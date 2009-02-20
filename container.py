@@ -28,6 +28,17 @@ class Container(object):
           return True
     return False
 
+  def parse(self, reader):
+    "Parse a line reader"
+    if hasattr(self, 'ending'):
+      self.parser.ending = self.ending
+    self.parser.factory = self.factory
+    self.header = self.parser.parseheader(reader)
+    self.begin = self.parser.begin
+    self.contents = self.parser.parse(reader)
+    self.process()
+    self.parser = []
+
   def process(self):
     "Process contents"
     pass
@@ -35,14 +46,41 @@ class Container(object):
   def finished(self, reader):
     "Find out if we are at the end"
     return reader.currentline().startswith(self.ending)
- 
+
   def gethtml(self):
-    "Get the HTML output"
+    "Get the resulting HTML"
     return self.output.gethtml(self)
 
   def __str__(self):
     "Get a description"
-    return 'Container ' + self.__class__.__name__
+    return self.__class__.__name__ + '@' + str(self.begin)
+
+  escapes = {'&':'&amp;', '<':'&lt;', '>':'&gt;'}
+
+  def escape(self, line):
+    "Escape a line to appear in HTML"
+    pieces = Container.escapes.keys()
+    # do the '&' first
+    pieces.sort()
+    for piece in pieces:
+      if piece in line:
+        line = line.replace(piece, Container.escapes[piece])
+    return line
+
+  def searchfor(self, check):
+    "Search for an embedded element recursively"
+    return self.searchinside(self.contents, check)
+
+  def searchinside(self, contents, check):
+    "Search for an embedded element in a list"
+    for element in contents:
+      if isinstance(element, Container):
+        if check(element):
+          return element
+        result = self.searchinside(element.contents, check)
+        if result:
+          return result
+    return None
 
 class QuoteContainer(Container):
   "A container for a pretty quote"
@@ -93,13 +131,14 @@ class StringContainer(Container):
     self.parser = StringParser()
     self.output = MirrorOutput()
     
-  replaces = { '`':u'‘', '\'':u'’', '\n':'', '--':u'—', '&':'&amp;', '<':'&lt;', '>':'&gt;' }
+  replaces = { '`':u'‘', '\'':u'’', '\n':'', '--':u'—' }
   commands = { '\\SpecialChar \\ldots{}':u'…', '\\InsetSpace ~':'&nbsp;' }
 
   def process(self):
     "Replace special chars"
     line = self.contents[0]
-    replaced = self.changeline(line)
+    replaced = self.escape(line)
+    replaced = self.changeline(replaced)
     self.contents = [replaced]
     if '\\' in replaced:
       # unprocessed commands
@@ -117,13 +156,24 @@ class StringContainer(Container):
       if piece in line:
         line = line.replace(piece, map[piece])
     return line
+  
+  def __str__(self):
+    length = ''
+    descr = ''
+    if len(self.contents) > 0:
+      length = str(len(self.contents[0]))
+      descr = self.contents[0].strip()
+    return 'StringContainer@' + str(self.begin) + '(' + str(length) + ')'
 
 class Constant(StringContainer):
   "A constant string"
 
   def __init__(self, text):
-    StringContainer.__init__(self)
     self.contents = [text]
+    self.output = MirrorOutput()
+
+  def __str__(self):
+    return 'Constant'
 
 class LangLine(Container):
   "A line with language information"
@@ -163,146 +213,28 @@ class Image(Container):
   def process(self):
     self.url = self.header[1]
 
-class PrintIndex(Container):
-  "Command to print an index"
-
-  start = '\\begin_inset LatexCommand printindex'
-  ending = '\\end_inset'
-
-  def __init__(self):
-    self.parser = BoundedParser()
-    self.output = IndexOutput()
-
-  def process(self):
-    self.keys = self.sortentries()
-    self.entries = IndexEntry.entries
-
-  def sortentries(self):
-    "Sort all entries in the index"
-    keys = IndexEntry.entries.keys()
-    # sort by name
-    keys.sort()
-    return keys
-
-class IndexEntry(Container):
-  "An entry in the alphabetical index"
-
-  start = '\\begin_inset LatexCommand index'
-  ending = '\\end_inset'
-
-  entries = dict()
-
-  def __init__(self):
-    self.parser = NamedCommand()
-    self.output = IndexEntryOutput()
-
-  def process(self):
-    "Put entry in index"
-    self.key = self.parser.key
-    self.name = self.parser.name
-    if not self.key in IndexEntry.entries:
-      # no entry; create
-      IndexEntry.entries[self.key] = list()
-    self.index = len(IndexEntry.entries[self.key])
-    IndexEntry.entries[self.key].append(self)
-
-class BiblioEntry(Container):
-  "A bibliography entry"
-
-  start = '\\begin_inset LatexCommand bibitem'
-  ending = '\\end_inset'
-
-  def __init__(self):
-    self.parser = NamedCommand()
-    self.output = BiblioEntryOutput()
-
-  def process(self):
-    self.key = self.parser.key
-    self.cites = BiblioCite.entries[self.key]
-
-class BiblioCite(Container):
-  "Cite of a bibliography entry"
-
-  start = '\\begin_inset LatexCommand cite'
-  ending = '\\end_inset'
-
-  index = 0
-  entries = dict()
-
-  def __init__(self):
-    self.parser = NamedCommand()
-    self.output = BiblioCiteOutput()
-
-  def process(self):
-    keys = self.parser.key.split(',')
-    self.cites = []
-    for key in keys:
-      BiblioCite.index += 1
-      if not key in BiblioCite.entries:
-        BiblioCite.entries[key] = []
-      BiblioCite.entries[key].append(BiblioCite.index)
-      self.cites.append(str(BiblioCite.index))
-
-class Reference(Container):
-  "A reference to a label"
-
-  start = '\\begin_inset LatexCommand ref'
-  ending = '\\end_inset'
-
-  def __init__(self):
-    self.parser = NamedCommand()
-    self.output = FixedOutput()
-
-  def process(self):
-    self.html =  ['<a class="ref" href="#' + self.parser.key +
-        '">' + self.parser.name + '</a>']
-
-class Label(Container):
-  "A label to be referenced"
-
-  start = '\\begin_inset LatexCommand label'
-  ending = '\\end_inset'
-
-  def __init__(self):
-    self.parser = NamedCommand()
-    self.output = FixedOutput()
-
-  def process(self):
-    self.html = ['<a class="label" name="' + self.parser.key + '"> </a>']
-
-class URL(Container):
-  "A clickable URL"
-
-  start = '\\begin_inset LatexCommand url'
-  ending = '\\end_inset'
-
-  def __init__(self):
-    self.parser = NamedCommand()
-    self.output = TagOutput()
-    self.breaklines = False
-
-  def process(self):
-    self.tag = 'a class="url" href="' + self.parser.name + '"'
-    self.contents = [Constant(self.parser.name)]
-
 class TaggedText(Container):
   "Text inside a tag"
 
   def __init__(self):
-    self.parser = OneLiner()
+    self.parser = TextParser()
     self.output = TagOutput()
     self.breaklines = False
 
-  def complete(self, contents, tag):
+  def complete(self, contents, tag, breaklines=False):
     "Complete the tagged text and return it"
     self.contents = contents
     self.tag = tag
+    self.breaklines = breaklines
     return self
 
   def constant(self, text, tag):
     "Complete the tagged text with a constant"
     constant = Constant(text)
     return self.complete([constant], tag)
+
+  def __str__(self):
+    return 'Tagged <' + self.tag + '>'
 
 class EmphaticText(TaggedText):
   "Text with emphatic mode"
@@ -357,38 +289,13 @@ class TextFamily(TaggedText):
     self.type = self.header[1]
     self.tag = TextFamily.typetags[self.type]
 
-class ListOf(Container):
-  "A list of entities (figures, tables, algorithms)"
-
-  start = '\\begin_inset FloatList'
-  ending = '\\end_inset'
-
-  names = {'figure':'figuras', 'table':'tablas', 'algorithm':'listados',
-      'tableofcontents':'contenidos'}
-
-  def __init__(self):
-    self.parser = BoundedParser()
-    self.output = TagOutput()
-    self.breaklines = False
-
-  def process(self):
-    "Parse the header and get the type"
-    self.type = self.header[2]
-    self.tag = 'div class="list"'
-    self.contents = [Constant(u'Índice de ' + ListOf.names[self.type])]
-
-class TableOfContents(ListOf):
-  "Table of contents"
-
-  start = '\\begin_inset LatexCommand tableofcontents'
-
 class Hfill(TaggedText):
   "Horizontall fill"
 
   start = '\\hfill'
 
   def process(self):
-    self.tag = 'p class="right"'
+    self.tag = 'span class="right"'
 
 class Float(Container):
   "A floating inset"
@@ -408,25 +315,27 @@ class Float(Container):
     # skip over four float parameters
     del self.contents[0:3]
 
-class Inset(Container):
-  "An inset (block of anything) inside a lyx file"
+class InsetText(Container):
+  "An inset of text in a lyx file"
 
-  start = '\\begin_inset '
+  start = '\\begin_inset Text'
   ending = '\\end_inset'
 
-  typetags = {'Text':'div class="text"', 'Caption':'div class="caption"'}
+  def __init__(self):
+    self.parser = BoundedParser()
+    self.output = ContentsOutput()
+
+class Caption(Container):
+  "A caption for a figure or a table"
+
+  start = '\\begin_inset Caption'
+  ending = '\\end_inset'
 
   def __init__(self):
     self.parser = BoundedParser()
     self.output = TagOutput()
+    self.tag = 'div class="caption"'
     self.breaklines = True
-
-  def process(self):
-    self.type = self.header[1]
-    if not self.type in Inset.typetags:
-      Trace.error('Unrecognized inset: ' + self.type)
-      return
-    self.tag = Inset.typetags[self.type]
 
 class Align(Container):
   "Bit of aligned text"
@@ -443,15 +352,17 @@ class Layout(Container):
   start = '\\begin_layout '
   ending = '\\end_layout'
 
-  typetags = { 'Quote':'blockquote', 'Standard':'div', 'Title':'h1', 'Author':'h2',
-        'Subsubsection*':'h4', 'Enumerate':'li', 'Chapter':'h1', 'Section':'h2', 'Subsection': 'h3',
-        'Bibliography':'p class="biblio"', 'Ordered':'ol', 'Description':'p class="desc"',
-        'Quotation':'blockquote', 'Itemize':'li', 'Unordered':'ul', 'Center':'p class="center"',
-        'Paragraph*':'p class="paragraph"' }
+  typetags = { 'Quote':'blockquote', 'Standard':'div class="text"', 'Title':'h1', 'Author':'h2',
+        'Subsubsection*':'h4', 'Enumerate':'li', 'Chapter':'h1', 'Section':'h2',
+        'Subsection': 'h3', 'Description':'div class="desc"',
+        'Quotation':'blockquote', 'Itemize':'li', 'Center':'div class="center"',
+        'Paragraph*':'div class="paragraph"', 'Part':'h1 class="part"',
+        'Subsection*': 'h3'}
 
   title = 'El libro gordo'
 
   def __init__(self):
+    self.contents = list()
     self.parser = BoundedParser()
     self.output = TagOutput()
     self.breaklines = True
@@ -465,4 +376,5 @@ class Layout(Container):
 
   def __str__(self):
     return 'Layout of type ' + self.type
+    self.contents = [Constant(self.url)]
 
