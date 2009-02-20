@@ -9,35 +9,6 @@ from trace import Trace
 from parse import *
 
 
-class ContainerFactory(object):
-  "Creates containers depending on the first line"
-
-  @classmethod
-  def create(cls, reader):
-    "Get the container corresponding to the reader contents"
-    # Trace.debug('processing ' + reader.currentline().strip())
-    containerlist = [BlackBox,
-        # do not add above this line
-        Layout, EmphaticText, VersalitasText, Image, QuoteContainer,
-        IndexEntry, BiblioEntry, BiblioCite, LangLine, Reference, Label,
-        TextFamily, Formula, PrintIndex, LyxHeader, URL, ListOf,
-        TableOfContents, Hfill, ColorText, SizeText, BoldText, LyxLine,
-        Align,
-        # do not add below this line
-        Float, Inset, StringContainer]
-    for type in containerlist:
-      if type.comesnext(reader):
-        container = type.__new__(type)
-        container.__init__()
-        if hasattr(container, 'ending'):
-          container.parser.ending = container.ending
-        container.parser.factory = ContainerFactory
-        container.header = container.parser.parseheader(reader)
-        container.contents = container.parser.parse(reader)
-        container.process()
-        return container
-    Trace.error('Error creating container at ' + str(reader.index) + ': ' + reader.currentline())
-
 class Container(object):
   "A container for text and objects in a lyx file"
 
@@ -55,18 +26,6 @@ class Container(object):
         if line.startswith(start):
           return True
     return False
-
-  def parseheader(self, reader):
-    "Parse the header of the container: skip it"
-    reader.nextline()
-
-  def parse(self, reader):
-    "Parse the contents of the container"
-    while not self.finished(reader):
-      container = ContainerFactory.create(reader)
-      self.contents.append(container)
-    # skip last line
-    reader.nextline()
 
   def process(self):
     "Process contents"
@@ -107,7 +66,8 @@ class BlackBox(Container):
       '\\end_body', '\\end_document', '\\family default', '\\color inherit',
       '\\shape default', '\\series default', '\\emph off',
       '\\bar no', '\\noun off', '\\emph default', '\\bar default',
-      '\\noun default']
+      '\\noun default', '\\family roman', '\\series medium',
+      '\\shape up', '\\size normal', '\\color none']
 
   def __init__(self):
     self.parser = LoneCommand()
@@ -126,10 +86,7 @@ class LyxHeader(Container):
 class StringContainer(Container):
   "A container for a single string"
 
-  @classmethod
-  def comesnext(cls, reader):
-    "Return if the next line is a string, always true"
-    return True
+  start = ''
 
   def __init__(self):
     self.parser = StringParser()
@@ -145,7 +102,7 @@ class StringContainer(Container):
     self.contents = [replaced]
     if '\\' in replaced:
       # unprocessed commands
-      Trace.error('Error in ' + str(line) + ': ' + replaced.strip())
+      Trace.error('Error at ' + str(self.parser.begin) + ': ' + replaced.strip())
 
   def changeline(self, line):
     line = self.replacemap(line, StringContainer.replaces)
@@ -269,12 +226,14 @@ class BiblioCite(Container):
     self.output = BiblioCiteOutput()
 
   def process(self):
-    self.key = self.parser.key
-    BiblioCite.index += 1
-    if not self.key in BiblioCite.entries:
-      BiblioCite.entries[self.key] = []
-    BiblioCite.entries[self.key].append(BiblioCite.index)
-    self.cite = str(BiblioCite.index)
+    keys = self.parser.key.split(',')
+    self.cites = []
+    for key in keys:
+      BiblioCite.index += 1
+      if not key in BiblioCite.entries:
+        BiblioCite.entries[key] = []
+      BiblioCite.entries[key].append(BiblioCite.index)
+      self.cites.append(str(BiblioCite.index))
 
 class Reference(Container):
   "A reference to a label"
@@ -370,7 +329,7 @@ class SizeText(Container):
 class BoldText(Container):
   "Bold text"
 
-  start = '\\bold'
+  start = '\\series bold'
 
   def __init__(self):
     self.parser = OneLiner()
@@ -404,10 +363,11 @@ class Formula(Container):
 
   def __init__(self):
     self.parser = FormulaParser()
-    self.output = FixedOutput()
+    self.output = TagOutput()
 
   def process(self):
-    self.html = ['<span class="formula">' + self.contents[0] + '</span>']
+    self.tag = 'span class="formula"'
+    self.breaklines = True
 
 class ListOf(Container):
   "A list of entities (figures, tables, algorithms)"
@@ -461,8 +421,8 @@ class Float(Container):
     self.type = self.header[2]
     self.tag = 'div class="' + self.type + '"'
     self.breaklines = True
-    # skip over three float parameters
-    del self.contents[0:2]
+    # skip over four float parameters
+    del self.contents[0:3]
 
 class Inset(Container):
   "An inset (block of anything) inside a lyx file"
@@ -499,10 +459,11 @@ class Layout(Container):
   start = '\\begin_layout '
   ending = '\\end_layout'
 
-  typetags = {'Quote':'blockquote', 'Standard':'p', 'Title':'h1', 'Author':'h2',
+  typetags = { 'Quote':'blockquote', 'Standard':'p', 'Title':'h1', 'Author':'h2',
         'Subsubsection*':'h4', 'Enumerate':'li', 'Chapter':'h1', 'Section':'h2', 'Subsection': 'h3',
         'Bibliography':'p class="biblio"', 'Ordered':'ol', 'Description':'p class="desc"',
-        'Quotation':'blockquote', 'Itemize':'li', 'Unordered':'ul', 'Center':'p class="center"'}
+        'Quotation':'blockquote', 'Itemize':'li', 'Unordered':'ul', 'Center':'p class="center"',
+        'Paragraph*':'p class="paragraph"' }
 
   title = 'El libro gordo'
 
@@ -520,4 +481,35 @@ class Layout(Container):
 
   def __str__(self):
     return 'Layout of type ' + self.type
+
+class ContainerFactory(object):
+  "Creates containers depending on the first line"
+
+  types = [BlackBox,
+        # do not add above this line
+        Layout, EmphaticText, VersalitasText, Image, QuoteContainer,
+        IndexEntry, BiblioEntry, BiblioCite, LangLine, Reference, Label,
+        TextFamily, Formula, PrintIndex, LyxHeader, URL, ListOf,
+        TableOfContents, Hfill, ColorText, SizeText, BoldText, LyxLine,
+        Align,
+        # do not add below this line
+        Float, Inset, StringContainer]
+
+  root = ParseTree(types)
+
+  @classmethod
+  def create(cls, reader):
+    "Get the container and parse it"
+    # Trace.debug('processing ' + reader.currentline().strip())
+    type = ContainerFactory.root.find(reader.currentline())
+    container = type.__new__(type)
+    container.__init__()
+    if hasattr(container, 'ending'):
+      container.parser.ending = container.ending
+    container.parser.factory = ContainerFactory
+    container.header = container.parser.parseheader(reader)
+    container.contents = container.parser.parse(reader)
+    container.process()
+    container.parser = []
+    return container
 

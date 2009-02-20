@@ -181,69 +181,114 @@ class PreFormula(PreStage):
 
   def preprocess(self, list, index):
     "Convert the formula to HTML"
-    formula = list[index].contents[0]
-    original, result = self.convert(formula, 0)
-    list[index].contents = [result]
+    formula = list[index]
+    original, result = self.convert(formula.contents[0], 0)
+    #Trace.debug('Formula ' + original + ' -> ' + result)
+    container = StringContainer()
+    container.contents = [result]
+    formula.contents = [container]
 
-  unmodified = ['.', '*', '-', '/']
-  modified = {'\'':u'’'}
-  commands = {'\\, ':' ', '\\%':'%', '\\prime':u'’', '\\times':u'×'}
-  functions = {'\\mathsf':'span class="sans"', '\\mathbf':'b', '^':'sup'}
+  unmodified = ['.', '*', '-', '/', u'€', '+', '(', ')']
+  modified = {'\'':u'’', '=':' = '}
+  commands = {'\\, ':' ', '\\%':'%', '\\prime':u'’', '\\times':u'×',
+      '\\rightarrow ':u'→', '\\lambda':u'λ', '\\propto ':u'∝',
+      '\\tilde{n}':u'ñ', '\\cdot ':u'·', '\\approx':u'≈',
+      '\\rightsquigarrow ':u'⇝', '\\dashrightarrow':'⇢', '\\sim':u'~'}
+  onefunctions = {'\\mathsf':'span class="sans"', '\\mathbf':'b', '^':'sup',
+      '_':'sub', '\\underline':'u', '\\overline':'span class="overline"'}
+  twofunctions = {
+      '\\frac':['div class="frac"', 'span class="fracup"', 'span class="fracdown"']}
   
-  def convert(self, text, index):
+  def convert(self, text, pos):
     "Convert a bit of text to HTML"
     processed = ''
     result = ''
-    while index < len(text) and text[index] != '}':
-      original, converted = self.convertchars(text, index)
+    while pos < len(text) and text[pos] != '}':
+      original, converted = self.convertchars(text, pos)
+      #Trace.debug('converted: ' + unicode(converted))
       processed += original
+      pos += len(original)
       result += converted
-      index += len(original)
     return processed, result
 
-  def convertchars(self, text, index):
+  def convertchars(self, text, pos):
     "Convert one or more characters, return the conversion"
-    char = text[index]
+    #Trace.debug('Formula ' + text + ' @' + str(pos))
+    char = text[pos]
     if char.isalpha():
-      alpha = self.readalpha(text, index)
+      alpha = self.readalpha(text, pos)
       return alpha, '<i>' + alpha + '</i>'
     if char.isdigit() or char in PreFormula.unmodified:
       return char, char
     if char in PreFormula.modified:
       return char, PreFormula.modified[char]
-    command, result = self.find(text, index, PreFormula.commands)
+    command, result = self.find(text, pos, PreFormula.commands)
     if command:
       return command, result
-    function, result = self.find(text, index, PreFormula.functions)
-    if not function:
-      Trace.error('Unrecognized string in ' + text[index:])
-      return '\\', '\\'
-    index += len(function)
-    if text[index] != '{':
-      Trace.error('Missing {')
-      return function, function
-    index += 1
-    original, converted = self.convert(text, index)
-    index += len(original)
-    if text[index] != '}':
-      Trace.error('Missing }')
-    tag = TagOutput()
-    container = Container()
-    container.tag = result
-    container.breaklines = False
-    return function + '{' + original + '}', tag.getopen(container) + converted + tag.getclose(container)
+    onefunction, result = self.readone(text, pos)
+    if onefunction:
+      return onefunction, result
+    twofunction, result = self.readtwo(text, pos)
+    if twofunction:
+      return twofunction, result
+    Trace.error('Unrecognized string in ' + unicode(text[pos:]))
+    return '\\', '\\'
 
-  def readalpha(self, string, index):
+  def readone(self, text, pos):
+    "read a one-parameter function"
+    function, result = self.find(text, pos, PreFormula.onefunctions)
+    if not function:
+      return None, None
+    pos += len(function)
+    bracket, parameter = self.readbracket(text, pos)
+    return function + bracket, self.createtag(result, parameter)
+
+  def readtwo(self, text, pos):
+    "read a two-parameter function"
+    function, result = self.find(text, pos, PreFormula.twofunctions)
+    if not function:
+      return None, None
+    pos += len(function)
+    bracket1, parameter1 = self.readbracket(text, pos)
+    pos += len(bracket1)
+    bracket2, parameter2 = self.readbracket(text, pos)
+    original =  function + bracket1 + bracket2
+    tag1 = self.createtag(result[1], parameter1)
+    tag2 = self.createtag(result[2], parameter2)
+    result = self.createtag(result[0], tag1 + tag2)
+    return original, result
+
+  def createtag(self, tag, text):
+    "Create a custom tag"
+    output = TagOutput()
+    container = Container()
+    container.tag = tag
+    container.breaklines = False
+    return output.getopen(container) + text + output.getclose(container)
+
+  def readbracket(self, text, pos):
+    "Read a bracket as {result}"
+    if text[pos] != u'{':
+      Trace.error(u'Missing { in ' + text + '@' + str(pos))
+      return '', ''
+    pos += 1
+    original, converted = self.convert(text, pos)
+    pos += len(original)
+    if text[pos] != u'}':
+      Trace.error(u'Missing } in ' + text + '@' + str(pos))
+    return '{' + original + '}', converted
+
+  def readalpha(self, text, pos):
     "Read alphabetic sequence"
     alpha = str()
-    while index < len(string) and string[index].isalpha():
-      alpha += string[index]
-      index += 1
+    while pos < len(text) and text[pos].isalpha():
+      alpha += text[pos]
+      pos += 1
     return alpha
 
-  def find(self, string, index, map):
+  def find(self, text, pos, map):
     "Read TeX command or function"
-    bit = string[index:]
+    bit = text[pos:]
     for element in map:
       if bit.startswith(element):
         return element, map[element]
