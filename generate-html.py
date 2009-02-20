@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 # Alex 27-01-2009
-# Create the custom HTML version
+# Generate custom HTML version from Lyx document
+# Main file and preprocessor
 
 import sys
 import re
@@ -19,7 +20,7 @@ class HtmlFile(object):
   "HTML file out"
 
   def __init__(self, filename):
-    Trace.debug('writing file ' + filename)
+    Trace.debug('Writing file ' + filename)
     self.file = codecs.open(filename, 'w', 'utf-8')
 
   def writebook(self, book, title):
@@ -58,7 +59,14 @@ class HtmlFile(object):
     self.file.write('</body>\n')
     self.file.write('</html>\n')
 
-class PreGrouping(object):
+class PreStage(object):
+  "Stage of preprocessing"
+
+  def isnext(self, element):
+    "Check if it is the given class"
+    return isinstance(element, self.processedclass)
+
+class PreGrouping(PreStage):
   "Preprocess groupings of elements"
 
   groupings = {'Enumerate':'Ordered', 'Itemize':'Unordered'}
@@ -76,23 +84,22 @@ class PreGrouping(object):
     element = list[index]
     grouping = Layout()
     grouping.type = PreGrouping.groupings[element.type]
-    grouping.contents.append(element)
+    grouping.tag = Layout.typetags[grouping.type]
+    grouping.contents = [element]
     list[index] = grouping
     while self.isnext(list[index + 1]):
       grouping.contents.append(list[index + 1])
       list.remove(list[index + 1])
 
-class PreFloat(object):
+class PreFloat(PreStage):
   "Preprocess a float"
 
-  def isnext(self, element):
-    "Check if it is a float"
-    return isinstance(element, Float)
+  processedclass = Float
 
   def preprocess(self, list, index):
     "Enclose in a float div"
     float = list[index]
-    enclosing = HtmlTag()
+    enclosing = Layout()
     enclosing.tag = 'div class="float"'
     enclosing.contents = [float]
     list[index] = enclosing
@@ -103,16 +110,29 @@ class PreFloat(object):
     for element in container.contents:
       if isinstance(element, Image):
         element.figure = True
-        float.extratag = ' style="width:' + str(element.width) + ';"'
       if isinstance(element, Container):
         self.checkforimages(element, float)
 
-class PreImage(object):
-  "Preprocess (convert) an image"
+class PreAlign(PreStage):
+  "Preprocess an aligned layout"
 
   def isnext(self, element):
-    "Check if it is an image"
-    return isinstance(element, Image)
+    "Check if it is a layout"
+    if not isinstance(element, Layout):
+      return False
+    if len(element.contents) == 0:
+      return False
+    first = element.contents[0]
+    return isinstance(first, Align)
+
+  def preprocess(self, list, index):
+    "Center the layout"
+    list[index].type = 'Center'
+
+class PreImage(PreStage):
+  "Preprocess (convert) an image"
+
+  processedclass = Image
 
   def preprocess(self, list, index):
     "Put images as a figure"
@@ -154,18 +174,16 @@ class PreImage(object):
     PreImage.dimensions[filename] = dimensions
     return dimensions
 
-class PreFormula(object):
+class PreFormula(PreStage):
   "Preprocess a formula"
 
-  def isnext(self, element):
-    "Check if it is a formula"
-    return isinstance(element, Formula)
+  processedclass = Formula
 
   def preprocess(self, list, index):
     "Convert the formula to HTML"
-    formula = list[index].formula
+    formula = list[index].contents[0]
     original, result = self.convert(formula, 0)
-    list[index].formula = result
+    list[index].contents = [result]
 
   unmodified = ['.', '*', '-', '/']
   modified = {'\'':u'’'}
@@ -209,9 +227,11 @@ class PreFormula(object):
     index += len(original)
     if text[index] != '}':
       Trace.error('Missing }')
-    html = HtmlTag()
-    html.tag = result
-    return function + '{' + original + '}', html.getopen() + converted + html.getclose()
+    tag = TagOutput()
+    container = Container()
+    container.tag = result
+    container.breaklines = False
+    return function + '{' + original + '}', tag.getopen(container) + converted + tag.getclose(container)
 
   def readalpha(self, string, index):
     "Read alphabetic sequence"
@@ -232,7 +252,7 @@ class PreFormula(object):
 class Preprocessor(object):
   "Preprocess a list of elements"
 
-  stages = [PreGrouping(), PreImage(), PreFloat(), PreFormula()]
+  stages = [PreGrouping(), PreImage(), PreFloat(), PreFormula(), PreAlign()]
 
   def preprocess(self, list):
     "Preprocess a list of elements"
@@ -256,7 +276,7 @@ class Book(object):
     "Parse the contents of the reader"
     reader.nextline()
     while not reader.finished():
-      container = ContainerFactory.createcontainer(reader)
+      container = ContainerFactory.create(reader)
       self.contents.append(container)
 
   def preprocess(self):
@@ -285,6 +305,7 @@ def createbook(filename):
   book = Book()
   book.parsecontents(reader)
   makedir(filename)
+  Trace.debug('Preprocessing')
   book.preprocess()
   book.show()
   book.writeresult()
