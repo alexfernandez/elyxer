@@ -1,20 +1,21 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Alex 27-01-2009
+# Alex 20090127
 # Generate custom HTML version from Lyx document
 # Main file and preprocessor
 
 import sys
-import re
 import codecs
 import os.path
+import shutil
 import subprocess
 import Numeric
 import array
 sys.path.append('./bin')
 from container import *
 from trace import Trace
+from formula import Formula
 
 class HtmlFile(object):
   "HTML file out"
@@ -180,119 +181,35 @@ class PreFormula(PreStage):
   processedclass = Formula
 
   def preprocess(self, list, index):
-    "Convert the formula to HTML"
+    "Make style changes to the formula"
     formula = list[index]
-    original, result = self.convert(formula.contents[0], 0)
-    #Trace.debug('Formula ' + original + ' -> ' + result)
-    container = StringContainer()
-    container.contents = [result]
-    formula.contents = [container]
+    self.process(formula.contents, self.restyletagged)
 
-  unmodified = ['.', '*', '-', '/', u'€', '+', '(', ')']
-  modified = {'\'':u'’', '=':' = '}
-  commands = {'\\, ':' ', '\\%':'%', '\\prime':u'’', '\\times':u'×',
-      '\\rightarrow ':u'→', '\\lambda':u'λ', '\\propto ':u'∝',
-      '\\tilde{n}':u'ñ', '\\cdot ':u'·', '\\approx':u'≈',
-      '\\rightsquigarrow ':u'⇝', '\\dashrightarrow':'⇢', '\\sim':u'~'}
-  onefunctions = {'\\mathsf':'span class="sans"', '\\mathbf':'b', '^':'sup',
-      '_':'sub', '\\underline':'u', '\\overline':'span class="overline"'}
-  twofunctions = {
-      '\\frac':['div class="frac"', 'span class="fracup"', 'span class="fracdown"']}
-  
-  def convert(self, text, pos):
-    "Convert a bit of text to HTML"
-    processed = ''
-    result = ''
-    while pos < len(text) and text[pos] != '}':
-      original, converted = self.convertchars(text, pos)
-      #Trace.debug('converted: ' + unicode(converted))
-      processed += original
-      pos += len(original)
-      result += converted
-    return processed, result
+  def process(self, contents, processor):
+    "Restyle contents"
+    i = 0
+    while i < len(contents):
+      element = contents[i]
+      if isinstance(element, TaggedText):
+        processor(contents, i)
+      if isinstance(element, Container):
+        self.process(element.contents, processor)
+      i += 1
 
-  def convertchars(self, text, pos):
-    "Convert one or more characters, return the conversion"
-    #Trace.debug('Formula ' + text + ' @' + str(pos))
-    char = text[pos]
-    if char.isalpha():
-      alpha = self.readalpha(text, pos)
-      return alpha, '<i>' + alpha + '</i>'
-    if char.isdigit() or char in PreFormula.unmodified:
-      return char, char
-    if char in PreFormula.modified:
-      return char, PreFormula.modified[char]
-    command, result = self.find(text, pos, PreFormula.commands)
-    if command:
-      return command, result
-    onefunction, result = self.readone(text, pos)
-    if onefunction:
-      return onefunction, result
-    twofunction, result = self.readtwo(text, pos)
-    if twofunction:
-      return twofunction, result
-    Trace.error('Unrecognized string in ' + unicode(text[pos:]))
-    return '\\', '\\'
+  def restyletagged(self, contents, index):
+    "Restyle tagged text"
+    tagged = contents[index]
+    if tagged.tag == 'span class="mathsf"':
+      self.process(tagged.contents, self.removeitalics)
+    elif tagged.tag == 'span class="sqrt"':
+      tagged.tag = 'span class="root"'
+      radical = TaggedText().complete(u'√', 'span class="radical"')
+      contents.insert(index, radical)
 
-  def readone(self, text, pos):
-    "read a one-parameter function"
-    function, result = self.find(text, pos, PreFormula.onefunctions)
-    if not function:
-      return None, None
-    pos += len(function)
-    bracket, parameter = self.readbracket(text, pos)
-    return function + bracket, self.createtag(result, parameter)
-
-  def readtwo(self, text, pos):
-    "read a two-parameter function"
-    function, result = self.find(text, pos, PreFormula.twofunctions)
-    if not function:
-      return None, None
-    pos += len(function)
-    bracket1, parameter1 = self.readbracket(text, pos)
-    pos += len(bracket1)
-    bracket2, parameter2 = self.readbracket(text, pos)
-    original =  function + bracket1 + bracket2
-    tag1 = self.createtag(result[1], parameter1)
-    tag2 = self.createtag(result[2], parameter2)
-    result = self.createtag(result[0], tag1 + tag2)
-    return original, result
-
-  def createtag(self, tag, text):
-    "Create a custom tag"
-    output = TagOutput()
-    container = Container()
-    container.tag = tag
-    container.breaklines = False
-    return output.getopen(container) + text + output.getclose(container)
-
-  def readbracket(self, text, pos):
-    "Read a bracket as {result}"
-    if text[pos] != u'{':
-      Trace.error(u'Missing { in ' + text + '@' + str(pos))
-      return '', ''
-    pos += 1
-    original, converted = self.convert(text, pos)
-    pos += len(original)
-    if text[pos] != u'}':
-      Trace.error(u'Missing } in ' + text + '@' + str(pos))
-    return '{' + original + '}', converted
-
-  def readalpha(self, text, pos):
-    "Read alphabetic sequence"
-    alpha = str()
-    while pos < len(text) and text[pos].isalpha():
-      alpha += text[pos]
-      pos += 1
-    return alpha
-
-  def find(self, text, pos, map):
-    "Read TeX command or function"
-    bit = text[pos:]
-    for element in map:
-      if bit.startswith(element):
-        return element, map[element]
-    return None, None
+  def removeitalics(self, contents, index):
+    "Remove the italics tag"
+    if contents[index].tag == 'i':
+      contents[index] = contents[index].contents[0]
 
 class Preprocessor(object):
   "Preprocess a list of elements"
@@ -310,6 +227,37 @@ class Preprocessor(object):
         if stage.isnext(element):
           stage.preprocess(list, i)
       i += 1
+
+class ContainerFactory(object):
+  "Creates containers depending on the first line"
+
+  types = [BlackBox,
+        # do not add above this line
+        Layout, EmphaticText, VersalitasText, Image, QuoteContainer,
+        IndexEntry, BiblioEntry, BiblioCite, LangLine, Reference, Label,
+        TextFamily, Formula, PrintIndex, LyxHeader, URL, ListOf,
+        TableOfContents, Hfill, ColorText, SizeText, BoldText, LyxLine,
+        Align,
+        # do not add below this line
+        Float, Inset, StringContainer]
+
+  root = ParseTree(types)
+
+  @classmethod
+  def create(cls, reader):
+    "Get the container and parse it"
+    # Trace.debug('processing ' + reader.currentline().strip())
+    type = ContainerFactory.root.find(reader.currentline())
+    container = type.__new__(type)
+    container.__init__()
+    if hasattr(container, 'ending'):
+      container.parser.ending = container.ending
+    container.parser.factory = ContainerFactory
+    container.header = container.parser.parseheader(reader)
+    container.contents = container.parser.parse(reader)
+    container.process()
+    container.parser = []
+    return container
 
 class Book(object):
   "book in a lyx file"
@@ -342,6 +290,7 @@ def makedir(filename):
     os.mkdir(basedir)
   except:
     pass
+  shutil.copyfile('lyx.css', basedir + '/lyx.css')
   os.chdir(basedir)
 
 def createbook(filename):
@@ -361,4 +310,3 @@ args = sys.argv
 del args[0]
 for arg in args:
   createbook(arg)
-

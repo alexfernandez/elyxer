@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Alex 2009-01-31
+# Alex 20090131
 # Generate custom HTML version from Lyx document
 # Containers for Lyx data that output HTML
 
@@ -116,6 +116,13 @@ class StringContainer(Container):
       if piece in line:
         line = line.replace(piece, map[piece])
     return line
+
+class Constant(StringContainer):
+  "A constant string"
+
+  def __init__(self, text):
+    StringContainer.__init__(self)
+    self.contents = [text]
 
 class LangLine(Container):
   "A line with language information"
@@ -270,104 +277,85 @@ class URL(Container):
 
   def __init__(self):
     self.parser = NamedCommand()
-    self.output = FixedOutput()
+    self.output = TagOutput()
+    self.breaklines = False
 
   def process(self):
-    self.html = ['<a class="url" href="' + self.parser.name +
-        '">' + self.parser.name + '</a>']
+    self.tag = '<a class="url" href="' + self.parser.name + '">'
+    
+    self.contents = [Constant(self.parser.name)]
 
-class EmphaticText(Container):
+class TaggedText(Container):
+  "Text inside a tag"
+
+  def __init__(self):
+    self.parser = OneLiner()
+    self.output = TagOutput()
+    self.breaklines = False
+
+  def complete(self, contents, tag):
+    "Complete the tagged text and return it"
+    self.contents = contents
+    self.tag = tag
+    return self
+
+  def constant(self, text, tag):
+    "Complete the tagged text with a constant"
+    constant = Constant(text)
+    return self.complete([constant], tag)
+
+class EmphaticText(TaggedText):
   "Text with emphatic mode"
 
   start = '\\emph on'
 
-  def __init__(self):
-    self.parser = OneLiner()
-    self.output = TagOutput()
+  def process(self):
     self.tag = 'i'
-    self.breaklines = False
 
-class VersalitasText(Container):
+class VersalitasText(TaggedText):
   "Text in versalitas"
 
   start = '\\noun on'
 
-  def __init__(self):
-    self.parser = OneLiner()
-    self.output = TagOutput()
+  def process(self):
     self.tag = 'span class="versalitas"'
-    self.breaklines = False
 
-class ColorText(Container):
+class ColorText(TaggedText):
   "Colored text"
 
   start = '\\color'
-
-  def __init__(self):
-    self.parser = OneLiner()
-    self.output = TagOutput()
-    self.breaklines = False
 
   def process(self):
     self.color = self.header[1]
     self.tag = 'span class="' + self.color + '"'
 
-class SizeText(Container):
+class SizeText(TaggedText):
   "Sized text"
 
   start = '\\size'
-
-  def __init__(self):
-    self.parser = OneLiner()
-    self.output = TagOutput()
-    self.breaklines = False
 
   def process(self):
     self.size = self.header[1]
     self.tag = 'span class="' + self.size + '"'
 
-class BoldText(Container):
+class BoldText(TaggedText):
   "Bold text"
 
   start = '\\series bold'
 
-  def __init__(self):
-    self.parser = OneLiner()
-    self.output = TagOutput()
-    self.breaklines = False
-
   def process(self):
     self.tag = 'b'
 
-class TextFamily(Container):
+class TextFamily(TaggedText):
   "A bit of text from a different family"
 
   start = '\\family'
   typetags = { 'typewriter':'tt', 'sans':'span class="sans"' }
 
-  def __init__(self):
-    self.parser = OneLiner()
-    self.output = TagOutput()
-    self.breaklines = False
-
   def process(self):
     "Parse the type of family"
     self.type = self.header[1]
     self.tag = TextFamily.typetags[self.type]
-
-class Formula(Container):
-  "A Latex formula"
-
-  start = '\\begin_inset Formula'
-  ending = '\\end_inset'
-
-  def __init__(self):
-    self.parser = FormulaParser()
-    self.output = TagOutput()
-
-  def process(self):
-    self.tag = 'span class="formula"'
-    self.breaklines = True
 
 class ListOf(Container):
   "A list of entities (figures, tables, algorithms)"
@@ -380,28 +368,24 @@ class ListOf(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = FixedOutput()
+    self.output = TagOutput()
+    self.breaklines = False
 
   def process(self):
     "Parse the header and get the type"
     self.type = self.header[2]
-    Trace.debug('List of: ' + self.type)
-    self.html = [u'<div class="list">Índice de ' + ListOf.names[self.type] + '</div>']
+    self.tag = 'div class="list"'
+    self.contents = [Constant(u'Índice de ' + ListOf.names[self.type])]
 
 class TableOfContents(ListOf):
   "Table of contents"
 
   start = '\\begin_inset LatexCommand tableofcontents'
 
-class Hfill(Container):
+class Hfill(TaggedText):
   "Horizontall fill"
 
   start = '\\hfill'
-
-  def __init__(self):
-    self.parser = OneLiner()
-    self.output = TagOutput()
-    self.breaklines = True
 
   def process(self):
     self.tag = 'p class="right"'
@@ -481,35 +465,4 @@ class Layout(Container):
 
   def __str__(self):
     return 'Layout of type ' + self.type
-
-class ContainerFactory(object):
-  "Creates containers depending on the first line"
-
-  types = [BlackBox,
-        # do not add above this line
-        Layout, EmphaticText, VersalitasText, Image, QuoteContainer,
-        IndexEntry, BiblioEntry, BiblioCite, LangLine, Reference, Label,
-        TextFamily, Formula, PrintIndex, LyxHeader, URL, ListOf,
-        TableOfContents, Hfill, ColorText, SizeText, BoldText, LyxLine,
-        Align,
-        # do not add below this line
-        Float, Inset, StringContainer]
-
-  root = ParseTree(types)
-
-  @classmethod
-  def create(cls, reader):
-    "Get the container and parse it"
-    # Trace.debug('processing ' + reader.currentline().strip())
-    type = ContainerFactory.root.find(reader.currentline())
-    container = type.__new__(type)
-    container.__init__()
-    if hasattr(container, 'ending'):
-      container.parser.ending = container.ending
-    container.parser.factory = ContainerFactory
-    container.header = container.parser.parseheader(reader)
-    container.contents = container.parser.parse(reader)
-    container.process()
-    container.parser = []
-    return container
 
