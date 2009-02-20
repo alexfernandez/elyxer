@@ -9,13 +9,13 @@ import sys
 import codecs
 import os.path
 import shutil
-import subprocess
-import Numeric
-import array
 sys.path.append('./bin')
 from container import *
-from trace import Trace
+from preprocess import Preprocessor
+from table import *
 from formula import Formula
+from trace import Trace
+
 
 class HtmlFile(object):
   "HTML file out"
@@ -31,6 +31,7 @@ class HtmlFile(object):
       for container in book.contents:
         html = container.gethtml()
         for line in html:
+          # Trace.debug('writing ' + line)
           self.file.write(line)
       self.end()
     finally:
@@ -45,7 +46,7 @@ class HtmlFile(object):
     self.file.write('<title>\n')
     self.file.write(title + '\n')
     self.file.write('</title>\n')
-    self.file.write('<link rel="stylesheet" href="lyx.css" type="text/css" media="screen"/>\n')
+    self.file.write('<link rel="stylesheet" href="../lyx.css" type="text/css" media="screen"/>\n')
     self.file.write('</head>\n')
     self.file.write('<body>\n')
     self.file.write('<div id="globalWrapper">\n')
@@ -60,174 +61,6 @@ class HtmlFile(object):
     self.file.write('</body>\n')
     self.file.write('</html>\n')
 
-class PreStage(object):
-  "Stage of preprocessing"
-
-  def isnext(self, element):
-    "Check if it is the given class"
-    return isinstance(element, self.processedclass)
-
-class PreGrouping(PreStage):
-  "Preprocess groupings of elements"
-
-  groupings = {'Enumerate':'Ordered', 'Itemize':'Unordered'}
-
-  def isnext(self, element):
-    "Check if the stage comes next"
-    if not isinstance(element, Layout):
-      return False
-    if element.type not in PreGrouping.groupings.keys():
-      return False
-    return True
-
-  def preprocess(self, list, index):
-    "Replace a list of items with a grouping"
-    element = list[index]
-    grouping = Layout()
-    grouping.type = PreGrouping.groupings[element.type]
-    grouping.tag = Layout.typetags[grouping.type]
-    grouping.contents = [element]
-    list[index] = grouping
-    while self.isnext(list[index + 1]):
-      grouping.contents.append(list[index + 1])
-      list.remove(list[index + 1])
-
-class PreFloat(PreStage):
-  "Preprocess a float"
-
-  processedclass = Float
-
-  def preprocess(self, list, index):
-    "Enclose in a float div"
-    float = list[index]
-    enclosing = Layout()
-    enclosing.tag = 'div class="float"'
-    enclosing.contents = [float]
-    list[index] = enclosing
-    self.checkforimages(float, float)
-
-  def checkforimages(self, container, float):
-    "Check for images, set figure class"
-    for element in container.contents:
-      if isinstance(element, Image):
-        element.figure = True
-      if isinstance(element, Container):
-        self.checkforimages(element, float)
-
-class PreAlign(PreStage):
-  "Preprocess an aligned layout"
-
-  def isnext(self, element):
-    "Check if it is a layout"
-    if not isinstance(element, Layout):
-      return False
-    if len(element.contents) == 0:
-      return False
-    first = element.contents[0]
-    return isinstance(first, Align)
-
-  def preprocess(self, list, index):
-    "Center the layout"
-    list[index].type = 'Center'
-
-class PreImage(PreStage):
-  "Preprocess (convert) an image"
-
-  processedclass = Image
-
-  def preprocess(self, list, index):
-    "Put images as a figure"
-    image = list[index]
-    origin = '../' + image.url
-    image.destination = os.path.splitext(image.url)[0] + '.png'
-    factor = 100
-    if hasattr(image, 'figure') and image.figure:
-      factor = 120
-    self.convert(origin, image.destination, factor)
-    image.width, image.height = self.getdimensions(image.destination)
-
-  def convert(self, origin, destination, factor):
-    "Convert an image to PNG"
-    if not os.path.exists(origin):
-      Trace.error('Error in image origin ' + origin)
-      return
-    if os.path.exists(destination) and os.path.getmtime(origin) <= os.path.getmtime(destination):
-      # file has not changed; do not convert
-      return
-    dir = os.path.dirname(destination)
-    if not os.path.exists(dir):
-      os.makedirs(dir)
-    Trace.debug('converting ' + origin + ' to ' + destination + ' with density ' + str(factor))
-    subprocess.call('convert -density ' + str(factor) + ' ' + origin + ' ' + destination, shell=True)
-
-  dimensions = dict()
-
-  def getdimensions(self, filename):
-    "Get the dimensions of a PNG image"
-    if filename in PreImage.dimensions:
-      return PreImage.dimensions[filename]
-    pngfile = codecs.open(filename, 'rb')
-    pngfile.seek(16)
-    dimensions = array.array('l')
-    dimensions.fromfile(pngfile, 2)
-    dimensions.byteswap()
-    pngfile.close()
-    PreImage.dimensions[filename] = dimensions
-    return dimensions
-
-class PreFormula(PreStage):
-  "Preprocess a formula"
-
-  processedclass = Formula
-
-  def preprocess(self, list, index):
-    "Make style changes to the formula"
-    formula = list[index]
-    self.process(formula.contents, self.restyletagged)
-
-  def process(self, contents, processor):
-    "Restyle contents"
-    i = 0
-    while i < len(contents):
-      element = contents[i]
-      if isinstance(element, TaggedText):
-        processor(contents, i)
-      if isinstance(element, Container):
-        self.process(element.contents, processor)
-      i += 1
-
-  def restyletagged(self, contents, index):
-    "Restyle tagged text"
-    tagged = contents[index]
-    if tagged.tag == 'span class="mathsf"':
-      self.process(tagged.contents, self.removeitalics)
-    elif tagged.tag == 'span class="sqrt"':
-      tagged.tag = 'span class="root"'
-      radical = TaggedText().complete(u'√', 'span class="radical"')
-      contents.insert(index, radical)
-
-  def removeitalics(self, contents, index):
-    "Remove the italics tag"
-    if contents[index].tag == 'i':
-      contents[index] = contents[index].contents[0]
-
-class Preprocessor(object):
-  "Preprocess a list of elements"
-
-  stages = [PreGrouping(), PreImage(), PreFloat(), PreFormula(), PreAlign()]
-
-  def preprocess(self, list):
-    "Preprocess a list of elements"
-    i = 0
-    while i < len((list)):
-      element = list[i]
-      if isinstance(element, Container):
-        self.preprocess(element.contents)
-      for stage in Preprocessor.stages:
-        if stage.isnext(element):
-          stage.preprocess(list, i)
-      i += 1
-
 class ContainerFactory(object):
   "Creates containers depending on the first line"
 
@@ -237,7 +70,7 @@ class ContainerFactory(object):
         IndexEntry, BiblioEntry, BiblioCite, LangLine, Reference, Label,
         TextFamily, Formula, PrintIndex, LyxHeader, URL, ListOf,
         TableOfContents, Hfill, ColorText, SizeText, BoldText, LyxLine,
-        Align,
+        Align, Table, TableHeader, Row, Cell,
         # do not add below this line
         Float, Inset, StringContainer]
 
@@ -290,7 +123,7 @@ def makedir(filename):
     os.mkdir(basedir)
   except:
     pass
-  shutil.copyfile('lyx.css', basedir + '/lyx.css')
+  # shutil.copyfile('lyx.css', basedir + '/lyx.css')
   os.chdir(basedir)
 
 def createbook(filename):

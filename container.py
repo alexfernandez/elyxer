@@ -7,6 +7,7 @@
 
 from trace import Trace
 from parse import *
+from output import *
 
 
 class Container(object):
@@ -92,7 +93,7 @@ class StringContainer(Container):
     self.parser = StringParser()
     self.output = MirrorOutput()
     
-  replaces = { '`':u'‘', '\'':u'’', '\n':'', '--':u'—' }
+  replaces = { '`':u'‘', '\'':u'’', '\n':'', '--':u'—', '&':'&amp;', '<':'&lt;', '>':'&gt;' }
   commands = { '\\SpecialChar \\ldots{}':u'…', '\\InsetSpace ~':'&nbsp;' }
 
   def process(self):
@@ -281,8 +282,7 @@ class URL(Container):
     self.breaklines = False
 
   def process(self):
-    self.tag = '<a class="url" href="' + self.parser.name + '">'
-    
+    self.tag = 'a class="url" href="' + self.parser.name + '"'
     self.contents = [Constant(self.parser.name)]
 
 class TaggedText(Container):
@@ -414,7 +414,7 @@ class Inset(Container):
   start = '\\begin_inset '
   ending = '\\end_inset'
 
-  typetags = {'Text':'div class="text"', 'Caption':'div class="caption"', 'Tabular':'table'}
+  typetags = {'Text':'div class="text"', 'Caption':'div class="caption"'}
 
   def __init__(self):
     self.parser = BoundedParser()
@@ -443,7 +443,7 @@ class Layout(Container):
   start = '\\begin_layout '
   ending = '\\end_layout'
 
-  typetags = { 'Quote':'blockquote', 'Standard':'p', 'Title':'h1', 'Author':'h2',
+  typetags = { 'Quote':'blockquote', 'Standard':'div', 'Title':'h1', 'Author':'h2',
         'Subsubsection*':'h4', 'Enumerate':'li', 'Chapter':'h1', 'Section':'h2', 'Subsection': 'h3',
         'Bibliography':'p class="biblio"', 'Ordered':'ol', 'Description':'p class="desc"',
         'Quotation':'blockquote', 'Itemize':'li', 'Unordered':'ul', 'Center':'p class="center"',
