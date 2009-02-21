@@ -30,9 +30,10 @@ class Hierarchy(object):
   
   def addcontainer(self, container):
     "Add a container to the hierarchy"
-    if isinstance(container, destination):
+    if isinstance(container, NodeLink):
       # store node in link destination
-      container.node = self.getlatest()
+      container.origin = self.getlatest()
+      container.destination = self.getlatest()
       return
     if isinstance(container, Numbered):
       return
@@ -186,6 +187,7 @@ class Node(Numbered):
     label = self.container.searchfor(lambda x: isinstance(x, Label))
     if not label:
       self.container.contents.insert(0, Constant(self.leading()))
+      self.keyprefix = '?'
       return
     self.keyprefix = label.key.split(':')[0]
     label.node = self

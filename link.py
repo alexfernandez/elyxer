@@ -16,37 +16,21 @@ class Link(Container):
 
   def __init__(self):
     self.contents = list()
-    self.destination = None
-  
-  def complete(self, url, contents):
-    self.url = url
     self.output = LinkOutput()
-    self.contents = contents
 
-  def geturl(self):
-    "Get the URL of the link"
-    return self.url
-
-class NodeLink(Link):
+class NodeLink(Container):
   "A link based on a node"
-
-  def complete(self, node):
-    self.node = node
-
-  def geturl(self):
-    return node.filename + '#' + node.getkey()
-
-  def getcontents(self):
-    return node.dashnumber()
-
-class Destination(Container):
-  "The destination of a link"
 
   def __init__(self):
     self.contents = list()
-    self.node = None
+    self.output = NodeLinkOutput()
 
-class Label(Destination):
+  def complete(self, node, text):
+    self.destination = node
+    self.contents = [Constant(text)]
+    return self
+
+class Label(NodeLink):
   "A label to be referenced"
 
   start = '\\begin_inset LatexCommand label'
@@ -56,7 +40,8 @@ class Label(Destination):
 
   def __init__(self):
     self.parser = NamedCommand()
-    self.output = EmptyOutput()
+    self.output = NodeLinkOutput()
+    self.contents = [Constant(' ')]
 
   def process(self):
     self.key = self.parser.key
@@ -64,9 +49,9 @@ class Label(Destination):
     if self.key in Reference.refs:
       ref = Reference.refs[self.key]
       ref.label = self
-      ref.arrow = u'↓'
+      ref.direction = 'down'
 
-class Reference(Link):
+class Reference(NodeLink):
   "A reference to a label"
 
   start = '\\begin_inset LatexCommand ref'
@@ -74,19 +59,44 @@ class Reference(Link):
 
   refs = dict()
 
+  arrows = {('up', True):u'↑', ('up', False):u'←',
+      ('down', True):u'↓', ('down', False):u'→'}
+
   def __init__(self):
     self.parser = NamedCommand()
-    self.output = ReferenceOutput()
-    self.arrow = '?'
+    self.output = LinkOutput()
+    self.direction = None
 
   def process(self):
     self.key = self.parser.key
     if self.key in Label.labels:
       self.label = Label.labels[self.key]
-      self.arrow = u'↑'
+      self.direction = 'up'
     Reference.refs[self.key] = self
 
-class BiblioCite(Link):
+  def gethtml(self):
+    "Get the HTML code for the reference"
+    if not hasattr(self, 'label'):
+      #Trace.error('No label in ' + str(self))
+      return ['?']
+    self.destination = self.label.origin
+    self.contents = [Constant(self.gettext())]
+    return self.output.gethtml(self)
+
+  def gettext(self):
+    "Get the inside text with the arrow"
+    text = self.destination.getnumber()
+    combo = (self.direction, self.samepage())
+    if not combo in Reference.arrows:
+      Trace.error('Unknown direction ' + self.direction)
+      return text + '?'
+    return text + Reference.arrows[combo]
+
+  def samepage(self):
+    "Find out if destination is in our page"
+    return (self.origin.filename == self.destination.filename)
+
+class BiblioCite(Container):
   "Cite of a bibliography entry"
 
   start = '\\begin_inset LatexCommand cite'
@@ -97,17 +107,23 @@ class BiblioCite(Link):
 
   def __init__(self):
     self.parser = NamedCommand()
-    self.output = BiblioCiteOutput()
+    self.output = TagOutput()
+    self.tag = 'sup'
+    self.breaklines = False
+    self.contents = list()
 
   def process(self):
+    "Add a cite to every entry"
     keys = self.parser.key.split(',')
-    self.cites = []
     for key in keys:
       BiblioCite.index += 1
       if not key in BiblioCite.entries:
         BiblioCite.entries[key] = []
-      BiblioCite.entries[key].append(BiblioCite.index)
-      self.cites.append(str(BiblioCite.index))
+      link = NodeLink()
+      link.index = BiblioCite.index
+      link.contents = [Constant(str(link.index))]
+      self.contents.append(link)
+      BiblioCite.entries[key].append(link)
 
 class Bibliography(Container):
   "A bibliography layout containing an entry"
@@ -121,7 +137,7 @@ class Bibliography(Container):
     self.breaklines = True
     self.tag = 'p class="biblio"'
 
-class BiblioEntry(Destination):
+class BiblioEntry(NodeLink):
   "A bibliography entry"
 
   start = '\\begin_inset LatexCommand bibitem'
@@ -129,30 +145,28 @@ class BiblioEntry(Destination):
 
   def __init__(self):
     self.parser = NamedCommand()
-    self.output = BiblioEntryOutput()
+    self.output = TagOutput()
+    self.tag = 'span class="entry"'
+    self.breaklines = False
+    self.cites = list()
 
   def process(self):
     "Get all the cites of the entry"
     self.key = self.parser.key
-    cites = []
     if self.key in BiblioCite.entries:
-      cites = BiblioCite.entries[self.key]
-    self.contents = ['[',']']
-    for cite in cites:
-      link = Link().link(cite.node, Constant(cite.number))
-      self.contents.insert(-1, link)
-      self.contents.insert(-1, Constant('-1'))
-    if len(cites) > 0:
-      self.contents.pop(-2)
+      self.cites = BiblioCite.entries[self.key]
 
-    html = ['[']
-    for cite in container.cites:
-      c = str(cite)
-      html.append('<a class="biblio" name="' + c + '" href="#back-' + c + '">' + c + '</a>')
-      html.append(',')
-    if len(html) > 1:
-      html.pop()
-    html.append('] ')
+  def gethtml(self):
+    "Get the HTML code for the entry"
+    self.contents = [Constant('[')]
+    for cite in self.cites:
+      link = NodeLink().complete(cite.origin, str(cite.index))
+      self.contents.append(link)
+      self.contents.append(Constant(','))
+    if len(self.cites) > 0:
+      self.contents.pop(-1)
+    self.contents.append(Constant(']'))
+    return self.output.gethtml(self)
 
 class ListOf(Container):
   "A list of entities (figures, tables, algorithms)"
@@ -201,7 +215,7 @@ class IndexEntry(Link):
     self.index = len(IndexEntry.entries[self.key])
     IndexEntry.entries[self.key].append(self)
 
-class PrintIndex(object):
+class PrintIndex(Container):
   "Command to print an index"
 
   start = '\\begin_inset LatexCommand printindex'
@@ -266,77 +280,8 @@ class IndexEntryOutput(object):
 class BiblioEntryOutput(object):
   "An entry in the bibliography"
 
-  def gethtml(self, container):
-    "Get the HTML code for the entry"
-    html = ['[']
-    for cite in container.cites:
-      c = str(cite)
-      html.append('<a class="biblio" name="' + c + '" href="#back-' + c + '">' + c + '</a>')
-      html.append(',')
-    if len(html) > 1:
-      html.pop()
-    html.append('] ')
-    return html
-
 class BiblioCiteOutput(object):
   "A bibliographical entry cited"
-
-  def gethtml(self, container):
-    "Get the HTML code for the cite"
-    html = []
-    for cite in container.cites:
-      html.append('<a class="cite" name="back-' + cite + '" href="#' +
-          cite + '"><sup>[' + cite + ']</sup></a>')
-    return html
-
-class ReferenceOutput(object):
-  "A reference to a labeled node"
-
-  def gethtml(self, container):
-    "Get the HTML code for the reference"
-    html = ['<a class="ref" href="']
-    link, name = self.getdestination(container)
-    html.append(link + '">')
-    html.append(name)
-    html.append('</a>')
-    return html
-
-  def getdestination(self, container):
-    "Find the destination for a container"
-    link = 'not-found.html'
-    name = '?'
-    if not hasattr(container, 'node'):
-      Trace.error('No node in ' + str(container))
-      return link, name
-    if not hasattr(container, 'label'):
-      #Trace.error('No label in ' + str(container))
-      return link, name
-    if not hasattr(container.label, 'node'):
-      Trace.error('No node in label for ' + str(container))
-      return link, name
-    origin = container.node
-    destination = container.label.node
-    Trace.debug('From ' + str(origin) + ' to ' + str(destination))
-    link = '#' + container.label.node.getkey()
-    name = container.label.node.getnumber()
-    if origin.filename == destination.filename:
-      return link, self.addarrow(container, name)
-    link = destination.filename + link
-    return link, self.switcharrow(container, name)
-
-  def addarrow(self, container, name):
-    "Name for same destination"
-    return name + container.arrow
-
-  def switcharrow(self, container, name):
-    "Name with a switched arrow"
-    "The arrows switch from ↑ to ← and ↓ to →"
-    if container.arrow == u'↑':
-      return u'←' + name
-    elif container.arrow == u'↓':
-      return name + u'→'
-    Trace.debug('Error in arrow for ' + str(container))
-    return name
 
 class LinkOutput(object):
   "A link pointing to some destination"
@@ -344,13 +289,26 @@ class LinkOutput(object):
 
   def gethtml(self, container):
     "Get the HTML code for the link"
-    tag = TagOutput()
-    container.tag = 'a class="' + container.__class__.__name__ + '"'
+    type = container.__class__.__name__
+    if hasattr(container, 'type'):
+      type = container.type
+    tag = 'a class="' + type + '"'
     if hasattr(container, 'anchor'):
-      container.tag += ' name="' + container.anchor + '"'
+      tag += ' name="' + container.anchor + '"'
     if hasattr(container, 'url'):
-      container.tag += ' href="' + container.url + '"'
-    container.breaklines = False
-    return tag.gethtml(container)
+      tag += ' href="' + container.url + '"'
+    text = TaggedText().complete(container.contents, tag)
+    return text.gethtml()
 
+class NodeLinkOutput(LinkOutput):
+  "A link pointing to or from a node"
+
+  def gethtml(self, container):
+    "Get the HTML code"
+    if hasattr(container, 'origin'):
+      container.anchor = container.origin.getkey()
+    if hasattr(container, 'destination'):
+      node = container.destination
+      container.url = node.filename + '#' + node.getkey()
+    return LinkOutput().gethtml(container)
 
