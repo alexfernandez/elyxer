@@ -72,7 +72,8 @@ class Hierarchy(object):
     "Get the current node at a certain level"
     top = len(self.currentlist)
     if level > top:
-      Trace.error('Level ' + str(level) + ' is beyond current level ' + str(top))
+      Trace.error('Level ' + str(level) + ' is beyond current level ' + str(top) +
+          ' for ' + str(self.currentlist[-1]))
       return None
     if level < 1:
       Trace.error('Level ' + str(level) + ' is below 1')
