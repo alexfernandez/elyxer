@@ -132,7 +132,7 @@ class PreImage(PreStage):
     dir = os.path.dirname(destination)
     if not os.path.exists(dir):
       os.makedirs(dir)
-    Trace.message('Converting ' + origin + ' to ' + destination + ' with density ' + str(factor))
+    Trace.debug('Converting ' + origin + ' to ' + destination + ' with density ' + str(factor))
     subprocess.call('convert -density ' + str(factor) + ' ' + origin + ' ' + destination, shell=True)
 
   dimensions = dict()
