@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Alex 20090308
-# Elyxer: create HTML file from LyX document
+# Alex 20090127
+# Generate custom HTML version from Lyx document
+# Main file generation
 
 import sys
 import codecs
