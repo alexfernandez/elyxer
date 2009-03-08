@@ -113,12 +113,11 @@ class PreImage(PreStage):
   def preprocess(self, contents, index):
     "Put images as a figure"
     image = contents[index]
-    origin = '../' + image.url
     image.destination = os.path.splitext(image.url)[0] + '.png'
     factor = 100
     if hasattr(image, 'figure') and image.figure:
       factor = 120
-    self.convert(origin, image.destination, factor)
+    self.convert(image.url, image.destination, factor)
     image.width, image.height = self.getdimensions(image.destination)
 
   def convert(self, origin, destination, factor):

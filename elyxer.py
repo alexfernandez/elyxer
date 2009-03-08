@@ -21,14 +21,14 @@ class ContainerFactory(object):
 
   types = [BlackBox,
         # do not add above this line
-        Layout, EmphaticText, VersalitasText, Image, QuoteContainer,
+        Title, EmphaticText, VersalitasText, Image, QuoteContainer,
         IndexEntry, BiblioEntry, BiblioCite, LangLine, Reference, Label,
-        TextFamily, Formula, PrintIndex, LyxHeader, URL, ListOf,
+        TextFamily, Formula, PrintIndex, LyxHeader, LyxFooter, URL, ListOf,
         TableOfContents, Hfill, ColorText, SizeText, BoldText, LyxLine,
         Align, Table, TableHeader, Row, Cell, Bibliography,
         InsetText, Caption,
         # do not add below this line
-        Float, StringContainer]
+        Layout, Float, StringContainer]
 
   root = ParseTree(types)
 

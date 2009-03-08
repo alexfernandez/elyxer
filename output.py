@@ -68,3 +68,39 @@ class MirrorOutput(object):
     "Return what is put in"
     return container.contents
 
+class HeaderOutput(object):
+  "Returns the HTML headers"
+
+  def gethtml(self, container):
+    "Return a constant header"
+    html = [u'<?xml version="1.0" encoding="UTF-8"?>\n']
+    html.append(u'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n')
+    html.append(u'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n')
+    html.append(u'<head>\n')
+    return html
+
+class TitleOutput(object):
+  "Return an HTML title for a document"
+
+  def gethtml(self, container):
+    "Return the HTML for the title"
+    container.tag = 'title'
+    container.breaklines = True
+    tag = TagOutput()
+    html = tag.gethtml(container)
+    html.append('</head>\n')
+    html.append('<body>\n')
+    container.tag = 'h1 class="title"'
+    html += tag.gethtml(container)
+    return html
+
+class FooterOutput(object):
+  "Return the HTML code for the footer"
+
+  def gethtml(self, container):
+    "Footer HTML"
+    html = ['<hr/>\n']
+    html.append('</body>\n')
+    html.append('</html>\n')
+    return html
+

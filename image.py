@@ -27,7 +27,7 @@ class Image(Container):
   def process(self):
     self.url = self.header[1]
     self.destination = os.path.splitext(self.url)[0] + '.png'
-    factor = 120  # slightly larger than life
+    factor = 100
     self.convert(self.url, self.destination, factor)
     self.width, self.height = self.getdimensions(self.destination)
 

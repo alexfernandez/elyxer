@@ -106,21 +106,31 @@ class BlackBox(Container):
       '\\shape default', '\\series default', '\\emph off',
       '\\bar no', '\\noun off', '\\emph default', '\\bar default',
       '\\noun default', '\\family roman', '\\series medium',
-      '\\shape up', '\\size normal', '\\color none']
+      '\\shape up', '\\size normal', '\\color none', '#LyX']
 
   def __init__(self):
     self.parser = LoneCommand()
     self.output = EmptyOutput()
 
 class LyxHeader(Container):
-  "Reads the header, does nothing with it"
+  "Reads the header, outputs the HTML header"
 
   start = '\\begin_header'
   ending = '\\end_header'
 
   def __init__(self):
     self.parser = BoundedDummy()
-    self.output = EmptyOutput()
+    self.output = HeaderOutput()
+
+class LyxFooter(Container):
+  "Reads the footer, outputs the HTML footer"
+
+  start = '\\end_body'
+  ending = '\\end_document'
+
+  def __init__(self):
+    self.parser = BoundedDummy()
+    self.output = FooterOutput()
 
 class StringContainer(Container):
   "A container for a single string"
@@ -332,20 +342,33 @@ class Align(Container):
     self.parser = LoneCommand()
     self.output = EmptyOutput()
 
+class Title(Container):
+  "The title of the whole document"
+
+  start = '\\begin_layout Title'
+  ending = '\\end_layout'
+
+  def __init__(self):
+    self.contents = list()
+    self.parser = BoundedParser()
+    self.output = TitleOutput()
+
+  def process(self):
+    self.title = self.contents[0].contents[0].strip()
+    Trace.debug('Title: ' + self.title)
+
 class Layout(Container):
   "A layout (block of text) inside a lyx file"
 
   start = '\\begin_layout '
   ending = '\\end_layout'
 
-  typetags = { 'Quote':'blockquote', 'Standard':'div class="text"', 'Title':'h1', 'Author':'h2',
+  typetags = { 'Quote':'blockquote', 'Standard':'div class="text"', 'Author':'h2',
         'Subsubsection*':'h4', 'Enumerate':'li', 'Chapter':'h1', 'Section':'h2',
         'Subsection': 'h3', 'Description':'div class="desc"',
         'Quotation':'blockquote', 'Itemize':'li', 'Center':'div class="center"',
         'Paragraph*':'div class="paragraph"', 'Part':'h1 class="part"',
         'Subsection*': 'h3'}
-
-  title = 'El libro gordo'
 
   def __init__(self):
     self.contents = list()
@@ -356,11 +379,7 @@ class Layout(Container):
   def process(self):
     self.type = self.header[1]
     self.tag = Layout.typetags[self.type]
-    if self.type == 'Title':
-      Layout.title = self.contents[0].contents[0].strip()
-      Trace.debug('Title: ' + Layout.title)
 
   def __str__(self):
     return 'Layout of type ' + self.type
-    self.contents = [Constant(self.url)]
 
