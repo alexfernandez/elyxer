@@ -199,20 +199,6 @@ class LyxLine(Container):
   def process(self):
     self.html = ['<hr class="line" />']
 
-class Image(Container):
-  "An embedded image"
-
-  start = '\\begin_inset Graphics'
-  ending = '\\end_inset'
-
-  def __init__(self):
-    self.parser = ImageCommand()
-    self.output = ImageOutput()
-    self.figure = False
-
-  def process(self):
-    self.url = self.header[1]
-
 class TaggedText(Container):
   "Text inside a tag"
 

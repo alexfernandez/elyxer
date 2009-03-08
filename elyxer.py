@@ -13,6 +13,7 @@ from container import *
 from link import *
 from formula import *
 from table import *
+from image import *
 
 
 class ContainerFactory(object):

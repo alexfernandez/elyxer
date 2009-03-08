@@ -68,15 +68,3 @@ class MirrorOutput(object):
     "Return what is put in"
     return container.contents
 
-class ImageOutput(object):
-  "Returns an image in the output"
-
-  def gethtml(self, container):
-    "Get the HTML output of the image as a list"
-    cssclass = 'embedded'
-    if container.figure:
-      cssclass = 'figure'
-    return ['<img class="' + cssclass + '" src="' + container.destination +
-        '" alt="figure ' + container.destination + '" width="' +
-        str(container.width) + '" height="' + str(container.height) + '"/>\n']
-
