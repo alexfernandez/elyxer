@@ -9,7 +9,38 @@ import sys
 import codecs
 from trace import Trace
 from fileline import *
+from container import *
+from link import *
+from formula import *
+from table import *
 
+
+class ContainerFactory(object):
+  "Creates containers depending on the first line"
+
+  types = [BlackBox,
+        # do not add above this line
+        Layout, EmphaticText, VersalitasText, Image, QuoteContainer,
+        IndexEntry, BiblioEntry, BiblioCite, LangLine, Reference, Label,
+        TextFamily, Formula, PrintIndex, LyxHeader, URL, ListOf,
+        TableOfContents, Hfill, ColorText, SizeText, BoldText, LyxLine,
+        Align, Table, TableHeader, Row, Cell, Bibliography,
+        InsetText, Caption,
+        # do not add below this line
+        Float, StringContainer]
+
+  root = ParseTree(types)
+
+  @classmethod
+  def create(cls, reader):
+    "Get the container and parse it"
+    # Trace.debug('processing ' + reader.currentline().strip())
+    type = ContainerFactory.root.find(reader)
+    container = type.__new__(type)
+    container.__init__()
+    container.factory = ContainerFactory
+    container.parse(reader)
+    return container
 
 class Book():
   "book in a lyx file"
@@ -17,9 +48,8 @@ class Book():
   def parsecontents(self, reader, writer):
     "Parse the contents of the reader and write them"
     while not reader.finished():
-      line = reader.currentline()
-      writer.write(line)
-      reader.nextline()
+      container = ContainerFactory.create(reader)
+      writer.write(container.gethtml())
 
 def createbook(args):
   "Read a whole book, write it"
@@ -37,7 +67,7 @@ def createbook(args):
     Trace.error('Usage: eLyXer [filein] [fileout]')
     return
   reader = LineReader(filein)
-  writer = LineWriter(fileout)
+  writer = HtmlWriter(fileout)
   book = Book()
   book.parsecontents(reader, writer)
 

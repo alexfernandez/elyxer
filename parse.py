@@ -9,50 +9,6 @@ import codecs
 from trace import Trace
 
 
-class LineReader(object):
-  "Reads a file line by line"
-
-  def __init__(self, arg):
-    self.contents = list()
-    self.index = 0
-    self.readfile(arg)
-    self.split = None
-
-  def readfile(self, filename):
-    file = codecs.open(filename, 'r', "utf-8")
-    try:
-      self.contents = file.readlines()
-    finally:
-      file.close()
-
-  def currentline(self):
-    return self.contents[self.index]
-
-  def currentsplit(self):
-    if not self.split:
-      self.split = self.currentline().split()
-    return self.split
-
-  def nextline(self):
-    "Go to next line"
-    self.split = None
-    self.inc()
-    if not self.finished():
-      self.skipempties()
-
-  def finished(self):
-    return self.index >= len(self.contents)
-
-  def skipempties(self):
-    "Skip empty lines"
-    while self.currentline() == '\n':
-      self.inc()
-
-  def inc(self):
-    self.index += 1
-    if self.index % 1000 == 0:
-      Trace.debug('Parsing line ' + str(self.index))
-
 class ParseTree:
   "A parsing tree"
 

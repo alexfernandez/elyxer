@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Alex 20090131
-# Generate custom HTML version from Lyx document
+# eLyXer
 # Containers for Lyx data that output HTML
 
 from trace import Trace

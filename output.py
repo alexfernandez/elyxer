@@ -79,3 +79,4 @@ class ImageOutput(object):
     return ['<img class="' + cssclass + '" src="' + container.destination +
         '" alt="figure ' + container.destination + '" width="' +
         str(container.width) + '" height="' + str(container.height) + '"/>\n']
+

@@ -13,7 +13,7 @@ class Trace(object):
   @classmethod
   def debug(cls, message):
     "Show a trace message"
-    if Trace.debug:
+    if Trace.debugmode:
       print message
 
   @classmethod

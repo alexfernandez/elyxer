@@ -55,14 +55,19 @@ class LineReader(object):
   def close(self):
     self.file.close()
 
-class LineWriter:
-  "Writes a file, line by line"
+class HtmlWriter:
+  "Writes an HTML file as a series of lists"
 
   def __init__(self, file):
     self.file = file
     self.index = 0
 
-  def write(self, line):
+  def write(self, html):
+    "Write a list of lines"
+    for line in html:
+      self.writeline(line)
+
+  def writeline(self, line):
     if self.file == sys.stdout:
       line = line.encode('utf-8')
     self.file.write(line)
