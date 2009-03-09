@@ -1,9 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# eLyXer: LyX to HTML converter
+# Copyright 2009 Alex Fernández
+# Published under the GPLv3, see LICENSE for details
+
 # Alex 20090308
-# eLyXer
-# Image treatment
+# eLyXer image treatment
 
 import os.path
 import subprocess

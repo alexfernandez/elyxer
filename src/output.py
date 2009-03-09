@@ -1,9 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# eLyXer: LyX to HTML converter
+# Copyright 2009 Alex Fernández
+# Published under the GPLv3, see LICENSE for details
+
 # Alex 20090203
-# Generate custom HTML version from Lyx document
-# Html outputters
+# eLyXer html outputters
 
 import codecs
 from trace import Trace
@@ -77,6 +80,7 @@ class HeaderOutput(object):
     html.append(u'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n')
     html.append(u'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n')
     html.append(u'<head>\n')
+    html.append(u'<link rel="stylesheet" href="lyx.css" type="text/css" media="screen"/>\n')
     return html
 
 class TitleOutput(object):

@@ -1,9 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# eLyXer: LyX to HTML converter
+# Copyright 2009 Alex Fernández
+# Published under the GPLv3, see LICENSE for details
+
 # Alex 20090207
-# Generate custom HTML version from Lyx document
-# Formula processing
+# eLyXer formula processing
 
 import sys
 sys.path.append('./elyxer')

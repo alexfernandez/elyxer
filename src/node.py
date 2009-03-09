@@ -1,9 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# eLyXer: LyX to HTML converter
+# Copyright 2009 Alex Fernández
+# Published under the GPLv3, see LICENSE for details
+
 # Alex 31-01-2009
-# Generate custom HTML version from Lyx document
-# General index and hierarchy
+# eLyXer general index and hierarchy
 
 from trace import Trace
 from container import *
