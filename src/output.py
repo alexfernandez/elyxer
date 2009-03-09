@@ -109,7 +109,7 @@ class FooterOutput(object):
     html = ['<hr/>\n']
     if FooterOutput.author:
       year = datetime.date.today().year
-      html.append('<p>Copyright (C)' + str(year) + ' ' + FooterOutput.author
+      html.append('<p>Copyright (C) ' + str(year) + ' ' + FooterOutput.author
           + '</p>\n')
     html.append('</body>\n')
     html.append('</html>\n')
