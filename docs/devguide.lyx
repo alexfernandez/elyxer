@@ -435,7 +435,7 @@ formula.py
 \family typewriter
 image.py
 \family default
- have some examples of unified processing.
+ have some examples of processing a command in just one file.
 \end_layout
 
 \begin_layout Section
@@ -449,6 +449,90 @@ Node Numbering
 \begin_layout Standard
 As eLyXer parses a LyX document it automatically numbers all chapters and
  sections.
+ The code is, however, not ready yet.
+\end_layout
+
+\begin_layout Subsection
+Mathematical Formulae
+\end_layout
+
+\begin_layout Standard
+Formulae in LyX are rendered beautifully into TeX and PDF documents.
+ For HTML the conversion is not so simple.
+ There are basically three options:
+\end_layout
+
+\begin_layout Itemize
+render the formula as an image (GIF or PNG), then import the image;
+\end_layout
+
+\begin_layout Itemize
+export a specific language called MathML
+\end_layout
+
+\begin_layout Itemize
+or render using a variety of Unicode characters, HTML and CSS wizardry 
+\begin_inset LatexCommand cite
+key "white-math"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+eLyXer employs the third technique.
+\end_layout
+
+\begin_layout Subsection
+HTML Code
+\end_layout
+
+\begin_layout Standard
+The HTML code generated is technically XHTML Transitional, version 1.0, using
+ UTF-8 encoding.
+ It passes the W3C tests 
+\begin_inset LatexCommand cite
+key "w3c-validator"
+
+\end_inset
+
+.
+ If your particular document doesn't pass the tests, it is a bug.
+ 
+\end_layout
+
+\begin_layout Subsection
+Distribution
+\end_layout
+
+\begin_layout Standard
+You will notice that in the 
+\family typewriter
+src/
+\family default
+ folder there are several Python files, while in the main directory there
+ is only one.
+ The reason is that before distributing the source code is conflated and
+ placed alone, so that users can use it without worrying about libraries,
+ directories and the such.
+ (They need of course to have Python 2.5 installed.)
+\end_layout
+
+\begin_layout Standard
+And the culprit is a little Python script called 
+\family typewriter
+conflate.py
+\family default
+ that does the dirty job of parsing dependencies and inserting them into
+ the main file.
+ There is also a 
+\family typewriter
+make
+\family default
+ Bash script that takes care of permissions and the like.
+ At the moment there is no way to do this packaging on non-Unix operating
+ systems, but the steps themselves are trivial.
 \end_layout
 
 \begin_layout Section
@@ -456,7 +540,7 @@ Future Extensions
 \end_layout
 
 \begin_layout Standard
-The author envisions the following extensions.
+The author has plans for the following extensions.
 \end_layout
 
 \begin_layout Subsection
@@ -633,6 +717,12 @@ lyx2lyx
 \emph on
 filter
 \emph default
+ 
+\begin_inset LatexCommand cite
+key "kernighan-filters"
+
+\end_inset
+
 .
 \end_layout
 
@@ -673,6 +763,87 @@ Q: Why isn't the code published?
 
 \begin_layout Description
 A: Basically, for lack of a hosting facility.
+ Once a suitable place is found the 
+\family typewriter
+git
+\family default
+ repository will be published.
+\end_layout
+
+\begin_layout Description
+Q: I found a bug, what should I do?
+\end_layout
+
+\begin_layout Description
+A: Just report it to the author in a mail.
+ In the future there might be some automated way to manage bugs.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "white-math"
+
+\end_inset
+
+S White: 
+\begin_inset Quotes eld
+\end_inset
+
+Math in HTML with CSS
+\begin_inset Quotes erd
+\end_inset
+
+, accessed March 2009.
+ 
+\begin_inset LatexCommand url
+target "http://www.zipcon.net/~swhite/docs/math/math.html"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "w3c-validator"
+
+\end_inset
+
+W3C: 
+\begin_inset Quotes eld
+\end_inset
+
+Markup Validation Service
+\begin_inset Quotes erd
+\end_inset
+
+, accessed March 2009.
+ 
+\begin_inset LatexCommand url
+target "http://validator.w3.org/"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "kernighan-filters"
+
+\end_inset
+
+B W Kernighan, P J Plauger: 
+\begin_inset Quotes eld
+\end_inset
+
+Software Tools
+\begin_inset Quotes erd
+\end_inset
+
+, ed.
+ Addison-Wesley Professional 1976, p.
+ 35.
 \end_layout
 
 \end_body
