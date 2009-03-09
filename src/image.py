@@ -43,7 +43,7 @@ class Image(Container):
       # file has not changed; do not convert
       return
     dir = os.path.dirname(destination)
-    if not os.path.exists(dir):
+    if len(dir) > 0 and not os.path.exists(dir):
       os.makedirs(dir)
     Trace.debug('Converting ' + origin + ' to ' + destination + ' with density ' + str(factor))
     subprocess.call('convert -density ' + str(factor) + ' ' + origin + ' ' + destination, shell=True)

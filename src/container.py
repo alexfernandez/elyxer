@@ -145,7 +145,7 @@ class StringContainer(Container):
     self.output = MirrorOutput()
     
   replaces = { '`':u'‘', '\'':u'’', '\n':'', '--':u'—' }
-  commands = { '\\SpecialChar \\ldots{}':u'…', '\\InsetSpace ~':'&nbsp;' }
+  commands = { '\\SpecialChar \\ldots{}':u'…', '\\InsetSpace ~':'&nbsp;', '\\backslash':'\\' }
 
   def process(self):
     "Replace special chars"
@@ -153,7 +153,7 @@ class StringContainer(Container):
     replaced = self.escape(line)
     replaced = self.changeline(replaced)
     self.contents = [replaced]
-    if '\\' in replaced:
+    if '\\' in replaced and len(replaced) > 1:
       # unprocessed commands
       Trace.error('Error at ' + str(self.parser.begin) + ': ' + replaced.strip())
 
@@ -360,13 +360,30 @@ class Title(Container):
     self.title = self.contents[0].contents[0].strip()
     Trace.debug('Title: ' + self.title)
 
+class Author(Container):
+  "The document author"
+
+  start = '\\begin_layout Author'
+  ending = '\\end_layout'
+
+  def __init__(self):
+    self.contents = list()
+    self.parser = BoundedParser()
+    self.output = TagOutput()
+    self.tag = 'h2'
+    self.breaklines = True
+
+  def process(self):
+    FooterOutput.author = self.contents[0].contents[0].strip()
+    Trace.debug('Author: ' + FooterOutput.author)
+
 class Layout(Container):
   "A layout (block of text) inside a lyx file"
 
   start = '\\begin_layout '
   ending = '\\end_layout'
 
-  typetags = { 'Quote':'blockquote', 'Standard':'div class="text"', 'Author':'h2',
+  typetags = { 'Quote':'blockquote', 'Standard':'div class="text"',
         'Subsubsection*':'h4', 'Enumerate':'li', 'Chapter':'h1', 'Section':'h2',
         'Subsection': 'h3', 'Description':'div class="desc"',
         'Quotation':'blockquote', 'Itemize':'li', 'Center':'div class="center"',

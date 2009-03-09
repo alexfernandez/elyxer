@@ -24,5 +24,5 @@ class Trace(object):
   @classmethod
   def error(cls, message):
     "Show an error message"
-    sys.stderr.write(message)
+    sys.stderr.write(message + '\n')
 

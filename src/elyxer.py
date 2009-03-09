@@ -21,7 +21,7 @@ class ContainerFactory(object):
 
   types = [BlackBox,
         # do not add above this line
-        Title, EmphaticText, VersalitasText, Image, QuoteContainer,
+        Title, Author, EmphaticText, VersalitasText, Image, QuoteContainer,
         IndexEntry, BiblioEntry, BiblioCite, LangLine, Reference, Label,
         TextFamily, Formula, PrintIndex, LyxHeader, LyxFooter, URL, ListOf,
         TableOfContents, Hfill, ColorText, SizeText, BoldText, LyxLine,

@@ -9,6 +9,7 @@
 # eLyXer html outputters
 
 import codecs
+import datetime
 from trace import Trace
 
 
@@ -101,9 +102,15 @@ class TitleOutput(object):
 class FooterOutput(object):
   "Return the HTML code for the footer"
 
+  author = None
+
   def gethtml(self, container):
     "Footer HTML"
     html = ['<hr/>\n']
+    if FooterOutput.author:
+      year = datetime.date.today().year
+      html.append('<p>Copyright (C)' + str(year) + ' ' + FooterOutput.author
+          + '</p>\n')
     html.append('</body>\n')
     html.append('</html>\n')
     return html
