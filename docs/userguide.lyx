@@ -283,10 +283,11 @@ CSS link automatically added to HTML
 \begin_layout Standard
 A sample CSS file is distributed along with the scripts, 
 \family typewriter
-extras/lyx.css
+docs/lyx.css
 \family default
 .
- To use it just copy it to the document directory, and customize as needed.
+ To use it just copy it to the directory where your document resides, and
+ customize as needed.
 \end_layout
 
 \begin_layout Subsection
