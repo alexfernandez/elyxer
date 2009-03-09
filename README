@@ -1,0 +1,41 @@
+eLyXer -- convert LyX source files to HTML output.
+
+Copyright (C) 2009 Alex Fernández
+
+Introduction
+============
+eLyXer converts a LyX source file to a HTML page.
+
+Usage
+=====
+eLyXer can be invoked from the command line as:
+  $ elyxer.py [source file] [destination file]
+
+If the source file is omitted then STDIN is used; likewise, if no destination
+file is specified eLyXer will output to STDOUT. This allows its use in pipes
+and other flexible configurations.
+
+Examples:
+  $ elyxer.py file.lyx file.html
+converts file.lyx to file.html. Debug messages are shown.
+  $ cat file.lyx | elyxer.py > file.html
+converts file.lyx to file.html, as before. This time debug messages are not
+shown.
+  $ elyxer.py file.lyx | grep "<blockquote>" | wc
+counts all blockquote paragraphs.
+
+Documentation
+=============
+Documentation about eLyXer, including a user guide and a developer guide, can
+be found in the docs directory.
+
+License
+=======
+eLyXer is published under the GPL, version 3 or later. You should have received
+a copy of the GNU General Public License along with this program.  If not, see
+<http://www.gnu.org/licenses/>.
+
+Enjoy!
+
+Copyright (C) 2009 Alex Fernández (elyxer@gmail.com)
+

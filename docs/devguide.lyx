@@ -1,0 +1,679 @@
+#LyX 1.5.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 276
+\begin_document
+\begin_header
+\textclass article
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+eLyXer programming guide
+\end_layout
+
+\begin_layout Author
+Alex Fernández (elyxer@gmail.com)
+\end_layout
+
+\begin_layout Section
+The Basics
+\end_layout
+
+\begin_layout Standard
+This document should help you get started extending eLyXer.
+\end_layout
+
+\begin_layout Standard
+The following figure 
+\begin_inset LatexCommand ref
+reference "fig:Container-structure"
+
+\end_inset
+
+ should explain how a Container works.
+ A 
+\family typewriter
+Container
+\family default
+ should have a 
+\family typewriter
+parser
+\family default
+ and an 
+\family typewriter
+output
+\family default
+, and a list of 
+\family typewriter
+contents
+\family default
+.
+ The 
+\family typewriter
+parser
+\family default
+ object receives LyX input and produces a list of 
+\family typewriter
+contents
+\family default
+ that is stored in the Container.
+ The 
+\family typewriter
+output
+\family default
+ object then converts that 
+\family typewriter
+contents
+\family default
+ to a portion of valid HTML code.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename container.eps
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:Container-structure"
+
+\end_inset
+
+Container structure.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Two important class attributes of a Container are 
+\family typewriter
+start
+\family default
+: a string of text containing the LyX command that we are about to process;
+ and 
+\family typewriter
+ending
+\family default
+, which is used on some 
+\family typewriter
+Container
+\family default
+s to determine when to stop parsing.
+\end_layout
+
+\begin_layout Standard
+A ParseTree is created on initialization to quickly pass each incoming LyX
+ command to the appropriate containers, which are created on demand.
+ For example, when the 
+\family typewriter
+ContainerFactory
+\family default
+ finds a command:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+
+\backslash
+
+\backslash
+emph on
+\end_layout
+
+\begin_layout Standard
+it will create and initialize an 
+\family typewriter
+EmphaticText
+\family default
+ object.
+\end_layout
+
+\begin_layout Subsection
+Parsers
+\end_layout
+
+\begin_layout Standard
+A 
+\family typewriter
+Parser
+\family default
+ has two main methods: 
+\family typewriter
+parseheader()
+\family default
+ and 
+\family typewriter
+parse()
+\family default
+.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+parseheader()
+\family default
+: parses the first line and returns the contents as a list of words.
+ This method is common for all 
+\family typewriter
+Parser
+\family default
+s.
+ For example, for the command 
+\family typewriter
+
+\backslash
+
+\backslash
+emph on
+\family default
+ the 
+\family typewriter
+Parser
+\family default
+ will return a list 
+\family typewriter
+['
+\backslash
+
+\backslash
+emph','on']
+\family default
+.
+ This list will end up in the 
+\family typewriter
+Container
+\family default
+ as an attribute 
+\family typewriter
+header
+\family default
+.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+parse()
+\family default
+: parses all the remaining lines of the command.
+ They will end up in the 
+\family typewriter
+Container
+\family default
+ as an attribute 
+\family typewriter
+contents
+\family default
+.
+ This method depends on the particular 
+\family typewriter
+Parser
+\family default
+ employed.
+\end_layout
+
+\begin_layout Standard
+Most 
+\family typewriter
+Parser
+\family default
+s reside in the file 
+\family typewriter
+parse.py
+\family default
+.
+ Among them are the following usual classes:
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+LoneCommand
+\family default
+: parses a single line containing a LyX command.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+BoundedParser
+\family default
+: reads until it finds the 
+\family typewriter
+ending
+\family default
+.
+ For each line found inside, the 
+\family typewriter
+BoundedParser
+\family default
+ will call the 
+\family typewriter
+ContainerFactory
+\family default
+ to recursively parse its contents.
+ Then the parser returns everything found inside as a list.
+\end_layout
+
+\begin_layout Subsection
+Outputs
+\end_layout
+
+\begin_layout Standard
+Common outputs reside in 
+\family typewriter
+output.py
+\family default
+.
+ They have just one method:
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+gethtml()
+\family default
+: processes the contents of a 
+\family typewriter
+Container
+\family default
+ and returns a list with file lines.
+ Carriage returns 
+\family typewriter
+
+\backslash
+n
+\family default
+ must be added manually at the desired points; eLyXer will just merge all
+ lines and write them to file.
+\end_layout
+
+\begin_layout Standard
+Outputs do not however inherit from a common class; all you need is an object
+ with a method 
+\family typewriter
+gethtml(self,container)
+\family default
+ that processes the 
+\family typewriter
+Container
+\family default
+'s 
+\family typewriter
+contents
+\family default
+ list attribute.
+\end_layout
+
+\begin_layout Subsection
+Preprocessors
+\end_layout
+
+\begin_layout Standard
+The file 
+\family typewriter
+preprocessor.py
+\family default
+ contains some preprocessing to be done on 
+\family typewriter
+Container
+\family default
+s before they are output.
+\end_layout
+
+\begin_layout Subsection
+Preprocessors
+\end_layout
+
+\begin_layout Standard
+The file 
+\family typewriter
+preprocessor.py
+\family default
+ contains some preprocessing to be done on 
+\family typewriter
+Container
+\family default
+s before they are output.
+\end_layout
+
+\begin_layout Subsection
+Adding your own 
+\family typewriter
+Container
+\end_layout
+
+\begin_layout Standard
+If you want to add your own 
+\family typewriter
+Container
+\family default
+ to the processing you do not need to modify all these files.
+ You just need to create your own source file that includes the 
+\family typewriter
+Container
+\family default
+, the 
+\family typewriter
+Parser
+\family default
+ and the 
+\family typewriter
+output
+\family default
+.
+ Once it is added to the 
+\family typewriter
+ContainerFactory
+\family default
+ eLyXer will happily start matching it against LyX commands as they are
+ parsed.
+\end_layout
+
+\begin_layout Standard
+The files 
+\family typewriter
+formula.py
+\family default
+ and 
+\family typewriter
+image.py
+\family default
+ have some examples of unified processing.
+\end_layout
+
+\begin_layout Section
+Advanced Use
+\end_layout
+
+\begin_layout Subsection
+Node Numbering
+\end_layout
+
+\begin_layout Standard
+As eLyXer parses a LyX document it automatically numbers all chapters and
+ sections.
+\end_layout
+
+\begin_layout Section
+Future Extensions
+\end_layout
+
+\begin_layout Standard
+The author envisions the following extensions.
+\end_layout
+
+\begin_layout Subsection
+Templates
+\end_layout
+
+\begin_layout Standard
+Some header and footer content is automatically added to the resulting document.
+ The use of templates might make the job far easier.
+\end_layout
+
+\begin_layout Subsection
+Postprocessors
+\end_layout
+
+\begin_layout Standard
+Some post-processing of the resulting HTML page could make the results look
+ much better.
+ The tool is called 
+\family typewriter
+posxer
+\family default
+.
+\end_layout
+
+\begin_layout Subsection
+Page Segmentors
+\end_layout
+
+\begin_layout Standard
+A page segmentor should build a set of pages and cross-reference them, but
+ generally avoids the complexities of the internal structure.
+ The tool is called 
+\family typewriter
+idxer
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+The tool uses templates to construct the header and footer.
+\end_layout
+
+\begin_layout Standard
+The complete package should implement something like the flow in figure
+ 
+\begin_inset LatexCommand ref
+reference "fig:pipeline"
+
+\end_inset
+
+.
+ This is the high-level design that has to be filled in with the missing
+ tools.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename pipeline.eps
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:pipeline"
+
+\end_inset
+
+Complete eLyXer pipeline.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+MathML
+\end_layout
+
+\begin_layout Standard
+As suggested by Günther Milne and Abdelrazak Younes, MathML is by now well
+ supported in e.g.
+ Firefox.
+ An option to emit MathML (instead of more-or-less clumsy HTML and CSS code)
+ would be very useful.
+\end_layout
+
+\begin_layout Subsection
+Roadmap
+\end_layout
+
+\begin_layout Standard
+Basic tool support should be ready in Q2 2009 (July 2009), including support
+ for most common LyX documents.
+ LyX integration (as an external tool) is planned for Q3 2009.
+ All this is within the usual constraints: day job, family, etc.
+\end_layout
+
+\begin_layout Section
+Discarded Bits
+\end_layout
+
+\begin_layout Standard
+Not everything that has been planned or can be done with eLyXer is planned;
+ some extensions have been discarded.
+ However, this means basically that the author is too ignorant to know how
+ to do them right; help (and patches!) towards a sane implementation would
+ be welcome if they fit with the design.
+\end_layout
+
+\begin_layout Subsection
+Spellchecking
+\end_layout
+
+\begin_layout Standard
+LyX can use a spellchecker to verify the words used.
+ However it is not interactive so you may forget to run it before generating
+ a version.
+ It is possible to integrate eLyXer with a spellchecker and verify the spelling
+ before generating the HTML, but it is not clear that it can be done cleanly.
+\end_layout
+
+\begin_layout Subsection
+URL Checking
+\end_layout
+
+\begin_layout Standard
+Another fun possibility is to make eLyXer check all the external URLs embedded
+ in the document.
+ However the Python facilities for URL checking are not very mature, at
+ least with Python 2.5: some of them do not return errors, others throw complex
+ exceptions that have to be parsed\SpecialChar \ldots{}
+ It is far easier to just create the HTML
+ page and use wget (or a similar tool) to recursively check all links in
+ the page.
+\end_layout
+
+\begin_layout Subsection
+Use of 
+\family typewriter
+lyx2lyx
+\family default
+ Framework
+\end_layout
+
+\begin_layout Standard
+Abdelrazak Younes suggests using the 
+\family typewriter
+lyx2lyx
+\family default
+ framework, which after all already knows about LyX formats.
+ It is an interesting suggestion, but one that for now does not fit well
+ with the design of eLyXer: a standalone tool to convert between two formats,
+ or as Kernighan and Plauger put it, a standalone 
+\emph on
+filter
+\emph default
+.
+\end_layout
+
+\begin_layout Section
+FAQ
+\end_layout
+
+\begin_layout Description
+Q: Why does your Python code suck so much? You don't make proper use of
+ most features!
+\end_layout
+
+\begin_layout Description
+A: Because I'm mostly a novice with little Python culture.
+ If you want to help it suck less, please send me an email.
+\end_layout
+
+\begin_layout Description
+Q: How is the code maintained?
+\end_layout
+
+\begin_layout Description
+A: It is kept in a 
+\family typewriter
+git
+\family default
+ repository.
+ Patches in 
+\family typewriter
+git
+\family default
+ format are welcome.
+\end_layout
+
+\begin_layout Description
+Q: Why isn't the code published?
+\end_layout
+
+\begin_layout Description
+A: Basically, for lack of a hosting facility.
+\end_layout
+
+\end_body
+\end_document

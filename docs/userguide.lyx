@@ -1,0 +1,425 @@
+#LyX 1.5.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 276
+\begin_document
+\begin_header
+\textclass article
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+eLyXer User Guide
+\end_layout
+
+\begin_layout Author
+Alex Fernández (elyxer@gmail.com)
+\end_layout
+
+\begin_layout Section
+The Basics
+\end_layout
+
+\begin_layout Quotation
+
+\emph on
+elixir, n: a substance believed to cure all ills
+\emph default
+ 
+\begin_inset LatexCommand url
+target "http://www.wordreference.com/definition/elixir"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+eLyXer (pronounced the same as 
+\emph on
+elixir
+\emph default
+) converts a LyX document into a web page that you can publish on the net.
+\end_layout
+
+\begin_layout Subsection
+Usage
+\end_layout
+
+\begin_layout Standard
+eLyXer can be invoked from the command line as:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+$ elyxer.py [source file] [destination file]
+\end_layout
+
+\begin_layout Standard
+If the source file is omitted then 
+\family typewriter
+STDIN
+\family default
+ is used; likewise, if no destination file is specified eLyXer will output
+ to 
+\family typewriter
+STDOUT
+\family default
+.
+ This allows its use in pipes and other flexible configurations.
+\end_layout
+
+\begin_layout Standard
+Examples:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+$ elyxer.py file.lyx file.html
+\end_layout
+
+\begin_layout Standard
+converts 
+\family typewriter
+file.lyx
+\family default
+ to 
+\family typewriter
+file.html
+\family default
+.
+ Debug messages are shown.
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+$ cat file.lyx | elyxer.py > file.html
+\end_layout
+
+\begin_layout Standard
+converts 
+\family typewriter
+file.lyx
+\family default
+ to 
+\family typewriter
+file.html
+\family default
+, as before.
+ This time debug messages are not shown.
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+$ elyxer.py file.lyx | grep "<blockquote>" | wc
+\end_layout
+
+\begin_layout Standard
+counts all blockquote paragraphs.
+\end_layout
+
+\begin_layout Subsection
+Resources
+\end_layout
+
+\begin_layout Standard
+eLyXer should be quite fast on contemporary hardware.
+ On my 1st-gen Asus Eee (with its underpowered 800MHz Celeron processor
+ -- underclocked to 570MHz), eLyXer can convert ~200 pages of LyX text in
+ just over 6 seconds.
+ Performance is fairly lineal: 200 pages take 
+\begin_inset Formula $10\times$
+\end_inset
+
+ as long as 20, so there are no artificial bottlenecks.
+\end_layout
+
+\begin_layout Standard
+Memory usage stays low even when processing large documents, since conversion
+ is done on the fly.
+\end_layout
+
+\begin_layout Subsection
+Image Processing
+\end_layout
+
+\begin_layout Standard
+If installed eLyXer will use the ImageMagick package (and more specifically
+ the 
+\family typewriter
+convert
+\family default
+ tool) to create PNG versions of the images embedded in the document.
+ If it is not installed -- well, right now eLyXer will fail.
+ It should probably check.
+\end_layout
+
+\begin_layout Section
+Advanced Use
+\end_layout
+
+\begin_layout Standard
+There are some advanced uses for eLyXer if you want to extract the most
+ of it.
+\end_layout
+
+\begin_layout Subsection
+Appearance
+\end_layout
+
+\begin_layout Standard
+HTML output, as generated, is a bit crude.
+ Some CSS wizardry can go a long way to make eLyXer output look nicer.
+\end_layout
+
+\begin_layout Standard
+eLyXer tags most elements with the type so you can later modify them using
+ a CSS.
+ The HTML header reads like listing 
+\begin_inset LatexCommand ref
+reference "alg:CSS"
+
+\end_inset
+
+, so a CSS file 
+\family typewriter
+lyx.css
+\family default
+ is employed if found.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Quotation
+
+\family typewriter
+<head>
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+<title>Your title here</title>
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\series bold
+<link rel="stylesheet" href="lyx.css" type="text/css" media="screen"/>
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+</head>
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "alg:CSS"
+
+\end_inset
+
+CSS link automatically added to HTML
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A sample CSS file is distributed along with the scripts, 
+\family typewriter
+extras/lyx.css
+\family default
+.
+ To use it just copy it to the document directory, and customize as needed.
+\end_layout
+
+\begin_layout Subsection
+Postprocessing
+\end_layout
+
+\begin_layout Standard
+Another feature worth mentioning is the eLyXer postprocessor 
+\family typewriter
+posxer
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+At the moment the postprocessor is under construction.
+\end_layout
+
+\begin_layout Subsection
+Segmenting pages
+\end_layout
+
+\begin_layout Standard
+Quite often you don't want a huge monolithic page, but a set of linked pages.
+ At the moment eLyXer does not allow you to do that, but a planned extension
+ will.
+\end_layout
+
+\begin_layout Standard
+The complete flow of tools might look like the one in figure 
+\begin_inset LatexCommand ref
+reference "fig:pipeline"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /home/chenno/bulk/elyxer/docs/pipeline.eps
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:pipeline"
+
+\end_inset
+
+Complete eLyXer pipeline.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Extending eLyXer
+\end_layout
+
+\begin_layout Standard
+eLyXer does not at the moment support all LyX features; it will happily
+ stop processing whenever it finds an unknown command.
+\end_layout
+
+\begin_layout Standard
+What can I do if eLyXer refuses to work with my LyX file? Worry not! Its
+ flexible approach via containers, parsers and outputs allows anyone to
+ write support for the missing command.
+ eLyXer is written in Python so that it does not need to be compiled; its
+ code is interpreted on the fly.
+ It requires Python 2.5.x; at the moment there are no plans to migrate to
+ Python 2.6.
+\end_layout
+
+\begin_layout Standard
+See the accompanying developer guide to learn how to extend eLyXer for your
+ own purposes.
+\end_layout
+
+\begin_layout Section
+FAQ
+\end_layout
+
+\begin_layout Description
+Q: What versions of LyX are supported?
+\end_layout
+
+\begin_layout Description
+A: At the moment the tool is very limited; it basically works for the author's
+ machine, i.e.
+ LyX 1.5.5 on Debian lenny.
+ With some help the author plans to add support for more recent LyX versions
+ (1.6) and a more thorough set of documents.
+\end_layout
+
+\begin_layout Description
+Q: Why did you leave out my favorite feature 
+\emph on
+<insert random LyX command here>
+\emph default
+?
+\end_layout
+
+\begin_layout Description
+A: In short, because I wasn't using it.
+ Usually it is better to first aim for your own needs and then worry about
+ others, or you will never get anything done.
+ But if you know how to program in Python it should not be difficult to
+ support other LyX features.
+ If you don't you can always ask the author; you can find him at the elyxer
+ gmail account.
+\end_layout
+
+\end_body
+\end_document
