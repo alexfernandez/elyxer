@@ -40,7 +40,7 @@
 \begin_body
 
 \begin_layout Title
-eLyXer programming guide
+eLyXer Programming Guide
 \end_layout
 
 \begin_layout Author
@@ -397,22 +397,12 @@ preprocessor.py
 Container
 \family default
 s before they are output.
-\end_layout
-
-\begin_layout Subsection
-Preprocessors
-\end_layout
-
-\begin_layout Standard
-The file 
-\family typewriter
-preprocessor.py
-\family default
- contains some preprocessing to be done on 
+ Preprocessing is deactivated at the time since it needs some context, not
+ just the current 
 \family typewriter
 Container
 \family default
-s before they are output.
+.
 \end_layout
 
 \begin_layout Subsection
@@ -461,7 +451,12 @@ image.py
 \end_layout
 
 \begin_layout Section
-Advanced Use
+Advanced Features
+\end_layout
+
+\begin_layout Standard
+This section tackles other, more complex features.
+ Not all of them are included in the current version.
 \end_layout
 
 \begin_layout Subsection
@@ -471,7 +466,7 @@ Node Numbering
 \begin_layout Standard
 As eLyXer parses a LyX document it automatically numbers all chapters and
  sections.
- The code is, however, not ready yet.
+ The code is, however, not ready yet for prime time and has been disabled.
 \end_layout
 
 \begin_layout Subsection
@@ -503,7 +498,10 @@ key "white-math"
 \end_layout
 
 \begin_layout Standard
-eLyXer employs the third technique.
+eLyXer employs the third technique, with varied results.
+ Basic fractions and square roots should be rendered fine, albeit at the
+ moment there are some issues pending.
+ Complex fractions with several levels do not come out right.
 \end_layout
 
 \begin_layout Subsection
@@ -531,8 +529,19 @@ conflate.py
 \family typewriter
 make
 \family default
- Bash script that takes care of permissions and the like.
- It is maybe a primitive way to generate the 
+ Bash script that takes care of permissions and generates the documentation.
+ Just type
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+$ ./make
+\end_layout
+
+\begin_layout Standard
+at the prompt.
+ It is a primitive way perhaps to generate the 
 \begin_inset Quotes eld
 \end_inset
 

@@ -72,6 +72,18 @@ elixir
 \end_layout
 
 \begin_layout Subsection
+Version History
+\end_layout
+
+\begin_layout Standard
+Latest version is 0.1.
+\end_layout
+
+\begin_layout Itemize
+0.1: first public version.
+\end_layout
+
+\begin_layout Subsection
 System Requirements
 \end_layout
 
@@ -86,7 +98,7 @@ Resource usage should be quite frugal; eLyXer runs quite happily on my 1st-gen
  Asus Eee, with its puny Celeron@570MHz and 512 MB of RAM.
  It should also be fast -- the Eee can convert ~200 pages of LyX text in
  just over 6 seconds.
- Performance is fairly lineal: 200 pages take 
+ Performance is fairly linear: 200 pages take 
 \begin_inset Formula $10\times$
 \end_inset
 
@@ -437,6 +449,10 @@ Lists (such as this one) appear disjoint, with each item in a separate list.
 ImageMagick is currently required if any images are present in the document.
 \end_layout
 
+\begin_layout Enumerate
+Chapters, sections and subsections should appear numbered as in LyX.
+\end_layout
+
 \begin_layout Subsection
 Reporting Bugs
 \end_layout
@@ -464,6 +480,10 @@ eLyXer is written in Python so that it does not need to be compiled; its
  code is interpreted on the fly.
  See the accompanying developer guide to learn how to extend eLyXer for
  your own purposes.
+ But if you know how to program in Python it should not be difficult to
+ support other LyX features.
+ If you don't you can always ask the author; you can find him at the elyxer
+ gmail account.
 \end_layout
 
 \begin_layout Section
@@ -519,10 +539,6 @@ Q: Why did you leave out my favorite feature
 A: In short, because I wasn't using it.
  Usually it is better to first aim for your own needs and then worry about
  others, or you will never get anything done.
- But if you know how to program in Python it should not be difficult to
- support other LyX features.
- If you don't you can always ask the author; you can find him at the elyxer
- gmail account.
 \end_layout
 
 \begin_layout Bibliography
