@@ -8,6 +8,7 @@
 # Alex 20090308
 # eLyXer image treatment
 
+import os
 import os.path
 import subprocess
 import array
@@ -30,7 +31,7 @@ class Image(Container):
     self.figure = False
 
   def process(self):
-    self.url = self.header[1]
+    self.url = self.relativepath(self.header[1])
     if not os.path.exists(self.url):
       Trace.error('Error in image origin ' + self.url)
       return
@@ -64,7 +65,6 @@ class Image(Container):
     except OSError:
       Trace.error('Error while converting image ' + origin)
 
-
   dimensions = dict()
 
   def getdimensions(self, filename):
@@ -81,6 +81,13 @@ class Image(Container):
     pngfile.close()
     Image.dimensions[filename] = dimensions
     return dimensions
+
+  def relativepath(self, url):
+    "Convert the given path to a relative path"
+    path = os.path.realpath(url)
+    current = os.path.realpath(os.getcwd())
+    common = os.path.commonprefix([path, current])
+    return path[len(common) + 1:]
 
 class ImageOutput(object):
   "Returns an image in the output"
