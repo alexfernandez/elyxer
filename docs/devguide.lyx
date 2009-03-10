@@ -148,12 +148,19 @@ Container structure.
 \end_layout
 
 \begin_layout Standard
-Two important class attributes of a Container are 
+Two important class attributes of a Container are:
+\end_layout
+
+\begin_layout Itemize
+
 \family typewriter
 start
 \family default
 : a string of text containing the LyX command that we are about to process;
- and 
+\end_layout
+
+\begin_layout Itemize
+and 
 \family typewriter
 ending
 \family default
@@ -190,6 +197,8 @@ it will create and initialize an
 EmphaticText
 \family default
  object.
+ Parsing is much faster this way, but there are disadvantages; for one,
+ parsing can only be done using whole words and not suffixes.
 \end_layout
 
 \begin_layout Subsection
@@ -498,24 +507,6 @@ eLyXer employs the third technique.
 \end_layout
 
 \begin_layout Subsection
-HTML Code
-\end_layout
-
-\begin_layout Standard
-The HTML code generated is technically XHTML Transitional, version 1.0, using
- UTF-8 encoding.
- It passes the W3C tests 
-\begin_inset LatexCommand cite
-key "w3c-validator"
-
-\end_inset
-
-.
- If your particular document doesn't pass the tests, it is a bug.
- 
-\end_layout
-
-\begin_layout Subsection
 Distribution
 \end_layout
 
@@ -525,15 +516,12 @@ You will notice that in the
 src/
 \family default
  folder there are several Python files, while in the main directory there
- is only one.
+ is just a big one.
  The reason is that before distributing the source code is conflated and
- placed alone, so that users can use it without worrying about libraries,
- directories and the such.
- (They need of course to have Python 2.5 installed.)
-\end_layout
-
-\begin_layout Standard
-And the culprit is a little Python script called 
+ placed on the main directory, so that users can run it without worrying
+ about libraries, directories and the such.
+ (They need of course to have Python 2.5 installed.) And the weapon is a little
+ Python script called 
 \family typewriter
 conflate.py
 \family default
@@ -552,7 +540,8 @@ binary
 \begin_inset Quotes erd
 \end_inset
 
- (ok, not really a binary but a single Python script), but it works great.
+ (ok, not really a binary but a distributable Python file), but it works
+ great.
 \end_layout
 
 \begin_layout Standard

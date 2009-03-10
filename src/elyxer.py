@@ -30,7 +30,7 @@ class ContainerFactory(object):
         TextFamily, Formula, PrintIndex, LyxHeader, LyxFooter, URL, ListOf,
         TableOfContents, Hfill, ColorText, SizeText, BoldText, LyxLine,
         Align, Table, TableHeader, Row, Cell, Bibliography,
-        InsetText, Caption,
+        InsetText, Caption, ListItem,
         # do not add below this line
         Layout, Float, StringContainer]
 

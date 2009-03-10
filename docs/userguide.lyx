@@ -55,22 +55,44 @@ The Basics
 
 \emph on
 elixir, n: a substance believed to cure all ills
-\emph default
- 
-\begin_inset LatexCommand url
-target "http://www.wordreference.com/definition/elixir"
+\begin_inset LatexCommand cite
+key "wordreference-elixir"
 
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
-eLyXer (pronounced the same as 
+eLyXer (pronounced 
 \emph on
 elixir
 \emph default
 ) converts a LyX document into a web page that you can publish on the net.
+\end_layout
+
+\begin_layout Subsection
+System Requirements
+\end_layout
+
+\begin_layout Standard
+eLyXer requires Python 2.5: it should be installed on the target machine.
+ It might also require a Linux operating system (I haven't tested it on
+ Mac OS X or Windows).
+\end_layout
+
+\begin_layout Standard
+Resource usage should be quite frugal; eLyXer runs quite happily on my 1st-gen
+ Asus Eee, with its puny Celeron@570MHz and 512 MB of RAM.
+ It should also be fast -- the Eee can convert ~200 pages of LyX text in
+ just over 6 seconds.
+ Performance is fairly lineal: 200 pages take 
+\begin_inset Formula $10\times$
+\end_inset
+
+ as long as 20, so there are no artificial bottlenecks.
+ Memory usage stays low even when processing large documents, since conversion
+ is done on the fly.
 \end_layout
 
 \begin_layout Subsection
@@ -151,27 +173,6 @@ $ elyxer.py file.lyx | grep "<blockquote>" | wc
 
 \begin_layout Standard
 counts all blockquote paragraphs.
-\end_layout
-
-\begin_layout Subsection
-Resources
-\end_layout
-
-\begin_layout Standard
-eLyXer should be quite fast on contemporary hardware.
- On my 1st-gen Asus Eee (with its underpowered 800MHz Celeron processor
- -- underclocked to 570MHz), eLyXer can convert ~200 pages of LyX text in
- just over 6 seconds.
- Performance is fairly lineal: 200 pages take 
-\begin_inset Formula $10\times$
-\end_inset
-
- as long as 20, so there are no artificial bottlenecks.
-\end_layout
-
-\begin_layout Standard
-Memory usage stays low even when processing large documents, since conversion
- is done on the fly.
 \end_layout
 
 \begin_layout Subsection
@@ -271,10 +272,6 @@ CSS link automatically added to HTML
 
 \end_layout
 
-\begin_layout Standard
-
-\end_layout
-
 \end_inset
 
 
@@ -307,7 +304,7 @@ At the moment the postprocessor is under construction.
 \end_layout
 
 \begin_layout Subsection
-Segmenting pages
+Segmenting Pages
 \end_layout
 
 \begin_layout Standard
@@ -364,28 +361,109 @@ Complete eLyXer pipeline.
 
 \end_layout
 
+\begin_layout Subsection
+HTML Code
+\end_layout
+
+\begin_layout Standard
+The HTML code generated is technically XHTML Transitional, version 1.0, using
+ UTF-8 encoding.
+ It passes the W3C tests 
+\begin_inset LatexCommand cite
+key "w3c-validator"
+
+\end_inset
+
+.
+ If your particular document doesn't pass the tests, it is a bug.
+ 
+\end_layout
+
 \begin_layout Section
+Work in Progress
+\end_layout
+
+\begin_layout Standard
+As you have already seen eLyXer is very much a work in progress.
+\end_layout
+
+\begin_layout Subsection
+Known Issues
+\end_layout
+
+\begin_layout Standard
+The following issues are acknowledged and should be solved soon.
+\end_layout
+
+\begin_layout Enumerate
+Only certain types of 
+\family typewriter
+Layout
+\family default
+s are supported.
+ Any unknown 
+\family typewriter
+Layout
+\family default
+ causes eLyXer to stop.
+\end_layout
+
+\begin_layout Enumerate
+Document structure is botched for articles: sections start with a 
+\family typewriter
+<h2>
+\family default
+ element (while they should be a 
+\family typewriter
+<h1>
+\family default
+).
+\end_layout
+
+\begin_layout Enumerate
+Lists (such as this one) appear disjoint, with each item in a separate list.
+ This causes all items to be numbered as 
+\begin_inset Quotes eld
+\end_inset
+
+1
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+ImageMagick is currently required if any images are present in the document.
+\end_layout
+
+\begin_layout Subsection
+Reporting Bugs
+\end_layout
+
+\begin_layout Standard
+If your problem does not appear in the above list, please let the author
+ know.
+\end_layout
+
+\begin_layout Subsection
 Extending eLyXer
 \end_layout
 
 \begin_layout Standard
-eLyXer does not at the moment support all LyX features; it will happily
- stop processing whenever it finds an unknown command.
+eLyXer does not at the moment support all LyX features; sometimes it will
+ ignore a command, sometimes it will signal it, and it might even refuse
+ to work with certain documents.
+ What can you do if eLyXer does not work with your LyX file? Worry not!
+ Its flexible approach to processing allows anyone to write support for
+ the missing commands.
 \end_layout
 
 \begin_layout Standard
-What can I do if eLyXer refuses to work with my LyX file? Worry not! Its
- flexible approach via containers, parsers and outputs allows anyone to
- write support for the missing command.
- eLyXer is written in Python so that it does not need to be compiled; its
+eLyXer is written in Python so that it does not need to be compiled; its
  code is interpreted on the fly.
- It requires Python 2.5.x; at the moment there are no plans to migrate to
- Python 2.6.
-\end_layout
-
-\begin_layout Standard
-See the accompanying developer guide to learn how to extend eLyXer for your
- own purposes.
+ See the accompanying developer guide to learn how to extend eLyXer for
+ your own purposes.
 \end_layout
 
 \begin_layout Section
@@ -400,8 +478,33 @@ Q: What versions of LyX are supported?
 A: At the moment the tool is very limited; it basically works for the author's
  machine, i.e.
  LyX 1.5.5 on Debian lenny.
- With some help the author plans to add support for more recent LyX versions
- (1.6) and a more thorough set of documents.
+\end_layout
+
+\begin_layout Description
+Q: What can we expect from the tool in the future?
+\end_layout
+
+\begin_layout Description
+A: As it matures (and with some help) eLyXer should support more recent
+ LyX versions (1.6) and a wider set of documents.
+\end_layout
+
+\begin_layout Description
+Q: Why publish a tool in such an immature state?
+\end_layout
+
+\begin_layout Description
+A: As is often said, 
+\begin_inset Quotes eld
+\end_inset
+
+release early, release often
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It seems better to put eLyXer in the hands of possible users as soon as
+ possible, and then let them have a say on future extensions.
 \end_layout
 
 \begin_layout Description
@@ -420,6 +523,54 @@ A: In short, because I wasn't using it.
  support other LyX features.
  If you don't you can always ask the author; you can find him at the elyxer
  gmail account.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "wordreference-elixir"
+
+\end_inset
+
+WordReference.com: 
+\begin_inset Quotes eld
+\end_inset
+
+definition of elixir
+\begin_inset Quotes erd
+\end_inset
+
+, accessed March 2009.
+ 
+\begin_inset LatexCommand url
+target "http://www.wordreference.com/definition/elixir"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "w3c-validator"
+
+\end_inset
+
+W3C: 
+\begin_inset Quotes eld
+\end_inset
+
+Markup Validation Service
+\begin_inset Quotes erd
+\end_inset
+
+, accessed March 2009.
+ 
+\begin_inset LatexCommand url
+target "http://validator.w3.org/"
+
+\end_inset
+
+
 \end_layout
 
 \end_body

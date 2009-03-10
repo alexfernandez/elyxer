@@ -360,23 +360,6 @@ class Title(Container):
     self.title = self.contents[0].contents[0].strip()
     Trace.debug('Title: ' + self.title)
 
-class Author(Container):
-  "The document author"
-
-  start = '\\begin_layout Author'
-  ending = '\\end_layout'
-
-  def __init__(self):
-    self.contents = list()
-    self.parser = BoundedParser()
-    self.output = TagOutput()
-    self.tag = 'h2'
-    self.breaklines = True
-
-  def process(self):
-    FooterOutput.author = self.contents[0].contents[0].strip()
-    Trace.debug('Author: ' + FooterOutput.author)
-
 class Layout(Container):
   "A layout (block of text) inside a lyx file"
 
@@ -384,9 +367,9 @@ class Layout(Container):
   ending = '\\end_layout'
 
   typetags = { 'Quote':'blockquote', 'Standard':'div class="text"',
-        'Subsubsection*':'h4', 'Enumerate':'li', 'Chapter':'h1', 'Section':'h2',
+        'Subsubsection*':'h4', 'Chapter':'h1', 'Section':'h2',
         'Subsection': 'h3', 'Description':'div class="desc"',
-        'Quotation':'blockquote', 'Itemize':'li', 'Center':'div class="center"',
+        'Quotation':'blockquote', 'Center':'div class="center"',
         'Paragraph*':'div class="paragraph"', 'Part':'h1 class="part"',
         'Subsection*': 'h3'}
 
@@ -398,8 +381,41 @@ class Layout(Container):
 
   def process(self):
     self.type = self.header[1]
-    self.tag = Layout.typetags[self.type]
+    self.tag = 'div class="' + self.type + '"'
+    if self.type in Layout.typetags:
+      self.tag = Layout.typetags[self.type]
 
   def __str__(self):
     return 'Layout of type ' + self.type
+
+class Author(Layout):
+  "The document author"
+
+  start = '\\begin_layout Author'
+  ending = '\\end_layout'
+
+  def process(self):
+    self.tag = 'h2'
+    FooterOutput.author = self.contents[0].contents[0].strip()
+    Trace.debug('Author: ' + FooterOutput.author)
+
+class ListItem(Container):
+  "An element in a list"
+
+  starts = ['\\begin_layout Enumerate', '\\begin_layout Itemize']
+  ending = '\\end_layout'
+
+  def __init__(self):
+    self.contents = list()
+    self.parser = BoundedParser()
+    self.output = TagOutput()
+    self.breaklines = True
+
+  tags = {'Enumerate':'ol', 'Itemize':'ul'}
+
+  def process(self):
+    self.tag = ListItem.tags[self.header[1]]
+    tag = TaggedText().complete(self.contents, 'li', True)
+    self.contents = [tag]
+
 
