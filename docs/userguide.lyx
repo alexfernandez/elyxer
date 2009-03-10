@@ -108,17 +108,129 @@ Resource usage should be quite frugal; eLyXer runs quite happily on my 1st-gen
 \end_layout
 
 \begin_layout Subsection
-Usage
+Installation
 \end_layout
 
 \begin_layout Standard
-eLyXer can be invoked from the command line as:
+There is no complex installation procedure; just uncompress the distributed
+ file to a suitable directory.
+ Just write at the command line prompt:
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-$ elyxer.py [source file] [destination file]
+\color blue
+$
+\color inherit
+ tar -xzf elyxer-
+\emph on
+[version]
+\emph default
+.tar.gz
+\end_layout
+
+\begin_layout Standard
+Or for the 
+\family typewriter
+.zip
+\family default
+ version:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\color blue
+$
+\color inherit
+ unzip elyxer-
+\emph on
+[version]
+\emph default
+.zip
+\end_layout
+
+\begin_layout Standard
+A directory called 
+\family typewriter
+elyxer
+\family default
+ should appear.
+ To test that everything works fine just move to the docs directory:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\color blue
+$
+\color inherit
+ cd elyxer/docs/
+\end_layout
+
+\begin_layout Standard
+and run the executab le on the user guide:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\color blue
+$
+\color inherit
+ ../elyxer userguide.lyx userguide2.html
+\end_layout
+
+\begin_layout Standard
+It should generate a working web page identical to the one distributed:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\color blue
+$
+\color inherit
+ diff userguide.html userguide2.html
+\end_layout
+
+\begin_layout Standard
+If nothing appears (i.e.
+ both files are equal) then everything is working fine.
+\end_layout
+
+\begin_layout Standard
+With this procedure you have to reference the executable file with full
+ path every time you run it.
+ If you want to avoid the hassle just place 
+\family typewriter
+elyxer
+\family default
+ someplace in the path (e.g.
+ 
+\family typewriter
+/usr/bin
+\family default
+ on Linux).
+\end_layout
+
+\begin_layout Subsection
+Usage
+\end_layout
+
+\begin_layout Standard
+eLyXer is a standalone command line tool.
+ It can be invoked from the command line as:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer [source file] [destination file]
 \end_layout
 
 \begin_layout Standard
@@ -133,16 +245,16 @@ STDOUT
 \family default
 .
  This allows its use in pipes and other flexible configurations.
-\end_layout
-
-\begin_layout Standard
-Examples:
+ Some examples:
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-$ elyxer.py file.lyx file.html
+\color blue
+$
+\color inherit
+ elyxer file.lyx file.html
 \end_layout
 
 \begin_layout Standard
@@ -161,7 +273,10 @@ file.html
 \begin_layout Quotation
 
 \family typewriter
-$ cat file.lyx | elyxer.py > file.html
+\color blue
+$
+\color inherit
+ cat file.lyx | elyxer > file.html
 \end_layout
 
 \begin_layout Standard
@@ -180,7 +295,10 @@ file.html
 \begin_layout Quotation
 
 \family typewriter
-$ elyxer.py file.lyx | grep "<blockquote>" | wc
+\color blue
+$
+\color inherit
+ elyxer file.lyx | grep "<blockquote>" | wc
 \end_layout
 
 \begin_layout Standard
@@ -192,14 +310,13 @@ Image Processing
 \end_layout
 
 \begin_layout Standard
-If installed eLyXer will use the ImageMagick package (and more specifically
- the 
+If the ImageMagick package is installed eLyXer will use the 
 \family typewriter
 convert
 \family default
- tool) to create PNG versions of the images embedded in the document.
- If it is not installed -- well, right now eLyXer will fail.
- It should probably check.
+ tool to create PNG versions of the images embedded in the document.
+ If it is not installed eLyXer will show an error message and will not try
+ to convert further images.
 \end_layout
 
 \begin_layout Section
