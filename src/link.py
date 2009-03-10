@@ -26,7 +26,7 @@ class Link(Container):
     self.url = url
     return self
 
-class Label(Link):
+class Label(Container):
   "A label to be referenced"
 
   start = '\\begin_inset LatexCommand label'
@@ -37,15 +37,11 @@ class Label(Link):
   def __init__(self):
     self.parser = NamedCommand()
     self.output = LinkOutput()
-    self.contents = [Constant(' ')]
+    self.contents = [Constant('***')]
 
   def process(self):
-    self.key = self.parser.key
-    Label.labels[self.key] = self
-    if self.key in Reference.refs:
-      ref = Reference.refs[self.key]
-      ref.label = self
-      ref.direction = 'down'
+    self.anchor = self.parser.key
+    Label.labels[self.parser.key] = self
 
 class Reference(Link):
   "A reference to a label"
@@ -53,42 +49,17 @@ class Reference(Link):
   start = '\\begin_inset LatexCommand ref'
   ending = '\\end_inset'
 
-  refs = dict()
-
-  arrows = {'up':u'↑', 'down':u'↓'}
-
   def __init__(self):
     self.parser = NamedCommand()
     self.output = LinkOutput()
-    self.direction = None
+    self.direction = u'↓'
 
   def process(self):
-    self.key = self.parser.key
-    if self.key in Label.labels:
-      self.label = Label.labels[self.key]
-      self.direction = 'up'
-    Reference.refs[self.key] = self
-
-  def gethtml(self):
-    "Get the HTML code for the reference"
-    if not hasattr(self, 'label'):
-      #Trace.error('No label in ' + str(self))
-      return ['?']
-    self.destination = self.label.key
-    self.contents = [Constant(self.gettext())]
-    return self.output.gethtml(self)
-
-  def gettext(self):
-    "Get the inside text with the arrow"
-    text = self.destination
-    if not self.direction in Reference.arrows:
-      Trace.error('Unknown direction ' + self.direction)
-      return text + '?'
-    return text + Reference.arrows[self.direction]
-
-  def samepage(self):
-    "Find out if destination is in our page"
-    return (self.origin.filename == self.destination.filename)
+    self.url = '#' + self.parser.key
+    if self.parser.key in Label.labels:
+      # already seen
+      self.direction = u'↑'
+    self.contents.append(Constant(self.direction))
 
 class BiblioCite(Container):
   "Cite of a bibliography entry"
