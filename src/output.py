@@ -95,6 +95,7 @@ class TitleOutput(object):
     html = tag.gethtml(container)
     html.append('</head>\n')
     html.append('<body>\n')
+    html.append('<div id="globalWrapper">\n')
     container.tag = 'h1 class="title"'
     html += tag.gethtml(container)
     return html
@@ -111,6 +112,7 @@ class FooterOutput(object):
       year = datetime.date.today().year
       html.append('<p>Copyright (C) ' + str(year) + ' ' + FooterOutput.author
           + '</p>\n')
+    html.append('</div>\n')
     html.append('</body>\n')
     html.append('</html>\n')
     return html

@@ -53,6 +53,15 @@ The Basics
 
 \begin_layout Standard
 This document should help you get started extending eLyXer.
+ In this section we will outline eLyXer performs its basic tasks.
+\end_layout
+
+\begin_layout Subsection
+
+\family typewriter
+Container
+\family default
+s
 \end_layout
 
 \begin_layout Standard
@@ -184,7 +193,11 @@ EmphaticText
 \end_layout
 
 \begin_layout Subsection
-Parsers
+
+\family typewriter
+Parser
+\family default
+s
 \end_layout
 
 \begin_layout Standard
@@ -531,8 +544,26 @@ conflate.py
 make
 \family default
  Bash script that takes care of permissions and the like.
- At the moment there is no way to do this packaging on non-Unix operating
- systems, but the steps themselves are trivial.
+ It is maybe a primitive way to generate the 
+\begin_inset Quotes eld
+\end_inset
+
+binary
+\begin_inset Quotes erd
+\end_inset
+
+ (ok, not really a binary but a single Python script), but it works great.
+\end_layout
+
+\begin_layout Standard
+At the moment there is no way to do this packaging on non-Unix operating
+ systems with a single script, e.g.
+ a Windows 
+\family typewriter
+.bat
+\family default
+ script.
+ However the steps themselves are trivial.
 \end_layout
 
 \begin_layout Section
