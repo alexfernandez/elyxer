@@ -145,6 +145,9 @@ span.mathsf {
 span.red {
 	color: #800000;
 }
+span.blue {
+	color: #000080;
+}
 .formula {
 	color: #004000;
 	text-align: center;
