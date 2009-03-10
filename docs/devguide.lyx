@@ -238,11 +238,11 @@ Parser
 s.
  For example, for the command 
 \family typewriter
-
+'
 \backslash
 
 \backslash
-emph on
+emph on'
 \family default
  the 
 \family typewriter
@@ -571,6 +571,30 @@ At the moment there is no way to do this packaging on non-Unix operating
  However the steps themselves are trivial.
 \end_layout
 
+\begin_layout Subsection
+License and Contributions
+\end_layout
+
+\begin_layout Standard
+eLyXer is published under the GPL, version 3 or later 
+\begin_inset LatexCommand cite
+key "stallman-gplv3"
+
+\end_inset
+
+.
+ This basically means that you can modify the code and distribute the result
+ as desired, as long as you publish your modifications under the same license.
+ But consult a lawyer if you want an authoritative opinion.
+\end_layout
+
+\begin_layout Standard
+All contributions will be published under this same license, so if you send
+ them this way you implicitly give your consent.
+ An explicit license grant would be even better and may be required for
+ larger contributions.
+\end_layout
+
 \begin_layout Section
 Future Extensions
 \end_layout
@@ -699,8 +723,10 @@ Roadmap
 \end_layout
 
 \begin_layout Standard
-Basic tool support should be ready in Q2 2009 (July 2009), including support
- for most common LyX documents.
+Basic tool support should be ready in Q1 2009 (end of March), including
+ support for most common LyX documents.
+ In Q2 2009 (i.e.
+ by the end of June) the pipeline should be complete and running.
  LyX integration (as an external tool) is planned for Q3 2009.
  All this is within the usual constraints: day job, family, etc.
 \end_layout
@@ -757,7 +783,13 @@ Abdelrazak Younes suggests using the
 \family typewriter
 lyx2lyx
 \family default
- framework, which after all already knows about LyX formats.
+ framework, which after all already knows about LyX formats 
+\begin_inset LatexCommand cite
+key "younes-elyxer"
+
+\end_inset
+
+.
  It is an interesting suggestion, but one that for now does not fit well
  with the design of eLyXer: a standalone tool to convert between two formats,
  or as Kernighan and Plauger put it, a standalone 
@@ -771,10 +803,28 @@ key "kernighan-filters"
 \end_inset
 
 .
+ Long-term maintenance might result a bit heavier with this approach though,
+ especially if LyX changes to a different file format in the future.
 \end_layout
 
 \begin_layout Section
 FAQ
+\end_layout
+
+\begin_layout Description
+Q: I don't like how your tool outputs my document, how can I help?
+\end_layout
+
+\begin_layout Description
+A: First make sure that you are using the proper CSS file, i.e.
+ copy the existing 
+\family typewriter
+docs/lyx.css
+\family default
+ file to your web page directory.
+ Next try to customize the CSS file to your liking; it is a flexible approach
+ that requires no code changes.
+ Changing code should be a last resort.
 \end_layout
 
 \begin_layout Description
@@ -784,7 +834,7 @@ Q: Why does your Python code suck so much? You don't make proper use of
 
 \begin_layout Description
 A: Because I'm mostly a novice with little Python culture.
- If you want to help it suck less, please send me an email.
+ If you want to help it suck less, please send mail and enlighten me.
 \end_layout
 
 \begin_layout Description
@@ -801,11 +851,15 @@ git
 \family typewriter
 git
 \family default
- format are welcome.
+ format are welcome (but keep in mind that my knowledge of 
+\family typewriter
+git
+\family default
+ is even shallower than my Python skills).
 \end_layout
 
 \begin_layout Description
-Q: Why isn't the code published?
+Q: Why isn't the whole repository published?
 \end_layout
 
 \begin_layout Description
@@ -844,6 +898,34 @@ Math in HTML with CSS
  
 \begin_inset LatexCommand url
 target "http://www.zipcon.net/~swhite/docs/math/math.html"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "stallman-gplv3"
+
+\end_inset
+
+R S Stallman 
+\emph on
+et al
+\emph default
+: 
+\begin_inset Quotes eld
+\end_inset
+
+GNU GENERAL PUBLIC LICENSE
+\begin_inset Quotes erd
+\end_inset
+
+ version 3, 20070629.
+ 
+\begin_inset LatexCommand url
+target "http://www.gnu.org/copyleft/gpl.html"
 
 \end_inset
 
