@@ -319,7 +319,8 @@ $
 \end_layout
 
 \begin_layout Standard
-checks all links in a document recursively.
+checks all external links in a document recursively.
+ (Local links will appear as unresolved, but they can be ignored.)
 \end_layout
 
 \begin_layout Subsection
