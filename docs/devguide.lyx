@@ -500,8 +500,15 @@ key "white-math"
 \begin_layout Standard
 eLyXer employs the third technique, with varied results.
  Basic fractions and square roots should be rendered fine, albeit at the
- moment there are some issues pending.
+ moment there may be some issues pending.
  Complex fractions with several levels do not come out right.
+ (But see subsection 
+\begin_inset LatexCommand ref
+reference "sub:MathML"
+
+\end_inset
+
+.)
 \end_layout
 
 \begin_layout Subsection
@@ -666,11 +673,22 @@ Complete eLyXer pipeline.
 
 \begin_layout Subsection
 MathML
+\begin_inset LatexCommand label
+name "sub:MathML"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-As suggested by Günther Milne and Abdelrazak Younes, MathML is by now well
- supported in e.g.
+As suggested by Günther Milne and Abdelrazak Younes 
+\begin_inset LatexCommand cite
+key "milde-mathml,younes-elyxer"
+
+\end_inset
+
+, MathML is by now well supported in e.g.
  Firefox.
  An option to emit MathML (instead of more-or-less clumsy HTML and CSS code)
  would be very useful.
@@ -834,22 +852,54 @@ target "http://www.zipcon.net/~swhite/docs/math/math.html"
 
 \begin_layout Bibliography
 \begin_inset LatexCommand bibitem
-key "w3c-validator"
+key "milde-mathml"
 
 \end_inset
 
-W3C: 
+G Milde: 
 \begin_inset Quotes eld
 \end_inset
 
-Markup Validation Service
+Re: eLyXer: LyX to HTML converter
 \begin_inset Quotes erd
 \end_inset
 
-, accessed March 2009.
+, message to list 
+\emph on
+lyx-devel
+\emph default
+, 20090309.
  
 \begin_inset LatexCommand url
-target "http://validator.w3.org/"
+target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg148627.html"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "younes-elyxer"
+
+\end_inset
+
+A Younes: 
+\begin_inset Quotes eld
+\end_inset
+
+Re: eLyXer: LyX to HTML converter
+\begin_inset Quotes erd
+\end_inset
+
+, message to list 
+\emph on
+lyx-devel
+\emph default
+, 20090309.
+ 
+\begin_inset LatexCommand url
+target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg148634.html"
 
 \end_inset
 

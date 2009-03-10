@@ -21,7 +21,8 @@ class Link(Container):
     self.contents = list()
     self.output = LinkOutput()
 
-  def complete(self, anchor, url):
+  def complete(self, text, anchor, url):
+    self.contents = [Constant(text)]
     self.anchor = anchor
     self.url = url
     return self
@@ -37,11 +38,11 @@ class Label(Container):
   def __init__(self):
     self.parser = NamedCommand()
     self.output = LinkOutput()
-    self.contents = [Constant('***')]
 
   def process(self):
     self.anchor = self.parser.key
     Label.labels[self.parser.key] = self
+    self.contents = [Constant(' ')]
 
 class Reference(Link):
   "A reference to a label"
@@ -59,7 +60,7 @@ class Reference(Link):
     if self.parser.key in Label.labels:
       # already seen
       self.direction = u'↑'
-    self.contents.append(Constant(self.direction))
+    self.contents = [Constant(self.direction)]
 
 class BiblioCite(Container):
   "Cite of a bibliography entry"
@@ -75,20 +76,23 @@ class BiblioCite(Container):
     self.output = TagOutput()
     self.tag = 'sup'
     self.breaklines = False
-    self.contents = list()
 
   def process(self):
     "Add a cite to every entry"
+    self.contents = list()
     keys = self.parser.key.split(',')
     for key in keys:
       BiblioCite.index += 1
+      number = str(BiblioCite.index)
+      link = Link().complete(number, 'cite-' + number, '#' + number)
+      self.contents.append(link)
+      self.contents.append(Constant(','))
       if not key in BiblioCite.entries:
         BiblioCite.entries[key] = []
-      link = Link()
-      link.index = BiblioCite.index
-      link.contents = [Constant(str(link.index))]
-      self.contents.append(link)
-      BiblioCite.entries[key].append(link)
+      BiblioCite.entries[key].append(number)
+    if len(keys) > 0:
+      # remove trailing ,
+      self.contents.pop()
 
 class Bibliography(Container):
   "A bibliography layout containing an entry"
@@ -102,7 +106,7 @@ class Bibliography(Container):
     self.breaklines = True
     self.tag = 'p class="biblio"'
 
-class BiblioEntry(Link):
+class BiblioEntry(Container):
   "A bibliography entry"
 
   start = '\\begin_inset LatexCommand bibitem'
@@ -113,25 +117,20 @@ class BiblioEntry(Link):
     self.output = TagOutput()
     self.tag = 'span class="entry"'
     self.breaklines = False
-    self.cites = list()
 
   def process(self):
     "Get all the cites of the entry"
-    self.key = self.parser.key
-    if self.key in BiblioCite.entries:
-      self.cites = BiblioCite.entries[self.key]
-
-  def gethtml(self):
-    "Get the HTML code for the entry"
+    cites = list()
+    if self.parser.key in BiblioCite.entries:
+      cites = BiblioCite.entries[self.parser.key]
     self.contents = [Constant('[')]
-    for cite in self.cites:
-      link = Link().complete(str(cite.index), str(cite.index))
+    for cite in cites:
+      link = Link().complete(cite, cite, '#cite-' + cite)
       self.contents.append(link)
       self.contents.append(Constant(','))
-    if len(self.cites) > 0:
+    if len(cites) > 0:
       self.contents.pop(-1)
-    self.contents.append(Constant(']'))
-    return self.output.gethtml(self)
+    self.contents.append(Constant('] '))
 
 class ListOf(Container):
   "A list of entities (figures, tables, algorithms)"

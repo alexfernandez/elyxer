@@ -387,7 +387,8 @@ key "w3c-validator"
 \end_inset
 
 .
- If your particular document doesn't pass the tests, it is a bug.
+ If your particular web page doesn't pass the tests, then it is a bug and
+ it will be treated as such.
  
 \end_layout
 
@@ -404,7 +405,8 @@ Known Issues
 \end_layout
 
 \begin_layout Standard
-The following issues are acknowledged and should be solved soon.
+The following issues (including bugs and missing features) are acknowledged
+ and should be solved soon.
 \end_layout
 
 \begin_layout Enumerate
