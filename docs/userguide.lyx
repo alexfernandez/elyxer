@@ -76,11 +76,15 @@ Version History
 \end_layout
 
 \begin_layout Standard
-Latest version is 0.1.
+Latest version is 0.2, created on 20090311.
 \end_layout
 
 \begin_layout Itemize
-0.1: first public version.
+0.1 (20090310): first public version.
+\end_layout
+
+\begin_layout Itemize
+0.2 (20090311): ImageMagick is not required anymore.
 \end_layout
 
 \begin_layout Subsection
@@ -303,6 +307,19 @@ $
 
 \begin_layout Standard
 counts all blockquote paragraphs.
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer file.lyx | wget --no-check-certificate --spider -nv -F -i -
+\end_layout
+
+\begin_layout Standard
+checks all links in a document recursively.
 \end_layout
 
 \begin_layout Subsection
@@ -562,10 +579,6 @@ Lists (such as this one) appear disjoint, with each item in a separate list.
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Enumerate
-ImageMagick is currently required if any images are present in the document.
 \end_layout
 
 \begin_layout Enumerate
