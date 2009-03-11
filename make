@@ -22,7 +22,7 @@ cd ..
 mkdir -p dist
 cd ..
 DATE=$(date +%Y%m%d)
-tar --exclude elyxer/dist --exclude elyxer/.git -czf elyxer-$DATE.tar.gz elyxer
+tar --exclude "elyxer/dist" --exclude "elyxer/.git" --exclude "elyxer/test" -czf elyxer-$DATE.tar.gz elyxer
 mv elyxer-$DATE.tar.gz elyxer/dist
 zip -q elyxer-$DATE.zip elyxer/* -x *dist*
 zip -qr elyxer-$DATE.zip elyxer/src
