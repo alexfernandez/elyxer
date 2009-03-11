@@ -32,7 +32,7 @@ class ContainerFactory(object):
         Align, Table, TableHeader, Row, Cell, Bibliography,
         InsetText, Caption, ListItem,
         # do not add below this line
-        Layout, Float, StringContainer]
+        Inset, Layout, Float, StringContainer]
 
   root = ParseTree(types)
 

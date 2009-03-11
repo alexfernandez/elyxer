@@ -418,4 +418,23 @@ class ListItem(Container):
     tag = TaggedText().complete(self.contents, 'li', True)
     self.contents = [tag]
 
+class Inset(Container):
+  "A generic inset in a LyX document"
+
+  start = '\\begin_inset'
+  ending = '\\end_inset'
+
+  def __init__(self):
+    self.contents = list()
+    self.parser = BoundedParser()
+    self.output = TagOutput()
+    self.breaklines = True
+
+  def process(self):
+    self.type = self.header[1]
+    self.tag = 'span class="' + self.type + '"'
+
+  def __str__(self):
+    return 'Inset of type ' + self.type
+
 
