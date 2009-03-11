@@ -13,47 +13,22 @@ import sys
 import codecs
 from trace import Trace
 from fileline import *
-from container import *
+from styles import *
 from link import *
 from formula import *
 from table import *
 from image import *
+from container import *
 
-
-class ContainerFactory(object):
-  "Creates containers depending on the first line"
-
-  types = [BlackBox,
-        # do not add above this line
-        Title, Author, EmphaticText, VersalitasText, Image, QuoteContainer,
-        IndexEntry, BiblioEntry, BiblioCite, LangLine, Reference, Label,
-        TextFamily, Formula, PrintIndex, LyxHeader, LyxFooter, URL, ListOf,
-        TableOfContents, Hfill, ColorText, SizeText, BoldText, LyxLine,
-        Align, Table, TableHeader, Row, Cell, Bibliography,
-        InsetText, Caption, ListItem,
-        # do not add below this line
-        Inset, Layout, Float, StringContainer]
-
-  root = ParseTree(types)
-
-  @classmethod
-  def create(cls, reader):
-    "Get the container and parse it"
-    # Trace.debug('processing ' + reader.currentline().strip())
-    type = ContainerFactory.root.find(reader)
-    container = type.__new__(type)
-    container.__init__()
-    container.factory = ContainerFactory
-    container.parse(reader)
-    return container
 
 class Book():
   "book in a lyx file"
 
   def parsecontents(self, reader, writer):
     "Parse the contents of the reader and write them"
+    factory = ContainerFactory()
     while not reader.finished():
-      container = ContainerFactory.create(reader)
+      container = factory.create(reader)
       writer.write(container.gethtml())
 
 def createbook(args):

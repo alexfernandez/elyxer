@@ -12,6 +12,7 @@ from trace import Trace
 from parse import *
 from output import *
 from container import *
+from styles import *
 
 
 class Link(Container):
@@ -263,4 +264,7 @@ class LinkOutput(object):
       tag += ' href="' + container.url + '"'
     text = TaggedText().complete(container.contents, tag)
     return text.gethtml()
+
+ContainerFactory.types += [Label, Reference, BiblioCite, Bibliography,
+    BiblioEntry, ListOf, TableOfContents, IndexEntry, PrintIndex, URL]
 

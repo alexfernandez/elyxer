@@ -107,3 +107,5 @@ class ImageOutput(object):
     html.append('/>\n')
     return html
 
+ContainerFactory.types.append(Image)
+

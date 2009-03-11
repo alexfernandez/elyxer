@@ -85,22 +85,6 @@ class Container(object):
           return result
     return None
 
-class QuoteContainer(Container):
-  "A container for a pretty quote"
-
-  start = '\\begin_inset Quotes'
-  ending = '\\end_inset'
-  outputs = { 'eld':u'“', 'erd':u'”' }
-
-  def __init__(self):
-    self.parser = BoundedParser()
-    self.output = FixedOutput()
-
-  def process(self):
-    "Process contents"
-    self.type = self.header[2]
-    self.html = QuoteContainer.outputs[self.type]
-
 class BlackBox(Container):
   "A container that does not output anything"
 
@@ -109,7 +93,7 @@ class BlackBox(Container):
       '\\shape default', '\\series default', '\\emph off',
       '\\bar no', '\\noun off', '\\emph default', '\\bar default',
       '\\noun default', '\\family roman', '\\series medium',
-      '\\shape up', '\\size normal', '\\color none', '#LyX']
+      '\\shape up', '\\size normal', '\\color none', '#LyX', '\\noindent']
 
   def __init__(self):
     self.parser = LoneCommand()
@@ -200,102 +184,6 @@ class LangLine(Container):
   def process(self):
     self.lang = self.header[1]
 
-class LyxLine(Container):
-  "A Lyx line"
-
-  start = '\\lyxline'
-
-  def __init__(self):
-    self.parser = LoneCommand()
-    self.output = FixedOutput()
-
-  def process(self):
-    self.html = ['<hr class="line" />']
-
-class TaggedText(Container):
-  "Text inside a tag"
-
-  def __init__(self):
-    self.parser = TextParser()
-    self.output = TagOutput()
-    self.breaklines = False
-
-  def complete(self, contents, tag, breaklines=False):
-    "Complete the tagged text and return it"
-    self.contents = contents
-    self.tag = tag
-    self.breaklines = breaklines
-    return self
-
-  def constant(self, text, tag):
-    "Complete the tagged text with a constant"
-    constant = Constant(text)
-    return self.complete([constant], tag)
-
-  def __str__(self):
-    return 'Tagged <' + self.tag + '>'
-
-class EmphaticText(TaggedText):
-  "Text with emphatic mode"
-
-  start = '\\emph on'
-
-  def process(self):
-    self.tag = 'i'
-
-class VersalitasText(TaggedText):
-  "Text in versalitas"
-
-  start = '\\noun on'
-
-  def process(self):
-    self.tag = 'span class="versalitas"'
-
-class ColorText(TaggedText):
-  "Colored text"
-
-  start = '\\color'
-
-  def process(self):
-    self.color = self.header[1]
-    self.tag = 'span class="' + self.color + '"'
-
-class SizeText(TaggedText):
-  "Sized text"
-
-  start = '\\size'
-
-  def process(self):
-    self.size = self.header[1]
-    self.tag = 'span class="' + self.size + '"'
-
-class BoldText(TaggedText):
-  "Bold text"
-
-  start = '\\series bold'
-
-  def process(self):
-    self.tag = 'b'
-
-class TextFamily(TaggedText):
-  "A bit of text from a different family"
-
-  start = '\\family'
-  typetags = { 'typewriter':'tt', 'sans':'span class="sans"' }
-
-  def process(self):
-    "Parse the type of family"
-    self.type = self.header[1]
-    self.tag = TextFamily.typetags[self.type]
-
-class Hfill(TaggedText):
-  "Horizontall fill"
-
-  start = '\\hfill'
-
-  def process(self):
-    self.tag = 'span class="right"'
-
 class Float(Container):
   "A floating inset"
 
@@ -336,15 +224,6 @@ class Caption(Container):
     self.tag = 'div class="caption"'
     self.breaklines = True
 
-class Align(Container):
-  "Bit of aligned text"
-
-  start = '\\align center'
-
-  def __init__(self):
-    self.parser = LoneCommand()
-    self.output = EmptyOutput()
-
 class Title(Container):
   "The title of the whole document"
 
@@ -357,7 +236,8 @@ class Title(Container):
     self.output = TitleOutput()
 
   def process(self):
-    self.title = self.contents[0].contents[0].strip()
+    string = self.searchfor(lambda x: isinstance(x, StringContainer))
+    self.title = string.contents[0]
     Trace.debug('Title: ' + self.title)
 
 class Layout(Container):
@@ -396,27 +276,9 @@ class Author(Layout):
 
   def process(self):
     self.tag = 'h2'
-    FooterOutput.author = self.contents[0].contents[0].strip()
+    string = self.searchfor(lambda x: isinstance(x, StringContainer))
+    FooterOutput.author = string.contents[0]
     Trace.debug('Author: ' + FooterOutput.author)
-
-class ListItem(Container):
-  "An element in a list"
-
-  starts = ['\\begin_layout Enumerate', '\\begin_layout Itemize']
-  ending = '\\end_layout'
-
-  def __init__(self):
-    self.contents = list()
-    self.parser = BoundedParser()
-    self.output = TagOutput()
-    self.breaklines = True
-
-  tags = {'Enumerate':'ol', 'Itemize':'ul'}
-
-  def process(self):
-    self.tag = ListItem.tags[self.header[1]]
-    tag = TaggedText().complete(self.contents, 'li', True)
-    self.contents = [tag]
 
 class Inset(Container):
   "A generic inset in a LyX document"
@@ -437,4 +299,22 @@ class Inset(Container):
   def __str__(self):
     return 'Inset of type ' + self.type
 
+class ContainerFactory(object):
+  "Creates containers depending on the first line"
+
+  types = [BlackBox, Title, Author, LangLine, LyxHeader, LyxFooter, InsetText,
+      Caption, Inset, Layout, Float, StringContainer]
+
+  def __init__(self):
+    self.tree = ParseTree(ContainerFactory.types)
+
+  def create(self, reader):
+    "Get the container and parse it"
+    # Trace.debug('processing ' + reader.currentline().strip())
+    type = self.tree.find(reader)
+    container = type.__new__(type)
+    container.__init__()
+    container.factory = self
+    container.parse(reader)
+    return container
 
