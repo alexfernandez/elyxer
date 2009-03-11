@@ -33,7 +33,7 @@ class Image(Container):
   def process(self):
     self.url = self.relativepath(self.header[1])
     if not os.path.exists(self.url):
-      Trace.error('Error in image origin ' + self.url)
+      Trace.error('Image ' + self.url + ' does not exist')
       return
     self.destination = os.path.splitext(self.url)[0] + '.png'
     factor = 100
@@ -97,7 +97,13 @@ class ImageOutput(object):
     cssclass = 'embedded'
     if container.figure:
       cssclass = 'figure'
-    return ['<img class="' + cssclass + '" src="' + container.destination +
-        '" alt="figure ' + container.destination + '" width="' +
-        str(container.width) + '" height="' + str(container.height) + '"/>\n']
+    html = ['<img class="' + cssclass + '"']
+    if hasattr(container, 'destination'):
+      html.append(' src="' + container.destination +
+          '" alt="figure ' + container.destination + '" width="' +
+          str(container.width) + '" height="' + str(container.height) + '"')
+    else:
+      html.append(' src="' + container.url + '"')
+    html.append('/>\n')
+    return html
 
