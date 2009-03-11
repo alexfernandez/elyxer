@@ -76,15 +76,19 @@ Version History
 \end_layout
 
 \begin_layout Standard
-Latest version is 0.2, created on 20090311.
+Latest version is 0.3, created on 20090311.
 \end_layout
 
 \begin_layout Itemize
-0.1 (20090310): first public version.
+0.3 (20090311): Now works with generic Insets.
 \end_layout
 
 \begin_layout Itemize
 0.2 (20090311): ImageMagick is not required anymore.
+\end_layout
+
+\begin_layout Itemize
+0.1 (20090310): first public version.
 \end_layout
 
 \begin_layout Subsection
