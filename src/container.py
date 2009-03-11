@@ -224,22 +224,6 @@ class Caption(Container):
     self.tag = 'div class="caption"'
     self.breaklines = True
 
-class Title(Container):
-  "The title of the whole document"
-
-  start = '\\begin_layout Title'
-  ending = '\\end_layout'
-
-  def __init__(self):
-    self.contents = list()
-    self.parser = BoundedParser()
-    self.output = TitleOutput()
-
-  def process(self):
-    string = self.searchfor(lambda x: isinstance(x, StringContainer))
-    self.title = string.contents[0]
-    Trace.debug('Title: ' + self.title)
-
 class Layout(Container):
   "A layout (block of text) inside a lyx file"
 
@@ -268,6 +252,18 @@ class Layout(Container):
   def __str__(self):
     return 'Layout of type ' + self.type
 
+class Title(Layout):
+  "The title of the whole document"
+
+  start = '\\begin_layout Title'
+  ending = '\\end_layout'
+
+  def process(self):
+    self.tag = 'h1 class="title"'
+    string = self.searchfor(lambda x: isinstance(x, StringContainer))
+    self.title = string.contents[0]
+    Trace.debug('Title: ' + self.title)
+
 class Author(Layout):
   "The document author"
 
@@ -275,7 +271,7 @@ class Author(Layout):
   ending = '\\end_layout'
 
   def process(self):
-    self.tag = 'h2'
+    self.tag = 'h2 class="author"'
     string = self.searchfor(lambda x: isinstance(x, StringContainer))
     FooterOutput.author = string.contents[0]
     Trace.debug('Author: ' + FooterOutput.author)

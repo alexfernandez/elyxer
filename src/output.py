@@ -82,22 +82,10 @@ class HeaderOutput(object):
     html.append(u'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n')
     html.append(u'<head>\n')
     html.append(u'<link rel="stylesheet" href="lyx.css" type="text/css" media="screen"/>\n')
-    return html
-
-class TitleOutput(object):
-  "Return an HTML title for a document"
-
-  def gethtml(self, container):
-    "Return the HTML for the title"
-    container.tag = 'title'
-    container.breaklines = True
-    tag = TagOutput()
-    html = tag.gethtml(container)
+    html.append(u'<title>Converted document</title>')
     html.append('</head>\n')
     html.append('<body>\n')
     html.append('<div id="globalWrapper">\n')
-    container.tag = 'h1 class="title"'
-    html += tag.gethtml(container)
     return html
 
 class FooterOutput(object):
