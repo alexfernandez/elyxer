@@ -291,6 +291,10 @@ class Inset(Container):
   def process(self):
     self.type = self.header[1]
     self.tag = 'span class="' + self.type + '"'
+    # remove status open/collapsed
+    if len(self.contents) > 0 and isinstance(self.contents[0], StringContainer):
+      if self.contents[0].contents[0].startswith('status'):
+        del(self.contents[0])
 
   def __str__(self):
     return 'Inset of type ' + self.type
