@@ -18,6 +18,7 @@ from link import *
 from formula import *
 from table import *
 from image import *
+from structure import *
 from container import *
 
 
