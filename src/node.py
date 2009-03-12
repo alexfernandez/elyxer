@@ -1,11 +1,11 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 # eLyXer: LyX to HTML converter
 # Copyright 2009 Alex Fernández
 # Published under the GPLv3, see LICENSE for details
 
-# Alex 31-01-2009
+# Alex 20090131
 # eLyXer general index and hierarchy
 
 from trace import Trace
