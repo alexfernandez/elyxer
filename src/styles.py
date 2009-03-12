@@ -42,29 +42,6 @@ class LyxLine(Container):
   def process(self):
     self.html = ['<hr class="line" />']
 
-class TaggedText(Container):
-  "Text inside a tag"
-
-  def __init__(self):
-    self.parser = TextParser()
-    self.output = TagOutput()
-    self.breaklines = False
-
-  def complete(self, contents, tag, breaklines=False):
-    "Complete the tagged text and return it"
-    self.contents = contents
-    self.tag = tag
-    self.breaklines = breaklines
-    return self
-
-  def constant(self, text, tag):
-    "Complete the tagged text with a constant"
-    constant = Constant(text)
-    return self.complete([constant], tag)
-
-  def __str__(self):
-    return 'Tagged <' + self.tag + '>'
-
 class EmphaticText(TaggedText):
   "Text with emphatic mode"
 
