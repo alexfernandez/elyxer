@@ -86,7 +86,12 @@ Latest version is 0.4, created on 20090312.
  Title no longer necessary to have a working document.
  ERT is ignored.
  Status line (open/collapsed) is ignored.
- Supports footnotes.
+ Supports footnotes, newlines, bibitem entries and citations.
+ Dev guide includes a 
+\family typewriter
+Container
+\family default
+ tutorial.
 \end_layout
 
 \begin_layout Itemize

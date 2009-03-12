@@ -71,8 +71,12 @@ reference "fig:Container-structure"
 
 \end_inset
 
- should explain how a Container works.
- A 
+ shows how a 
+\family typewriter
+Container
+\family default
+ works.
+ Each type of 
 \family typewriter
 Container
 \family default
@@ -97,7 +101,11 @@ parser
 \family typewriter
 contents
 \family default
- that is stored in the Container.
+ that is stored in the 
+\family typewriter
+Container
+\family default
+.
  The 
 \family typewriter
 output
@@ -148,7 +156,11 @@ Container structure.
 \end_layout
 
 \begin_layout Standard
-Two important class attributes of a Container are:
+Two important class attributes of a 
+\family typewriter
+Container
+\family default
+ are:
 \end_layout
 
 \begin_layout Itemize
@@ -172,33 +184,45 @@ s to determine when to stop parsing.
 \end_layout
 
 \begin_layout Standard
-A ParseTree is created on initialization to quickly pass each incoming LyX
- command to the appropriate containers, which are created on demand.
- For example, when the 
+A class called 
 \family typewriter
 ContainerFactory
 \family default
- finds a command:
-\end_layout
-
-\begin_layout Quotation
-
+ has the responsibility of creating the appropriate containers, as the strings
+ in their 
 \family typewriter
-
-\backslash
-
-\backslash
-emph on
+start
+\family default
+ attributes are found.
 \end_layout
 
 \begin_layout Standard
-it will create and initialize an 
+The basic method of a 
 \family typewriter
-EmphaticText
+Container
 \family default
- object.
- Parsing is much faster this way, but there are disadvantages; for one,
- parsing can only be done using whole words and not suffixes.
+ is:
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+process()
+\family default
+: called after parsing the LyX text and before outputting the HTML result.
+ Here the 
+\family typewriter
+Container
+\family default
+ can alter its 
+\family typewriter
+contents
+\family default
+ as needed.
+\end_layout
+
+\begin_layout Standard
+Now we will see each subordinate class in detail.
 \end_layout
 
 \begin_layout Subsection
@@ -406,7 +430,7 @@ Container
 \end_layout
 
 \begin_layout Subsection
-Adding your own 
+Tutorial: Adding Your Own 
 \family typewriter
 Container
 \end_layout
@@ -429,8 +453,12 @@ Parser
 \family typewriter
 output
 \family default
-.
+ (or reuse existing ones).
  Once it is added to the 
+\family typewriter
+types
+\family default
+ in the 
 \family typewriter
 ContainerFactory
 \family default
@@ -439,15 +467,876 @@ ContainerFactory
 \end_layout
 
 \begin_layout Standard
-The files 
+The file 
 \family typewriter
-formula.py
+bibitem.py
 \family default
- and 
+ has a good example of processing commands in just one file.
+ Let us build our own container 
 \family typewriter
-image.py
+BibitemInset
 \family default
- have some examples of processing a command in just one file.
+ here.
+ We want to parse the LyX command in listing 
+\begin_inset LatexCommand ref
+reference "alg:bibitem-command"
+
+\end_inset
+
+.
+ In the resulting HTML we will generate an anchor: a single tag 
+\family typewriter
+<a>
+\family default
+ with fixed text 
+\family typewriter
+"[ref]"
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Quotation
+
+\family typewriter
+
+\backslash
+begin_inset CommandInset bibitem
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+LatexCommand bibitem
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+key "mykey"
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+
+\backslash
+end_inset
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "alg:bibitem-command"
+
+\end_inset
+
+The LyX command to parse.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We will call the 
+\family typewriter
+Container
+\family default
+ 
+\family typewriter
+BibitemInset
+\family default
+, and it will process precisely the inset that we have here.
+ We will place the class in 
+\family typewriter
+bibitem.py
+\family default
+.
+ So this file starts as shown in listing 
+\begin_inset LatexCommand ref
+reference "alg:bibitem-class"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Quotation
+
+\family typewriter
+class BibitemInset(Container):
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+"An inset containing a bibitem command"
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+start = '
+\backslash
+
+\backslash
+begin_inset CommandInset bibitem'
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+ending = '
+\backslash
+
+\backslash
+end_inset'
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "alg:bibitem-class"
+
+\end_inset
+
+Class definition for 
+\family typewriter
+BibitemInset
+\family default
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can use the parser for a bounded command with start and ending, 
+\family typewriter
+BoundedParser
+\family default
+.
+ For the output we will generate a single HTML tag 
+\family typewriter
+<a>
+\family default
+, so the 
+\family typewriter
+TagOutput()
+\family default
+ is appropriate.
+ Finally we will set the 
+\family typewriter
+breaklines
+\family default
+ attribute to 
+\family typewriter
+False
+\family default
+, so that the output shows the tag in the same line as the contents: 
+\family typewriter
+<a \SpecialChar \ldots{}
+>[ref]</a>
+\family default
+.
+ Listing 
+\begin_inset LatexCommand ref
+reference "alg:bibitem-init"
+
+\end_inset
+
+ shows the constructor.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+def __init__(self):
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+self.parser = BoundedParser()
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+self.output = TagOutput()
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+self.tag = 'a'
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+self.breaklines = False
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "alg:bibitem-init"
+
+\end_inset
+
+Constructor for 
+\family typewriter
+BibitemInset
+\family default
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+BoundedParser
+\family default
+ will automatically parse the header and the contents.
+ In the 
+\family typewriter
+process()
+\family default
+ method we will discard the first line with the 
+\family typewriter
+LatexCommand
+\family default
+, and place the key from the second line as link destination.
+ The class 
+\family typewriter
+StringContainer
+\family default
+ holds string constants; in our case we will have to isolate the key by
+ splitting the string around the double quote 
+\family typewriter
+"
+\family default
+, and then access the anchor with the same name.
+ The contents will be set to the fixed string 
+\family typewriter
+[ref]
+\family default
+.
+ The result is shown in listing 
+\begin_inset LatexCommand ref
+reference "alg:bibitem-process"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+def process(self):
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+#skip first line
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+del self.contents[0]
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+# parse second line: fixed string
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+string = self.contents[0]
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+# split around the "
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+key = string.contents[0].split('"')[1]
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+# make tag and contents
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+self.tag = 'a name="' + key + '"'
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+string.contents[0] = '[ref] '
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "alg:bibitem-process"
+
+\end_inset
+
+Processing for 
+\family typewriter
+BibitemInset
+\family default
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And then we have to add the new class to the types parsed by the 
+\family typewriter
+ContainerFactory
+\family default
+; this has to be done outside the class definition.
+ The full listing is shown in listing 
+\begin_inset LatexCommand ref
+reference "alg:bibitem-complete"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Quotation
+
+\family typewriter
+from parser import *
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+from output import *
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+from container import *
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+class BibitemInset(Container):
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+"An inset containing a bibitem command"
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+start = '
+\backslash
+
+\backslash
+begin_inset CommandInset bibitem'
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+ending = '
+\backslash
+
+\backslash
+end_inset'
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+def __init__(self):
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+self.parser = BoundedParser()
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+self.output = TagOutput()
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+self.breaklines = False
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+def process(self):
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+#skip first line
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+del self.contents[0]
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+# parse second line: fixed string
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+string = self.contents[0]
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+# split around the "
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+key = string.contents[0].split('"')[1]
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+# make tag and contents
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+self.tag = 'a name="' + key + '"'
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+string.contents[0] = '[ref] '
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+ContainerFactory.types.append(BibitemInset)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "alg:bibitem-complete"
+
+\end_inset
+
+Full listing for 
+\family typewriter
+BibitemInset
+\family default
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The end result of processing the command in listing 
+\begin_inset LatexCommand ref
+reference "alg:bibitem-command"
+
+\end_inset
+
+ is a valid anchor:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+<a name="mykey">[ref] </a>
+\end_layout
+
+\begin_layout Standard
+The final touch is to make sure that the class is run, importing it in the
+ main file 
+\family typewriter
+elyxer.py
+\family default
+, as shown in listing 
+\begin_inset LatexCommand ref
+reference "alg:bibitem-include"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Quotation
+
+\family typewriter
+\SpecialChar \ldots{}
+
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+from structure import *
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\series bold
+from bibitem import *
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+from container import *
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\SpecialChar \ldots{}
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "alg:bibitem-include"
+
+\end_inset
+
+Importing the 
+\family typewriter
+BibitemInset
+\family default
+ from the main file.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now this 
+\series bold
+Container
+\series default
+ is not too refined: the link text is fixed, and we need to do additional
+ processing on the bibitem entry to show consecutive numbers.
+ The approach is not very flexible either: e.g.
+ anchor text is fixed.
+ But in less than 20 lines we have parsed a new LyX command and have outputted
+ valid, working XHTML code.
+ The actual code is found in the sources for eLyXer, in 
+\family typewriter
+src/bibitem.py
+\family default
+: it processes bibitem entries and citations in about 50 lines.
 \end_layout
 
 \begin_layout Section
@@ -457,6 +1346,54 @@ Advanced Features
 \begin_layout Standard
 This section tackles other, more complex features.
  Not all of them are included in the current version.
+\end_layout
+
+\begin_layout Subsection
+Parse Tree
+\begin_inset LatexCommand label
+name "sub:Parse-Tree"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+On initialization of the 
+\family typewriter
+ContainerFactory
+\family default
+, a 
+\family typewriter
+ParseTree
+\family default
+ is created to quickly pass each incoming LyX command to the appropriate
+ containers, which are created on demand.
+ For example, when the 
+\family typewriter
+ContainerFactory
+\family default
+ finds a command:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+
+\backslash
+
+\backslash
+emph on
+\end_layout
+
+\begin_layout Standard
+it will create and initialize an 
+\family typewriter
+EmphaticText
+\family default
+ object.
+ Parsing is much faster this way, but there are disadvantages; for one,
+ parsing can only be done using whole words and not suffixes.
 \end_layout
 
 \begin_layout Subsection
