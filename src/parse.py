@@ -38,14 +38,17 @@ class ParseTree:
 
   def find(self, reader):
     "Find the current sentence in the tree"
-    tree = self.root
+    branches = [self.root]
     for piece in reader.currentsplit():
+      current = branches[-1]
       piece = piece.rstrip('>')
-      if piece in tree:
-        tree = tree[piece]
-    if not ParseTree.default in tree:
-      Trace.error('Line ' + reader.currentline().strip() + ' not found')
-    return tree[ParseTree.default]
+      if piece in current:
+        branches.append(current[piece])
+    while not ParseTree.default in branches[-1]:
+      #Trace.debug('Line ' + reader.currentline().strip() + ' not found')
+      branches.pop()
+    last = branches[-1]
+    return last[ParseTree.default]
 
 class Parser(object):
   "A generic parser"
