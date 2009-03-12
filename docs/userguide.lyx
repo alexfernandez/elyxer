@@ -605,6 +605,12 @@ Lists (such as this one) appear disjoint, with each item in a separate list.
 Chapters, sections and subsections should appear numbered as in LyX.
 \end_layout
 
+\begin_layout Enumerate
+Text styles do not mix and match correctly.
+ E.g.
+ typewriter bold text will appear as typewriter or bold, but not both.
+\end_layout
+
 \begin_layout Subsection
 Reporting Bugs
 \end_layout
