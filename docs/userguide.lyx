@@ -76,7 +76,17 @@ Version History
 \end_layout
 
 \begin_layout Standard
-Latest version is 0.3, created on 20090311.
+Latest version is 0.4, created on 20090312.
+\end_layout
+
+\begin_layout Itemize
+0.4 (20090312): When images do not exist warns but does not fail.
+ Author and title containing tags are properly processed.
+ Slanted text translated to italics.
+ Title no longer necessary to have a working document.
+ ERT is ignored.
+ Status line (open/collapsed) is ignored.
+ Supports footnotes.
 \end_layout
 
 \begin_layout Itemize
