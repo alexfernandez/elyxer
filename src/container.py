@@ -299,11 +299,21 @@ class Inset(Container):
   def __str__(self):
     return 'Inset of type ' + self.type
 
+class ERT(Container):
+  "Evil Red Text"
+
+  start = '\\begin_inset ERT'
+  ending = '\\end_inset'
+
+  def __init__(self):
+    self.parser = BoundedParser()
+    self.output = EmptyOutput()
+
 class ContainerFactory(object):
   "Creates containers depending on the first line"
 
   types = [BlackBox, Title, Author, LangLine, LyxHeader, LyxFooter, InsetText,
-      Caption, Inset, Layout, Float, StringContainer]
+      Caption, Inset, Layout, Float, StringContainer, ERT]
 
   def __init__(self):
     self.tree = ParseTree(ContainerFactory.types)
