@@ -39,6 +39,7 @@ a.leaf {
 }
 h1 {
 	margin-top: 1em;
+	line-height: 1.5em;
 }
 sup {
 	font-size: 0.75em;
@@ -200,4 +201,12 @@ span.dot {
 }
 span.dotted {
 	border-top: thin #004000 dotted;
+}
+span.Foot {
+	float: right;
+	border: thin solid #c0c0c0;
+	background: #ffffff;
+	width: 25%;
+	padding: 0.5ex;
+	font: small normal;
 }
