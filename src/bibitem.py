@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from parser import *
+from parse import *
 from output import *
 from container import *
 
