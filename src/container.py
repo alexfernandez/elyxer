@@ -70,20 +70,44 @@ class Container(object):
         line = line.replace(piece, Container.escapes[piece])
     return line
 
-  def searchfor(self, check):
-    "Search for an embedded element recursively"
-    return self.searchinside(self.contents, check)
-
-  def searchinside(self, contents, check):
-    "Search for an embedded element in a list"
-    for element in contents:
+  def searchfor(self, type):
+    "Search for an embedded container of a given type recursively"
+    for element in self.contents:
       if isinstance(element, Container):
-        if check(element):
+        if isinstance(element, type):
           return element
-        result = self.searchinside(element.contents, check)
+        result = element.searchfor(type)
         if result:
           return result
     return None
+
+  def restyle(self, type, restyler):
+    "Restyle contents with a restyler function"
+    i = 0
+    while i < len(self.contents):
+      element = self.contents[i]
+      if isinstance(element, type):
+        restyler(self, i)
+      if isinstance(element, Container):
+        element.restyle(type, restyler)
+      i += 1
+
+  def group(self, index, group, isingroup):
+    "Group some adjoining elements into a group"
+    if hasattr(self.contents[index], 'grouped'):
+      return
+    while index < len(self.contents) and isingroup(self.contents[index]):
+      self.contents[index].grouped = True
+      group.contents.append(self.contents[index])
+      self.contents.pop(index)
+    self.contents.insert(index, group)
+
+  def remove(self, index):
+    "Remove a container but leave its contents"
+    container = self.contents[index]
+    self.contents.pop(index)
+    while len(container.contents) > 0:
+      self.contents.insert(index, container.contents.pop())
 
 class BlackBox(Container):
   "A container that does not output anything"

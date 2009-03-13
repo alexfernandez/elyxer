@@ -142,9 +142,9 @@ class Leaf(Numbered):
     "Process the container contents"
     self.container.node = self
     self.name = Leaf.names[self.type]
-    caption = self.container.searchfor(lambda x: isinstance(x, Caption))
+    caption = self.container.searchfor(Caption)
     caption.contents.insert(0, Constant(self.leading()))
-    label = caption.searchfor(lambda x: isinstance(x, Label))
+    label = caption.searchfor(Label)
     self.keyprefix = label.key.split(':')[0]
     label.node = self
     anchor = TaggedText().constant(' ', 'a class="leaf" name="' + self.getkey() + '"')
@@ -188,7 +188,7 @@ class Node(Numbered):
     self.container.node = self
     if self.level <= Node.newfile:
       self.beginfile()
-    label = self.container.searchfor(lambda x: isinstance(x, Label))
+    label = self.container.searchfor(Label)
     if not label:
       self.container.contents.insert(0, Constant(self.leading()))
       self.keyprefix = '?'

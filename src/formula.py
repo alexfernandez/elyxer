@@ -30,12 +30,14 @@ class Formula(Container):
     original, result = self.convert(text, 0)
     #Trace.debug('Formula ' + original + ' -> ' + result)
     self.contents = result
+    self.restyle(TaggedText, self.restyletagged)
     if self.header[0] == 'inline':
       self.tag = 'span class="formula"'
       self.breaklines = False
     else:
       self.tag = 'div class="formula"'
       self.breaklines = True
+
 
   unmodified = ['.', '*', u'€', '(', ')', '[', ']', ':']
   modified = {'\'':u'’', '=':u' = ', ' ':'', '<':u' &lt; ', '-':u' − ', '+':u' + ',
@@ -157,6 +159,55 @@ class Formula(Container):
     return None, []
 
   readers = [readalpha, readsymbols, command, readone, readtwo]
+
+  def restyletagged(self, container, index):
+    "Restyle tagged text"
+    tagged = container.contents[index]
+    if tagged.tag == 'span class="mathsf"':
+      tagged.restyle(TaggedText, self.removeitalics)
+      first = tagged.contents[0]
+      if self.mustspaceunits(container.contents, index):
+        first.contents[0] = u' ' + first.contents[0]
+    elif tagged.tag == 'span class="sqrt"':
+      tagged.tag = 'span class="root"'
+      radical = TaggedText().constant(u'√', 'span class="radical"')
+      container.contents.insert(index, radical)
+    elif tagged.tag == 'span class="overdot"':
+      dot = TaggedText().constant(u'⋅', 'span class="dot"')
+      tagged.tag = 'span class="dotted"'
+      container.contents.insert(index, dot)
+    elif tagged.tag == 'i':
+      group = TaggedText().complete([], 'i')
+      self.group(index, group, self.isalpha)
+      group.restyle(TaggedText, self.removeitalics)
+
+  def removeitalics(self, container, index):
+    "Remove italics tag"
+    if container.contents[index].tag == 'i':
+      container.remove(index)
+
+  def isalpha(self, element):
+    "Check if the element is all text"
+    if isinstance(element, StringContainer):
+      return element.contents[0].isalpha()
+    for item in element.contents:
+      if not self.isalpha(item):
+        return False
+    return True
+
+  def mustspaceunits(self, contents, index):
+    "Check if units must be spaced"
+    if index == 0:
+      return False
+    first = contents[index].contents[0]
+    if not isinstance(first, Constant):
+      return False
+    last = contents[index - 1]
+    if isinstance(last, Constant):
+      string = last.contents[-1]
+      if string[-1].isdigit():
+        return True
+    return False
 
 ContainerFactory.types.append(Formula)
 

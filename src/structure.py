@@ -108,7 +108,7 @@ class Title(Layout):
 
   def process(self):
     self.tag = 'h1 class="title"'
-    string = self.searchfor(lambda x: isinstance(x, StringContainer))
+    string = self.searchfor(StringContainer)
     self.title = string.contents[0]
     Trace.debug('Title: ' + self.title)
 
@@ -120,7 +120,7 @@ class Author(Layout):
 
   def process(self):
     self.tag = 'h2 class="author"'
-    string = self.searchfor(lambda x: isinstance(x, StringContainer))
+    string = self.searchfor(StringContainer)
     FooterOutput.author = string.contents[0]
     Trace.debug('Author: ' + FooterOutput.author)
 
