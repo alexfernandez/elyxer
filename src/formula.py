@@ -158,3 +158,5 @@ class Formula(Container):
 
   readers = [readalpha, readsymbols, command, readone, readtwo]
 
+ContainerFactory.types.append(Formula)
+

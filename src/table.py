@@ -9,7 +9,7 @@
 # eLyXer tables
 
 from trace import Trace
-from container import Container
+from container import *
 from parse import *
 from output import *
 
@@ -63,4 +63,5 @@ class Cell(Container):
     self.breaklines = True
     self.tag = 'td'
 
+ContainerFactory.types += [Table, TableHeader, Row, Cell]
 
