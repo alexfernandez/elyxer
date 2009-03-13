@@ -58,7 +58,7 @@ class LineReader(object):
   def close(self):
     self.file.close()
 
-class HtmlWriter:
+class HtmlWriter(object):
   "Writes an HTML file as a series of lists"
 
   def __init__(self, file):

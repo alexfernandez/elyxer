@@ -12,7 +12,7 @@ import codecs
 from trace import Trace
 
 
-class ParseTree:
+class ParseTree(object):
   "A parsing tree"
 
   default = '~~default~~'
