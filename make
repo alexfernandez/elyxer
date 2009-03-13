@@ -22,11 +22,20 @@ cd ..
 mkdir -p dist
 cd ..
 DATE=$(date +%Y%m%d)
-tar --exclude "elyxer/dist" --exclude "elyxer/.git" --exclude "elyxer/test" -czf elyxer-$DATE.tar.gz elyxer
+tar --exclude "elyxer/dist" --exclude "elyxer/.git" --exclude "elyxer/samples" -czf elyxer-$DATE.tar.gz elyxer
 mv elyxer-$DATE.tar.gz elyxer/dist
 zip -q elyxer-$DATE.zip elyxer/* -x *dist*
 zip -qr elyxer-$DATE.zip elyxer/src
 zip -qr elyxer-$DATE.zip elyxer/docs
+zip -qr elyxer-$DATE.zip elyxer/test
 mv elyxer-$DATE.zip elyxer/dist
 cd elyxer
+# run tests
+echo "Testing eLyXer -- any text below this line signals an error"
+cd test
+for file in $(ls *.lyx); do
+name=$(basename $file .lyx)
+../elyxer $name.lyx $name-test.html
+diff $name-test.html $name-good.html
+done
 
