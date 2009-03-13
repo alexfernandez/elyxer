@@ -80,6 +80,13 @@ Latest version is 0.4, created on 20090312.
 \end_layout
 
 \begin_layout Itemize
+0.5 (20090313): Inset parameters are all parsed correctly (including spaces
+ in image paths).
+ Formulae and tables should work again (including complex formatting).
+ Run under Python 2.3.5 (Mac OS X Tiger).
+\end_layout
+
+\begin_layout Itemize
 0.4 (20090312): When images do not exist warns but does not fail.
  Author and title containing tags are properly processed.
  Slanted text translated to italics.
@@ -111,9 +118,13 @@ System Requirements
 \end_layout
 
 \begin_layout Standard
-eLyXer requires Python 2.5: it should be installed on the target machine.
- It might also require a Linux operating system (I haven't tested it on
- Mac OS X or Windows).
+eLyXer requires Python 2.3.4, and should work with versions up to 2.5.
+\begin_inset Formula $x$
+\end_inset
+
+.
+ It might also require a Unix-based operating system (it has been tested
+ it on Mac OS X and Linux, but not on Windows).
 \end_layout
 
 \begin_layout Standard
