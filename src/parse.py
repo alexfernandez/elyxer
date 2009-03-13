@@ -34,6 +34,8 @@ class ParseTree:
       if not piece in tree:
         tree[piece] = dict()
       tree = tree[piece]
+    if ParseTree.default in tree:
+      Trace.error('Start ' + start + ' duplicated')
     tree[ParseTree.default] = type
 
   def find(self, reader):
