@@ -35,6 +35,8 @@ class Image(Container):
       return
     self.destination = os.path.splitext(self.url)[0] + '.png'
     factor = 100
+    if 'scale' in parameters:
+      factor = int(self.parser.parameters['scale'])
     self.convert(self.url, self.destination, factor)
     self.width, self.height = self.getdimensions(self.destination)
 
