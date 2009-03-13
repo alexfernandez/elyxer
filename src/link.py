@@ -67,7 +67,7 @@ class Reference(Link):
 class BiblioCite(Container):
   "Cite of a bibliography entry"
 
-  start = '\\begin_inset LatexCommand cite'
+  starts = ['\\begin_inset LatexCommand cite', '\\begin_inset CommandInset citation']
   ending = '\\end_inset'
 
   index = 0
@@ -111,7 +111,7 @@ class Bibliography(Container):
 class BiblioEntry(Container):
   "A bibliography entry"
 
-  start = '\\begin_inset LatexCommand bibitem'
+  starts = ['\\begin_inset LatexCommand bibitem', '\\begin_inset CommandInset bibitem']
   ending = '\\end_inset'
 
   def __init__(self):

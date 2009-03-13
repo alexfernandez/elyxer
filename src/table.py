@@ -29,7 +29,7 @@ class Table(Container):
 class TableHeader(Container):
   "The headers for the table"
 
-  starts = ['<lyxtabular', '<lyxtabular', '<features', '<column', '</lyxtabular']
+  starts = ['<lyxtabular', '<features', '<column', '</lyxtabular']
 
   def __init__(self):
     self.parser = LoneCommand()

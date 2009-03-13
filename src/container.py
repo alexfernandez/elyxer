@@ -89,7 +89,7 @@ class BlackBox(Container):
   "A container that does not output anything"
 
   starts = ['\\lyxformat', '\\begin_document', '\\begin_body',
-      '\\end_body', '\\end_document', '\\family default', '\\color inherit',
+      '\\family default', '\\color inherit',
       '\\shape default', '\\series default', '\\emph off',
       '\\bar no', '\\noun off', '\\emph default', '\\bar default',
       '\\noun default', '\\family roman', '\\series medium',

@@ -19,7 +19,6 @@ from formula import *
 from table import *
 from image import *
 from structure import *
-from bibitem import *
 from container import *
 
 
