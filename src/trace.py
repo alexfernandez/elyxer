@@ -15,15 +15,16 @@ class Trace(object):
 
   debugmode = False
 
-  @classmethod
   def debug(cls, message):
     "Show a trace message"
     if Trace.debugmode:
       print message
 
-  @classmethod
   def error(cls, message):
     "Show an error message"
     message = message.encode('utf-8')
     sys.stderr.write(message + '\n')
+
+  debug = classmethod(debug)
+  error = classmethod(error)
 

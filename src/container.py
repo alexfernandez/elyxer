@@ -19,7 +19,6 @@ class Container(object):
   def __init__(self):
     self.contents = list()
 
-  @classmethod
   def comesnext(cls, reader):
     "Return if the current line matches"
     line = reader.currentline()
@@ -30,6 +29,8 @@ class Container(object):
         if line.startswith(start):
           return True
     return False
+
+  comesnext = classmethod(comesnext)
 
   def parse(self, reader):
     "Parse by lines"

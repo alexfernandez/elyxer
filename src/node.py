@@ -122,7 +122,6 @@ class Leaf(Numbered):
 
   names = {'figure':'Figura', 'table':'Tabla', 'algorithm':'Listado'}
 
-  @classmethod
   def hasleaf(cls, container):
     if not hasattr(container, 'type'):
       return False
@@ -131,6 +130,8 @@ class Leaf(Numbered):
     if not container.type in Leaf.names:
       return False
     return True
+
+  hasleaf = classmethod(hasleaf)
 
   def setcontainer(self, container):
     "Set the container for the leaf"
@@ -161,13 +162,14 @@ class Node(Numbered):
   newfile = 2
   current = None
 
-  @classmethod
   def hasnode(cls, container):
     if not hasattr(container, 'type'):
       return False
     if not container.type in Node.levels:
       return False
     return True
+
+  hasnode = classmethod(hasnode)
 
   def __init__(self):
     Numbered.__init__(self)
