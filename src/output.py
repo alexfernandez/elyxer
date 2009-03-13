@@ -96,8 +96,9 @@ class FooterOutput(object):
 
   def gethtml(self, container):
     "Footer HTML"
+    html = []
     if FooterOutput.author and not Options.nocopy:
-      html = ['<hr/>\n']
+      html.append('<hr/>\n')
       year = datetime.date.today().year
       html.append('<p>Copyright (C) ' + str(year) + ' ' + FooterOutput.author
           + '</p>\n')
