@@ -47,7 +47,7 @@ class ParseTree(object):
       if piece in current:
         branches.append(current[piece])
     while not ParseTree.default in branches[-1]:
-      #Trace.debug('Line ' + reader.currentline().strip() + ' not found')
+      Trace.debug('Line ' + reader.currentline().strip() + ' not found')
       branches.pop()
     last = branches[-1]
     return last[ParseTree.default]

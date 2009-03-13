@@ -9,13 +9,14 @@
 # eLyXer runtime options
 
 import codecs
-from trace import Trace
 
 
 class Options(object):
   "A set of runtime options"
 
   nocopy = False
+  debug = False
+  quiet = False
 
   def parseoptions(self, args):
     "Parse command line options"

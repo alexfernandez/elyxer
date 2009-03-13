@@ -47,7 +47,7 @@ class LineReader(object):
     self.split = None
     self.index += 1
     if self.index % 1000 == 0:
-      Trace.debug('Parsing line ' + str(self.index))
+      Trace.message('Parsing line ' + str(self.index))
 
   def finished(self):
     "Have we finished reading the file"

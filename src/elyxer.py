@@ -23,7 +23,7 @@ from container import *
 from options import *
 
 
-class Book():
+class Book(object):
   "book in a lyx file"
 
   def parsecontents(self, reader, writer):
@@ -35,16 +35,16 @@ class Book():
 
 def createbook(args):
   "Read a whole book, write it"
-  Trace.debugmode = False
   filein = sys.stdin
   fileout = sys.stdout
+  if len(args) < 2:
+    Options.quiet = true
   if len(args) > 0:
     filein = codecs.open(args[0], 'r', "utf-8")
     del args[0]
   if len(args) > 0:
     fileout = codecs.open(args[0], 'w', "utf-8")
     del args[0]
-    Trace.debugmode = True
   if len(args) > 0:
     usage('Too many arguments')
     return
@@ -61,6 +61,7 @@ def usage(error):
   Trace.error('Usage: eLyXer [filein] [fileout].')
   Trace.error('  Options:')
   Trace.error('    --nocopy: disables the copyright notice at the bottom')
+  Trace.error('    --quiet: disables all runtime messages')
   exit()
 
 biblio = dict()

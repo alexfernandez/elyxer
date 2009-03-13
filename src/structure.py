@@ -116,7 +116,7 @@ class Title(Layout):
     self.tag = 'h1 class="title"'
     string = self.searchfor(StringContainer)
     self.title = string.contents[0]
-    Trace.debug('Title: ' + self.title)
+    Trace.message('Title: ' + self.title)
 
 class Author(Layout):
   "The document author"

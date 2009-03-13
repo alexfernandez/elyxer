@@ -83,7 +83,9 @@ Latest version is 0.4, created on 20090312.
 0.5 (20090313): Inset parameters are all parsed correctly (including spaces
  in image paths).
  Formulae and tables should work again (including complex formatting).
- Run under Python 2.3.5 (Mac OS X Tiger).
+ Modified to run under Python 2.3.5 (Mac OS X Tiger).
+ Processes layouts ending in `*' (like `Section*').
+ Runtime options for help and to disable the copyright notice, debug, quietness.
 \end_layout
 
 \begin_layout Itemize

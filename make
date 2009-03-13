@@ -35,7 +35,7 @@ echo "Testing eLyXer -- any text below this line signals an error"
 cd test
 for file in $(ls *.lyx); do
 name=$(basename $file .lyx)
-../elyxer $name.lyx $name-test.html
+../elyxer --quiet $name.lyx $name-test.html
 diff $name-test.html $name-good.html
 done
 

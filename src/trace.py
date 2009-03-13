@@ -9,15 +9,19 @@
 # eLyXer trace library
 
 import sys
+from options import *
 
 class Trace(object):
   "A tracing class"
 
-  debugmode = False
-
   def debug(cls, message):
+    "Show a debug message"
+    if Options.debug and not Options.quiet:
+      print message
+
+  def message(cls, message):
     "Show a trace message"
-    if Trace.debugmode:
+    if not Options.quiet:
       print message
 
   def error(cls, message):
@@ -26,5 +30,6 @@ class Trace(object):
     sys.stderr.write(message + '\n')
 
   debug = classmethod(debug)
+  message = classmethod(message)
   error = classmethod(error)
 
