@@ -86,6 +86,7 @@ Latest version is 0.4, created on 20090312.
  Modified to run under Python 2.3.5 (Mac OS X Tiger).
  Processes layouts ending in `*' (like `Section*').
  Runtime options for help and to disable the copyright notice, debug, quietness.
+ Accepts scaling for images.
 \end_layout
 
 \begin_layout Itemize

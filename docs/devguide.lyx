@@ -1503,7 +1503,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename parsetree.eps
+	filename parse tree.eps
 
 \end_inset
 
