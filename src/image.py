@@ -35,7 +35,7 @@ class Image(Container):
       return
     self.destination = os.path.splitext(self.url)[0] + '.png'
     factor = 100
-    if 'scale' in parameters:
+    if 'scale' in self.parser.parameters:
       factor = int(self.parser.parameters['scale'])
     self.convert(self.url, self.destination, factor)
     self.width, self.height = self.getdimensions(self.destination)
@@ -54,8 +54,8 @@ class Image(Container):
     if len(dir) > 0 and not os.path.exists(dir):
       os.makedirs(dir)
     try:
-      result = os.system('convert -density ' + str(factor) + ' ' + origin +
-          ' ' + destination)
+      result = os.system('convert -density ' + str(factor) + ' "' + origin +
+          '" "' + destination + '"')
       if result != 0:
         Trace.error('ImageMagick not installed; images will not be processed')
         Image.converter = False
