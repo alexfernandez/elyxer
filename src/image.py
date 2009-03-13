@@ -26,12 +26,11 @@ class Image(Container):
   converter = True
 
   def __init__(self):
-    self.parser = ImageCommand()
+    self.parser = InsetParser()
     self.output = ImageOutput()
-    self.figure = False
 
   def process(self):
-    self.url = self.header[1]
+    self.url = self.parser.parameters['filename']
     if not os.path.exists(self.url):
       Trace.error('Image ' + self.url + ' not found')
       return
@@ -88,8 +87,6 @@ class ImageOutput(object):
   def gethtml(self, container):
     "Get the HTML output of the image as a list"
     cssclass = 'embedded'
-    if container.figure:
-      cssclass = 'figure'
     html = ['<img class="' + cssclass + '"']
     if hasattr(container, 'destination'):
       html.append(' src="' + container.destination +

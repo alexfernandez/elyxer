@@ -101,7 +101,7 @@ class BoundedParser(Parser):
   def parse(self, reader):
     "Parse the contents of the container"
     contents = []
-    while not reader.currentline().startswith(self.ending):
+    while not reader.currentnonblank().startswith(self.ending):
       container = self.factory.create(reader)
       contents.append(container)
     # skip last line
@@ -133,24 +133,23 @@ class StringParser(Parser):
     reader.nextline()
     return contents
 
-class ImageCommand(BoundedParser):
-  "Parses an image command"
+class InsetParser(BoundedParser):
+  "Parses a LyX inset"
 
-  def parseheader(self, reader):
-    "Skip one line, parse next line"
-    reader.nextline()
-    return reader.currentsplit()
-
-class NamedCommand(BoundedParser):
-  "Parses a command with a name"
-
-  def parseheader(self, reader):
-    "Skip one line, parse text in quotes"
-    reader.nextline()
-    header = reader.currentline().split('"')
-    self.name = header[1]
-    self.key = self.name.replace(' ', '-')
-    return header
+  def parse(self, reader):
+    "Parse inset parameters into a dictionary"
+    self.parameters = dict()
+    if reader.currentline().startswith(self.ending):
+      return []
+    while reader.currentline() != '\n':
+      partitioned = reader.currentline().strip().partition(' ')
+      if len(partitioned[1]) == 0:
+        Trace.error('Wrong inset parameter "' + reader.currentline().strip() + '"')
+        return
+      key = partitioned[0]
+      self.parameters[key] = partitioned[2].replace('"', '')
+      reader.nextline()
+    return BoundedParser.parse(self, reader)
 
 class FormulaParser(Parser):
   "Parses a formula"

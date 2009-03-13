@@ -32,7 +32,7 @@ class Container(object):
     return False
 
   def parse(self, reader):
-    "Parse a line reader"
+    "Parse by lines"
     if hasattr(self, 'ending'):
       self.parser.ending = self.ending
     self.parser.factory = self.factory
@@ -207,7 +207,7 @@ class ContainerFactory(object):
 
   def create(self, reader):
     "Get the container and parse it"
-    # Trace.debug('processing ' + reader.currentline().strip())
+    #Trace.debug('processing "' + reader.currentline() + '"')
     type = self.tree.find(reader)
     container = type.__new__(type)
     container.__init__()

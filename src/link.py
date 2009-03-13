@@ -37,12 +37,12 @@ class Label(Container):
   labels = dict()
 
   def __init__(self):
-    self.parser = NamedCommand()
+    self.parser = InsetParser()
     self.output = LinkOutput()
 
   def process(self):
-    self.anchor = self.parser.key
-    Label.labels[self.parser.key] = self
+    self.anchor = self.parser.parameters['name']
+    Label.labels[self.anchor] = self
     self.contents = [Constant(' ')]
 
 class Reference(Link):
@@ -52,13 +52,14 @@ class Reference(Link):
   ending = '\\end_inset'
 
   def __init__(self):
-    self.parser = NamedCommand()
+    self.parser = InsetParser()
     self.output = LinkOutput()
     self.direction = u'↓'
 
   def process(self):
-    self.url = '#' + self.parser.key
-    if self.parser.key in Label.labels:
+    key = self.parser.parameters['reference']
+    self.url = '#' + key
+    if key in Label.labels:
       # already seen
       self.direction = u'↑'
     self.contents = [Constant(self.direction)]
@@ -73,7 +74,7 @@ class BiblioCite(Container):
   entries = dict()
 
   def __init__(self):
-    self.parser = NamedCommand()
+    self.parser = InsetParser()
     self.output = TagOutput()
     self.tag = 'sup'
     self.breaklines = False
@@ -81,7 +82,7 @@ class BiblioCite(Container):
   def process(self):
     "Add a cite to every entry"
     self.contents = list()
-    keys = self.parser.key.split(',')
+    keys = self.parser.parameters['key'].split(',')
     for key in keys:
       BiblioCite.index += 1
       number = str(BiblioCite.index)
@@ -114,7 +115,7 @@ class BiblioEntry(Container):
   ending = '\\end_inset'
 
   def __init__(self):
-    self.parser = NamedCommand()
+    self.parser = InsetParser()
     self.output = TagOutput()
     self.tag = 'span class="entry"'
     self.breaklines = False
@@ -122,8 +123,9 @@ class BiblioEntry(Container):
   def process(self):
     "Get all the cites of the entry"
     cites = list()
-    if self.parser.key in BiblioCite.entries:
-      cites = BiblioCite.entries[self.parser.key]
+    key = self.parser.parameters['key']
+    if key in BiblioCite.entries:
+      cites = BiblioCite.entries[key]
     self.contents = [Constant('[')]
     for cite in cites:
       link = Link().complete(cite, cite, '#cite-' + cite)
@@ -167,13 +169,13 @@ class IndexEntry(Link):
   entries = dict()
 
   def __init__(self):
-    self.parser = NamedCommand()
+    self.parser = InsetParser()
     self.output = IndexEntryOutput()
 
   def process(self):
     "Put entry in index"
-    self.key = self.parser.key
-    self.name = self.parser.name
+    self.name = self.parser.parameters['name']
+    self.key = self.name.replace(' ', '-')
     if not self.key in IndexEntry.entries:
       # no entry; create
       IndexEntry.entries[self.key] = list()
@@ -208,11 +210,11 @@ class URL(Link):
   ending = '\\end_inset'
 
   def __init__(self):
-    self.parser = NamedCommand()
+    self.parser = InsetParser()
     self.output = LinkOutput()
 
   def process(self):
-    self.url = self.escape(self.parser.name)
+    self.url = self.escape(self.parser.parameters['target'])
     self.contents = [Constant(self.url)]
 
 class IndexOutput(object):

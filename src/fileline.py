@@ -22,39 +22,38 @@ class LineReader(object):
     self.split = None
 
   def currentline(self):
+    "Get the current line"
     if not self.current:
       self.current = self.file.readline()
       if self.file == sys.stdin:
         self.current = self.current.decode('utf-8')
     return self.current
 
+  def currentnonblank(self):
+    "Get the current nonblank line"
+    while (self.currentline() == '\n'):
+      self.nextline()
+    return self.currentline()
+
   def currentsplit(self):
+    "Get the current nonblank line, split into words"
     if not self.split:
-      self.split = self.currentline().split()
+      self.split = self.currentnonblank().split()
     return self.split
 
   def nextline(self):
     "Go to next line"
-    self.inc()
-    if not self.finished():
-      self.skipempties()
-
-  def finished(self):
-    if len(self.currentline()) == 0:
-      return True
-    return False
-
-  def skipempties(self):
-    "Skip empty lines"
-    while self.currentline() == '\n':
-      self.inc()
-
-  def inc(self):
     self.current = None
     self.split = None
     self.index += 1
     if self.index % 1000 == 0:
       Trace.debug('Parsing line ' + str(self.index))
+
+  def finished(self):
+    "Have we finished reading the file"
+    if len(self.currentline()) == 0:
+      return True
+    return False
 
   def close(self):
     self.file.close()
@@ -71,6 +70,7 @@ class HtmlWriter:
       self.writeline(line)
 
   def writeline(self, line):
+    "Write a line to file"
     if self.file == sys.stdout:
       line = line.encode('utf-8')
     self.file.write(line)
