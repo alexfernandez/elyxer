@@ -145,12 +145,12 @@ class InsetParser(BoundedParser):
       reader.nextline()
       return []
     while reader.currentline() != '\n':
-      partitioned = reader.currentline().strip().partition(' ')
-      if len(partitioned[1]) == 0:
+      split = reader.currentline().strip().split(' ', 1)
+      if len(split) < 2:
         Trace.error('Wrong inset parameter "' + reader.currentline().strip() + '"')
         return
-      key = partitioned[0]
-      self.parameters[key] = partitioned[2].replace('"', '')
+      key = split[0]
+      self.parameters[key] = split[1].replace('"', '')
       reader.nextline()
     return BoundedParser.parse(self, reader)
 
