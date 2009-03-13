@@ -51,7 +51,7 @@ sub {
 	line-height: 0.5em;
 	vertical-align: text-bottom;
 }
-div.text {
+div.Standard {
 	margin: 1em 0;
 }
 p.dir {
@@ -129,7 +129,7 @@ p.right {
 p.biblio {
 	font-size: 90%;
 }
-div.paragraph {
+div.Paragraph {
 	font-weight: bold;
 	font-size: 103%;
 }
