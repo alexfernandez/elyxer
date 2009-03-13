@@ -142,6 +142,7 @@ class InsetParser(BoundedParser):
     "Parse inset parameters into a dictionary"
     self.parameters = dict()
     if reader.currentline().startswith(self.ending):
+      reader.nextline()
       return []
     while reader.currentline() != '\n':
       partitioned = reader.currentline().strip().partition(' ')

@@ -41,16 +41,14 @@ class Float(Container):
   ending = '\\end_inset'
 
   def __init__(self):
-    self.parser = BoundedParser()
+    self.parser = InsetParser()
     self.output = TagOutput()
+    self.breaklines = True
 
   def process(self):
     "Get the float type"
     self.type = self.header[2]
     self.tag = 'div class="' + self.type + '"'
-    self.breaklines = True
-    # skip over four float parameters
-    del self.contents[0:3]
 
 class InsetText(Container):
   "An inset of text in a lyx file"
@@ -69,7 +67,7 @@ class Caption(Container):
   ending = '\\end_inset'
 
   def __init__(self):
-    self.parser = BoundedParser()
+    self.parser = InsetParser()
     self.output = TagOutput()
     self.tag = 'div class="caption"'
     self.breaklines = True
@@ -134,17 +132,13 @@ class Inset(Container):
 
   def __init__(self):
     self.contents = list()
-    self.parser = BoundedParser()
+    self.parser = InsetParser()
     self.output = TagOutput()
     self.breaklines = True
 
   def process(self):
     self.type = self.header[1]
     self.tag = 'span class="' + self.type + '"'
-    # remove status open/collapsed
-    if len(self.contents) > 0 and isinstance(self.contents[0], StringContainer):
-      if self.contents[0].contents[0].startswith('status'):
-        del(self.contents[0])
 
   def __str__(self):
     return 'Inset of type ' + self.type

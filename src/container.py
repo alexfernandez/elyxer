@@ -171,7 +171,7 @@ class ERT(Container):
   ending = '\\end_inset'
 
   def __init__(self):
-    self.parser = BoundedParser()
+    self.parser = InsetParser()
     self.output = EmptyOutput()
 
 class TaggedText(Container):
