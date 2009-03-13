@@ -134,7 +134,8 @@ class StringContainer(Container):
     self.output = MirrorOutput()
     
   replaces = { '`':u'‘', '\'':u'’', '\n':'', '--':u'—' }
-  commands = { '\\SpecialChar \\ldots{}':u'…', '\\InsetSpace ~':'&nbsp;', '\\backslash':'\\' }
+  commands = { '\\SpecialChar \\ldots{}':u'…', '\\InsetSpace ~':'&nbsp;',
+      '\\backslash':'\\' }
 
   def process(self):
     "Replace special chars"
@@ -144,7 +145,8 @@ class StringContainer(Container):
     self.contents = [replaced]
     if '\\' in replaced and len(replaced) > 1:
       # unprocessed commands
-      Trace.error('Error at ' + str(self.parser.begin) + ': ' + replaced.strip())
+      Trace.error('Unknown command at ' + str(self.parser.begin) + ': '
+          + replaced.strip())
 
   def changeline(self, line):
     line = self.replacemap(line, StringContainer.replaces)
