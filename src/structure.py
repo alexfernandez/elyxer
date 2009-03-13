@@ -78,24 +78,30 @@ class Layout(Container):
   start = '\\begin_layout '
   ending = '\\end_layout'
 
-  typetags = { 'Quote':'blockquote', 'Standard':'div class="text"',
-        'Subsubsection*':'h4', 'Chapter':'h1', 'Section':'h2',
-        'Subsection': 'h3', 'Description':'div class="desc"',
-        'Quotation':'blockquote', 'Center':'div class="center"',
-        'Paragraph*':'div class="paragraph"', 'Part':'h1 class="part"',
-        'Subsection*': 'h3'}
+  typetags = { 'Quote':'blockquote', 'Standard':'div',
+        'Chapter':'h1', 'Section':'h2', 'Subsubsection':'h4',
+        'Subsection': 'h3', 'Description':'div',
+        'Quotation':'blockquote', 'Center':'div',
+        'Paragraph':'div', 'Part':'h1',
+        '?':'div'}
 
   def __init__(self):
     self.contents = list()
     self.parser = BoundedParser()
     self.output = TagOutput()
     self.breaklines = True
+    self.numbered = False
 
   def process(self):
     self.type = self.header[1]
     self.tag = 'div class="' + self.type + '"'
     if self.type in Layout.typetags:
-      self.tag = Layout.typetags[self.type]
+      self.numbered = True
+    elif self.type.replace('*', '') in Layout.typetags:
+      self.type = self.type.replace('*', '')
+    else:
+      self.type = '?'
+    self.tag = Layout.typetags[self.type]
 
   def __str__(self):
     return 'Layout of type ' + self.type
