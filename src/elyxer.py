@@ -20,6 +20,7 @@ from table import *
 from image import *
 from structure import *
 from container import *
+from options import *
 
 
 class Book():
@@ -45,15 +46,29 @@ def createbook(args):
     del args[0]
     Trace.debugmode = True
   if len(args) > 0:
-    Trace.error('Usage: eLyXer [filein] [fileout]')
+    usage('Too many arguments')
     return
   reader = LineReader(filein)
   writer = HtmlWriter(fileout)
   book = Book()
   book.parsecontents(reader, writer)
 
+def usage(error):
+  "Show an error message and correct usage"
+  if not error:
+    return
+  Trace.error(error)
+  Trace.error('Usage: eLyXer [filein] [fileout].')
+  Trace.error('  Options:')
+  Trace.error('    --nocopy: disables the copyright notice at the bottom')
+  exit()
+
 biblio = dict()
 args = sys.argv
 del args[0]
+error = Options().parseoptions(args)
+if error:
+  usage(error)
+  exit()
 createbook(args)
 
