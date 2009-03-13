@@ -467,12 +467,16 @@ ContainerFactory
 \end_layout
 
 \begin_layout Standard
-The file 
+There are good examples of parsing commands in just one file in 
 \family typewriter
-bibitem.py
+image.py
 \family default
- has a good example of processing commands in just one file.
- Let us build our own container 
+ and 
+\family typewriter
+formula.py
+\family default
+.
+ But let us build our own container 
 \family typewriter
 BibitemInset
 \family default
@@ -486,7 +490,7 @@ reference "alg:bibitem-command"
 .
  In the resulting HTML we will generate an anchor: a single tag 
 \family typewriter
-<a>
+<a name="mykey">
 \family default
  with fixed text 
 \family typewriter
@@ -1332,12 +1336,21 @@ Container
  anchor text is fixed.
  But in less than 20 lines we have parsed a new LyX command and have outputted
  valid, working XHTML code.
- The actual code can be found with the remaining sources for eLyXer, in
- 
+ The actual code is a bit different but follows the same principles; it
+ can be found in 
 \family typewriter
-src/bibitem.py
+src/link.py
 \family default
-: it processes bibliography entries and citations in about 50 lines.
+: in the classes 
+\family typewriter
+BiblioCite
+\family default
+ and 
+\family typewriter
+BiblioEntry
+\family default
+, and it processes bibliography entries and citations (with all our missing
+ bits) in about 50 lines.
 \end_layout
 
 \begin_layout Section
@@ -1393,8 +1406,170 @@ it will create and initialize an
 EmphaticText
 \family default
  object.
- Parsing is much faster this way, but there are disadvantages; for one,
- parsing can only be done using whole words and not suffixes.
+ The 
+\family typewriter
+ParseTree
+\family default
+ works with words: it creates a tree where each keyword has its own node.
+ At that node there may be a leaf, which is a 
+\family typewriter
+Container
+\family default
+ class, and/or additional branches that point to other nodes.
+ If the tree finds a 
+\family typewriter
+Container
+\family default
+ leaf at the last node then it has found the right point; otherwise it must
+ backtrack to the last node with a 
+\family typewriter
+Container
+\family default
+ leaf.
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset LatexCommand ref
+reference "fig:parsetree"
+
+\end_inset
+
+ shows a piece of the actual parse tree.
+ You can see how if the string to parse is 
+\begin_inset Quotes eld
+\end_inset
+
+
+\backslash
+begin_inset LatexCommand
+\begin_inset Quotes erd
+\end_inset
+
+, at the node for the second keyword 
+\begin_inset Quotes eld
+\end_inset
+
+LatexCommand
+\begin_inset Quotes erd
+\end_inset
+
+ there is no 
+\family typewriter
+Container
+\family default
+ leaf, just two more branches 
+\begin_inset Quotes eld
+\end_inset
+
+label
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+ref
+\begin_inset Quotes erd
+\end_inset
+
+.
+ In this case the 
+\family typewriter
+ParseTree
+\family default
+ would backtrack to 
+\begin_inset Quotes eld
+\end_inset
+
+begin_inset
+\begin_inset Quotes erd
+\end_inset
+
+, and choose the generic 
+\family typewriter
+Inset
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename parsetree.eps
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "fig:parsetree"
+
+\end_inset
+
+Portion of the parse tree.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Parsing is much faster this way, but there are disadvantages; for one, parsing
+ can only be done using whole words and not prefixes.
+ SGML tags (such as 
+\family typewriter
+<lyxtabular>
+\family default
+) pose particular problems: sometimes they may appear with attributes (as
+ in 
+\family typewriter
+<lyxtabular version="3">
+\family default
+), and in this case the starting word is 
+\family typewriter
+<lyxtabular
+\family default
+ without the trailing 
+\family typewriter
+'>'
+\family default
+ character.
+ So the parse tree removes any trailing 
+\family typewriter
+'>'
+\family default
+, and the start string would be just 
+\family typewriter
+<lyxtabular
+\family default
+; this way both starting words 
+\family typewriter
+<lyxtabular>
+\family default
+ and 
+\family typewriter
+<lyxtabular
+\family default
+ are recognized.
 \end_layout
 
 \begin_layout Subsection
@@ -1547,7 +1722,7 @@ Templates
 
 \begin_layout Standard
 Some header and footer content is automatically added to the resulting document.
- The use of templates might make the job far easier.
+ The use of templates might make the job far more flexible.
 \end_layout
 
 \begin_layout Subsection
