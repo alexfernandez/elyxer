@@ -10,7 +10,6 @@
 
 import os
 import os.path
-import subprocess
 import array
 from trace import Trace
 from container import *
@@ -53,14 +52,13 @@ class Image(Container):
     if len(dir) > 0 and not os.path.exists(dir):
       os.makedirs(dir)
     try:
-      result = subprocess.call('convert -density ' + str(factor) + ' '
-          + origin + ' ' + destination, shell=True)
+      result = os.system('convert -density ' + str(factor) + ' ' + origin +
+          ' ' + destination)
       if result != 0:
         Trace.error('ImageMagick not installed; images will not be processed')
         Image.converter = False
         return
-      Trace.debug('Converted ' + origin + ' to ' + destination
-          + ' with density ' + str(factor))
+      Trace.message('Converted ' + origin + ' to ' + destination)
     except OSError:
       Trace.error('Error while converting image ' + origin)
 
