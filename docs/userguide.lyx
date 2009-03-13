@@ -76,16 +76,18 @@ Version History
 \end_layout
 
 \begin_layout Standard
-Latest version is 0.4, created on 20090312.
+Latest version is 0.5, created on 20090314.
 \end_layout
 
 \begin_layout Itemize
 0.5 (20090313): Inset parameters are all parsed correctly (including spaces
  in image paths).
  Formulae and tables should work again (including complex formatting).
- Modified to run under Python 2.3.5 (Mac OS X Tiger).
+ Modified to (mostly) run under Python 2.3.5 (Mac OS X Tiger); thanks to Joachim
+ Osnabryg.
  Processes layouts ending in `*' (like `Section*').
- Runtime options for help and to disable the copyright notice, debug, quietness.
+ Runtime options for help and to disable the copyright notice, debug, quietness;
+ thanks to Nikos Alexandris.
  Accepts scaling for images.
 \end_layout
 
@@ -96,7 +98,8 @@ Latest version is 0.4, created on 20090312.
  Title no longer necessary to have a working document.
  ERT is ignored.
  Status line (open/collapsed) is ignored.
- Supports footnotes, newlines, bibitem entries and citations.
+ Supports footnotes, newlines, bibitem entries and citations; thanks to
+ Nikos Alexandris.
  Dev guide includes a 
 \family typewriter
 Container
