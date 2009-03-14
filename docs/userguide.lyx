@@ -570,54 +570,6 @@ Quite often you don't want a huge monolithic page, but a set of linked pages.
  will.
 \end_layout
 
-\begin_layout Standard
-The complete flow of tools might look like the one in figure 
-\begin_inset LatexCommand ref
-reference "fig:pipeline"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename pipeline.eps
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Caption
-
-\begin_layout Standard
-\begin_inset LatexCommand label
-name "fig:pipeline"
-
-\end_inset
-
-Complete eLyXer pipeline.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 HTML Code
 \end_layout
@@ -692,11 +644,7 @@ Text styles do not mix and match correctly.
 \begin_layout Enumerate
 On Mac OS X the output of a message with Unicode characters may cause an
  error.
- Workaround: run elyxer with the 
-\family typewriter
---quiet
-\family default
- option.
+ Workaround: run elyxer with the --quiet option.
 \end_layout
 
 \begin_layout Subsection

@@ -47,6 +47,18 @@ eLyXer Programming Guide
 Alex Fernández (elyxer@gmail.com)
 \end_layout
 
+\begin_layout Standard
+\align right
+\begin_inset Graphics
+	filename elyxer.svg
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 The Basics
 \end_layout
@@ -275,7 +287,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename container.eps
+	filename container.svg
 
 \end_inset
 
@@ -1652,7 +1664,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename parse tree.eps
+	filename parse tree.svg
 
 \end_inset
 
@@ -1928,7 +1940,7 @@ status open
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename pipeline.eps
+	filename pipeline.svg
 
 \end_inset
 
