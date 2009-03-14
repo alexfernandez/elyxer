@@ -214,7 +214,21 @@ class URL(Link):
     self.output = LinkOutput()
 
   def process(self):
+    "Read URL from parameters"
     self.url = self.escape(self.parser.parameters['target'])
+    self.contents = [Constant(self.url)]
+
+class FlexURL(URL):
+  "A flexible URL"
+
+  start = '\\begin_inset Flex URL'
+  ending = '\\end_inset'
+
+  def process(self):
+    "Read URL from contents"
+    text = self.searchfor(StringContainer).contents[0]
+    self.url = self.escape(text)
+    Trace.debug('Flex URL: ' + self.url)
     self.contents = [Constant(self.url)]
 
 class IndexOutput(object):
@@ -268,5 +282,6 @@ class LinkOutput(object):
     return text.gethtml()
 
 ContainerFactory.types += [Label, Reference, BiblioCite, Bibliography,
-    BiblioEntry, ListOf, TableOfContents, IndexEntry, PrintIndex, URL]
+    BiblioEntry, ListOf, TableOfContents, IndexEntry, PrintIndex, URL,
+    FlexURL]
 
