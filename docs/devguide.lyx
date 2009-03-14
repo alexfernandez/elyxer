@@ -40,15 +40,6 @@
 \begin_body
 
 \begin_layout Title
-eLyXer Programming Guide
-\end_layout
-
-\begin_layout Author
-Alex Fernández (elyxer@gmail.com)
-\end_layout
-
-\begin_layout Standard
-\align right
 \begin_inset Graphics
 	filename elyxer.svg
 	lyxscale 50
@@ -56,7 +47,11 @@ Alex Fernández (elyxer@gmail.com)
 
 \end_inset
 
+eLyXer Programming Guide
+\end_layout
 
+\begin_layout Author
+Alex Fernández (elyxer@gmail.com)
 \end_layout
 
 \begin_layout Section
