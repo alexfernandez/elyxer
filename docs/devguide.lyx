@@ -64,8 +64,14 @@ This document should help you get started extending eLyXer.
 \end_layout
 
 \begin_layout Standard
-This guide and all accompanying materials are licensed under the GPL version
- 3 or, at your option, any later version.
+This guide and all accompanying materials are licensed under the 
+\begin_inset LatexCommand url
+name "GPL version 3"
+target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
+
+\end_inset
+
+ or, at your option, any later version.
  See 
 \family typewriter
 LICENSE
@@ -2093,7 +2099,7 @@ docs/lyx.css
  file to your web page directory.
  Next try to customize the CSS file to your liking; it is a flexible approach
  that requires no code changes.
- Changing code should be a last resort.
+ Then try changing the code (and submitting the patch back).
 \end_layout
 
 \begin_layout Description
@@ -2128,16 +2134,19 @@ git
 \end_layout
 
 \begin_layout Description
-Q: Why isn't the whole repository published?
+Q: Where is the whole repository published?
 \end_layout
 
 \begin_layout Description
-A: Basically, for lack of a hosting facility.
- Once a suitable place is found the 
-\family typewriter
-git
-\family default
- repository will be published.
+A: It is hosted at Savannah.nongnu.org, along with the rest of the project
+ files.
+ It is a GNU project to host non-GNU projects 
+\begin_inset LatexCommand cite
+key "savannah.nongnu"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Description
@@ -2160,7 +2169,7 @@ key "savannah-elyxer"
 
 \end_inset
 
-Free Software Foundation: eLyXer summary.
+Free Software Foundation, Inc.: eLyXer summary.
  
 \begin_inset LatexCommand url
 target "https://savannah.nongnu.org/projects/elyxer/"
@@ -2295,6 +2304,22 @@ Software Tools
 , ed.
  Addison-Wesley Professional 1976, p.
  35.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "savannah.nongnu"
+
+\end_inset
+
+Free Software Foundation, Inc.: Savannah.nongnu.org, accessed March 2009.
+ 
+\begin_inset LatexCommand url
+target "https://savannah.nongnu.org/"
+
+\end_inset
+
+
 \end_layout
 
 \end_body

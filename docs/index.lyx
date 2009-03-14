@@ -73,8 +73,14 @@ elixir
 \end_layout
 
 \begin_layout Standard
-This page and all accompanying materials are licensed under the GPL version
- 3 or, at your option, any later version.
+This page and all accompanying materials are licensed under the 
+\begin_inset LatexCommand url
+name "GPL version 3"
+target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
+
+\end_inset
+
+ or, at your option, any later version.
  See 
 \family typewriter
 LICENSE
@@ -149,7 +155,7 @@ Modified license files to comply with Savannah policies.
 \end_layout
 
 \begin_layout Itemize
-Added logo.
+Added index page and logo.
 \end_layout
 
 \end_deeper
@@ -239,6 +245,30 @@ Container
 
 \begin_layout Itemize
 0.1 (20090310): first public version.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "wordreference-elixir"
+
+\end_inset
+
+WordReference.com: 
+\begin_inset Quotes eld
+\end_inset
+
+definition of elixir
+\begin_inset Quotes erd
+\end_inset
+
+, accessed March 2009.
+ 
+\begin_inset LatexCommand url
+target "http://www.wordreference.com/definition/elixir"
+
+\end_inset
+
+
 \end_layout
 
 \end_body
