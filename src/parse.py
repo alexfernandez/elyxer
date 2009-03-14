@@ -111,15 +111,23 @@ class TextParser(Parser):
       return True
     return current[0] in TextParser.endings
 
-class BoundedParser(Parser):
-  "A parser bound by a final line"
+class ExcludingParser(Parser):
+  "A parser that excludes the final line"
 
   def parse(self, reader):
-    "Parse the contents of the container"
+    "Parse everything up to (and excluding) the final line"
     contents = []
     while not reader.currentnonblank().startswith(self.ending):
       container = self.factory.create(reader)
       contents.append(container)
+    return contents
+
+class BoundedParser(ExcludingParser):
+  "A parser bound by a final line"
+
+  def parse(self, reader):
+    "Parse everything, including the final line"
+    contents = ExcludingParser.parse(self, reader)
     # skip last line
     reader.nextline()
     return contents

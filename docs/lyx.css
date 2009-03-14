@@ -123,8 +123,11 @@ td.numeric {
 td.empty {
 	text-align: center;
 }
-p.right {
+.right {
 	text-align: right;
+}
+.center {
+	text-align: center;
 }
 p.biblio {
 	font-size: 90%;

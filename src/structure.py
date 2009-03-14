@@ -86,6 +86,20 @@ class Caption(Container):
     self.tag = 'div class="caption"'
     self.breaklines = True
 
+class Align(Container):
+  "Bit of aligned text"
+
+  start = '\\align'
+  ending = '\\end_layout'
+
+  def __init__(self):
+    self.parser = ExcludingParser()
+    self.output = TagOutput()
+    self.breaklines = True
+
+  def process(self):
+    self.tag = 'div class="' + self.header[1] + '"'
+
 class Layout(Container):
   "A layout (block of text) inside a lyx file"
 
@@ -107,12 +121,14 @@ class Layout(Container):
 
   def process(self):
     self.type = self.header[1]
-    key = self.type
-    if self.type in Layout.typetags:
+    if False: #self.searchfor(Align):
+      align = self.searchfor(Align)
+      self.tag = 'div class="' + align.header[1] + '"'
+    elif self.type in Layout.typetags:
       self.numbered = True
-      self.tag = Layout.typetags[self.type]
+      self.tag = Layout.typetags[self.type] + ' class="' + self.type + '"'
     elif self.type.replace('*', '') in Layout.typetags:
-      self.tag = Layout.typetags[self.type.replace('*', '')]
+      self.tag = Layout.typetags[self.type.replace('*', '')] + ' class="' +  self.type.replace('*', '-') + '"'
     else:
       self.tag = 'div'
     self.tag = self.tag + ' class="' + self.type.replace('*', '-') + '"'
@@ -179,5 +195,5 @@ class Newline(Container):
     self.html = '<br/>'
 
 ContainerFactory.types += [LyxHeader, LyxFooter, InsetText, Caption, Inset,
-    Layout, Float, Title, Author, Newline]
+    Align, Layout, Float, Title, Author, Newline]
 

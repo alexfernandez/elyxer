@@ -125,15 +125,6 @@ class Hfill(TaggedText):
   def process(self):
     self.tag = 'span class="right"'
 
-class Align(Container):
-  "Bit of aligned text"
-
-  start = '\\align center'
-
-  def __init__(self):
-    self.parser = LoneCommand()
-    self.output = EmptyOutput()
-
 class FlexCode(Container):
   "A bit of inset code"
 
@@ -178,6 +169,6 @@ class DeeperList(Container):
     self.tag = 'ul'
 
 ContainerFactory.types += [QuoteContainer, LyxLine, EmphaticText, SlantedText,
-    VersalitasText, ColorText, SizeText, BoldText, TextFamily, Hfill, Align,
+    VersalitasText, ColorText, SizeText, BoldText, TextFamily, Hfill,
     FlexCode, ListItem, DeeperList]
 
