@@ -82,8 +82,7 @@ class Layout(Container):
         'Chapter':'h1', 'Section':'h2', 'Subsubsection':'h4',
         'Subsection': 'h3', 'Description':'div',
         'Quotation':'blockquote', 'Center':'div',
-        'Paragraph':'div', 'Part':'h1',
-        '?':'div'}
+        'Paragraph':'div', 'Part':'h1'}
 
   def __init__(self):
     self.contents = list()
@@ -94,14 +93,15 @@ class Layout(Container):
 
   def process(self):
     self.type = self.header[1]
-    self.tag = 'div class="' + self.type + '"'
+    key = self.type
     if self.type in Layout.typetags:
       self.numbered = True
+      self.tag = Layout.typetags[self.type]
     elif self.type.replace('*', '') in Layout.typetags:
-      self.type = self.type.replace('*', '')
+      self.tag = Layout.typetags[self.type.replace('*', '')]
     else:
-      self.type = '?'
-    self.tag = Layout.typetags[self.type]
+      self.tag = 'div'
+    self.tag = self.tag + ' class="' + self.type + '"'
 
   def __str__(self):
     return 'Layout of type ' + self.type
