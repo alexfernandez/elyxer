@@ -56,6 +56,16 @@ This document should help you get started extending eLyXer.
  In this section we will outline eLyXer performs its basic tasks.
 \end_layout
 
+\begin_layout Standard
+This guide and all accompanying materials are licensed under the GPL version
+ 3 or, at your option, any later version.
+ See 
+\family typewriter
+LICENSE
+\family default
+ file for details.
+\end_layout
+
 \begin_layout Subsection
 
 \family typewriter

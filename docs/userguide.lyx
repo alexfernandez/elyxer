@@ -51,7 +51,7 @@ Alex Fernández (elyxer@gmail.com)
 The Basics
 \end_layout
 
-\begin_layout Quotation
+\begin_layout Standard
 
 \emph on
 elixir, n: a substance believed to cure all ills
@@ -68,7 +68,19 @@ eLyXer (pronounced
 \emph on
 elixir
 \emph default
-) converts a LyX document into a web page that you can publish on the net.
+) eLyXer (pronounced elixir) is a LyX to HTML converter.
+ While there are a ton of such projects all over the web, eLyXer has a clear
+ focus on flexibility and elegant output.
+\end_layout
+
+\begin_layout Standard
+This guide and all accompanying materials are licensed under the GPL version
+ 3 or, at your option, any later version.
+ See 
+\family typewriter
+LICENSE
+\family default
+ file for details.
 \end_layout
 
 \begin_layout Subsection
@@ -86,6 +98,10 @@ Latest version is 0.5, created on 20090314.
 \begin_deeper
 \begin_layout Itemize
 Added Flex URLs, Flex code.
+\end_layout
+
+\begin_layout Itemize
+Works with Mac OS X terminal (thanks to Joachim Osnabryg).
 \end_layout
 
 \end_deeper
