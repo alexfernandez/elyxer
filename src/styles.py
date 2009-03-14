@@ -139,7 +139,19 @@ class ListItem(Container):
     tag = TaggedText().complete(self.contents, 'li', True)
     self.contents = [tag]
 
+class DeeperList(Container):
+  "A nested list"
+
+  start = '\\begin_deeper'
+  ending = '\\end_deeper'
+
+  def __init__(self):
+    self.parser = BoundedParser()
+    self.output = TagOutput()
+    self.breaklines = True
+    self.tag = 'ul'
+
 ContainerFactory.types += [QuoteContainer, LyxLine, EmphaticText, SlantedText,
     VersalitasText, ColorText, SizeText, BoldText, TextFamily, Hfill, Align,
-    ListItem]
+    ListItem, DeeperList]
 

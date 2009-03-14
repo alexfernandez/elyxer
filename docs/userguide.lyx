@@ -80,33 +80,81 @@ Latest version is 0.5, created on 20090314.
 \end_layout
 
 \begin_layout Itemize
-0.5 (20090313): Inset parameters are all parsed correctly (including spaces
- in image paths).
- Formulae and tables should work again (including complex formatting).
- Modified to (mostly) run under Python 2.3.5 (Mac OS X Tiger); thanks to Joachim
- Osnabryg.
- Processes layouts ending in `*' (like `Section*').
- Runtime options for help and to disable the copyright notice, debug, quietness;
- thanks to Nikos Alexandris.
- Accepts scaling for images.
+0.5 (20090314):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Inset parameters are all parsed correctly (including spaces in image paths).
 \end_layout
 
 \begin_layout Itemize
-0.4 (20090312): When images do not exist warns but does not fail.
- Author and title containing tags are properly processed.
- Slanted text translated to italics.
- Title no longer necessary to have a working document.
- ERT is ignored.
+Formulae and tables should work again (including complex formatting).
+\end_layout
+
+\begin_layout Itemize
+Modified to (mostly) run under Python 2.3.5 (Mac OS X Tiger); thanks to Joachim
+ Osnabryg.
+\end_layout
+
+\begin_layout Itemize
+Processes layouts ending in `*' (like `Section*').
+\end_layout
+
+\begin_layout Itemize
+Runtime options for help and to disable the copyright notice, debug, quietness;
+ thanks again to Nikos Alexandris.
+\end_layout
+
+\begin_layout Itemize
+Accepts scaling for images.
+\end_layout
+
+\begin_layout Itemize
+Nested lists working; thanks to Richard Talley.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+0.4 (20090312):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+When images do not exist warns but does not fail.
+\end_layout
+
+\begin_layout Itemize
+Author and title containing tags are properly processed.
+\end_layout
+
+\begin_layout Itemize
+Slanted text translated to italics.
+\end_layout
+
+\begin_layout Itemize
+Title no longer necessary to have a working document.
+\end_layout
+
+\begin_layout Itemize
+ERT is ignored.
  Status line (open/collapsed) is ignored.
- Supports footnotes, newlines, bibitem entries and citations; thanks to
- Nikos Alexandris.
- Dev guide includes a 
+\end_layout
+
+\begin_layout Itemize
+Supports footnotes, newlines, bibitem entries and citations; thanks to Nikos
+ Alexandris.
+\end_layout
+
+\begin_layout Itemize
+Dev guide includes a 
 \family typewriter
 Container
 \family default
  tutorial.
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
 0.3 (20090311): Now works with generic Insets.
 \end_layout
