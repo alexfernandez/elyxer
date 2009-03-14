@@ -101,7 +101,7 @@ class Layout(Container):
       self.tag = Layout.typetags[self.type.replace('*', '')]
     else:
       self.tag = 'div'
-    self.tag = self.tag + ' class="' + self.type + '"'
+    self.tag = self.tag + ' class="' + self.type.replace('*', '-') + '"'
 
   def __str__(self):
     return 'Layout of type ' + self.type
