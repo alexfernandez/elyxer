@@ -210,3 +210,21 @@ span.Foot {
 	padding: 0.5ex;
 	font: small normal;
 }
+div.LyX-Code {
+	padding: 0.5em;
+	margin-left: 1em;
+	margin-right: auto;
+	width: auto;
+	font-family: monospace;
+}
+span.listings {
+	padding: 0.5em;
+	border: thin solid #c0c0c0;
+}
+span.code {
+	font-family: monospace;
+}
+div.Plain {
+	display: inline;
+	width: auto;
+}
