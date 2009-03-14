@@ -67,11 +67,150 @@ LICENSE
 \end_layout
 
 \begin_layout Subsection
+Getting eLyXer
+\end_layout
+
+\begin_layout Standard
+If you are interested in eLyXer from a developer's perspective the first
+ thing to do is fetch the code.
+ It is included in the standard distribution, so just navigate to the 
+\family typewriter
+src/
+\family default
+ folder and take a look at the 
+\family typewriter
+.py
+\family default
+ Python code files.
+\end_layout
+
+\begin_layout Standard
+For more serious use, or to get the latest copy of the code (after the last
+ published version) you need to install the tool 
+\family typewriter
+git
+\family default
+, created by Linus Torvalds (of Linux fame).
+ The code is hosted in Savannah 
+\begin_inset LatexCommand cite
+key "savannah-elyxer"
+
+\end_inset
+
+.
+ So first you have to fetch the code:
+\end_layout
+
+\begin_layout LyX-Code
+$ git clone git://git.sv.gnu.org/elyxer.git
+\end_layout
+
+\begin_layout Standard
+You should see some output similar to this:
+\end_layout
+
+\begin_layout LyX-Code
+Initialized empty Git repository in /home/chenno/bulk/install/elyxer/.git/
+\end_layout
+
+\begin_layout LyX-Code
+remote: Counting objects: 528, done.
+\end_layout
+
+\begin_layout LyX-Code
+remote: Compressing objects: 100% (157/157), done.
+\end_layout
+
+\begin_layout LyX-Code
+remote: Total 528 (delta 371), reused 528 (delta 371)
+\end_layout
+
+\begin_layout LyX-Code
+Receiving objects: 100% (528/528), 150.00 KiB | 140 KiB/s, done.
+\end_layout
+
+\begin_layout LyX-Code
+Resolving deltas: 100% (371/371), done.
+ 
+\end_layout
+
+\begin_layout Standard
+Now enter the directory that 
+\family typewriter
+git
+\family default
+ has created.
+\end_layout
+
+\begin_layout LyX-Code
+$ cd elyxer
+\end_layout
+
+\begin_layout Standard
+Your first task is to create the main executable file:
+\end_layout
+
+\begin_layout LyX-Code
+$ ./make
+\end_layout
+
+\begin_layout Standard
+eLyXer will compile it for you, and even run some basic tests.
+ Now you can try it out:
+\end_layout
+
+\begin_layout LyX-Code
+$ cd docs/
+\end_layout
+
+\begin_layout LyX-Code
+$ ../elyxer devguide.lyx devguide2.html
+\end_layout
+
+\begin_layout Standard
+You have just created your first eLyXer page! The result is in 
+\family typewriter
+devguide2.html
+\family default
+; to view it in Firefox:
+\end_layout
+
+\begin_layout LyX-Code
+$ firefox-bin devguide2.html
+\end_layout
+
+\begin_layout Standard
+Note for Windows developers: the commands shown should work without modification
+, except for maybe changing the slashes to backward-slashes (as in 
+\family typewriter
+..
+\backslash
+elyxer
+\family default
+).
+ But it has not been tested.
+\end_layout
+
+\begin_layout Standard
+In the rest of this section we will delve a little bit into how eLyXer works.
+\end_layout
+
+\begin_layout Subsection
 
 \family typewriter
 Container
 \family default
 s
+\end_layout
+
+\begin_layout Standard
+The basic code artifact (or `class' in Python talk) is the 
+\family typewriter
+Container
+\family default
+.
+ Its responsibility is to take a bit of LyX code and generate working HTML
+ code.
 \end_layout
 
 \begin_layout Standard
@@ -1999,8 +2138,29 @@ Q: I found a bug, what should I do?
 \end_layout
 
 \begin_layout Description
-A: Just report it to the author in a mail.
- In the future there might be some automated way to manage bugs.
+A: Just report it to the Savannah interface: 
+\begin_inset LatexCommand url
+target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "savannah-elyxer"
+
+\end_inset
+
+Free Software Foundation: eLyXer summary.
+ 
+\begin_inset LatexCommand url
+target "https://savannah.nongnu.org/projects/elyxer/"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Bibliography
