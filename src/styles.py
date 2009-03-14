@@ -120,6 +120,18 @@ class Align(Container):
     self.parser = LoneCommand()
     self.output = EmptyOutput()
 
+class FlexCode(Container):
+  "A bit of inset code"
+
+  start = '\\begin_inset Flex CharStyle:Code'
+  ending = '\\end_inset'
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = TagOutput()
+    self.breaklines = True
+    self.tag = 'span class="code"'
+
 class ListItem(Container):
   "An element in a list"
 
@@ -153,5 +165,5 @@ class DeeperList(Container):
 
 ContainerFactory.types += [QuoteContainer, LyxLine, EmphaticText, SlantedText,
     VersalitasText, ColorText, SizeText, BoldText, TextFamily, Hfill, Align,
-    ListItem, DeeperList]
+    FlexCode, ListItem, DeeperList]
 
