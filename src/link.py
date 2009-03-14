@@ -220,7 +220,8 @@ class PrintIndex(Container):
 class URL(Link):
   "A clickable URL"
 
-  start = '\\begin_inset LatexCommand url'
+  starts = ['\\begin_inset LatexCommand url',
+      '\\begin_inset LatexCommand htmlurl']
   ending = '\\end_inset'
 
   def __init__(self):
@@ -230,7 +231,10 @@ class URL(Link):
   def process(self):
     "Read URL from parameters"
     self.url = self.escape(self.parser.parameters['target'])
-    self.contents = [Constant(self.url)]
+    name = self.url
+    if 'name' in self.parser.parameters:
+      name = self.parser.parameters['name']
+    self.contents = [Constant(name)]
 
 class FlexURL(URL):
   "A flexible URL"
