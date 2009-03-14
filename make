@@ -14,6 +14,7 @@ cd ..
 chmod 755 elyxer
 # prepare documentation
 cd docs
+rm -f *.png
 ../elyxer userguide.lyx userguide.html
 ../elyxer devguide.lyx devguide.html
 rm -f *.lyx~
@@ -22,10 +23,12 @@ cd ..
 mkdir -p dist
 cd ..
 DATE=$(date +%Y%m%d)
-tar --exclude "elyxer/dist" --exclude "elyxer/.git" --exclude "elyxer/samples" -czf elyxer-$DATE.tar.gz elyxer
+tar --exclude "elyxer/dist" --exclude "elyxer/.git" \
+  --exclude "elyxer/samples" --exclude "src/*.pyc" \
+  -czf elyxer-$DATE.tar.gz elyxer
 mv elyxer-$DATE.tar.gz elyxer/dist
 zip -q elyxer-$DATE.zip elyxer/* -x *dist*
-zip -qr elyxer-$DATE.zip elyxer/src
+zip -qr elyxer-$DATE.zip elyxer/src/*.py
 zip -qr elyxer-$DATE.zip elyxer/docs
 zip -qr elyxer-$DATE.zip elyxer/test
 mv elyxer-$DATE.zip elyxer/dist
