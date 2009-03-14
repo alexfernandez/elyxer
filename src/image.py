@@ -48,13 +48,13 @@ class Image(Container):
       Trace.error('Image ' + self.url + ' not found')
       return
     self.destination = os.path.splitext(self.url)[0] + '.png'
-    factor = 100
+    density = 100
     if 'scale' in self.parser.parameters:
-      factor = int(self.parser.parameters['scale'])
-    self.convert(self.url, self.destination, factor)
+      density = int(self.parser.parameters['scale'])
+    self.convert(self.url, self.destination, density)
     self.width, self.height = self.getdimensions(self.destination)
 
-  def convert(self, origin, destination, factor):
+  def convert(self, origin, destination, density):
     "Convert an image to PNG"
     if not Image.converter:
       return
@@ -68,13 +68,14 @@ class Image(Container):
     if len(dir) > 0 and not os.path.exists(dir):
       os.makedirs(dir)
     try:
-      result = os.system('convert -density ' + str(factor) + ' "' + origin +
+      result = os.system('convert -density ' + str(density) + ' "' + origin +
           '" "' + destination + '"')
       if result != 0:
         Trace.error('ImageMagick not installed; images will not be processed')
         Image.converter = False
         return
-      Trace.message('Converted ' + origin + ' to ' + destination)
+      Trace.message('Converted ' + origin + ' to ' + destination + ' at ' +
+          str(density) + '%')
     except OSError:
       Trace.error('Error while converting image ' + origin)
 
