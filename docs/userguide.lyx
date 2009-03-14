@@ -51,7 +51,7 @@ Alex Fernández (elyxer@gmail.com)
 The Basics
 \end_layout
 
-\begin_layout Standard
+\begin_layout Quotation
 
 \emph on
 elixir, n: a substance believed to cure all ills
@@ -655,19 +655,6 @@ The following issues (including bugs and missing features) are acknowledged
 \end_layout
 
 \begin_layout Enumerate
-Only certain types of 
-\family typewriter
-Layout
-\family default
-s are supported.
- Any unknown 
-\family typewriter
-Layout
-\family default
- causes eLyXer to stop.
-\end_layout
-
-\begin_layout Enumerate
 Document structure is botched for articles: sections start with a 
 \family typewriter
 <h2>
@@ -700,6 +687,16 @@ Chapters, sections and subsections should appear numbered as in LyX.
 Text styles do not mix and match correctly.
  E.g.
  typewriter bold text will appear as typewriter or bold, but not both.
+\end_layout
+
+\begin_layout Enumerate
+On Mac OS X the output of a message with Unicode characters may cause an
+ error.
+ Workaround: run elyxer with the 
+\family typewriter
+--quiet
+\family default
+ option.
 \end_layout
 
 \begin_layout Subsection
