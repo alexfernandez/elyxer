@@ -134,6 +134,21 @@ Latest version is 0.6, created on 20090315.
 \end_layout
 
 \begin_layout Itemize
+0.7 (20090316):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Images referenced by absolute path are converted to relative PNGs.
+\end_layout
+
+\begin_layout Itemize
+Range of supported quotes is greater.
+ Unknown quotes are now marked as errors but do not make the tool fail.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.6 (20090315):
 \end_layout
 
