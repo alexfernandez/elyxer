@@ -215,7 +215,7 @@ target "http://www.nongnu.org/elyxer/lyx.css"
 
 , it can be changed via command line option 
 \family typewriter
---css
+‐‐css
 \family default
 .
 \end_layout
@@ -230,6 +230,22 @@ Updated documentation to include how to run on Windows.
 
 \begin_layout Itemize
 Added meta generator tag to all pages.
+\end_layout
+
+\begin_layout Itemize
+Added option 
+\family typewriter
+‐‐title
+\family default
+ to change the default page title.
+\end_layout
+
+\begin_layout Itemize
+Phonetic symbols appear in dark cyan: 
+\begin_inset Formula $\text{\textipa{[sample]}}$
+\end_inset
+
+.
 \end_layout
 
 \end_deeper
