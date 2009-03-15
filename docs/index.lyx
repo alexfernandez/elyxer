@@ -228,6 +228,10 @@ Reinstated layout classes for unknown types.
 Updated documentation to include how to run on Windows.
 \end_layout
 
+\begin_layout Itemize
+Added meta generator tag to all pages.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.6 (20090315):
@@ -352,9 +356,10 @@ This little project is my little contribution back to the wonderful LyX
 \begin_layout Standard
 Thanks to Stevan White for encouraging me to publish the tool; to Christian
  Ridderström for helping me out right at the start; to Abdelrazak Younes,
- Pavel Sanda, Günther Milde, Olivier Ripoll and José Matos for their interesting
- suggestions; to Nikos Alexandris, Joachim Osnabryg, Richard Talley, Wolfgang
- Keller, Murray Eisenberg and Robert Orr for their early testing.
+ Pavel Sanda, Günther Milde, Olivier Ripoll, José Matos and Iain Mac Donald
+ for their interesting suggestions; to Nikos Alexandris, Joachim Osnabryg,
+ Richard Talley, Wolfgang Keller, Murray Eisenberg and Robert Orr for their
+ early testing.
  A silent 
 \begin_inset Quotes eld
 \end_inset
