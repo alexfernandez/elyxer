@@ -237,3 +237,10 @@ h1.title {
 h2.author {
 	text-align: center;
 }
+span.text {
+	font-style: normal;
+}
+span.textipa {
+	color: #008080;
+	background: #fff0f0;
+}

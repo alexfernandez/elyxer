@@ -69,7 +69,8 @@ class Formula(Container):
       '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
       '\\dot':'span class="overdot"', '\\sqrt':'span class="sqrt"',
       '\\bar':'span class="bar"', '\\mbox':'span class="mbox"',
-      '\\textrm':'span class="mathrm"'}
+      '\\textrm':'span class="mathrm"', '\\text':'span class="text"',
+      '\\textipa':'span class="textipa"'}
   twofunctions = {
       '\\frac':['span class="fraction"', 'span class="numerator"', 'span class="denominator"'],
       '\\nicefrac':['span class="fraction"', 'span class="numerator"', 'span class="denominator"']
@@ -177,7 +178,7 @@ class Formula(Container):
   def restyletagged(self, container, index):
     "Restyle tagged text"
     tagged = container.contents[index]
-    if tagged.tag == 'span class="mathsf"':
+    if tagged.tag == 'span class="mathsf"' or tagged.tag == 'span class="text"':
       tagged.restyle(TaggedText, self.removeitalics)
       first = tagged.contents[0]
       if self.mustspaceunits(container.contents, index):

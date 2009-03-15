@@ -728,27 +728,7 @@ Converted document
 \end_layout
 
 \begin_layout Enumerate
-Phonetic alphabet symbols are not supported -- they appear preceded by 
-\emph on
-
-\begin_inset Quotes eld
-\end_inset
-
-
-\backslash
-text
-\backslash
-
-\backslash
-textipa
-\backslash
-
-\begin_inset Quotes erd
-\end_inset
-
-
-\emph default
-.
+Phonetic alphabet symbols are not supported -- they appear in dark cyan.
 \end_layout
 
 \begin_layout Subsection
