@@ -350,6 +350,24 @@ convert
  to convert further images.
 \end_layout
 
+\begin_layout Subsection
+Acknowledgments
+\end_layout
+
+\begin_layout Standard
+This little project is my little contribution back to the wonderful LyX
+ community, for all these years of fruitful use.
+ Thanks to Stevan White for encouraging me to publish the tool; to Christian
+ Ridderström for helping me out right at the start; to Abdelrazak Younes,
+ Pavel Sanda, Günther Milde, Olivier Ripoll and José Matos for their interesting
+ suggestions; to Nikos Alexandris, Joachim Osnabryg, Richard Talley, Wolfgang
+ Keller, Murray Eisenberg and Robert Orr for their early testing.
+ Thanks go to all those who downloaded the tool and silently tested it to
+ their satisfaction (or were not bugged enough to write about it).
+ And finally thanks to all those who have helped and yet I am now forgetting
+ about them, for not hating me.
+\end_layout
+
 \begin_layout Section
 Advanced Use
 \end_layout

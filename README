@@ -30,7 +30,9 @@ as unresolved, but they can be ignored.)
 Documentation
 =============
 Documentation about eLyXer, including a user guide and a developer guide, can
-be found in the docs directory.
+be found in the docs directory. The project is hosted at Savannah.nongnu.org.  
+Be sure to visit the project home page at:
+  http://www.nongnu.org/elyxer/
 
 License
 =======
