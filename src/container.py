@@ -109,6 +109,8 @@ class Container(object):
 
   def group(self, index, group, isingroup):
     "Group some adjoining elements into a group"
+    if index >= len(self.contents):
+      return
     if hasattr(self.contents[index], 'grouped'):
       return
     while index < len(self.contents) and isingroup(self.contents[index]):
