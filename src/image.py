@@ -47,7 +47,10 @@ class Image(Container):
     if not os.path.exists(self.url):
       Trace.error('Image ' + self.url + ' not found')
       return
-    self.destination = os.path.splitext(self.url)[0] + '.png'
+    self.destination = self.url
+    if os.path.isabs(self.url):
+      self.destination = os.path.basename(self.url)
+    self.destination = os.path.splitext(self.destination)[0] + '.png'
     density = 100
     if 'scale' in self.parser.parameters:
       density = int(self.parser.parameters['scale'])
