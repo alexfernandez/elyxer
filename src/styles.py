@@ -33,7 +33,7 @@ class QuoteContainer(Container):
 
   start = '\\begin_inset Quotes'
   ending = '\\end_inset'
-  outputs = { 'eld':u'“', 'erd':u'”' }
+  outputs = { 'eld':u'“', 'erd':u'”', 'ald':u'»', 'ard':u'«' }
 
   def __init__(self):
     self.parser = BoundedParser()
@@ -42,6 +42,10 @@ class QuoteContainer(Container):
   def process(self):
     "Process contents"
     self.type = self.header[2]
+    if not self.type in QuoteContainer.outputs:
+      Trace.error('Quote type ' + self.type + ' not found')
+      self.html = '"'
+      return
     self.html = QuoteContainer.outputs[self.type]
 
 class LyxLine(Container):
