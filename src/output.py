@@ -96,7 +96,7 @@ class HeaderOutput(object):
     html.append(u'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n')
     html.append(u'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n')
     html.append(u'<head>\n')
-    html.append(u'<link rel="stylesheet" href="lyx.css" type="text/css" media="screen"/>\n')
+    html.append(u'<link rel="stylesheet" href="' + Options.css + '" type="text/css" media="screen"/>\n')
     html.append(u'<title>Converted document</title>')
     html.append('</head>\n')
     html.append('<body>\n')

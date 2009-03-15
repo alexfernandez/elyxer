@@ -31,6 +31,7 @@ class Options(object):
   nocopy = False
   debug = False
   quiet = False
+  css = 'http://www.nongnu.org/elyxer/lyx.css'
 
   def parseoptions(self, args):
     "Parse command line options"
@@ -38,9 +39,14 @@ class Options(object):
       option = args[0].replace('-', '')
       if option == 'help':
         return 'eLyXer help'
+      value = True
+      if '=' in option:
+        split = option.split('=', 1)
+        option = split[0]
+        value = split[1]
       if not hasattr(Options, option):
         return 'Option ' + option + ' not recognized'
-      setattr(Options, option, True)
+      setattr(Options, option, value)
       del args[0]
     return None
 
