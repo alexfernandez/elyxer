@@ -60,11 +60,8 @@ The Basics
 
 \begin_layout Standard
 This document should help you get started extending eLyXer.
- In this section we will outline eLyXer performs its basic tasks.
-\end_layout
-
-\begin_layout Standard
-This guide and all accompanying materials are licensed under the 
+ The package (including this guide and all accompanying materials) is licensed
+ under the 
 \begin_inset LatexCommand url
 name "GPL version 3"
 target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
@@ -77,6 +74,10 @@ target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
 LICENSE
 \family default
  file for details.
+\end_layout
+
+\begin_layout Standard
+In this section we will outline how eLyXer performs the basic tasks.
 \end_layout
 
 \begin_layout Subsection

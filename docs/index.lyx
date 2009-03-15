@@ -73,7 +73,8 @@ elixir
 \end_layout
 
 \begin_layout Standard
-This page and all accompanying materials are licensed under the 
+eLyXer (including this page and all accompanying materials) is licensed
+ under the 
 \begin_inset LatexCommand url
 name "GPL version 3"
 target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
@@ -86,6 +87,63 @@ target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
 LICENSE
 \family default
  file for details.
+\end_layout
+
+\begin_layout Subsection*
+Usage
+\end_layout
+
+\begin_layout Standard
+eLyXer is a command line tool written in Python.
+ Basic usage is as simple as writing at the command line prompt:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer document.lyx page.html
+\end_layout
+
+\begin_layout Standard
+or, on Windows:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+>
+\color inherit
+ Python.exe elyxer document.lyx page.html
+\end_layout
+
+\begin_layout Standard
+where 
+\family typewriter
+document.lyx
+\family default
+ is your LyX document, and 
+\family typewriter
+page.html
+\family default
+ is the resulting HTML page.
+ Write
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer --help
+\end_layout
+
+\begin_layout Standard
+or see the user guide for details.
 \end_layout
 
 \begin_layout Subsection*
@@ -164,6 +222,10 @@ target "http://www.nongnu.org/elyxer/lyx.css"
 
 \begin_layout Itemize
 Reinstated layout classes for unknown types.
+\end_layout
+
+\begin_layout Itemize
+Updated documentation to include how to run on Windows.
 \end_layout
 
 \end_deeper
@@ -293,8 +355,16 @@ Thanks to Stevan White for encouraging me to publish the tool; to Christian
  Pavel Sanda, Günther Milde, Olivier Ripoll and José Matos for their interesting
  suggestions; to Nikos Alexandris, Joachim Osnabryg, Richard Talley, Wolfgang
  Keller, Murray Eisenberg and Robert Orr for their early testing.
- Thanks go to all those who downloaded the tool and silently tested it to
- their satisfaction (or were not bugged enough to write about it).
+ A silent 
+\begin_inset Quotes eld
+\end_inset
+
+thank you
+\begin_inset Quotes erd
+\end_inset
+
+ goes to all those who downloaded the tool and silently tested it to their
+ satisfaction (or were not bugged enough to write about it).
  And finally thanks to all those who have helped and yet I am now forgetting
  about them, for not hating me for it.
 \end_layout

@@ -75,13 +75,14 @@ eLyXer (pronounced
 \emph on
 elixir
 \emph default
-) eLyXer (pronounced elixir) is a LyX to HTML converter.
+) is a LyX to HTML converter.
  While there are a ton of such projects all over the web, eLyXer has a clear
  focus on flexibility and elegant output.
 \end_layout
 
 \begin_layout Standard
-This guide and all accompanying materials are licensed under the 
+eLyXer (including this guide and all accompanying materials) is licensed
+ under the 
 \begin_inset LatexCommand url
 name "GPL version 3"
 target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
@@ -106,8 +107,8 @@ eLyXer requires Python 2.3.4, and should work with versions up to 2.5.
 \end_inset
 
 .
- It might also require a Unix-based operating system (it has been tested
- it on Mac OS X, Linux and Windows with CygWin, but not on Windows).
+ It has been tested on the most common operating systems: on Mac OS X, Linux
+ and Windows, with and without CygWin.
 \end_layout
 
 \begin_layout Standard
@@ -200,6 +201,19 @@ $
 \end_layout
 
 \begin_layout Standard
+On Windows you have to include the Python executable:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+>
+\color inherit
+ Python.exe ../elyxer userguide.lyx userguide2.html
+\end_layout
+
+\begin_layout Standard
 It should generate a working web page identical to the one distributed:
 \end_layout
 
@@ -262,7 +276,20 @@ STDOUT
 \family default
 .
  This allows its use in pipes and other flexible configurations.
- Some examples:
+ Once again, on Windows you have to explicitly call the Python executable:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+>
+\color inherit
+ Python.exe elyxer [options] [source file] [destination file]
+\end_layout
+
+\begin_layout Standard
+Some examples:
 \end_layout
 
 \begin_layout LyX-Code
