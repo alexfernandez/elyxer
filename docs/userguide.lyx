@@ -90,7 +90,7 @@ target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
 \end_inset
 
  or, at your option, any later version.
- See 
+ See the 
 \family typewriter
 LICENSE
 \family default
@@ -355,7 +355,7 @@ counts all blockquote paragraphs.
 \color blue
 $
 \color inherit
- elyxer file.lyx | wget --no-check-certificate --spider -nv -F -i -
+ elyxer file.lyx | wget ‐‐no-check-certificate ‐‐spider -nv -F -i -
 \end_layout
 
 \begin_layout Standard
@@ -398,7 +398,7 @@ eLyXer supports a few command line optios.
 \begin_layout Description
 
 \family typewriter
---help
+‐‐help
 \family default
 : show command line help.
 \end_layout
@@ -406,7 +406,7 @@ eLyXer supports a few command line optios.
 \begin_layout Description
 
 \family typewriter
---debug
+‐‐debug
 \family default
 : show debug messages.
  They may help a developer understand your problem.
@@ -415,7 +415,7 @@ eLyXer supports a few command line optios.
 \begin_layout Description
 
 \family typewriter
---quiet
+‐‐quiet
 \family default
 : be quiet and do not output messages (except errors).
  This way you can avoid the comforting 
@@ -430,7 +430,7 @@ Parsing line 1000
  When STDIN or STDOUT are used (e.g.
  in a pipeline) 
 \family typewriter
---quiet
+‐‐quiet
 \family default
  is always enabled.
 \end_layout
@@ -438,12 +438,12 @@ Parsing line 1000
 \begin_layout Description
 
 \family typewriter
---nocopy
+‐‐nocopy
 \family default
 : do not show the copyright notice at the bottom.
  If there is no author in the document 
 \family typewriter
---nocopy
+‐‐nocopy
 \family default
  is always enabled.
 \end_layout
@@ -451,7 +451,7 @@ Parsing line 1000
 \begin_layout Description
 
 \family typewriter
---css
+‐‐css
 \family default
 : change default CSS.
  See below.
@@ -563,7 +563,7 @@ elyxer
 \color blue
 $
 \color inherit
- elyxer --css=custom.css document.lyx page.html
+ elyxer ‐‐css=custom.css document.lyx page.html
 \end_layout
 
 \begin_layout Standard
@@ -578,11 +578,11 @@ custom.css
  file.
  Notice the 
 \family typewriter
-=
+`='
 \family default
  sign between the constant 
 \family typewriter
---css
+`‐‐css'
 \family default
  and the name of the CSS file.
 \end_layout
@@ -671,7 +671,11 @@ Text styles do not mix and match correctly.
 \begin_layout Enumerate
 On Mac OS X the output of a message with Unicode characters may cause an
  error.
- Workaround: run elyxer with the --quiet option.
+ Workaround: run elyxer with the 
+\family typewriter
+‐‐quiet
+\family default
+ option.
 \end_layout
 
 \begin_layout Enumerate
@@ -685,14 +689,6 @@ Converted document
 
 .
  Not pretty.
-\end_layout
-
-\begin_layout Enumerate
-Double-dash in options appears as long dash: 
-\family typewriter
---css
-\family default
-.
 \end_layout
 
 \begin_layout Subsection
