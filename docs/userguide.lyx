@@ -728,7 +728,12 @@ Converted document
 \end_layout
 
 \begin_layout Enumerate
-Phonetic alphabet symbols are not supported -- they appear in dark cyan.
+Phonetic alphabet symbols are not supported -- they appear in dark cyan:
+ 
+\begin_inset Formula $\text{[sample]}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
