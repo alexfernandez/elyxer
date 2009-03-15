@@ -99,7 +99,7 @@ class HeaderOutput(object):
     html.append(u'<meta name="generator" content="http://www.nongnu.org/elyxer/"/>\n')
     html.append(u'<meta name="create-date" content="' + datetime.date.today().isoformat() + '"/>\n')
     html.append(u'<link rel="stylesheet" href="' + Options.css + '" type="text/css" media="screen"/>\n')
-    html.append(u'<title>Converted document</title>\n')
+    html.append(u'<title>' + Options.title + '</title>\n')
     html.append('</head>\n')
     html.append('<body>\n')
     html.append('<div id="globalWrapper">\n')

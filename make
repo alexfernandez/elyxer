@@ -28,9 +28,9 @@ chmod 755 elyxer
 # prepare documentation
 cd docs
 rm -f *.png
-../elyxer userguide.lyx userguide.html
-../elyxer devguide.lyx devguide.html
-../elyxer index.lyx index.html
+../elyxer --title "eLyXer User Guide" userguide.lyx userguide.html
+../elyxer --title="eLyxer Developer Guide" devguide.lyx devguide.html
+../elyxer --title=eLyXer index.lyx index.html
 rm -f *.lyx~
 cd ..
 # make compressed files

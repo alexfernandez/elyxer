@@ -451,7 +451,24 @@ Parsing line 1000
 \begin_layout Description
 
 \family typewriter
-‐‐css
+‐‐title\InsetSpace ~
+
+\series bold
+"
+\series default
+title
+\series bold
+"
+\family default
+\series default
+: change the title of the generated web page.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+‐‐css\InsetSpace ~
+[new.css]
 \family default
 : change default CSS.
  See below.
@@ -462,7 +479,7 @@ Appearance
 \end_layout
 
 \begin_layout Standard
-HTML output, as generated, is a bit crude.
+HTML output, as generated, can be a bit crude.
  Some CSS wizardry can go a long way to make eLyXer output look nicer.
 \end_layout
 
@@ -576,7 +593,7 @@ page.html
 custom.css
 \family default
  file.
- Notice the 
+ The 
 \family typewriter
 `='
 \family default
@@ -584,7 +601,22 @@ custom.css
 \family typewriter
 `‐‐css'
 \family default
- and the name of the CSS file.
+ and the name of the CSS file is optional.
+ You can also change the title of the web page (which is not the title of
+ the document) with the 
+\family typewriter
+‐‐title
+\family default
+ option:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer ‐‐title "My Beautiful Document" document.lyx page.html
 \end_layout
 
 \begin_layout Subsection

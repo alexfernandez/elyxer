@@ -32,21 +32,61 @@ class Options(object):
   debug = False
   quiet = False
   css = 'http://www.nongnu.org/elyxer/lyx.css'
+  title = 'Converted document'
 
   def parseoptions(self, args):
     "Parse command line options"
     while args[0].startswith('--'):
-      option = args[0].replace('-', '')
-      if option == 'help':
+      if args[0] == '--help':
         return 'eLyXer help'
-      value = True
-      if '=' in option:
-        split = option.split('=', 1)
-        option = split[0]
-        value = split[1]
-      if not hasattr(Options, option):
-        return 'Option ' + option + ' not recognized'
-      setattr(Options, option, value)
-      del args[0]
+      key, value = self.readoption(args)
+      if not key:
+        return 'Option ' + original + ' not recognized'
+      if not value:
+        return 'Option ' + key + ' needs a value'
+      setattr(Options, key, value)
     return None
+
+  def readoption(self, args):
+    "Read the key and value for an option"
+    arg = args[0][2:]
+    del args[0]
+    if '=' in arg:
+      return self.readequals(arg, args)
+    key = arg
+    if not hasattr(Options, key):
+      return None, None
+    current = getattr(Options, key)
+    if current.__class__ == bool:
+      return key, True
+    # read value
+    if len(args) == 0:
+      return key, None
+    if args[0].startswith('"'):
+      initial = args[0]
+      del args[0]
+      return key, self.readquoted(args, initial)
+    value = args[0]
+    del args[0]
+    return key, value
+
+  def readquoted(self, args, initial):
+    "Read a value between quotes"
+    value = initial[1:]
+    while len(args) > 0 and not args[0].endswith('"') and not args[0].startswith('--'):
+      value += ' ' + args[0]
+      del args[0]
+    if len(args) == 0 or args[0].startswith('--'):
+      return None
+    value += ' ' + args[0:-1]
+    return value
+
+  def readequals(self, arg, args):
+    "Read a value with equals"
+    split = arg.split('=', 1)
+    key = split[0]
+    value = split[1]
+    if not value.startswith('"'):
+      return key, value
+    return key, self.readquoted(args, value)
 
