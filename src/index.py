@@ -37,6 +37,9 @@ class Hierarchy(object):
     self.root.filename = filename
     self.currentlist = [self.root]
 
+  def addbranch(self, container):
+    "Add a branch"
+
   def add(self, container):
     "Add all elements in a container to the hierarchy"
     self.addcontainer(container)
@@ -105,25 +108,24 @@ class Numbered(object):
   "The destination for a link"
 
   def __init__(self):
-    self.number = list()
-    self.filename = None
+    self.numbering = list()
+    self.number = None
     self.parent = None
+    self.name = None
 
   def getnumber(self):
     "Get the number to show"
-    number = ''
-    for level in self.number:
-      number += str(level) + '.'
-    number += '.'
-    return number.replace('..', '')
-
-  def dashnumber(self):
-    "Get the number separated by dashes"
-    return self.getnumber().replace('.', '-')
+    if self.number:
+      return self.number
+    self.number = ''
+    for level in self.numbering:
+      self.number += str(level) + '.'
+    self.number = (self.number + '.').replace('..', '')
+    return self.number
 
   def getkey(self):
     "Get a unique key"
-    return self.keyprefix + '-' + self.dashnumber()
+    return self.keyprefix + '-' + self.getnumber().replace('.', '-')
 
   def leading(self):
     "Get the leading constant"
