@@ -134,7 +134,7 @@ There is no complex installation procedure; just uncompress the distributed
  Just write at the command line prompt:
 \end_layout
 
-\begin_layout Quotation
+\begin_layout LyX-Code
 
 \family typewriter
 \color blue
@@ -155,7 +155,7 @@ Or for the
  version:
 \end_layout
 
-\begin_layout Quotation
+\begin_layout LyX-Code
 
 \family typewriter
 \color blue
@@ -177,7 +177,7 @@ elyxer
  To test that everything works fine just move to the docs directory:
 \end_layout
 
-\begin_layout Quotation
+\begin_layout LyX-Code
 
 \family typewriter
 \color blue
@@ -190,7 +190,7 @@ $
 and run the executab le on the user guide:
 \end_layout
 
-\begin_layout Quotation
+\begin_layout LyX-Code
 
 \family typewriter
 \color blue
@@ -203,7 +203,7 @@ $
 It should generate a working web page identical to the one distributed:
 \end_layout
 
-\begin_layout Quotation
+\begin_layout LyX-Code
 
 \family typewriter
 \color blue
@@ -241,7 +241,7 @@ eLyXer is a standalone command line tool.
  It can be invoked from the command line as:
 \end_layout
 
-\begin_layout Quotation
+\begin_layout LyX-Code
 
 \family typewriter
 \color blue
@@ -265,7 +265,7 @@ STDOUT
  Some examples:
 \end_layout
 
-\begin_layout Quotation
+\begin_layout LyX-Code
 
 \family typewriter
 \color blue
@@ -287,7 +287,7 @@ file.html
  Debug messages are shown.
 \end_layout
 
-\begin_layout Quotation
+\begin_layout LyX-Code
 
 \family typewriter
 \color blue
@@ -309,7 +309,7 @@ file.html
  This time debug messages are not shown.
 \end_layout
 
-\begin_layout Quotation
+\begin_layout LyX-Code
 
 \family typewriter
 \color blue
@@ -322,7 +322,7 @@ $
 counts all blockquote paragraphs.
 \end_layout
 
-\begin_layout Quotation
+\begin_layout LyX-Code
 
 \family typewriter
 \color blue
@@ -530,7 +530,7 @@ elyxer
  with the following option:
 \end_layout
 
-\begin_layout Quotation
+\begin_layout LyX-Code
 
 \family typewriter
 \color blue
@@ -658,6 +658,14 @@ Converted document
 
 .
  Not pretty.
+\end_layout
+
+\begin_layout Enumerate
+Double-dash in options appears as long dash: 
+\family typewriter
+--css
+\family default
+.
 \end_layout
 
 \begin_layout Subsection

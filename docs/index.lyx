@@ -134,7 +134,7 @@ Latest version is 0.6, created on 20090315.
 \end_layout
 
 \begin_layout Itemize
-0.7 (20090316):
+0.7 (unreleased):
 \end_layout
 
 \begin_deeper
@@ -155,11 +155,15 @@ target "http://www.nongnu.org/elyxer/lyx.css"
 
 \end_inset
 
-, can be changed via command line option 
+, it can be changed via command line option 
 \family typewriter
 --css
 \family default
 .
+\end_layout
+
+\begin_layout Itemize
+Reinstated layout classes for unknown types.
 \end_layout
 
 \end_deeper
