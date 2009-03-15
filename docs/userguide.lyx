@@ -247,7 +247,7 @@ eLyXer is a standalone command line tool.
 \color blue
 $
 \color inherit
- elyxer [source file] [destination file]
+ elyxer [options] [source file] [destination file]
 \end_layout
 
 \begin_layout Standard
@@ -350,24 +350,6 @@ convert
  to convert further images.
 \end_layout
 
-\begin_layout Subsection
-Acknowledgments
-\end_layout
-
-\begin_layout Standard
-This little project is my little contribution back to the wonderful LyX
- community, for all these years of fruitful use.
- Thanks to Stevan White for encouraging me to publish the tool; to Christian
- Ridderström for helping me out right at the start; to Abdelrazak Younes,
- Pavel Sanda, Günther Milde, Olivier Ripoll and José Matos for their interesting
- suggestions; to Nikos Alexandris, Joachim Osnabryg, Richard Talley, Wolfgang
- Keller, Murray Eisenberg and Robert Orr for their early testing.
- Thanks go to all those who downloaded the tool and silently tested it to
- their satisfaction (or were not bugged enough to write about it).
- And finally thanks to all those who have helped and yet I am now forgetting
- about them, for not hating me.
-\end_layout
-
 \begin_layout Section
 Advanced Use
 \end_layout
@@ -375,6 +357,77 @@ Advanced Use
 \begin_layout Standard
 There are some advanced uses for eLyXer if you want to extract the most
  of it.
+\end_layout
+
+\begin_layout Subsection
+Command Line Options
+\end_layout
+
+\begin_layout Standard
+eLyXer supports a few command line optios.
+ They are the following:
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--help
+\family default
+: show command line help.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--debug
+\family default
+: show debug messages.
+ They may help a developer understand your problem.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--quiet
+\family default
+: be quiet and do not output messages (except errors).
+ This way you can avoid the comforting 
+\begin_inset Quotes eld
+\end_inset
+
+Parsing line 1000
+\begin_inset Quotes erd
+\end_inset
+
+ messages.
+ When STDIN or STDOUT are used (e.g.
+ in a pipeline) 
+\family typewriter
+--quiet
+\family default
+ is always enabled.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--nocopy
+\family default
+: do not show the copyright notice at the bottom.
+ If there is no author in the document 
+\family typewriter
+--nocopy
+\family default
+ is always enabled.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--css
+\family default
+: change default CSS.
+ See below.
 \end_layout
 
 \begin_layout Subsection
@@ -395,7 +448,7 @@ reference "alg:CSS"
 
 \end_inset
 
-, so a CSS file 
+, so the default CSS file 
 \family typewriter
 lyx.css
 \family default
@@ -424,7 +477,8 @@ status open
 
 \family typewriter
 \series bold
-<link rel="stylesheet" href="lyx.css" type="text/css" media="screen"/>
+<link rel="stylesheet" href="http://www.nongnu.org/elyxer/lyx.css" type="text/css"
+ media="screen"/>
 \end_layout
 
 \begin_layout Quotation
@@ -456,29 +510,54 @@ CSS link automatically added to HTML
 \end_layout
 
 \begin_layout Standard
-A sample CSS file is distributed along with the scripts, 
+A sample CSS file is published on nongnu.org and distributed along with the
+ scripts, 
 \family typewriter
 docs/lyx.css
 \family default
 .
- To use it just copy it to the directory where your document resides, and
- customize as needed.
-\end_layout
-
-\begin_layout Subsection
-Postprocessing
-\end_layout
-
-\begin_layout Standard
-Another feature worth mentioning is the eLyXer postprocessor 
+ You may want to use your own CSS file; to use it first copy it to the directory
+ where your document resides (e.g.
+ renaming it to 
 \family typewriter
-posxer
+custom.css
 \family default
-.
+), and customize as needed.
+ Then run 
+\family typewriter
+elyxer
+\family default
+ with the following option:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer --css=custom.css document.lyx page.html
 \end_layout
 
 \begin_layout Standard
-At the moment the postprocessor is under construction.
+This will make the generated 
+\family typewriter
+page.html
+\family default
+ use your 
+\family typewriter
+custom.css
+\family default
+ file.
+ Notice the 
+\family typewriter
+=
+\family default
+ sign between the constant 
+\family typewriter
+--css
+\family default
+ and the name of the CSS file.
 \end_layout
 
 \begin_layout Subsection
@@ -566,6 +645,19 @@ Text styles do not mix and match correctly.
 On Mac OS X the output of a message with Unicode characters may cause an
  error.
  Workaround: run elyxer with the --quiet option.
+\end_layout
+
+\begin_layout Enumerate
+The title of all converted documents is 
+\begin_inset Quotes eld
+\end_inset
+
+Converted document
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Not pretty.
 \end_layout
 
 \begin_layout Subsection

@@ -147,6 +147,21 @@ Range of supported quotes is greater.
  Unknown quotes are now marked as errors but do not make the tool fail.
 \end_layout
 
+\begin_layout Itemize
+Default CSS is always 
+\begin_inset LatexCommand url
+name "on nongnu.org"
+target "http://www.nongnu.org/elyxer/lyx.css"
+
+\end_inset
+
+, can be changed via command line option 
+\family typewriter
+--css
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.6 (20090315):
@@ -257,6 +272,27 @@ Container
 
 \begin_layout Itemize
 0.1 (20090310): first public version.
+\end_layout
+
+\begin_layout Subsection*
+Acknowledgments
+\end_layout
+
+\begin_layout Standard
+This little project is my little contribution back to the wonderful LyX
+ community, for all these years of fruitful use.
+\end_layout
+
+\begin_layout Standard
+Thanks to Stevan White for encouraging me to publish the tool; to Christian
+ Ridderström for helping me out right at the start; to Abdelrazak Younes,
+ Pavel Sanda, Günther Milde, Olivier Ripoll and José Matos for their interesting
+ suggestions; to Nikos Alexandris, Joachim Osnabryg, Richard Talley, Wolfgang
+ Keller, Murray Eisenberg and Robert Orr for their early testing.
+ Thanks go to all those who downloaded the tool and silently tested it to
+ their satisfaction (or were not bugged enough to write about it).
+ And finally thanks to all those who have helped and yet I am now forgetting
+ about them, for not hating me for it.
 \end_layout
 
 \begin_layout Bibliography
