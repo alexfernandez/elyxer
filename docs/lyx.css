@@ -231,3 +231,9 @@ div.Plain {
 	display: inline;
 	width: auto;
 }
+h1.title {
+	text-align: center;
+}
+h2.author {
+	text-align: center;
+}
