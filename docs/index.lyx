@@ -51,15 +51,15 @@ eLyXer
 \end_layout
 
 \begin_layout Quotation
-
-\emph on
-elixir, n: a substance believed to cure all ills
-\begin_inset LatexCommand cite
-key "wordreference-elixir"
+\begin_inset LatexCommand url
+name "elixir"
+target "http://www.wordreference.com/definition/elixir"
 
 \end_inset
 
-.
+
+\emph on
+, n: a substance believed to cure all ills.
 \end_layout
 
 \begin_layout Standard
@@ -70,6 +70,29 @@ elixir
 ) is a LyX to HTML converter.
  While there are a ton of such projects all over the web, eLyXer has a clear
  focus on flexibility and elegant output.
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand url
+name "LyX"
+target "http://www.lyx.org/"
+
+\end_inset
+
+ is a wonderful text editor which produces beautiful PDF files.
+ Internally it exports documents to LaTeX, and from there to PDF.
+ Sadly there is not an equivalent 
+\begin_inset Quotes eld
+\end_inset
+
+export to HTML
+\begin_inset Quotes erd
+\end_inset
+
+ option\SpecialChar \ldots{}
+ Until now! With eLyXer you can convert your master thesis, learned
+ article, fascinating novel or love letter to a web page that you can then
+ publish on the web.
 \end_layout
 
 \begin_layout Standard
@@ -389,9 +412,9 @@ This little project is my little contribution back to the wonderful LyX
 \begin_layout Standard
 Thanks to Stevan White for encouraging me to publish the tool; to Christian
  Ridderström for helping me out right at the start; to Abdelrazak Younes,
- Pavel Sanda, Günther Milde, Olivier Ripoll, José Matos and Iain Mac Donald
- for their interesting suggestions; to Nikos Alexandris, Joachim Kreimer-de
- Fries (Osnabryg), Richard Talley, Wolfgang Keller, Murray Eisenberg and
+ Pavel Sanda, Günther Milde, Olivier Ripoll, José Matos, Iain Mac Donald,
+ Uwe Stöhr for their interesting suggestions; to Nikos Alexandris, Joachim
+ Kreimer-de Fries (Osnabryg), Richard Talley, Wolfgang Keller, Murray Eisenberg,
  Robert Orr for their early testing.
  A silent 
 \begin_inset Quotes eld
@@ -405,30 +428,6 @@ thank you
  satisfaction (or were not bugged enough to write about it).
  And finally thanks to all those who have helped and yet I am now forgetting
  about them, for not hating me for it.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset LatexCommand bibitem
-key "wordreference-elixir"
-
-\end_inset
-
-WordReference.com: 
-\begin_inset Quotes eld
-\end_inset
-
-definition of elixir
-\begin_inset Quotes erd
-\end_inset
-
-, accessed March 2009.
- 
-\begin_inset LatexCommand url
-target "http://www.wordreference.com/definition/elixir"
-
-\end_inset
-
-
 \end_layout
 
 \end_body
