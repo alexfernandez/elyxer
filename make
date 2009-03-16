@@ -26,13 +26,11 @@ mv elyxer ..
 cd ..
 chmod 755 elyxer
 # prepare documentation
-cd docs
-rm -f *.png
-../elyxer --title "eLyXer User Guide" userguide.lyx userguide.html
-../elyxer --title="eLyxer Developer Guide" devguide.lyx devguide.html
-../elyxer --title=eLyXer index.lyx index.html
-rm -f *.lyx~
-cd ..
+rm -f docs/*.png
+./elyxer --title "eLyXer User Guide" docs/userguide.lyx docs/userguide.html
+./elyxer --title="eLyxer Developer Guide" docs/devguide.lyx docs/devguide.html
+./elyxer --title=eLyXer docs/index.lyx docs/index.html
+rm -f docs/*.lyx~
 # make compressed files
 mkdir -p dist
 cd ..
@@ -49,10 +47,9 @@ mv elyxer-$DATE.zip elyxer/dist
 cd elyxer
 # run tests
 echo "Testing eLyXer -- any text below this line signals an error"
-cd test
-for file in $(ls *.lyx); do
-name=$(basename $file .lyx)
-../elyxer --quiet $name.lyx $name-test.html
+for file in $(ls test/*.lyx); do
+  name=$(dirname $file)/$(basename $file .lyx)
+./elyxer --quiet $name.lyx $name-test.html
 diff --ignore-matching-lines="create-date" $name-test.html $name-good.html
 done
 
