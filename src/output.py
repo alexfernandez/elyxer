@@ -48,6 +48,9 @@ class ContentsOutput(object):
   def gethtml(self, container):
     "Return the HTML code"
     html = []
+    if container.contents == None:
+      Trace.error('Container ' + str(container) + ' has no contents')
+      return html
     for element in container.contents:
       html += element.gethtml()
     return html
