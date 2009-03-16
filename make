@@ -53,6 +53,6 @@ cd test
 for file in $(ls *.lyx); do
 name=$(basename $file .lyx)
 ../elyxer --quiet $name.lyx $name-test.html
-diff $name-test.html $name-good.html
+diff --ignore-matching-lines="create-date" $name-test.html $name-good.html
 done
 
