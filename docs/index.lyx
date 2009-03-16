@@ -188,11 +188,11 @@ Changelog
 \end_layout
 
 \begin_layout Standard
-Latest version is 0.6, created on 20090315.
+Latest version is 0.7, created on 20090316.
 \end_layout
 
 \begin_layout Itemize
-0.7 (unreleased):
+0.7 (20090316):
 \end_layout
 
 \begin_deeper
@@ -246,6 +246,23 @@ Phonetic symbols appear in dark cyan:
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Itemize
+Lots of small fixes and improvements to correctly parse the official LyX
+ guides (
+\family typewriter
+UserGuide.lyx
+\family default
+, 
+\family typewriter
+EmbeddedObjects.lyx
+\family default
+ and 
+\family typewriter
+Math.lyx
+\family default
+).
 \end_layout
 
 \end_deeper
