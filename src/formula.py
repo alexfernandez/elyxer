@@ -64,7 +64,7 @@ class Formula(Container):
       '\\beta':u'β', '\\acute{o}':u'ó', '\\acute{a}':u'á', '\\implies':u'  ⇒  ',
       '\\pi':u'π', '\\infty':u'∞', '\\left(':u'<span class="bigsymbol">(</span>',
       '\\right)':u'<span class="bigsymbol">)</span>',
-      '\\intop':u'∫', '\\log':'log', '\\exp':'exp'}
+      '\\intop':u'∫', '\\log':'log', '\\exp':'exp', '\\_':'_'}
   onefunctions = {'\\mathsf':'span class="mathsf"', '\\mathbf':'b', '^':'sup',
       '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
       '\\dot':'span class="overdot"', '\\sqrt':'span class="sqrt"',
@@ -95,7 +95,8 @@ class Formula(Container):
       bit, result = reader(self, text, pos)
       if bit:
         return bit, result
-    Trace.error('Unrecognized string in ' + unicode(text[pos:]))
+    Trace.error('Unrecognized string at ' + str(self.parser.begin) + ' in ' +
+        unicode(text[pos:]))
     return '\\', [Constant('\\')]
 
   def readalpha(self, text, pos):
@@ -220,9 +221,35 @@ class Formula(Container):
     last = contents[index - 1]
     if isinstance(last, Constant):
       string = last.contents[-1]
+      if len(string) == 0:
+        return False
       if string[-1].isdigit():
         return True
     return False
+
+class FormulaParser(Parser):
+  "Parses a formula"
+
+  def parseheader(self, reader):
+    "See if the formula is inlined"
+    self.begin = reader.index + 1
+    if reader.currentline().find('$') > 0:
+      return ['inline']
+    else:
+      return ['block']
+  
+  def parse(self, reader):
+    "Parse the formula"
+    if reader.currentline().find('$') > 0:
+      formula = reader.currentline().split('$')[1]
+    else:
+      # formula of the form \[...\]
+      reader.nextline()
+      formula = reader.currentline()[:-3]
+    while not reader.currentline().startswith(self.ending):
+      reader.nextline()
+    reader.nextline()
+    return [formula]
 
 ContainerFactory.types.append(Formula)
 

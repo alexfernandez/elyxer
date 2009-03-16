@@ -163,10 +163,10 @@ class InsetParser(BoundedParser):
   def parse(self, reader):
     "Parse inset parameters into a dictionary"
     self.parameters = dict()
-    if reader.currentline().startswith(self.ending):
-      reader.nextline()
-      return []
     while reader.currentline() != '\n':
+      if reader.currentline().startswith(self.ending):
+        reader.nextline()
+        return []
       split = reader.currentline().strip().split(' ', 1)
       if len(split) < 2:
         Trace.error('Wrong inset parameter "' + reader.currentline().strip() + '"')
@@ -175,27 +175,4 @@ class InsetParser(BoundedParser):
       self.parameters[key] = split[1].replace('"', '')
       reader.nextline()
     return BoundedParser.parse(self, reader)
-
-class FormulaParser(Parser):
-  "Parses a formula"
-
-  def parseheader(self, reader):
-    "See if the formula is inlined"
-    if reader.currentline().find('$') > 0:
-      return ['inline']
-    else:
-      return ['block']
-  
-  def parse(self, reader):
-    "Parse the formula"
-    if reader.currentline().find('$') > 0:
-      formula = reader.currentline().split('$')[1]
-    else:
-      # formula of the form \[...\]
-      reader.nextline()
-      formula = reader.currentline()[:-3]
-    while not reader.currentline().startswith(self.ending):
-      reader.nextline()
-    reader.nextline()
-    return [formula]
 
