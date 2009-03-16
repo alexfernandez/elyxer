@@ -164,9 +164,6 @@ class InsetParser(BoundedParser):
     "Parse inset parameters into a dictionary"
     self.parameters = dict()
     while reader.currentline() != '\n' and not reader.currentline().startswith('\\'):
-      if reader.currentline().startswith(self.ending):
-        reader.nextline()
-        return []
       split = reader.currentline().strip().split(' ', 1)
       if len(split) < 2:
         Trace.error('Wrong inset parameter "' + reader.currentline().strip() + '"')
