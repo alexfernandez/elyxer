@@ -95,7 +95,7 @@ class Formula(Container):
       bit, result = reader(self, text, pos)
       if bit:
         return bit, result
-    Trace.error('Unrecognized string at ' + str(self.parser.begin) + ' in ' +
+    Trace.error('Unrecognized formula function at ' + str(self.parser.begin) + ' in ' +
         unicode(text[pos:]))
     return '\\', [Constant('\\')]
 
