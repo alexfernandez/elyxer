@@ -207,6 +207,26 @@ class Description(Layout):
         del contents[index]
     return firstword
 
+class Space(Container):
+  "A space of several types"
+
+  start = '\\begin_inset space'
+  ending = '\\end_inset'
+
+  spaces = {'~':'&nbsp'}
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = ConstantOutput()
+
+  def process(self):
+    self.type = self.header[2]
+    if self.type not in Space.spaces:
+      Trace.error('Unknown space type ' + self.type)
+      self.contents = [' ']
+      return
+    self.contents = [Space.spaces[self.type]]
+
 class Inset(Container):
   "A generic inset in a LyX document"
 
