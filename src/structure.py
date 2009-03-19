@@ -179,7 +179,6 @@ class Description(Layout):
     words = element.contents[0].split(' ', 1)
     if len(words) == 1:
       words.append('')
-    Trace.debug('First word in description: ' + words[0])
     contents.insert(0, TaggedText().constant(words[0],
       'span class="Description-entry"'))
     element.contents[0] = words[1]
