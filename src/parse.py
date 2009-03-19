@@ -61,7 +61,7 @@ class ParseTree(object):
       if piece in current:
         branches.append(current[piece])
     while not ParseTree.default in branches[-1]:
-      Trace.debug('Line ' + reader.currentline().strip() + ' not found')
+      Trace.error('Line ' + reader.currentline().strip() + ' not found')
       branches.pop()
     last = branches[-1]
     return last[ParseTree.default]
@@ -71,6 +71,7 @@ class Parser(object):
 
   def __init__(self):
     self.begin = 0
+    self.parameters = dict()
 
   def parseheader(self, reader):
     "Parse the header"
@@ -78,6 +79,18 @@ class Parser(object):
     reader.nextline()
     self.begin = reader.index + 1
     return header
+
+  def parseparameter(self, reader):
+    "Parse a parameter"
+    split = reader.currentline().strip().split(' ', 1)
+    if len(split) == 0:
+      return
+    key = split[0]
+    if len(split) == 1:
+      self.parameters[key] = True
+      return
+    self.parameters[key] = split[1].replace('"', '')
+    reader.nextline()
 
   def __str__(self):
     "Return a description"
@@ -138,6 +151,7 @@ class BoundedDummy(Parser):
   def parse(self, reader):
     "Parse the contents of the container"
     while not reader.currentline().startswith(self.ending):
+      self.parseparameter(reader)
       reader.nextline()
     # skip last line
     reader.nextline()
@@ -162,14 +176,7 @@ class InsetParser(BoundedParser):
 
   def parse(self, reader):
     "Parse inset parameters into a dictionary"
-    self.parameters = dict()
     while reader.currentline() != '\n' and not reader.currentline().startswith('\\'):
-      split = reader.currentline().strip().split(' ', 1)
-      if len(split) < 2:
-        Trace.error('Wrong inset parameter "' + reader.currentline().strip() + '"')
-        return
-      key = split[0]
-      self.parameters[key] = split[1].replace('"', '')
-      reader.nextline()
+      self.parseparameter(reader)
     return BoundedParser.parse(self, reader)
 
