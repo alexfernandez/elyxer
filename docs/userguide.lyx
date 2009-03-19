@@ -736,6 +736,12 @@ Phonetic alphabet symbols are not supported -- they appear in dark cyan:
 .
 \end_layout
 
+\begin_layout Enumerate
+There is no visual link between a footnote and its place of insertion.
+ (I have no idea of how to deal with this one, so any suggestions are welcome
+ -- if possible with CSS code.)
+\end_layout
+
 \begin_layout Subsection
 Reporting Bugs
 \end_layout
