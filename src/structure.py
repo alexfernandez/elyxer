@@ -113,10 +113,9 @@ class Layout(Container):
   ending = '\\end_layout'
 
   typetags = { 'Quote':'blockquote', 'Standard':'div',
-        'Chapter':'h1', 'Section':'h2', 'Subsubsection':'h4',
-        'Subsection': 'h3', 'Description':'div',
-        'Quotation':'blockquote', 'Center':'div',
-        'Paragraph':'div', 'Part':'h1'}
+        'Chapter':'h1', 'Section':'h2', 'Subsection':'h3', 'Subsubsection':'h4',
+        'Quotation':'blockquote', 'Center':'div', 'Paragraph':'div',
+        'Part':'h1'}
 
   def __init__(self):
     self.contents = list()
@@ -182,15 +181,31 @@ class Description(Layout):
     if not isinstance(element, StringContainer):
       self.insertfirst(element.contents)
       return
-    words = element.contents[0].split(' ', 1)
-    if len(words) == 1:
-      words.append('')
-      Trace.debug("More: " + str(contents[1]))
-    else:
-      words[1] = '&nbsp;' + words[1]
-    contents.insert(0, TaggedText().constant(words[0],
-      'span class="Description-entry"'))
-    element.contents[0] = words[1]
+    firstword = self.extractfirst(contents) + u' '
+    tag = 'span class="Description-entry"'
+    contents.insert(0, TaggedText().constant(firstword, tag))
+
+  def extractfirst(self, contents):
+    "Extract the first word"
+    firstword = ''
+    index = 0
+    while index < len(contents):
+      element = contents[index]
+      words = element.contents[0].split(' ', 1)
+      firstword += words[0]
+      if len(words) > 1:
+        element.contents[0] = words[1]
+        return firstword
+      del contents[index]
+      if len(contents) == index:
+        return firstword
+      next = contents[index]
+      if not isinstance(next, StringContainer):
+        if not isinstance(next, Space):
+          return firstword
+        firstword += '&nbsp'
+        del contents[index]
+    return firstword
 
 class Inset(Container):
   "A generic inset in a LyX document"
