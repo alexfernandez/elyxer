@@ -225,6 +225,7 @@ Can be run from other directories than the one with the document.
 
 \begin_layout Itemize
 Tables have light grey separations.
+ Table spacing is now better adjusted.
 \end_layout
 
 \begin_layout Itemize
