@@ -90,7 +90,7 @@ export to HTML
 \end_inset
 
  option\SpecialChar \ldots{}
- Until now! With eLyXer you can convert your master thesis, learned
+ Until now! With eLyXer you can convert your master's thesis, learned
  article, fascinating novel or love letter to a web page that you can then
  publish on the web.
 \end_layout
@@ -214,6 +214,28 @@ Changelog
 Latest version is 0.7, created on 20090316.
 \end_layout
 
+\begin_layout Itemize
+0.8 (20090317):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Can be run from other directories than the one with the document.
+\end_layout
+
+\begin_layout Itemize
+Tables have light grey separations.
+\end_layout
+
+\begin_layout Itemize
+Descriptions appear correctly: the first word in bold.
+\end_layout
+
+\begin_layout Itemize
+Supports hyperlinks and Lyx notes (the latter are not rendered in the HTML).
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 0.7 (20090316):
 \end_layout
@@ -413,9 +435,9 @@ This little project is my little contribution back to the wonderful LyX
 Thanks to Stevan White for encouraging me to publish the tool; to Christian
  Ridderström for helping me out right at the start; to Abdelrazak Younes,
  Pavel Sanda, Günther Milde, Olivier Ripoll, José Matos, Iain Mac Donald,
- Uwe Stöhr for their interesting suggestions; to Nikos Alexandris, Joachim
- Kreimer-de Fries (Osnabryg), Richard Talley, Wolfgang Keller, Murray Eisenberg,
- Robert Orr for their early testing.
+ Uwe Stöhr, Ignacio García for their interesting suggestions; to Nikos Alexandri
+s, Joachim Kreimer-de Fries (Osnabryg), Richard Talley, Wolfgang Keller,
+ Murray Eisenberg, Robert Orr for their early testing.
  A silent 
 \begin_inset Quotes eld
 \end_inset
