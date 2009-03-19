@@ -210,7 +210,8 @@ class IndexEntry(Link):
 class PrintIndex(Container):
   "Command to print an index"
 
-  start = '\\begin_inset LatexCommand printindex'
+  starts = ['\\begin_inset LatexCommand printindex',
+      '\\begin_inset CommandInset index_print']
   ending = '\\end_inset'
 
   def __init__(self):
