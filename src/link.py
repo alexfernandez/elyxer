@@ -155,8 +155,7 @@ class ListOf(Container):
   start = '\\begin_inset FloatList'
   ending = '\\end_inset'
 
-  names = {'figure':'figuras', 'table':'tablas', 'algorithm':'listados',
-      'tableofcontents':'contenidos'}
+  names = {'figure':'figures', 'table':'tables', 'algorithm':'listings'}
 
   def __init__(self):
     self.parser = BoundedParser()
@@ -167,7 +166,7 @@ class ListOf(Container):
     "Parse the header and get the type"
     self.type = self.header[2]
     self.tag = 'div class="list"'
-    self.contents = [Constant(u'Índice de ' + ListOf.names[self.type])]
+    self.contents = [Constant(u'List of ' + ListOf.names[self.type])]
 
 class TableOfContents(Container):
   "Table of contents"
@@ -184,7 +183,7 @@ class TableOfContents(Container):
   def process(self):
     "Parse the header and get the type"
     self.tag = 'div class="toc"'
-    self.contents = [Constant(u'Índice de Contenidos')]
+    self.contents = [Constant(u'Table of Contents')]
 
 class IndexEntry(Link):
   "An entry in the alphabetical index"
