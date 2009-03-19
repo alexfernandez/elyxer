@@ -102,7 +102,7 @@ System Requirements
 \end_layout
 
 \begin_layout Standard
-eLyXer requires Python 2.3.4, and should work with versions up to 2.5.
+eLyXer requires Python 2.3.4, and should work with versions up to 2.6.
 \begin_inset Formula $x$
 \end_inset
 
@@ -699,6 +699,27 @@ Lists (such as this one) appear disjoint, with each item in a separate list.
 \end_inset
 
 .
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+This happens only in the HTML file converted with eLyXer, not from within
+ LyX.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Comment
+status open
+
+\begin_layout Standard
+By the way, the previous note (and this one) should not appear on the HTML.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
@@ -749,8 +770,28 @@ Phonetic alphabet symbols are not supported -- they appear in dark cyan:
 
 \begin_layout Enumerate
 There is no visual link between a footnote and its place of insertion.
- (I have no idea of how to deal with this one, so any suggestions are welcome
- -- if possible with CSS code.)
+ 
+\begin_inset Foot
+status open
+
+\begin_layout Standard
+I have no idea about how to deal with this one, so any suggestions are welcome
+ -- if possible with CSS code.
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Marginal
+status open
+
+\begin_layout Standard
+And still less on what to do with margin notes: should they appear differently?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection

@@ -221,6 +221,17 @@ span.Foot {
 	padding: 0.5ex;
 	font: small normal;
 }
+span.Marginal {
+	float: right;
+	border: thin solid #c0c0c0;
+	background: #ffffff;
+	width: 25%;
+	padding: 0.5ex;
+	font: small normal;
+}
+span.Note {
+	display: none;
+}
 div.LyX-Code {
 	padding: 0.2em 2em;
 	margin-left: 1em;
