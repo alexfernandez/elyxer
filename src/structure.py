@@ -203,7 +203,7 @@ class Description(Layout):
       if not isinstance(next, StringContainer):
         if not isinstance(next, Space):
           return firstword
-        firstword += '&nbsp'
+        firstword += next.html[0]
         del contents[index]
     return firstword
 
@@ -213,19 +213,19 @@ class Space(Container):
   start = '\\begin_inset space'
   ending = '\\end_inset'
 
-  spaces = {'~':'&nbsp'}
+  spaces = {'~':'&nbsp;', '\\space{}':'&nbsp;', '\\thinspace{}':u' '}
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = ConstantOutput()
+    self.output = FixedOutput()
 
   def process(self):
     self.type = self.header[2]
     if self.type not in Space.spaces:
       Trace.error('Unknown space type ' + self.type)
-      self.contents = [' ']
+      self.html = [' ']
       return
-    self.contents = [Space.spaces[self.type]]
+    self.html = [Space.spaces[self.type]]
 
 class Inset(Container):
   "A generic inset in a LyX document"
@@ -262,5 +262,5 @@ class Newline(Container):
     self.html = '<br/>'
 
 ContainerFactory.types += [LyxHeader, LyxFooter, InsetText, Caption, Inset,
-    Align, Layout, Float, Title, Author, Description, Newline]
+    Align, Layout, Float, Title, Author, Description, Newline, Space]
 
