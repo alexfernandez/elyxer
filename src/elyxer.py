@@ -55,6 +55,8 @@ def createbook(args):
     Options.quiet = True
   if len(args) > 0:
     Options.directory = os.path.dirname(args[0])
+    if Options.directory == '':
+      Options.directory = '.'
     filein = codecs.open(args[0], 'r', "utf-8")
     del args[0]
   if len(args) > 0:

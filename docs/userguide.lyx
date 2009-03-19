@@ -175,7 +175,8 @@ A directory called
 elyxer
 \family default
  should appear.
- To test that everything works fine just move to the docs directory:
+ To test that everything works fine just run the executable on the user
+ guide:
 \end_layout
 
 \begin_layout LyX-Code
@@ -184,20 +185,7 @@ elyxer
 \color blue
 $
 \color inherit
- cd elyxer/docs/
-\end_layout
-
-\begin_layout Standard
-and run the executable on the user guide:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
-$
-\color inherit
- ../elyxer userguide.lyx userguide2.html
+ ./elyxer --title "eLyXer User Guide" docs/userguide.lyx docs/userguide2.html
 \end_layout
 
 \begin_layout Standard
@@ -210,7 +198,8 @@ On Windows you have to include the Python executable:
 \color blue
 >
 \color inherit
- Python.exe ../elyxer userguide.lyx userguide2.html
+ Python.exe ./elyxer --title "eLyXer User Guide" docs/userguide.lyx docs/userguide2.
+html
 \end_layout
 
 \begin_layout Standard
@@ -223,7 +212,7 @@ It should generate a working web page identical to the one distributed:
 \color blue
 $
 \color inherit
- diff userguide.html userguide2.html
+ diff docs/userguide.html docs/userguide2.html
 \end_layout
 
 \begin_layout Standard

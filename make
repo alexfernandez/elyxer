@@ -52,4 +52,11 @@ for file in test/*.lyx; do
 ./elyxer --quiet "$name.lyx" "$name-test.html"
 diff --ignore-matching-lines="create-date" "$name-test.html" "$name-good.html"
 done
+# now tests from with the directory
+cd test
+for file in *.lyx; do
+  name=$(basename "$file" .lyx)
+../elyxer --quiet "$name.lyx" "$name-test.html"
+diff --ignore-matching-lines="create-date" "$name-test.html" "$name-good.html"
+done
 
