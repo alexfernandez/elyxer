@@ -730,7 +730,7 @@ Converted document
 \begin_layout Enumerate
 Phonetic alphabet symbols are not supported -- they appear in dark cyan:
  
-\begin_inset Formula $\text{[sample]}$
+\begin_inset Formula $\text{\textipa{[sample]}}$
 \end_inset
 
 .
