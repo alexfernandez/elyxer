@@ -38,6 +38,12 @@ class LyxHeader(Container):
     self.parser = BoundedDummy()
     self.output = HeaderOutput()
 
+  def process(self):
+    "Find pdf title"
+    if '\\pdf_title' in self.parser.parameters:
+      Options.title = self.parser.parameters['\\pdf_title']
+      Trace.debug('PDF Title: ' + Options.title)
+
 class LyxFooter(Container):
   "Reads the footer, outputs the HTML footer"
 
@@ -179,6 +185,7 @@ class Description(Layout):
     words = element.contents[0].split(' ', 1)
     if len(words) == 1:
       words.append('')
+      Trace.debug("More: " + str(contents[1]))
     else:
       words[1] = '&nbsp;' + words[1]
     contents.insert(0, TaggedText().constant(words[0],
