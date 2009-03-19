@@ -235,7 +235,8 @@ Descriptions appear with the first word in bold), but only within the first
 \end_layout
 
 \begin_layout Itemize
-Supports hyperlinks, Lyx notes (not rendered in the HTML), margin notes.
+Supports hyperlinks, Lyx notes (not rendered in the HTML), margin notes,
+ pretty quotes ‘’, hyperlinks.
 \end_layout
 
 \end_deeper
