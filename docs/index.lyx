@@ -240,7 +240,11 @@ Added support for Lyx notes (not rendered in the HTML), margin notes, pretty
 \end_layout
 
 \begin_layout Itemize
-Added support for new style hyperlinks, labels and references.
+Added support for new style (1.6.
+\begin_inset Formula $x$
+\end_inset
+
+) hyperlinks, labels and references, TOC.
 \end_layout
 
 \begin_layout Itemize
