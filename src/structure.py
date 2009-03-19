@@ -159,6 +159,31 @@ class Author(Layout):
     FooterOutput.author = string.contents[0]
     Trace.debug('Author: ' + FooterOutput.author)
 
+class Description(Layout):
+  "A description layout"
+
+  start = '\\begin_layout Description'
+  ending = '\\end_layout'
+
+  def process(self):
+    "Set the first word to bold"
+    self.tag = 'div class="Description"'
+    self.insertfirst(self.contents)
+
+  def insertfirst(self, contents):
+    "Insert a bold tag for the first word"
+    element = contents[0]
+    if not isinstance(element, StringContainer):
+      self.insertfirst(element.contents)
+      return
+    words = element.contents[0].split(' ', 1)
+    if len(words) == 1:
+      words.append('')
+    Trace.debug('First word in description: ' + words[0])
+    contents.insert(0, TaggedText().constant(words[0],
+      'span class="Description-entry"'))
+    element.contents[0] = words[1]
+
 class Inset(Container):
   "A generic inset in a LyX document"
 
@@ -194,5 +219,5 @@ class Newline(Container):
     self.html = '<br/>'
 
 ContainerFactory.types += [LyxHeader, LyxFooter, InsetText, Caption, Inset,
-    Align, Layout, Float, Title, Author, Newline]
+    Align, Layout, Float, Title, Author, Description, Newline]
 
