@@ -106,8 +106,7 @@ img.figure {
 table {
 	text-align: center;
 	border-collapse: collapse;
-	margin-left: auto;
-	margin-right: auto;
+	margin: 1em;
 }
 tr.header {
 	border-bottom: thin solid #c0c0c0;
@@ -116,6 +115,15 @@ tr.header {
 }
 td {
 	padding: 1ex;
+	border: thin solid #f0f0f0;
+}
+td div.Standard {
+	margin: 0ex;
+	padding: 0ex;
+}
+div div.Standard {
+	margin: 0ex;
+	padding: 0ex;
 }
 td.numeric {
 	text-align: right;
