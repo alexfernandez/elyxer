@@ -25,12 +25,14 @@ cd src
 mv elyxer ..
 cd ..
 chmod 755 elyxer
-# prepare documentation
+# remove artifacts
 rm -f docs/*.png
+rm -f docs/*.lyx~
+rm -f test/*.lyx~
+# prepare documentation
 ./elyxer --title "eLyXer User Guide" --css "lyx.css" docs/userguide.lyx docs/userguide.html
 ./elyxer --title="eLyxer Developer Guide" --css "lyx.css" docs/devguide.lyx docs/devguide.html
 ./elyxer --title=eLyXer --css "lyx.css" docs/index.lyx docs/index.html
-rm -f docs/*.lyx~
 # make compressed files
 mkdir -p dist
 cd ..

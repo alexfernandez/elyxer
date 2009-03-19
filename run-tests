@@ -33,4 +33,7 @@ for file in *.lyx; do
 ../elyxer --quiet "$name.lyx" "$name-test.html"
 diff --ignore-matching-lines="create-date" "$name-test.html" "$name-good.html"
 done
+# cleanup
+cd ..
+rm -f "*-test.html"
 
