@@ -27,9 +27,9 @@ cd ..
 chmod 755 elyxer
 # prepare documentation
 rm -f docs/*.png
-./elyxer --title "eLyXer User Guide" docs/userguide.lyx docs/userguide.html
-./elyxer --title="eLyxer Developer Guide" docs/devguide.lyx docs/devguide.html
-./elyxer --title=eLyXer docs/index.lyx docs/index.html
+./elyxer --title "eLyXer User Guide" --css "lyx.css" docs/userguide.lyx docs/userguide.html
+./elyxer --title="eLyxer Developer Guide" --css "lyx.css" docs/devguide.lyx docs/devguide.html
+./elyxer --title=eLyXer --css "lyx.css" docs/index.lyx docs/index.html
 rm -f docs/*.lyx~
 # make compressed files
 mkdir -p dist
