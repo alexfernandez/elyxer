@@ -231,12 +231,12 @@ Tables have light grey separations.
 \begin_layout Itemize
 Descriptions appear with the first word in bold), but only within the first
  text style.
- Changing style in the middle of a word will come out wrong.
+ Changing style in the middle of a word may distract the algorithm.
 \end_layout
 
 \begin_layout Itemize
 Added support for Lyx notes (not rendered in the HTML), margin notes, pretty
- quotes ‘’.
+ quotes ‘’, weird spaces.
 \end_layout
 
 \begin_layout Itemize
