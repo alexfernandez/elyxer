@@ -169,10 +169,22 @@ class ListOf(Container):
     self.tag = 'div class="list"'
     self.contents = [Constant(u'Índice de ' + ListOf.names[self.type])]
 
-class TableOfContents(ListOf):
+class TableOfContents(Container):
   "Table of contents"
 
-  start = '\\begin_inset LatexCommand tableofcontents'
+  starts = ['\\begin_inset LatexCommand tableofcontents',
+      '\\begin_inset CommandInset toc']
+  ending = '\\end_inset'
+
+  def __init__(self):
+    self.parser = BoundedParser()
+    self.output = TagOutput()
+    self.breaklines = True
+
+  def process(self):
+    "Parse the header and get the type"
+    self.tag = 'div class="toc"'
+    self.contents = [Constant(u'Índice de Contenidos')]
 
 class IndexEntry(Link):
   "An entry in the alphabetical index"
