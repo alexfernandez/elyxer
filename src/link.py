@@ -45,7 +45,7 @@ class Link(Container):
 class Label(Container):
   "A label to be referenced"
 
-  start = '\\begin_inset LatexCommand label'
+  starts = ['\\begin_inset LatexCommand label', '\\begin_inset CommandInset label']
   ending = '\\end_inset'
 
   labels = dict()
@@ -62,7 +62,7 @@ class Label(Container):
 class Reference(Link):
   "A reference to a label"
 
-  start = '\\begin_inset LatexCommand ref'
+  starts = ['\\begin_inset LatexCommand ref', '\\begin_inset CommandInset ref']
   ending = '\\end_inset'
 
   def __init__(self):
@@ -221,7 +221,7 @@ class URL(Link):
   "A clickable URL"
 
   starts = ['\\begin_inset LatexCommand url',
-      '\\begin_inset LatexCommand htmlurl']
+      '\\begin_inset LatexCommand htmlurl', '\\begin_inset CommandInset href']
   ending = '\\end_inset'
 
   def __init__(self):
@@ -231,6 +231,8 @@ class URL(Link):
   def process(self):
     "Read URL from parameters"
     self.url = self.escape(self.parser.parameters['target'])
+    if 'type' in self.parser.parameters:
+      self.url = self.escape(self.parser.parameters['type']) + self.url
     name = self.url
     if 'name' in self.parser.parameters:
       name = self.parser.parameters['name']
@@ -246,20 +248,7 @@ class FlexURL(URL):
     "Read URL from contents"
     text = self.searchfor(StringContainer).contents[0]
     self.url = self.escape(text)
-    Trace.debug('Flex URL: ' + self.url)
     self.contents = [Constant(self.url)]
-
-class Hyperlink(URL):
-  "A hyperlink"
-
-  start = '\\begin_inset CommandInset href'
-  ending = '\\end_inset'
-
-  def process(self):
-    "Read Hyperlink from contents"
-    URL.process(self)
-    if 'type' in self.parser.parameters:
-      self.url = self.escape(self.parser.parameters['type']) + self.url
 
 class IndexOutput(object):
   "Returns an index as output"
@@ -313,5 +302,5 @@ class LinkOutput(object):
 
 ContainerFactory.types += [Label, Reference, BiblioCite, Bibliography,
     BiblioEntry, ListOf, TableOfContents, IndexEntry, PrintIndex, URL,
-    FlexURL, Hyperlink]
+    FlexURL]
 
