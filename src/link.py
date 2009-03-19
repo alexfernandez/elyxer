@@ -267,7 +267,7 @@ class IndexOutput(object):
 
   def gethtml(self, container):
     "Get the HTML code for the index"
-    html = [u'<h1>Índice Alfabético</h1>\n']
+    html = [u'<h1 class="index">Index</h1>\n']
     for key in container.keys:
       entries = container.entries[key]
       for entry in entries:
