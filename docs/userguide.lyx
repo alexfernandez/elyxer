@@ -40,6 +40,7 @@
 \begin_body
 
 \begin_layout Title
+s
 \begin_inset Graphics
 	filename elyxer.svg
 	lyxscale 50
@@ -175,8 +176,30 @@ A directory called
 elyxer
 \family default
  should appear.
- To test that everything works fine just run the executable on the user
- guide:
+ To test that everything works fine just run the included tests:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ ./run-tests
+\end_layout
+
+\begin_layout Standard
+It will run a number of test and check the results, so you can see if everything
+ is well.
+ You need to have installed the command-line tool 
+\family typewriter
+diff
+\family default
+ to show differences between two files.
+\end_layout
+
+\begin_layout Standard
+You may also want to try to convert the user guide:
 \end_layout
 
 \begin_layout LyX-Code
@@ -198,8 +221,8 @@ On Windows you have to include the Python executable:
 \color blue
 >
 \color inherit
- Python.exe ./elyxer --title "eLyXer User Guide" docs/userguide.lyx docs/userguide2.
-html
+ Python.exe elyxer --title "eLyXer User Guide" docs/userguide.lyx docs/userguide2.h
+tml
 \end_layout
 
 \begin_layout Standard
@@ -221,8 +244,8 @@ If nothing appears (i.e.
 \end_layout
 
 \begin_layout Standard
-With this procedure you have to reference the executable file with full
- path every time you run it.
+Since nothing is installed you have to reference the full path to the executable
+ file every time you run it.
  If you want to avoid the hassle just place 
 \family typewriter
 elyxer
