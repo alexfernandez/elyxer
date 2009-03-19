@@ -151,7 +151,7 @@ class StringContainer(Container):
     
   replaces = { '`':u'‘', '\'':u'’', '\n':'', '--':u'—' }
   commands = { '\\SpecialChar \\ldots{}':u'…', '\\InsetSpace ~':'&nbsp;',
-      '\\backslash':'\\' }
+      '\\backslash':'\\', '\\SpecialChar \\@.':'.' }
 
   def process(self):
     "Replace special chars"
