@@ -121,7 +121,7 @@ td div.Standard {
 	margin: 0ex;
 	padding: 0ex;
 }
-div div.Standard {
+div.caption div.Standard, div.table div.Standard {
 	margin: 0ex;
 	padding: 0ex;
 }
