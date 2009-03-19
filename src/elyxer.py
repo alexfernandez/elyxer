@@ -76,6 +76,9 @@ def usage(error):
   Trace.error('  Options:')
   Trace.error('    --nocopy: disables the copyright notice at the bottom')
   Trace.error('    --quiet: disables all runtime messages')
+  Trace.error('    --debug: enable debugging messages (for developers)')
+  Trace.error('    --title <title>: set the generated page title')
+  Trace.error('    --css <file.css>: use a custom CSS file')
   exit()
 
 biblio = dict()
