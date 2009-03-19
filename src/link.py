@@ -249,6 +249,18 @@ class FlexURL(URL):
     Trace.debug('Flex URL: ' + self.url)
     self.contents = [Constant(self.url)]
 
+class Hyperlink(URL):
+  "A hyperlink"
+
+  start = '\\begin_inset CommandInset href'
+  ending = '\\end_inset'
+
+  def process(self):
+    "Read Hyperlink from contents"
+    URL.process(self)
+    if 'type' in self.parser.parameters:
+      self.url = self.escape(self.parser.parameters['type']) + self.url
+
 class IndexOutput(object):
   "Returns an index as output"
 
@@ -301,5 +313,5 @@ class LinkOutput(object):
 
 ContainerFactory.types += [Label, Reference, BiblioCite, Bibliography,
     BiblioEntry, ListOf, TableOfContents, IndexEntry, PrintIndex, URL,
-    FlexURL]
+    FlexURL, Hyperlink]
 
