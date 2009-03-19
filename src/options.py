@@ -33,6 +33,7 @@ class Options(object):
   quiet = False
   css = 'http://www.nongnu.org/elyxer/lyx.css'
   title = 'Converted document'
+  directory = '.'
 
   def parseoptions(self, args):
     "Parse command line options"

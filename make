@@ -47,9 +47,9 @@ mv elyxer-$DATE.zip elyxer/dist
 cd elyxer
 # run tests
 echo "Testing eLyXer -- any text below this line signals an error"
-for file in $(ls test/*.lyx); do
-  name=$(dirname $file)/$(basename $file .lyx)
-./elyxer --quiet $name.lyx $name-test.html
-diff --ignore-matching-lines="create-date" $name-test.html $name-good.html
+for file in test/*.lyx; do
+  name=$(dirname "$file")/$(basename "$file" .lyx)
+./elyxer --quiet "$name.lyx" "$name-test.html"
+diff --ignore-matching-lines="create-date" "$name-test.html" "$name-good.html"
 done
 

@@ -44,18 +44,32 @@ class Image(Container):
 
   def process(self):
     self.url = self.parser.parameters['filename']
-    if not os.path.exists(self.url):
-      Trace.error('Image ' + self.url + ' not found')
+    origin = self.getpath(self.url)
+    if not os.path.exists(origin):
+      Trace.error('Image ' + origin + ' not found')
       return
-    self.destination = self.url
-    if os.path.isabs(self.url):
-      self.destination = os.path.basename(self.url)
-    self.destination = os.path.splitext(self.destination)[0] + '.png'
+    self.destination = self.getdestination(self.url)
+    destination = self.getpath(self.destination)
     density = 100
     if 'scale' in self.parser.parameters:
       density = int(self.parser.parameters['scale'])
-    self.convert(self.url, self.destination, density)
-    self.width, self.height = self.getdimensions(self.destination)
+    Trace.debug('From ' + origin + ' to ' + destination)
+    self.convert(origin, destination, density)
+    self.width, self.height = self.getdimensions(destination)
+
+  def getpath(self, path):
+    "Get the correct path for the image"
+    if os.path.isabs(path):
+      return path
+    return Options.directory + os.path.sep + path
+
+  def getdestination(self, origin):
+    "Get the destination URL for an image URL"
+    if os.path.isabs(origin):
+      dest = os.path.basename(origin)
+    else:
+      dest = origin
+    return os.path.splitext(dest)[0] + '.png'
 
   def convert(self, origin, destination, density):
     "Convert an image to PNG"
