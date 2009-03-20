@@ -207,6 +207,29 @@ target "devguide.html"
 \end_layout
 
 \begin_layout Subsection*
+Contact
+\end_layout
+
+\begin_layout Standard
+You can contact the author at 
+\begin_inset LatexCommand url
+name "elyxer@gmail.com"
+target "mailto:elyxer@gmail.com"
+
+\end_inset
+
+.
+ You can also join the 
+\begin_inset LatexCommand url
+name "mailing list"
+target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection*
 Changelog
 \end_layout
 

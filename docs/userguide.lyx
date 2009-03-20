@@ -827,6 +827,29 @@ eLyXer is written in Python so that it does not need to be compiled; its
  gmail account.
 \end_layout
 
+\begin_layout Subsection
+Contact Information
+\end_layout
+
+\begin_layout Standard
+You can find the main author at 
+\begin_inset LatexCommand url
+name "elyxer@gmail.com"
+target "mailto:elyxer@gmail.com"
+
+\end_inset
+
+.
+ You can also join the 
+\begin_inset LatexCommand url
+name "mailing list"
+target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
+
+\end_inset
+
+ to discuss any information related to eLyXer.
+\end_layout
+
 \begin_layout Section
 FAQ
 \end_layout
