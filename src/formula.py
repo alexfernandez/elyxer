@@ -65,7 +65,8 @@ class Formula(Container):
       '\\pi':u'π', '\\infty':u'∞', '\\left(':u'<span class="bigsymbol">(</span>',
       '\\right)':u'<span class="bigsymbol">)</span>',
       '\\intop':u'∫', '\\log':'log', '\\exp':'exp', '\\_':'_', '\\\\':'<br/>',
-      '\\not':u'¬', '\\ln':'ln'}
+      '\\not':u'¬', '\\ln':'ln', '\\blacktriangleright':u'▶', '\\bullet':u'•',
+      '\\dagger':u'†', '\\ddagger':u'‡', '\\bigstar':u'★'}
   onefunctions = {'\\mathsf':'span class="mathsf"', '\\mathbf':'b', '^':'sup',
       '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
       '\\dot':'span class="overdot"', '\\sqrt':'span class="sqrt"',
