@@ -39,7 +39,7 @@ class QuoteContainer(Container):
       'gld':u'„', 'grd':u'“', 'gls':u'‚', 'grs':u'‘',
       'pld':u'„', 'prd':u'”', 'pls':u'‚', 'prs':u'’',
       'fld':u'«', 'frd':u'»', 'fls':u'‹', 'frs':u'›',
-      'ald':u'»', 'ard':u'«', 'als':u'›', 'ard':u'‹'
+      'ald':u'»', 'ard':u'«', 'als':u'›', 'ars':u'‹'
       }
 
   def __init__(self):
