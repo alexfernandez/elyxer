@@ -25,6 +25,7 @@
 from trace import Trace
 from parse import *
 from output import *
+from general import *
 
 
 class Container(object):
@@ -73,16 +74,14 @@ class Container(object):
     "Get a description"
     return self.__class__.__name__ + '@' + str(self.begin)
 
-  escapes = {'&':'&amp;', '<':'&lt;', '>':'&gt;'}
-
   def escape(self, line):
     "Escape a line to appear in HTML"
-    pieces = Container.escapes.keys()
+    pieces = ContainerConfig.escapes.keys()
     # do the '&' first
     pieces.sort()
     for piece in pieces:
       if piece in line:
-        line = line.replace(piece, Container.escapes[piece])
+        line = line.replace(piece, ContainerConfig.escapes[piece])
     return line
 
   def searchfor(self, type):
@@ -129,13 +128,7 @@ class Container(object):
 class BlackBox(Container):
   "A container that does not output anything"
 
-  starts = ['\\lyxformat', '\\begin_document', '\\begin_body',
-      '\\family default', '\\color inherit',
-      '\\shape default', '\\series default', '\\emph off',
-      '\\bar no', '\\noun off', '\\emph default', '\\bar default',
-      '\\noun default', '\\family roman', '\\series medium',
-      '\\shape up', '\\size normal', '\\color none', '#LyX', '\\noindent',
-      '\\labelwidthstring', '\\paragraph_spacing']
+  starts = BlackBoxConfig.starts
 
   def __init__(self):
     self.parser = LoneCommand()
@@ -149,14 +142,6 @@ class StringContainer(Container):
   def __init__(self):
     self.parser = StringParser()
     self.output = MirrorOutput()
-    
-  replaces = { '`':u'‘', '\'':u'’', '\n':'', '--':u'—' }
-  commands = { '\\SpecialChar \\ldots{}':u'…', '\\InsetSpace ~':'&nbsp;',
-      '\\InsetSpace \\space{}':'&nbsp;', '\\InsetSpace \\thinspace{}':u' ',
-      '\\backslash':'\\', '\\SpecialChar \\@.':'.',
-      '\\SpecialChar \\menuseparator':u'&nbsp;▷&nbsp;',
-      '\\SpecialChar \\textcompwordmark{}':u'', '\\SpecialChar \\nobreakdash-':'-',
-      '\\SpecialChar \\slash{}':'/'}
 
   def process(self):
     "Replace special chars"
@@ -170,10 +155,10 @@ class StringContainer(Container):
           + replaced.strip())
 
   def changeline(self, line):
-    line = self.replacemap(line, StringContainer.replaces)
+    line = self.replacemap(line, ContainerConfig.replaces)
     if not '\\' in line:
       return line
-    line = self.replacemap(line, StringContainer.commands)
+    line = self.replacemap(line, ContainerConfig.commands)
     return line
 
   def replacemap(self, line, map):

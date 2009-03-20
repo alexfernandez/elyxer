@@ -23,9 +23,9 @@
 # eLyXer formula processing
 
 import sys
-sys.path.append('./elyxer')
 from container import *
 from trace import Trace
+from general import *
 
 
 class Formula(Container):
@@ -51,32 +51,6 @@ class Formula(Container):
     else:
       self.tag = 'div class="formula"'
       self.breaklines = True
-
-
-  unmodified = ['.', '*', u'€', '(', ')', '[', ']', ':']
-  modified = {'\'':u'’', '=':u' = ', ' ':'', '<':u' &lt; ', '-':u' − ', '+':u' + ',
-      ',':u', ', '/':u' ⁄ '}
-  commands = {'\\, ':' ', '\\%':'%', '\\prime':u'′', '\\times':u' × ',
-      '\\rightarrow':u' → ', '\\lambda':u'λ', '\\propto':u' ∝ ',
-      '\\tilde{n}':u'ñ', '\\cdot':u'⋅', '\\approx':u' ≈ ',
-      '\\rightsquigarrow':u' ⇝ ', '\\dashrightarrow':u' ⇢ ', '\\sim':u' ~ ',
-      '\\pm':u'±', '\\Delta':u'Δ', '\\sum':u'∑', '\\sigma':u'σ',
-      '\\beta':u'β', '\\acute{o}':u'ó', '\\acute{a}':u'á', '\\implies':u'  ⇒  ',
-      '\\pi':u'π', '\\infty':u'∞', '\\left(':u'<span class="bigsymbol">(</span>',
-      '\\right)':u'<span class="bigsymbol">)</span>',
-      '\\intop':u'∫', '\\log':'log', '\\exp':'exp', '\\_':'_', '\\\\':'<br/>',
-      '\\not':u'¬', '\\ln':'ln', '\\blacktriangleright':u'▶', '\\bullet':u'•',
-      '\\dagger':u'†', '\\ddagger':u'‡', '\\bigstar':u'★'}
-  onefunctions = {'\\mathsf':'span class="mathsf"', '\\mathbf':'b', '^':'sup',
-      '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
-      '\\dot':'span class="overdot"', '\\sqrt':'span class="sqrt"',
-      '\\bar':'span class="bar"', '\\mbox':'span class="mbox"',
-      '\\textrm':'span class="mathrm"', '\\mathrm':'span class="mathrm"',
-      '\\text':'span class="text"', '\\textipa':'span class="textipa"'}
-  twofunctions = {
-      '\\frac':['span class="fraction"', 'span class="numerator"', 'span class="denominator"'],
-      '\\nicefrac':['span class="fraction"', 'span class="numerator"', 'span class="denominator"']
-      }
   
   def convert(self, text, pos):
     "Convert a bit of text to HTML"
@@ -115,12 +89,12 @@ class Formula(Container):
     result = unicode()
     while pos + len(symbols) < len(text):
       char = text[pos + len(symbols)]
-      if char.isdigit() or char in Formula.unmodified:
+      if char.isdigit() or char in FormulaConfig.unmodified:
         symbols += char
         result += char
-      elif char in Formula.modified:
+      elif char in FormulaConfig.modified:
         symbols += char
-        result += Formula.modified[char]
+        result += FormulaConfig.modified[char]
       else:
         break
     if len(symbols) == 0:
@@ -129,14 +103,14 @@ class Formula(Container):
 
   def command(self, text, pos):
     "read a command"
-    command, translated = self.find(text, pos, Formula.commands)
+    command, translated = self.find(text, pos, FormulaConfig.commands)
     if not command:
       return None, None
     return command, [Constant(translated)]
 
   def readone(self, text, pos):
     "read a one-parameter function"
-    function, tag = self.find(text, pos, Formula.onefunctions)
+    function, tag = self.find(text, pos, FormulaConfig.onefunctions)
     if not function:
       return None, None
     pos += len(function)
@@ -145,7 +119,7 @@ class Formula(Container):
 
   def readtwo(self, text, pos):
     "read a two-parameter function"
-    function, tags = self.find(text, pos, Formula.twofunctions)
+    function, tags = self.find(text, pos, FormulaConfig.twofunctions)
     if not function:
       return None, None
     pos += len(function)
