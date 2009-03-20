@@ -229,6 +229,56 @@ class PrintIndex(Container):
     keys.sort()
     return keys
 
+class NomenclatureEntry(Link):
+  "An entry of LyX nomenclature"
+
+  start = '\\begin_inset CommandInset nomenclature'
+  ending = '\\end_inset'
+
+  entries = {}
+
+  def __init__(self):
+    self.parser = BoundedParser()
+    self.output = LinkOutput()
+
+  def process(self):
+    "Put entry in index"
+    self.symbol = self.parser.parameters['symbol']
+    self.description = self.parser.parameters['description']
+    self.key = self.name.replace(' ', '-').lower()
+    NomenclatureEntry.entries[self.key] = self
+    self.anchor = 'noment-' + self.key
+    self.url = 'nom-' + self.key
+    self.contents = [Constant(self.symbol)]
+
+class NomenclaturePrint(Container):
+  "Print all nomenclature entries"
+
+  start = '\\begin_inset CommandInset nomencl_print'
+  ending = '\\end_inset'
+
+  def __init__(self):
+    self.parser = BoundedParser()
+    self.output = ContentsOutput()
+
+  def process(self):
+    self.keys = self.sortentries()
+    self.contents = [TaggedText.constant('Nomenclature', 'h1 class="nomenclature"')]
+    for key in self.keys:
+      entry = NomenclatureEntry.entries[key]
+      contents = [Link.complete(u'↑', 'nom-' + key, 'noment-' + key)]
+      contents.append(Constant(entry.symbol + u' '))
+      contents.append(Constant(entry.description))
+      text = TaggedText.complete(contents, 'div class="Nomenclated"', true)
+      self.contents.append(text)
+
+  def sortentries(self):
+    "Sort all entries in the index"
+    keys = NomenclatureEntry.entries.keys()
+    # sort by name
+    keys.sort()
+    return keys
+
 class URL(Link):
   "A clickable URL"
 
@@ -289,12 +339,6 @@ class IndexEntryOutput(object):
     return ['<a class="index" name="' + container.key + '-' + str(container.index) +
         '" href="#' + container.key + u'">↓</a>']
 
-class BiblioEntryOutput(object):
-  "An entry in the bibliography"
-
-class BiblioCiteOutput(object):
-  "A bibliographical entry cited"
-
 class LinkOutput(object):
   "A link pointing to some destination"
   "Or an anchor (destination)"
@@ -314,5 +358,5 @@ class LinkOutput(object):
 
 ContainerFactory.types += [Label, Reference, BiblioCite, Bibliography,
     BiblioEntry, ListOf, TableOfContents, IndexEntry, PrintIndex, URL,
-    FlexURL]
+    FlexURL, NomenclatureEntry, NomenclaturePrint]
 
