@@ -47,7 +47,7 @@ class FormulaConfig(object):
       '\\pm':u'±', '\\sim':u' ~ ', '\\implies':u'  ⇒  ', '\\int':u'∫',
       '\\intop':u'∫', '\\infty':u'∞', '\\not':u'¬',
       # symbols
-      '\\rightarrow':u' → ', '\\rightsquigarrow':u' ⇝ ',
+      '\\rightarrow':u' → ', '\\rightsquigarrow':u' ⇝ ', '\\Rightarrow':'⇒',
       '\\dashrightarrow':u' ⇢ ', '\\blacktriangleright':u'▶', '\\bullet':u'•',
       '\\dagger':u'†', '\\ddagger':u'‡', '\\bigstar':u'★',
       '\\to':u'→', '\\gets':u'←',
@@ -66,7 +66,7 @@ class FormulaConfig(object):
       '\\bar':'span class="bar"', '\\mbox':'span class="mbox"',
       '\\textrm':'span class="mathrm"', '\\mathrm':'span class="mathrm"',
       '\\text':'span class="text"', '\\textipa':'span class="textipa"',
-      '\\boldsymbol':'b',
+      '\\boldsymbol':'b', '\\mathit':'i', '\\mathtt':'tt',
       # functions
       '\\sqrt':'span class="sqrt"',
       # LaTeX (ignored)
