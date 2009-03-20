@@ -137,6 +137,21 @@ class Hfill(TaggedText):
   def process(self):
     self.tag = 'span class="right"'
 
+class BarredText(TaggedText):
+  "Text with a bar somewhere"
+
+  start = '\\bar'
+  typetags = { 'under':'u' }
+
+  def process(self):
+    "Parse the type of bar"
+    self.type = self.header[1]
+    if not self.type in BarredText.typetags:
+      Trace.error('Unknown bar type ' + self.type)
+      self.tag = 'span'
+      return
+    self.tag = BarredText.typetags[self.type]
+
 class FlexCode(Container):
   "A bit of inset code"
 
@@ -182,5 +197,5 @@ class DeeperList(Container):
 
 ContainerFactory.types += [QuoteContainer, LyxLine, EmphaticText, ShapedText,
     VersalitasText, ColorText, SizeText, BoldText, TextFamily, Hfill,
-    FlexCode, ListItem, DeeperList]
+    FlexCode, ListItem, DeeperList, BarredText]
 
