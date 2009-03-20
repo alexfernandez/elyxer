@@ -244,6 +244,7 @@ Latest version is 0.8, created on 20090320.
 \begin_deeper
 \begin_layout Itemize
 Better formula parsing (including line breaks).
+ Supports a few math fonts.
 \end_layout
 
 \begin_layout Itemize
