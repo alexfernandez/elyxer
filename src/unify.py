@@ -20,7 +20,7 @@
 
 # --end--
 # Alex 20090309
-# conflates all into one file to generate an executable
+# conflates (unifies) all into one file to generate an executable
 
 import sys
 import codecs

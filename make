@@ -21,7 +21,7 @@
 
 # create executable
 cd src
-./conflate.py elyxer.py > elyxer
+./unify.py elyxer.py > elyxer
 mv elyxer ..
 cd ..
 chmod 755 elyxer
