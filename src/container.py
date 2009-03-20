@@ -134,7 +134,8 @@ class BlackBox(Container):
       '\\shape default', '\\series default', '\\emph off',
       '\\bar no', '\\noun off', '\\emph default', '\\bar default',
       '\\noun default', '\\family roman', '\\series medium',
-      '\\shape up', '\\size normal', '\\color none', '#LyX', '\\noindent']
+      '\\shape up', '\\size normal', '\\color none', '#LyX', '\\noindent',
+      '\\labelwidthstring']
 
   def __init__(self):
     self.parser = LoneCommand()
