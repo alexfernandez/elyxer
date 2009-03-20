@@ -35,7 +35,7 @@ class LyxHeader(Container):
   ending = '\\end_header'
 
   def __init__(self):
-    self.parser = BoundedDummy()
+    self.parser = HeaderParser()
     self.output = HeaderOutput()
 
   def process(self):
@@ -269,10 +269,36 @@ class NewlineInset(Newline):
   ending = '\\end_inset'
 
   def __init__(self):
-    self.parser = BoundedParser()
+    self.parser = InsetParser()
     self.output = FixedOutput()
 
+class Branch(Container):
+  "A branch within a LyX document"
+
+  start = '\\begin_inset Branch'
+  ending = '\\end_inset'
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = TagOutput()
+    self.breaklines = True
+
+  def process(self):
+    "Disable inactive branches"
+    self.branch = self.header[2]
+    self.tag = 'span class="branch"'
+    if not self.isactive():
+      self.output = EmptyOutput()
+
+  def isactive(self):
+    "Check if the branch is active"
+    if not self.branch in Options.branches:
+      Trace.error('Invalid branch ' + self.branch)
+      return True
+    branch = Options.branches[self.branch]
+    return branch.selected == 1
+    
 ContainerFactory.types += [LyxHeader, LyxFooter, InsetText, Caption, Inset,
     Align, Layout, Float, Title, Author, Description, Newline, Space,
-    NewlineInset]
+    NewlineInset, Branch]
 

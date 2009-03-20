@@ -151,7 +151,6 @@ class BoundedDummy(Parser):
   def parse(self, reader):
     "Parse the contents of the container"
     while not reader.currentline().startswith(self.ending):
-      self.parseparameter(reader)
       reader.nextline()
     # skip last line
     reader.nextline()
@@ -179,4 +178,16 @@ class InsetParser(BoundedParser):
     while reader.currentline() != '\n' and not reader.currentline().startswith('\\'):
       self.parseparameter(reader)
     return BoundedParser.parse(self, reader)
+
+class HeaderParser(Parser):
+  "Parses the LyX header"
+
+  def parse(self, reader):
+    "Parse header parameters into a dictionary"
+    while not reader.currentline().startswith(self.ending):
+      self.parseparameter(reader)
+      reader.nextline()
+    # skip last line
+    reader.nextline()
+    return []
 

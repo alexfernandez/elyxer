@@ -23,19 +23,21 @@
 # eLyXer trace library
 
 import sys
-from options import *
 
 class Trace(object):
   "A tracing class"
 
+  debug = False
+  quiet = False
+
   def debug(cls, message):
     "Show a debug message"
-    if Options.debug and not Options.quiet:
+    if Trace.debug and not Trace.quiet:
       print message
 
   def message(cls, message):
     "Show a trace message"
-    if not Options.quiet:
+    if not Trace.quiet:
       print message
 
   def error(cls, message):

@@ -34,6 +34,7 @@ class Options(object):
   css = 'http://www.nongnu.org/elyxer/lyx.css'
   title = 'Converted document'
   directory = '.'
+  branches = dict()
 
   def parseoptions(self, args):
     "Parse command line options"
@@ -45,7 +46,7 @@ class Options(object):
         return 'Option ' + original + ' not recognized'
       if not value:
         return 'Option ' + key + ' needs a value'
-      setattr(Options, key, value)
+      self.setoption(key, value)
     return None
 
   def readoption(self, args):
@@ -90,4 +91,25 @@ class Options(object):
     if not value.startswith('"'):
       return key, value
     return key, self.readquoted(args, value)
+
+  def setoption(self, key, value):
+    "Set an option value"
+    setattr(Options, key, value)
+    if hasattr(Trace, key):
+      setattr(Trace, key, value)
+
+class BranchOptions(object):
+  "A set of options for a branch"
+
+  def __init__(self):
+    self.selected = 0
+    self.color = '#ffffff'
+
+  def set(self, key, value):
+    "Set a branch option"
+    if not key.startswith('/'):
+      Trace.error('Invalid branch option ' + key)
+      return
+    key = key.replace('/', '')
+    setattr(self, key, value)
 
