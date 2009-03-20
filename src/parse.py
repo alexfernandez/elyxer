@@ -24,6 +24,7 @@
 
 import codecs
 from trace import Trace
+from options import *
 
 
 class ParseTree(object):
@@ -185,9 +186,36 @@ class HeaderParser(Parser):
   def parse(self, reader):
     "Parse header parameters into a dictionary"
     while not reader.currentline().startswith(self.ending):
-      self.parseparameter(reader)
+      self.parseline(reader)
       reader.nextline()
     # skip last line
     reader.nextline()
     return []
+
+  def parseline(self, reader):
+    "Parse a single line as a parameter or as a start"
+    line = reader.currentline()
+    for key in HeaderParser.openings:
+      if line.startswith(key):
+        HeaderParser.openings[key](self, reader)
+        return
+    # no match
+    self.parseparameter(reader)
+
+  def parsebranch(self, reader):
+    branch = reader.currentline().split()[1]
+    Trace.debug('Header branch ' + branch)
+    reader.nextline()
+    subparser = HeaderParser().complete('\\end_branch')
+    subparser.parse(reader)
+    options = BranchOptions()
+    for key in subparser.parameters:
+      options.set(key, subparser.parameters[key])
+    Options.branches[branch] = options
+
+  def complete(self, ending):
+    self.ending = ending
+    return self
+
+  openings = {'\\branch':parsebranch}
 

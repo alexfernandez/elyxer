@@ -23,6 +23,7 @@
 # eLyXer runtime options
 
 import codecs
+from trace import *
 
 
 class Options(object):
@@ -107,9 +108,9 @@ class BranchOptions(object):
 
   def set(self, key, value):
     "Set a branch option"
-    if not key.startswith('/'):
+    if not key.startswith('\\'):
       Trace.error('Invalid branch option ' + key)
       return
-    key = key.replace('/', '')
+    key = key.replace('\\', '')
     setattr(self, key, value)
 
