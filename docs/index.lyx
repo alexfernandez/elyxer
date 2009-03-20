@@ -244,7 +244,6 @@ Latest version is 0.8, created on 20090320.
 \begin_deeper
 \begin_layout Itemize
 Better formula parsing (including line breaks).
- New characters bullet, right triangle.
 \end_layout
 
 \begin_layout Itemize
@@ -266,6 +265,10 @@ Layout of type Space is hidden.
 \begin_layout Itemize
 Supports branches.
  Inactive branches are not shown.
+\end_layout
+
+\begin_layout Itemize
+New symbols: greek letters, shapes: bullet, right triangle.
 \end_layout
 
 \end_deeper
