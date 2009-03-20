@@ -56,7 +56,7 @@ class Formula(Container):
   unmodified = ['.', '*', u'€', '(', ')', '[', ']', ':']
   modified = {'\'':u'’', '=':u' = ', ' ':'', '<':u' &lt; ', '-':u' − ', '+':u' + ',
       ',':u', ', '/':u' ⁄ '}
-  commands = {'\\, ':' ', '\\%':'%', '\\prime':u'’', '\\times':u' × ',
+  commands = {'\\, ':' ', '\\%':'%', '\\prime':u'′', '\\times':u' × ',
       '\\rightarrow':u' → ', '\\lambda':u'λ', '\\propto':u' ∝ ',
       '\\tilde{n}':u'ñ', '\\cdot':u'⋅', '\\approx':u' ≈ ',
       '\\rightsquigarrow':u' ⇝ ', '\\dashrightarrow':u' ⇢ ', '\\sim':u' ~ ',
