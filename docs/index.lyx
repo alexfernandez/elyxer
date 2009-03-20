@@ -307,7 +307,7 @@ Uses PDF title if present.
 \end_layout
 
 \begin_layout Itemize
-From documentation: 
+From LyX documentation: 
 \family typewriter
 Intro.lyx
 \family default
@@ -516,7 +516,7 @@ Thanks to Stevan White for encouraging me to publish the tool; to Christian
  Pavel Sanda, Günther Milde, Olivier Ripoll, José Matos, Iain Mac Donald,
  Uwe Stöhr, Ignacio García for their interesting suggestions; to Nikos Alexandri
 s, Joachim Kreimer-de Fries (Osnabryg), Richard Talley, Wolfgang Keller,
- Murray Eisenberg, Robert Orr for their early testing.
+ Murray Eisenberg, Robert Orr, Shane Clark for their early testing.
  A silent 
 \begin_inset Quotes eld
 \end_inset
