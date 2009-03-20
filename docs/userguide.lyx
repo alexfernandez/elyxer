@@ -487,6 +487,12 @@ title
 
 \begin_layout Subsection
 Appearance
+\begin_inset LatexCommand label
+name "sub:Appearance"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -503,11 +509,7 @@ reference "alg:CSS"
 
 \end_inset
 
-, so the default CSS file 
-\family typewriter
-lyx.css
-\family default
- is employed if found.
+, so the default remote CSS file is used.
 \end_layout
 
 \begin_layout Standard
@@ -565,14 +567,26 @@ CSS link automatically added to HTML
 \end_layout
 
 \begin_layout Standard
-A sample CSS file is published on nongnu.org and distributed along with the
- scripts, 
+This sample CSS file is published on nongnu.org and distributed along with
+ the scripts, 
 \family typewriter
 docs/lyx.css
 \family default
 .
- You may want to use your own CSS file; to use it first copy it to the directory
- where your document resides (e.g.
+ (You may have found that your document changes its appearance with time
+ -- this is the reason.
+ The main author regularly publishes a new, updated version of 
+\family typewriter
+lyx.css
+\family default
+ on nongnu.org, and all documents using it automatically appear with the
+ changes.)
+\end_layout
+
+\begin_layout Standard
+To give your document a customized appearance you probably will want to
+ use your own CSS file; to use it first copy it to the directory where your
+ document resides (e.g.
  renaming it to 
 \family typewriter
 custom.css
@@ -859,9 +873,9 @@ Q: What versions of LyX are supported?
 \end_layout
 
 \begin_layout Description
-A: At the moment the tool is very limited; it basically works for the author's
- machine, i.e.
- LyX 1.5.5 on Debian lenny.
+A: The tool is slowly improving; it now should work with LyX versions 1.5.5
+ to 1.6.2.
+ It has been tested on Linux, Mac OS X and Windows.
 \end_layout
 
 \begin_layout Description
@@ -869,8 +883,10 @@ Q: What can we expect from the tool in the future?
 \end_layout
 
 \begin_layout Description
-A: As it matures (and with some help) eLyXer should support more recent
- LyX versions (1.6) and a wider set of documents.
+A: As it matures (and with some help) eLyXer should support a wider set
+ of documents.
+ Eventually it may be integrated with LyX so that it can be accessed from
+ within the editor.
 \end_layout
 
 \begin_layout Description
@@ -903,6 +919,30 @@ Q: Why did you leave out my favorite feature
 A: In short, because I wasn't using it.
  Usually it is better to first aim for your own needs and then worry about
  others, or you will never get anything done.
+\end_layout
+
+\begin_layout Description
+Q: My document changed its appearance without my intervention.
+ Was it black magic, elves or what?
+\end_layout
+
+\begin_layout Description
+A: It probably uses the online CSS file, which is regularly updated.
+ See section 
+\begin_inset LatexCommand ref
+reference "sub:Appearance"
+
+\end_inset
+
+: 
+\begin_inset Quotes eld
+\end_inset
+
+Appearance
+\begin_inset Quotes erd
+\end_inset
+
+ for details.
 \end_layout
 
 \begin_layout Bibliography
