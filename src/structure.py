@@ -214,7 +214,7 @@ class Space(Container):
   ending = '\\end_inset'
 
   spaces = {'~':'&nbsp;', '\\space{}':'&nbsp;', '\\thinspace{}':u' ',
-      '\\hfill{}':' '}
+      '\\hfill{}':u' ', '\\hspace*{\\fill}':u' ', '\\hspace{}':u' '}
 
   def __init__(self):
     self.parser = InsetParser()
