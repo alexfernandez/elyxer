@@ -238,18 +238,19 @@ class NomenclatureEntry(Link):
   entries = {}
 
   def __init__(self):
-    self.parser = BoundedParser()
+    self.parser = InsetParser()
     self.output = LinkOutput()
 
   def process(self):
     "Put entry in index"
+    Trace.debug('Params in nom: ' + str(self.parser.parameters))
     self.symbol = self.parser.parameters['symbol']
     self.description = self.parser.parameters['description']
-    self.key = self.name.replace(' ', '-').lower()
+    self.key = self.symbol.replace(' ', '-').lower()
     NomenclatureEntry.entries[self.key] = self
     self.anchor = 'noment-' + self.key
-    self.url = 'nom-' + self.key
-    self.contents = [Constant(self.symbol)]
+    self.url = '#nom-' + self.key
+    self.contents = [Constant(u'↓')]
 
 class NomenclaturePrint(Container):
   "Print all nomenclature entries"
@@ -258,18 +259,18 @@ class NomenclaturePrint(Container):
   ending = '\\end_inset'
 
   def __init__(self):
-    self.parser = BoundedParser()
+    self.parser = InsetParser()
     self.output = ContentsOutput()
 
   def process(self):
     self.keys = self.sortentries()
-    self.contents = [TaggedText.constant('Nomenclature', 'h1 class="nomenclature"')]
+    self.contents = [TaggedText().constant('Nomenclature', 'h1 class="nomenclature"')]
     for key in self.keys:
       entry = NomenclatureEntry.entries[key]
-      contents = [Link.complete(u'↑', 'nom-' + key, 'noment-' + key)]
+      contents = [Link().complete(u'↑', 'nom-' + key, '#noment-' + key)]
       contents.append(Constant(entry.symbol + u' '))
       contents.append(Constant(entry.description))
-      text = TaggedText.complete(contents, 'div class="Nomenclated"', true)
+      text = TaggedText().complete(contents, 'div class="Nomenclated"', True)
       self.contents.append(text)
 
   def sortentries(self):
