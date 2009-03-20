@@ -252,7 +252,7 @@ class Inset(Container):
 class Newline(Container):
   "A newline or line break"
 
-  start = '\\begin_inset Newline'
+  starts = ['\\begin_inset Newline', '\\newline']
   ending = '\\end_inset'
 
   def __init__(self):
