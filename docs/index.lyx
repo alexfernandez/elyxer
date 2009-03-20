@@ -244,10 +244,23 @@ Latest version is 0.8, created on 20090320.
 \begin_deeper
 \begin_layout Itemize
 Better formula parsing (including line breaks).
+ New characters bullet, right triangle.
 \end_layout
 
 \begin_layout Itemize
 Supports menu separator, text with bar, nomenclature, many more quote types.
+\end_layout
+
+\begin_layout Itemize
+Single configuration file 
+\family typewriter
+general.py
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+Layout of type Space does not show.
 \end_layout
 
 \end_deeper
