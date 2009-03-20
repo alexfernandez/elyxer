@@ -260,7 +260,12 @@ general.py
 \end_layout
 
 \begin_layout Itemize
-Layout of type Space does not show.
+Layout of type Space is hidden.
+\end_layout
+
+\begin_layout Itemize
+Supports branches.
+ Inactive branches are not shown.
 \end_layout
 
 \end_deeper
