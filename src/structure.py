@@ -109,7 +109,7 @@ class Align(Container):
 class Layout(Container):
   "A layout (block of text) inside a lyx file"
 
-  start = '\\begin_layout '
+  start = '\\begin_layout'
   ending = '\\end_layout'
 
   typetags = { 'Quote':'blockquote', 'Standard':'div',
