@@ -154,7 +154,7 @@ class StringContainer(Container):
   commands = { '\\SpecialChar \\ldots{}':u'…', '\\InsetSpace ~':'&nbsp;',
       '\\InsetSpace \\space{}':'&nbsp;', '\\InsetSpace \\thinspace{}':u' ',
       '\\backslash':'\\', '\\SpecialChar \\@.':'.',
-      '\\SpecialChar \\menuseparator':u'▷',
+      '\\SpecialChar \\menuseparator':u'&nbsp;▷&nbsp;',
       '\\SpecialChar \\textcompwordmark{}':u'', '\\SpecialChar \\nobreakdash-':'-',
       '\\SpecialChar \\slash{}':'/'}
 
