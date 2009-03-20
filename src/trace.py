@@ -27,17 +27,17 @@ import sys
 class Trace(object):
   "A tracing class"
 
-  debug = False
-  quiet = False
+  debugmode = False
+  quietmode = False
 
   def debug(cls, message):
     "Show a debug message"
-    if Trace.debug and not Trace.quiet:
+    if Trace.debugmode and not Trace.quietmode:
       print message
 
   def message(cls, message):
     "Show a trace message"
-    if not Trace.quiet:
+    if not Trace.quietmode:
       print message
 
   def error(cls, message):

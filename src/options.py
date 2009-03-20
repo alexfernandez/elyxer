@@ -96,8 +96,8 @@ class Options(object):
   def setoption(self, key, value):
     "Set an option value"
     setattr(Options, key, value)
-    if hasattr(Trace, key):
-      setattr(Trace, key, value)
+    if hasattr(Trace, key + 'mode'):
+      setattr(Trace, key + 'mode', value)
 
 class BranchOptions(object):
   "A set of options for a branch"
