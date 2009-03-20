@@ -47,7 +47,7 @@ class FormulaConfig(object):
       '\\pm':u'±', '\\sim':u' ~ ', '\\implies':u'  ⇒  ', '\\int':u'∫',
       '\\intop':u'∫', '\\infty':u'∞', '\\not':u'¬',
       # symbols
-      '\\rightarrow':u' → ', '\\rightsquigarrow':u' ⇝ ', '\\Rightarrow':'⇒',
+      '\\rightarrow':u' → ', '\\rightsquigarrow':u' ⇝ ', '\\Rightarrow':u'⇒',
       '\\dashrightarrow':u' ⇢ ', '\\blacktriangleright':u'▶', '\\bullet':u'•',
       '\\dagger':u'†', '\\ddagger':u'‡', '\\bigstar':u'★',
       '\\to':u'→', '\\gets':u'←',
