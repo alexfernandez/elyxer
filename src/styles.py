@@ -69,13 +69,20 @@ class EmphaticText(TaggedText):
   def process(self):
     self.tag = 'i'
 
-class SlantedText(TaggedText):
-  "Text slanted (not italic)"
+class ShapedText(TaggedText):
+  "Text shaped (italic, slanted)"
 
-  start = '\\shape slanted'
+  start = '\\shape'
+
+  tags = {'slanted':'i', 'italic':'i', 'smallcaps':'span class="versalitas"'}
 
   def process(self):
-    self.tag = 'i'
+    self.type = self.header[1]
+    if not self.type in ShapedText.tags:
+      Trace.error('Unrecognized shape ' + self.header[1])
+      self.tag = 'span'
+      return
+    self.tag = ShapedText.tags[self.type]
 
 class VersalitasText(TaggedText):
   "Text in versalitas"
@@ -173,7 +180,7 @@ class DeeperList(Container):
     self.breaklines = True
     self.tag = 'ul'
 
-ContainerFactory.types += [QuoteContainer, LyxLine, EmphaticText, SlantedText,
+ContainerFactory.types += [QuoteContainer, LyxLine, EmphaticText, ShapedText,
     VersalitasText, ColorText, SizeText, BoldText, TextFamily, Hfill,
     FlexCode, ListItem, DeeperList]
 
