@@ -88,8 +88,8 @@ class Parser(object):
     key = split[0]
     if len(split) == 1:
       self.parameters[key] = True
-      return
-    self.parameters[key] = split[1].replace('"', '')
+    else:
+      self.parameters[key] = split[1].replace('"', '')
     reader.nextline()
 
   def __str__(self):
