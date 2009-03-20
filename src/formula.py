@@ -64,13 +64,14 @@ class Formula(Container):
       '\\beta':u'β', '\\acute{o}':u'ó', '\\acute{a}':u'á', '\\implies':u'  ⇒  ',
       '\\pi':u'π', '\\infty':u'∞', '\\left(':u'<span class="bigsymbol">(</span>',
       '\\right)':u'<span class="bigsymbol">)</span>',
-      '\\intop':u'∫', '\\log':'log', '\\exp':'exp', '\\_':'_', '\\\\':'<br/>'}
+      '\\intop':u'∫', '\\log':'log', '\\exp':'exp', '\\_':'_', '\\\\':'<br/>',
+      '\\not':u'¬'}
   onefunctions = {'\\mathsf':'span class="mathsf"', '\\mathbf':'b', '^':'sup',
       '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
       '\\dot':'span class="overdot"', '\\sqrt':'span class="sqrt"',
       '\\bar':'span class="bar"', '\\mbox':'span class="mbox"',
-      '\\textrm':'span class="mathrm"', '\\text':'span class="text"',
-      '\\textipa':'span class="textipa"'}
+      '\\textrm':'span class="mathrm"', '\\mathrm':'span class="mathrm"',
+      '\\text':'span class="text"', '\\textipa':'span class="textipa"'}
   twofunctions = {
       '\\frac':['span class="fraction"', 'span class="numerator"', 'span class="denominator"'],
       '\\nicefrac':['span class="fraction"', 'span class="numerator"', 'span class="denominator"']
