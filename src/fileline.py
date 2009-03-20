@@ -31,7 +31,7 @@ class LineReader(object):
 
   def __init__(self, file):
     self.file = file
-    self.index = 0
+    self.linenumber = 0
     self.current = None
     self.split = None
 
@@ -59,9 +59,9 @@ class LineReader(object):
     "Go to next line"
     self.current = None
     self.split = None
-    self.index += 1
-    if self.index % 1000 == 0:
-      Trace.message('Parsing line ' + str(self.index))
+    self.linenumber += 1
+    if self.linenumber % 1000 == 0:
+      Trace.message('Parsing line ' + str(self.linenumber))
 
   def finished(self):
     "Have we finished reading the file"

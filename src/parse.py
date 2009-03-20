@@ -78,7 +78,7 @@ class Parser(object):
     "Parse the header"
     header = reader.currentsplit()
     reader.nextline()
-    self.begin = reader.index + 1
+    self.begin = reader.linenumber + 1
     return header
 
   def parseparameter(self, reader):
@@ -162,7 +162,7 @@ class StringParser(Parser):
 
   def parseheader(self, reader):
     "Do nothing, just take note"
-    self.begin = reader.index + 1
+    self.begin = reader.linenumber + 1
     return []
 
   def parse(self, reader):

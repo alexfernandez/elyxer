@@ -210,7 +210,7 @@ class FormulaParser(Parser):
 
   def parseheader(self, reader):
     "See if the formula is inlined"
-    self.begin = reader.index + 1
+    self.begin = reader.linenumber + 1
     if reader.currentline().find('$') > 0:
       return ['inline']
     else:
