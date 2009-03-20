@@ -153,7 +153,8 @@ class StringContainer(Container):
   commands = { '\\SpecialChar \\ldots{}':u'…', '\\InsetSpace ~':'&nbsp;',
       '\\InsetSpace \\space{}':'&nbsp;', '\\InsetSpace \\thinspace{}':u' ',
       '\\backslash':'\\', '\\SpecialChar \\@.':'.',
-      '\\SpecialChar \\menuseparator':u'▷'}
+      '\\SpecialChar \\menuseparator':u'▷',
+      '\\SpecialChar \\textcompwordmark{}':u''}
 
   def process(self):
     "Replace special chars"
