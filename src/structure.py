@@ -250,20 +250,29 @@ class Inset(Container):
     return 'Inset of type ' + self.type
 
 class Newline(Container):
-  "A newline or line break"
+  "A newline"
 
-  starts = ['\\begin_inset Newline', '\\newline']
+  start = '\\newline'
+
+  def __init__(self):
+    self.parser = LoneCommand()
+    self.output = FixedOutput()
+
+  def process(self):
+    "Process contents"
+    self.html = '<br/>'
+
+class NewlineInset(Newline):
+  "A newline or line break in an inset"
+
+  start = '\\begin_inset Newline'
   ending = '\\end_inset'
 
   def __init__(self):
     self.parser = BoundedParser()
     self.output = FixedOutput()
 
-  def process(self):
-    "Process contents"
-    self.type = self.header[2]
-    self.html = '<br/>'
-
 ContainerFactory.types += [LyxHeader, LyxFooter, InsetText, Caption, Inset,
-    Align, Layout, Float, Title, Author, Description, Newline, Space]
+    Align, Layout, Float, Title, Author, Description, Newline, Space,
+    NewlineInset]
 
