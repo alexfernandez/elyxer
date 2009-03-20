@@ -64,7 +64,7 @@ class Formula(Container):
       '\\beta':u'β', '\\acute{o}':u'ó', '\\acute{a}':u'á', '\\implies':u'  ⇒  ',
       '\\pi':u'π', '\\infty':u'∞', '\\left(':u'<span class="bigsymbol">(</span>',
       '\\right)':u'<span class="bigsymbol">)</span>',
-      '\\intop':u'∫', '\\log':'log', '\\exp':'exp', '\\_':'_'}
+      '\\intop':u'∫', '\\log':'log', '\\exp':'exp', '\\_':'_', '\\\\':'<br/>'}
   onefunctions = {'\\mathsf':'span class="mathsf"', '\\mathbf':'b', '^':'sup',
       '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
       '\\dot':'span class="overdot"', '\\sqrt':'span class="sqrt"',
@@ -95,7 +95,7 @@ class Formula(Container):
       bit, result = reader(self, text, pos)
       if bit:
         return bit, result
-    Trace.error('Unrecognized formula at ' + str(self.parser.begin) + ' in ' +
+    Trace.error('Unrecognized function at ' + str(self.parser.begin) + ' in ' +
         unicode(text[pos:]))
     return '\\', [Constant('\\')]
 
@@ -240,16 +240,38 @@ class FormulaParser(Parser):
   
   def parse(self, reader):
     "Parse the formula"
-    if reader.currentline().find('$') > 0:
+    if '$' in reader.currentline():
       formula = reader.currentline().split('$')[1]
-    else:
-      # formula of the form \[...\]
       reader.nextline()
-      formula = reader.currentline()[:-3]
+    elif '\\[' in reader.currentline():
+      # formula of the form \[...\]
+      formula = self.parsemultiliner(reader, '\\]')
+    elif '\\begin{' in reader.currentline() and reader.currentline().endswith('}\n'):
+      current = reader.currentline().strip()
+      endsplit = current.split('\\begin{')[1].split('}')
+      endpiece = '\\end{' + endsplit[0] + '}'
+      formula = self.parsemultiliner(reader, endpiece)
+    else:
+      Trace.error('Formula beginning ' + reader.currentline().strip +
+          ' is unknown')
     while not reader.currentline().startswith(self.ending):
+      stripped = reader.currentline().strip()
+      if len(stripped) > 0:
+        Trace.error('Unparsed formula line ' + stripped)
       reader.nextline()
     reader.nextline()
     return [formula]
+
+  def parsemultiliner(self, reader, ending):
+    "Parse a formula in multiple lines"
+    reader.nextline()
+    formula = ''
+    while not reader.currentline().endswith(ending + '\n'):
+      formula += reader.currentline()
+      reader.nextline()
+    formula += reader.currentline()[:-len(ending) - 1]
+    reader.nextline()
+    return formula
 
 ContainerFactory.types.append(Formula)
 
