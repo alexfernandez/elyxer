@@ -691,11 +691,12 @@ The following issues (including bugs and missing features) are acknowledged
 \end_layout
 
 \begin_layout Enumerate
-Document structure is botched for articles: sections start with a 
+Document structure is not preserved for certain document categories: for
+ example in articles sections start with a 
 \family typewriter
 <h2>
 \family default
- element (while they should be a 
+ element (when they should translate to 
 \family typewriter
 <h1>
 \family default
@@ -771,6 +772,7 @@ Converted document
 ‐‐title
 \family default
  option.
+ It will also pick up the PDF title if present.
 \end_layout
 
 \begin_layout Enumerate
@@ -806,6 +808,17 @@ And still less on what to do with margin notes: should they appear differently?
 \end_inset
 
 
+\end_layout
+
+\begin_layout Enumerate
+Vertical spacing is not preserved.
+ It is hard to do in CSS.
+\end_layout
+
+\begin_layout Enumerate
+Multi-column layouts are lost.
+ This one is almost impossible to get right in CSS, so there are no plans
+ to even try.
 \end_layout
 
 \begin_layout Subsection
