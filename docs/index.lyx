@@ -247,7 +247,7 @@ Better formula parsing (including line breaks).
 \end_layout
 
 \begin_layout Itemize
-Supports menu separator, text with bar, nomenclature.
+Supports menu separator, text with bar, nomenclature, many more quote types.
 \end_layout
 
 \end_deeper
@@ -286,6 +286,14 @@ Added support for new style (1.6.
 
 \begin_layout Itemize
 Uses PDF title if present.
+\end_layout
+
+\begin_layout Itemize
+From documentation: 
+\family typewriter
+Intro.lyx
+\family default
+ is now working.
 \end_layout
 
 \end_deeper
