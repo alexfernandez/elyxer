@@ -29,30 +29,56 @@ class FormulaConfig(object):
   unmodified = ['.', '*', u'€', '(', ')', '[', ']', ':']
   modified = {'\'':u'’', '=':u' = ', ' ':'', '<':u' &lt; ', '-':u' − ', '+':u' + ',
       ',':u', ', '/':u' ⁄ '}
-  commands = {'\\, ':' ', '\\%':'%', '\\prime':u'′', '\\times':u' × ',
-      '\\rightarrow':u' → ', '\\lambda':u'λ', '\\propto':u' ∝ ',
-      '\\tilde{n}':u'ñ', '\\cdot':u'⋅', '\\approx':u' ≈ ',
-      '\\rightsquigarrow':u' ⇝ ', '\\dashrightarrow':u' ⇢ ', '\\sim':u' ~ ',
-      '\\pm':u'±', '\\Delta':u'Δ', '\\sum':u'∑', '\\sigma':u'σ',
-      '\\beta':u'β', '\\acute{o}':u'ó', '\\acute{a}':u'á', '\\implies':u'  ⇒  ',
-      '\\pi':u'π', '\\infty':u'∞', '\\left(':u'<span class="bigsymbol">(</span>',
+  commands = {
+      # spacing
+      '\\, ':' ', '& ':u'', '\\\\':'<br/>',
+      # typographical
+      '\\%':'%', '\\prime':u'′', '\\_':'_',
+      '\\left(':u'<span class="bigsymbol">(</span>',
       '\\right)':u'<span class="bigsymbol">)</span>',
-      '\\intop':u'∫', '\\log':'log', '\\exp':'exp', '\\_':'_', '\\\\':'<br/>',
-      '\\not':u'¬', '\\ln':'ln', '\\blacktriangleright':u'▶', '\\bullet':u'•',
-      '\\dagger':u'†', '\\ddagger':u'‡', '\\bigstar':u'★'}
-  onefunctions = {'\\mathsf':'span class="mathsf"', '\\mathbf':'b', '^':'sup',
+      # regional
+      '\\tilde{n}':u'ñ', '\\acute{o}':u'ó', '\\acute{a}':u'á',
+      # greek
+      '\\alpha':u'α', '\\beta':u'β', '\\gamma':u'γ', '\\delta':u'δ',
+      '\\epsilon':u'ε', '\\lambda':u'λ', '\\Delta':u'Δ', '\\sum':u'∑',
+      '\\sigma':u'σ', '\\pi':u'π',
+      # mathematical
+      '\\times':u' × ', '\\propto':u' ∝ ', '\\cdot':u'⋅', '\\approx':u' ≈ ',
+      '\\pm':u'±', '\\sim':u' ~ ', '\\implies':u'  ⇒  ', '\\int':u'∫',
+      '\\intop':u'∫', '\\infty':u'∞', '\\not':u'¬',
+      # symbols
+      '\\rightarrow':u' → ', '\\rightsquigarrow':u' ⇝ ',
+      '\\dashrightarrow':u' ⇢ ', '\\blacktriangleright':u'▶', '\\bullet':u'•',
+      '\\dagger':u'†', '\\ddagger':u'‡', '\\bigstar':u'★',
+      '\\to':u'→', '\\gets':u'←',
+      # common functions
+      '\\log':'log', '\\exp':'exp', '\\ln':'ln',
+      # hyperbolic functions
+      '\\tanh':'tanh', '\\sinh':'sinh', '\\cosh':'cosh',
+      # LaTeX (ignored)
+      '\\nonumber':''
+      }
+  onefunctions = {
+      # typographical
+      '\\mathsf':'span class="mathsf"', '\\mathbf':'b', '^':'sup',
       '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
-      '\\dot':'span class="overdot"', '\\sqrt':'span class="sqrt"',
+      '\\dot':'span class="overdot"',
       '\\bar':'span class="bar"', '\\mbox':'span class="mbox"',
       '\\textrm':'span class="mathrm"', '\\mathrm':'span class="mathrm"',
-      '\\text':'span class="text"', '\\textipa':'span class="textipa"'}
+      '\\text':'span class="text"', '\\textipa':'span class="textipa"',
+      '\\boldsymbol':'b',
+      # functions
+      '\\sqrt':'span class="sqrt"',
+      # LaTeX (ignored)
+      '\\label':''
+      }
   twofunctions = {
       '\\frac':['span class="fraction"', 'span class="numerator"', 'span class="denominator"'],
       '\\nicefrac':['span class="fraction"', 'span class="numerator"', 'span class="denominator"']
       }
 
 class ContainerConfig(object):
-  "Configuration for containers"
+  "Low-level configuration for containers"
 
   escapes = {'&':'&amp;', '<':'&lt;', '>':'&gt;'}
   replaces = { '`':u'‘', '\'':u'’', '\n':'', '--':u'—' }
@@ -64,7 +90,7 @@ class ContainerConfig(object):
       '\\SpecialChar \\slash{}':'/'}
 
 class BlackBoxConfig(object):
-  "A container that does not output anything"
+  "Configuration for lines ignored"
 
   starts = ['\\lyxformat', '\\begin_document', '\\begin_body',
       '\\family default', '\\color inherit',
@@ -72,5 +98,15 @@ class BlackBoxConfig(object):
       '\\bar no', '\\noun off', '\\emph default', '\\bar default',
       '\\noun default', '\\family roman', '\\series medium',
       '\\shape up', '\\size normal', '\\color none', '#LyX', '\\noindent',
-      '\\labelwidthstring', '\\paragraph_spacing']
+      '\\labelwidthstring', '\\paragraph_spacing', '\\length']
+
+class SpaceConfig(object):
+  "Configuration for spaces"
+
+  spaces = {
+      '~':'&nbsp;', '\\space{}':'&nbsp;', '\\thinspace{}':u' ',
+      '\\hfill{}':u' ', '\\hspace*{\\fill}':u' ', '\\hspace{}':u' ',
+      '\\negthinspace{}':u'', '\\enskip{}':u' ', '\\quad{}': u' ',
+      '\\qquad{}':u'  '
+      }
 

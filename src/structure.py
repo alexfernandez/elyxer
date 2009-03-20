@@ -215,20 +215,17 @@ class Space(Container):
   start = '\\begin_inset space'
   ending = '\\end_inset'
 
-  spaces = {'~':'&nbsp;', '\\space{}':'&nbsp;', '\\thinspace{}':u' ',
-      '\\hfill{}':u' ', '\\hspace*{\\fill}':u' ', '\\hspace{}':u' '}
-
   def __init__(self):
     self.parser = InsetParser()
     self.output = FixedOutput()
 
   def process(self):
     self.type = self.header[2]
-    if self.type not in Space.spaces:
+    if self.type not in SpaceConfig.spaces:
       Trace.error('Unknown space type ' + self.type)
       self.html = [' ']
       return
-    self.html = [Space.spaces[self.type]]
+    self.html = [SpaceConfig.spaces[self.type]]
 
 class Inset(Container):
   "A generic inset in a LyX document"

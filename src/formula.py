@@ -113,6 +113,8 @@ class Formula(Container):
     function, tag = self.find(text, pos, FormulaConfig.onefunctions)
     if not function:
       return None, None
+    if len(tag) == 0:
+      return None, None
     pos += len(function)
     bracket, result = self.readbracket(text, pos)
     return function + bracket, [TaggedText().complete(result, tag)]
@@ -217,8 +219,14 @@ class FormulaParser(Parser):
   def parse(self, reader):
     "Parse the formula"
     if '$' in reader.currentline():
-      formula = reader.currentline().split('$')[1]
-      reader.nextline()
+      rest = reader.currentline().split('$', 1)
+      if '$' in rest:
+        # formula is $...$
+        formula = reader.currentline().split('$')[1]
+        reader.nextline()
+      else:
+        # formula is multiline $...$
+        formula = self.parsemultiliner(reader, '$')
     elif '\\[' in reader.currentline():
       # formula of the form \[...\]
       formula = self.parsemultiliner(reader, '\\]')
