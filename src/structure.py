@@ -177,6 +177,8 @@ class Description(Layout):
 
   def insertfirst(self, contents):
     "Insert a bold tag for the first word"
+    if len(contents) == 0:
+      return
     element = contents[0]
     if not isinstance(element, StringContainer):
       self.insertfirst(element.contents)
