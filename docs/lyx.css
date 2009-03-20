@@ -265,3 +265,6 @@ span.textipa {
 span.Description-entry {
 	font-weight: bold;
 }
+div.Space {
+	display: none;
+}
