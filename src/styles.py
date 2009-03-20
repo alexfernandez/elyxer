@@ -33,8 +33,14 @@ class QuoteContainer(Container):
 
   start = '\\begin_inset Quotes'
   ending = '\\end_inset'
-  outputs = { 'eld':u'“', 'erd':u'”', 'ald':u'»', 'ard':u'«', 'gld':u'„',
-      'grd':u'“', 'els':u'‘', 'ers':u'’' }
+  outputs = {
+      'eld':u'“', 'erd':u'”', 'els':u'‘', 'ers':u'’',
+      'sld':u'”', 'srd':u'”',
+      'gld':u'„', 'grd':u'“', 'gls':u'‚', 'grs':u'‘',
+      'pld':u'„', 'prd':u'”', 'pls':u'‚', 'prs':u'’',
+      'fld':u'«', 'frd':u'»', 'fls':u'‹', 'frs':u'›',
+      'ald':u'»', 'ard':u'«', 'als':u'›', 'ard':u'‹'
+      }
 
   def __init__(self):
     self.parser = BoundedParser()
