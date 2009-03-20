@@ -219,7 +219,7 @@ class FormulaParser(Parser):
   def parse(self, reader):
     "Parse the formula"
     if '$' in reader.currentline():
-      rest = reader.currentline().split('$', 1)
+      rest = reader.currentline().split('$', 1)[1]
       if '$' in rest:
         # formula is $...$
         formula = reader.currentline().split('$')[1]
