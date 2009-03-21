@@ -36,10 +36,14 @@ class Link(Container):
     self.contents = list()
     self.output = LinkOutput()
 
-  def complete(self, text, anchor, url):
+  def complete(self, text, anchor, url, type = None):
     self.contents = [Constant(text)]
-    self.anchor = anchor
-    self.url = url
+    if anchor:
+      self.anchor = anchor
+    if url:
+      self.url = url
+    if type:
+      self.type = type
     return self
 
 class Label(Container):
@@ -193,19 +197,41 @@ class IndexEntry(Link):
 
   entries = dict()
 
+  namescapes = {'!':'', '|':', '}
+  keyescapes = {' ':'-', '--':'-', ',':''}
+
   def __init__(self):
     self.parser = InsetParser()
-    self.output = IndexEntryOutput()
+    self.output = LinkOutput()
+    self.breaklines = False
 
   def process(self):
     "Put entry in index"
-    self.name = self.parser.parameters['name']
-    self.key = self.name.replace(' ', '-')
+    name = self.parser.parameters['name']
+    self.name = self.escape(name, IndexEntry.namescapes)
+    Trace.debug('Index: ' + self.name)
+    self.key = self.escape(self.name, IndexEntry.keyescapes)
     if not self.key in IndexEntry.entries:
       # no entry; create
       IndexEntry.entries[self.key] = list()
     self.index = len(IndexEntry.entries[self.key])
     IndexEntry.entries[self.key].append(self)
+    self.anchor = 'entry-' + self.key + '-' + str(self.index)
+    self.url = '#index-' + self.key
+    self.contents = [Constant(u'↓')]
+
+class LayoutIndexEntry(IndexEntry):
+  "An entry with the name in a layout"
+
+  start = '\\begin_inset Index'
+  ending = '\\end_inset'
+
+  def process(self):
+    "Read entry from layout and put in index"
+    layout = self.contents[0]
+    string = layout.contents[0]
+    self.parser.parameters['name'] = string.contents[0]
+    IndexEntry.process(self)
 
 class PrintIndex(Container):
   "Command to print an index"
@@ -216,11 +242,20 @@ class PrintIndex(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = IndexOutput()
+    self.output = ContentsOutput()
 
   def process(self):
-    self.keys = self.sortentries()
-    self.entries = IndexEntry.entries
+    "Create the alphabetic index"
+    self.contents = [TaggedText().constant('Index', 'h1 class="index"'),
+        Constant('\n')]
+    for key in self.sortentries():
+      name = IndexEntry.entries[key][0].name
+      entry = [Link().complete(name, 'index-' + key, None, 'printindex'),
+          Constant(': ')]
+      contents = [TaggedText().complete(entry, 'i')]
+      contents += self.createarrows(key, IndexEntry.entries[key])
+      self.contents.append(TaggedText().complete(contents, 'p class="printindex"',
+          True))
 
   def sortentries(self):
     "Sort all entries in the index"
@@ -228,6 +263,15 @@ class PrintIndex(Container):
     # sort by name
     keys.sort()
     return keys
+
+  def createarrows(self, key, entries):
+    "Create an entry in the index"
+    arrows = []
+    for entry in entries:
+      link = Link().complete(u'↑', 'index-' + entry.key,
+          '#entry-' + entry.key + '-' + str(entry.index))
+      arrows += [link, Constant(u', \n')]
+    return arrows[:-1]
 
 class NomenclatureEntry(Link):
   "An entry of LyX nomenclature"
@@ -243,7 +287,6 @@ class NomenclatureEntry(Link):
 
   def process(self):
     "Put entry in index"
-    Trace.debug('Params in nom: ' + str(self.parser.parameters))
     self.symbol = self.parser.parameters['symbol']
     self.description = self.parser.parameters['description']
     self.key = self.symbol.replace(' ', '-').lower()
@@ -313,33 +356,6 @@ class FlexURL(URL):
     self.url = self.escape(text)
     self.contents = [Constant(self.url)]
 
-class IndexOutput(object):
-  "Returns an index as output"
-
-  def gethtml(self, container):
-    "Get the HTML code for the index"
-    html = [u'<h1 class="index">Index</h1>\n']
-    for key in container.keys:
-      entries = container.entries[key]
-      for entry in entries:
-        if entries.index(entry) == 0:
-          html.append(u'<p class="printindex">\n<i><a class="printindex" name="' +
-              key + '">' + entries[0].name + '</a></i>: ')
-        else:
-          html.append(u', \n')
-        html.append('<a href="#' + entry.key +
-              '-' + str(entry.index) + u'">↑</a>')
-      html.append('</p>\n')
-    return html
-
-class IndexEntryOutput(object):
-  "An entry in an index"
-
-  def gethtml(self, container):
-    "Get the HTML code for the entry"
-    return ['<a class="index" name="' + container.key + '-' + str(container.index) +
-        '" href="#' + container.key + u'">↓</a>']
-
 class LinkOutput(object):
   "A link pointing to some destination"
   "Or an anchor (destination)"
@@ -359,5 +375,5 @@ class LinkOutput(object):
 
 ContainerFactory.types += [Label, Reference, BiblioCite, Bibliography,
     BiblioEntry, ListOf, TableOfContents, IndexEntry, PrintIndex, URL,
-    FlexURL, NomenclatureEntry, NomenclaturePrint]
+    FlexURL, NomenclatureEntry, NomenclaturePrint, LayoutIndexEntry]
 

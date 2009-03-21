@@ -74,14 +74,14 @@ class Container(object):
     "Get a description"
     return self.__class__.__name__ + '@' + str(self.begin)
 
-  def escape(self, line):
+  def escape(self, line, escapes = ContainerConfig.escapes):
     "Escape a line to appear in HTML"
-    pieces = ContainerConfig.escapes.keys()
+    pieces = escapes.keys()
     # do the '&' first
     pieces.sort()
     for piece in pieces:
       if piece in line:
-        line = line.replace(piece, ContainerConfig.escapes[piece])
+        line = line.replace(piece, escapes[piece])
     return line
 
   def searchfor(self, type):
