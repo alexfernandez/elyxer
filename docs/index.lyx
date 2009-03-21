@@ -234,11 +234,11 @@ Changelog
 \end_layout
 
 \begin_layout Standard
-Latest version is 0.8, created on 20090320.
+Latest version is 0.9, created on 20090321.
 \end_layout
 
 \begin_layout Itemize
-0.9 (unreleased):
+0.9 (20090321):
 \end_layout
 
 \begin_deeper
@@ -248,7 +248,8 @@ Better formula parsing (including line breaks).
 \end_layout
 
 \begin_layout Itemize
-Supports menu separator, text with bar, nomenclature, many more quote types.
+Supports menu separator, text with bar, nomenclature and many more quote
+ types.
 \end_layout
 
 \begin_layout Itemize
@@ -260,7 +261,7 @@ general.py
 \end_layout
 
 \begin_layout Itemize
-Layout of type Space is hidden.
+Layout of type Space is not shown.
 \end_layout
 
 \begin_layout Itemize
@@ -270,6 +271,22 @@ Supports branches.
 
 \begin_layout Itemize
 New symbols: greek letters, shapes: bullet, right triangle.
+\end_layout
+
+\begin_layout Itemize
+Added support for new style (1.6.
+\begin_inset Formula $x$
+\end_inset
+
+) index entries.
+\end_layout
+
+\begin_layout Itemize
+From LyX documentation: 
+\family typewriter
+UserGuide.lyx
+\family default
+ is now working (except for some math functions).
 \end_layout
 
 \end_deeper
