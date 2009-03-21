@@ -197,7 +197,7 @@ class IndexEntry(Link):
 
   entries = dict()
 
-  namescapes = {'!':'', '|':', '}
+  namescapes = {'!':'', '|':', ', '  ':' '}
   keyescapes = {' ':'-', '--':'-', ',':''}
 
   def __init__(self):
@@ -207,9 +207,8 @@ class IndexEntry(Link):
 
   def process(self):
     "Put entry in index"
-    name = self.parser.parameters['name']
+    name = self.parser.parameters['name'].strip()
     self.name = self.escape(name, IndexEntry.namescapes)
-    Trace.debug('Index: ' + self.name)
     self.key = self.escape(self.name, IndexEntry.keyescapes)
     if not self.key in IndexEntry.entries:
       # no entry; create
@@ -228,9 +227,14 @@ class LayoutIndexEntry(IndexEntry):
 
   def process(self):
     "Read entry from layout and put in index"
+    name = ''
     layout = self.contents[0]
-    string = layout.contents[0]
-    self.parser.parameters['name'] = string.contents[0]
+    for element in layout.contents:
+      if isinstance(element, StringContainer):
+        name += element.contents[0]
+      else:
+        name += ' '
+    self.parser.parameters['name'] = name
     IndexEntry.process(self)
 
 class PrintIndex(Container):
