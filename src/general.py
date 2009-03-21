@@ -26,9 +26,9 @@
 class FormulaConfig(object):
   "Configuration for formulae"
 
-  unmodified = ['.', '*', u'€', '(', ')', '[', ']', ':']
+  unmodified = ['.', '*', u'€', '(', ')', '[', ']', ':', u'·']
   modified = {'\'':u'’', '=':u' = ', ' ':'', '<':u' &lt; ', '-':u' − ', '+':u' + ',
-      ',':u', ', '/':u' ⁄ '}
+      ',':u', ', '/':u' ⁄ ', '\n':''}
   commands = {
       # spacing
       '\\, ':' ', '& ':u'', '\\\\':'<br/>',
@@ -52,7 +52,8 @@ class FormulaConfig(object):
       '\\dagger':u'†', '\\ddagger':u'‡', '\\bigstar':u'★',
       '\\to':u'→', '\\gets':u'←',
       # common functions
-      '\\log':'log', '\\exp':'exp', '\\ln':'ln',
+      '\\log':'log', '\\exp':'exp', '\\ln':'ln', '\\lim':'lim', '\\sin':'sin',
+      '\\cos':'cos',
       # hyperbolic functions
       '\\tanh':'tanh', '\\sinh':'sinh', '\\cosh':'cosh',
       # LaTeX (ignored)
