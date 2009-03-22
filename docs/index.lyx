@@ -273,7 +273,16 @@ Latest version is 0.9, created on 20090321.
 
 \begin_deeper
 \begin_layout Itemize
-Better handling of footnotes.
+Better handling of footnotes and margin notes: not overlapping and with
+ a reference in the text.
+\end_layout
+
+\begin_layout Itemize
+Better parsing of first word in a Description.
+\end_layout
+
+\begin_layout Itemize
+Short titles are ignored.
 \end_layout
 
 \end_deeper
