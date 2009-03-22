@@ -173,41 +173,52 @@ class Description(Layout):
   def process(self):
     "Set the first word to bold"
     self.tag = 'div class="Description"'
-    self.insertfirst(self.contents)
-
-  def insertfirst(self, contents):
-    "Insert a bold tag for the first word"
-    if len(contents) == 0:
+    firstword, found = self.extractfirst(self.contents)
+    if not firstword:
       return
-    element = contents[0]
-    if not isinstance(element, StringContainer):
-      self.insertfirst(element.contents)
-      return
-    firstword = self.extractfirst(contents) + u' '
+    firstword.append(Constant(u' '))
     tag = 'span class="Description-entry"'
-    contents.insert(0, TaggedText().constant(firstword, tag))
+    self.contents.insert(0, TaggedText().complete(firstword, tag))
 
   def extractfirst(self, contents):
-    "Extract the first word"
-    firstword = ''
+    "Extract the first word as a list"
+    firstcontents = []
     index = 0
     while index < len(contents):
-      element = contents[index]
-      words = element.contents[0].split(' ', 1)
-      firstword += words[0]
-      if len(words) > 1:
-        element.contents[0] = words[1]
-        return firstword
-      del contents[index]
-      if len(contents) == index:
-        return firstword
-      next = contents[index]
-      if not isinstance(next, StringContainer):
-        if not isinstance(next, Space):
-          return firstword
-        firstword += next.html[0]
+      first, found = self.extractfirstcontainer(contents[index])
+      if first:
+        firstcontents += first
+      if found:
+        return firstcontents, True
+      else:
         del contents[index]
-    return firstword
+    return firstcontents, False
+
+  def extractfirstcontainer(self, container):
+    "Extract the first word from a string container"
+    if len(container.contents) == 0:
+      # empty container
+      return [container], False
+    if isinstance(container, StringContainer):
+      return self.extractfirststring(container)
+    elif isinstance(container, Space):
+      Trace.error('jul')
+      return [container], False
+    elif isinstance(container, ERT):
+      return [container], False
+    if len(container.contents) == 0:
+      # empty container
+      return None, False
+    return self.extractfirst(container.contents)
+
+  def extractfirststring(self, container):
+    "Extract the first word from a string container"
+    string = container.contents[0]
+    if not ' ' in string:
+      return [container], False
+    split = string.split(' ', 1)
+    container.contents[0] = split[1]
+    return [Constant(split[0])], True
 
 class Space(Container):
   "A space of several types"
