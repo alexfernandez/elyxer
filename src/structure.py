@@ -201,9 +201,6 @@ class Description(Layout):
       return [container], False
     if isinstance(container, StringContainer):
       return self.extractfirststring(container)
-    elif isinstance(container, Space):
-      Trace.error('jul')
-      return [container], False
     elif isinstance(container, ERT):
       return [container], False
     if len(container.contents) == 0:
@@ -305,8 +302,44 @@ class Branch(Container):
       return True
     branch = Options.branches[self.branch]
     return branch.selected == 1
-    
-ContainerFactory.types += [LyxHeader, LyxFooter, InsetText, Caption, Inset,
+
+class ShortTitle(Container):
+  "A short title to display (always hidden)"
+
+  start = '\\begin_inset OptArg'
+  ending = '\\end_inset'
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = EmptyOutput()
+
+class Footnote(Container):
+  "A footnote to the main text"
+
+  starts = ['\\begin_inset Foot', '\\begin_inset Marginal']
+  ending = '\\end_inset'
+
+  order = 0
+  list = 'ABCDEFGHIJKLMNOPQRSTUVW'
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = ContentsOutput()
+
+  def process(self):
+    "Add a letter for the order, rotating"
+    letter = Footnote.list[Footnote.order % len(Footnote.list)]
+    span = 'span class="FootMarker"'
+    fromfoot = TaggedText().constant(u'[→' + letter + u'] ', span)
+    self.contents.insert(0, fromfoot)
+    tag = TaggedText().complete(self.contents, 'span class="Foot"', True)
+    tofoot = TaggedText().constant(' [' + letter + u'→] ', span)
+    self.contents = [tofoot, tag]
+    Footnote.order += 1
+
+ContainerFactory.types += [
+    LyxHeader, LyxFooter, InsetText, Caption, Inset,
     Align, Layout, Float, Title, Author, Description, Newline, Space,
-    NewlineInset, Branch]
+    NewlineInset, Branch, ShortTitle, Footnote
+    ]
 
