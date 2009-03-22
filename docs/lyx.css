@@ -15,6 +15,7 @@ body {
 	padding: 20px;
 	background: #ffffff;
 	line-height: 1.5em;
+	overflow: hidden;
 }
 a {
 	text-decoration: none;
@@ -161,7 +162,7 @@ span.blue {
 	color: #000080;
 }
 .formula {
-	color: #004000;
+	color: #000040;
 	text-align: center;
 }
 div.formula {
@@ -180,7 +181,7 @@ span.overline {
 span.denominator {
 	display: block;
 	padding: 0;
-	border-top: thin solid #004000;
+	border-top: thin solid #000040;
 }
 span.radical {
 	display: inline-block;
@@ -190,7 +191,7 @@ span.radical {
 }
 span.root {
 	display: inline-block;
-	border-top: thin #004000 solid;
+	border-top: thin #000040 solid;
 	padding: 0;
 }
 span.bigsymbol {
@@ -211,15 +212,21 @@ span.dot {
 	padding: 0ex;
 }
 span.dotted {
-	border-top: thin #004000 dotted;
+	border-top: thin #000040 dotted;
+}
+span.FootMarker {
+	color: #004000;
 }
 span.Foot {
 	float: right;
+	clear: right;
+	margin: 0.2ex;
 	border: thin solid #c0c0c0;
 	background: #ffffff;
-	width: 25%;
+	width: 30%;
 	padding: 0.5ex;
 	font: small normal;
+	text-align: left;
 }
 span.Marginal {
 	float: right;
