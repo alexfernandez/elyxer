@@ -958,6 +958,20 @@ Appearance
  for details.
 \end_layout
 
+\begin_layout Description
+Q: I found a bug, what should I do?
+\end_layout
+
+\begin_layout Description
+A: Just report it to the Savannah interface: 
+\begin_inset LatexCommand url
+target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Bibliography
 \begin_inset LatexCommand bibitem
 key "wordreference-elixir"

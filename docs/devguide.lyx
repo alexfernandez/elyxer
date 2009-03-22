@@ -111,7 +111,7 @@ key "savannah-elyxer"
 
 \end_inset
 
-.
+, a GNU project for hosting non-GNU projects.
  So first you have to fetch the code:
 \end_layout
 
@@ -2135,22 +2135,6 @@ git
 \end_layout
 
 \begin_layout Description
-Q: Where is the whole repository published?
-\end_layout
-
-\begin_layout Description
-A: It is hosted at Savannah.nongnu.org, along with the rest of the project
- files.
- It is a GNU project to host non-GNU projects 
-\begin_inset LatexCommand cite
-key "savannah.nongnu"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Description
 Q: I found a bug, what should I do?
 \end_layout
 
@@ -2305,22 +2289,6 @@ Software Tools
 , ed.
  Addison-Wesley Professional 1976, p.
  35.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset LatexCommand bibitem
-key "savannah.nongnu"
-
-\end_inset
-
-Free Software Foundation, Inc.: Savannah.nongnu.org, accessed March 2009.
- 
-\begin_inset LatexCommand url
-target "https://savannah.nongnu.org/"
-
-\end_inset
-
-
 \end_layout
 
 \end_body

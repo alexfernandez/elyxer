@@ -92,7 +92,7 @@ export to HTML
  option\SpecialChar \ldots{}
  Until now! With eLyXer you can convert your master's thesis, learned
  article, fascinating novel or love letter to a web page that you can then
- publish on the web.
+ share, publish on the web or import into other text editors.
 \end_layout
 
 \begin_layout Standard
@@ -110,6 +110,35 @@ target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
 LICENSE
 \family default
  file for details.
+\end_layout
+
+\begin_layout Subsection*
+Requirements
+\end_layout
+
+\begin_layout Standard
+eLyXer is a standalone tool: it does not require that LyX is installed to
+ run.
+ It can convert documents generated with versions of LyX from 1.5.5 through
+ 1.6.2 (and probably earlier versions).
+ It requires Python 2.3.4, and should work with versions up to 2.6.1.
+ It has been tested to run on Linux, Mac OS X and Windows.
+\end_layout
+
+\begin_layout Standard
+Resource usage is minimum.
+ Converting UserGuide.lyx (
+\begin_inset Formula $154$
+\end_inset
+
+ pages, about 
+\begin_inset Formula $40000$
+\end_inset
+
+ words) takes about 50 seconds on my 1st-generation Asus Eee, which sports
+ a 530MHz Celeron processor.
+ On a modern machine it should be ligthning fast.
+ Memory usage is also quite frugal, remaining always below 10 MB.
 \end_layout
 
 \begin_layout Subsection*
@@ -170,7 +199,7 @@ or see the user guide for details.
 \end_layout
 
 \begin_layout Subsection*
-Download
+Downloads
 \end_layout
 
 \begin_layout Standard
@@ -182,28 +211,21 @@ target "https://savannah.nongnu.org/files/?group=elyxer"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Subsection*
-Documentation
-\end_layout
-
-\begin_layout Standard
-eLyxer comes with a 
+ The 
 \begin_inset LatexCommand htmlurl
 name "user guide"
 target "userguide.html"
 
 \end_inset
 
- and a 
+ and the 
 \begin_inset LatexCommand url
 name "developer guide"
 target "devguide.html"
 
 \end_inset
 
-.
+ can also be accessed online.
 \end_layout
 
 \begin_layout Subsection*
@@ -219,6 +241,14 @@ target "mailto:elyxer@gmail.com"
 \end_inset
 
 .
+ Please send any documents that are giving you trouble and I will do my
+ best.
+ Any document sample you send will be treated as confidential.
+\end_layout
+
+\begin_layout Standard
+The author lingers on official LyX mailing lists and monitors for mentions
+ of eLyXer.
  You can also join the 
 \begin_inset LatexCommand url
 name "mailing list"
@@ -226,7 +256,7 @@ target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
 
 \end_inset
 
-.
+, although there is not much activity in it yet.
 \end_layout
 
 \begin_layout Subsection*
@@ -237,6 +267,16 @@ Changelog
 Latest version is 0.9, created on 20090321.
 \end_layout
 
+\begin_layout Itemize
+0.10 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Better handling of footnotes.
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 0.9 (20090321):
 \end_layout
