@@ -48,6 +48,7 @@ class FormulaConfig(object):
       '\\intop':u'∫', '\\infty':u'∞', '\\not':u'¬',
       # symbols
       '\\rightarrow':u' → ', '\\rightsquigarrow':u' ⇝ ', '\\Rightarrow':u'⇒',
+      '\\leftarrow':u' ← ',
       '\\dashrightarrow':u' ⇢ ', '\\blacktriangleright':u'▶', '\\bullet':u'•',
       '\\dagger':u'†', '\\ddagger':u'‡', '\\bigstar':u'★',
       '\\to':u'→', '\\gets':u'←',
