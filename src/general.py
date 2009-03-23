@@ -69,6 +69,8 @@ class FormulaConfig(object):
       '\\textrm':'span class="mathrm"', '\\mathrm':'span class="mathrm"',
       '\\text':'span class="text"', '\\textipa':'span class="textipa"',
       '\\boldsymbol':'b', '\\mathit':'i', '\\mathtt':'tt',
+      '\\mathbb':'span class="blackboard"',
+      '\\mathfrak':'span class="fraktur"', '\\mathcal':'span class="script"',
       # functions
       '\\sqrt':'span class="sqrt"',
       # LaTeX (ignored)
