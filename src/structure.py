@@ -206,7 +206,11 @@ class Description(Layout):
     if len(container.contents) == 0:
       # empty container
       return None, False
-    return self.extractfirst(container.contents)
+    first, found = self.extractfirst(container.contents)
+    if isinstance(container, TaggedText) and hasattr(container, 'tag'):
+      newtag = TaggedText().complete(first, container.tag)
+      return [newtag], found
+    return first, found
 
   def extractfirststring(self, container):
     "Extract the first word from a string container"
