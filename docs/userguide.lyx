@@ -785,32 +785,6 @@ Phonetic alphabet symbols are not supported -- they appear in dark cyan:
 \end_layout
 
 \begin_layout Enumerate
-There is no visual link between a footnote and its place of insertion.
- 
-\begin_inset Foot
-status open
-
-\begin_layout Standard
-I have no idea about how to deal with this one, so any suggestions are welcome
- -- if possible with CSS code.
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Marginal
-status open
-
-\begin_layout Standard
-And still less on what to do with margin notes: should they appear differently?
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
 Vertical spacing is not preserved.
  It is hard to do in CSS.
 \end_layout
@@ -819,6 +793,10 @@ Vertical spacing is not preserved.
 Multi-column layouts are lost.
  This one is almost impossible to get right in CSS, so there are no plans
  to even try.
+\end_layout
+
+\begin_layout Enumerate
+Formulae with roots and fractions intermixed are displayed wrong.
 \end_layout
 
 \begin_layout Subsection
