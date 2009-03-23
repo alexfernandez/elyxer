@@ -257,6 +257,14 @@ target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
 \end_inset
 
 , although there is not much activity in it yet.
+ Bugs can be reported at 
+\begin_inset LatexCommand url
+name "the Savannah page"
+target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection*
