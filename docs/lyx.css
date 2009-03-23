@@ -275,3 +275,12 @@ span.Description-entry {
 div.Space {
 	display: none;
 }
+span.fraktur {
+	font-family: blackletter;
+}
+span.blackboard {
+	font-family: Blackboard, serif;
+}
+span.script {
+	font-family: cursive;
+}
