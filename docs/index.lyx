@@ -272,9 +272,23 @@ Changelog
 \end_layout
 
 \begin_layout Standard
-Latest version is 0.10, created on 20090321.
+Latest version is 0.10, created on 20090323.
 \end_layout
 
+\begin_layout Itemize
+0.11 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Arrays are at least well parsed (but still show wrong).
+\end_layout
+
+\begin_layout Itemize
+Integrals and sums appear as large characters.
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 0.10 (20090323):
 \end_layout
