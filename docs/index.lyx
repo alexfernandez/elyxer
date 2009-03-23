@@ -264,11 +264,11 @@ Changelog
 \end_layout
 
 \begin_layout Standard
-Latest version is 0.9, created on 20090321.
+Latest version is 0.10, created on 20090321.
 \end_layout
 
 \begin_layout Itemize
-0.10 (unreleased):
+0.10 (20090323):
 \end_layout
 
 \begin_deeper
@@ -283,6 +283,12 @@ Better parsing of first word in a Description.
 
 \begin_layout Itemize
 Short titles are ignored.
+\end_layout
+
+\begin_layout Itemize
+Added a few font families for equations.
+ Not that they display too well\SpecialChar \ldots{}
+
 \end_layout
 
 \end_deeper
@@ -586,8 +592,8 @@ Thanks to Stevan White for encouraging me to publish the tool; to Christian
  Pavel Sanda, Günther Milde, Olivier Ripoll, José Matos, Iain Mac Donald,
  Uwe Stöhr, Ignacio García for their interesting suggestions; to Nikos Alexandri
 s, Joachim Kreimer-de Fries (Osnabryg), Richard Talley, Wolfgang Keller,
- Murray Eisenberg, Robert Orr, a Linux guy in Singapore for their early
- testing.
+ Murray Eisenberg, Robert Orr, Ignacio García again, a Linux guy in Singapore
+ for their early testing.
  A silent 
 \begin_inset Quotes eld
 \end_inset
