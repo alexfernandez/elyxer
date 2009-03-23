@@ -113,10 +113,10 @@ class Formula(Container):
     function, tag = self.find(text, pos, FormulaConfig.onefunctions)
     if not function:
       return None, None
-    if len(tag) == 0:
-      return None, None
     pos += len(function)
     bracket, result = self.readbracket(text, pos)
+    if len(tag) == 0:
+      return function + bracket, []
     return function + bracket, [TaggedText().complete(result, tag)]
 
   def readtwo(self, text, pos):
