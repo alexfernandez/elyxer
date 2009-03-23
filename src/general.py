@@ -31,48 +31,58 @@ class FormulaConfig(object):
       ',':u', ', '/':u' ⁄ ', '\n':''}
   commands = {
       # spacing
-      '\\, ':' ', '& ':u'', '\\\\':'<br/>',
+      '\\, ':' ', '& ':u'', '\\\\':'<br/>', '\\,':u' ',
       # typographical
       '\\%':'%', '\\prime':u'′', '\\_':'_',
       '\\left(':u'<span class="bigsymbol">(</span>',
       '\\right)':u'<span class="bigsymbol">)</span>',
+      '\\left[':u'<span class="bigsymbol">[</span>',
+      '\\right]':u'<span class="bigsymbol">]</span>',
       # regional
       '\\tilde{n}':u'ñ', '\\acute{o}':u'ó', '\\acute{a}':u'á',
       # greek
       '\\alpha':u'α', '\\beta':u'β', '\\gamma':u'γ', '\\delta':u'δ',
-      '\\epsilon':u'ε', '\\lambda':u'λ', '\\Delta':u'Δ', '\\sum':u'∑',
+      '\\epsilon':u'ε', '\\lambda':u'λ', '\\Delta':u'Δ',
       '\\sigma':u'σ', '\\pi':u'π',
       # mathematical
       '\\times':u' × ', '\\propto':u' ∝ ', '\\cdot':u'⋅', '\\approx':u' ≈ ',
-      '\\pm':u'±', '\\sim':u' ~ ', '\\implies':u'  ⇒  ', '\\int':u'∫',
-      '\\intop':u'∫', '\\infty':u'∞', '\\not':u'¬',
+      '\\pm':u'±', '\\sim':u' ~ ', '\\implies':u'  ⇒  ', '\\not':u'¬',
+      '\\sum':u'<span class="bigsymbol">∑</span>',
+      '\\int':u'<span class="bigsymbol">∫</span>',
+      '\\intop':u'<span class="bigsymbol">∫</span>', '\\infty':u'∞',
       # symbols
       '\\rightarrow':u' → ', '\\rightsquigarrow':u' ⇝ ', '\\Rightarrow':u'⇒',
       '\\leftarrow':u' ← ',
       '\\dashrightarrow':u' ⇢ ', '\\blacktriangleright':u'▶', '\\bullet':u'•',
       '\\dagger':u'†', '\\ddagger':u'‡', '\\bigstar':u'★',
-      '\\to':u'→', '\\gets':u'←',
+      '\\to':u'→', '\\gets':u'←', '\\circ':u'○', '\\diamond':u'◇',
+      '\\triangleright':u'▷',
       # common functions
       '\\log':'log', '\\exp':'exp', '\\ln':'ln', '\\lim':'lim', '\\sin':'sin',
       '\\cos':'cos',
       # hyperbolic functions
       '\\tanh':'tanh', '\\sinh':'sinh', '\\cosh':'cosh',
       # LaTeX (ignored)
-      '\\nonumber':''
+      '\\nonumber':'', '\\lyxlock':'', '\\end{array}':''
       }
   onefunctions = {
       # typographical
       '\\mathsf':'span class="mathsf"', '\\mathbf':'b', '^':'sup',
       '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
-      '\\dot':'span class="overdot"',
+      '\\dot':'span class="dotted"',
       '\\bar':'span class="bar"', '\\mbox':'span class="mbox"',
       '\\textrm':'span class="mathrm"', '\\mathrm':'span class="mathrm"',
       '\\text':'span class="text"', '\\textipa':'span class="textipa"',
       '\\boldsymbol':'b', '\\mathit':'i', '\\mathtt':'tt',
       '\\mathbb':'span class="blackboard"',
       '\\mathfrak':'span class="fraktur"', '\\mathcal':'span class="script"',
+      # combining (start with *)
+      '\\check':u'*\u030C', '\\breve':u'*\u0306', '\\vector':u'*\u20D7',
+      '\\dot':u'*\u0307',
       # functions
       '\\sqrt':'span class="sqrt"',
+      # hard functions
+      '\\begin{array}':'span class="arraydef"',
       # LaTeX (ignored)
       '\\label':''
       }

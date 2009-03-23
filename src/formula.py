@@ -110,14 +110,20 @@ class Formula(Container):
 
   def readone(self, text, pos):
     "read a one-parameter function"
-    function, tag = self.find(text, pos, FormulaConfig.onefunctions)
+    function, value = self.find(text, pos, FormulaConfig.onefunctions)
     if not function:
       return None, None
     pos += len(function)
     bracket, result = self.readbracket(text, pos)
-    if len(tag) == 0:
+    if len(value) == 0:
       return function + bracket, []
-    return function + bracket, [TaggedText().complete(result, tag)]
+    if value.startswith('*') and len(result) == 1:
+      # combining
+      first = result[0].searchfor(StringContainer)
+      if first:
+        first.contents[0] = value.replace('*','') + first.contents[0]
+        return function + bracket, result
+    return function + bracket, [TaggedText().complete(result, value)]
 
   def readtwo(self, text, pos):
     "read a two-parameter function"
@@ -166,10 +172,6 @@ class Formula(Container):
       tagged.tag = 'span class="root"'
       radical = TaggedText().constant(u'√', 'span class="radical"')
       container.contents.insert(index, radical)
-    elif tagged.tag == 'span class="overdot"':
-      dot = TaggedText().constant(u'⋅', 'span class="dot"')
-      tagged.tag = 'span class="dotted"'
-      container.contents.insert(index, dot)
     elif tagged.tag == 'i':
       group = TaggedText().complete([], 'i')
       self.group(index, group, self.isalpha)
