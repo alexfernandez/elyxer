@@ -53,23 +53,10 @@ class PostBiblio(object):
     tag = TaggedText().constant('Bibliography', 'h1 class="biblio"')
     return Group().contents([tag, element])
 
-class PostFloat(object):
-  "Postprocess a float"
-
-  processedclass = Float
-
-  def postprocess(self, element, last):
-    "Enclose in a float div"
-    return TaggedText().complete([element], 'div class="float"', True)
-
-  def setfigure(self, contents, index):
-    "Set the image as figure"
-    contents[index].figure = True
-
 class Postprocessor(object):
   "Postprocess an element keeping some context"
 
-  stages = [PostBiblio(), PostFloat()]
+  stages = [PostBiblio()]
 
   stagedict = dict([(x.processedclass, x) for x in stages])
 

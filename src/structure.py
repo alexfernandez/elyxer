@@ -68,7 +68,9 @@ class Float(Container):
   def process(self):
     "Get the float type"
     self.type = self.header[2]
-    self.tag = 'div class="' + self.type + '"'
+    tag = TaggedText().complete(self.contents, 'div class="' + self.type + '"')
+    self.contents = [tag]
+    self.tag = 'div class="float"'
 
 class InsetText(Container):
   "An inset of text in a lyx file"
