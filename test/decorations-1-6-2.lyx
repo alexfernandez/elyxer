@@ -45,8 +45,6 @@
 \newcommand{\IndexDef}[1]{\textit{#1}}
 
 % redefine the greyed out note
-\renewenvironment{lyxgreyedout}
- {\textcolor{blue}\bgroup}{\egroup}
 \end_preamble
 \options intoc,bibtotoc,idxtotoc,BCOR7mm,tablecaptionabove
 \use_default_options false
@@ -634,6 +632,16 @@ A big recursive fraction:
 
 \begin_layout Standard
 That's all folks!
+\end_layout
+
+\begin_layout Chapter
+\start_of_appendix
+Appendices
+\end_layout
+
+\begin_layout Standard
+Actually let us start an appendix here, if only to learn how it displays
+ in PDF and how to do it in HTML.
 \end_layout
 
 \end_body

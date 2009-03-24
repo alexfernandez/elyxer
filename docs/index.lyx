@@ -288,6 +288,10 @@ Arrays are at least well parsed (but still show wrong).
 Integrals and sums appear as large characters.
 \end_layout
 
+\begin_layout Itemize
+Appendices are at least separated from the main document.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.10 (20090323):

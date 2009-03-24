@@ -341,9 +341,20 @@ class Footnote(Container):
     self.contents = [tofoot, tag]
     Footnote.order += 1
 
+class Appendix(Container):
+  "An appendix to the main document"
+
+  start = '\\start_of_appendix'
+
+  def __init__(self):
+    self.parser = LoneCommand()
+    self.output = TagOutput()
+    self.tag = 'span class="appendix"'
+    self.breaklines = True
+
 ContainerFactory.types += [
     LyxHeader, LyxFooter, InsetText, Caption, Inset,
     Align, Layout, Float, Title, Author, Description, Newline, Space,
-    NewlineInset, Branch, ShortTitle, Footnote
+    NewlineInset, Branch, ShortTitle, Footnote, Appendix
     ]
 
