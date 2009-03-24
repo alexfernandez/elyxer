@@ -35,6 +35,7 @@ from image import *
 from structure import *
 from container import *
 from options import *
+from postprocess import *
 
 
 class Book(object):
@@ -43,9 +44,11 @@ class Book(object):
   def parsecontents(self, reader, writer):
     "Parse the contents of the reader and write them"
     factory = ContainerFactory()
+    postproc = Postprocessor()
     while not reader.finished():
       container = factory.create(reader)
-      writer.write(container.gethtml())
+      result = postproc.postprocess(container)
+      writer.write(result.gethtml())
 
 def createbook(args):
   "Read a whole book, write it"

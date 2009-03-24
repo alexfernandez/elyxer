@@ -301,3 +301,6 @@ span.arraydef {
 span.appendix {
 	display: none;
 }
+h1.biblio {
+	font-size: 90%;
+}

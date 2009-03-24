@@ -292,6 +292,14 @@ Integrals and sums appear as large characters.
 Appendices are at least separated from the main document.
 \end_layout
 
+\begin_layout Itemize
+The bibliography appears separated with a title.
+\end_layout
+
+\begin_layout Itemize
+Floats appear centered on-screen.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.10 (20090323):
