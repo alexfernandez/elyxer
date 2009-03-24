@@ -117,12 +117,14 @@ class Formula(Container):
     bracket, result = self.readbracket(text, pos)
     if len(value) == 0:
       return function + bracket, []
-    if value.startswith('*') and len(result) == 1:
-      # combining
-      first = result[0].searchfor(StringContainer)
-      if first:
-        first.contents[0] = value.replace('*','') + first.contents[0]
-        return function + bracket, result
+    if value.startswith('*'):
+      value = value.replace('*', '')
+      Trace.debug('Combining ' + value + ' with ' + str(result))
+      tagover = TaggedText().constant(value, 'span class="symbolover"')
+      tagunder = TaggedText().complete(result, 'span class="undersymbol"')
+      result = [tagover, tagunder]
+      realresult = [TaggedText().complete(result, 'span class="withsymbol"')]
+      return function + bracket, realresult
     return function + bracket, [TaggedText().complete(result, value)]
 
   def readtwo(self, text, pos):

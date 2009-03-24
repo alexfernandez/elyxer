@@ -39,7 +39,11 @@ class FormulaConfig(object):
       '\\left[':u'<span class="bigsymbol">[</span>',
       '\\right]':u'<span class="bigsymbol">]</span>',
       # regional
-      '\\tilde{n}':u'ñ', '\\acute{o}':u'ó', '\\acute{a}':u'á',
+      '\\tilde{n}':u'ñ', '\\tilde{N}':u'Ñ',
+      '\\acute{a}':u'á', '\\acute{e}':u'é', '\\acute{i}':u'í',
+      '\\acute{o}':u'ó', '\\acute{u}':u'ú',
+      '\\acute{A}':u'Á', '\\acute{E}':u'É', '\\acute{I}':u'Í',
+      '\\acute{O}':u'Ó', '\\acute{U}':u'Ú',
       # greek
       '\\alpha':u'α', '\\beta':u'β', '\\gamma':u'γ', '\\delta':u'δ',
       '\\epsilon':u'ε', '\\lambda':u'λ', '\\Delta':u'Δ',
@@ -76,9 +80,9 @@ class FormulaConfig(object):
       '\\boldsymbol':'b', '\\mathit':'i', '\\mathtt':'tt',
       '\\mathbb':'span class="blackboard"',
       '\\mathfrak':'span class="fraktur"', '\\mathcal':'span class="script"',
-      # combining (start with *)
-      '\\check':u'*\u030C', '\\breve':u'*\u0306', '\\vector':u'*\u20D7',
-      '\\dot':u'*\u0307',
+      # symbols above (start with *)
+      '\\check':u'*ˇ', '\\breve':u'*˘', '\\vec':u'*→', '\\dot':u'*˙',
+      '\\hat':u'*^', '\\grave':u'*`', '\\ddot':u'*¨', '\\tilde':u'*˜',
       # functions
       '\\sqrt':'span class="sqrt"',
       # hard functions
