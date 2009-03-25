@@ -59,7 +59,7 @@ p.dir {
 	float: right;
 }
 p.printindex {
-	font-size: 80%;
+	font-size: 0.90em;
 }
 a.printindex {
 	color: black;
@@ -141,9 +141,9 @@ td.empty {
 	margin-right: auto;
 }
 p.biblio {
-	font-size: 90%;
+	font-size: 0.90em;
 }
-div.Paragraph {
+div.Paragraph, div.Paragraph- {
 	font-weight: bold;
 	font-size: 103%;
 }
@@ -304,5 +304,5 @@ span.appendix {
 	display: none;
 }
 h1.biblio {
-	font-size: 90%;
+	font-size: 140%;
 }
