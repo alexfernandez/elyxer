@@ -44,7 +44,7 @@ class Formula(Container):
     original, result = self.convert(text, 0)
     #Trace.debug('Formula ' + original + ' -> ' + result)
     self.contents = result
-    self.restyle(TaggedText, self.restyletagged)
+    # self.restyle(TaggedText, self.restyletagged)
     if self.header[0] == 'inline':
       self.tag = 'span class="formula"'
       self.breaklines = False
@@ -77,7 +77,7 @@ class Formula(Container):
 
   def readalpha(self, text, pos):
     "Read alphabetic sequence"
-    alpha = str()
+    alpha = unicode()
     while pos < len(text) and text[pos].isalpha():
       alpha += text[pos]
       pos += 1
