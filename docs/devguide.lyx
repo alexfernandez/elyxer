@@ -1736,6 +1736,29 @@ Parsing is much faster this way, but there are disadvantages; for one, parsing
 \end_layout
 
 \begin_layout Subsection
+Postprocessors
+\end_layout
+
+\begin_layout Standard
+Some post-processing of the resulting HTML page can make the results look
+ much better.
+ There is right now only one 
+\family typewriter
+PostStage
+\family default
+ in the postprocessing pipeline: it inserts a title 
+\begin_inset Quotes eld
+\end_inset
+
+Bibliography
+\begin_inset Quotes erd
+\end_inset
+
+ before the first bibliographical entry.
+ But more can be added to alter the result.
+\end_layout
+
+\begin_layout Subsection
 Node Numbering
 \end_layout
 
@@ -1889,20 +1912,6 @@ Some header and footer content is automatically added to the resulting document.
 \end_layout
 
 \begin_layout Subsection
-Postprocessors
-\end_layout
-
-\begin_layout Standard
-Some post-processing of the resulting HTML page could make the results look
- much better.
- The tool is called 
-\family typewriter
-posxer
-\family default
-.
-\end_layout
-
-\begin_layout Subsection
 Page Segmentors
 \end_layout
 
@@ -1914,10 +1923,7 @@ A page segmentor should build a set of pages and cross-reference them, but
 idxer
 \family default
 .
-\end_layout
-
-\begin_layout Standard
-The tool uses templates to construct the header and footer.
+ It uses templates to construct the header and footer.
 \end_layout
 
 \begin_layout Standard
@@ -1930,7 +1936,7 @@ reference "fig:pipeline"
 
 .
  This is the high-level design that has to be filled in with the missing
- tools.
+ tool.
 \end_layout
 
 \begin_layout Standard

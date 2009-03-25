@@ -8,7 +8,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="300"
+   width="220"
    height="120"
    id="svg2"
    sodipodi:version="0.32"
@@ -89,7 +89,7 @@
      inkscape:cx="131.97527"
      inkscape:cy="93.750515"
      inkscape:document-units="px"
-     inkscape:current-layer="g3220"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1600"
      inkscape:window-height="930"
@@ -142,7 +142,7 @@
        transform="translate(-17.957886,59.883487)"
        id="g3220">
       <rect
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.40000001000000002;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="rect3222"
          width="49.112373"
          height="16.490463"
@@ -165,31 +165,8 @@
        d="M 104.95579,17.901759 L 104.95579,40.458376"
        id="path3228" />
     <g
-       id="g3230"
-       transform="translate(95.256324,-5.0193549)">
-      <rect
-         y="19.399424"
-         x="22.000002"
-         height="29.599998"
-         width="59.599998"
-         id="rect3232"
-         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <text
-         sodipodi:linespacing="100%"
-         id="text3234"
-         y="37.549423"
-         x="52.144924"
-         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-         xml:space="preserve"><tspan
-           y="37.549423"
-           x="52.144924"
-           id="tspan3236"
-           sodipodi:role="line"
-           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;font-family:Nimbus Mono L;-inkscape-font-specification:Nimbus Mono L">posxer</tspan></text>
-    </g>
-    <g
        id="g3238"
-       transform="translate(179.45738,-5.0193549)">
+       transform="translate(93.865846,-5.0193549)">
       <rect
          y="19.399424"
          x="22.000002"
@@ -219,7 +196,7 @@
          height="25.451309"
          width="49.112373"
          id="rect3248"
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.39999997999999998;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.39999998;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
       <text
          sodipodi:linespacing="100%"
          id="text3250"
@@ -230,18 +207,14 @@
            y="36.249847"
            x="50.978207"
            id="tspan3252"
-           sodipodi:role="line">basic</tspan><tspan
+           sodipodi:role="line">single</tspan><tspan
            y="46.249847"
            x="50.978207"
            sodipodi:role="line"
            id="tspan3270">HTML file</tspan></text>
     </g>
-    <path
-       id="path3254"
-       d="M 189.15685,17.901759 L 189.15685,40.458376"
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <g
-       transform="translate(209.46222,53.403064)"
+       transform="translate(123.87069,53.403064)"
        id="g3272">
       <rect
          style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.39999998;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -280,44 +253,14 @@
            y="50.249847"
            id="tspan3284">HTML files</tspan></text>
     </g>
-    <g
-       transform="translate(138.08443,55.403064)"
-       id="g3290">
-      <rect
-         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.39999997999999998;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-         id="rect3292"
-         width="49.112373"
-         height="25.451309"
-         x="27.243816"
-         y="25.954191" />
-      <text
-         xml:space="preserve"
-         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-         x="50.978207"
-         y="36.249847"
-         id="text3294"
-         sodipodi:linespacing="100%"><tspan
-           id="tspan3298"
-           sodipodi:role="line"
-           x="50.978207"
-           y="36.249847">extended</tspan><tspan
-           sodipodi:role="line"
-           x="50.978207"
-           y="46.249847"
-           id="tspan3302">HTML file</tspan></text>
-    </g>
     <path
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.39999998;stroke-linejoin:miter;marker-start:url(#Arrow1Mstart);marker-end:url(#Arrow1Mend);stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        d="M 104.9109,46.794512 L 104.9109,75.98683"
        id="path3304" />
     <path
-       id="path3839"
-       d="M 189.88443,46.794512 L 189.88443,75.98683"
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.39999998;stroke-linejoin:miter;marker-start:url(#Arrow1Mstart);marker-end:url(#Arrow1Mend);stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-    <path
        sodipodi:nodetypes="ccc"
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-linejoin:miter;marker-start:none;marker-end:url(#Arrow1Mend);stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="M 264.87403,28.973055 L 271.04969,28.973055 L 271.04969,75.478647"
+       d="M 179.2825,28.973055 L 185.45816,28.973055 L 185.45816,75.478647"
        id="path3841" />
   </g>
 </svg>

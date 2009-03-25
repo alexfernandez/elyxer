@@ -799,6 +799,27 @@ Multi-column layouts are lost.
 Formulae with roots and fractions intermixed are displayed wrong.
 \end_layout
 
+\begin_layout Enumerate
+Text constants (such as 
+\begin_inset Quotes eld
+\end_inset
+
+Bibliography
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+Nomenclature
+\begin_inset Quotes erd
+\end_inset
+
+) are not translated.
+ They will probably be in a future version.
+\end_layout
+
 \begin_layout Subsection
 Reporting Bugs
 \end_layout
