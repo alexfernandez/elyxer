@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta name="generator" content="http://www.nongnu.org/elyxer/"/>
-<meta name="create-date" content="2009-03-24"/>
+<meta name="create-date" content="2009-03-25"/>
 <link rel="stylesheet" href="http://www.nongnu.org/elyxer/lyx.css" type="text/css" media="screen"/>
 <title>Decorations Test</title>
 </head>
@@ -16,11 +16,11 @@ Decorations Test
 Decorations
 </h1>
 <div class="Standard">
-A few examples taken from the Spanish Lyx User’s Guide. An accent that looks like a hat: <span class="formula"><i></i><span class="withsymbol"><span class="symbolover">^</span><span class="undersymbol"><i>a</i></span></span></span>, done  using <b>\hata</b> within an equation. The following table shows commands to make decorations.
+A few examples taken from the Spanish Lyx User’s Guide. An accent that looks like a hat: <span class="formula"><span class="withsymbol"><span class="symbolover">^</span><span class="undersymbol"><i>a</i></span></span></span>, done  using <b>\hata</b> within an equation. The following table shows commands to make decorations.
 </div>
 <div class="Standard">
-<div class="table">
-<div class="Plain">
+<div class="float">
+<div class="table"><div class="Plain">
 <div class="caption">
 <div class="Plain">
 Decorations and commands.
@@ -71,7 +71,7 @@ circumflex
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><i></i><span class="withsymbol"><span class="symbolover">^</span><span class="undersymbol"><i>a</i></span></span></span>
+<span class="formula"><span class="withsymbol"><span class="symbolover">^</span><span class="undersymbol"><i>a</i></span></span></span>
 </div>
 
 </td>
@@ -92,7 +92,7 @@ grave
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><i></i><span class="withsymbol"><span class="symbolover">`</span><span class="undersymbol"><i>m</i></span></span></span>
+<span class="formula"><span class="withsymbol"><span class="symbolover">`</span><span class="undersymbol"><i>m</i></span></span></span>
 </div>
 
 </td>
@@ -134,7 +134,7 @@ diaeresis
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><i></i><span class="withsymbol"><span class="symbolover">¨</span><span class="undersymbol"><i>B</i></span></span></span>
+<span class="formula"><span class="withsymbol"><span class="symbolover">¨</span><span class="undersymbol"><i>B</i></span></span></span>
 </div>
 
 </td>
@@ -176,7 +176,7 @@ dot
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><i></i><span class="withsymbol"><span class="symbolover">˙</span><span class="undersymbol"><i>L</i></span></span></span>
+<span class="formula"><span class="withsymbol"><span class="symbolover">˙</span><span class="undersymbol"><i>L</i></span></span></span>
 </div>
 
 </td>
@@ -197,7 +197,7 @@ breve
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><i></i><span class="withsymbol"><span class="symbolover">˘</span><span class="undersymbol"><i>g</i></span></span></span>
+<span class="formula"><span class="withsymbol"><span class="symbolover">˘</span><span class="undersymbol"><i>g</i></span></span></span>
 </div>
 
 </td>
@@ -218,7 +218,7 @@ caron
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><i><span class="withsymbol"><span class="symbolover">ˇ</span><span class="undersymbol">s</span></span></i></span>
+<span class="formula"><span class="withsymbol"><span class="symbolover">ˇ</span><span class="undersymbol"><i>s</i></span></span></span>
 </div>
 
 </td>
@@ -239,7 +239,7 @@ bar
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><i><span class="bar">l</span></i></span>
+<span class="formula"><span class="bar"><i>l</i></span></span>
 </div>
 
 </td>
@@ -260,7 +260,7 @@ vector
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><i></i><span class="withsymbol"><span class="symbolover">→</span><span class="undersymbol"><i>m</i></span></span></span>
+<span class="formula"><span class="withsymbol"><span class="symbolover">→</span><span class="undersymbol"><i>m</i></span></span></span>
 </div>
 
 </td>
@@ -272,7 +272,7 @@ vector
 </div>
 
 </div>
-
+</div>
 </div>
 
 </div>
@@ -281,19 +281,19 @@ Limit
 </h1>
 <div class="Standard">
 A limit : <div class="formula">
-<i>lim</i><sub><i>x</i> → ∞</sub><i>f</i>(<i>x</i>), 
+lim<sub><i>x</i> → ∞</sub><i>f</i>(<i>x</i>), 
 </div>
-which should appear as <span class="formula"><i>x</i> → ∞</span> in italics, and «lim» in plain style. Inlined: <span class="formula"><i>lim</i><sub><i>x</i> → ∞</sub><i>f</i>(<i>x</i>)</span>.
+which should appear as <span class="formula"><i>x</i> → ∞</span> in italics, and «lim» in plain style. Inlined: <span class="formula">lim<sub><i>x</i> → ∞</sub><i>f</i>(<i>x</i>)</span>.
 </div>
 <h1 class="Chapter">
 Parentheses
 </h1>
 <div class="Standard">
 Some delimiters also taken from the Spanish Lyx User’s Guide. Array: <div class="formula">
-<i></i><span class="bigsymbol">[</span><span class="arraydef"><i>cc</i></span>12<br/>34<span class="bigsymbol">]</span>
+<span class="bigsymbol">[</span><span class="arraydef"><i>cc</i></span>12<br/>34<span class="bigsymbol">]</span>
 </div>
 A big recursive fraction: <div class="formula">
-<span class="fraction"><span class="numerator">1</span><span class="denominator"><span class="bigsymbol">(</span>1 + <span class="bigsymbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + <span class="bigsymbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + <i>x</i></span></span><span class="bigsymbol">)</span></span></span><span class="bigsymbol">)</span><span class="bigsymbol">)</span></span></span><i></i>
+<span class="fraction"><span class="numerator">1</span><span class="denominator"><span class="bigsymbol">(</span>1 + <span class="bigsymbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + <span class="bigsymbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + <i>x</i></span></span><span class="bigsymbol">)</span></span></span><span class="bigsymbol">)</span><span class="bigsymbol">)</span></span></span>
 </div>
 
 </div>
