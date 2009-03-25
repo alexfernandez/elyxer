@@ -866,7 +866,13 @@ target "mailto:elyxer@gmail.com"
 \end_inset
 
 .
- You can also join the 
+ You can send your sample documents and we will try to make eLyXer convert
+ them acceptably.
+ Any documents sent will be treated with the utmost confidentiality.
+\end_layout
+
+\begin_layout Standard
+You can also join the 
 \begin_inset LatexCommand url
 name "mailing list"
 target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
@@ -874,6 +880,7 @@ target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
 \end_inset
 
  to discuss any information related to eLyXer.
+ The author monitors the official LyX lists for mentions of eLyXer.
 \end_layout
 
 \begin_layout Section
