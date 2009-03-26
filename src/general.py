@@ -27,33 +27,17 @@ class FormulaConfig(object):
   "Configuration for formulae"
 
   unmodified = ['.', '*', u'€', '(', ')', '[', ']', ':', u'·']
-  modified = {'\'':u'’', '=':u' = ', ' ':'', '<':u' &lt; ', '-':u' − ', '+':u' + ',
-      ',':u', ', '/':u' ⁄ ', '\n':''}
+  modified = {'\'':u'’', '=':u' = ', ' ':'', '<':u' &lt; ', '>':u' &gt; ',
+      '-':u' − ', '+':u' + ',
+      ',':u', ', '/':u' ⁄ ', '\n':'', '&':u'\t'}
   commands = {
-      # spacing
-      '\\, ':' ', '& ':u'', '\\\\':'<br/>', '\\,':u' ',
-      # typographical
-      '\\%':'%', '\\prime':u'′', '\\_':'_',
-      '\\left(':u'<span class="bigsymbol">(</span>',
-      '\\right)':u'<span class="bigsymbol">)</span>',
-      '\\left[':u'<span class="bigsymbol">[</span>',
-      '\\right]':u'<span class="bigsymbol">]</span>',
-      # regional
-      '\\tilde{n}':u'ñ', '\\tilde{N}':u'Ñ',
-      '\\acute{a}':u'á', '\\acute{e}':u'é', '\\acute{i}':u'í',
-      '\\acute{o}':u'ó', '\\acute{u}':u'ú',
-      '\\acute{A}':u'Á', '\\acute{E}':u'É', '\\acute{I}':u'Í',
-      '\\acute{O}':u'Ó', '\\acute{U}':u'Ú',
-      # greek
-      '\\alpha':u'α', '\\beta':u'β', '\\gamma':u'γ', '\\delta':u'δ',
-      '\\epsilon':u'ε', '\\lambda':u'λ', '\\Delta':u'Δ',
-      '\\sigma':u'σ', '\\pi':u'π',
       # mathematical
       '\\times':u' × ', '\\propto':u' ∝ ', '\\cdot':u'⋅', '\\approx':u' ≈ ',
       '\\pm':u'±', '\\sim':u' ~ ', '\\implies':u'  ⇒  ', '\\not':u'¬',
       '\\sum':u'<span class="bigsymbol">∑</span>',
       '\\int':u'<span class="bigsymbol">∫</span>',
       '\\intop':u'<span class="bigsymbol">∫</span>', '\\infty':u'∞',
+      '\\prime':u'′',
       # symbols
       '\\rightarrow':u' → ', '\\rightsquigarrow':u' ⇝ ', '\\Rightarrow':u'⇒',
       '\\leftarrow':u' ← ',
@@ -67,7 +51,27 @@ class FormulaConfig(object):
       # hyperbolic functions
       '\\tanh':'tanh', '\\sinh':'sinh', '\\cosh':'cosh',
       # LaTeX (ignored)
-      '\\nonumber':'', '\\lyxlock':'', '\\end{array}':''
+      '\\nonumber':'', '\\lyxlock':'', '\\end{array}':'',
+      # spacing
+      '\\,':' ', '\\\\':'<br/>',
+      # typographical
+      '\\%':'%', '\\_':'_',
+      '\\left(':u'<span class="bigsymbol">(</span>',
+      '\\right)':u'<span class="bigsymbol">)</span>',
+      '\\left[':u'<span class="bigsymbol">[</span>',
+      '\\right]':u'<span class="bigsymbol">]</span>',
+      }
+  alphacommands = {
+      # regional
+      '\\tilde{n}':u'ñ', '\\tilde{N}':u'Ñ',
+      '\\acute{a}':u'á', '\\acute{e}':u'é', '\\acute{i}':u'í',
+      '\\acute{o}':u'ó', '\\acute{u}':u'ú',
+      '\\acute{A}':u'Á', '\\acute{E}':u'É', '\\acute{I}':u'Í',
+      '\\acute{O}':u'Ó', '\\acute{U}':u'Ú',
+      # greek
+      '\\alpha':u'α', '\\beta':u'β', '\\gamma':u'γ', '\\delta':u'δ',
+      '\\epsilon':u'ε', '\\lambda':u'λ', '\\Delta':u'Δ',
+      '\\sigma':u'σ', '\\pi':u'π',
       }
   onefunctions = {
       # typographical
@@ -80,15 +84,17 @@ class FormulaConfig(object):
       '\\boldsymbol':'b', '\\mathit':'i', '\\mathtt':'tt',
       '\\mathbb':'span class="blackboard"',
       '\\mathfrak':'span class="fraktur"', '\\mathcal':'span class="script"',
-      # symbols above (start with *)
-      '\\check':u'*ˇ', '\\breve':u'*˘', '\\vec':u'*→', '\\dot':u'*˙',
-      '\\hat':u'*^', '\\grave':u'*`', '\\ddot':u'*¨', '\\tilde':u'*˜',
       # functions
       '\\sqrt':'span class="sqrt"',
       # hard functions
       '\\begin{array}':'span class="arraydef"',
       # LaTeX (ignored)
       '\\label':''
+      }
+  alphafunctions = {
+      # symbols above (start with *)
+      '\\check':u'*ˇ', '\\breve':u'*˘', '\\vec':u'*→', '\\dot':u'*˙',
+      '\\hat':u'*^', '\\grave':u'*`', '\\ddot':u'*¨', '\\tilde':u'*˜',
       }
   twofunctions = {
       '\\frac':['span class="fraction"', 'span class="numerator"', 'span class="denominator"'],

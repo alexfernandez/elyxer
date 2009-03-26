@@ -29,7 +29,7 @@ from general import *
 
 
 class Formula(Container):
-  "A Latex formula"
+  "A LaTeX formula"
 
   start = '\\begin_inset Formula'
   ending = '\\end_inset'
@@ -39,7 +39,7 @@ class Formula(Container):
     self.output = TagOutput()
 
   def process(self):
-    "Convert the formula to HTML"
+    "Convert the formula to tags"
     text = self.contents[0]
     original, result = self.convert(text, 0)
     #Trace.debug('Formula ' + original + ' -> ' + result)
@@ -58,7 +58,6 @@ class Formula(Container):
     result = list()
     while pos < len(text) and text[pos] != '}':
       original, converted = self.convertchars(text, pos)
-      #Trace.debug('converted: ' + unicode(converted))
       processed += original
       pos += len(original)
       result += converted
@@ -66,22 +65,61 @@ class Formula(Container):
 
   def convertchars(self, text, pos):
     "Convert one or more characters, return the conversion"
-    #Trace.debug('Formula ' + text + ' @' + str(pos))
     for reader in Formula.readers:
       bit, result = reader(self, text, pos)
       if bit:
         return bit, result
+    if text[pos] == '{':
+      bracket, result = self.readbracket(text, pos)
+      return bracket, [Constant('{')] + result + [Constant('}')]
     Trace.error('Unrecognized function at ' + str(self.parser.begin) + ' in ' +
         unicode(text[pos:]))
-    return '\\', [Constant('\\')]
+    return text[pos], [Constant(text[pos])]
 
-  def readalpha(self, text, pos):
+  def readvariable(self, text, pos):
+    "Read a variable"
+    alpha, result = self.extractalpha(text, pos)
+    if not alpha or len(alpha) == 0:
+      return None, None
+    return alpha, [TaggedText().constant(alpha, 'i')]
+
+  def extractalpha(self, text, pos):
     "Read alphabetic sequence"
+    alpha = unicode()
+    result = []
+    while pos < len(text):
+      bit, bitresult = self.extractalphabit(text, pos)
+      if not bit or len(bit) == 0:
+        return alpha, result
+      alpha += bit
+      result += bitresult
+      pos += len(bit)
+    return alpha, result
+
+  def extractalphabit(self, text, pos):
+    "Find out if there is an alphabetic sequence"
+    if text[pos].isalpha():
+      alpha = self.extractpurealpha(text, pos)
+      return alpha, alpha
+    if text[pos] == '\\':
+      command, result = self.findcommand(text, pos, FormulaConfig.alphacommands)
+      if command:
+        return command, result
+    return None, None
+
+  def extractpurealpha(self, text, pos):
+    "Extract a pure alphabetic sequence"
     alpha = unicode()
     while pos < len(text) and text[pos].isalpha():
       alpha += text[pos]
       pos += 1
-    return alpha, [TaggedText().constant(alpha, 'i')]
+    return alpha
+
+  def extractcommand(self, text, pos):
+    "Extract a whole command"
+    if pos == len(text) or text[pos] != '\\':
+      return None
+    return '\\' + self.extractpurealpha(text, pos + 1)
 
   def readsymbols(self, text, pos):
     "Read a string of symbols"
@@ -101,16 +139,29 @@ class Formula(Container):
       return None, None
     return symbols, [Constant(result)]
 
-  def command(self, text, pos):
+  def readcommand(self, text, pos):
     "read a command"
-    command, translated = self.find(text, pos, FormulaConfig.commands)
-    if not command:
-      return None, None
-    return command, [Constant(translated)]
+    command, translated = self.findcommand(text, pos, FormulaConfig.commands)
+    if command:
+      return command, [Constant(translated)]
+    return None, None
+
+  def extractsymbolcommand(self, text, pos):
+    "Extract a command made with alpha and one symbol"
+    backslash = ''
+    if text[pos] == '\\' and pos + 1 < len(text):
+      backslash = '\\'
+      pos += 1
+    alpha = self.extractpurealpha(text, pos)
+    pos += len(alpha)
+    if pos == len(text):
+      return None
+    symbol = backslash + alpha + text[pos]
+    return symbol
 
   def readone(self, text, pos):
     "read a one-parameter function"
-    function, value = self.find(text, pos, FormulaConfig.onefunctions)
+    function, value = self.findcommand(text, pos, FormulaConfig.onefunctions)
     if not function:
       return None, None
     pos += len(function)
@@ -129,7 +180,7 @@ class Formula(Container):
 
   def readtwo(self, text, pos):
     "read a two-parameter function"
-    function, tags = self.find(text, pos, FormulaConfig.twofunctions)
+    function, tags = self.findcommand(text, pos, FormulaConfig.twofunctions)
     if not function:
       return None, None
     pos += len(function)
@@ -152,15 +203,69 @@ class Formula(Container):
       Trace.error(u'Missing } in ' + text + '@' + str(pos))
     return '{' + original + '}', converted
 
-  def find(self, text, pos, map):
-    "Read TeX command or function"
-    bit = text[pos:]
-    for element in map:
-      if bit.startswith(element):
-        return element, map[element]
-    return None, []
+  def findcommand(self, text, pos, map):
+    "Find a command (alphanumeric or with a symbol) in a map"
+    command = self.extractcommand(text, pos)
+    command, translated = self.locatecommand(command, map)
+    if command:
+      return command, translated
+    command = self.extractsymbolcommand(text, pos)
+    command, translated = self.locatecommand(command, map)
+    if command:
+      return command, translated
+    return None, None
 
-  readers = [readalpha, readsymbols, command, readone, readtwo]
+  def locatecommand(self, command, map):
+    "Locate a command in a map"
+    if not command or len(command) == 0:
+      return None, None
+    if not command in map:
+      return None, None
+    return command, map[command]
+
+  readers = [ readvariable, readsymbols, readcommand, readone, readtwo ]
+
+class OldFormula(Container):
+  "The old LaTeX formula"
+  
+  def convert(self, text, pos):
+    "Convert a bit of text to HTML"
+    processed = ''
+    result = list()
+    while pos < len(text) and text[pos] != '}':
+      original, converted = self.convertchars(text, pos)
+      processed += original
+      pos += len(original)
+      result += converted
+    return processed, result
+
+  def convertchars(self, text, pos):
+    "Convert one or more characters, return the conversion"
+    for reader in Formula.readers:
+      bit, result = reader(self, text, pos)
+      if bit:
+        return bit, result
+    Trace.error('Unrecognized function at ' + str(self.parser.begin) + ' in ' +
+        unicode(text[pos:]))
+    return '\\', [Constant('\\')]
+
+  def readsymbols(self, text, pos):
+    "Read a string of symbols"
+    symbols = unicode()
+    result = unicode()
+    while pos + len(symbols) < len(text):
+      char = text[pos + len(symbols)]
+      if char.isdigit() or char in FormulaConfig.unmodified:
+        symbols += char
+        result += char
+      elif char in FormulaConfig.modified:
+        symbols += char
+        result += FormulaConfig.modified[char]
+      else:
+        break
+    if len(symbols) == 0:
+      return None, None
+    return symbols, [Constant(result)]
 
   def restyletagged(self, container, index):
     "Restyle tagged text"
