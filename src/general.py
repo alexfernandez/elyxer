@@ -77,7 +77,6 @@ class FormulaConfig(object):
       # typographical
       '\\mathsf':'span class="mathsf"', '\\mathbf':'b', '^':'sup',
       '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
-      '\\dot':'span class="dotted"',
       '\\bar':'span class="bar"', '\\mbox':'span class="mbox"',
       '\\textrm':'span class="mathrm"', '\\mathrm':'span class="mathrm"',
       '\\text':'span class="text"', '\\textipa':'span class="textipa"',
@@ -93,8 +92,8 @@ class FormulaConfig(object):
       }
   alphafunctions = {
       # symbols above (start with *)
-      '\\check':u'*ˇ', '\\breve':u'*˘', '\\vec':u'*→', '\\dot':u'*˙',
-      '\\hat':u'*^', '\\grave':u'*`', '\\ddot':u'*¨', '\\tilde':u'*˜',
+      '\\check':u'ˇ', '\\breve':u'˘', '\\vec':u'→', '\\dot':u'˙',
+      '\\hat':u'^', '\\grave':u'`', '\\ddot':u'¨', '\\tilde':u'˜',
       }
   twofunctions = {
       '\\frac':['span class="fraction"', 'span class="numerator"', 'span class="denominator"'],

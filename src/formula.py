@@ -81,7 +81,8 @@ class Formula(Container):
     alpha, result = self.extractalpha(text, pos)
     if not alpha or len(alpha) == 0:
       return None, None
-    return alpha, [TaggedText().constant(alpha, 'i')]
+    Trace.debug('Alpha: ' + str(result))
+    return alpha, [TaggedText().complete(result, 'i')]
 
   def extractalpha(self, text, pos):
     "Read alphabetic sequence"
@@ -100,12 +101,23 @@ class Formula(Container):
     "Find out if there is an alphabetic sequence"
     if text[pos].isalpha():
       alpha = self.extractpurealpha(text, pos)
-      return alpha, alpha
-    if text[pos] == '\\':
-      command, result = self.findcommand(text, pos, FormulaConfig.alphacommands)
-      if command:
-        return command, result
-    return None, None
+      return alpha, [Constant(alpha)]
+    if text[pos] != '\\':
+      return None, None
+    command, value = self.findcommand(text, pos, FormulaConfig.alphacommands)
+    if command:
+      return command, [Constant(value)]
+    function, value = self.findcommand(text, pos, FormulaConfig.alphafunctions)
+    if not function:
+      return None, None
+    pos += len(function)
+    bracket, result = self.readbracket(text, pos)
+    Trace.debug('Combining ' + value + ' with ' + str(result))
+    tagover = TaggedText().constant(value, 'span class="symbolover"')
+    tagunder = TaggedText().complete(result, 'span class="undersymbol"')
+    result = [tagover, tagunder]
+    tagged = TaggedText().complete(result, 'span class="withsymbol"')
+    return function + bracket, [tagged]
 
   def extractpurealpha(self, text, pos):
     "Extract a pure alphabetic sequence"
@@ -168,14 +180,6 @@ class Formula(Container):
     bracket, result = self.readbracket(text, pos)
     if len(value) == 0:
       return function + bracket, []
-    if value.startswith('*'):
-      value = value.replace('*', '')
-      Trace.debug('Combining ' + value + ' with ' + str(result))
-      tagover = TaggedText().constant(value, 'span class="symbolover"')
-      tagunder = TaggedText().complete(result, 'span class="undersymbol"')
-      result = [tagover, tagunder]
-      realresult = [TaggedText().complete(result, 'span class="withsymbol"')]
-      return function + bracket, realresult
     return function + bracket, [TaggedText().complete(result, value)]
 
   def readtwo(self, text, pos):
