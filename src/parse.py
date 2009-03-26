@@ -204,7 +204,6 @@ class HeaderParser(Parser):
 
   def parsebranch(self, reader):
     branch = reader.currentline().split()[1]
-    Trace.debug('Header branch ' + branch)
     reader.nextline()
     subparser = HeaderParser().complete('\\end_branch')
     subparser.parse(reader)
