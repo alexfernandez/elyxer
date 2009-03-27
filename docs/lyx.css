@@ -207,19 +207,15 @@ sup.bigsymbol {
 	position: relative;
 	left: -1ex;
 }
-sub.bigsymbol {
-}
 span.symbolover {
+	font-style: italic;
+	text-align: center;
 	position: relative;
-	bottom: 0.3em;
-	left: -1.2ex;
+	bottom: 0.4em;
+	left: -1.3ex;
 	padding: 0ex;
 	width: 0ex;
 	float: right;
-}
-span.undersymbol {
-	position: relative;
-	padding: 0ex;
 }
 span.withsymbol {
 	display: inline-block;
