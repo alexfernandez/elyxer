@@ -272,11 +272,11 @@ Changelog
 \end_layout
 
 \begin_layout Standard
-Latest version is 0.10, created on 20090323.
+Latest version is 0.11, created on 20090327.
 \end_layout
 
 \begin_layout Itemize
-0.11 (unreleased):
+0.11 (20090327):
 \end_layout
 
 \begin_deeper
@@ -289,7 +289,7 @@ Integrals and sums appear as large characters.
 \end_layout
 
 \begin_layout Itemize
-Appendices are at least separated from the main document.
+Appendices are separated from the main document.
 \end_layout
 
 \begin_layout Itemize
