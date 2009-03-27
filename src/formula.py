@@ -107,17 +107,7 @@ class Formula(Container):
     command, value = self.findcommand(text, pos, FormulaConfig.alphacommands)
     if command:
       return command, [Constant(value)]
-    function, value = self.findcommand(text, pos, FormulaConfig.alphafunctions)
-    if not function:
-      return None, None
-    pos += len(function)
-    bracket, result = self.readbracket(text, pos)
-    Trace.debug('Combining ' + value + ' with ' + str(result))
-    tagover = TaggedText().constant(value, 'span class="symbolover"')
-    tagunder = TaggedText().complete(result, 'span class="undersymbol"')
-    result = [tagover, tagunder]
-    tagged = TaggedText().complete(result, 'span class="withsymbol"')
-    return function + bracket, [tagged]
+    return None, None
 
   def extractpurealpha(self, text, pos):
     "Extract a pure alphabetic sequence"
@@ -182,6 +172,24 @@ class Formula(Container):
       return function + bracket, []
     return function + bracket, [TaggedText().complete(result, value)]
 
+  def readalphafunction(self, text, pos):
+    "Read a function for alphanumeric strings: a symbol addition"
+    function, value = self.findcommand(text, pos, FormulaConfig.alphafunctions)
+    if not function:
+      return None, None
+    pos += len(function)
+    bracket, result = self.readbracket(text, pos)
+    Trace.debug('Combining ' + value + ' with ' + str(result))
+    tagover = TaggedText().constant(value, 'span class="symbolover"')
+    tagunder = TaggedText().complete(result, 'span class="undersymbol"')
+    result = [tagover, tagunder]
+    tagged = TaggedText().complete(result, 'span class="withsymbol"')
+    original = function + bracket
+    if original in FormulaConfig.alphacommands:
+      result = FormulaConfig.alphacommands[original]
+      return original, [TaggedText().constant(result, 'i')]
+    return original, [tagged]
+
   def readtwo(self, text, pos):
     "read a two-parameter function"
     function, tags = self.findcommand(text, pos, FormulaConfig.twofunctions)
@@ -203,7 +211,11 @@ class Formula(Container):
       Trace.error(u'Missing { in ' + text + '@' + str(pos))
       return '', [Constant('')]
     original, converted = self.convert(text, pos + 1)
-    if text[pos + 1 + len(original)] != u'}':
+    pos += 1 + len(original)
+    if pos >= len(text):
+      Trace.error(u'Missing } in ' + text + '@' + str(pos))
+      return '{' + original, converted
+    if text[pos] != u'}':
       Trace.error(u'Missing } in ' + text + '@' + str(pos))
     return '{' + original + '}', converted
 
@@ -227,7 +239,7 @@ class Formula(Container):
       return None, None
     return command, map[command]
 
-  readers = [ readvariable, readsymbols, readcommand, readone, readtwo ]
+  readers = [ readvariable, readsymbols, readcommand, readone, readalphafunction, readtwo ]
 
 class OldFormula(Container):
   "The old LaTeX formula"
@@ -369,6 +381,156 @@ class FormulaParser(Parser):
     formula += reader.currentline()[:-len(ending) - 1]
     reader.nextline()
     return formula
+
+class FormulaBit(object):
+  "A bit of a formula"
+
+  def __init__(self):
+    self.alpha = False
+    self.original = ''
+    self.result = []
+
+  def detect(self, text, pos):
+    "Detect if this bit comes next"
+    return False
+
+  def parse(self, text, pos):
+    "Parse the bit of formula"
+    pass
+
+  def glob(self, text, pos, check):
+    "Glob a bit of text that satisfies a check"
+    glob = ''
+    while check(text, pos) and not self.out(text, pos):
+      glob += text[pos]
+      pos += 1
+    return glob
+
+  def process(self):
+    "Do any further processing"
+    pass
+
+  def clone(self):
+    "Return an exact copy of self"
+    type = self.__class__
+    clone = type.__new__(type)
+    clone.__init__()
+    return clone
+
+  def out(self, text, pos):
+    "Check if we have got outside the formula"
+    return pos >= len(text)
+
+class RawText(FormulaBit):
+  "A bit of text inside a formula"
+
+  def detect(self, text, pos):
+    "Detect a bit of raw text"
+    return text[pos].isalpha()
+
+  def parse(self, text, pos):
+    "Parse alphabetic text"
+    self.original = self.glob(text, pos, lambda(t, p): t[p].isalpha())
+    self.alpha = True
+
+  def process(self):
+    self.result = [Constant(self.original)]
+
+class LatexCommand(FormulaBit):
+  "A LaTeX command inside a formula"
+
+  def detect(self, text, pos):
+    "Detect a command"
+    if not text[pos].startswith('\\'):
+      return False
+    if self.out(text, pos + 1):
+      return False
+    text = RawText()
+    if not text.detect(text, pos + 1):
+      return False
+    text.parse(text, pos)
+    self.original = '\\' + text.original
+    return True
+
+  def parse(self, text, pos):
+    "Parse the command"
+    self.command = self.original
+
+class DecoratedText(LatexCommand):
+  "A bit of text decorated with a formula"
+
+  def detect(self, text, pos):
+    "Detect decorated text"
+    if not LatexCommand.detect(self, text, pos):
+      return False
+    return self.original in FormulaConfig.decoratingfunctions
+
+  def parse(self, text, pos):
+    "Parse the decoration"
+    pos += len(original)
+    bracket = Bracket()
+    bracket.parse(text, pos)
+
+  def process(self):
+    "Generate several spans"
+
+class Number(FormulaBit):
+  "A string of digits in a formula"
+
+  def detect(self, text, pos):
+    "Detect a digit"
+    return text[pos].isdigit()
+
+  def parse(self, text, pos):
+    "Parse a bunch of digits"
+    self.original = self.glob(text, pos, lambda(t, p): t[p].isdigit())
+
+  def process(self):
+    self.result = [Constant(self.original)]
+
+class Bracket(FormulaBit):
+  "A {} bracket inside a formula"
+
+  def detect(self, text, pos):
+    "Detect the start of a bracket"
+    return text[pos] == '{'
+
+class WholeFormula(FormulaBit):
+  "Parse a whole formula"
+
+  formulabit = [ RawText(), DecoratedText(), Number(), LatexCommand() ]
+
+  def detect(self, text, pos):
+    "Check if inside bounds"
+    return not self.out(text, pos)
+
+  def parse(self, text, pos):
+    "Parse with any formula bit"
+    self.bits = []
+    while not self.out(text, pos):
+      bit = self.parsebit(self, text, pos)
+      self.original += bit.original
+      self.bits.append(bit)
+      pos += len(self.original)
+
+  def parsebit(self, text, pos):
+    "Parse a formula bit"
+    for bit in WholeFormula.formulabit:
+      if bit.detect(text, pos):
+        self.usebit(bit, text, pos)
+        return bit
+
+  def process(self):
+    "Process the whole formula"
+    for bit in self.bits:
+      bit.process()
+
+  def usebit(self, bit, text, pos):
+    "Use a formula bit from the array"
+    index = WholeFormula.formulabit.indexof(bit)
+    bit.parse(text, pos)
+    # replace in array with clean one
+    WholeFormula.formulabit[index] = bit.clone()
 
 ContainerFactory.types.append(Formula)
 
