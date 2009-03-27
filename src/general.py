@@ -94,6 +94,7 @@ class FormulaConfig(object):
       # symbols above (start with *)
       '\\check':u'ˇ', '\\breve':u'˘', '\\vec':u'→', '\\dot':u'˙',
       '\\hat':u'^', '\\grave':u'`', '\\ddot':u'¨', '\\tilde':u'˜',
+      '\\acute':u'´'
       }
   twofunctions = {
       '\\frac':['span class="fraction"', 'span class="numerator"', 'span class="denominator"'],
