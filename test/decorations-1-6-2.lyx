@@ -576,12 +576,20 @@ vec
 
 \end_layout
 
+\begin_layout Standard
+Decorations should also appear correctly in unit names: 
+\begin_inset Formula $100\mathrm{años}$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Chapter
 Limit
 \end_layout
 
 \begin_layout Standard
-A limit : 
+A limit: 
 \begin_inset Formula \[
 \lim_{x\rightarrow\infty}\lyxlock f(x),\]
 
