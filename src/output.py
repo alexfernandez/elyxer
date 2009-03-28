@@ -60,8 +60,18 @@ class ContentsOutput(object):
 class TagOutput(ContentsOutput):
   "Outputs an HTML tag surrounding the contents"
 
+  def __init__(self):
+    self.breaklines = False
+
+  def setbreaklines(self, breaklines):
+    "Set the value for breaklines"
+    self.breaklines = breaklines
+    return self
+
   def gethtml(self, container):
     "Return the HTML code"
+    if hasattr(container, 'breaklines'):
+      self.breaklines = container.breaklines
     html = [self.getopen(container)]
     html += ContentsOutput.gethtml(self, container)
     html.append(self.getclose(container))
@@ -72,7 +82,7 @@ class TagOutput(ContentsOutput):
     if container.tag == '':
       return ''
     open = '<' + container.tag + '>'
-    if container.breaklines:
+    if self.breaklines:
       return open + '\n'
     return open
 
@@ -81,7 +91,7 @@ class TagOutput(ContentsOutput):
     if container.tag == '':
       return ''
     close = '</' + container.tag.split()[0] + '>'
-    if container.breaklines:
+    if self.breaklines:
       return '\n' + close + '\n'
     return close
 

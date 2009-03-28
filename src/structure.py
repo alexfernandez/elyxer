@@ -62,8 +62,7 @@ class Float(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput()
-    self.breaklines = True
+    self.output = TagOutput().setbreaklines(True)
 
   def process(self):
     "Get the float type"
@@ -90,9 +89,8 @@ class Caption(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput()
+    self.output = TagOutput().setbreaklines(True)
     self.tag = 'div class="caption"'
-    self.breaklines = True
 
 class Align(Container):
   "Bit of aligned text"
@@ -102,8 +100,7 @@ class Align(Container):
 
   def __init__(self):
     self.parser = ExcludingParser()
-    self.output = TagOutput()
-    self.breaklines = True
+    self.output = TagOutput().setbreaklines(True)
 
   def process(self):
     self.tag = 'div class="' + self.header[1] + '"'
@@ -122,8 +119,7 @@ class Layout(Container):
   def __init__(self):
     self.contents = list()
     self.parser = BoundedParser()
-    self.output = TagOutput()
-    self.breaklines = True
+    self.output = TagOutput().setbreaklines(True)
     self.numbered = False
 
   def process(self):
@@ -250,8 +246,7 @@ class Inset(Container):
   def __init__(self):
     self.contents = list()
     self.parser = InsetParser()
-    self.output = TagOutput()
-    self.breaklines = True
+    self.output = TagOutput().setbreaklines(True)
 
   def process(self):
     self.type = self.header[1]
@@ -291,8 +286,7 @@ class Branch(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput()
-    self.breaklines = True
+    self.output = TagOutput().setbreaklines(True)
 
   def process(self):
     "Disable inactive branches"
@@ -350,9 +344,8 @@ class Appendix(Container):
 
   def __init__(self):
     self.parser = LoneCommand()
-    self.output = TagOutput()
+    self.output = TagOutput().setbreaklines(True)
     self.tag = 'span class="appendix"'
-    self.breaklines = True
 
 ContainerFactory.types += [
     LyxHeader, LyxFooter, InsetText, Caption, Inset,

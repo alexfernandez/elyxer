@@ -36,8 +36,7 @@ class Table(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput()
-    self.breaklines = True
+    self.output = TagOutput().setbreaklines(True)
     self.tag = 'table'
 
 class TableHeader(Container):
@@ -57,8 +56,7 @@ class Row(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput()
-    self.breaklines = True
+    self.output = TagOutput().setbreaklines(True)
     self.tag = 'tr'
 
   def process(self):
@@ -73,8 +71,7 @@ class Cell(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput()
-    self.breaklines = True
+    self.output = TagOutput().setbreaklines(True)
     self.tag = 'td'
 
 ContainerFactory.types += [Table, TableHeader, Row, Cell]
