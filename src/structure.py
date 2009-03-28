@@ -128,10 +128,7 @@ class Layout(Container):
 
   def process(self):
     self.type = self.header[1]
-    if False: #self.searchfor(Align):
-      align = self.searchfor(Align)
-      self.tag = 'div class="' + align.header[1] + '"'
-    elif self.type in Layout.typetags:
+    if self.type in Layout.typetags:
       self.numbered = True
       self.tag = Layout.typetags[self.type] + ' class="' + self.type + '"'
     elif self.type.replace('*', '') in Layout.typetags:
@@ -149,6 +146,7 @@ class Title(Layout):
   ending = '\\end_layout'
 
   def process(self):
+    self.type = 'title'
     self.tag = 'h1 class="title"'
     string = self.searchfor(StringContainer)
     self.title = string.contents[0]
@@ -161,6 +159,7 @@ class Author(Layout):
   ending = '\\end_layout'
 
   def process(self):
+    self.type = 'author'
     self.tag = 'h2 class="author"'
     string = self.searchfor(StringContainer)
     FooterOutput.author = string.contents[0]
@@ -174,6 +173,7 @@ class Description(Layout):
 
   def process(self):
     "Set the first word to bold"
+    self.type = 'Description'
     self.tag = 'div class="Description"'
     firstword, found = self.extractfirst(self.contents)
     if not firstword:
