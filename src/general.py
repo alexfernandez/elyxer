@@ -90,7 +90,7 @@ class FormulaConfig(object):
       # LaTeX (ignored)
       '\\label':''
       }
-  alphafunctions = {
+  decoratingfunctions = {
       # symbols above (start with *)
       '\\check':u'ˇ', '\\breve':u'˘', '\\vec':u'→', '\\dot':u'˙',
       '\\hat':u'^', '\\grave':u'`', '\\ddot':u'¨', '\\tilde':u'˜',
