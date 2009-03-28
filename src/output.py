@@ -51,6 +51,9 @@ class ContentsOutput(object):
     if container.contents == None:
       return html
     for element in container.contents:
+      if not hasattr(element, 'gethtml'):
+        Trace.error('No html in ' + unicode(element))
+        return html
       html += element.gethtml()
     return html
 
