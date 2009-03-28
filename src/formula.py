@@ -349,7 +349,7 @@ class FormulaBit(Container):
 
   def addconstant(self, string):
     "add a constant string"
-    self.add(FormulaConstant().constant(string))
+    self.add(FormulaConstant(string))
 
   def add(self, bit):
     "Add any kind of formula bit"
@@ -363,11 +363,11 @@ class FormulaBit(Container):
 class FormulaConstant(FormulaBit):
   "A constant string in a formula"
 
-  def constant(self, string):
+  def __init__(self, string):
     "Set the constant string"
     self.original = string
-    self.contents.append(Constant(string))
-    return self
+    self.output = FixedOutput()
+    self.html = [string]
 
 class RawText(FormulaBit):
   "A bit of text inside a formula"
@@ -455,28 +455,36 @@ class LatexCommand(FormulaBit):
     "Parse a command with or without parameters"
     Trace.debug('Parsing command ' + command + ' at ' + text[pos:])
     if command in FormulaConfig.commands:
-      self.addconstant(FormulaConfig.commands[command])
+      self.addtranslated(command, FormulaConfig.commands)
       return
     if command in FormulaConfig.alphacommands:
-      self.addconstant(FormulaConfig.alphacommands[command])
+      self.addtranslated(command, FormulaConfig.alphacommands)
       self.alpha = True
       return
     if command in FormulaConfig.onefunctions:
-      self.parsebracket(text, pos)
       self.output = TagOutput()
       self.tag = FormulaConfig.onefunctions[command]
+      self.parsebracket(text, pos)
       return
     if command in FormulaConfig.decoratingfunctions:
-      self.parsebracket(text, pos)
       self.output = TagOutput()
       self.tag = FormulaConfig.decoratingfunctions[command]
+      self.parsebracket(text, pos)
+      return
     if command in FormulaConfig.twofunctions:
-      self.parsebracket(text, pos)
-      self.parsebracket(text, pos)
       self.output = TagOutput()
       tags = FormulaConfig.twofunctions[command]
       self.tag = tags[0]
+      self.parsebracket(text, pos)
+      self.parsebracket(text, pos)
+      return
     Trace.error('Internal error: command ' + command + ' not found')
+
+  def addtranslated(self, command, map):
+    "Add a command and find its translation"
+    translated = map[command]
+    self.original += command
+    self.contents.append(FormulaConstant(translated))
 
   def parsebracket(self, text, pos):
     "Parse a bracket at the current position"
@@ -565,25 +573,18 @@ class WholeFormula(FormulaBit):
   def parsebit(self, text, pos):
     "Parse a formula bit"
     for bit in WholeFormula.formulabit:
-      newbit = self.bitdetected(bit, text, pos)
-      if newbit:
+      if bit.detect(text, pos):
+        # get a fresh bit and parse it
+        newbit = bit.clone()
+        newbit.parse(text, pos)
         return newbit
     Trace.error('Unrecognized formula at ' + text[pos:])
-    return FormulaConstant().constant(text[pos])
+    return FormulaConstant(text[pos])
 
   def process(self):
     "Process the whole formula"
     for bit in self.contents:
       bit.process()
-
-  def bitdetected(self, bit, text, pos):
-    "Try to detect a formula bit from the array"
-    "If detected, use a fresh copy to parse the formula"
-    if not bit.detect(text, pos):
-      return None
-    newbit = bit.clone()
-    newbit.parse(text, pos)
-    return newbit
 
 ContainerFactory.types.append(Formula)
 
