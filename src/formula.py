@@ -264,12 +264,17 @@ class FormulaCommand(FormulaBit):
   def parsedecorating(self, command, text, pos):
     "Parse a decorating function"
     self.output = TagOutput().settag('span class="withsymbol"')
+    self.alpha = True
     tagged = TaggedText().constant(FormulaConfig.decoratingfunctions[command],
         'span class="symbolover"')
     self.contents.append(tagged)
     bracket = self.parsebracket(text, pos)
     bracket.output = TagOutput()
     bracket.tag = 'span class="undersymbol"'
+    # simplify if possible
+    if self.original in FormulaConfig.alphacommands:
+      self.output = FixedOutput()
+      self.html = FormulaConfig.alphacommands[self.original]
 
   def parsebracket(self, text, pos):
     "Parse a bracket at the current position"

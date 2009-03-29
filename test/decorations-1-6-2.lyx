@@ -578,7 +578,7 @@ vec
 
 \begin_layout Standard
 Decorations should also appear correctly in unit names: 
-\begin_inset Formula $100\mathrm{años}$
+\begin_inset Formula $100\mathrm{a\tilde{n}os}$
 \end_inset
 
 .
