@@ -73,7 +73,7 @@ class EmphaticText(TaggedText):
   start = '\\emph on'
 
   def process(self):
-    self.tag = 'i'
+    self.output.tag = 'i'
 
 class ShapedText(TaggedText):
   "Text shaped (italic, slanted)"
@@ -86,9 +86,9 @@ class ShapedText(TaggedText):
     self.type = self.header[1]
     if not self.type in ShapedText.tags:
       Trace.error('Unrecognized shape ' + self.header[1])
-      self.tag = 'span'
+      self.output.tag = 'span'
       return
-    self.tag = ShapedText.tags[self.type]
+    self.output.tag = ShapedText.tags[self.type]
 
 class VersalitasText(TaggedText):
   "Text in versalitas"
@@ -96,7 +96,7 @@ class VersalitasText(TaggedText):
   start = '\\noun on'
 
   def process(self):
-    self.tag = 'span class="versalitas"'
+    self.output.tag = 'span class="versalitas"'
 
 class ColorText(TaggedText):
   "Colored text"
@@ -105,7 +105,7 @@ class ColorText(TaggedText):
 
   def process(self):
     self.color = self.header[1]
-    self.tag = 'span class="' + self.color + '"'
+    self.output.tag = 'span class="' + self.color + '"'
 
 class SizeText(TaggedText):
   "Sized text"
@@ -114,7 +114,7 @@ class SizeText(TaggedText):
 
   def process(self):
     self.size = self.header[1]
-    self.tag = 'span class="' + self.size + '"'
+    self.output.tag = 'span class="' + self.size + '"'
 
 class BoldText(TaggedText):
   "Bold text"
@@ -122,7 +122,7 @@ class BoldText(TaggedText):
   start = '\\series bold'
 
   def process(self):
-    self.tag = 'b'
+    self.output.tag = 'b'
 
 class TextFamily(TaggedText):
   "A bit of text from a different family"
@@ -133,7 +133,7 @@ class TextFamily(TaggedText):
   def process(self):
     "Parse the type of family"
     self.type = self.header[1]
-    self.tag = TextFamily.typetags[self.type]
+    self.output.tag = TextFamily.typetags[self.type]
 
 class Hfill(TaggedText):
   "Horizontall fill"
@@ -141,7 +141,7 @@ class Hfill(TaggedText):
   start = '\\hfill'
 
   def process(self):
-    self.tag = 'span class="right"'
+    self.output.tag = 'span class="right"'
 
 class BarredText(TaggedText):
   "Text with a bar somewhere"
@@ -154,9 +154,9 @@ class BarredText(TaggedText):
     self.type = self.header[1]
     if not self.type in BarredText.typetags:
       Trace.error('Unknown bar type ' + self.type)
-      self.tag = 'span'
+      self.output.tag = 'span'
       return
-    self.tag = BarredText.typetags[self.type]
+    self.output.tag = BarredText.typetags[self.type]
 
 class FlexCode(Container):
   "A bit of inset code"
@@ -166,8 +166,7 @@ class FlexCode(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput().setbreaklines(True)
-    self.tag = 'span class="code"'
+    self.output = TagOutput().settag('span class="code"', True)
 
 class ListItem(Container):
   "An element in a list"
@@ -183,7 +182,7 @@ class ListItem(Container):
   tags = {'Enumerate':'ol', 'Itemize':'ul'}
 
   def process(self):
-    self.tag = ListItem.tags[self.header[1]]
+    self.output.tag = ListItem.tags[self.header[1]]
     tag = TaggedText().complete(self.contents, 'li', True)
     self.contents = [tag]
 
@@ -195,8 +194,7 @@ class DeeperList(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput().setbreaklines(True)
-    self.tag = 'ul'
+    self.output = TagOutput().settag('ul', True)
 
 ContainerFactory.types += [QuoteContainer, LyxLine, EmphaticText, ShapedText,
     VersalitasText, ColorText, SizeText, BoldText, TextFamily, Hfill,

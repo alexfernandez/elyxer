@@ -36,7 +36,7 @@ class Formula(Container):
 
   def __init__(self):
     self.parser = FormulaParser()
-    self.output = TagOutput()
+    self.output = TagOutput().settag('span class="formula"')
 
   def process(self):
     "Convert the formula to tags"
@@ -48,12 +48,9 @@ class Formula(Container):
     self.contents = [whole]
     whole.parse(text, pos)
     whole.process()
-    if self.header[0] == 'inline':
-      self.tag = 'span class="formula"'
-      self.breaklines = False
-    else:
-      self.tag = 'div class="formula"'
-      self.breaklines = True
+    if self.header[0] != 'inline':
+      self.output.tag = 'div class="formula"'
+      self.output.breaklines = True
 
 class OldFormula(Container):
   "A LaTeX formula"
@@ -462,19 +459,14 @@ class FormulaCommand(FormulaBit):
       self.alpha = True
       return
     if command in FormulaConfig.onefunctions:
-      self.output = TagOutput()
-      self.tag = FormulaConfig.onefunctions[command]
+      self.output = TagOutput().settag(FormulaConfig.onefunctions[command])
       self.parsebracket(text, pos)
       return
     if command in FormulaConfig.decoratingfunctions:
       self.parsedecorating(command, text, pos)
       return
     if command in FormulaConfig.twofunctions:
-      self.output = TagOutput()
-      tags = FormulaConfig.twofunctions[command]
-      self.tag = tags[0]
-      self.parsebracket(text, pos)
-      self.parsebracket(text, pos)
+      self.parsetwofunction(command, text, pos)
       return
     Trace.error('Internal error: command ' + command + ' not found')
 
@@ -485,8 +477,7 @@ class FormulaCommand(FormulaBit):
 
   def parsedecorating(self, command, text, pos):
     "Parse a decorating function"
-    self.output = TagOutput()
-    self.tag = 'span class="withsymbol"'
+    self.output = TagOutput().settag('span class="withsymbol"')
     tagged = TaggedText().constant(FormulaConfig.decoratingfunctions[command],
         'span class="symbolover"')
     self.contents.append(tagged)
@@ -503,6 +494,15 @@ class FormulaCommand(FormulaBit):
     bracket.parse(text, pos)
     self.add(bracket)
     return bracket
+
+  def parsetwofunction(self, command, text, pos):
+    "Parse a function of two parameters"
+    tags = FormulaConfig.twofunctions[command]
+    self.output = TagOutput().settag(tags[0])
+    bracket1 = self.parsebracket(text, pos)
+    bracket1.output = TagOutput().settag(tags[1])
+    bracket2 = self.parsebracket(text, pos)
+    bracket2.output = TagOutput().settag(tags[2])
 
 class Number(FormulaBit):
   "A string of digits in a formula"

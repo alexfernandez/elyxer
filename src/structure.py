@@ -62,14 +62,13 @@ class Float(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput().setbreaklines(True)
+    self.output = TagOutput().settag('div class="float"', True)
 
   def process(self):
     "Get the float type"
     self.type = self.header[2]
     tag = TaggedText().complete(self.contents, 'div class="' + self.type + '"')
     self.contents = [tag]
-    self.tag = 'div class="float"'
 
 class InsetText(Container):
   "An inset of text in a lyx file"
@@ -89,8 +88,7 @@ class Caption(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput().setbreaklines(True)
-    self.tag = 'div class="caption"'
+    self.output = TagOutput().settag('div class="caption"', True)
 
 class Align(Container):
   "Bit of aligned text"
@@ -103,7 +101,7 @@ class Align(Container):
     self.output = TagOutput().setbreaklines(True)
 
   def process(self):
-    self.tag = 'div class="' + self.header[1] + '"'
+    self.output.tag = 'div class="' + self.header[1] + '"'
 
 class Layout(Container):
   "A layout (block of text) inside a lyx file"
@@ -126,11 +124,11 @@ class Layout(Container):
     self.type = self.header[1]
     if self.type in Layout.typetags:
       self.numbered = True
-      self.tag = Layout.typetags[self.type] + ' class="' + self.type + '"'
+      self.output.tag = Layout.typetags[self.type] + ' class="' + self.type + '"'
     elif self.type.replace('*', '') in Layout.typetags:
-      self.tag = Layout.typetags[self.type.replace('*', '')] + ' class="' +  self.type.replace('*', '-') + '"'
+      self.output.tag = Layout.typetags[self.type.replace('*', '')] + ' class="' +  self.type.replace('*', '-') + '"'
     else:
-      self.tag = 'div class="' + self.type + '"'
+      self.output.tag = 'div class="' + self.type + '"'
 
   def __str__(self):
     return 'Layout of type ' + self.type
@@ -143,7 +141,7 @@ class Title(Layout):
 
   def process(self):
     self.type = 'title'
-    self.tag = 'h1 class="title"'
+    self.output.tag = 'h1 class="title"'
     string = self.searchfor(StringContainer)
     self.title = string.contents[0]
     Trace.message('Title: ' + self.title)
@@ -156,7 +154,7 @@ class Author(Layout):
 
   def process(self):
     self.type = 'author'
-    self.tag = 'h2 class="author"'
+    self.output.tag = 'h2 class="author"'
     string = self.searchfor(StringContainer)
     FooterOutput.author = string.contents[0]
     Trace.debug('Author: ' + FooterOutput.author)
@@ -170,7 +168,7 @@ class Description(Layout):
   def process(self):
     "Set the first word to bold"
     self.type = 'Description'
-    self.tag = 'div class="Description"'
+    self.output.tag = 'div class="Description"'
     firstword, found = self.extractfirst(self.contents)
     if not firstword:
       return
@@ -250,7 +248,7 @@ class Inset(Container):
 
   def process(self):
     self.type = self.header[1]
-    self.tag = 'span class="' + self.type + '"'
+    self.output.tag = 'span class="' + self.type + '"'
 
   def __str__(self):
     return 'Inset of type ' + self.type
@@ -286,12 +284,11 @@ class Branch(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput().setbreaklines(True)
+    self.output = TagOutput().settag('span class="branch"', True)
 
   def process(self):
     "Disable inactive branches"
     self.branch = self.header[2]
-    self.tag = 'span class="branch"'
     if not self.isactive():
       self.output = EmptyOutput()
 
@@ -344,8 +341,7 @@ class Appendix(Container):
 
   def __init__(self):
     self.parser = LoneCommand()
-    self.output = TagOutput().setbreaklines(True)
-    self.tag = 'span class="appendix"'
+    self.output = TagOutput().settag('span class="appendix"', True)
 
 ContainerFactory.types += [
     LyxHeader, LyxFooter, InsetText, Caption, Inset,

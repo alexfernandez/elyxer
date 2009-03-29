@@ -93,8 +93,7 @@ class BiblioCite(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput().setbreaklines(False)
-    self.tag = 'sup'
+    self.output = TagOutput().settag('sup')
 
   def process(self):
     "Add a cite to every entry"
@@ -121,8 +120,7 @@ class Bibliography(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput().setbreaklines(True)
-    self.tag = 'p class="biblio"'
+    self.output = TagOutput().settag('p class="biblio"', True)
 
 class BiblioEntry(Container):
   "A bibliography entry"
@@ -132,8 +130,7 @@ class BiblioEntry(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput().setbreaklines(False)
-    self.tag = 'span class="entry"'
+    self.output = TagOutput().settag('span class="entry"')
 
   def process(self):
     "Get all the cites of the entry"
@@ -160,12 +157,11 @@ class ListOf(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput().setbreaklines(True)
+    self.output = TagOutput().settag('div class="list"', True)
 
   def process(self):
     "Parse the header and get the type"
     self.type = self.header[2]
-    self.tag = 'div class="list"'
     self.contents = [Constant(u'List of ' + ListOf.names[self.type])]
 
 class TableOfContents(Container):
@@ -177,11 +173,10 @@ class TableOfContents(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput().setbreaklines(True)
+    self.output = TagOutput().settag('div class="toc"', True)
 
   def process(self):
     "Parse the header and get the type"
-    self.tag = 'div class="toc"'
     self.contents = [Constant(u'Table of Contents')]
 
 class IndexEntry(Link):
