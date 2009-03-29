@@ -103,6 +103,13 @@ class FormulaParser(Parser):
     reader.nextline()
     return formula
 
+class Position(object):
+  "A position in a formula to parse"
+
+  def __init__(self, text, pos):
+    self.text = text
+    self.pos = pos
+
 class FormulaBit(Container):
   "A bit of a formula"
 
