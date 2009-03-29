@@ -396,7 +396,7 @@ class FormulaSymbol(FormulaBit):
     "Parse the symbol"
     self.addconstant(text[pos])
 
-class LatexCommand(FormulaBit):
+class FormulaCommand(FormulaBit):
   "A LaTeX command inside a formula"
 
   keys = FormulaConfig.commands.keys() + FormulaConfig.alphacommands.keys() + \
@@ -407,20 +407,18 @@ class LatexCommand(FormulaBit):
     "Detect a command"
     if text[pos] == '\\':
       return True
-    if text[pos] in LatexCommand.keys:
+    if text[pos] in FormulaCommand.keys:
       return True
     return False
 
   def parse(self, text, pos):
     "Parse the command"
     command = self.findcommand(text, pos)
-    if command and command in LatexCommand.keys:
-      pos += len(command)
+    if command and command in FormulaCommand.keys:
       self.parsecommand(command, text, pos)
       return
     command = self.findsymbolcommand(text, pos)
-    if command and command in LatexCommand.keys:
-      pos += len(command)
+    if command and command in FormulaCommand.keys:
       self.parsecommand(command, text, pos)
       return
     Trace.error('Invalid command in ' + text[pos:])
@@ -454,6 +452,8 @@ class LatexCommand(FormulaBit):
   def parsecommand(self, command, text, pos):
     "Parse a command with or without parameters"
     Trace.debug('Parsing command ' + command + ' at ' + text[pos:])
+    self.original += command
+    pos += len(command)
     if command in FormulaConfig.commands:
       self.addtranslated(command, FormulaConfig.commands)
       return
@@ -467,9 +467,7 @@ class LatexCommand(FormulaBit):
       self.parsebracket(text, pos)
       return
     if command in FormulaConfig.decoratingfunctions:
-      self.output = TagOutput()
-      self.tag = FormulaConfig.decoratingfunctions[command]
-      self.parsebracket(text, pos)
+      self.parsedecorating(command, text, pos)
       return
     if command in FormulaConfig.twofunctions:
       self.output = TagOutput()
@@ -483,8 +481,18 @@ class LatexCommand(FormulaBit):
   def addtranslated(self, command, map):
     "Add a command and find its translation"
     translated = map[command]
-    self.original += command
     self.contents.append(FormulaConstant(translated))
+
+  def parsedecorating(self, command, text, pos):
+    "Parse a decorating function"
+    self.output = TagOutput()
+    self.tag = 'span class="withsymbol"'
+    tagged = TaggedText().constant(FormulaConfig.decoratingfunctions[command],
+        'span class="symbolover"')
+    self.contents.append(tagged)
+    bracket = self.parsebracket(text, pos)
+    bracket.output = TagOutput()
+    bracket.tag = 'span class="undersymbol"'
 
   def parsebracket(self, text, pos):
     "Parse a bracket at the current position"
@@ -494,23 +502,7 @@ class LatexCommand(FormulaBit):
       return
     bracket.parse(text, pos)
     self.add(bracket)
-
-class DecoratedText(LatexCommand):
-  "A bit of text decorated with a formula"
-
-  def detect(self, text, pos):
-    "Detect decorated text"
-    command = self.findcommand(text, pos)
-    return command in FormulaConfig.decoratingfunctions
-
-  def parse(self, text, pos):
-    "Parse the decoration"
-    command = self.findcommand(text, pos)
-    self.addconstant(command)
-
-  def process(self):
-    "Generate several spans"
-    pass
+    return bracket
 
 class Number(FormulaBit):
   "A string of digits in a formula"
@@ -535,7 +527,7 @@ class Bracket(FormulaBit):
 
   def parse(self, text, pos):
     "Parse the bracket"
-    self.addconstant('{')
+    self.original += '{'
     pos += 1
     self.inside = WholeFormula()
     if not self.inside.detect(text, pos):
@@ -547,7 +539,7 @@ class Bracket(FormulaBit):
     if self.out(text, pos) or text[pos] != '}':
       Trace.error('Missing }')
       return
-    self.addconstant('}')
+    self.original += '}'
 
   def process(self):
     "Process the bracket"
@@ -556,8 +548,7 @@ class Bracket(FormulaBit):
 class WholeFormula(FormulaBit):
   "Parse a whole formula"
 
-  formulabit = [ FormulaSymbol(), RawText(), DecoratedText(), Number(),
-      LatexCommand(), Bracket() ]
+  formulabit = [ FormulaSymbol(), RawText(), Number(), FormulaCommand(), Bracket() ]
 
   def detect(self, text, pos):
     "Check if inside bounds"
