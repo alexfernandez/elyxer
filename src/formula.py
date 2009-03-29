@@ -235,7 +235,6 @@ class FormulaCommand(FormulaBit):
 
   def parsecommand(self, command, text, pos):
     "Parse a command with or without parameters"
-    Trace.debug('Parsing command ' + command + ' at ' + text[pos:])
     self.original += command
     pos += len(command)
     if command in FormulaConfig.commands:
@@ -288,6 +287,7 @@ class FormulaCommand(FormulaBit):
     self.output = TagOutput().settag(tags[0])
     bracket1 = self.parsebracket(text, pos)
     bracket1.output = TagOutput().settag(tags[1])
+    pos += len(bracket1.original)
     bracket2 = self.parsebracket(text, pos)
     bracket2.output = TagOutput().settag(tags[2])
 
@@ -345,6 +345,7 @@ class WholeFormula(FormulaBit):
     "Parse with any formula bit"
     while not self.out(text, pos) and text[pos] != '}':
       bit = self.parsebit(text, pos)
+      #Trace.debug(bit.original + ' -> ' + str(bit.gethtml()))
       self.add(bit)
       pos += len(bit.original)
 
