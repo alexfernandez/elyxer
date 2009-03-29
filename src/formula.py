@@ -140,9 +140,50 @@ class FormulaBit(Container):
     self.original += bit.original
     self.contents.append(bit)
 
+  def checkfor(self, string, text, pos):
+    "Check for a string at the given pos"
+    if pos + len(string) > len(text):
+      return False
+    return text[pos : pos + len(string)] == string
+
   def __str__(self):
     "Get a string representation"
     return self.__class__.__name__ + ' in formula ' + self.original
+
+  def parsebracket(self, text, pos):
+    "Parse a bracket at the current position"
+    bracket = Bracket()
+    if not bracket.detect(text, pos):
+      Trace.error('Expected {} at: ' + text[pos:])
+      return
+    bracket.parse(text, pos)
+    self.add(bracket)
+    return bracket
+
+  def findcommand(self, text, pos):
+    "Find a command with \\alpha"
+    if text[pos] != '\\':
+      return None
+    pos += 1
+    if self.out(text, pos):
+      return None
+    if not text[pos].isalpha():
+      return None
+    command = self.glob(text, pos, lambda(t, p): t[p].isalpha())
+    return '\\' + command
+
+  def findsymbolcommand(self, text, pos):
+    "Find a command made with optional \\alpha and one symbol"
+    backslash = ''
+    if text[pos] == '\\' and pos + 1 < len(text):
+      backslash = '\\'
+      pos += 1
+    alpha = self.glob(text, pos, lambda(t, p): t[p].isalpha())
+    pos += len(alpha)
+    if pos == len(text):
+      return None
+    symbol = backslash + alpha + text[pos]
+    return symbol
 
 class FormulaConstant(FormulaBit):
   "A constant string in a formula"
@@ -180,12 +221,131 @@ class FormulaSymbol(FormulaBit):
     "Parse the symbol"
     self.addconstant(text[pos])
 
+class Number(FormulaBit):
+  "A string of digits in a formula"
+
+  def detect(self, text, pos):
+    "Detect a digit"
+    return text[pos].isdigit()
+
+  def parse(self, text, pos):
+    "Parse a bunch of digits"
+    self.addconstant(self.glob(text, pos, lambda(t, p): t[p].isdigit()))
+
+  def process(self):
+    self.contents = [Constant(self.original)]
+
+class Bracket(FormulaBit):
+  "A {} bracket inside a formula"
+
+  def detect(self, text, pos):
+    "Detect the start of a bracket"
+    return self.checkfor('{', text, pos)
+
+  def parse(self, text, pos):
+    "Parse the bracket"
+    self.original += '{'
+    pos += 1
+    self.inside = WholeFormula()
+    if not self.inside.detect(text, pos):
+      Trace.error('Dangling {')
+      return
+    self.inside.parse(text, pos)
+    self.add(self.inside)
+    pos += len(self.inside.original)
+    if self.out(text, pos) or text[pos] != '}':
+      Trace.error('Missing }')
+      return
+    self.original += '}'
+
+  def process(self):
+    "Process the bracket"
+    self.inside.process()
+
+class FormulaArray(FormulaBit):
+  "An array within a formula"
+
+  ending = '\\end'
+  bracket = '{array}'
+
+  def detect(self, text, pos):
+    "Detect an array"
+    bracket = Bracket()
+    if not bracket.detect(text, pos):
+      return False
+    bracket.parse(text, pos)
+    if bracket.original != FormulaArray.bracket:
+      return False
+    return True
+
+  def parse(self, text, pos):
+    "Parse the array (after the command has been entered)"
+    bracket1 = self.parsebracket(text, pos)
+    if not bracket1 or bracket1.original != '{array}':
+      Trace.error('{array} has disappeared! at ' + text[pos:])
+      return False
+    pos += len(bracket1.original)
+    pos += self.parsealignments(text, pos)
+    while not self.out(text, pos):
+      row = FormulaRow(self.alignments)
+      row.parse(text, pos)
+      Trace.debug('Row parsed: ' + row.original)
+      self.add(row)
+      pos += len(row.original)
+      if self.detectarrayend(text, pos):
+        pos += self.parsearrayend(text, pos)
+        Trace.debug('Array parsed: ' + self.original)
+        return
+      pos += self.parserowend(text, pos)
+
+  def parsealignments(self, text, pos):
+    "Parse the different alignments"
+    bracket = self.parsebracket(text, pos)
+    if not bracket:
+      Trace.error('No alignments for array in ' + text[pos:])
+      return 0
+    Trace.debug('Alignments: ' + bracket.original[1:-1])
+    self.alignments = []
+    for l in bracket.original[1:-1]:
+      self.alignments.append(l)
+    return len(bracket.original)
+
+  def detectarrayend(self, text, pos):
+    "Parse the end of the array"
+    command = self.findcommand(text, pos)
+    if command and command == FormulaArray.ending:
+      return True
+    return False
+
+  def parsearrayend(self, text, pos):
+    "Parse the end of the array"
+    if not self.checkfor(FormulaArray.ending, text, pos):
+      Trace.error('End of array disappeared! from ' + text[pos:])
+      return 0
+    self.original += FormulaArray.ending
+    parsed = len(FormulaArray.ending)
+    if not self.checkfor(FormulaArray.bracket, text, pos + parsed):
+      Trace.error('End but not of array! in ' + text[pos+parsed:])
+      return parsed
+    self.original += FormulaArray.bracket
+    parsed += len(FormulaArray.bracket)
+    return parsed
+
+  def parserowend(self, text, pos):
+    "Parse the end of a row"
+    if not self.checkfor('\\\\', text, pos):
+      Trace.error('No row end at ' + text[pos:])
+      return 0
+    return 2
+
 class FormulaCommand(FormulaBit):
   "A LaTeX command inside a formula"
 
   keys = FormulaConfig.commands.keys() + FormulaConfig.alphacommands.keys() + \
       FormulaConfig.onefunctions.keys() + FormulaConfig.decoratingfunctions.keys() + \
-      FormulaConfig.twofunctions.keys()
+      FormulaConfig.twofunctions.keys() + ['\\begin']
+
+  array = FormulaArray()
 
   def detect(self, text, pos):
     "Detect a command"
@@ -208,139 +368,125 @@ class FormulaCommand(FormulaBit):
     Trace.error('Invalid command in ' + text[pos:])
     self.addconstant('\\')
 
-  def findcommand(self, text, pos):
-    "Find a command with \\alpha"
-    if text[pos] != '\\':
-      return None
-    pos += 1
-    if self.out(text, pos):
-      return None
-    if not text[pos].isalpha():
-      return None
-    command = self.glob(text, pos, lambda(t, p): t[p].isalpha())
-    return '\\' + command
-
-  def findsymbolcommand(self, text, pos):
-    "Find a command made with optional \\alpha and one symbol"
-    backslash = ''
-    if text[pos] == '\\' and pos + 1 < len(text):
-      backslash = '\\'
-      pos += 1
-    alpha = self.glob(text, pos, lambda(t, p): t[p].isalpha())
-    pos += len(alpha)
-    if pos == len(text):
-      return None
-    symbol = backslash + alpha + text[pos]
-    return symbol
-
   def parsecommand(self, command, text, pos):
     "Parse a command with or without parameters"
     self.original += command
     pos += len(command)
+    if self.parsenonecommand(command, text, pos):
+      return
+    if self.parseonefunction(command, text, pos):
+      return
+    if self.parsedecorating(command, text, pos):
+      return
+    if self.parsetwofunction(command, text, pos):
+      return
+    if self.parsearray(command, text, pos):
+      return
+    Trace.error('Internal error: command ' + command + ' not found')
+
+  def parsenonecommand(self, command, text, pos):
+    "Parse a command without parameters"
     if command in FormulaConfig.commands:
       self.addtranslated(command, FormulaConfig.commands)
-      return
+      return True
     if command in FormulaConfig.alphacommands:
       self.addtranslated(command, FormulaConfig.alphacommands)
       self.alpha = True
-      return
-    if command in FormulaConfig.onefunctions:
-      self.output = TagOutput().settag(FormulaConfig.onefunctions[command])
-      self.parsebracket(text, pos)
-      return
-    if command in FormulaConfig.decoratingfunctions:
-      self.parsedecorating(command, text, pos)
-      return
-    if command in FormulaConfig.twofunctions:
-      self.parsetwofunction(command, text, pos)
-      return
-    Trace.error('Internal error: command ' + command + ' not found')
+      return True
+    return False
 
   def addtranslated(self, command, map):
     "Add a command and find its translation"
     translated = map[command]
     self.contents.append(FormulaConstant(translated))
 
+  def parseonefunction(self, command, text, pos):
+    "Parse a function with one parameter"
+    if not command in FormulaConfig.onefunctions:
+      return False
+    self.output = TagOutput().settag(FormulaConfig.onefunctions[command])
+    self.parsebracket(text, pos)
+    return True
+
   def parsedecorating(self, command, text, pos):
     "Parse a decorating function"
+    if not command in FormulaConfig.decoratingfunctions:
+      return False
     self.output = TagOutput().settag('span class="withsymbol"')
     self.alpha = True
     tagged = TaggedText().constant(FormulaConfig.decoratingfunctions[command],
         'span class="symbolover"')
     self.contents.append(tagged)
     bracket = self.parsebracket(text, pos)
+    if not bracket:
+      Trace.error('Bracket missing at ' + text[pos:])
+      return False
     bracket.output = TagOutput()
     bracket.tag = 'span class="undersymbol"'
     # simplify if possible
     if self.original in FormulaConfig.alphacommands:
       self.output = FixedOutput()
       self.html = FormulaConfig.alphacommands[self.original]
-
-  def parsebracket(self, text, pos):
-    "Parse a bracket at the current position"
-    bracket = Bracket()
-    if not bracket.detect(text, pos):
-      Trace.error('Expected {} at: ' + text[pos:])
-      return
-    bracket.parse(text, pos)
-    self.add(bracket)
-    return bracket
+    return True
 
   def parsetwofunction(self, command, text, pos):
     "Parse a function of two parameters"
+    if not command in FormulaConfig.twofunctions:
+      return False
     tags = FormulaConfig.twofunctions[command]
     self.output = TagOutput().settag(tags[0])
     bracket1 = self.parsebracket(text, pos)
+    if not bracket1:
+      Trace.error('Bracket missing at ' + text[pos:])
+      return False
     bracket1.output = TagOutput().settag(tags[1])
     pos += len(bracket1.original)
     bracket2 = self.parsebracket(text, pos)
+    if not bracket2:
+      Trace.error('Bracket missing at ' + text[pos:])
+      return False
     bracket2.output = TagOutput().settag(tags[2])
+    return True
 
-class Number(FormulaBit):
-  "A string of digits in a formula"
+  def parsearray(self, command, text, pos):
+    "Parse an array"
+    if command != '\\begin':
+      return False
+    array = FormulaArray()
+    if not array.detect(text, pos):
+      return False
+    array.parse(text, pos)
+    self.add(array)
+    return True
 
-  def detect(self, text, pos):
-    "Detect a digit"
-    return text[pos].isdigit()
+class FormulaRow(FormulaCommand):
+  "An array row inside an array"
 
-  def parse(self, text, pos):
-    "Parse a bunch of digits"
-    self.addconstant(self.glob(text, pos, lambda(t, p): t[p].isdigit()))
-
-  def process(self):
-    self.contents = [Constant(self.original)]
-
-class Bracket(FormulaBit):
-  "A {} bracket inside a formula"
-
-  def detect(self, text, pos):
-    "Detect the start of a bracket"
-    return text[pos] == '{'
+  def __init__(self, alignments):
+    FormulaCommand.__init__(self)
+    self.alignments = alignments
 
   def parse(self, text, pos):
-    "Parse the bracket"
-    self.original += '{'
-    pos += 1
-    self.inside = WholeFormula()
-    if not self.inside.detect(text, pos):
-      Trace.error('Dangling {')
-      return
-    self.inside.parse(text, pos)
-    self.add(self.inside)
-    pos += len(self.inside.original)
-    if self.out(text, pos) or text[pos] != '}':
-      Trace.error('Missing }')
-      return
-    self.original += '}'
-
-  def process(self):
-    "Process the bracket"
-    self.inside.process()
+    for i in self.alignments:
+      formula = WholeFormula().setarraymode()
+      if not formula.detect(text, pos):
+        Trace.error('Unexpected end of array at ' + text[pos:])
+        return
+      formula.parse(text, pos)
+      self.add(formula)
+      pos += len(formula.original)
+      if self.checkfor('&', text, pos):
+        self.original += '&'
+        pos += 1
 
 class WholeFormula(FormulaBit):
   "Parse a whole formula"
 
   formulabit = [ FormulaSymbol(), RawText(), Number(), FormulaCommand(), Bracket() ]
+
+  def __init__(self):
+    FormulaBit.__init__(self)
+    self.arraymode = False
 
   def detect(self, text, pos):
     "Check if inside bounds"
@@ -348,7 +494,9 @@ class WholeFormula(FormulaBit):
 
   def parse(self, text, pos):
     "Parse with any formula bit"
-    while not self.out(text, pos) and text[pos] != '}':
+    while not self.out(text, pos) and not self.checkfor('}', text, pos):
+      if self.parsearrayend(text, pos):
+        return
       bit = self.parsebit(text, pos)
       #Trace.debug(bit.original + ' -> ' + str(bit.gethtml()))
       self.add(bit)
@@ -369,6 +517,23 @@ class WholeFormula(FormulaBit):
     "Process the whole formula"
     for bit in self.contents:
       bit.process()
+
+  def setarraymode(self):
+    "Set array mode for parsing"
+    self.arraymode = True
+    return self
+
+  def parsearrayend(self, text, pos):
+    "Parse the end of a formula in array mode"
+    if not self.arraymode:
+      return False
+    if self.checkfor('&', text, pos):
+      return True
+    if self.checkfor('\\\\', text, pos):
+      return True
+    if self.checkfor('\\end', text, pos):
+      return True
+    return False
 
 ContainerFactory.types.append(Formula)
 
