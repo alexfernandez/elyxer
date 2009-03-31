@@ -113,10 +113,6 @@ class Position(object):
     "Skip a string"
     self.pos += len(string)
 
-  def skipbit(self, bit):
-    "Skip a formula bit"
-    self.pos += len(bit.original)
-
   def remaining(self):
     "Return the text remaining for parsing"
     return self.text[self.pos:]
@@ -135,6 +131,12 @@ class Position(object):
       return False
     return self.text[self.pos : self.pos + len(string)] == string
 
+  def clone(self):
+    "Return a copy of self"
+    clone = Position(self.text)
+    clone.pos = self.pos
+    return clone
+
 class FormulaBit(Container):
   "A bit of a formula"
 
@@ -144,9 +146,10 @@ class FormulaBit(Container):
     self.contents = []
     self.output = ContentsOutput()
 
-  def glob(self, pos, check):
+  def glob(self, oldpos, check):
     "Glob a bit of text that satisfies a check"
     glob = ''
+    pos = oldpos.clone()
     while not pos.isout() and check(pos):
       glob += pos.current()
       pos.skip(pos.current())
@@ -162,21 +165,22 @@ class FormulaBit(Container):
   def addconstant(self, string, pos):
     "add a constant string"
     self.add(FormulaConstant(string), pos)
+    self.addoriginal(string, pos)
 
   def add(self, bit, pos):
-    "Add any kind of formula bit"
-    self.original += bit.original
+    "Add any kind of formula bit already processed"
     self.contents.append(bit)
-    pos.skipbit(self)
+    self.original += bit.original
+    Trace.debug('Added ' + unicode(bit) + ' to ' + unicode(self))
 
   def addoriginal(self, string, pos):
     "Add a constant to the original formula only"
     self.original += string
-    pos.skipbit(self)
+    pos.skip(string)
 
   def __str__(self):
     "Get a string representation"
-    return self.__class__.__name__ + ' in formula ' + self.original
+    return self.__class__.__name__ + ' read in ' + self.original
 
 class FormulaConstant(FormulaBit):
   "A constant string in a formula"
@@ -197,11 +201,10 @@ class RawText(FormulaBit):
   def parse(self, pos):
     "Parse alphabetic text"
     alpha = self.glob(pos, lambda(p): p.current().isalpha())
+    Trace.debug('Found ' + alpha)
     self.addconstant(alpha, pos)
+    Trace.debug('Original ' + self.original + ', rem ' + pos.remaining())
     self.alpha = True
-
-  def process(self):
-    self.contents = [Constant(self.original)]
 
 class FormulaSymbol(FormulaBit):
   "A symbol inside a formula"
@@ -250,14 +253,17 @@ class WholeFormula(FormulaBit):
       bit = self.parsebit(pos)
       #Trace.debug(bit.original + ' -> ' + str(bit.gethtml()))
       self.add(bit, pos)
+    Trace.debug('Out of formula ' + self.original + ' with ' + pos.remaining())
 
   def parsebit(self, pos):
     "Parse a formula bit"
     for bit in WholeFormula.bits:
       if bit.detect(pos):
+        Trace.debug('Found ' + str(bit) + ' in ' + pos.remaining())
         # get a fresh bit and parse it
         newbit = bit.clone()
         newbit.parse(pos)
+        Trace.debug('Found ' + unicode(newbit) + ' in ' + pos.remaining())
         return newbit
     Trace.error('Unrecognized formula at ' + pos.remaining())
     return FormulaConstant(pos.current())

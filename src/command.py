@@ -49,6 +49,7 @@ class FormulaCommand(FormulaBit):
   def parse(self, pos):
     "Parse the command"
     bit = self.findbit(pos)
+    Trace.debug('Found bit ' + unicode(bit) + ' in ' + pos.remaining())
     if not bit:
       Trace.error('Invalid command in ' + pos.remaining())
       self.addconstant('\\', pos)
@@ -63,11 +64,11 @@ class FormulaCommand(FormulaBit):
         return bit
     return None
 
-  def addtranslated(self, command, map):
+  def addtranslated(self, command, map, pos):
     "Add a command and find its translation"
     translated = map[command]
     self.addoriginal(command, pos)
-    self.contents.append(FormulaConstant(translated))
+    self.add(FormulaConstant(translated), pos)
  
   def parsebracket(self, pos):
     "Parse a bracket at the current position"
@@ -77,6 +78,7 @@ class FormulaCommand(FormulaBit):
       return
     bracket.parse(pos)
     self.add(bracket, pos)
+    Trace.debug('Found bracket ' + unicode(bracket))
     return bracket
 
   def findcommand(self, pos, map):
@@ -89,8 +91,9 @@ class FormulaCommand(FormulaBit):
       return command
     return None
 
-  def findalphacommand(self, pos):
+  def findalphacommand(self, oldpos):
     "Find a command with \\alpha"
+    pos = oldpos.clone()
     if pos.current() != '\\':
       return None
     pos.skip('\\')
@@ -101,8 +104,9 @@ class FormulaCommand(FormulaBit):
     command = self.glob(pos, lambda(p): p.current().isalpha())
     return '\\' + command
 
-  def findsymbolcommand(self, pos):
+  def findsymbolcommand(self, oldpos):
     "Find a command made with optional \\alpha and one symbol"
+    pos = oldpos.clone()
     backslash = ''
     if pos.current() == '\\':
       backslash = '\\'
@@ -129,11 +133,11 @@ class EmptyCommand(FormulaCommand):
     "Parse a command without parameters"
     command = self.findcommand(pos, FormulaConfig.commands)
     if command:
-      self.addtranslated(command, FormulaConfig.commands)
+      self.addtranslated(command, FormulaConfig.commands, pos)
       return True
     command = self.findcommand(pos, FormulaConfig.alphacommands)
     if command:
-      self.addtranslated(command, FormulaConfig.alphacommands)
+      self.addtranslated(command, FormulaConfig.alphacommands, pos)
       self.alpha = True
       return True
     return False
@@ -166,12 +170,13 @@ class DecoratingFunction(FormulaCommand):
   def parse(self, pos):
     "Parse a decorating function"
     command = self.findcommand(pos, FormulaConfig.decoratingfunctions)
+    Trace.debug('Decorating ' + command)
     self.addoriginal(command, pos)
     self.output = TagOutput().settag('span class="withsymbol"')
     self.alpha = True
     symbol = FormulaConfig.decoratingfunctions[command]
     tagged = TaggedText().constant(symbol, 'span class="symbolover"')
-    self.add(tagged, pos)
+    self.contents.append(tagged)
     bracket = self.parsebracket(pos)
     bracket.output = TagOutput()
     bracket.tag = 'span class="undersymbol"'
@@ -221,7 +226,7 @@ class Bracket(FormulaBit):
     self.inside.parse(pos)
     self.add(self.inside, pos)
     if pos.isout() or pos.current() != '}':
-      Trace.error('Missing }')
+      Trace.error('Missing } in ' + pos.remaining())
       return
     self.addoriginal('}', pos)
 
@@ -243,11 +248,11 @@ class FormulaRow(FormulaCommand):
         Trace.error('Unexpected end of array at ' + pos.remaining())
         return
       formula.parse(pos)
-      self.add(formula)
+      self.add(formula, pos)
       if pos.checkfor('&'):
-        self.addoriginal('&')
+        self.addoriginal('&', pos)
 
-class FormulaArray(FormulaBit):
+class FormulaArray(FormulaCommand):
   "An array within a formula"
 
   start = '\\begin{array}'
@@ -261,18 +266,18 @@ class FormulaArray(FormulaBit):
 
   def parse(self, pos):
     "Parse the array"
-    self.addconstant(FormulaArray.start)
+    self.addconstant(FormulaArray.start, pos)
     self.parsealignments(pos)
     while not pos.isout():
       row = FormulaRow(self.alignments)
       row.parse(pos)
       Trace.debug('Row parsed: ' + row.original)
-      self.add(row)
+      self.add(row, pos)
       if pos.checkfor(FormulaArray.ending):
         self.addoriginal(FormulaArray.ending, pos)
         Trace.debug('Array parsed: ' + self.original)
         return
-      self.parserowend(self, pos)
+      self.parserowend(pos)
 
   def parsealignments(self, pos):
     "Parse the different alignments"
@@ -284,7 +289,6 @@ class FormulaArray(FormulaBit):
     self.alignments = []
     for l in bracket.original[1:-1]:
       self.alignments.append(l)
-    pos.skipbit(bracket)
 
   def parserowend(self, pos):
     "Parse the end of a row"
