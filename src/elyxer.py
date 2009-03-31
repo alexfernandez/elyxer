@@ -30,6 +30,7 @@ from fileline import *
 from styles import *
 from link import *
 from formula import *
+from command import *
 from table import *
 from image import *
 from structure import *
