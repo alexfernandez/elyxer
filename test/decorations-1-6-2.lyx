@@ -581,6 +581,10 @@ Decorations should also appear correctly in unit names:
 \begin_inset Formula $100\mathrm{a\tilde{n}os}$
 \end_inset
 
+ and in superscripts: 
+\begin_inset Formula $40^{100\mathrm{a\tilde{n}os}}$
+\end_inset
+
 .
 \end_layout
 
@@ -623,9 +627,9 @@ Parentheses
 Some delimiters also taken from the Spanish Lyx User's Guide.
  Array: 
 \begin_inset Formula \[
-\left[\begin{array}{cc}
-1 & 2\\
-3 & 4\end{array}\right]\]
+\left[\begin{array}{lc}
+12 & 2\\
+3 & 4\times y^{x}\end{array}\right]\]
 
 \end_inset
 

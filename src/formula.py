@@ -164,14 +164,13 @@ class FormulaBit(Container):
 
   def addconstant(self, string, pos):
     "add a constant string"
-    self.add(FormulaConstant(string), pos)
+    self.contents.append(FormulaConstant(string))
     self.addoriginal(string, pos)
 
-  def add(self, bit, pos):
+  def add(self, bit):
     "Add any kind of formula bit already processed"
     self.contents.append(bit)
     self.original += bit.original
-    Trace.debug('Added ' + unicode(bit) + ' to ' + unicode(self))
 
   def addoriginal(self, string, pos):
     "Add a constant to the original formula only"
@@ -187,6 +186,7 @@ class FormulaConstant(FormulaBit):
 
   def __init__(self, string):
     "Set the constant string"
+    FormulaBit.__init__(self)
     self.original = string
     self.output = FixedOutput()
     self.html = [string]
@@ -201,23 +201,31 @@ class RawText(FormulaBit):
   def parse(self, pos):
     "Parse alphabetic text"
     alpha = self.glob(pos, lambda(p): p.current().isalpha())
-    Trace.debug('Found ' + alpha)
     self.addconstant(alpha, pos)
-    Trace.debug('Original ' + self.original + ', rem ' + pos.remaining())
     self.alpha = True
 
 class FormulaSymbol(FormulaBit):
   "A symbol inside a formula"
 
-  keys = FormulaConfig.unmodified + FormulaConfig.modified.keys()
-
   def detect(self, pos):
     "Detect a symbol"
-    return pos.current() in FormulaSymbol.keys
+    if pos.current() in FormulaConfig.unmodified:
+      return True
+    if pos.current() in FormulaConfig.modified:
+      return True
+    return False
 
   def parse(self, pos):
     "Parse the symbol"
-    self.addconstant(pos.current(), pos)
+    if pos.current() in FormulaConfig.unmodified:
+      self.addconstant(pos.current(), pos)
+      return
+    if pos.current() in FormulaConfig.modified:
+      symbol = FormulaConfig.modified[pos.current()]
+      self.addoriginal(pos.current(), pos)
+      self.contents.append(FormulaConstant(symbol))
+      return
+    Trace.error('Symbol ' + pos.current() + ' not found')
 
 class Number(FormulaBit):
   "A string of digits in a formula"
@@ -252,26 +260,31 @@ class WholeFormula(FormulaBit):
         return
       bit = self.parsebit(pos)
       #Trace.debug(bit.original + ' -> ' + str(bit.gethtml()))
-      self.add(bit, pos)
-    Trace.debug('Out of formula ' + self.original + ' with ' + pos.remaining())
+      self.add(bit)
 
   def parsebit(self, pos):
     "Parse a formula bit"
     for bit in WholeFormula.bits:
       if bit.detect(pos):
-        Trace.debug('Found ' + str(bit) + ' in ' + pos.remaining())
         # get a fresh bit and parse it
         newbit = bit.clone()
         newbit.parse(pos)
-        Trace.debug('Found ' + unicode(newbit) + ' in ' + pos.remaining())
         return newbit
     Trace.error('Unrecognized formula at ' + pos.remaining())
+    pos.skip(pos.current())
     return FormulaConstant(pos.current())
 
   def process(self):
     "Process the whole formula"
-    for bit in self.contents:
+    i = 0
+    while i < len(self.contents):
+      bit = self.contents[i]
       bit.process()
+      if bit.alpha:
+        Trace.debug('Italicizing ' + str(bit))
+        # make variable
+        self.contents[i] = TaggedText().complete([bit], 'i')
+      i += 1
 
   def setarraymode(self):
     "Set array mode for parsing"

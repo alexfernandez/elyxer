@@ -302,3 +302,24 @@ span.appendix {
 h1.biblio {
 	font-size: 140%;
 }
+table.formula {
+	display: inline;
+	text-align: center;
+	border-collapse: collapse;
+	margin: 0em;
+}
+td.formula-l {
+	text-align: left;
+	padding: 0.2ex;
+	border: 0ex;
+}
+td.formula-c {
+	text-align: center;
+	padding: 0.2ex;
+	border: 0ex;
+}
+td.formula-r {
+	text-align: right;
+	padding: 0.2ex;
+	border: 0ex;
+}

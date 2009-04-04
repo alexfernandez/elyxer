@@ -39,7 +39,7 @@ class FormulaConfig(object):
       '\\intop':u'<span class="bigsymbol">∫</span>', '\\infty':u'∞',
       '\\prime':u'′',
       # symbols
-      '\\rightarrow':u' → ', '\\rightsquigarrow':u' ⇝ ', '\\Rightarrow':u'⇒',
+      '\\rightarrow':u' → ', '\\rightsquigarrow':u' ⇝ ', '\\Rightarrow':u' ⇒ ',
       '\\leftarrow':u' ← ',
       '\\dashrightarrow':u' ⇢ ', '\\blacktriangleright':u'▶', '\\bullet':u'•',
       '\\dagger':u'†', '\\ddagger':u'‡', '\\bigstar':u'★',
@@ -75,20 +75,22 @@ class FormulaConfig(object):
       }
   onefunctions = {
       # typographical
-      '\\mathsf':'span class="mathsf"', '\\mathbf':'b', '^':'sup',
       '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
       '\\bar':'span class="bar"', '\\mbox':'span class="mbox"',
-      '\\textrm':'span class="mathrm"', '\\mathrm':'span class="mathrm"',
-      '\\text':'span class="text"', '\\textipa':'span class="textipa"',
-      '\\boldsymbol':'b', '\\mathit':'i', '\\mathtt':'tt',
-      '\\mathbb':'span class="blackboard"',
-      '\\mathfrak':'span class="fraktur"', '\\mathcal':'span class="script"',
       # functions
       '\\sqrt':'span class="sqrt"',
       # hard functions
       '\\begin{array}':'span class="arraydef"',
       # LaTeX (ignored)
       '\\label':''
+      }
+  typofunctions = {
+      '\\mathsf':'span class="mathsf"', '\\mathbf':'b', '^':'sup',
+      '\\textrm':'span class="mathrm"', '\\mathrm':'span class="mathrm"',
+      '\\text':'span class="text"', '\\textipa':'span class="textipa"',
+      '\\boldsymbol':'b', '\\mathit':'i', '\\mathtt':'tt',
+      '\\mathbb':'span class="blackboard"',
+      '\\mathfrak':'span class="fraktur"', '\\mathcal':'span class="script"',
       }
   decoratingfunctions = {
       # symbols above (start with *)
