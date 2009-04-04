@@ -75,7 +75,7 @@ class FormulaConfig(object):
       }
   onefunctions = {
       # typographical
-      '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
+      '^':'sup', '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
       '\\bar':'span class="bar"', '\\mbox':'span class="mbox"',
       # functions
       '\\sqrt':'span class="sqrt"',
@@ -85,7 +85,7 @@ class FormulaConfig(object):
       '\\label':''
       }
   typofunctions = {
-      '\\mathsf':'span class="mathsf"', '\\mathbf':'b', '^':'sup',
+      '\\mathsf':'span class="mathsf"', '\\mathbf':'b',
       '\\textrm':'span class="mathrm"', '\\mathrm':'span class="mathrm"',
       '\\text':'span class="text"', '\\textipa':'span class="textipa"',
       '\\boldsymbol':'b', '\\mathit':'i', '\\mathtt':'tt',

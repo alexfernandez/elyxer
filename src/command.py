@@ -31,37 +31,6 @@ from formula import *
 
 class FormulaCommand(FormulaBit):
   "A LaTeX command inside a formula"
-
-  keys = FormulaConfig.commands.keys() + FormulaConfig.alphacommands.keys() + \
-      FormulaConfig.onefunctions.keys() + FormulaConfig.decoratingfunctions.keys() + \
-      FormulaConfig.twofunctions.keys() + ['\\begin']
-
-  bits = []
-
-  def detect(self, pos):
-    "Detect a command"
-    if pos.current() == '\\':
-      return True
-    if pos.current() in FormulaCommand.keys:
-      return True
-    return False
-
-  def parse(self, pos):
-    "Parse the command"
-    bit = self.findbit(pos)
-    if not bit:
-      Trace.error('Invalid command in ' + pos.remaining())
-      self.addconstant('\\', pos)
-      return
-    bit.parse(pos)
-    self.add(bit)
-
-  def findbit(self, pos):
-    "Find a bit that fits the bill"
-    for bit in FormulaCommand.bits:
-      if bit.detect(pos):
-        return bit.clone()
-    return None
  
   def parsebracket(self, pos):
     "Parse a bracket at the current position"
@@ -307,12 +276,12 @@ class FormulaArray(FormulaCommand):
     "Parse the end of a row"
     if not pos.checkfor('\\\\'):
       Trace.error('No row end at ' + pos.remaining())
+      self.addoriginal(pos.current(), pos)
       return
     self.addoriginal('\\\\', pos)
 
-FormulaCommand.bits = [
-    EmptyCommand(), OneParamFunction(), DecoratingFunction(), TwoParamFunction(), FormulaArray()
-      ]
-
-WholeFormula.bits.append(FormulaCommand())
+WholeFormula.bits += [
+    EmptyCommand(), OneParamFunction(), DecoratingFunction(),
+    TwoParamFunction(), FormulaArray(),
+    ]
 

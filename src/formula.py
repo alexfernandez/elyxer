@@ -280,6 +280,7 @@ class WholeFormula(FormulaBit):
     while i < len(self.contents):
       bit = self.contents[i]
       bit.process()
+      Trace.debug('Processed ' + str(bit) + ', alpha: ' + str(bit.alpha))
       if bit.alpha:
         Trace.debug('Italicizing ' + str(bit))
         # make variable
