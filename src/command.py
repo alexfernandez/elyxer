@@ -153,7 +153,7 @@ class DecoratingFunction(OneParamFunction):
     self.output = TagOutput().settag('span class="withsymbol"')
     self.type = 'alpha'
     symbol = FormulaConfig.decoratingfunctions[command]
-    tagged = TaggedText().constant(symbol, 'span class="symbolover"')
+    tagged = TaggedBit().constant(symbol, 'span class="symbolover"')
     self.contents.append(tagged)
     bracket = self.parsebracket(pos)
     bracket.output = TagOutput()

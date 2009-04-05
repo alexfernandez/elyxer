@@ -182,6 +182,21 @@ class FormulaBit(Container):
     "Get a string representation"
     return self.__class__.__name__ + ' read in ' + self.original
 
+class TaggedBit(FormulaBit):
+  "A tagged string in a formula"
+
+  def constant(self, constant, tag):
+    "Set the constant and the tag"
+    self.output = TagOutput().settag(tag)
+    self.add(FormulaConstant(constant))
+    return self
+
+  def complete(self, contents, tag):
+    "Set the constant and the tag"
+    self.contents = contents
+    self.output = TagOutput().settag(tag)
+    return self
+
 class FormulaConstant(FormulaBit):
   "A constant string in a formula"
 
@@ -273,8 +288,9 @@ class WholeFormula(FormulaBit):
         newbit.parse(pos)
         return newbit
     Trace.error('Unrecognized formula at ' + pos.remaining())
+    constant = FormulaConstant(pos.current())
     pos.skip(pos.current())
-    return FormulaConstant(pos.current())
+    return constant
 
   def process(self):
     "Process the whole formula"
@@ -284,7 +300,7 @@ class WholeFormula(FormulaBit):
       bit.process()
       if bit.type == 'alpha':
         # make variable
-        self.contents[i] = TaggedText().complete([bit], 'i')
+        self.contents[i] = TaggedBit().complete([bit], 'i')
       elif bit.type == 'font' and i > 0:
         last = self.contents[i - 1]
         if last.type == 'number':
