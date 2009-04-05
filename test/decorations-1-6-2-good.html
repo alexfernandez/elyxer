@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta name="generator" content="http://www.nongnu.org/elyxer/"/>
-<meta name="create-date" content="2009-03-27"/>
+<meta name="create-date" content="2009-04-05"/>
 <link rel="stylesheet" href="http://www.nongnu.org/elyxer/lyx.css" type="text/css" media="screen"/>
 <title>Decorations Test</title>
 </head>
@@ -16,7 +16,7 @@ Decorations Test
 Decorations
 </h1>
 <div class="Standard">
-A few examples taken from the Spanish Lyx User’s Guide. An accent that looks like a hat: <span class="formula"><span class="withsymbol"><span class="symbolover">^</span><span class="undersymbol"><i>a</i></span></span></span>, done  using <b>\hata</b> within an equation. The following table shows commands to make decorations.
+A few examples taken from the Spanish Lyx User’s Guide. An accent that looks like a hat: <span class="formula"><i><span class="withsymbol"><span class="symbolover">^</span><span class="undersymbol"><i>a</i></span></span></i></span>, done  using <b>\hata</b> within an equation. The following table shows commands to make decorations.
 </div>
 <div class="Standard">
 <div class="float">
@@ -71,7 +71,7 @@ circumflex
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><span class="withsymbol"><span class="symbolover">^</span><span class="undersymbol"><i>a</i></span></span></span>
+<span class="formula"><i><span class="withsymbol"><span class="symbolover">^</span><span class="undersymbol"><i>a</i></span></span></i></span>
 </div>
 
 </td>
@@ -92,7 +92,7 @@ grave
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><span class="withsymbol"><span class="symbolover">`</span><span class="undersymbol"><i>m</i></span></span></span>
+<span class="formula"><i><span class="withsymbol"><span class="symbolover">`</span><span class="undersymbol"><i>m</i></span></span></i></span>
 </div>
 
 </td>
@@ -134,7 +134,7 @@ diaeresis
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><span class="withsymbol"><span class="symbolover">¨</span><span class="undersymbol"><i>B</i></span></span></span>
+<span class="formula"><i><span class="withsymbol"><span class="symbolover">¨</span><span class="undersymbol"><i>B</i></span></span></i></span>
 </div>
 
 </td>
@@ -176,7 +176,7 @@ dot
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><span class="withsymbol"><span class="symbolover">˙</span><span class="undersymbol"><i>L</i></span></span></span>
+<span class="formula"><i><span class="withsymbol"><span class="symbolover">˙</span><span class="undersymbol"><i>L</i></span></span></i></span>
 </div>
 
 </td>
@@ -197,7 +197,7 @@ breve
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><span class="withsymbol"><span class="symbolover">˘</span><span class="undersymbol"><i>g</i></span></span></span>
+<span class="formula"><i><span class="withsymbol"><span class="symbolover">˘</span><span class="undersymbol"><i>g</i></span></span></i></span>
 </div>
 
 </td>
@@ -218,7 +218,7 @@ caron
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><span class="withsymbol"><span class="symbolover">ˇ</span><span class="undersymbol"><i>s</i></span></span></span>
+<span class="formula"><i><span class="withsymbol"><span class="symbolover">ˇ</span><span class="undersymbol"><i>s</i></span></span></i></span>
 </div>
 
 </td>
@@ -260,7 +260,7 @@ vector
 </td>
 <td>
 <div class="Plain">
-<span class="formula"><span class="withsymbol"><span class="symbolover">→</span><span class="undersymbol"><i>m</i></span></span></span>
+<span class="formula"><i><span class="withsymbol"><span class="symbolover">→</span><span class="undersymbol"><i>m</i></span></span></i></span>
 </div>
 
 </td>
@@ -277,7 +277,7 @@ vector
 
 </div>
 <div class="Standard">
-Decorations should also appear correctly in unit names: <span class="formula">100<span class="mathrm"><i>años</i></span></span>.
+Decorations should also appear correctly in unit names: <span class="formula">100 <span class="mathrm">años</span></span> and in superscripts: <span class="formula">40<sup>100 <span class="mathrm">años</span></sup></span>.
 </div>
 <h1 class="Chapter">
 Limit
@@ -293,10 +293,31 @@ Parentheses
 </h1>
 <div class="Standard">
 Some delimiters also taken from the Spanish Lyx User’s Guide. Array: <div class="formula">
-<span class="bigsymbol">[</span>\<i>begin</i>{<i>array</i>}{<i>cc</i>}1	2<br/>3	4\<i>end</i>{<i>array</i>}<span class="bigsymbol">]</span>
+<span class="bigsymbol">[</span><table class="formula">
+<tr>
+<td class="formula-l">
+12
+</td>
+<td class="formula-c">
+2
+</td>
+
+</tr>
+<tr>
+<td class="formula-l">
+3
+</td>
+<td class="formula-c">
+4 × <i>y</i><sup><i>x</i></sup>
+</td>
+
+</tr>
+
+</table>
+<span class="bigsymbol">]</span>
 </div>
 A big recursive fraction: <div class="formula">
-<span class="fraction"><span class="numerator">1</span><span class="denominator"><span class="bigsymbol">(</span>1 + <span class="bigsymbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + <span class="bigsymbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + <i>x</i></span></span><span class="bigsymbol">)</span></span></span><span class="bigsymbol">)</span><span class="bigsymbol">)</span></span></span>
+<span class="fraction"><span class="numerator">1</span><span class="denominator"><span class="bigsymbol">(</span>1 + <span class="bigsymbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + <span class="bigsymbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + 2<i>x</i></span></span><span class="bigsymbol">)</span></span></span><span class="bigsymbol">)</span><span class="bigsymbol">)</span></span></span>
 </div>
 
 </div>

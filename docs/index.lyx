@@ -305,6 +305,10 @@ Notes and comments are not output at all, greyed-out notes are shown in
  grey.
 \end_layout
 
+\begin_layout Itemize
+LyX guides parse completely.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.11 (20090327):
