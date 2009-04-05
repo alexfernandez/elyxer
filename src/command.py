@@ -78,6 +78,11 @@ class FormulaCommand(FormulaBit):
       return None
     return backslash + alpha + pos.current()
 
+  def process(self):
+    "Process the internals"
+    for bit in self.contents:
+      bit.process()
+
 class EmptyCommand(FormulaCommand):
   "An empty command (without parameters)"
 
@@ -98,7 +103,7 @@ class EmptyCommand(FormulaCommand):
     command = self.findcommand(pos, FormulaConfig.alphacommands)
     if command:
       self.addtranslated(command, FormulaConfig.alphacommands, pos)
-      self.alpha = True
+      self.type = 'alpha'
       return
     Trace.error('No command found in ' + pos.remaining())
     return
@@ -112,34 +117,41 @@ class EmptyCommand(FormulaCommand):
 class OneParamFunction(FormulaCommand):
   "A function of one parameter"
 
+  functions = FormulaConfig.onefunctions
+
   def detect(self, pos):
     "Detect the start of the function"
-    if self.findcommand(pos, FormulaConfig.onefunctions):
+    if self.findcommand(pos, self.functions):
       return True
     return False
 
   def parse(self, pos):
     "Parse a function with one parameter"
-    command = self.findcommand(pos, FormulaConfig.onefunctions)
+    command = self.findcommand(pos, self.functions)
     self.addoriginal(command, pos)
-    self.output = TagOutput().settag(FormulaConfig.onefunctions[command])
+    self.output = TagOutput().settag(self.functions[command])
     self.parsebracket(pos)
 
-class DecoratingFunction(FormulaCommand):
+class FontFunction(OneParamFunction):
+  "A function of one parameter that changes the font"
+
+  functions = FormulaConfig.fontfunctions
+
+  def process(self):
+    "Do not process the inside"
+    self.type = 'font'
+
+class DecoratingFunction(OneParamFunction):
   "A function that decorates some bit of text"
 
-  def detect(self, pos):
-    "Detect the start of the function"
-    if self.findcommand(pos, FormulaConfig.decoratingfunctions):
-      return True
-    return False
+  functions = FormulaConfig.decoratingfunctions
 
   def parse(self, pos):
     "Parse a decorating function"
     command = self.findcommand(pos, FormulaConfig.decoratingfunctions)
     self.addoriginal(command, pos)
     self.output = TagOutput().settag('span class="withsymbol"')
-    self.alpha = True
+    self.type = 'alpha'
     symbol = FormulaConfig.decoratingfunctions[command]
     tagged = TaggedText().constant(symbol, 'span class="symbolover"')
     self.contents.append(tagged)
@@ -282,6 +294,6 @@ class FormulaArray(FormulaCommand):
 
 WholeFormula.bits += [
     EmptyCommand(), OneParamFunction(), DecoratingFunction(),
-    TwoParamFunction(), FormulaArray(),
+    TwoParamFunction(), FormulaArray(), FontFunction(), 
     ]
 

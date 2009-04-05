@@ -141,7 +141,8 @@ class FormulaBit(Container):
   "A bit of a formula"
 
   def __init__(self):
-    self.alpha = False
+    # type can be 'alpha', 'number', 'font'
+    self.type = None
     self.original = ''
     self.contents = []
     self.output = ContentsOutput()
@@ -202,7 +203,7 @@ class RawText(FormulaBit):
     "Parse alphabetic text"
     alpha = self.glob(pos, lambda(p): p.current().isalpha())
     self.addconstant(alpha, pos)
-    self.alpha = True
+    self.type = 'alpha'
 
 class FormulaSymbol(FormulaBit):
   "A symbol inside a formula"
@@ -238,6 +239,7 @@ class Number(FormulaBit):
     "Parse a bunch of digits"
     digits = self.glob(pos, lambda(p): p.current().isdigit())
     self.addconstant(digits, pos)
+    self.type = 'number'
 
 class WholeFormula(FormulaBit):
   "Parse a whole formula"
@@ -280,11 +282,14 @@ class WholeFormula(FormulaBit):
     while i < len(self.contents):
       bit = self.contents[i]
       bit.process()
-      Trace.debug('Processed ' + str(bit) + ', alpha: ' + str(bit.alpha))
-      if bit.alpha:
-        Trace.debug('Italicizing ' + str(bit))
+      if bit.type == 'alpha':
         # make variable
         self.contents[i] = TaggedText().complete([bit], 'i')
+      elif bit.type == 'font' and i > 0:
+        last = self.contents[i - 1]
+        if last.type == 'number':
+          #separate
+          last.contents.append(FormulaConstant(u' '))
       i += 1
 
   def setarraymode(self):

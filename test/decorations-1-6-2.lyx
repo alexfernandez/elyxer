@@ -635,7 +635,7 @@ Some delimiters also taken from the Spanish Lyx User's Guide.
 
 A big recursive fraction: 
 \begin_inset Formula \[
-\frac{1}{\left(1+\left(\frac{1}{1+\left(\frac{1}{1+x}\lyxlock\right)}\lyxlock\right)\right)}\lyxlock\]
+\frac{1}{\left(1+\left(\frac{1}{1+\left(\frac{1}{1+2x}\lyxlock\right)}\lyxlock\right)\right)}\lyxlock\]
 
 \end_inset
 

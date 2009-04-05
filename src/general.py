@@ -84,7 +84,7 @@ class FormulaConfig(object):
       # LaTeX (ignored)
       '\\label':''
       }
-  typofunctions = {
+  fontfunctions = {
       '\\mathsf':'span class="mathsf"', '\\mathbf':'b',
       '\\textrm':'span class="mathrm"', '\\mathrm':'span class="mathrm"',
       '\\text':'span class="text"', '\\textipa':'span class="textipa"',
