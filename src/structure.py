@@ -334,6 +334,25 @@ class Footnote(Container):
     self.contents = [tofoot, tag]
     Footnote.order += 1
 
+class Note(Container):
+  "A LyX note of several types"
+
+  start = '\\begin_inset Note'
+  ending = '\\end_inset'
+
+  typetags = {'Note':'', 'Comment':'', 'Greyedout':'span class="greyedout"'}
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = EmptyOutput()
+
+  def process(self):
+    "Hide note and comment, dim greyed out"
+    self.type = self.header[2]
+    if Note.typetags[self.type] == '':
+      return
+    self.output = TagOutput().settag(Note.typetags[self.type], True)
+
 class Appendix(Container):
   "An appendix to the main document"
 
@@ -346,6 +365,6 @@ class Appendix(Container):
 ContainerFactory.types += [
     LyxHeader, LyxFooter, InsetText, Caption, Inset,
     Align, Layout, Float, Title, Author, Description, Newline, Space,
-    NewlineInset, Branch, ShortTitle, Footnote, Appendix
+    NewlineInset, Branch, ShortTitle, Footnote, Appendix, Note
     ]
 

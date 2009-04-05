@@ -300,6 +300,11 @@ Text decorations (such as
 Variables are italicized.
 \end_layout
 
+\begin_layout Itemize
+Notes and comments are not output at all, greyed-out notes are shown in
+ grey.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.11 (20090327):

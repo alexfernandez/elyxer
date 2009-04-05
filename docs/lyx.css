@@ -323,3 +323,6 @@ td.formula-r {
 	padding: 0.2ex;
 	border: 0ex;
 }
+span.greyedout {
+	color: #808080;
+}

@@ -36,36 +36,67 @@
 \tracking_changes false
 \output_changes false
 \author "" 
+\author "" 
 \end_header
 
 \begin_body
 
 \begin_layout Title
-Título
+Title
 \end_layout
 
 \begin_layout Author
-Creado por Fedeguico
+Created by Alex Fernández
 \end_layout
 
 \begin_layout Standard
-Este documento se ha creado con LyX 1.6.2rc2, un gran editor de texto.
+This document was created with LyX 1.6.2rc2, a great text editor.
 \end_layout
 
 \begin_layout Section
-La primera sección
+The First Section
 \end_layout
 
 \begin_layout Standard
-Que contiene algo de texto.
+With some text.
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+And a greyed out note.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
-Otra sección sin numerar
+Another Section (Not Numbered)
 \end_layout
 
 \begin_layout Standard
-Que contiene más texto.
+With some more text.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+And a note which should not appear at all.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Actually, two notes which should not appear.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
