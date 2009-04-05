@@ -276,6 +276,32 @@ Latest version is 0.11, created on 20090327.
 \end_layout
 
 \begin_layout Itemize
+0.12 (20090405):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Arrays are parsed correctly and displayed acceptably.
+\end_layout
+
+\begin_layout Itemize
+Numbers and units are correctly separated.
+\end_layout
+
+\begin_layout Itemize
+Text decorations (such as 
+\begin_inset Formula $\hat{a}$
+\end_inset
+
+) are shown in line.
+\end_layout
+
+\begin_layout Itemize
+Variables are italicized.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.11 (20090327):
 \end_layout
 
