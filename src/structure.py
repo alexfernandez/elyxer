@@ -159,25 +159,16 @@ class Author(Layout):
     FooterOutput.author = string.contents[0]
     Trace.debug('Author: ' + FooterOutput.author)
 
-class Description(Layout):
-  "A description layout"
+class FirstWorder(Layout):
+  "A layout where the first word is extracted"
 
-  start = '\\begin_layout Description'
-  ending = '\\end_layout'
-
-  def process(self):
-    "Set the first word to bold"
-    self.type = 'Description'
-    self.output.tag = 'div class="Description"'
-    firstword, found = self.extractfirst(self.contents)
-    if not firstword:
-      return
-    firstword.append(Constant(u' '))
-    tag = 'span class="Description-entry"'
-    self.contents.insert(0, TaggedText().complete(firstword, tag))
-
-  def extractfirst(self, contents):
+  def extractfirstword(self, contents):
     "Extract the first word as a list"
+    first, found = self.extractfirsttuple(contents)
+    return first
+
+  def extractfirsttuple(self, contents):
+    "Extract the first word as a tuple"
     firstcontents = []
     index = 0
     while index < len(contents):
@@ -202,7 +193,7 @@ class Description(Layout):
     if len(container.contents) == 0:
       # empty container
       return None, False
-    first, found = self.extractfirst(container.contents)
+    first, found = self.extractfirsttuple(container.contents)
     if isinstance(container, TaggedText) and hasattr(container, 'tag'):
       newtag = TaggedText().complete(first, container.tag)
       return [newtag], found
@@ -216,6 +207,39 @@ class Description(Layout):
     split = string.split(' ', 1)
     container.contents[0] = split[1]
     return [Constant(split[0])], True
+
+class Description(FirstWorder):
+  "A description layout"
+
+  start = '\\begin_layout Description'
+  ending = '\\end_layout'
+
+  def process(self):
+    "Set the first word to bold"
+    self.type = 'Description'
+    self.output.tag = 'div class="Description"'
+    firstword = self.extractfirstword(self.contents)
+    if not firstword:
+      return
+    firstword.append(Constant(u' '))
+    tag = 'span class="Description-entry"'
+    self.contents.insert(0, TaggedText().complete(firstword, tag))
+
+class List(FirstWorder):
+  "A list layout"
+
+  start = '\\begin_layout List'
+  ending = '\\end_layout'
+
+  def process(self):
+    "Set the first word to bold"
+    self.type = 'List'
+    self.output.tag = 'div class="List"'
+    firstword = self.extractfirstword(self.contents)
+    if not firstword:
+      return
+    tag = 'span class="List-entry"'
+    self.contents.insert(0, TaggedText().complete(firstword, tag))
 
 class Space(Container):
   "A space of several types"
@@ -365,6 +389,6 @@ class Appendix(Container):
 ContainerFactory.types += [
     LyxHeader, LyxFooter, InsetText, Caption, Inset,
     Align, Layout, Float, Title, Author, Description, Newline, Space,
-    NewlineInset, Branch, ShortTitle, Footnote, Appendix, Note
+    NewlineInset, Branch, ShortTitle, Footnote, Appendix, Note, List
     ]
 

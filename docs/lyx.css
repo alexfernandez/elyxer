@@ -281,6 +281,10 @@ span.textipa {
 span.Description-entry {
 	font-weight: bold;
 }
+span.List-entry {
+	display: inline-block;
+	width: 25%;
+}
 div.Space {
 	display: none;
 }
@@ -325,4 +329,7 @@ td.formula-r {
 }
 span.greyedout {
 	color: #808080;
+}
+div.Description, div.List, li {
+	margin: 1em 0;
 }
