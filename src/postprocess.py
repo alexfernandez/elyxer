@@ -49,33 +49,50 @@ class PostBiblio(object):
   def postprocess(self, element, last):
     "If we have the first bibliography insert a tag"
     if isinstance(last, Bibliography):
-      return
+      return element
     tag = TaggedText().constant('Bibliography', 'h1 class="biblio"')
     return Group().contents([tag, element])
+
+class PostListItem(object):
+  "Output a unified list element"
+
+  processedclass = ListItem
+
+  pending = []
+
+  def lastprocess(self, element, last):
+    "After the last list element return it all"
+    PostListItem.pending += last.contents
+    if isinstance(element, ListItem) and element.type == last.type:
+      Trace.debug('Another ' + last.type + ' pending')
+      return element
+    tag = ListItem.typetags[last.type]
+    list = TaggedText().complete(PostListItem.pending, tag)
+    Trace.debug('Output list with ' + str(len(list.contents)) + ' items')
+    PostListItem.pending = []
+    return Group().contents([list, element])
 
 class Postprocessor(object):
   "Postprocess an element keeping some context"
 
   stages = [PostBiblio()]
+  laststages = [PostListItem()]
 
   stagedict = dict([(x.processedclass, x) for x in stages])
+  laststagedict = dict([(x.processedclass, x) for x in laststages])
 
   def __init__(self):
     self.last = None
 
-  def postprocess(self, element):
+  def postprocess(self, original):
     "Postprocess an element taking into account the last one"
-    if not self.last:
-      self.last = element
-      return element
-    if not isinstance(element, Container):
-      return element
-    if not element.__class__ in Postprocessor.stagedict:
-      return element
-    stage = Postprocessor.stagedict[element.__class__]
-    result = stage.postprocess(element, self.last)
-    self.last = element
-    if not result:
-      return element
-    return result
+    element = original
+    if element.__class__ in Postprocessor.stagedict:
+      stage = Postprocessor.stagedict[element.__class__]
+      element = stage.postprocess(element, self.last)
+    if self.last and self.last.__class__ in Postprocessor.laststagedict:
+      stage = Postprocessor.laststagedict[self.last.__class__]
+      element = stage.lastprocess(element, self.last)
+    self.last = original
+    return element
 

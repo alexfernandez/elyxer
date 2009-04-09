@@ -179,12 +179,15 @@ class ListItem(Container):
     self.parser = BoundedParser()
     self.output = TagOutput().setbreaklines(True)
 
-  tags = {'Enumerate':'ol', 'Itemize':'ul'}
+  typetags = {'Enumerate':'ol', 'Itemize':'ul'}
 
   def process(self):
-    self.output.tag = ListItem.tags[self.header[1]]
+    "Set the correct type and contents."
+    "Output should be empty until the postprocessor can group items"
+    self.type = self.header[1]
     tag = TaggedText().complete(self.contents, 'li', True)
     self.contents = [tag]
+    self.output = EmptyOutput()
 
 class DeeperList(Container):
   "A nested list"
