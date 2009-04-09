@@ -276,6 +276,32 @@ Latest version is 0.12, created on 20090405.
 \end_layout
 
 \begin_layout Itemize
+0.13 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Lists are correctly displayed, instead of one list per item.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+List
+\family default
+ layouts (not to mistake with 
+\family typewriter
+Enumerate
+\family default
+ or 
+\family typewriter
+Itemize
+\family default
+ lists) are processed correctly.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.12 (20090405):
 \end_layout
 
