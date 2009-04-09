@@ -61,10 +61,18 @@ class PostListItem(object):
   pending = []
 
   def lastprocess(self, element, last):
-    "After the last list element return it all"
+    "Add the last list item"
     PostListItem.pending += last.contents
+    return self.decidelist(element, last)
+
+  def decidelist(self, element, last):
+    "After the last list element return it all"
     if isinstance(element, ListItem) and element.type == last.type:
       Trace.debug('Another ' + last.type + ' pending')
+      return element
+    elif isinstance(element, DeeperList):
+      Trace.debug('Another deeper ' + element.type + ' pending')
+      element.output = EmptyOutput()
       return element
     tag = ListItem.typetags[last.type]
     list = TaggedText().complete(PostListItem.pending, tag)
@@ -72,11 +80,26 @@ class PostListItem(object):
     PostListItem.pending = []
     return Group().contents([list, element])
 
+  def generate(self):
+    "Generate the list"
+
+class PostDeeperList(PostListItem):
+  "Add nested lists as list items"
+
+  processedclass = DeeperList
+
+  def lastprocess(self, element, last):
+    "Add the last nested list"
+    tag = ListItem.typetags[last.type]
+    last.output = TaggedOutput().settag(tag, True)
+    PostListItem.pending.append(last)
+    return self.decidelist(element, last)
+
 class Postprocessor(object):
   "Postprocess an element keeping some context"
 
   stages = [PostBiblio()]
-  laststages = [PostListItem()]
+  laststages = [PostListItem(), PostDeeperList()]
 
   stagedict = dict([(x.processedclass, x) for x in stages])
   laststagedict = dict([(x.processedclass, x) for x in laststages])

@@ -86,19 +86,19 @@ Itemize and Enumerate
 \end_layout
 
 \begin_layout Enumerate
-Lorem ipsum dolor sit amet,
+First enumerated,
 \end_layout
 
 \begin_layout Enumerate
-consectetur adipisicing elit,
+second enumerated.
 \end_layout
 
 \begin_layout Itemize
-sed do eiusmod tempor incididunt ut labore
+First itemized,
 \end_layout
 
 \begin_layout Itemize
-et dolore magna aliqua.
+second itemized.
 \end_layout
 
 \begin_layout Section
@@ -106,69 +106,81 @@ Lists with Levels
 \end_layout
 
 \begin_layout Itemize
-sed do eiusmod tempor incididunt ut labore
+First in first level
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-sed do eiusmod tempor incididunt ut labore
+first in second level,
 \end_layout
 
 \begin_layout Itemize
-et dolore magna aliqua.
+second in second level,
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
-et dolore magna aliqua.
+second in first level,
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-sed do eiusmod tempor incididunt ut labore
+now third on second level,
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-ut labore,
+third level 1,
 \end_layout
 
 \begin_layout Itemize
-ut labore.
+third level 2.
 \end_layout
 
 \end_deeper
 \end_deeper
 \begin_layout Itemize
-et dolore magna aliqua.
+back to third in first level.
 \end_layout
 
 \begin_layout Enumerate
-Lorem ipsum dolor sit amet,
+Now 1st in 1st level,
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
-consectetur adipisicing elit,
+1st on 2nd level,
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
-Lorem ipsum dolor sit amet,
+1st on 3rd level!
 \end_layout
 
 \begin_layout Enumerate
-consectetur adipisicing elit,
+2nd on 3rd level.
+\end_layout
+
+\begin_layout Itemize
+And now mixing 3rd level itemized,
+\end_layout
+
+\begin_layout Itemize
+and another.
 \end_layout
 
 \end_deeper
 \begin_layout Enumerate
-Lorem ipsum dolor sit amet,
+back to 2nd on 2nd street, sorry, level,
 \end_layout
 
 \end_deeper
 \begin_layout Enumerate
-consectetur adipisicing elit,
+and back to 1st level.
+\end_layout
+
+\begin_layout Enumerate
+3rd on 1st level.
 \end_layout
 
 \end_body

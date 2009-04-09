@@ -175,19 +175,18 @@ class ListItem(Container):
   ending = '\\end_layout'
 
   def __init__(self):
+    "Output should be empty until the postprocessor can group items"
     self.contents = list()
     self.parser = BoundedParser()
-    self.output = TaggedOutput().setbreaklines(True)
+    self.output = EmptyOutput()
 
   typetags = {'Enumerate':'ol', 'Itemize':'ul'}
 
   def process(self):
     "Set the correct type and contents."
-    "Output should be empty until the postprocessor can group items"
     self.type = self.header[1]
     tag = TaggedText().complete(self.contents, 'li', True)
     self.contents = [tag]
-    self.output = EmptyOutput()
 
 class DeeperList(Container):
   "A nested list"
@@ -197,7 +196,24 @@ class DeeperList(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TaggedOutput().settag('ul', True)
+    self.output = TaggedOutput()
+
+  def process(self):
+    "Create the deeper list"
+    if len(self.contents) == 0:
+      Trace.error('Empty deeper list')
+      return
+    items = []
+    for item in self.contents:
+      if isinstance(item, ListItem):
+        self.type = item.type
+        items.append(item.contents[0])
+      elif isinstance(item, DeeperList):
+        items.append(item)
+      else:
+        Trace.error('Unknown list item ' + str(item))
+    self.contents = items
+    self.output.settag(ListItem.typetags[self.type], True)
 
 ContainerFactory.types += [QuoteContainer, LyxLine, EmphaticText, ShapedText,
     VersalitasText, ColorText, SizeText, BoldText, TextFamily, Hfill,
