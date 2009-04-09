@@ -92,6 +92,10 @@ Itemize
 Changelog moved to separate document.
 \end_layout
 
+\begin_layout Itemize
+Read image sizes correctly on big-endian architectures.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.12 (20090405):
