@@ -845,6 +845,21 @@ Nomenclature
  They will probably be in a future version.
 \end_layout
 
+\begin_layout Enumerate
+Mixed ordered and unordered list items come out as a list of the last type.
+ Example:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+ordered,
+\end_layout
+
+\begin_layout Itemize
+unordered.
+\end_layout
+
+\end_deeper
 \begin_layout Subsection
 Reporting Bugs
 \end_layout
