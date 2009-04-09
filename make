@@ -33,6 +33,7 @@ rm -f test/*.lyx~
 ./elyxer --title "eLyXer User Guide" --css "lyx.css" docs/userguide.lyx docs/userguide.html
 ./elyxer --title="eLyxer Developer Guide" --css "lyx.css" docs/devguide.lyx docs/devguide.html
 ./elyxer --title=eLyXer --css "lyx.css" docs/index.lyx docs/index.html
+./elyxer --title="eLyXer changelog" --css "lyx.css" docs/changelog.lyx docs/changelog.html
 # make compressed files
 mkdir -p dist
 cd ..
