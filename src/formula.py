@@ -36,7 +36,7 @@ class Formula(Container):
 
   def __init__(self):
     self.parser = FormulaParser()
-    self.output = TagOutput().settag('span class="formula"')
+    self.output = TaggedOutput().settag('span class="formula"')
 
   def process(self):
     "Convert the formula to tags"
@@ -187,14 +187,14 @@ class TaggedBit(FormulaBit):
 
   def constant(self, constant, tag):
     "Set the constant and the tag"
-    self.output = TagOutput().settag(tag)
+    self.output = TaggedOutput().settag(tag)
     self.add(FormulaConstant(constant))
     return self
 
   def complete(self, contents, tag):
     "Set the constant and the tag"
     self.contents = contents
-    self.output = TagOutput().settag(tag)
+    self.output = TaggedOutput().settag(tag)
     return self
 
 class FormulaConstant(FormulaBit):

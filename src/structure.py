@@ -62,7 +62,7 @@ class Float(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput().settag('div class="float"', True)
+    self.output = TaggedOutput().settag('div class="float"', True)
 
   def process(self):
     "Get the float type"
@@ -88,7 +88,7 @@ class Caption(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput().settag('div class="caption"', True)
+    self.output = TaggedOutput().settag('div class="caption"', True)
 
 class Align(Container):
   "Bit of aligned text"
@@ -98,7 +98,7 @@ class Align(Container):
 
   def __init__(self):
     self.parser = ExcludingParser()
-    self.output = TagOutput().setbreaklines(True)
+    self.output = TaggedOutput().setbreaklines(True)
 
   def process(self):
     self.output.tag = 'div class="' + self.header[1] + '"'
@@ -117,7 +117,7 @@ class Layout(Container):
   def __init__(self):
     self.contents = list()
     self.parser = BoundedParser()
-    self.output = TagOutput().setbreaklines(True)
+    self.output = TaggedOutput().setbreaklines(True)
     self.numbered = False
 
   def process(self):
@@ -268,7 +268,7 @@ class Inset(Container):
   def __init__(self):
     self.contents = list()
     self.parser = InsetParser()
-    self.output = TagOutput().setbreaklines(True)
+    self.output = TaggedOutput().setbreaklines(True)
 
   def process(self):
     self.type = self.header[1]
@@ -308,7 +308,7 @@ class Branch(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput().settag('span class="branch"', True)
+    self.output = TaggedOutput().settag('span class="branch"', True)
 
   def process(self):
     "Disable inactive branches"
@@ -375,7 +375,7 @@ class Note(Container):
     self.type = self.header[2]
     if Note.typetags[self.type] == '':
       return
-    self.output = TagOutput().settag(Note.typetags[self.type], True)
+    self.output = TaggedOutput().settag(Note.typetags[self.type], True)
 
 class Appendix(Container):
   "An appendix to the main document"
@@ -384,7 +384,7 @@ class Appendix(Container):
 
   def __init__(self):
     self.parser = LoneCommand()
-    self.output = TagOutput().settag('span class="appendix"', True)
+    self.output = TaggedOutput().settag('span class="appendix"', True)
 
 ContainerFactory.types += [
     LyxHeader, LyxFooter, InsetText, Caption, Inset,

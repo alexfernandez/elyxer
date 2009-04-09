@@ -166,7 +166,7 @@ class FlexCode(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput().settag('span class="code"', True)
+    self.output = TaggedOutput().settag('span class="code"', True)
 
 class ListItem(Container):
   "An element in a list"
@@ -177,7 +177,7 @@ class ListItem(Container):
   def __init__(self):
     self.contents = list()
     self.parser = BoundedParser()
-    self.output = TagOutput().setbreaklines(True)
+    self.output = TaggedOutput().setbreaklines(True)
 
   typetags = {'Enumerate':'ol', 'Itemize':'ul'}
 
@@ -197,7 +197,7 @@ class DeeperList(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput().settag('ul', True)
+    self.output = TaggedOutput().settag('ul', True)
 
 ContainerFactory.types += [QuoteContainer, LyxLine, EmphaticText, ShapedText,
     VersalitasText, ColorText, SizeText, BoldText, TextFamily, Hfill,

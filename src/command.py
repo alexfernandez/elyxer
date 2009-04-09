@@ -129,7 +129,7 @@ class OneParamFunction(FormulaCommand):
     "Parse a function with one parameter"
     command = self.findcommand(pos, self.functions)
     self.addoriginal(command, pos)
-    self.output = TagOutput().settag(self.functions[command])
+    self.output = TaggedOutput().settag(self.functions[command])
     self.parsebracket(pos)
 
 class FontFunction(OneParamFunction):
@@ -150,14 +150,13 @@ class DecoratingFunction(OneParamFunction):
     "Parse a decorating function"
     command = self.findcommand(pos, FormulaConfig.decoratingfunctions)
     self.addoriginal(command, pos)
-    self.output = TagOutput().settag('span class="withsymbol"')
+    self.output = TaggedOutput().settag('span class="withsymbol"')
     self.type = 'alpha'
     symbol = FormulaConfig.decoratingfunctions[command]
     tagged = TaggedBit().constant(symbol, 'span class="symbolover"')
     self.contents.append(tagged)
     bracket = self.parsebracket(pos)
-    bracket.output = TagOutput()
-    bracket.tag = 'span class="undersymbol"'
+    bracket.output = TaggedOutput().settag('span class="undersymbol"')
     # simplify if possible
     if self.original in FormulaConfig.alphacommands:
       self.output = FixedOutput()
@@ -177,15 +176,15 @@ class TwoParamFunction(FormulaCommand):
     command = self.findcommand(pos, FormulaConfig.twofunctions)
     self.addoriginal(command, pos)
     tags = FormulaConfig.twofunctions[command]
-    self.output = TagOutput().settag(tags[0])
+    self.output = TaggedOutput().settag(tags[0])
     bracket1 = self.parsebracket(pos)
     if not bracket1:
       return
-    bracket1.output = TagOutput().settag(tags[1])
+    bracket1.output = TaggedOutput().settag(tags[1])
     bracket2 = self.parsebracket(pos)
     if not bracket2:
       return
-    bracket2.output = TagOutput().settag(tags[2])
+    bracket2.output = TaggedOutput().settag(tags[2])
 
 class Bracket(FormulaBit):
   "A {} bracket inside a formula"
@@ -218,7 +217,7 @@ class FormulaCell(FormulaCommand):
   def __init__(self, alignment):
     FormulaCommand.__init__(self)
     self.alignment = alignment
-    self.output = TagOutput().settag('td class="formula-' + alignment +'"', True)
+    self.output = TaggedOutput().settag('td class="formula-' + alignment +'"', True)
 
   def parse(self, pos):
     formula = WholeFormula().setarraymode()
@@ -234,7 +233,7 @@ class FormulaRow(FormulaCommand):
   def __init__(self, alignments):
     FormulaCommand.__init__(self)
     self.alignments = alignments
-    self.output = TagOutput().settag('tr', True)
+    self.output = TaggedOutput().settag('tr', True)
 
   def parse(self, pos):
     for i in self.alignments:
@@ -252,7 +251,7 @@ class FormulaArray(FormulaCommand):
 
   def __init__(self):
     FormulaCommand.__init__(self)
-    self.output = TagOutput().settag('table class="formula"', True)
+    self.output = TaggedOutput().settag('table class="formula"', True)
 
   def detect(self, pos):
     "Detect an array"

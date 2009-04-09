@@ -93,7 +93,7 @@ class BiblioCite(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput().settag('sup')
+    self.output = TaggedOutput().settag('sup')
 
   def process(self):
     "Add a cite to every entry"
@@ -120,7 +120,7 @@ class Bibliography(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput().settag('p class="biblio"', True)
+    self.output = TaggedOutput().settag('p class="biblio"', True)
 
 class BiblioEntry(Container):
   "A bibliography entry"
@@ -130,7 +130,7 @@ class BiblioEntry(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TagOutput().settag('span class="entry"')
+    self.output = TaggedOutput().settag('span class="entry"')
 
   def process(self):
     "Get all the cites of the entry"
@@ -157,7 +157,7 @@ class ListOf(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput().settag('div class="list"', True)
+    self.output = TaggedOutput().settag('div class="list"', True)
 
   def process(self):
     "Parse the header and get the type"
@@ -173,7 +173,7 @@ class TableOfContents(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput().settag('div class="toc"', True)
+    self.output = TaggedOutput().settag('div class="toc"', True)
 
   def process(self):
     "Parse the header and get the type"

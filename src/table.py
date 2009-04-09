@@ -36,7 +36,7 @@ class Table(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput().settag('table').setbreaklines(True)
+    self.output = TaggedOutput().settag('table', True)
 
 class TableHeader(Container):
   "The headers for the table"
@@ -55,7 +55,7 @@ class Row(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput().settag('tr').setbreaklines(True)
+    self.output = TaggedOutput().settag('tr', True)
 
   def process(self):
     if len(self.header) > 1:
@@ -69,7 +69,7 @@ class Cell(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TagOutput().settag('td').setbreaklines(True)
+    self.output = TaggedOutput().settag('td', True)
 
 ContainerFactory.types += [Table, TableHeader, Row, Cell]
 

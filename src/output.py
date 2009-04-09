@@ -57,7 +57,7 @@ class ContentsOutput(object):
       html += element.gethtml()
     return html
 
-class TagOutput(ContentsOutput):
+class TaggedOutput(ContentsOutput):
   "Outputs an HTML tag surrounding the contents"
 
   def __init__(self):

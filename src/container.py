@@ -212,7 +212,7 @@ class TaggedText(Container):
 
   def __init__(self):
     self.parser = TextParser()
-    self.output = TagOutput()
+    self.output = TaggedOutput()
 
   def complete(self, contents, tag, breaklines=False):
     "Complete the tagged text and return it"
