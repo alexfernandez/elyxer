@@ -68,15 +68,12 @@ class PostListItem(object):
   def decidelist(self, element, last):
     "After the last list element return it all"
     if isinstance(element, ListItem) and element.type == last.type:
-      Trace.debug('Another ' + last.type + ' pending')
       return element
     elif isinstance(element, DeeperList):
-      Trace.debug('Another deeper ' + element.type + ' pending')
       element.output = EmptyOutput()
       return element
     tag = ListItem.typetags[last.type]
     list = TaggedText().complete(PostListItem.pending, tag)
-    Trace.debug('Output list with ' + str(len(list.contents)) + ' items')
     PostListItem.pending = []
     return Group().contents([list, element])
 
