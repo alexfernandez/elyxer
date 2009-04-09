@@ -1,0 +1,175 @@
+#LyX 1.6.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\language spanish
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+List Test
+\end_layout
+
+\begin_layout Author
+Alex Fernández
+\end_layout
+
+\begin_layout Standard
+This document was created with LyX 1.6.2rc2, a great text editor.
+ It is used to test lists, descriptions and item lists.
+\end_layout
+
+\begin_layout Section
+List and Description
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+Ut enim ad minim veniam, quis nostrud exercitation
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+ullamco laboris nisi ut aliquip ex ea commodo
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+consequat.
+\end_layout
+
+\begin_layout Description
+Duis aute irure dolor in reprehenderit in
+\end_layout
+
+\begin_layout Description
+voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+\end_layout
+
+\begin_layout Section
+Itemize and Enumerate
+\end_layout
+
+\begin_layout Enumerate
+Lorem ipsum dolor sit amet,
+\end_layout
+
+\begin_layout Enumerate
+consectetur adipisicing elit,
+\end_layout
+
+\begin_layout Itemize
+sed do eiusmod tempor incididunt ut labore
+\end_layout
+
+\begin_layout Itemize
+et dolore magna aliqua.
+\end_layout
+
+\begin_layout Section
+Lists with Levels
+\end_layout
+
+\begin_layout Itemize
+sed do eiusmod tempor incididunt ut labore
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+sed do eiusmod tempor incididunt ut labore
+\end_layout
+
+\begin_layout Itemize
+et dolore magna aliqua.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+et dolore magna aliqua.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+sed do eiusmod tempor incididunt ut labore
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+ut labore,
+\end_layout
+
+\begin_layout Itemize
+ut labore.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+et dolore magna aliqua.
+\end_layout
+
+\begin_layout Enumerate
+Lorem ipsum dolor sit amet,
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+consectetur adipisicing elit,
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Lorem ipsum dolor sit amet,
+\end_layout
+
+\begin_layout Enumerate
+consectetur adipisicing elit,
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Lorem ipsum dolor sit amet,
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+consectetur adipisicing elit,
+\end_layout
+
+\end_body
+\end_document

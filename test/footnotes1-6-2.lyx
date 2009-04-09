@@ -149,45 +149,6 @@ laborum, laborum
 .
 \end_layout
 
-\begin_layout Enumerate
-Lorem ipsum dolor sit amet,
-\end_layout
-
-\begin_layout Enumerate
-consectetur adipisicing elit,
-\end_layout
-
-\begin_layout Itemize
-sed do eiusmod tempor incididunt ut labore
-\end_layout
-
-\begin_layout Itemize
-et dolore magna aliqua.
-\end_layout
-
-\begin_layout List
-\labelwidthstring 00.00.0000
-Ut enim ad minim veniam, quis nostrud exercitation
-\end_layout
-
-\begin_layout List
-\labelwidthstring 00.00.0000
-ullamco laboris nisi ut aliquip ex ea commodo
-\end_layout
-
-\begin_layout List
-\labelwidthstring 00.00.0000
-consequat.
-\end_layout
-
-\begin_layout Description
-Duis aute irure dolor in reprehenderit in
-\end_layout
-
-\begin_layout Description
-voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-\end_layout
-
 \begin_layout Standard
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
  tempor incididunt ut 
