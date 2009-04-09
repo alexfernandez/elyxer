@@ -74,6 +74,14 @@ target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
 LICENSE
 \family default
  file for details.
+ Also visit the 
+\begin_inset LatexCommand url
+name "main page"
+target "index.html"
+
+\end_inset
+
+ to find out about the latest developments.
 \end_layout
 
 \begin_layout Standard
@@ -1758,6 +1766,20 @@ Bibliography
  But more can be added to alter the result.
 \end_layout
 
+\begin_layout Standard
+There is also a 
+\family typewriter
+LastStage
+\family default
+: a stage that processes the 
+\emph on
+last
+\emph default
+ container based on the current one.
+ It is used to join list items into one coherent list tag.
+ The principle is the same as with other postprocessors.
+\end_layout
+
 \begin_layout Subsection
 Node Numbering
 \end_layout
@@ -1994,10 +2016,9 @@ key "milde-mathml,younes-elyxer"
 
 \end_inset
 
-, MathML is by now well supported in e.g.
- Firefox.
+, MathML is by now well supported in Firefox.
  An option to emit MathML (instead of more-or-less clumsy HTML and CSS code)
- would be very useful.
+ could be very useful.
 \end_layout
 
 \begin_layout Subsection
@@ -2005,12 +2026,12 @@ Roadmap
 \end_layout
 
 \begin_layout Standard
-Basic tool support should be ready in Q1 2009 (end of March), including
- support for most common LyX documents.
+Basic tool support is ready by Q1 2009 (end of March), including support
+ for most common LyX documents.
  In Q2 2009 (i.e.
  by the end of June) the pipeline should be complete and running.
  LyX integration (as an external tool) is planned for Q3 2009.
- All this is within the usual constraints: day job, family, etc.
+ All this within the usual constraints: day job, family, etc.
 \end_layout
 
 \begin_layout Section

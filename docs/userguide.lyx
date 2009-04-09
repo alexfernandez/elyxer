@@ -97,6 +97,17 @@ LICENSE
  file for details.
 \end_layout
 
+\begin_layout Standard
+Please visit the 
+\begin_inset LatexCommand url
+name "main page"
+target "index.html"
+
+\end_inset
+
+ to find out about the latest developments.
+\end_layout
+
 \begin_layout Subsection
 System Requirements
 \end_layout
@@ -486,9 +497,9 @@ title
 \end_layout
 
 \begin_layout Subsection
-Appearance
+CSS
 \begin_inset LatexCommand label
-name "sub:Appearance"
+name "sub:CSS"
 
 \end_inset
 
@@ -584,9 +595,9 @@ lyx.css
 \end_layout
 
 \begin_layout Standard
-To give your document a customized appearance you probably will want to
- use your own CSS file; to use it first copy it to the directory where your
- document resides (e.g.
+To give your document a customized appearance (or for pages to be accessible
+ offline) you probably will want to use your own CSS file; to use it first
+ copy it to the directory where your document resides (e.g.
  renaming it to 
 \family typewriter
 custom.css
@@ -627,8 +638,32 @@ custom.css
 `‐‐css'
 \family default
  and the name of the CSS file is optional.
- You can also change the title of the web page (which is not the title of
- the document) with the 
+\end_layout
+
+\begin_layout Subsection
+Title
+\end_layout
+
+\begin_layout Standard
+By default the generated web pages have the title 
+\begin_inset Quotes eld
+\end_inset
+
+Converted Document
+\begin_inset Quotes erd
+\end_inset
+
+.
+ If a PDF title is found then it is used instead.
+ eLyXer does not try to use the proper LyX title, since it may be found
+ in the middle of the document or not be present at all; scanning for it
+ would mean doing two passes, one to look for the title in the document
+ and another to output the web page.
+\end_layout
+
+\begin_layout Standard
+You can change the title of the web page (which is not the title of the
+ document) with the 
 \family typewriter
 ‐‐title
 \family default
@@ -714,6 +749,24 @@ Lists (such as this one) appear disjoint, with each item in a separate list.
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Enumerate
+Chapters, sections and subsections should appear numbered as in LyX.
+\end_layout
+
+\begin_layout Enumerate
+Text styles do not mix and match correctly.
+ E.g.
+ typewriter bold text will appear as typewriter or bold, but not both.
+ An example: 
+\family typewriter
+\series bold
+typewriter bold text
+\family default
+\series default
+.
+ 
 \begin_inset Note Note
 status open
 
@@ -738,16 +791,6 @@ By the way, the previous note (and this one) should not appear on the HTML.
 \end_layout
 
 \begin_layout Enumerate
-Chapters, sections and subsections should appear numbered as in LyX.
-\end_layout
-
-\begin_layout Enumerate
-Text styles do not mix and match correctly.
- E.g.
- typewriter bold text will appear as typewriter or bold, but not both.
-\end_layout
-
-\begin_layout Enumerate
 On Mac OS X the output of a message with Unicode characters may cause an
  error.
  Workaround: run elyxer with the 
@@ -755,24 +798,6 @@ On Mac OS X the output of a message with Unicode characters may cause an
 ‐‐quiet
 \family default
  option.
-\end_layout
-
-\begin_layout Enumerate
-The title of all converted documents is 
-\begin_inset Quotes eld
-\end_inset
-
-Converted document
-\begin_inset Quotes erd
-\end_inset
-
-.
- Not pretty, but you can change it with the 
-\family typewriter
-‐‐title
-\family default
- option.
- It will also pick up the PDF title if present.
 \end_layout
 
 \begin_layout Enumerate
@@ -786,7 +811,7 @@ Phonetic alphabet symbols are not supported -- they appear in dark cyan:
 
 \begin_layout Enumerate
 Vertical spacing is not preserved.
- It is hard to do in CSS.
+ (It is hard to do in CSS without significant mangling.)
 \end_layout
 
 \begin_layout Enumerate
@@ -845,8 +870,14 @@ eLyXer does not at the moment support all LyX features; sometimes it will
 \begin_layout Standard
 eLyXer is written in Python so that it does not need to be compiled; its
  code is interpreted on the fly.
- See the accompanying developer guide to learn how to extend eLyXer for
- your own purposes.
+ See the accompanying 
+\begin_inset LatexCommand url
+name "developer guide"
+target "devguide.html"
+
+\end_inset
+
+ to learn how to extend eLyXer for your own purposes.
  But if you know how to program in Python it should not be difficult to
  support other LyX features.
  If you don't you can always ask the author; you can find him at the elyxer
@@ -949,16 +980,8 @@ Q: My document changed its appearance without my intervention.
 A: It probably uses the online CSS file, which is regularly updated.
  See section 
 \begin_inset LatexCommand ref
-reference "sub:Appearance"
+reference "sub:CSS"
 
-\end_inset
-
-: 
-\begin_inset Quotes eld
-\end_inset
-
-Appearance
-\begin_inset Quotes erd
 \end_inset
 
  for details.
