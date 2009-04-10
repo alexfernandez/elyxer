@@ -116,10 +116,12 @@ class PostListItem(object):
   processedclass = ListItem
 
   pending = []
+  lasttype = None
 
   def lastprocess(self, element, last):
     "Add the last list item"
     PostListItem.pending += last.contents
+    PostListItem.lasttype = last.type
     return self.decidelist(element, last)
 
   def decidelist(self, element, last):
@@ -129,13 +131,10 @@ class PostListItem(object):
     elif isinstance(element, DeeperList):
       element.output = EmptyOutput()
       return element
-    tag = ListItem.typetags[last.type]
+    tag = ListItem.typetags[PostListItem.lasttype]
     list = TaggedText().complete(PostListItem.pending, tag)
     PostListItem.pending = []
     return Group().contents([list, element])
-
-  def generate(self):
-    "Generate the list"
 
 class PostDeeperList(PostListItem):
   "Add nested lists as list items"
@@ -144,9 +143,15 @@ class PostDeeperList(PostListItem):
 
   def lastprocess(self, element, last):
     "Add the last nested list"
-    tag = ListItem.typetags[last.type]
-    last.output = TaggedOutput().settag(tag, True)
-    PostListItem.pending.append(last)
+    if last.sublist:
+      tag = ListItem.typetags[last.type]
+      last.output = TaggedOutput().settag(tag, True)
+      PostListItem.pending.append(last)
+    else:
+      if len(PostListItem.pending) == 0:
+        Trace.error('No items in list for nested element')
+      else:
+        PostListItem.pending[-1].contents.append(last)
     return self.decidelist(element, last)
 
 class Postprocessor(object):

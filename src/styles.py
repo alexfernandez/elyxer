@@ -197,6 +197,8 @@ class DeeperList(Container):
   def __init__(self):
     self.parser = BoundedParser()
     self.output = TaggedOutput()
+    self.type = None
+    self.sublist = True
 
   def process(self):
     "Create the deeper list"
@@ -206,14 +208,26 @@ class DeeperList(Container):
     items = []
     for item in self.contents:
       if isinstance(item, ListItem):
-        self.type = item.type
+        self.settypeandsublist(item.type, True)
         items.append(item.contents[0])
       elif isinstance(item, DeeperList):
         items.append(item)
       else:
-        Trace.error('Unknown list item ' + str(item))
+        self.settypeandsublist(None, False)
+    if not self.sublist:
+      # do not mangle contents
+      return
     self.contents = items
     self.output.settag(ListItem.typetags[self.type], True)
+
+  def settypeandsublist(self, type, sublist):
+    "Set the new type and whether a sublist"
+    if self.type and not sublist:
+      Trace.error('Layouts in nested list not allowed')
+    if self.sublist and self.type and self.type != type:
+      Trace.error('Mixed items in nested list not allowed')
+    self.type = type
+    self.sublist = sublist
 
 ContainerFactory.types += [QuoteContainer, LyxLine, EmphaticText, ShapedText,
     VersalitasText, ColorText, SizeText, BoldText, TextFamily, Hfill,
