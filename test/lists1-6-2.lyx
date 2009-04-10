@@ -184,8 +184,20 @@ and back to 1st level.
 Now with some non-list text.
 \end_layout
 
+\begin_layout Enumerate
+And an ordered list.
+\end_layout
+
+\begin_layout Enumerate
+Second element in the ordered list.
+\end_layout
+
+\begin_layout Itemize
+For a still more difficult number: unordered now.
+\end_layout
+
 \begin_layout Subsection
-And even a new subsection.
+And now a new subsection.
 \end_layout
 
 \end_deeper
