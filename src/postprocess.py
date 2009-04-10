@@ -53,6 +53,63 @@ class PostBiblio(object):
     tag = TaggedText().constant('Bibliography', 'h1 class="biblio"')
     return Group().contents([tag, element])
 
+class PostLayout(object):
+  "Numerate an indexed layout"
+
+  processedclass = Layout
+
+  ordered = ['Chapter', 'Section', 'Subsection', 'Subsubsection', 'Paragraph']
+  unique = ['Part', 'Book']
+
+  def __init__(self):
+    self.startinglevel = 0
+    self.number = []
+    self.uniques = dict()
+
+  def postprocess(self, element, last):
+    "Generate a number and place it before the text"
+    if element.type in PostLayout.unique:
+      level = PostLayout.unique.index(element.type)
+      number = self.generateunique(element.type)
+    elif element.type in PostLayout.ordered:
+      level = PostLayout.ordered.index(element.type)
+      number = self.generate(level)
+    else:
+      return element
+    element.contents.insert(0, Constant(number + u' '))
+    return element
+
+  def generateunique(self, type):
+    "Generate a number to place in the title but not to append to others"
+    if not type in PostLayout.unique:
+      self.uniques[type] = 0
+    self.uniques[type] += 1
+    return type + ' ' + self.uniques[type] + '.'
+
+  def generate(self, level):
+    "Generate a number in the given level"
+    if self.number == [] and level == 1:
+      # starting at level 1
+      self.startinglevel = 1
+    level -= self.startinglevel
+    if len(self.number) > level:
+      self.number = self.number[:level + 1]
+    else:
+      while len(self.number) <= level:
+        self.number.append(0)
+    self.number[level] += 1
+    return self.dotseparated()
+
+  def dotseparated(self):
+    "Get the number separated by dots: 1.1.3"
+    dotsep = ''
+    if len(self.number) == 0:
+      Trace.error('Empty number')
+      return '.'
+    for number in self.number:
+      dotsep += '.' + str(number)
+    return dotsep[1:]
+
 class PostListItem(object):
   "Output a unified list element"
 
@@ -95,7 +152,7 @@ class PostDeeperList(PostListItem):
 class Postprocessor(object):
   "Postprocess an element keeping some context"
 
-  stages = [PostBiblio()]
+  stages = [PostBiblio(), PostLayout()]
   laststages = [PostListItem(), PostDeeperList()]
 
   stagedict = dict([(x.processedclass, x) for x in stages])

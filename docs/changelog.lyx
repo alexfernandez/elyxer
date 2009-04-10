@@ -97,6 +97,11 @@ Read image sizes correctly on big-endian architectures (e.g.
  Mac OS X on PowerPC).
 \end_layout
 
+\begin_layout Itemize
+Numeration of chapters, sections\SpecialChar \ldots{}
+ is working.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.12 (20090405):

@@ -739,23 +739,6 @@ Document structure is not preserved for certain document categories: for
 \end_layout
 
 \begin_layout Enumerate
-Lists (such as this one) appear disjoint, with each item in a separate list.
- This causes all items to be numbered as 
-\begin_inset Quotes eld
-\end_inset
-
-1
-\begin_inset Quotes erd
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Enumerate
-Chapters, sections and subsections should appear numbered as in LyX.
-\end_layout
-
-\begin_layout Enumerate
 Text styles do not mix and match correctly.
  E.g.
  typewriter bold text will appear as typewriter or bold, but not both.

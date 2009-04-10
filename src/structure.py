@@ -109,10 +109,11 @@ class Layout(Container):
   start = '\\begin_layout'
   ending = '\\end_layout'
 
-  typetags = { 'Quote':'blockquote', 'Standard':'div',
-        'Chapter':'h1', 'Section':'h2', 'Subsection':'h3', 'Subsubsection':'h4',
-        'Quotation':'blockquote', 'Center':'div', 'Paragraph':'div',
-        'Part':'h1'}
+  typetags = {
+      'Quote':'blockquote', 'Standard':'div', 'Part':'h1',
+      'Chapter':'h1', 'Section':'h2', 'Subsection':'h3', 'Subsubsection':'h4',
+      'Quotation':'blockquote', 'Center':'div', 'Paragraph':'div'
+      }
 
   def __init__(self):
     self.contents = list()

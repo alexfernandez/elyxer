@@ -1750,11 +1750,7 @@ Postprocessors
 \begin_layout Standard
 Some post-processing of the resulting HTML page can make the results look
  much better.
- There is right now only one 
-\family typewriter
-PostStage
-\family default
- in the postprocessing pipeline: it inserts a title 
+ The main stage in the postprocessing pipeline inserts a title 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1764,6 +1760,9 @@ Bibliography
 
  before the first bibliographical entry.
  But more can be added to alter the result.
+ As eLyXer parses a LyX document it automatically numbers all chapters and
+ sections.
+ This is also done in the postprocessor.
 \end_layout
 
 \begin_layout Standard
@@ -1778,16 +1777,6 @@ last
  container based on the current one.
  It is used to join list items into one coherent list tag.
  The principle is the same as with other postprocessors.
-\end_layout
-
-\begin_layout Subsection
-Node Numbering
-\end_layout
-
-\begin_layout Standard
-As eLyXer parses a LyX document it automatically numbers all chapters and
- sections.
- The code is, however, not ready yet for prime time and has been disabled.
 \end_layout
 
 \begin_layout Subsection
