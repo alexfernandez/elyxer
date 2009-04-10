@@ -30,6 +30,8 @@ class Trace(object):
   debugmode = False
   quietmode = False
 
+  prefix = None
+
   def debug(cls, message):
     "Show a debug message"
     if Trace.debugmode and not Trace.quietmode:
@@ -37,11 +39,16 @@ class Trace(object):
 
   def message(cls, message):
     "Show a trace message"
-    if not Trace.quietmode:
-      print message
+    if Trace.quietmode:
+      return
+    if Trace.prefix:
+      message = Trace.prefix + message
+    print message
 
   def error(cls, message):
     "Show an error message"
+    if Trace.prefix:
+      message = Trace.prefix + message
     message = message.encode('utf-8')
     sys.stderr.write(message + '\n')
 

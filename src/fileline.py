@@ -64,6 +64,7 @@ class LineReader(object):
     if self.file == sys.stdin:
       self.current = self.current.decode('utf-8')
     self.linenumber += 1
+    Trace.prefix = 'Line ' + str(self.linenumber) + ': '
     if self.linenumber % 1000 == 0:
       Trace.message('Parsing line ' + str(self.linenumber))
 
