@@ -106,12 +106,17 @@ class Image(Container):
       return Image.dimensions[filename]
     pngfile = codecs.open(filename, 'rb')
     pngfile.seek(16)
-    width = struct.unpack('>L', pngfile.read(4))
-    height = struct.unpack('>L', pngfile.read(4))
+    width = self.readlong(pngfile)
+    height = self.readlong(pngfile)
     dimensions = (width, height)
     pngfile.close()
     Image.dimensions[filename] = dimensions
     return dimensions
+
+  def readlong(self, file):
+    "Read a long value"
+    tuple = struct.unpack('>L', file.read(4))
+    return tuple[0]
 
 class ImageOutput(object):
   "Returns an image in the output"
