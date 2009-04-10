@@ -93,7 +93,8 @@ Changelog moved to separate document.
 \end_layout
 
 \begin_layout Itemize
-Read image sizes correctly on big-endian architectures.
+Read image sizes correctly on big-endian architectures (e.g.
+ Mac OS X on PowerPC).
 \end_layout
 
 \end_deeper

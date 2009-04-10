@@ -24,7 +24,7 @@
 
 import os
 import os.path
-import array
+import struct
 from trace import Trace
 from container import *
 from output import MirrorOutput
@@ -106,20 +106,12 @@ class Image(Container):
       return Image.dimensions[filename]
     pngfile = codecs.open(filename, 'rb')
     pngfile.seek(16)
-    bytes = array.array('b')
-    bytes.fromfile(pngfile, 8)
-    width = self.readlong(bytes, 0)
-    height = self.readlong(bytes, 4)
+    width = struct.unpack('>L', pngfile.read(4))
+    height = struct.unpack('>L', pngfile.read(4))
     dimensions = (width, height)
     pngfile.close()
     Image.dimensions[filename] = dimensions
     return dimensions
-
-  def readlong(self, bytes, offset):
-    "Read a long from a series of bytes"
-    value = bytes[offset] * 2^24 + bytes[offset + 1] * 2^16
-    value += bytes[offset + 2] * 2^8 + bytes[offset + 3]
-    return value
 
 class ImageOutput(object):
   "Returns an image in the output"
