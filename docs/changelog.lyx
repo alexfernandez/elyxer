@@ -73,6 +73,10 @@ Lists are correctly displayed, instead of one list per item.
 \end_layout
 
 \begin_layout Itemize
+Lists can contain nested layouts.
+\end_layout
+
+\begin_layout Itemize
 
 \family typewriter
 List
