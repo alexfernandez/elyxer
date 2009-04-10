@@ -38,9 +38,7 @@ class LineReader(object):
   def currentline(self):
     "Get the current line"
     if not self.current:
-      self.current = self.file.readline()
-      if self.file == sys.stdin:
-        self.current = self.current.decode('utf-8')
+      self.readline()
     return self.current
 
   def currentnonblank(self):
@@ -59,6 +57,12 @@ class LineReader(object):
     "Go to next line"
     self.current = None
     self.split = None
+
+  def readline(self):
+    "Read a line from file"
+    self.current = self.file.readline()
+    if self.file == sys.stdin:
+      self.current = self.current.decode('utf-8')
     self.linenumber += 1
     if self.linenumber % 1000 == 0:
       Trace.message('Parsing line ' + str(self.linenumber))
