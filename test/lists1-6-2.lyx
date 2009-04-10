@@ -179,6 +179,16 @@ back to 2nd on 2nd street, sorry, level,
 and back to 1st level.
 \end_layout
 
+\begin_deeper
+\begin_layout Standard
+Now with some non-list text.
+\end_layout
+
+\begin_layout Subsection
+And even a new subsection.
+\end_layout
+
+\end_deeper
 \begin_layout Enumerate
 3rd on 1st level.
 \end_layout
