@@ -26,6 +26,7 @@ from container import *
 from link import *
 from trace import Trace
 from structure import *
+from layout import *
 
 
 class Group(Container):
