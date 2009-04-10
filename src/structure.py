@@ -248,8 +248,70 @@ class Appendix(Container):
     self.parser = LoneCommand()
     self.output = TaggedOutput().settag('span class="appendix"', True)
 
+class ListItem(Container):
+  "An element in a list"
+
+  starts = ['\\begin_layout Enumerate', '\\begin_layout Itemize']
+  ending = '\\end_layout'
+
+  def __init__(self):
+    "Output should be empty until the postprocessor can group items"
+    self.contents = list()
+    self.parser = BoundedParser()
+    self.output = EmptyOutput()
+
+  typetags = {'Enumerate':'ol', 'Itemize':'ul'}
+
+  def process(self):
+    "Set the correct type and contents."
+    self.type = self.header[1]
+    tag = TaggedText().complete(self.contents, 'li', True)
+    self.contents = [tag]
+
+class DeeperList(Container):
+  "A nested list"
+
+  start = '\\begin_deeper'
+  ending = '\\end_deeper'
+
+  def __init__(self):
+    self.parser = BoundedParser()
+    self.output = TaggedOutput()
+    self.type = None
+    self.sublist = True
+
+  def process(self):
+    "Create the deeper list"
+    if len(self.contents) == 0:
+      Trace.error('Empty deeper list')
+      return
+    items = []
+    for item in self.contents:
+      if isinstance(item, ListItem):
+        self.settypeandsublist(item.type, True)
+        items.append(item.contents[0])
+      elif isinstance(item, DeeperList):
+        items.append(item)
+      else:
+        self.settypeandsublist(None, False)
+    if not self.sublist:
+      # do not mangle contents
+      return
+    self.contents = items
+    self.output.settag(ListItem.typetags[self.type], True)
+
+  def settypeandsublist(self, type, sublist):
+    "Set the new type and whether a sublist"
+    if self.type and not sublist:
+      Trace.error('Layouts in nested list not allowed')
+    if self.sublist and self.type and self.type != type:
+      Trace.error('Mixed items in nested list not allowed')
+    self.type = type
+    self.sublist = sublist
+
 ContainerFactory.types += [
     LyxHeader, LyxFooter, InsetText, Caption, Inset, Align, Float, Newline,
-    Space, NewlineInset, Branch, ShortTitle, Footnote, Appendix, Note
+    Space, NewlineInset, Branch, ShortTitle, Footnote, Appendix, Note,
+    ListItem, DeeperList
     ]
 
