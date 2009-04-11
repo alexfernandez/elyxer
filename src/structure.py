@@ -287,6 +287,12 @@ class DeeperList(Container):
       Trace.error('Empty deeper list')
       return
 
+  def __str__(self):
+    result = 'deeper list @ ' + str(self.begin) + ': ['
+    for element in self.contents:
+      result += str(element) + ', '
+    return result[:-2] + ']'
+
 ContainerFactory.types += [
     LyxHeader, LyxFooter, InsetText, Caption, Inset, Align, Float, Newline,
     Space, NewlineInset, Branch, ShortTitle, Footnote, Appendix, Note,

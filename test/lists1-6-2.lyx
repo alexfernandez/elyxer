@@ -101,6 +101,28 @@ second itemized.
 Lists with Levels
 \end_layout
 
+\begin_layout Standard
+First a simple nested list.
+\end_layout
+
+\begin_layout Itemize
+Level one:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+level two first item,
+\end_layout
+
+\begin_layout Itemize
+level two second item.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Now a more complex example.
+\end_layout
+
 \begin_layout Itemize
 First in first level:
 \end_layout

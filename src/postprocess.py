@@ -125,7 +125,7 @@ class PostDeeperList(object):
       result = postproc.postprocess(part)
       deeper.contents[i] = result
       i += 1
-    postproc.postprocess(None)
+    deeper.contents = postproc.postprocess(Constant('')).contents
     deeper.output = EmptyOutput()
     return deeper
 
@@ -142,21 +142,25 @@ class PendingList(object):
     self.contents += item.contents
     self.type = item.type
 
+  def addnested(self, nested):
+    "Add a nested list item"
+    if len(self.contents) == 0:
+      Trace.error('No items in list to insert ' + str(nested))
+      return nested
+    Trace.debug('Adding ' + str(nested) + ' to end of ' + str(self))
+    self.contents.append(nested)
+
   def getlist(self):
     "Get the resulting list"
     tag = ListItem.typetags[self.type]
+    Trace.debug('List from ' + str(self))
     return TaggedText().complete(self.contents, tag, True)
 
-  def addnested(self, element):
-    "Add a nested list item"
-    if len(self.contents) == 0:
-      Trace.error('No items in list to insert ' + str(element))
-      return element
-    Trace.debug('Adding ' + str(element) + ' to end of ' + str(self))
-    self.contents.append(element)
-
   def __str__(self):
-    return 'pending ' + str(self.contents) + ' of ' + self.type
+    result = 'pending ' + self.type + ': ['
+    for element in self.contents:
+      result += str(element) + ', '
+    return result[:-2] + ']'
 
 class LastListItem(object):
   "Output a unified list element"
