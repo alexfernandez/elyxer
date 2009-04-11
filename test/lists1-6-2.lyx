@@ -45,10 +45,6 @@
 List Test
 \end_layout
 
-\begin_layout Author
-Alex Fernández
-\end_layout
-
 \begin_layout Standard
 This document was created with LyX 1.6.2rc2, a great text editor.
  It is used to test lists, descriptions and item lists.
@@ -106,7 +102,7 @@ Lists with Levels
 \end_layout
 
 \begin_layout Itemize
-First in first level
+First in first level:
 \end_layout
 
 \begin_deeper
@@ -120,12 +116,12 @@ second in second level,
 
 \end_deeper
 \begin_layout Itemize
-second in first level,
+second in first level:
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-now third on second level,
+now third on second level:
 \end_layout
 
 \begin_deeper
@@ -144,12 +140,12 @@ back to third in first level.
 \end_layout
 
 \begin_layout Enumerate
-Now 1st in 1st level,
+Now 1st in 1st level:
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
-1st on 2nd level,
+1st on 2nd level:
 \end_layout
 
 \begin_deeper
@@ -176,7 +172,7 @@ back to 2nd on 2nd street, sorry, level,
 
 \end_deeper
 \begin_layout Enumerate
-and back to 1st level.
+and back to 1st level:
 \end_layout
 
 \begin_deeper
@@ -188,6 +184,12 @@ Now with some non-list text.
 And an ordered list.
 \end_layout
 
+\begin_deeper
+\begin_layout Standard
+Just the nested text.
+\end_layout
+
+\end_deeper
 \begin_layout Enumerate
 Second element in the ordered list.
 \end_layout
