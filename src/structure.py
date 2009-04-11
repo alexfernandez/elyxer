@@ -268,6 +268,9 @@ class ListItem(Container):
     tag = TaggedText().complete(self.contents, 'li', True)
     self.contents = [tag]
 
+  def __str__(self):
+    return self.type + ' item @ ' + str(self.begin)
+
 class DeeperList(Container):
   "A nested list"
 
@@ -277,37 +280,12 @@ class DeeperList(Container):
   def __init__(self):
     self.parser = BoundedParser()
     self.output = TaggedOutput()
-    self.type = None
-    self.sublist = True
 
   def process(self):
     "Create the deeper list"
     if len(self.contents) == 0:
       Trace.error('Empty deeper list')
       return
-    items = []
-    for item in self.contents:
-      if isinstance(item, ListItem):
-        self.settypeandsublist(item.type, True)
-        items.append(item.contents[0])
-      elif isinstance(item, DeeperList):
-        items.append(item)
-      else:
-        self.settypeandsublist(None, False)
-    if not self.sublist:
-      # do not mangle contents
-      return
-    self.contents = items
-    self.output.settag(ListItem.typetags[self.type], True)
-
-  def settypeandsublist(self, type, sublist):
-    "Set the new type and whether a sublist"
-    if self.type and not sublist:
-      Trace.error('Layouts in nested list not allowed')
-    if self.sublist and self.type and self.type != type:
-      Trace.error('Mixed items in nested list not allowed')
-    self.type = type
-    self.sublist = sublist
 
 ContainerFactory.types += [
     LyxHeader, LyxFooter, InsetText, Caption, Inset, Align, Float, Newline,

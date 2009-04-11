@@ -111,6 +111,24 @@ class PostLayout(object):
       dotsep += '.' + str(number)
     return dotsep[1:]
 
+class PostDeeperList(object):
+  "Postprocess a deeper (nested) list"
+
+  processedclass = DeeperList
+
+  def postprocess(self, deeper, last):
+    "Run the postprocessor on the nested list"
+    postproc = Postprocessor()
+    i = 0
+    while i < len(deeper.contents):
+      part = deeper.contents[i]
+      result = postproc.postprocess(part)
+      deeper.contents[i] = result
+      i += 1
+    postproc.postprocess(None)
+    deeper.output = EmptyOutput()
+    return deeper
+
 class PendingList(object):
   "A pending list"
 
@@ -120,15 +138,27 @@ class PendingList(object):
 
   def additem(self, item):
     "Add a list item"
+    Trace.debug('Pending ' + str(len(self.contents)) + ': ' + str(item))
     self.contents += item.contents
     self.type = item.type
 
   def getlist(self):
     "Get the resulting list"
     tag = ListItem.typetags[self.type]
-    return TaggedText().complete(self.contents, tag)
+    return TaggedText().complete(self.contents, tag, True)
 
-class PostListItem(object):
+  def addnested(self, element):
+    "Add a nested list item"
+    if len(self.contents) == 0:
+      Trace.error('No items in list to insert ' + str(element))
+      return element
+    Trace.debug('Adding ' + str(element) + ' to end of ' + str(self))
+    self.contents.append(element)
+
+  def __str__(self):
+    return 'pending ' + str(self.contents) + ' of ' + self.type
+
+class LastListItem(object):
   "Output a unified list element"
 
   processedclass = ListItem
@@ -143,16 +173,16 @@ class PostListItem(object):
 
   def decidelist(self, element, last):
     "After the last list element return it all"
-    if isinstance(element, ListItem) and element.type == last.type:
-      return element
-    elif isinstance(element, DeeperList):
-      element.output = EmptyOutput()
+    if isinstance(element, ListItem):
+      if element.type == self.pending.type:
+        return element
+    if isinstance(element, DeeperList):
       return element
     list = self.pending.getlist()
     self.pending.__init__()
     return Group().contents([list, element])
 
-class PostDeeperList(PostListItem):
+class LastDeeperList(LastListItem):
   "Add nested lists as list items"
 
   processedclass = DeeperList
@@ -162,25 +192,17 @@ class PostDeeperList(PostListItem):
 
   def lastprocess(self, element, last):
     "Add the last nested list"
-    if last.sublist:
-      tag = ListItem.typetags[last.type]
-      last.output = TaggedOutput().settag(tag, True)
-      self.pending.contents.append(last)
-    else:
-      if len(self.pending.contents) == 0:
-        Trace.error('No items in list for nested element')
-      else:
-        Trace.debug('Adding ' + str(last) + ' to pending ' + str(self.pending))
-        self.pending.contents[-1].contents.append(last)
+    last.output = ContentsOutput()
+    self.pending.addnested(last)
     return self.decidelist(element, last)
 
 class Postprocessor(object):
   "Postprocess an element keeping some context"
 
   def __init__(self):
-    self.stages = [PostBiblio(), PostLayout()]
+    self.stages = [PostBiblio(), PostLayout(), PostDeeperList()]
     pending = PendingList()
-    self.laststages = [PostListItem(pending), PostDeeperList(pending)]
+    self.laststages = [LastListItem(pending), LastDeeperList(pending)]
     self.stagedict = dict([(x.processedclass, x) for x in self.stages])
     self.laststagedict = dict([(x.processedclass, x) for x in self.laststages])
     self.last = None
