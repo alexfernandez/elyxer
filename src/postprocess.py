@@ -125,7 +125,7 @@ class PostDeeperList(object):
       result = postproc.postprocess(part)
       deeper.contents[i] = result
       i += 1
-    deeper.contents = postproc.postprocess(Constant('')).contents
+    deeper.contents.append(postproc.postprocess(Constant('')))
     deeper.output = EmptyOutput()
     return deeper
 
