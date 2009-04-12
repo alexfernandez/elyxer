@@ -135,7 +135,7 @@ Resource usage is minimum.
 \begin_inset Formula $40000$
 \end_inset
 
- words) takes about 50 seconds on my 1st-generation Asus Eee, which sports
+ words) takes close to 50 seconds on my 1st-generation Asus Eee, which sports
  a 530MHz Celeron processor.
  On a modern machine it should be ligthning fast.
  Memory usage is also quite frugal, remaining always below 10 MB.
@@ -277,10 +277,6 @@ target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Subsection*
-Changelog
 \end_layout
 
 \begin_layout Subsection*
