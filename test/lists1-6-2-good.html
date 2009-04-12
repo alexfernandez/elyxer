@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta name="generator" content="http://www.nongnu.org/elyxer/"/>
-<meta name="create-date" content="2009-04-11"/>
-<link rel="stylesheet" href="http://www.nongnu.org/elyxer/lyx.css" type="text/css" media="screen"/>
+<meta name="create-date" content="2009-04-12"/>
+<link rel="stylesheet" href="../docs/lyx.css" type="text/css" media="screen"/>
 <title>Converted document</title>
 </head>
 <body>
@@ -62,9 +62,7 @@ First a simple nested list.
 </div>
 <ul>
 <li>
-Level one:
-</li>
-<ul>
+Level one:<ul>
 <li>
 level two first item,
 </li>
@@ -74,15 +72,15 @@ level two second item.
 
 </ul>
 
+</li>
+
 </ul>
 <div class="Standard">
 Now a more complex example.
 </div>
 <ul>
 <li>
-First in first level:
-</li>
-<ul>
+First in first level:<ul>
 <li>
 first in second level,
 </li>
@@ -91,14 +89,12 @@ second in second level,
 </li>
 
 </ul>
-<li>
-second in first level:
+
 </li>
-<ul>
 <li>
-now third on second level:
-</li>
-<ul>
+second in first level:<ul>
+<li>
+now third on second level:<ul>
 <li>
 third level 1,
 </li>
@@ -108,7 +104,11 @@ third level 2.
 
 </ul>
 
+</li>
+
 </ul>
+
+</li>
 <li>
 back to third in first level.
 </li>
@@ -116,12 +116,17 @@ back to third in first level.
 </ul>
 <ol>
 <li>
-Now 1st in 1st level:
-</li>
-<ol>
+Now 1st in 1st level:<ol>
 <li>
-1st on 2nd level:
+1st on 2nd level:<ol>
+<li>
+1st on 3rd level!
 </li>
+<li>
+2nd on 3rd level.
+</li>
+
+</ol>
 <ul>
 <li>
 And now mixing 3rd level itemized,
@@ -131,13 +136,44 @@ and another.
 </li>
 
 </ul>
+
+</li>
 <li>
 back to 2nd on 2nd street, sorry, level,
 </li>
 
 </ol>
+
+</li>
 <li>
-and back to 1st level:
+and back to 1st level:<div class="Standard">
+Now with some non-list text.
+</div>
+<ol>
+<li>
+And an ordered list.<div class="Standard">
+Just the nested text.
+</div>
+<div class="Standard">
+Repeated twice.
+</div>
+
+</li>
+<li>
+Second element in the ordered list.
+</li>
+
+</ol>
+<ul>
+<li>
+For a still more difficult number: unordered now.
+</li>
+
+</ul>
+<h3 class="Subsection">
+0.0.1 And now a new subsection.
+</h3>
+
 </li>
 <li>
 3rd on 1st level.

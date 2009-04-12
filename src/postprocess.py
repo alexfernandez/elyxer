@@ -138,10 +138,8 @@ class PendingList(object):
 
   def additem(self, item):
     "Add a list item"
-    Trace.debug('Pending ' + str(len(self.contents)) + ': ' + str(item))
     self.contents += item.contents
     self.type = item.type
-    Trace.debug('Added ' + str(item.contents))
 
   def addnested(self, nested):
     "Add a nested list item"
@@ -149,7 +147,6 @@ class PendingList(object):
       Trace.error('No items in list to insert ' + str(nested))
       return
     item = self.contents[-1]
-    Trace.debug('Adding ' + str(nested) + ' to end of ' + str(item))
     self.contents[-1].contents.append(nested)
 
   def generatelist(self):
@@ -157,7 +154,6 @@ class PendingList(object):
     if not self.type:
       return Group().contents(self.contents)
     tag = ListItem.typetags[self.type]
-    Trace.debug('List from ' + str(self))
     return TaggedText().complete(self.contents, tag, True)
 
   def empty(self):
@@ -180,16 +176,16 @@ class PostListPending(object):
   def postprocess(self, element, last):
     "If a list element do not return anything;"
     "otherwise return the whole pending list"
-    original = element
+    list = None
+    if self.generatepending(element):
+      list = self.pending.generatelist()
+      self.pending.__init__()
     if isinstance(element, ListItem):
       element = self.processitem(element)
     elif isinstance(element, DeeperList):
       element = self.processnested(element)
-    if not self.generatepending(original):
+    if not list:
       return element
-    Trace.debug('Generating ' + str(self.pending))
-    list = self.pending.generatelist()
-    self.pending.__init__()
     return Group().contents([list, element])
 
   def processitem(self, item):
@@ -221,8 +217,8 @@ class Postprocessor(object):
 
   def __init__(self):
     self.stages = [PostBiblio(), PostLayout(), PostNestedList()]
-    self.unconditional = [PostListPending()]
     self.stagedict = dict([(x.processedclass, x) for x in self.stages])
+    self.unconditional = [PostListPending()]
     self.last = None
 
   def postprocess(self, original):
