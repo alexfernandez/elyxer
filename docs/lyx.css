@@ -333,3 +333,6 @@ span.greyedout {
 div.Description, div.List, li {
 	margin: 1em 0;
 }
+li.nested {
+	list-style-type: none;
+}
