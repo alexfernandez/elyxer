@@ -223,10 +223,10 @@ class TaggedText(Container):
     self.breaklines = breaklines
     return self
 
-  def constant(self, text, tag):
+  def constant(self, text, tag, breaklines=False):
     "Complete the tagged text with a constant"
     constant = Constant(text)
-    return self.complete([constant], tag)
+    return self.complete([constant], tag, breaklines)
 
   def __str__(self):
     return 'Tagged <' + self.tag + '>'

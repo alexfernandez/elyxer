@@ -144,8 +144,7 @@ class PendingList(object):
   def addnested(self, nested):
     "Add a nested list item"
     if self.empty():
-      Trace.error('No items in list to insert ' + str(nested))
-      return
+      self.insertfake()
     item = self.contents[-1]
     self.contents[-1].contents.append(nested)
 
@@ -158,6 +157,13 @@ class PendingList(object):
 
   def empty(self):
     return len(self.contents) == 0
+
+  def insertfake(self):
+    "Insert a fake item"
+    item = TaggedText().constant('', 'li class="nested"', True)
+    self.contents = [item]
+    # Special type so it will not mix with Itemized or Enumerated
+    self.type = '*Special*'
 
   def __str__(self):
     result = 'pending ' + str(self.type) + ': ['
