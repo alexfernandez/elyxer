@@ -72,6 +72,8 @@ class Container(object):
 
   def __str__(self):
     "Get a description"
+    if not hasattr(self, 'begin'):
+      return self.__class__.__name__
     return self.__class__.__name__ + '@' + str(self.begin)
 
   def escape(self, line, escapes = ContainerConfig.escapes):

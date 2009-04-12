@@ -279,7 +279,7 @@ class DeeperList(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TaggedOutput()
+    self.output = ContentsOutput()
 
   def process(self):
     "Create the deeper list"

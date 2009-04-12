@@ -111,8 +111,8 @@ class PostLayout(object):
       dotsep += '.' + str(number)
     return dotsep[1:]
 
-class PostDeeperList(object):
-  "Postprocess a deeper (nested) list"
+class PostNestedList(object):
+  "Postprocess a nested list"
 
   processedclass = DeeperList
 
@@ -125,8 +125,8 @@ class PostDeeperList(object):
       result = postproc.postprocess(part)
       deeper.contents[i] = result
       i += 1
-    deeper.contents.append(postproc.postprocess(Constant('')))
-    deeper.output = EmptyOutput()
+    # one additional item to flush the list
+    deeper.contents.append(postproc.postprocess(BlackBox()))
     return deeper
 
 class PendingList(object):
@@ -141,74 +141,88 @@ class PendingList(object):
     Trace.debug('Pending ' + str(len(self.contents)) + ': ' + str(item))
     self.contents += item.contents
     self.type = item.type
+    Trace.debug('Added ' + str(item.contents))
 
   def addnested(self, nested):
     "Add a nested list item"
-    if len(self.contents) == 0:
+    if self.empty():
       Trace.error('No items in list to insert ' + str(nested))
-      return nested
-    Trace.debug('Adding ' + str(nested) + ' to end of ' + str(self))
-    self.contents.append(nested)
+      return
+    item = self.contents[-1]
+    Trace.debug('Adding ' + str(nested) + ' to end of ' + str(item))
+    self.contents[-1].contents.append(nested)
 
-  def getlist(self):
+  def generatelist(self):
     "Get the resulting list"
+    if not self.type:
+      return Group().contents(self.contents)
     tag = ListItem.typetags[self.type]
     Trace.debug('List from ' + str(self))
     return TaggedText().complete(self.contents, tag, True)
 
+  def empty(self):
+    return len(self.contents) == 0
+
   def __str__(self):
-    result = 'pending ' + self.type + ': ['
+    result = 'pending ' + str(self.type) + ': ['
     for element in self.contents:
       result += str(element) + ', '
-    return result[:-2] + ']'
+    if len(self.contents) > 0:
+      result = result[:-2]
+    return result + ']'
 
-class LastListItem(object):
-  "Output a unified list element"
+class PostListPending(object):
+  "Check if there is a pending list"
 
-  processedclass = ListItem
+  def __init__(self):
+    self.pending = PendingList()
 
-  def __init__(self, pending):
-    self.pending = pending
-
-  def lastprocess(self, element, last):
-    "Add the last list item"
-    self.pending.additem(last)
-    return self.decidelist(element, last)
-
-  def decidelist(self, element, last):
-    "After the last list element return it all"
+  def postprocess(self, element, last):
+    "If a list element do not return anything;"
+    "otherwise return the whole pending list"
+    original = element
     if isinstance(element, ListItem):
-      if element.type == self.pending.type:
-        return element
-    if isinstance(element, DeeperList):
+      element = self.processitem(element)
+    elif isinstance(element, DeeperList):
+      element = self.processnested(element)
+    if not self.generatepending(original):
       return element
-    list = self.pending.getlist()
+    Trace.debug('Generating ' + str(self.pending))
+    list = self.pending.generatelist()
     self.pending.__init__()
     return Group().contents([list, element])
 
-class LastDeeperList(LastListItem):
-  "Add nested lists as list items"
+  def processitem(self, item):
+    "Process a list item"
+    self.pending.additem(item)
+    return BlackBox()
 
-  processedclass = DeeperList
+  def processnested(self, nested):
+    "Process a nested list"
+    self.pending.addnested(nested)
+    return BlackBox()
 
-  def __init__(self, pending):
-    self.pending = pending
-
-  def lastprocess(self, element, last):
-    "Add the last nested list"
-    last.output = ContentsOutput()
-    self.pending.addnested(last)
-    return self.decidelist(element, last)
+  def generatepending(self, element):
+    "Decide whether to generate the pending list"
+    if self.pending.empty():
+      return False
+    if isinstance(element, ListItem):
+      if not self.pending.type:
+        return False
+      if self.pending.type != element.type:
+        return True
+      return False
+    if isinstance(element, DeeperList):
+      return False
+    return True
 
 class Postprocessor(object):
   "Postprocess an element keeping some context"
 
   def __init__(self):
-    self.stages = [PostBiblio(), PostLayout(), PostDeeperList()]
-    pending = PendingList()
-    self.laststages = [LastListItem(pending), LastDeeperList(pending)]
+    self.stages = [PostBiblio(), PostLayout(), PostNestedList()]
+    self.unconditional = [PostListPending()]
     self.stagedict = dict([(x.processedclass, x) for x in self.stages])
-    self.laststagedict = dict([(x.processedclass, x) for x in self.laststages])
     self.last = None
 
   def postprocess(self, original):
@@ -217,9 +231,8 @@ class Postprocessor(object):
     if element.__class__ in self.stagedict:
       stage = self.stagedict[element.__class__]
       element = stage.postprocess(element, self.last)
-    if self.last and self.last.__class__ in self.laststagedict:
-      stage = self.laststagedict[self.last.__class__]
-      element = stage.lastprocess(element, self.last)
+    for stage in self.unconditional:
+      element = stage.postprocess(element, self.last)
     self.last = original
     return element
 
