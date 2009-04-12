@@ -211,6 +211,10 @@ And an ordered list.
 Just the nested text.
 \end_layout
 
+\begin_layout Standard
+Repeated twice.
+\end_layout
+
 \end_deeper
 \begin_layout Enumerate
 Second element in the ordered list.
