@@ -106,6 +106,10 @@ Numeration of chapters, sections\SpecialChar \ldots{}
  is working.
 \end_layout
 
+\begin_layout Itemize
+Error messages now show the line where they happen.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.12 (20090405):
