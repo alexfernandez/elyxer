@@ -211,7 +211,19 @@ target "https://savannah.nongnu.org/files/?group=elyxer"
 \end_inset
 
 .
- The 
+ Latest version is 0.13, created on 20090412.
+ See the 
+\begin_inset LatexCommand url
+name "change log"
+target "changelog.html"
+
+\end_inset
+
+ for information about past versions.
+\end_layout
+
+\begin_layout Standard
+The 
 \begin_inset LatexCommand htmlurl
 name "user guide"
 target "userguide.html"
@@ -269,18 +281,6 @@ target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 
 \begin_layout Subsection*
 Changelog
-\end_layout
-
-\begin_layout Standard
-Latest version is 0.12, created on 20090405.
- See the 
-\begin_inset LatexCommand url
-name "change log"
-target "changelog.html"
-
-\end_inset
-
- for information about past versions.
 \end_layout
 
 \begin_layout Subsection*
