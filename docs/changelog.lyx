@@ -64,6 +64,16 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.14 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Deeper layouts (of any kind, not just in lists) are now supported.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.13 (20090412):
 \end_layout
 
