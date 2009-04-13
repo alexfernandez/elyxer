@@ -252,6 +252,7 @@ class FormulaArray(FormulaCommand):
   def __init__(self):
     FormulaCommand.__init__(self)
     self.output = TaggedOutput().settag('table class="formula"', True)
+    self.valign = 'c'
 
   def detect(self, pos):
     "Detect an array"
@@ -275,6 +276,15 @@ class FormulaArray(FormulaCommand):
 
   def parsealignments(self, pos):
     "Parse the different alignments"
+    # vertical
+    if pos.checkfor('['):
+      self.addoriginal('[', pos)
+      self.valign = pos.current()
+      self.addoriginal(self.valign, pos)
+      if not pos.checkfor(']'):
+        Trace.error('Vertical alignment ' + self.valign + ' not closed')
+      self.addoriginal(']', pos)
+    # horizontal
     bracket = self.parsebracket(pos)
     if not bracket:
       Trace.error('No alignments for array in ' + pos.remaining())

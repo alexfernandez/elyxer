@@ -90,6 +90,10 @@ Double dash does not catch Unix-style options: --css is not converted --
 Corrected serious bug in formula parsing affecting inline arrays.
 \end_layout
 
+\begin_layout Itemize
+Arrays with vertical alignment are correctly parsed.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.13 (20090412):
