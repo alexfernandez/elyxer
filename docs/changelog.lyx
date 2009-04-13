@@ -87,9 +87,7 @@ Double dash does not catch Unix-style options: --css is not converted --
 \end_layout
 
 \begin_layout Itemize
-Corrected serious bug in formula parsing (of the form $\SpecialChar \ldots{}
-$ on several lines
- -- in other words, affecting inline arrays).
+Corrected serious bug in formula parsing affecting inline arrays.
 \end_layout
 
 \end_deeper
