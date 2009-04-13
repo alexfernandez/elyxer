@@ -86,6 +86,12 @@ Double dash does not catch Unix-style options: --css is not converted --
  while the version with spaces is.
 \end_layout
 
+\begin_layout Itemize
+Corrected serious bug in formula parsing (of the form $\SpecialChar \ldots{}
+$ on several lines
+ -- in other words, affecting inline arrays).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.13 (20090412):

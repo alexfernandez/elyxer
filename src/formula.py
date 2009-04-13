@@ -71,15 +71,16 @@ class FormulaParser(Parser):
         reader.nextline()
       else:
         # formula is multiline $...$
-        formula = self.parsemultiliner(reader, '$')
+        formula = self.parsemultiliner(reader, '$', '$')
     elif '\\[' in reader.currentline():
       # formula of the form \[...\]
-      formula = self.parsemultiliner(reader, '\\]')
+      formula = self.parsemultiliner(reader, '\\[', '\\]')
     elif '\\begin{' in reader.currentline() and reader.currentline().endswith('}\n'):
       current = reader.currentline().strip()
       endsplit = current.split('\\begin{')[1].split('}')
+      startpiece = '\\begin{' + endsplit + '}'
       endpiece = '\\end{' + endsplit[0] + '}'
-      formula = self.parsemultiliner(reader, endpiece)
+      formula = self.parsemultiliner(reader, startpiece, endpiece)
     else:
       Trace.error('Formula beginning ' + reader.currentline().strip +
           ' is unknown')
@@ -91,10 +92,16 @@ class FormulaParser(Parser):
     reader.nextline()
     return [formula]
 
-  def parsemultiliner(self, reader, ending):
+  def parsemultiliner(self, reader, start, ending):
     "Parse a formula in multiple lines"
-    reader.nextline()
     formula = ''
+    if not start in reader.currentline():
+      Trace.error('Line ' + reader.currentline().strip() +
+          ' does not contain formula start ' + start)
+      return ''
+    index = reader.currentline().index(start)
+    formula = reader.currentline()[index + len(start):].strip()
+    reader.nextline()
     while not reader.currentline().endswith(ending + '\n'):
       formula += reader.currentline()
       reader.nextline()
