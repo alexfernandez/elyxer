@@ -251,13 +251,6 @@ span.Marginal {
 span.Note {
 	display: none;
 }
-div.LyX-Code {
-	padding: 0.2em 2em;
-	margin-left: 1em;
-	margin-right: auto;
-	width: auto;
-	font-family: monospace;
-}
 span.listings {
 	padding: 0.5em;
 	border: thin solid #c0c0c0;
@@ -342,4 +335,14 @@ li.nested {
 span.Info {
 	background: #f0f0f0;
 	border: thin solid #c0c0c0;
+}
+pre {
+	padding: 0.2em 2em;
+	margin-left: 1em;
+	margin-right: auto;
+	margin-top: 0em;
+	margin-bottom: 0em;
+	width: auto;
+	font-family: monospace;
+	line-height: 1.1em;
 }

@@ -37,19 +37,18 @@ class Layout(Container):
   typetags = {
       'Quote':'blockquote', 'Standard':'div', 'Part':'h1',
       'Chapter':'h1', 'Section':'h2', 'Subsection':'h3', 'Subsubsection':'h4',
-      'Quotation':'blockquote', 'Center':'div', 'Paragraph':'div'
+      'Quotation':'blockquote', 'Center':'div', 'Paragraph':'div',
+      'LyX-Code':'pre'
       }
 
   def __init__(self):
     self.contents = list()
     self.parser = BoundedParser()
     self.output = TaggedOutput().setbreaklines(True)
-    self.numbered = False
 
   def process(self):
     self.type = self.header[1]
     if self.type in Layout.typetags:
-      self.numbered = True
       self.output.tag = Layout.typetags[self.type] + ' class="' + self.type + '"'
     elif self.type.replace('*', '') in Layout.typetags:
       self.output.tag = Layout.typetags[self.type.replace('*', '')] + ' class="' +  self.type.replace('*', '-') + '"'
