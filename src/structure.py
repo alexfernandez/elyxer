@@ -203,7 +203,7 @@ class Footnote(Container):
   ending = '\\end_inset'
 
   order = 0
-  list = 'ABCDEFGHIJKLMNOPQRSTUVW'
+  list = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
   def __init__(self):
     self.parser = InsetParser()
@@ -246,7 +246,7 @@ class Appendix(Container):
 
   def __init__(self):
     self.parser = LoneCommand()
-    self.output = TaggedOutput().settag('span class="appendix"', True)
+    self.output = EmptyOutput()
 
 class ListItem(Container):
   "An element in a list"

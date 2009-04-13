@@ -1,0 +1,214 @@
+#LyX 1.6.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass scrbook
+\begin_preamble
+% DO NOT ALTER THIS PREAMBLE!!!
+%
+% This preamble is designed to ensure that the User's Guide prints
+% out as advertised. If you mess with this preamble,
+% parts of the User's Guide may not print out as expected.  If you
+% have problems LaTeXing this file, please contact 
+% the documentation team
+% email: lyx-docs@lists.lyx.org
+
+\usepackage{ifpdf} % part of the hyperref bundle
+\ifpdf % if pdflatex is used
+
+ % set fonts for nicer pdf view
+ \IfFileExists{lmodern.sty}{\usepackage{lmodern}}{}
+
+\fi % end if pdflatex is used
+
+% for correct jump positions whe clicking on a link to a float
+\usepackage[figure]{hypcap}
+
+% the pages of the TOC is numbered roman
+% and a pdf-bookmark for the TOC is added
+\let\myTOC\tableofcontents
+\renewcommand\tableofcontents{%
+  \frontmatter
+  \pdfbookmark[1]{\contentsname}{}
+  \myTOC
+  \mainmatter }
+
+% redefine the \LyX macro for PDF bookmarks
+\def\LyX{\texorpdfstring{%
+  L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+  {LyX}}
+
+% define a short command for \textvisiblespace
+\newcommand{\spce}{\textvisiblespace}
+
+% macro for italic page numbers in the index
+\newcommand{\IndexDef}[1]{\textit{#1}}
+
+% redefine the greyed out note
+\end_preamble
+\options intoc,bibtotoc,idxtotoc,BCOR7mm,tablecaptionabove
+\use_default_options false
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_title "Decorations Test"
+\pdf_author "Alex Fernández"
+\pdf_subject "Taken from Guía de Usuario de Lyx, Ignacio García"
+\pdf_keywords "LyX"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels,pdftex"
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\branch Pregunta
+\selected 1
+\color #00ff00
+\end_branch
+\branch Respuesta
+\selected 0
+\color #aa55ff
+\end_branch
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Appendix Test
+\end_layout
+
+\begin_layout Part
+Of How Our Hero Came and Went
+\end_layout
+
+\begin_layout Chapter
+First Chapter
+\end_layout
+
+\begin_layout Standard
+A perfunctory passage telling how Our Hero came and went.
+\end_layout
+
+\begin_layout Section
+The Meeting
+\end_layout
+
+\begin_layout Standard
+This section is devoted to our Hero's adventure.
+ He came, and went.
+\end_layout
+
+\begin_layout Part
+Of How Our Hero Went No More
+\end_layout
+
+\begin_layout Chapter
+Second Chapter
+\end_layout
+
+\begin_layout Standard
+It could not last.
+\end_layout
+
+\begin_layout Section
+The Passing Away
+\end_layout
+
+\begin_layout Standard
+Wasn't it great.
+\end_layout
+
+\begin_layout Itemize
+But first a message from our kind sponsors.
+ They want to present you the next section.
+\end_layout
+
+\begin_deeper
+\begin_layout Section
+The Mourning
+\end_layout
+
+\begin_layout Standard
+Everyone cried.
+\end_layout
+
+\end_deeper
+\begin_layout Chapter
+\start_of_appendix
+Some Appendix
+\end_layout
+
+\begin_layout Standard
+Let us start an appendix here, if only to learn how it displays in PDF and
+ how to do it in HTML.
+\end_layout
+
+\begin_layout Section
+Some Section
+\end_layout
+
+\begin_layout Standard
+Let us include a section.
+\end_layout
+
+\begin_layout Section
+Two is Better than One
+\end_layout
+
+\begin_layout Standard
+Ditto.
+\end_layout
+
+\begin_layout Chapter
+Second Appendix
+\end_layout
+
+\begin_layout Standard
+A second appendix would leave us more relaxed about it.
+\end_layout
+
+\begin_layout Section
+And Let Us Continue
+\end_layout
+
+\begin_layout Standard
+Why not.
+\end_layout
+
+\end_body
+\end_document

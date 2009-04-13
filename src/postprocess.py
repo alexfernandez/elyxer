@@ -64,42 +64,64 @@ class PostLayout(object):
 
   def __init__(self):
     self.startinglevel = 0
-    self.number = []
-    self.uniques = dict()
+    self.generator = NumberGenerator.instance
 
   def postprocess(self, element, last):
     "Generate a number and place it before the text"
     if element.type in PostLayout.unique:
-      level = PostLayout.unique.index(element.type)
-      number = self.generateunique(element.type)
+      number = self.generator.generateunique(element.type)
     elif element.type in PostLayout.ordered:
-      level = PostLayout.ordered.index(element.type)
-      number = self.generate(level)
+      level = self.getlevel(element)
+      number = self.generator.generate(level)
     else:
       return element
     element.contents.insert(0, Constant(number + u' '))
     return element
 
+  def getlevel(self, element):
+    "Get the current level for the element"
+    level = PostLayout.ordered.index(element.type)
+    if self.generator.number == [] and level == 1:
+      self.startinglevel = 1
+    return level - self.startinglevel
+
+class NumberGenerator(object):
+  "A number generator for unique sequences and hierarchical structures"
+
+  letters = '-ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+  instance = None
+
+  def __init__(self):
+    self.number = []
+    self.uniques = dict()
+
   def generateunique(self, type):
     "Generate a number to place in the title but not to append to others"
-    if not type in PostLayout.unique:
+    if not type in self.uniques:
       self.uniques[type] = 0
-    self.uniques[type] += 1
-    return type + ' ' + self.uniques[type] + '.'
+    self.uniques[type] = self.increase(self.uniques[type])
+    return type + ' ' + str(self.uniques[type]) + '.'
 
   def generate(self, level):
     "Generate a number in the given level"
-    if self.number == [] and level == 1:
-      # starting at level 1
-      self.startinglevel = 1
-    level -= self.startinglevel
     if len(self.number) > level:
       self.number = self.number[:level + 1]
     else:
       while len(self.number) <= level:
         self.number.append(0)
-    self.number[level] += 1
+    self.number[level] = self.increase(self.number[level])
     return self.dotseparated()
+
+  def increase(self, number):
+    "Increase the number (or letter)"
+    if not isinstance(number, str):
+      return number + 1
+    if not number in NumberGenerator.letters:
+      Trace.error('Unknown letter numeration ' + number)
+      return 0
+    index = NumberGenerator.letters.index(number) + 1
+    return NumberGenerator.letters[index % len(NumberGenerator.letters)]
 
   def dotseparated(self):
     "Get the number separated by dots: 1.1.3"
@@ -110,6 +132,19 @@ class PostLayout(object):
     for number in self.number:
       dotsep += '.' + str(number)
     return dotsep[1:]
+
+NumberGenerator.instance = NumberGenerator()
+
+class PostAppendix(object):
+  "Start numbering appendices with letters"
+
+  processedclass = Appendix
+
+  def postprocess(self, appendix, last):
+    "Change first number to letter, and chapter to appendix"
+    PostLayout.ordered[0] = 'Appendix'
+    Trace.debug('Appendix')
+    NumberGenerator.instance.number = ['-']
 
 class PostNestedList(object):
   "Postprocess a nested list"
@@ -222,7 +257,7 @@ class Postprocessor(object):
   "Postprocess an element keeping some context"
 
   def __init__(self):
-    self.stages = [PostBiblio(), PostLayout(), PostNestedList()]
+    self.stages = [PostBiblio(), PostLayout(), PostNestedList(), PostAppendix()]
     self.stagedict = dict([(x.processedclass, x) for x in self.stages])
     self.unconditional = [PostListPending()]
     self.last = None
@@ -230,6 +265,7 @@ class Postprocessor(object):
   def postprocess(self, original):
     "Postprocess an element taking into account the last one"
     element = original
+    Trace.debug('We have a ' + element.__class__.__name__)
     if element.__class__ in self.stagedict:
       stage = self.stagedict[element.__class__]
       element = stage.postprocess(element, self.last)
