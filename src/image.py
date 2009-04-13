@@ -53,7 +53,6 @@ class Image(Container):
     density = 100
     if 'scale' in self.parser.parameters:
       density = int(self.parser.parameters['scale'])
-    Trace.debug('Image from ' + origin + ' to ' + destination)
     self.convert(origin, destination, density)
     self.width, self.height = self.getdimensions(destination)
 
