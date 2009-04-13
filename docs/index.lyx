@@ -191,7 +191,7 @@ page.html
 \color blue
 $
 \color inherit
- elyxer ‐‐help
+ elyxer --help
 \end_layout
 
 \begin_layout Standard
