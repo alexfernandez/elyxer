@@ -107,7 +107,7 @@ class ContainerConfig(object):
   "Low-level configuration for containers"
 
   escapes = {'&':'&amp;', '<':'&lt;', '>':'&gt;'}
-  replaces = { '`':u'‘', '\'':u'’', '\n':'', '--':u'—' }
+  replaces = { '`':u'‘', '\'':u'’', '\n':'', ' -- ':u' — ' }
   commands = { '\\SpecialChar \\ldots{}':u'…', '\\InsetSpace ~':'&nbsp;',
       '\\InsetSpace \\space{}':'&nbsp;', '\\InsetSpace \\thinspace{}':u' ',
       '\\backslash':'\\', '\\SpecialChar \\@.':'.',
