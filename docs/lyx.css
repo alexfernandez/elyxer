@@ -339,3 +339,7 @@ div.Description, div.List, li {
 li.nested {
 	list-style-type: none;
 }
+span.Info {
+	background: #f0f0f0;
+	border: thin solid #c0c0c0;
+}

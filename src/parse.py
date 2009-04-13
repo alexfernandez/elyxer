@@ -84,14 +84,18 @@ class Parser(object):
   def parseparameter(self, reader):
     "Parse a parameter"
     split = reader.currentline().strip().split(' ', 1)
+    reader.nextline()
     if len(split) == 0:
       return
     key = split[0]
     if len(split) == 1:
       self.parameters[key] = True
-    else:
-      self.parameters[key] = split[1].replace('"', '')
-    reader.nextline()
+      return
+    if not '"' in split[1]:
+      self.parameters[key] = split[1].strip()
+      return
+    doublesplit = split[1].split('"')
+    self.parameters[key] = doublesplit[1]
 
   def __str__(self):
     "Return a description"

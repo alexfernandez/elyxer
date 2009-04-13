@@ -64,6 +64,24 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.15 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Info insets (containing shortcuts) are now interpreted and shown.
+\end_layout
+
+\begin_layout Itemize
+LyX-Code is interpreted as a 
+\family typewriter
+<pre>
+\family default
+ tag.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.14 (20090413):
 \end_layout
 

@@ -168,8 +168,28 @@ class FlexCode(Container):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('span class="code"', True)
 
+class InfoInset(Container):
+  "A LyX Info inset"
+
+  start = '\\begin_inset Info'
+  ending = '\\end_inset'
+
+  types = ['shortcut', 'shortcuts']
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = TaggedOutput().settag('span class="Info"', False)
+
+  def process(self):
+    "Set the shortcut as text"
+    self.type = self.parser.parameters['type']
+    if self.type not in InfoInset.types:
+      Trace.error('Unknown Info type ' + self.type)
+    self.contents = [Constant(self.parser.parameters['arg'])]
+
 ContainerFactory.types += [
     QuoteContainer, LyxLine, EmphaticText, ShapedText, VersalitasText,
-    ColorText, SizeText, BoldText, TextFamily, Hfill, FlexCode, BarredText
+    ColorText, SizeText, BoldText, TextFamily, Hfill, FlexCode, BarredText,
+    InfoInset
     ]
 
