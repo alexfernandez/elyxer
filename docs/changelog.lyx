@@ -72,6 +72,20 @@ target "index.html"
 Deeper layouts (of any kind, not just in lists) are now supported.
 \end_layout
 
+\begin_layout Itemize
+Appendices are numbered correctly (as A, B, C\SpecialChar \ldots{}
+).
+\end_layout
+
+\begin_layout Itemize
+Sections in deeper layouts are numbered correctly too.
+\end_layout
+
+\begin_layout Itemize
+Double dash does not catch Unix-style options: --css is not converted --
+ while the version with spaces is.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.13 (20090412):
