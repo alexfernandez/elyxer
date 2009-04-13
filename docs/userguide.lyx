@@ -377,7 +377,7 @@ counts all blockquote paragraphs.
 \color blue
 $
 \color inherit
- elyxer file.lyx | wget ‐‐no-check-certificate ‐‐spider -nv -F -i -
+ elyxer file.lyx | wget --no-check-certificate --spider -nv -F -i -
 \end_layout
 
 \begin_layout Standard
@@ -420,7 +420,7 @@ eLyXer supports a few command line optios.
 \begin_layout Description
 
 \family typewriter
-‐‐help
+--help
 \family default
 : show command line help.
 \end_layout
@@ -428,7 +428,7 @@ eLyXer supports a few command line optios.
 \begin_layout Description
 
 \family typewriter
-‐‐debug
+--debug
 \family default
 : show debug messages.
  They may help a developer understand your problem.
@@ -437,7 +437,7 @@ eLyXer supports a few command line optios.
 \begin_layout Description
 
 \family typewriter
-‐‐quiet
+--quiet
 \family default
 : be quiet and do not output messages (except errors).
  This way you can avoid the comforting 
@@ -452,7 +452,7 @@ Parsing line 1000
  When STDIN or STDOUT are used (e.g.
  in a pipeline) 
 \family typewriter
-‐‐quiet
+--quiet
 \family default
  is always enabled.
 \end_layout
@@ -460,12 +460,12 @@ Parsing line 1000
 \begin_layout Description
 
 \family typewriter
-‐‐nocopy
+--nocopy
 \family default
 : do not show the copyright notice at the bottom.
  If there is no author in the document 
 \family typewriter
-‐‐nocopy
+--nocopy
 \family default
  is always enabled.
 \end_layout
@@ -473,7 +473,7 @@ Parsing line 1000
 \begin_layout Description
 
 \family typewriter
-‐‐title\InsetSpace ~
+--title\InsetSpace ~
 
 \series bold
 "
@@ -489,7 +489,7 @@ title
 \begin_layout Description
 
 \family typewriter
-‐‐css\InsetSpace ~
+--css\InsetSpace ~
 [new.css]
 \family default
 : change default CSS.
@@ -616,7 +616,7 @@ elyxer
 \color blue
 $
 \color inherit
- elyxer ‐‐css=custom.css document.lyx page.html
+ elyxer --css=custom.css document.lyx page.html
 \end_layout
 
 \begin_layout Standard
@@ -635,7 +635,7 @@ custom.css
 \family default
  sign between the constant 
 \family typewriter
-`‐‐css'
+`--css'
 \family default
  and the name of the CSS file is optional.
 \end_layout
@@ -665,7 +665,7 @@ Converted Document
 You can change the title of the web page (which is not the title of the
  document) with the 
 \family typewriter
-‐‐title
+--title
 \family default
  option:
 \end_layout
@@ -676,7 +676,7 @@ You can change the title of the web page (which is not the title of the
 \color blue
 $
 \color inherit
- elyxer ‐‐title "My Beautiful Document" document.lyx page.html
+ elyxer --title "My Beautiful Document" document.lyx page.html
 \end_layout
 
 \begin_layout Subsection
@@ -705,7 +705,6 @@ key "w3c-validator"
 .
  If your particular web page doesn't pass the tests, then it is a bug and
  it will be treated as such.
- 
 \end_layout
 
 \begin_layout Section
@@ -778,7 +777,7 @@ On Mac OS X the output of a message with Unicode characters may cause an
  error.
  Workaround: run elyxer with the 
 \family typewriter
-‐‐quiet
+--quiet
 \family default
  option.
 \end_layout
@@ -829,20 +828,13 @@ Nomenclature
 \end_layout
 
 \begin_layout Enumerate
-Mixed ordered and unordered list items come out as a list of the last type.
- Example:
+Table formatting is not implemented in full.
 \end_layout
 
-\begin_deeper
 \begin_layout Enumerate
-ordered,
+ERT (bare TeX code) is ignored.
 \end_layout
 
-\begin_layout Itemize
-unordered.
-\end_layout
-
-\end_deeper
 \begin_layout Subsection
 Reporting Bugs
 \end_layout
