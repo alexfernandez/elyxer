@@ -78,7 +78,7 @@ class FormulaParser(Parser):
     elif '\\begin{' in reader.currentline() and reader.currentline().endswith('}\n'):
       current = reader.currentline().strip()
       endsplit = current.split('\\begin{')[1].split('}')
-      startpiece = '\\begin{' + endsplit + '}'
+      startpiece = '\\begin{' + endsplit[0] + '}'
       endpiece = '\\end{' + endsplit[0] + '}'
       formula = self.parsemultiliner(reader, startpiece, endpiece)
     else:
