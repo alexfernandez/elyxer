@@ -195,8 +195,7 @@ class PendingList(object):
     "Insert a fake item"
     item = TaggedText().constant('', 'li class="nested"', True)
     self.contents = [item]
-    # Special type so it will not mix with Itemized or Enumerated
-    self.type = '*Special*'
+    self.type = 'Itemize'
 
   def __str__(self):
     result = 'pending ' + str(self.type) + ': ['
