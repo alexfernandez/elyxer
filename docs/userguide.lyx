@@ -836,12 +836,52 @@ ERT (bare TeX code) is ignored.
 \end_layout
 
 \begin_layout Subsection
-Reporting Bugs
+Contact Information
 \end_layout
 
 \begin_layout Standard
 If your problem does not appear in the above list, please let the author
- know.
+ know; you can find him at 
+\begin_inset LatexCommand url
+name "elyxer@gmail.com"
+target "mailto:elyxer@gmail.com"
+
+\end_inset
+
+.
+ In the words of Rich Talley: 
+\begin_inset Quotes eld
+\end_inset
+
+the tool's author really likes getting challenging documents and making
+ eLyXer work with them
+\begin_inset Quotes erd
+\end_inset
+
+.
+ You can send your sample documents and we will try to make eLyXer convert
+ them acceptably.
+ Any documents sent will be treated with the utmost confidentiality.
+\end_layout
+
+\begin_layout Standard
+You can also join the 
+\begin_inset LatexCommand url
+name "mailing list"
+target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
+
+\end_inset
+
+ to discuss any information related to eLyXer.
+ The author monitors the official LyX lists for mentions of eLyXer.
+ Bugs can also be reported at 
+\begin_inset LatexCommand url
+name "the Savannah page"
+target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -868,40 +908,9 @@ target "devguide.html"
 \end_inset
 
  to learn how to extend eLyXer for your own purposes.
- But if you know how to program in Python it should not be difficult to
- support other LyX features.
- If you don't you can always ask the author; you can find him at the elyxer
- gmail account.
-\end_layout
-
-\begin_layout Subsection
-Contact Information
-\end_layout
-
-\begin_layout Standard
-You can find the main author at 
-\begin_inset LatexCommand url
-name "elyxer@gmail.com"
-target "mailto:elyxer@gmail.com"
-
-\end_inset
-
-.
- You can send your sample documents and we will try to make eLyXer convert
- them acceptably.
- Any documents sent will be treated with the utmost confidentiality.
-\end_layout
-
-\begin_layout Standard
-You can also join the 
-\begin_inset LatexCommand url
-name "mailing list"
-target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
-
-\end_inset
-
- to discuss any information related to eLyXer.
- The author monitors the official LyX lists for mentions of eLyXer.
+ If you know how to program in Python it should not be difficult to support
+ other LyX features.
+ If you don't your best bet is to ask the author.
 \end_layout
 
 \begin_layout Section
@@ -923,28 +932,10 @@ Q: What can we expect from the tool in the future?
 \end_layout
 
 \begin_layout Description
-A: As it matures (and with some help) eLyXer should support a wider set
- of documents.
+A: eLyXer should support a widening set of LyX features, and a couple of
+ tricks of its own (such as page segmenting).
  Eventually it may be integrated with LyX so that it can be accessed from
  within the editor.
-\end_layout
-
-\begin_layout Description
-Q: Why publish a tool in such an immature state?
-\end_layout
-
-\begin_layout Description
-A: As is often said, 
-\begin_inset Quotes eld
-\end_inset
-
-release early, release often
-\begin_inset Quotes erd
-\end_inset
-
-.
- It seems better to put eLyXer in the hands of possible users as soon as
- possible, and then let them have a say on future extensions.
 \end_layout
 
 \begin_layout Description
@@ -959,6 +950,7 @@ Q: Why did you leave out my favorite feature
 A: In short, because I wasn't using it.
  Usually it is better to first aim for your own needs and then worry about
  others, or you will never get anything done.
+ But if you let me know, I will be glad to help.
 \end_layout
 
 \begin_layout Description
@@ -982,7 +974,14 @@ Q: I found a bug, what should I do?
 \end_layout
 
 \begin_layout Description
-A: Just report it to the Savannah interface: 
+A: Just send it to the author at 
+\begin_inset LatexCommand url
+name "elyxer@gmail.com"
+target "mailto:elyxer@gmail.com"
+
+\end_inset
+
+, or report it to the Savannah interface: 
 \begin_inset LatexCommand url
 target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 

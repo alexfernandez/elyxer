@@ -245,16 +245,15 @@ Contact
 \end_layout
 
 \begin_layout Standard
-You can contact the author at 
+You can contact the main developer at 
 \begin_inset LatexCommand url
 name "elyxer@gmail.com"
 target "mailto:elyxer@gmail.com"
 
 \end_inset
 
-.
- Please send any documents that are giving you trouble and I will do my
- best to make it work.
+; he really likes getting challenging documents and making eLyXer work with
+ them.
  Any document sample you send will be treated with the utmost confidentiality.
 \end_layout
 
@@ -268,7 +267,7 @@ target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
 
 \end_inset
 
-, although there is not much activity in it yet.
+, although there is not much activity in it yet (meaning zero messages overall).
  Bugs can be reported at 
 \begin_inset LatexCommand url
 name "the Savannah page"
