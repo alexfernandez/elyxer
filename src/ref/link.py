@@ -20,7 +20,7 @@
 
 # --end--
 # Alex 20090218
-# eLyXer links and nodes
+# eLyXer links
 
 from trace import Trace
 from parse import *
@@ -81,71 +81,6 @@ class Reference(Link):
       # already seen
       self.direction = u'↑'
     self.contents = [Constant(self.direction)]
-
-class BiblioCite(Container):
-  "Cite of a bibliography entry"
-
-  starts = ['\\begin_inset LatexCommand cite', '\\begin_inset CommandInset citation']
-  ending = '\\end_inset'
-
-  index = 0
-  entries = dict()
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = TaggedOutput().settag('sup')
-
-  def process(self):
-    "Add a cite to every entry"
-    self.contents = list()
-    keys = self.parser.parameters['key'].split(',')
-    for key in keys:
-      BiblioCite.index += 1
-      number = str(BiblioCite.index)
-      link = Link().complete(number, 'cite-' + number, '#' + number)
-      self.contents.append(link)
-      self.contents.append(Constant(','))
-      if not key in BiblioCite.entries:
-        BiblioCite.entries[key] = []
-      BiblioCite.entries[key].append(number)
-    if len(keys) > 0:
-      # remove trailing ,
-      self.contents.pop()
-
-class Bibliography(Container):
-  "A bibliography layout containing an entry"
-
-  start = '\\begin_layout Bibliography'
-  ending = '\\end_layout'
-
-  def __init__(self):
-    self.parser = BoundedParser()
-    self.output = TaggedOutput().settag('p class="biblio"', True)
-
-class BiblioEntry(Container):
-  "A bibliography entry"
-
-  starts = ['\\begin_inset LatexCommand bibitem', '\\begin_inset CommandInset bibitem']
-  ending = '\\end_inset'
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = TaggedOutput().settag('span class="entry"')
-
-  def process(self):
-    "Get all the cites of the entry"
-    cites = list()
-    key = self.parser.parameters['key']
-    if key in BiblioCite.entries:
-      cites = BiblioCite.entries[key]
-    self.contents = [Constant('[')]
-    for cite in cites:
-      link = Link().complete(cite, cite, '#cite-' + cite)
-      self.contents.append(link)
-      self.contents.append(Constant(','))
-    if len(cites) > 0:
-      self.contents.pop(-1)
-    self.contents.append(Constant('] '))
 
 class ListOf(Container):
   "A list of entities (figures, tables, algorithms)"

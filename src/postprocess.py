@@ -23,7 +23,7 @@
 # eLyXer postprocessor code
 
 from container import *
-from link import *
+from ref.biblio import *
 from trace import Trace
 from structure import *
 from layout import *
@@ -253,6 +253,9 @@ class PostListPending(object):
 class Postprocessor(object):
   "Postprocess an element keeping some context"
 
+  stages = [PostBiblio, PostLayout]
+  unconditional = []
+
   def __init__(self):
     self.stages = [PostBiblio(), PostLayout(), PostNestedList()]
     self.stagedict = dict([(x.processedclass, x) for x in self.stages])
@@ -269,4 +272,10 @@ class Postprocessor(object):
       element = stage.postprocess(element, self.last)
     self.last = original
     return element
+
+  def instantiate(self, classes):
+    "Instantiate an element from each class"
+    list = [x.__new__() for x in classes]
+    for element in list:
+      element.__init__()
 

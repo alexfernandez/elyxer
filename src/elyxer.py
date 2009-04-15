@@ -28,7 +28,7 @@ import codecs
 from trace import Trace
 from fileline import *
 from styles import *
-from link import *
+from ref.link import *
 from formula import *
 from command import *
 from table import *
