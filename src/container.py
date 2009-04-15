@@ -22,9 +22,9 @@
 # Alex 20090131
 # eLyXer containers for Lyx data that output HTML
 
-from trace import Trace
-from parse import *
-from output import *
+from util.trace import Trace
+from io.parse import *
+from io.output import *
 from general import *
 
 
@@ -187,28 +187,6 @@ class Constant(StringContainer):
   def __str__(self):
     return 'Constant'
 
-class LangLine(Container):
-  "A line with language information"
-
-  start = '\\lang'
-
-  def __init__(self):
-    self.parser = LoneCommand()
-    self.output = EmptyOutput()
-
-  def process(self):
-    self.lang = self.header[1]
-
-class ERT(Container):
-  "Evil Red Text"
-
-  start = '\\begin_inset ERT'
-  ending = '\\end_inset'
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = EmptyOutput()
-
 class TaggedText(Container):
   "Text inside a tag"
 
@@ -234,7 +212,7 @@ class TaggedText(Container):
 class ContainerFactory(object):
   "Creates containers depending on the first line"
 
-  types = [BlackBox, LangLine, StringContainer, ERT]
+  types = [BlackBox, StringContainer]
 
   def __init__(self):
     self.tree = ParseTree(ContainerFactory.types)

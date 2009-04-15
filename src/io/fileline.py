@@ -23,7 +23,7 @@
 # File line management for eLyXer
 
 import sys
-from trace import Trace
+from util.trace import Trace
 
 
 class LineReader(object):

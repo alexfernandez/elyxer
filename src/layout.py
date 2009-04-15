@@ -22,9 +22,10 @@
 # Alex 20090411
 # LyX layout and derived classes
 
-from trace import Trace
-from parse import *
-from output import *
+from util.trace import Trace
+from io.parse import *
+from io.output import *
+from structure import *
 from container import *
 
 

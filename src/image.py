@@ -25,9 +25,9 @@
 import os
 import os.path
 import struct
-from trace import Trace
+from util.trace import Trace
 from container import *
-from output import MirrorOutput
+from io.output import MirrorOutput
 
 
 class Image(Container):

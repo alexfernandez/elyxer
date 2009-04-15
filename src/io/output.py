@@ -24,8 +24,8 @@
 
 import codecs
 import datetime
-from trace import Trace
-from options import *
+from util.trace import Trace
+from util.options import *
 
 
 class EmptyOutput(object):

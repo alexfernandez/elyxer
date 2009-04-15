@@ -22,9 +22,9 @@
 # Alex 20090311
 # LyX styles in containers
 
-from trace import Trace
-from parse import *
-from output import *
+from util.trace import Trace
+from io.parse import *
+from io.output import *
 from container import *
 
 
@@ -187,9 +187,21 @@ class InfoInset(Container):
       Trace.error('Unknown Info type ' + self.type)
     self.contents = [Constant(self.parser.parameters['arg'])]
 
+class LangLine(Container):
+  "A line with language information"
+
+  start = '\\lang'
+
+  def __init__(self):
+    self.parser = LoneCommand()
+    self.output = EmptyOutput()
+
+  def process(self):
+    self.lang = self.header[1]
+
 ContainerFactory.types += [
     QuoteContainer, LyxLine, EmphaticText, ShapedText, VersalitasText,
     ColorText, SizeText, BoldText, TextFamily, Hfill, FlexCode, BarredText,
-    InfoInset
+    InfoInset, LangLine
     ]
 

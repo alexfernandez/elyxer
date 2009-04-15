@@ -23,7 +23,7 @@
 # eLyXer runtime options
 
 import codecs
-from trace import *
+from util.trace import *
 
 
 class Options(object):

@@ -24,7 +24,7 @@
 
 from container import *
 from ref.biblio import *
-from trace import Trace
+from util.trace import Trace
 from structure import *
 from layout import *
 

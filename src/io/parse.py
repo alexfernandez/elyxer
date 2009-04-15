@@ -23,8 +23,8 @@
 # eLyXer parsers
 
 import codecs
-from trace import Trace
-from options import *
+from util.trace import Trace
+from util.options import *
 
 
 class ParseTree(object):

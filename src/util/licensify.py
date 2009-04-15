@@ -25,8 +25,8 @@
 import os
 import sys
 import codecs
-from fileline import *
-from trace import Trace
+from io.fileline import *
+from util.trace import Trace
 
 
 mark = '# --end--'

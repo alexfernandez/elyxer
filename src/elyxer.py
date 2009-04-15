@@ -25,8 +25,8 @@
 
 import sys
 import codecs
-from trace import Trace
-from fileline import *
+from util.trace import Trace
+from io.fileline import *
 from styles import *
 from ref.link import *
 from formula import *
@@ -35,7 +35,7 @@ from table import *
 from image import *
 from structure import *
 from container import *
-from options import *
+from util.options import *
 from postprocess import *
 
 

@@ -22,9 +22,9 @@
 # Alex 20090218
 # eLyXer links
 
-from trace import Trace
-from parse import *
-from output import *
+from util.trace import Trace
+from io.parse import *
+from io.output import *
 from container import *
 from styles import *
 
@@ -301,7 +301,8 @@ class LinkOutput(object):
     text = TaggedText().complete(container.contents, tag)
     return text.gethtml()
 
-ContainerFactory.types += [Label, Reference, BiblioCite, Bibliography,
-    BiblioEntry, ListOf, TableOfContents, IndexEntry, PrintIndex, URL,
-    FlexURL, NomenclatureEntry, NomenclaturePrint, LayoutIndexEntry]
+ContainerFactory.types += [
+    Label, Reference, ListOf, TableOfContents, IndexEntry, PrintIndex, URL,
+    FlexURL, NomenclatureEntry, NomenclaturePrint, LayoutIndexEntry
+    ]
 

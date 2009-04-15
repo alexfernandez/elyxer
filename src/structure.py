@@ -22,9 +22,9 @@
 # Alex 20090312
 # LyX structure in containers
 
-from trace import Trace
-from parse import *
-from output import *
+from util.trace import Trace
+from io.parse import *
+from io.output import *
 from container import *
 
 
@@ -293,9 +293,20 @@ class DeeperList(Container):
       result += str(element) + ', '
     return result[:-2] + ']'
 
+class ERT(Container):
+  "Evil Red Text"
+
+  start = '\\begin_inset ERT'
+  ending = '\\end_inset'
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = EmptyOutput()
+
+
 ContainerFactory.types += [
     LyxHeader, LyxFooter, InsetText, Caption, Inset, Align, Float, Newline,
     Space, NewlineInset, Branch, ShortTitle, Footnote, Appendix, Note,
-    ListItem, DeeperList
+    ListItem, DeeperList, ERT
     ]
 

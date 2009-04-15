@@ -24,7 +24,7 @@
 
 import sys
 from container import *
-from trace import Trace
+from util.trace import Trace
 from general import *
 from formula import *
 

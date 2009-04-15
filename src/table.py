@@ -22,10 +22,10 @@
 # Alex 20090207
 # eLyXer tables
 
-from trace import Trace
+from util.trace import Trace
 from container import *
-from parse import *
-from output import *
+from io.parse import *
+from io.output import *
 
 
 class Table(Container):
