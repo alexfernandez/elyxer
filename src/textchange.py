@@ -19,8 +19,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # --end--
-# Alex 20090314
-# Modifies the license of a Python source file
+# Alex 20090416
+# Change text in some files at once
 
 import os
 import sys
@@ -28,18 +28,32 @@ import codecs
 from io.fileline import *
 from io.bulk import *
 from util.trace import Trace
+from util.clparser import *
 
 
-mark = '# --end--'
+class TextChange(object):
+  "A change in some text"
 
-def process(reader, writer, license):
-  "Conflate all Python files used in filein to fileout"
-  for line in license:
-    writer.writeline(line)
-  while not reader.currentline().startswith(mark):
-    reader.nextline()
+  def __init__(self, key, value):
+    self.key = key
+    self.value = value
+
+  def affects(self, line):
+    "Decide if the change affects the line"
+    if self.key in line:
+      return True
+    return False
+
+  def do(self, line):
+    "Change the text in the line"
+    return line.replace(self.key, self.value)
+
+def process(reader, writer, change):
+  "Change all lines in the file"
   while not reader.finished():
     line = reader.currentline()
+    if change.affects(line):
+      line = change.do(line)
     writer.writeline(line)
     reader.nextline()
   reader.close()
@@ -47,17 +61,20 @@ def process(reader, writer, license):
 def processall(args):
   "Process all arguments"
   del args[0]
-  if len(args == 0):
-    Trace.error('Usage: licensify.py licensefile [file...]')
+  if len(args) < 3:
+    Trace.error('Usage: textchange.py original changed [file...]')
     return
-  licensefile = args[0]
-  license = readall(licensefile)
+  original = args[0]
   del args[0]
+  changed = args[0]
+  del args[0]
+  change = TextChange(original, changed)
   while len(args) > 0:
     filename = args[0]
+    Trace.message('Doing ' + original + '->' + changed + ' in ' + filename)
     reader, writer = getfiles(filename)
     del args[0]
-    process(reader, writer, license)
+    process(reader, writer, change)
     os.rename(filename + '.temp', filename)
 
 processall(sys.argv)

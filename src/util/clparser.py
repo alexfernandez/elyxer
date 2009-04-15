@@ -19,49 +19,30 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # --end--
-# Alex 20090313
-# eLyXer runtime options
+# Alex 20090416
+# Command line option parser
 
 import codecs
 from util.trace import *
-from util.clparse import *
 
 
-class Options(object):
-  "A set of runtime options"
+class CommandLineParser(object):
+  "A parser for runtime options"
 
-  instance = None
-
-  def __init__(self):
-    nocopy = False
-    debug = False
-    quiet = False
-    css = 'http://www.nongnu.org/elyxer/lyx.css'
-    title = 'Converted document'
-    directory = '.'
-    branches = dict()
-
-  def parseoptions(self, args):
-    "Parse command line options"
-    parser = CommandLineParser(self)
-    result = parser.parse(args)
-    # set in Trace if necessary
-    for param in dir(self):
-      if hasattr(Trace, param + 'mode'):
-        setattr(Trace, param + 'mode', getattr(self, param))
-    return result
+  def __init__(self, options):
+    self.options = options
 
   def parseoptions(self, args):
     "Parse command line options"
     while args[0].startswith('--'):
       if args[0] == '--help':
-        return 'eLyXer help'
+        return 'Help'
       key, value = self.readoption(args)
       if not key:
         return 'Option ' + original + ' not recognized'
       if not value:
         return 'Option ' + key + ' needs a value'
-      self.setoption(key, value)
+      setattr(self.options, key, value)
     return None
 
   def readoption(self, args):
@@ -71,9 +52,9 @@ class Options(object):
     if '=' in arg:
       return self.readequals(arg, args)
     key = arg
-    if not hasattr(Options, key):
+    if not hasattr(self.options, key):
       return None, None
-    current = getattr(Options, key)
+    current = getattr(self.options, key)
     if current.__class__ == bool:
       return key, True
     # read value
@@ -106,27 +87,4 @@ class Options(object):
     if not value.startswith('"'):
       return key, value
     return key, self.readquoted(args, value)
-
-  def setoption(self, key, value):
-    "Set an option value"
-    setattr(Options, key, value)
-    if hasattr(Trace, key + 'mode'):
-      setattr(Trace, key + 'mode', value)
-
-Options.instance = Options()
-
-class BranchOptions(object):
-  "A set of options for a branch"
-
-  def __init__(self):
-    self.selected = 0
-    self.color = '#ffffff'
-
-  def set(self, key, value):
-    "Set a branch option"
-    if not key.startswith('\\'):
-      Trace.error('Invalid branch option ' + key)
-      return
-    key = key.replace('\\', '')
-    setattr(self, key, value)
 
