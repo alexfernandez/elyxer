@@ -26,7 +26,7 @@ import os
 import os.path
 import struct
 from util.trace import Trace
-from container import *
+from gen.container import *
 from io.output import MirrorOutput
 
 

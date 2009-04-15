@@ -23,9 +23,9 @@
 # eLyXer formula processing
 
 import sys
-from container import *
+from gen.container import *
 from util.trace import Trace
-from general import *
+from config import *
 
 
 class Formula(Container):

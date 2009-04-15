@@ -22,11 +22,11 @@
 # Alex 20090324
 # eLyXer postprocessor code
 
-from container import *
+from gen.container import *
 from ref.biblio import *
 from util.trace import Trace
-from structure import *
-from layout import *
+from gen.structure import *
+from gen.layout import *
 
 
 class Group(Container):

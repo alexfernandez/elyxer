@@ -23,10 +23,10 @@
 # eLyXer commands in formula processing
 
 import sys
-from container import *
+from gen.container import *
 from util.trace import Trace
-from general import *
-from formula import *
+from config import *
+from gen.formula import *
 
 
 class FormulaCommand(FormulaBit):

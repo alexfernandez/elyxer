@@ -23,7 +23,7 @@
 # eLyXer tables
 
 from util.trace import Trace
-from container import *
+from gen.container import *
 from io.parse import *
 from io.output import *
 

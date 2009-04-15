@@ -25,8 +25,8 @@
 from util.trace import Trace
 from io.parse import *
 from io.output import *
-from container import *
-from styles import *
+from gen.container import *
+from gen.styles import *
 
 
 class Link(Container):

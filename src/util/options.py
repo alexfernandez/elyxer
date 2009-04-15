@@ -32,88 +32,23 @@ class Options(object):
 
   instance = None
 
-  def __init__(self):
-    nocopy = False
-    debug = False
-    quiet = False
-    css = 'http://www.nongnu.org/elyxer/lyx.css'
-    title = 'Converted document'
-    directory = '.'
-    branches = dict()
+  nocopy = False
+  debug = False
+  quiet = False
+  css = 'http://www.nongnu.org/elyxer/lyx.css'
+  title = 'Converted document'
+  directory = '.'
+  branches = dict()
 
   def parseoptions(self, args):
     "Parse command line options"
-    parser = CommandLineParser(self)
-    result = parser.parse(args)
+    parser = CommandLineParser(Options)
+    result = parser.parseoptions(args)
     # set in Trace if necessary
-    for param in dir(self):
+    for param in dir(Options):
       if hasattr(Trace, param + 'mode'):
         setattr(Trace, param + 'mode', getattr(self, param))
     return result
-
-  def parseoptions(self, args):
-    "Parse command line options"
-    while args[0].startswith('--'):
-      if args[0] == '--help':
-        return 'eLyXer help'
-      key, value = self.readoption(args)
-      if not key:
-        return 'Option ' + original + ' not recognized'
-      if not value:
-        return 'Option ' + key + ' needs a value'
-      self.setoption(key, value)
-    return None
-
-  def readoption(self, args):
-    "Read the key and value for an option"
-    arg = args[0][2:]
-    del args[0]
-    if '=' in arg:
-      return self.readequals(arg, args)
-    key = arg
-    if not hasattr(Options, key):
-      return None, None
-    current = getattr(Options, key)
-    if current.__class__ == bool:
-      return key, True
-    # read value
-    if len(args) == 0:
-      return key, None
-    if args[0].startswith('"'):
-      initial = args[0]
-      del args[0]
-      return key, self.readquoted(args, initial)
-    value = args[0]
-    del args[0]
-    return key, value
-
-  def readquoted(self, args, initial):
-    "Read a value between quotes"
-    value = initial[1:]
-    while len(args) > 0 and not args[0].endswith('"') and not args[0].startswith('--'):
-      value += ' ' + args[0]
-      del args[0]
-    if len(args) == 0 or args[0].startswith('--'):
-      return None
-    value += ' ' + args[0:-1]
-    return value
-
-  def readequals(self, arg, args):
-    "Read a value with equals"
-    split = arg.split('=', 1)
-    key = split[0]
-    value = split[1]
-    if not value.startswith('"'):
-      return key, value
-    return key, self.readquoted(args, value)
-
-  def setoption(self, key, value):
-    "Set an option value"
-    setattr(Options, key, value)
-    if hasattr(Trace, key + 'mode'):
-      setattr(Trace, key + 'mode', value)
-
-Options.instance = Options()
 
 class BranchOptions(object):
   "A set of options for a branch"

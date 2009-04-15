@@ -27,14 +27,14 @@ import sys
 import codecs
 from util.trace import Trace
 from io.fileline import *
-from styles import *
+from gen.styles import *
 from ref.link import *
-from formula import *
-from command import *
-from table import *
-from image import *
-from structure import *
-from container import *
+from gen.formula import *
+from gen.command import *
+from gen.table import *
+from gen.image import *
+from gen.structure import *
+from gen.container import *
 from util.options import *
 from postprocess import *
 

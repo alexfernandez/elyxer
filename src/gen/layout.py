@@ -26,7 +26,7 @@ from util.trace import Trace
 from io.parse import *
 from io.output import *
 from structure import *
-from container import *
+from gen.container import *
 
 
 class Layout(Container):
