@@ -25,7 +25,7 @@
 from util.trace import Trace
 from io.parse import *
 from io.output import *
-from link import *
+from ref.link import *
 
 
 class BiblioCite(Container):

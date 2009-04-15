@@ -64,7 +64,7 @@ def conflate(reader, writer):
   while not reader.finished():
     line = reader.currentline()
     if line.startswith('from'):
-      filename = line.split()[1] + '.py'
+      filename = line.split()[1].replace('.', '/') + '.py'
       newreader = getreader(filename)
       conflate(newreader, writer)
     else:
