@@ -28,7 +28,7 @@ import codecs
 from io.fileline import *
 from io.bulk import *
 from util.trace import Trace
-from util.clparser import *
+from util.clparse import *
 
 
 class TextChange(object):
