@@ -36,7 +36,7 @@ from gen.image import *
 from gen.structure import *
 from gen.container import *
 from util.options import *
-from postprocess import *
+from post.postprocess import *
 
 
 class Book(object):
