@@ -29,6 +29,7 @@ class Trace(object):
 
   debugmode = False
   quietmode = False
+  showlinesmode = False
 
   prefix = None
 
@@ -41,13 +42,13 @@ class Trace(object):
     "Show a trace message"
     if Trace.quietmode:
       return
-    if Trace.prefix:
+    if Trace.prefix and Trace.showlinesmode:
       message = Trace.prefix + message
     print message
 
   def error(cls, message):
     "Show an error message"
-    if Trace.prefix:
+    if Trace.prefix and Trace.showlinesmode:
       message = Trace.prefix + message
     message = message.encode('utf-8')
     sys.stderr.write(message + '\n')
