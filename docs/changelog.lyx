@@ -84,6 +84,10 @@ LyX-Code is interpreted as a
 Reorganized code into a few packages.
 \end_layout
 
+\begin_layout Itemize
+Line numbers are not shown for utility classes.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.14 (20090413):
