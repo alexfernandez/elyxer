@@ -19,13 +19,14 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # --end--
-# Alex 20090218
+# Alex 20090415
 # eLyXer bibliography
 
 from util.trace import Trace
 from io.parse import *
 from io.output import *
 from ref.link import *
+from post.postprocess import *
 
 
 class BiblioCite(Container):
@@ -96,4 +97,18 @@ class BiblioEntry(Container):
 ContainerFactory.types += [
     BiblioCite, Bibliography, BiblioEntry
     ]
+
+class PostBiblio(object):
+  "Insert a Bibliography legend before the first item"
+
+  processedclass = Bibliography
+
+  def postprocess(self, element, last):
+    "If we have the first bibliography insert a tag"
+    if isinstance(last, Bibliography):
+      return element
+    tag = TaggedText().constant('Bibliography', 'h1 class="biblio"')
+    return Group().contents([tag, element])
+
+Postprocessor.stages += [PostBiblio]
 

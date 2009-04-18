@@ -42,18 +42,6 @@ class Group(Container):
   def __str__(self):
     return 'Group: ' + str(self.contents)
 
-class PostBiblio(object):
-  "Insert a Bibliography legend before the first item"
-
-  processedclass = Bibliography
-
-  def postprocess(self, element, last):
-    "If we have the first bibliography insert a tag"
-    if isinstance(last, Bibliography):
-      return element
-    tag = TaggedText().constant('Bibliography', 'h1 class="biblio"')
-    return Group().contents([tag, element])
-
 class PostLayout(object):
   "Numerate an indexed layout"
 
@@ -253,13 +241,13 @@ class PostListPending(object):
 class Postprocessor(object):
   "Postprocess an element keeping some context"
 
-  stages = [PostBiblio, PostLayout]
-  unconditional = []
+  stages = [PostLayout, PostNestedList]
+  unconditional = [PostListPending]
 
   def __init__(self):
-    self.stages = [PostBiblio(), PostLayout(), PostNestedList()]
+    self.stages = self.instantiate(Postprocessor.stages)
     self.stagedict = dict([(x.processedclass, x) for x in self.stages])
-    self.unconditional = [PostListPending()]
+    self.unconditional = self.instantiate(Postprocessor.unconditional)
     self.last = None
 
   def postprocess(self, original):
