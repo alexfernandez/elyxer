@@ -97,16 +97,23 @@ class Container(object):
           return result
     return None
 
+  def searchall(self, type):
+    "Search for all embedded containers of a given type"
+    list = []
+    for element in self.contents:
+      if isinstance(element, Container):
+        if isinstance(element, type):
+          list.append(element)
+        list += element.searchall(type)
+    return list
+
   def restyle(self, type, restyler):
     "Restyle contents with a restyler function"
-    i = 0
-    while i < len(self.contents):
-      element = self.contents[i]
+    for index, element in enumerate(self.contents):
       if isinstance(element, type):
-        restyler(self, i)
+        restyler(self, index)
       if isinstance(element, Container):
         element.restyle(type, restyler)
-      i += 1
 
   def group(self, index, group, isingroup):
     "Group some adjoining elements into a group"

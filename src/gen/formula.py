@@ -301,19 +301,16 @@ class WholeFormula(FormulaBit):
 
   def process(self):
     "Process the whole formula"
-    i = 0
-    while i < len(self.contents):
-      bit = self.contents[i]
+    for index, bit in enumerate(self.contents):
       bit.process()
       if bit.type == 'alpha':
         # make variable
-        self.contents[i] = TaggedBit().complete([bit], 'i')
-      elif bit.type == 'font' and i > 0:
-        last = self.contents[i - 1]
+        self.contents[index] = TaggedBit().complete([bit], 'i')
+      elif bit.type == 'font' and index > 0:
+        last = self.contents[index - 1]
         if last.type == 'number':
           #separate
           last.contents.append(FormulaConstant(u' '))
-      i += 1
 
   def setarraymode(self):
     "Set array mode for parsing"

@@ -52,12 +52,9 @@ class PostNestedList(object):
   def postprocess(self, deeper, last):
     "Run the postprocessor on the nested list"
     postproc = Postprocessor()
-    i = 0
-    while i < len(deeper.contents):
-      part = deeper.contents[i]
+    for index, part in enumerate(deeper.contents):
       result = postproc.postprocess(part)
       deeper.contents[i] = result
-      i += 1
     # one additional item to flush the list
     deeper.contents.append(postproc.postprocess(BlackBox()))
     return deeper
