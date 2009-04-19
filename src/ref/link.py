@@ -52,6 +52,9 @@ class Label(Container):
 
   starts = ['\\begin_inset LatexCommand label', '\\begin_inset CommandInset label']
   ending = '\\end_inset'
+  typelabels = {
+      'fig':'Figure ', 'tab':'Table ', 'alg':'Listing '
+      }
 
   numbers = dict()
   labels = dict()
@@ -59,15 +62,21 @@ class Label(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = LinkOutput()
-    self.generator = NumberGenerator.instance
 
   def process(self):
     self.anchor = self.parser.parameters['name']
-    self.type = self.anchor.split(':')[0]
-    number = self.generator.generatechaptered(self.type)
-    Label.numbers[self.anchor] = number
     Label.labels[self.anchor] = self
-    self.contents = [Constant(number)]
+    self.contents = [Constant(Label.number(self.anchor))]
+
+  def number(cls, anchor):
+    "Construct the numbering for an anchor"
+    if not anchor in Label.numbers:
+      type = anchor.split(':')[0]
+      number = NumberGenerator.instance.generatechaptered(type)
+      Label.numbers[anchor] = Label.typelabels[type] + number + u' '
+    return Label.numbers[anchor]
+
+  number = classmethod(number)
 
 class Reference(Link):
   "A reference to a label"
