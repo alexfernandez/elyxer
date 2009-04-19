@@ -64,6 +64,20 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.16 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Document date is shown centered.
+\end_layout
+
+\begin_layout Itemize
+Long table special rows are properly ignored.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.15 (20090419):
 \end_layout
 

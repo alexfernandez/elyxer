@@ -343,3 +343,6 @@ a.Label {
 	text-decoration: none;
 	color: #000000;
 }
+div.Date {
+	text-align: center;
+}
