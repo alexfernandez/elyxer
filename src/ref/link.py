@@ -27,7 +27,7 @@ from io.parse import *
 from io.output import *
 from gen.container import *
 from gen.styles import *
-from post.numbering import *
+from util.numbering import *
 
 
 class Link(Container):
@@ -46,56 +46,6 @@ class Link(Container):
     if type:
       self.type = type
     return self
-
-class Label(Container):
-  "A label to be referenced"
-
-  starts = ['\\begin_inset LatexCommand label', '\\begin_inset CommandInset label']
-  ending = '\\end_inset'
-  typelabels = {
-      'fig':'Figure ', 'tab':'Table ', 'alg':'Listing '
-      }
-
-  numbers = dict()
-  labels = dict()
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = LinkOutput()
-
-  def process(self):
-    self.anchor = self.parser.parameters['name']
-    Label.labels[self.anchor] = self
-    self.contents = [Constant(Label.number(self.anchor))]
-
-  def number(cls, anchor):
-    "Construct the numbering for an anchor"
-    if not anchor in Label.numbers:
-      type = anchor.split(':')[0]
-      number = NumberGenerator.instance.generatechaptered(type)
-      Label.numbers[anchor] = Label.typelabels[type] + number + u' '
-    return Label.numbers[anchor]
-
-  number = classmethod(number)
-
-class Reference(Link):
-  "A reference to a label"
-
-  starts = ['\\begin_inset LatexCommand ref', '\\begin_inset CommandInset ref']
-  ending = '\\end_inset'
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = LinkOutput()
-    self.direction = u'↓'
-
-  def process(self):
-    key = self.parser.parameters['reference']
-    self.url = '#' + key
-    if key in Label.labels:
-      # already seen
-      self.direction = u'↑'
-    self.contents = [Constant(self.direction)]
 
 class ListOf(Container):
   "A list of entities (figures, tables, algorithms)"
@@ -317,7 +267,7 @@ class LinkOutput(object):
     return text.gethtml()
 
 ContainerFactory.types += [
-    Label, Reference, ListOf, TableOfContents, IndexEntry, PrintIndex, URL,
+    ListOf, TableOfContents, IndexEntry, PrintIndex, URL,
     FlexURL, NomenclatureEntry, NomenclaturePrint, LayoutIndexEntry
     ]
 

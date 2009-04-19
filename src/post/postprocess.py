@@ -26,7 +26,7 @@ from gen.container import *
 from util.trace import Trace
 from gen.structure import *
 from gen.layout import *
-from post.numbering import *
+from util.numbering import *
 from ref.link import *
 
 

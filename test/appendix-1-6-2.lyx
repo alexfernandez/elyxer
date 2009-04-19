@@ -277,14 +277,14 @@ Anyway, back to the story.
  film the divine Pedro had copied the scene.
  Actually both directors had copied the idea from a short story by Roald
  Dahl, very much worth reading.
- There it was a lamb leg, which hardly offers the consistency and stiffness
- necessary to kill a sturdy husband.
+ Although it must be said that in this story it was a lamb leg, which hardly
+ offers the consistency and stiffness necessary to kill a sturdy husband.
 \end_layout
 
 \begin_layout Standard
 But who cares.
- Laurinda meanwhile was a bit funny; if you want to see why please direct
- your eyes to figure 
+ Laurinda meanwhile had a funny appearance; if you want to see why please
+ direct your eyes to figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:anger"
@@ -320,7 +320,7 @@ name "fig:anger"
 
 \end_inset
 
-Laurinda's anger pictured in a mild humorous tone.
+Laurinda's anger pictured in a mildly humorous tone.
 \end_layout
 
 \end_inset
@@ -480,7 +480,14 @@ Laurinda's anger, again.
 
 \begin_layout Standard
 But how did Laurinda compute her anger? We cannot but speculate; here is
- a stupid suggestion in listing .
+ a stupid suggestion in listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:computation"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -497,6 +504,12 @@ anger = time - 1
 \begin_inset Caption
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:computation"
+
+\end_inset
+
 Laurinda computes her anger.
 \end_layout
 

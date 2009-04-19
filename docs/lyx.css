@@ -31,13 +31,6 @@ a:active {
 a:hover {
 	text-decoration: underline;
 }
-a.node {
-	color: #000000;
-	text-decoration: none;
-}
-a.leaf {
-	color: #000000;
-}
 h1 {
 	margin-top: 1em;
 	line-height: 1.5em;
@@ -345,4 +338,8 @@ pre {
 	width: auto;
 	font-family: monospace;
 	line-height: 1.1em;
+}
+a.Label {
+	text-decoration: none;
+	color: #000000;
 }

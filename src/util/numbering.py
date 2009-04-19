@@ -68,6 +68,8 @@ class NumberGenerator(object):
       self.chaptered[type] = [self.number[0], 0]
     chaptered = self.chaptered[type]
     chaptered[1] = self.increase(chaptered[1])
+    self.chaptered[type] = chaptered
+    Trace.debug('Chaptered: ' + str(chaptered))
     return self.dotseparated(chaptered)
 
   def increase(self, number):
@@ -83,11 +85,11 @@ class NumberGenerator(object):
   def dotseparated(self, number):
     "Get the number separated by dots: 1.1.3"
     dotsep = ''
-    if len(self.number) == 0:
+    if len(number) == 0:
       Trace.error('Empty number')
       return '.'
-    for number in self.number:
-      dotsep += '.' + str(number)
+    for piece in number:
+      dotsep += '.' + str(piece)
     return dotsep[1:]
 
 NumberGenerator.instance = NumberGenerator()
