@@ -25,7 +25,7 @@
 from util.trace import Trace
 from io.parse import *
 from io.output import *
-from structure import *
+from gen.structure import *
 from gen.container import *
 
 
