@@ -37,6 +37,7 @@ from gen.structure import *
 from gen.container import *
 from util.options import *
 from post.postprocess import *
+from post.numbering import *
 
 
 class Book(object):

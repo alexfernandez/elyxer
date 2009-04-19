@@ -110,5 +110,5 @@ class PostBiblio(object):
     tag = TaggedText().constant('Bibliography', 'h1 class="biblio"')
     return Group().contents([tag, element])
 
-Postprocessor.stages += [PostBiblio]
+Postprocessor.stages.append(PostBiblio)
 
