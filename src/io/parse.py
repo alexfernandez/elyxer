@@ -99,7 +99,7 @@ class Parser(object):
 
   def __str__(self):
     "Return a description"
-    return self.__class__.__name__ + ' (' + self.begin + ')'
+    return self.__class__.__name__ + ' (' + str(self.begin) + ')'
 
 class LoneCommand(Parser):
   "A parser for just one command line"

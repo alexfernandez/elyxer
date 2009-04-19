@@ -35,17 +35,8 @@ class Table(Container):
   ending = '\\end_inset'
 
   def __init__(self):
-    self.parser = BoundedParser()
+    self.parser = TableParser()
     self.output = TaggedOutput().settag('table', True)
-
-class TableHeader(Container):
-  "The headers for the table"
-
-  starts = ['<lyxtabular', '<features', '<column', '</lyxtabular']
-
-  def __init__(self):
-    self.parser = LoneCommand()
-    self.output = EmptyOutput()
 
 class Row(Container):
   "A row in a table"
@@ -71,5 +62,22 @@ class Cell(Container):
     self.parser = BoundedParser()
     self.output = TaggedOutput().settag('td', True)
 
-ContainerFactory.types += [Table, TableHeader, Row, Cell]
+class TableParser(BoundedDummy):
+  "Parse the whole table"
+
+  ending = '</lyxtabular'
+
+  def parse(self, reader):
+    "Parse table header as parameters, rows and end of table"
+    contents = []
+    while not reader.currentline().strip().startswith(TableParser.ending):
+      if reader.currentline().strip().startswith(Row.start):
+        row = self.factory.create(reader)
+        contents.append(row)
+      else:
+        self.parseparameter(reader)
+    BoundedDummy.parse(self, reader)
+    return contents
+
+ContainerFactory.types += [Table, Row, Cell]
 

@@ -55,8 +55,9 @@ class Container(object):
     self.header = self.parser.parseheader(reader)
     self.begin = self.parser.begin
     self.contents = self.parser.parse(reader)
+    self.parameters = self.parser.parameters
     self.process()
-    self.parser = []
+    self.parser = None
 
   def process(self):
     "Process contents"
