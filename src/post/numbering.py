@@ -26,6 +26,7 @@ from gen.container import *
 from util.trace import Trace
 from gen.structure import *
 from gen.layout import *
+from ref.link import *
 from post.postprocess import *
 
 
@@ -40,6 +41,7 @@ class NumberGenerator(object):
     self.startinglevel = 0
     self.number = []
     self.uniques = dict()
+    self.chaptered = dict()
 
   def generateunique(self, type):
     "Generate a number to place in the title but not to append to others"
@@ -59,7 +61,15 @@ class NumberGenerator(object):
       while len(self.number) <= level:
         self.number.append(0)
     self.number[level] = self.increase(self.number[level])
-    return self.dotseparated()
+    return self.dotseparated(self.number)
+
+  def generatechaptered(self, type):
+    "Generate a number which goes with first-level numbers"
+    if not type in self.chaptered:
+      self.chaptered[type] = [self.number[0], 0]
+    chaptered = self.chaptered[type]
+    chaptered[1] = self.increase(chaptered[1])
+    return self.dotseparated(chaptered)
 
   def increase(self, number):
     "Increase the number (or letter)"
@@ -71,7 +81,7 @@ class NumberGenerator(object):
     index = NumberGenerator.letters.index(number) + 1
     return NumberGenerator.letters[index % len(NumberGenerator.letters)]
 
-  def dotseparated(self):
+  def dotseparated(self, number):
     "Get the number separated by dots: 1.1.3"
     dotsep = ''
     if len(self.number) == 0:
@@ -103,6 +113,8 @@ class PostLayout(object):
     elif layout.type in PostLayout.ordered:
       level = PostLayout.ordered.index(layout.type)
       number = self.generator.generate(level)
+    elif layout.type == 'Standard':
+      return self.checkforfloat(layout)
     else:
       return layout
     layout.contents.insert(0, Constant(number + u' '))
@@ -119,5 +131,32 @@ class PostLayout(object):
     "Change first number to letter, and chapter to appendix"
     self.generator.number = ['-']
 
-Postprocessor.stages.append(PostLayout)
+  def checkforfloat(self, standard):
+    "Check a standard layout for a float inset"
+    float = standard.searchfor(Float)
+    if not float:
+      return standard
+    Trace.debug('Float type: ' + float.type)
+    return self.numberfloat(float)
+
+  def numberfloat(self, float):
+    "Generate the number for the float"
+    caption = float.searchfor(Caption)
+    Trace.debug('Float: ' + str(caption.contents[0]))
+    layout = caption.contents[0]
+    index = 0
+    while index < len(layout.contents):
+      element = layout.contents[index]
+      Trace.debug('Contains ' + str(element))
+      if isinstance(element, Label):
+        float.contents.insert(0, element)
+        del layout.contents[index]
+      elif isinstance(element, StringContainer):
+        Trace.debug('Caption: "' + element.contents[0] + '"')
+        index += 1
+    number = self.generator.generatechaptered(float.type)
+    caption.contents.insert(0, Constant(number + u' '))
+    return float
+
+Postprocessor.stages += [PostLayout]
 

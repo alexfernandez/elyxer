@@ -63,10 +63,10 @@
 \paperfontsize 12
 \spacing single
 \use_hyperref true
-\pdf_title "Decorations Test"
+\pdf_title "Appendix Test"
 \pdf_author "Alex Fernández"
-\pdf_subject "Taken from Guía de Usuario de Lyx, Ignacio García"
-\pdf_keywords "LyX"
+\pdf_subject "Containing Numeration and Other Appendixy things"
+\pdf_keywords "LyX eLyXer"
 \pdf_bookmarks true
 \pdf_bookmarksnumbered true
 \pdf_bookmarksopen false
@@ -321,6 +321,101 @@ name "fig:anger"
 \end_inset
 
 Laurinda's anger pictured in a mild humorous tone.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And yet, how furious was really Laurinda, whom we may optionally refer to
+ as Melinda from now on? Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:anger-time"
+
+\end_inset
+
+ vainly attempts to quantify it.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Anger
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Time
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:anger-time"
+
+\end_inset
+
+Laurinda's anger as a function of time.
 \end_layout
 
 \end_inset
