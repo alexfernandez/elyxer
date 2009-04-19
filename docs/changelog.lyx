@@ -88,6 +88,14 @@ Reorganized code into a few packages.
 Line numbers are not shown for utility classes.
 \end_layout
 
+\begin_layout Itemize
+Floats (figures, tables and algorithms) are now numbered.
+\end_layout
+
+\begin_layout Itemize
+Float links point to the start of the table or figure, not to the caption.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.14 (20090413):

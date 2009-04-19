@@ -31,34 +31,13 @@ from util.numbering import *
 from ref.link import *
 
 
-class LabelName(object):
-  "The name of a label"
-
-  names = dict()
-
-  def __init__(self, name):
-    "Parse the label name"
-    self.name = name
-    self.type = self.name.split(':')[0]
-    self.number = NumberGenerator.instance.generatechaptered(self.type)
-
-  def create(cls, string):
-    "Construct the numbering for a label name"
-    if not string in LabelName.names:
-      name = LabelName(string)
-      LabelName.names[string] = name
-    return LabelName.names[string]
-
-  create = classmethod(create)
-
 class Label(Container):
   "A label to be referenced"
 
   starts = ['\\begin_inset LatexCommand label', '\\begin_inset CommandInset label']
   ending = '\\end_inset'
-  typelabels = {
-      'fig':'Figure ', 'tab':'Table ', 'alg':'Listing '
-      }
+
+  names = dict()
 
   def __init__(self):
     self.parser = InsetParser()
@@ -66,9 +45,8 @@ class Label(Container):
 
   def process(self):
     self.anchor = self.parser.parameters['name']
-    self.name = LabelName.create(self.anchor)
-    text = Label.typelabels[self.name.type] + self.name.number + u' '
-    self.contents = [Constant(text)]
+    Label.names[self.anchor] = self
+    self.contents = [Constant(' ')]
 
 class Reference(Link):
   "A reference to a label"
@@ -84,7 +62,7 @@ class Reference(Link):
   def process(self):
     key = self.parser.parameters['reference']
     self.url = '#' + key
-    if key in LabelName.names:
+    if key in Label.names:
       # already seen
       self.direction = u'↑'
     self.contents = [Constant(self.direction)]

@@ -136,3 +136,10 @@ class SpaceConfig(object):
       '\\qquad{}':u'  '
       }
 
+class TranslationConfig(object):
+  "Configuration for messages to translate"
+
+  floats = {
+      'figure':'Figure ', 'algorithm':'Listing ', 'table':'Table '
+      }
+

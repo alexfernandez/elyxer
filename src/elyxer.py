@@ -30,6 +30,7 @@ from io.fileline import *
 from gen.styles import *
 from ref.link import *
 from ref.label import *
+from ref.biblio import *
 from gen.formula import *
 from gen.command import *
 from gen.table import *
@@ -38,7 +39,6 @@ from gen.structure import *
 from gen.container import *
 from util.options import *
 from post.postprocess import *
-from post.numbering import *
 
 
 class Book(object):

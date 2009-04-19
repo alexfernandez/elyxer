@@ -23,6 +23,7 @@
 # LyX structure in containers
 
 from util.trace import Trace
+from util.numbering import *
 from io.parse import *
 from io.output import *
 from gen.container import *
@@ -67,8 +68,14 @@ class Float(Container):
   def process(self):
     "Get the float type"
     self.type = self.header[2]
-    tag = TaggedText().complete(self.contents, 'div class="' + self.type + '"')
-    self.contents = [tag]
+    tagged = TaggedText().complete(self.contents, 'div class="' + self.type + '"')
+    self.contents = [tagged]
+    caption = self.searchfor(Caption)
+    if caption:
+      number = NumberGenerator.instance.generatechaptered(self.type)
+      prefix = TranslationConfig.floats[self.type]
+      layout = caption.contents[0]
+      layout.contents.insert(0, Constant(prefix + number + u' '))
 
 class InsetText(Container):
   "An inset of text in a lyx file"

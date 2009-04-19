@@ -25,6 +25,7 @@
 from gen.container import *
 from util.trace import Trace
 from gen.structure import *
+from ref.label import *
 from gen.layout import *
 from util.numbering import *
 from ref.link import *
@@ -192,28 +193,19 @@ class PostLayout(object):
     float = standard.searchfor(Float)
     if not float:
       return standard
-    Trace.debug('Float type: ' + float.type)
-    return self.numberfloat(float)
-
-  def numberfloat(self, float):
-    "Generate the number for the float"
-    return float
     caption = float.searchfor(Caption)
-    Trace.debug('Float: ' + str(caption.contents[0]))
-    layout = caption.contents[0]
-    index = 0
-    while index < len(layout.contents):
-      element = layout.contents[index]
-      Trace.debug('Contains ' + str(element))
-      if isinstance(element, Label):
-        float.contents.insert(0, element)
-        del layout.contents[index]
-      elif isinstance(element, StringContainer):
-        Trace.debug('Caption: "' + element.contents[0] + '"')
-        index += 1
-    number = self.generator.generatechaptered(float.type)
-    caption.contents.insert(0, Constant(number + u' '))
+    for layout in caption.contents:
+      for element in layout.contents:
+        self.movelabel(float, layout, element)
     return float
+
+  def movelabel(self, float, layout, element):
+    "Move any labels to the start of the float"
+    if not isinstance(element, Label):
+      return
+    float.contents.insert(0, element)
+    index = layout.contents.index(element)
+    layout.contents[index] = BlackBox()
 
 class Postprocessor(object):
   "Postprocess an element keeping some context"

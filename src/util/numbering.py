@@ -22,11 +22,7 @@
 # Alex 20090418
 # eLyXer number generator
 
-from gen.container import *
 from util.trace import Trace
-from gen.structure import *
-from gen.layout import *
-from ref.link import *
 
 
 class NumberGenerator(object):
@@ -64,12 +60,11 @@ class NumberGenerator(object):
 
   def generatechaptered(self, type):
     "Generate a number which goes with first-level numbers"
-    if not type in self.chaptered:
+    if not type in self.chaptered or self.chaptered[type][0] != self.number[0]:
       self.chaptered[type] = [self.number[0], 0]
     chaptered = self.chaptered[type]
     chaptered[1] = self.increase(chaptered[1])
     self.chaptered[type] = chaptered
-    Trace.debug('Chaptered: ' + str(chaptered))
     return self.dotseparated(chaptered)
 
   def increase(self, number):
