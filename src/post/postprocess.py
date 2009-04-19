@@ -54,7 +54,7 @@ class PostNestedList(object):
     postproc = Postprocessor()
     for index, part in enumerate(deeper.contents):
       result = postproc.postprocess(part)
-      deeper.contents[i] = result
+      deeper.contents[index] = result
     # one additional item to flush the list
     deeper.contents.append(postproc.postprocess(BlackBox()))
     return deeper
