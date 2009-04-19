@@ -50,13 +50,16 @@ class TextChange(object):
 
 def process(reader, writer, change):
   "Change all lines in the file"
+  counter = 0
   while not reader.finished():
     line = reader.currentline()
     if change.affects(line):
       line = change.do(line)
+      counter += 1
     writer.writeline(line)
     reader.nextline()
   reader.close()
+  return counter
 
 def processall(args):
   "Process all arguments"
@@ -68,14 +71,18 @@ def processall(args):
   del args[0]
   changed = args[0]
   del args[0]
+  Trace.message('Replacing ' + original + '->' + changed)
   change = TextChange(original, changed)
+  total = 0
   while len(args) > 0:
     filename = args[0]
-    Trace.message('Doing ' + original + '->' + changed + ' in ' + filename)
     reader, writer = getfiles(filename)
     del args[0]
-    process(reader, writer, change)
+    counter = process(reader, writer, change)
+    total += counter
+    Trace.message('  ' + str(counter) + ' occurrences in ' + filename)
     os.rename(filename + '.temp', filename)
+  Trace.message('Total replacements: ' + str(total))
 
 processall(sys.argv)
 
