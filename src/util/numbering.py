@@ -60,8 +60,12 @@ class NumberGenerator(object):
 
   def generatechaptered(self, type):
     "Generate a number which goes with first-level numbers"
-    if not type in self.chaptered or self.chaptered[type][0] != self.number[0]:
-      self.chaptered[type] = [self.number[0], 0]
+    if len(self.number) == 0:
+      chapter = 0
+    else:
+      chapter = self.number[0]
+    if not type in self.chaptered or self.chaptered[type][0] != chapter:
+      self.chaptered[type] = [chapter, 0]
     chaptered = self.chaptered[type]
     chaptered[1] = self.increase(chaptered[1])
     self.chaptered[type] = chaptered
