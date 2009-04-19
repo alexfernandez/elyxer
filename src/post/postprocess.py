@@ -26,6 +26,8 @@ from gen.container import *
 from util.trace import Trace
 from gen.structure import *
 from gen.layout import *
+from post.numbering import *
+from ref.link import *
 
 
 class Group(Container):
@@ -147,10 +149,76 @@ class PostListPending(object):
       return False
     return True
 
+class PostLayout(object):
+  "Numerate an indexed layout"
+
+  processedclass = Layout
+
+  ordered = ['Chapter', 'Section', 'Subsection', 'Subsubsection', 'Paragraph']
+  unique = ['Part', 'Book']
+
+  def __init__(self):
+    self.generator = NumberGenerator.instance
+
+  def postprocess(self, layout, last):
+    "Generate a number and place it before the text"
+    if self.containsappendix(layout):
+      self.activateappendix()
+    if layout.type in PostLayout.unique:
+      number = self.generator.generateunique(layout.type)
+    elif layout.type in PostLayout.ordered:
+      level = PostLayout.ordered.index(layout.type)
+      number = self.generator.generate(level)
+    elif layout.type == 'Standard':
+      return self.checkforfloat(layout)
+    else:
+      return layout
+    layout.contents.insert(0, Constant(number + u' '))
+    return layout
+
+  def containsappendix(self, layout):
+    "Find out if there is an appendix somewhere in the layout"
+    for element in layout.contents:
+      if isinstance(element, Appendix):
+        return True
+    return False
+
+  def activateappendix(self):
+    "Change first number to letter, and chapter to appendix"
+    self.generator.number = ['-']
+
+  def checkforfloat(self, standard):
+    "Check a standard layout for a float inset"
+    float = standard.searchfor(Float)
+    if not float:
+      return standard
+    Trace.debug('Float type: ' + float.type)
+    return self.numberfloat(float)
+
+  def numberfloat(self, float):
+    "Generate the number for the float"
+    return float
+    caption = float.searchfor(Caption)
+    Trace.debug('Float: ' + str(caption.contents[0]))
+    layout = caption.contents[0]
+    index = 0
+    while index < len(layout.contents):
+      element = layout.contents[index]
+      Trace.debug('Contains ' + str(element))
+      if isinstance(element, Label):
+        float.contents.insert(0, element)
+        del layout.contents[index]
+      elif isinstance(element, StringContainer):
+        Trace.debug('Caption: "' + element.contents[0] + '"')
+        index += 1
+    number = self.generator.generatechaptered(float.type)
+    caption.contents.insert(0, Constant(number + u' '))
+    return float
+
 class Postprocessor(object):
   "Postprocess an element keeping some context"
 
-  stages = [PostNestedList]
+  stages = [PostNestedList, PostLayout]
   unconditional = [PostListPending]
 
   def __init__(self):

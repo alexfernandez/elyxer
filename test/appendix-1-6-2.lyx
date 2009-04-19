@@ -270,10 +270,10 @@ Wasn't it great
 \begin_layout Standard
 Anyway, back to the story.
  Laurinda wanted to hit him in the head with a big ham that she kept just
- for occassions like this, and being a big Hitchcock fan she was ready to
- cook the ham afterwards and serve the resulting stew to any policemen that
- might come by.
- She was also a huge Almodovar fan, but she was unaware that in an early
+ for occassions like this, and being a solid Hitchcock fan she was ready
+ to cook the ham afterwards and serve the resulting stew to any policemen
+ that might come by.
+ She was also a huge Almodóvar fan, but she was unaware that in an early
  film the divine Pedro had copied the scene.
  Actually both directors had copied the idea from a short story by Roald
  Dahl, very much worth reading.
@@ -416,6 +416,186 @@ name "tab:anger-time"
 \end_inset
 
 Laurinda's anger as a function of time.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the sake of Laurinda's furiousness, here is figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:anger-again"
+
+\end_inset
+
+ again.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename laurindas-anger.svg
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:anger-again"
+
+\end_inset
+
+Laurinda's anger, again.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+But how did Laurinda compute her anger? We cannot but speculate; here is
+ a stupid suggestion in listing .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+anger = time - 1
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Laurinda computes her anger.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The result is in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:anger-time-again"
+
+\end_inset
+
+, proving we were right all along.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Anger
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Time
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:anger-time-again"
+
+\end_inset
+
+Laurinda's anger quantified, again.
 \end_layout
 
 \end_inset
