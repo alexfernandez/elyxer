@@ -19,8 +19,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # --end--
-# Alex 20090324
-# eLyXer postprocessor code
+# Alex 20090418
+# eLyXer number generator
 
 from gen.container import *
 from util.trace import Trace
