@@ -78,11 +78,14 @@ class Parser(object):
     "Parse the header"
     header = reader.currentsplit()
     reader.nextline()
-    self.begin = reader.linenumber + 1
+    self.begin = reader.linenumber
     return header
 
   def parseparameter(self, reader):
     "Parse a parameter"
+    if reader.currentline().strip().startswith('<'):
+      self.parsexml(reader)
+      return
     split = reader.currentline().strip().split(' ', 1)
     reader.nextline()
     if len(split) == 0:
@@ -96,6 +99,31 @@ class Parser(object):
       return
     doublesplit = split[1].split('"')
     self.parameters[key] = doublesplit[1]
+
+  def parsexml(self, reader):
+    "Parse a parameter in xml form: <param attr1=value...>"
+    strip = reader.currentline().strip()
+    reader.nextline()
+    if not strip.endswith('>'):
+      Trace.error('XML parameter ' + strip + ' should be <...>')
+    split = strip[1:-1].split()
+    if len(split) == 0:
+      return
+    key = split[0]
+    del split[0]
+    if len(split) == 0:
+      self.parameters[key] = dict()
+      return
+    attrs = dict()
+    for attr in split:
+      if not '=' in attr:
+        Trace.error('Erroneous attribute ' + attr)
+        return
+      parts = attr.split('=')
+      attrkey = parts[0]
+      value = parts[1].split('"')[1]
+      attrs[attrkey] = value
+    self.parameters[key] = attrs
 
   def __str__(self):
     "Return a description"
