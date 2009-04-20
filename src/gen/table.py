@@ -45,7 +45,7 @@ class Row(Container):
   ending = '</row'
 
   def __init__(self):
-    self.parser = BoundedParser()
+    self.parser = TablePartParser()
     self.output = TaggedOutput().settag('tr', True)
 
   def process(self):
@@ -59,7 +59,7 @@ class Cell(Container):
   ending = '</cell'
 
   def __init__(self):
-    self.parser = BoundedParser()
+    self.parser = TablePartParser()
     self.output = TaggedOutput().settag('td', True)
 
 class TableParser(BoundedDummy):
@@ -78,6 +78,20 @@ class TableParser(BoundedDummy):
         self.parseparameter(reader)
     BoundedDummy.parse(self, reader)
     return contents
+
+class TablePartParser(BoundedParser):
+  "Parse a table part (row or cell)"
+
+  def parseheader(self, reader):
+    "Parse the header"
+    self.parsexml(reader)
+    parameters = dict()
+    if len(self.parameters) > 1:
+      Trace.error('Too many parameters in table part')
+    for key in self.parameters:
+      parameters = self.parameters[key]
+    self.parameters = parameters
+    return list()
 
 ContainerFactory.types += [Table, Row, Cell]
 

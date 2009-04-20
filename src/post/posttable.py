@@ -41,9 +41,38 @@ class PostTable(object):
 
   def posttable(self, table):
     "Postprocess the table"
-    Trace.debug('Params: ' + str(len(table.parameters)))
-    for parameter, value in table.parameters.iteritems():
-      Trace.debug('Table param ' + parameter + ': ' + unicode(value))
+    self.longtable(table)
+    for row in table.contents:
+      Trace.debug('Row: ' + str(row.parameters))
+      for cell in row.contents:
+        Trace.debug('Cell: ' + str(cell.parameters))
+
+  def longtable(self, table):
+    "Postprocess a long table, removing unwanted rows"
+    if not 'features' in table.parameters:
+      return
+    features = table.parameters['features']
+    if not 'islongtable' in features:
+      return
+    if features['islongtable'] != 'true':
+      return
+    if self.hasrow(table, 'endfirsthead'):
+      self.removerows(table, 'endhead')
+    if self.hasrow(table, 'endlastfoot'):
+      self.removerows(table, 'endfoot')
+
+  def hasrow(self, table, attrname):
+    "Find out if the table has a row of first heads"
+    for row in table.contents:
+      if attrname in row.parameters:
+        return True
+    return False
+
+  def removerows(self, table, attrname):
+    "Remove the head rows, since the table has first head rows."
+    for row in table.contents:
+      if attrname in row.parameters:
+        row.output = EmptyOutput()
 
 Postprocessor.unconditional.append(PostTable)
 
