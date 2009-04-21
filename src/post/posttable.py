@@ -43,9 +43,10 @@ class PostTable(object):
     "Postprocess the table"
     self.longtable(table)
     for row in table.contents:
-      Trace.debug('Row: ' + str(row.parameters))
-      for cell in row.contents:
-        Trace.debug('Cell: ' + str(cell.parameters))
+      index = 0
+      while index < len(row.contents):
+        self.checkmulticolumn(row, index)
+        index += 1
 
   def longtable(self, table):
     "Postprocess a long table, removing unwanted rows"
@@ -73,6 +74,32 @@ class PostTable(object):
     for row in table.contents:
       if attrname in row.parameters:
         row.output = EmptyOutput()
+
+  def checkmulticolumn(self, row, index):
+    "Process a multicolumn attribute"
+    cell = row.contents[index]
+    if not 'multicolumn' in cell.parameters:
+      return
+    mc = cell.parameters['multicolumn']
+    if mc != '1':
+      Trace.error('Unprocessed multicolumn=' + str(multicolumn) + ' cell ' + str(cell))
+      return
+    total = 1
+    index += 1
+    while self.checkbounds(row, index):
+      del row.contents[index]
+      total += 1
+    cell.setmulticolumn(total)
+
+  def checkbounds(self, row, index):
+    "Check if the index is within bounds for the row"
+    if index >= len(row.contents):
+      return False
+    if not 'multicolumn' in row.contents[index].parameters:
+      return False
+    if row.contents[index].parameters['multicolumn'] != '2':
+      return False
+    return True
 
 Postprocessor.unconditional.append(PostTable)
 

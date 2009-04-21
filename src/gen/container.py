@@ -143,6 +143,7 @@ class BlackBox(Container):
   def __init__(self):
     self.parser = LoneCommand()
     self.output = EmptyOutput()
+    self.contents = []
 
 class StringContainer(Container):
   "A container for a single string"

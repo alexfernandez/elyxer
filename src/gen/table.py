@@ -62,6 +62,10 @@ class Cell(Container):
     self.parser = TablePartParser()
     self.output = TaggedOutput().settag('td', True)
 
+  def setmulticolumn(self, span):
+    "Set the cell as multicolumn"
+    self.output.settag('td colspan="' + str(span) + '"', True)
+
 class TableParser(BoundedDummy):
   "Parse the whole table"
 

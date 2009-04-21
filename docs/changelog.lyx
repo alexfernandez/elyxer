@@ -73,7 +73,11 @@ Document date is shown centered.
 \end_layout
 
 \begin_layout Itemize
-Long table special rows are properly ignored.
+Special rows in a longtable are properly ignored.
+\end_layout
+
+\begin_layout Itemize
+Multicolumn cells are properly interpreted.
 \end_layout
 
 \end_deeper
