@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta name="generator" content="http://www.nongnu.org/elyxer/"/>
-<meta name="create-date" content="2009-04-19"/>
+<meta name="create-date" content="2009-04-22"/>
 <link rel="stylesheet" href="http://www.nongnu.org/elyxer/lyx.css" type="text/css" media="screen"/>
 <title>Decorations Test</title>
 </head>
@@ -284,6 +284,12 @@ A limit: <div class="formula">
 lim<sub><i>x</i> → ∞</sub><i>f</i>(<i>x</i>), 
 </div>
 which should appear as <span class="formula"><i>x</i> → ∞</span> in italics, and «lim» in plain style. Inlined: <span class="formula">lim<sub><i>x</i> → ∞</sub><i>f</i>(<i>x</i>)</span>.
+</div>
+<div class="Standard">
+And why not, a sum: <div class="formula">
+<span class="bigsymbol">∑</span><span class="limits"><sup class="bigsymbol">∞</sup><sub class="bigsymbol"><i>i</i> = 1</sub></span><i>x</i>, 
+</div>
+where the sum’s limits should appear below (<span class="formula"><i>i</i> = 1</span>) and above (<span class="formula">∞</span>) the <span class="formula"><span class="bigsymbol">∑</span></span>. Inlined: <span class="formula"><span class="bigsymbol">∑</span><span class="limits"><sup class="bigsymbol">∞</sup><sub class="bigsymbol"><i>i</i> = 1</sub></span><i>x</i>.</span> Integral: <span class="formula"><span class="bigsymbol">∫</span><span class="limits"><sup class="bigsymbol">∞</sup><sub class="bigsymbol"><i>i</i> = 1</sub></span><i>x</i>.</span>
 </div>
 <h1 class="Chapter">
 3 Parentheses
