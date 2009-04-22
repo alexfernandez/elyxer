@@ -80,6 +80,15 @@ Special rows in a longtable are properly ignored.
 Multicolumn cells are properly interpreted.
 \end_layout
 
+\begin_layout Itemize
+Sums and integral limits are properly displayed with respect to the symbol:
+ 
+\begin_inset Formula $\sum_{i=1}^{\infty}$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.15 (20090419):

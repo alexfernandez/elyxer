@@ -197,28 +197,20 @@ span.root {
 }
 span.bigsymbol {
 	font-size: 150%;
-#	vertical-align: -0.15ex;
 }
 span.limits {
 	display: inline-table;
-	background: #c0c0ff;
-	border: thin solid #4040ff;
-	vertical-align: 1ex;
+	vertical-align: 1.5ex;
 }
 sub.bigsymbol {
 	display: table-row;
-	background: #c0ffc0;
 	text-align: left;
 	line-height: 150%;
-	vertical-align: text-bottom;
 }
 sup.bigsymbol {
 	display: table-row;
-	background: #ffc0c0;
-	top: -2ex;
 	text-align: left;
 	line-height: 150%;
-	vertical-align: text-top;
 }
 span.symbolover {
 	font-style: italic;

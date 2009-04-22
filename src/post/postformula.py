@@ -53,12 +53,10 @@ class PostFormula(object):
       return
     if not bit.command in PostFormula.limited:
       return
-    Trace.debug('Limited command ' + bit.command)
     limits = self.findlimits(contents, index + 1)
-    Trace.debug('Limiting ' + str(len(limits)))
+    limits.reverse()
     if len(limits) == 0:
       return
-    Trace.debug('Limiting ' + str(len(limits)))
     tagged = TaggedText().complete(limits, 'span class="limits"')
     contents.insert(index + 1, tagged)
 
@@ -79,7 +77,6 @@ class PostFormula(object):
       return False
     if not bit.command in PostFormula.limits:
       return False
-    Trace.debug('Limits command ' + bit.command)
     bit.output.tag += ' class="bigsymbol"'
     return True
 

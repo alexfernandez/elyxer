@@ -643,6 +643,10 @@ where the sum's limits should appear below (
 \begin_inset Formula $\sum_{i=1}^{\infty}x.$
 \end_inset
 
+ Integral: 
+\begin_inset Formula $\intop_{i=1}^{\infty}x.$
+\end_inset
+
 
 \end_layout
 
