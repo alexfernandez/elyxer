@@ -46,9 +46,11 @@ class FormulaCommand(FormulaBit):
     "Find any type of command in a map"
     command = self.findalphacommand(pos)
     if command and command in map:
+      self.command = command
       return command
     command = self.findsymbolcommand(pos)
     if command and command in map:
+      self.command = command
       return command
     return None
 

@@ -40,6 +40,7 @@ from gen.container import *
 from util.options import *
 from post.postprocess import *
 from post.posttable import *
+from post.postformula import *
 
 
 class Book(object):

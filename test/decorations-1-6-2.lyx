@@ -619,6 +619,33 @@ lim
 .
 \end_layout
 
+\begin_layout Standard
+And why not, a sum: 
+\begin_inset Formula \[
+\sum_{i=1}^{\infty}x,\]
+
+\end_inset
+
+where the sum's limits should appear below (
+\begin_inset Formula $i=1$
+\end_inset
+
+) and above (
+\begin_inset Formula $\infty$
+\end_inset
+
+) the 
+\begin_inset Formula $\sum$
+\end_inset
+
+.
+ Inlined: 
+\begin_inset Formula $\sum_{i=1}^{\infty}x.$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 Parentheses
 \end_layout
