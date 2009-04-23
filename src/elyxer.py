@@ -52,8 +52,8 @@ class Book(object):
     postproc = Postprocessor()
     while not reader.finished():
       container = factory.create(reader)
-      result = postproc.postprocess(container)
-      writer.write(result.gethtml())
+      container = postproc.postprocess(container)
+      writer.write(container.gethtml())
 
 def createbook(args):
   "Read a whole book, write it"
