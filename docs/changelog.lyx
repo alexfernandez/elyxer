@@ -64,6 +64,16 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.17 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Alignment of table cells is now respected, both horizontally and vertically.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.16 (20090422):
 \end_layout
 

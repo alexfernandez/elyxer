@@ -47,10 +47,20 @@ class Row(Container):
   def __init__(self):
     self.parser = TablePartParser()
     self.output = TaggedOutput().settag('tr', True)
+    self.columns = list()
 
-  def process(self):
-    if len(self.header) > 1:
-      self.output.tag += ' class="header"'
+  def setcolumns(self, columns):
+    "Process alignments for every column"
+    if len(columns) != len(self.contents):
+      Trace.error('Columns: ' + str(len(columns)) + ', cells: ' + str(len(self.contents)))
+      return
+    for index, column in enumerate(columns):
+      alignment = column['alignment']
+      if alignment == 'block':
+        alignment = 'justify'
+      self.contents[index].setalignment(alignment)
+      valignment = column['valignment']
+      self.contents[index].setvalignment(valignment)
 
 class Cell(Container):
   "A cell in a table"
@@ -64,24 +74,53 @@ class Cell(Container):
 
   def setmulticolumn(self, span):
     "Set the cell as multicolumn"
-    self.output.settag('td colspan="' + str(span) + '"', True)
+    self.setattribute('colspan', span)
+
+  def setalignment(self, alignment):
+    "Set the alignment for the cell"
+    self.setattribute('align', alignment)
+
+  def setvalignment(self, valignment):
+    "Set the vertical alignment"
+    self.setattribute('valign', valignment)
+
+  def setattribute(self, attribute, value):
+    "Set a cell attribute in the tag"
+    self.output.tag += ' ' + attribute + '="' + unicode(value) + '"'
 
 class TableParser(BoundedDummy):
   "Parse the whole table"
 
   ending = '</lyxtabular'
+  column = '<column'
+
+  def __init__(self):
+    BoundedDummy.__init__(self)
+    self.columns = list()
 
   def parse(self, reader):
     "Parse table header as parameters, rows and end of table"
     contents = []
-    while not reader.currentline().strip().startswith(TableParser.ending):
-      if reader.currentline().strip().startswith(Row.start):
+    while not self.checkcurrent(reader, TableParser.ending):
+      if self.checkcurrent(reader, Row.start):
         row = self.factory.create(reader)
+        row.setcolumns(self.columns)
         contents.append(row)
+      elif self.checkcurrent(reader, TableParser.column):
+        self.parsecolumn(reader)
       else:
         self.parseparameter(reader)
     BoundedDummy.parse(self, reader)
     return contents
+
+  def checkcurrent(self, reader, start):
+    "Check if the current line starts with the given string"
+    return reader.currentline().strip().startswith(start)
+
+  def parsecolumn(self, reader):
+    "Parse a column definition"
+    self.parseparameter(reader)
+    self.columns.append(self.parameters['column'])
 
 class TablePartParser(BoundedParser):
   "Parse a table part (row or cell)"
