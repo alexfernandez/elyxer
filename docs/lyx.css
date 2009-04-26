@@ -328,6 +328,18 @@ td.formula-r {
 	padding: 0.2ex;
 	border: 0ex;
 }
+table.cases {
+	display: inline-block;
+	text-align: center;
+	border-collapse: collapse;
+	margin: 0.2em;
+	border-left: thin solid #000040;
+	vertical-align: middle;
+}
+table.cases tr td {
+	padding-left: 1ex;
+	padding-right: 1em;
+}
 span.greyedout {
 	color: #808080;
 }

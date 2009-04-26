@@ -120,5 +120,34 @@ class FormulaArray(FormulaCommand):
       return
     self.addoriginal('\\\\', pos)
 
-WholeFormula.bits += [FormulaArray()]
+class FormulaCases(FormulaArray):
+  "A cases statement"
+
+  start = '\\begin{cases}'
+  ending = '\\end{cases}'
+
+  def __init__(self):
+    FormulaCommand.__init__(self)
+    self.output = TaggedOutput().settag('table class="cases"', True)
+    self.alignments = ['l', 'l']
+
+  def detect(self, pos):
+    "Detect a cases statement"
+    if not pos.checkfor(FormulaCases.start):
+      return False
+    return True
+
+  def parse(self, pos):
+    "Parse the cases"
+    self.addoriginal(FormulaCases.start, pos)
+    while not pos.isout():
+      row = FormulaRow(self.alignments)
+      row.parse(pos)
+      self.add(row)
+      if pos.checkfor(FormulaCases.ending):
+        self.addoriginal(FormulaCases.ending, pos)
+        return
+      self.parserowend(pos)
+
+WholeFormula.bits += [FormulaArray(), FormulaCases()]
 
