@@ -119,11 +119,11 @@ displaystyle
 \end_layout
 
 \begin_layout Itemize
-Square roots are displayed correctly (in postprocessing).
+Square roots are again displayed correctly, and even better than before!
 \end_layout
 
 \begin_layout Itemize
-Cases are working.
+Cases are working rudimentarily.
 \end_layout
 
 \end_deeper
