@@ -122,6 +122,10 @@ displaystyle
 Square roots are displayed correctly (in postprocessing).
 \end_layout
 
+\begin_layout Itemize
+Cases are working.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.16 (20090422):
