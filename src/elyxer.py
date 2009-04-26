@@ -31,8 +31,8 @@ from gen.styles import *
 from ref.link import *
 from ref.label import *
 from ref.biblio import *
-from gen.formula import *
-from gen.command import *
+from math.formula import *
+from math.command import *
 from gen.table import *
 from gen.image import *
 from gen.structure import *
@@ -40,7 +40,7 @@ from gen.container import *
 from util.options import *
 from post.postprocess import *
 from post.posttable import *
-from post.postformula import *
+from math.postformula import *
 
 
 class Book(object):

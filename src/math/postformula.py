@@ -23,7 +23,7 @@
 # eLyXer postprocessor for formulae
 
 from util.trace import Trace
-from gen.command import *
+from math.command import *
 from post.postprocess import *
 
 
@@ -43,6 +43,7 @@ class PostFormula(object):
     "Search for sum or integral"
     for index, bit in enumerate(contents):
       self.checklimited(contents, index)
+      self.checkroot(contents, index)
       if isinstance(bit, FormulaBit):
         self.postcontents(bit.contents)
 
@@ -79,6 +80,15 @@ class PostFormula(object):
       return False
     bit.output.tag += ' class="bigsymbol"'
     return True
+
+  def checkroot(self, contents, index):
+    "Check for a root, insert the radical in front"
+    bit = contents[index]
+    if not hasattr(bit, 'tag'):
+      return
+    if bit.tag != 'span class="root"':
+      return
+    return
 
 Postprocessor.unconditional.append(PostFormula)
 

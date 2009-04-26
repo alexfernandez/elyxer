@@ -26,7 +26,7 @@ import sys
 from gen.container import *
 from util.trace import Trace
 from config import *
-from gen.formula import *
+from math.formula import *
 
 
 class FormulaCommand(FormulaBit):

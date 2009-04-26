@@ -119,7 +119,7 @@ displaystyle
 \end_layout
 
 \begin_layout Itemize
-Square roots are properly displayed.
+Square roots are displayed correctly (in postprocessing).
 \end_layout
 
 \end_deeper
