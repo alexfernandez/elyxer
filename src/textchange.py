@@ -81,7 +81,9 @@ def processall(args):
     counter = process(reader, writer, change)
     total += counter
     Trace.message('  ' + str(counter) + ' occurrences in ' + filename)
-    os.rename(filename + '.temp', filename)
+    temp = filename + '.temp'
+    os.chmod(temp, os.stat(filename).st_mode)
+    os.rename(temp, filename)
   Trace.message('Total replacements: ' + str(total))
 
 processall(sys.argv)
