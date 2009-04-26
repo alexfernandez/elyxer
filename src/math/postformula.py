@@ -84,11 +84,13 @@ class PostFormula(object):
   def checkroot(self, contents, index):
     "Check for a root, insert the radical in front"
     bit = contents[index]
-    if not hasattr(bit, 'tag'):
+    if not hasattr(bit, 'original'):
       return
-    if bit.tag != 'span class="root"':
+    if not bit.original.startswith('\\sqrt'):
       return
-    return
+    tagged = TaggedText().constant(u'√', 'span class="radical"')
+    group = Group().contents([tagged, bit])
+    contents[index] = group
 
 Postprocessor.unconditional.append(PostFormula)
 
