@@ -184,6 +184,9 @@ span.denominator {
 	padding: 0;
 	border-top: thin solid #000040;
 }
+span.sqrt {
+	display: inline-block;
+}
 span.radical {
 	display: inline-block;
 	padding: 0;

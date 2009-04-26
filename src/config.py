@@ -81,7 +81,7 @@ class FormulaConfig(object):
       '^':'sup', '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
       '\\bar':'span class="bar"', '\\mbox':'span class="mbox"',
       # functions
-      '\\sqrt':'span class="root"',
+      '\\sqrt':'span class="sqrt"',
       # hard functions
       '\\begin{array}':'span class="arraydef"',
       # LaTeX (ignored)

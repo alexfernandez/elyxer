@@ -88,9 +88,9 @@ class PostFormula(object):
       return
     if not bit.original.startswith('\\sqrt'):
       return
-    tagged = TaggedText().constant(u'√', 'span class="radical"')
-    group = Group().contents([tagged, bit])
-    contents[index] = group
+    radical = TaggedText().constant(u'√', 'span class="radical"')
+    root = TaggedText().complete(bit.contents, 'span class="root"')
+    bit.contents = [radical, root]
 
 Postprocessor.unconditional.append(PostFormula)
 
