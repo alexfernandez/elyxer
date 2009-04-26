@@ -355,3 +355,9 @@ a.Label {
 div.Date {
 	text-align: center;
 }
+div.wrap-l, div.wrap-o, div.wrap-i {
+	float: left;
+}
+div.wrap-r {
+	float: right;
+}

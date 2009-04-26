@@ -77,6 +77,17 @@ class Float(Container):
       layout = caption.contents[0]
       layout.contents.insert(0, Constant(prefix + number + u' '))
 
+class Wrap(Float):
+  "A wrapped (floating) float"
+
+  start = '\\begin_inset Wrap'
+
+  def process(self):
+    "Get the wrap type"
+    Float.process(self)
+    placement = self.parameters['placement']
+    self.output.tag = 'div class="wrap-' + placement + '"'
+
 class InsetText(Container):
   "An inset of text in a lyx file"
 
@@ -312,8 +323,8 @@ class ERT(Container):
 
 
 ContainerFactory.types += [
-    LyxHeader, LyxFooter, InsetText, Caption, Inset, Align, Float, Newline,
-    Space, NewlineInset, Branch, ShortTitle, Footnote, Appendix, Note,
-    ListItem, DeeperList, ERT
+    LyxHeader, LyxFooter, InsetText, Caption, Inset, Align, Float, Wrap,
+    Newline, Space, NewlineInset, Branch, ShortTitle, Footnote, Appendix,
+    Note, ListItem, DeeperList, ERT
     ]
 

@@ -72,6 +72,10 @@ target "index.html"
 Alignment of table cells is now respected, both horizontally and vertically.
 \end_layout
 
+\begin_layout Itemize
+Wrap floats are actually floated left or right.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.16 (20090422):
