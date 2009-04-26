@@ -26,7 +26,7 @@
 class FormulaConfig(object):
   "Configuration for formulae"
 
-  unmodified = ['.', '*', u'€', '(', ')', '[', ']', ':', u'·']
+  unmodified = ['.', '*', u'€', '(', ')', '[', ']', ':', u'·', '!', ';']
   modified = {'\'':u'’', '=':u' = ', ' ':'', '<':u' &lt; ', '>':u' &gt; ',
       '-':u' − ', '+':u' + ',
       ',':u', ', '/':u' ⁄ ', '\n':'', '&':u'\t'}
@@ -37,7 +37,8 @@ class FormulaConfig(object):
       '\\sum':u'<span class="bigsymbol">∑</span>',
       '\\int':u'<span class="bigsymbol">∫</span>',
       '\\intop':u'<span class="bigsymbol">∫</span>', '\\infty':u'∞',
-      '\\prime':u'′',
+      '\\prime':u'′', '\\ddots':u'⋱',
+      '\\leq':u'≤', '\\geq':u'≥', '\\neq':u'≠', '\\in':u'∈',
       # symbols
       '\\rightarrow':u' → ', '\\rightsquigarrow':u' ⇝ ', '\\Rightarrow':u' ⇒ ',
       '\\leftarrow':u' ← ',
@@ -51,9 +52,11 @@ class FormulaConfig(object):
       # hyperbolic functions
       '\\tanh':'tanh', '\\sinh':'sinh', '\\cosh':'cosh',
       # LaTeX (ignored)
-      '\\nonumber':'', '\\lyxlock':'', '\\end{array}':'',
+      '\\nonumber':'', '\\lyxlock':'', '\\end{array}':'', '\\:':'',
+      '\\displaystyle':'', '\\textstyle':'', '\\scriptstyle':'',
+      '\\scriptscriptstyle':'',
       # spacing
-      '\\,':' ', '\\\\':'<br/>',
+      '\\,':' ', '\\\\':'<br/>', '\\quad':u' ', '\\!':'',
       # typographical
       '\\%':'%', '\\_':'_',
       '\\left(':u'<span class="bigsymbol">(</span>',
@@ -78,7 +81,7 @@ class FormulaConfig(object):
       '^':'sup', '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
       '\\bar':'span class="bar"', '\\mbox':'span class="mbox"',
       # functions
-      '\\sqrt':'span class="sqrt"',
+      '\\sqrt':'span class="root"',
       # hard functions
       '\\begin{array}':'span class="arraydef"',
       # LaTeX (ignored)

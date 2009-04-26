@@ -76,6 +76,52 @@ Alignment of table cells is now respected, both horizontally and vertically.
 Wrap floats are actually floated left or right.
 \end_layout
 
+\begin_layout Itemize
+Correctly interpret symbols in formulae: 
+\begin_inset Formula $!$
+\end_inset
+
+, 
+\begin_inset Formula $;$
+\end_inset
+
+, 
+\begin_inset Formula $\leq$
+\end_inset
+
+, 
+\begin_inset Formula $\geq$
+\end_inset
+
+, 
+\begin_inset Formula $\neq,$
+\end_inset
+
+ 
+\begin_inset Formula $\in$
+\end_inset
+
+, 
+\begin_inset Formula $\ddots$
+\end_inset
+
+, and a few spaces.
+\end_layout
+
+\begin_layout Itemize
+In formulae, 
+\family typewriter
+
+\backslash
+displaystyle
+\family default
+ and friends are ignored.
+\end_layout
+
+\begin_layout Itemize
+Square roots are properly displayed.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.16 (20090422):
