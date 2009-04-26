@@ -52,11 +52,11 @@ class FormulaConfig(object):
       # hyperbolic functions
       '\\tanh':'tanh', '\\sinh':'sinh', '\\cosh':'cosh',
       # LaTeX (ignored)
-      '\\nonumber':'', '\\lyxlock':'', '\\end{array}':'', '\\:':'',
+      '\\nonumber':'', '\\lyxlock':'', '\\end{array}':'',
       '\\displaystyle':'', '\\textstyle':'', '\\scriptstyle':'',
       '\\scriptscriptstyle':'',
       # spacing
-      '\\,':' ', '\\\\':'<br/>', '\\quad':u' ', '\\!':'',
+      '\\,':' ', '\\\\':'<br/>', '\\quad':u' ', '\\!':'', '\\:':u' ',
       # typographical
       '\\%':'%', '\\_':'_',
       '\\left(':u'<span class="bigsymbol">(</span>',
