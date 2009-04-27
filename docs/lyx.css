@@ -371,8 +371,10 @@ div.Date {
 	text-align: center;
 }
 div.wrap-l, div.wrap-o, div.wrap-i {
+	margin: 2ex;
 	float: left;
 }
 div.wrap-r {
+	margin: 2ex;
 	float: right;
 }
