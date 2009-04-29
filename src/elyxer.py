@@ -21,6 +21,7 @@
 # --end--
 # Alex 20090308
 # eLyXer main script
+# http://www.nongnu.org/elyxer/
 
 
 import sys
