@@ -34,6 +34,8 @@ class CommandLineParser(object):
 
   def parseoptions(self, args):
     "Parse command line options"
+    if len(args) == 0:
+      return None
     while args[0].startswith('--'):
       if args[0] == '--help':
         return 'Help'
