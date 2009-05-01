@@ -21,19 +21,19 @@
 
 # create executable
 cd src
-./coalesce.py elyxer.py > elyxer
-mv elyxer ..
+./coalesce.py principal.py > elyxer.py
+mv elyxer.py ..
 cd ..
-chmod 755 elyxer
+chmod 755 elyxer.py
 # remove artifacts
 rm -f docs/*.png
 rm -f docs/*.lyx~
 rm -f test/*.lyx~
 # prepare documentation
-./elyxer --title "eLyXer User Guide" --css "lyx.css" docs/userguide.lyx docs/userguide.html
-./elyxer --title="eLyxer Developer Guide" --css "lyx.css" docs/devguide.lyx docs/devguide.html
-./elyxer --title=eLyXer --css "lyx.css" docs/index.lyx docs/index.html
-./elyxer --title="eLyXer changelog" --css "lyx.css" docs/changelog.lyx docs/changelog.html
+./elyxer.py --title "eLyXer User Guide" --css "lyx.css" docs/userguide.lyx docs/userguide.html
+./elyxer.py --title="eLyxer Developer Guide" --css "lyx.css" docs/devguide.lyx docs/devguide.html
+./elyxer.py --title=eLyXer --css "lyx.css" docs/index.lyx docs/index.html
+./elyxer.py --title="eLyXer changelog" --css "lyx.css" docs/changelog.lyx docs/changelog.html
 # make compressed files
 mkdir -p dist
 cd ..

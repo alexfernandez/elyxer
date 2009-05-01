@@ -73,6 +73,31 @@ Wrap floats are separated by a bit of space (two exes, actually) from the
  text.
 \end_layout
 
+\begin_layout Itemize
+Solved bug when running without any arguments.
+\end_layout
+
+\begin_layout Itemize
+Main executable file is now changed from 
+\family typewriter
+elyxer
+\family default
+ to 
+\family typewriter
+elyxer.py
+\family default
+, to prevent problems on platforms that require the extension; main source
+ file has changed from 
+\family typewriter
+elyxer.py
+\family default
+ to 
+\family typewriter
+principal.py
+\family default
+, to avoid confusion.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.17 (20090427):
