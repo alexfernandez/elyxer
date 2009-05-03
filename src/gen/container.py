@@ -25,7 +25,7 @@
 from util.trace import Trace
 from parse.parser import *
 from io.output import *
-from config import *
+from conf.config import *
 
 
 class Container(object):

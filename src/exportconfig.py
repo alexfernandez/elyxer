@@ -29,12 +29,15 @@ from config import *
 from parse.configparse import *
 
 
-linewriter = LineWriter('base.cfg')
+linewriter = LineWriter('conf/base.cfg')
 writer = ConfigWriter(linewriter)
 writer.writeall([FormulaConfig(), ContainerConfig(), BlackBoxConfig(), SpaceConfig(), TranslationConfig()])
-linereader = LineReader('base.cfg')
+linereader = LineReader('conf/base.cfg')
 reader = ConfigReader(linereader)
 reader.parse()
+linewriter = LineWriter('conf/base.py')
+translator = ConfigTranslator(linewriter)
+translator.write(reader.objects)
 for section, object in reader.objects.iteritems():
   print
   print 'Section ' + section

@@ -25,7 +25,7 @@
 import sys
 from gen.container import *
 from util.trace import Trace
-from config import *
+from conf.config import *
 from parse.formulaparse import *
 
 
