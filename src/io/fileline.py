@@ -23,14 +23,18 @@
 # File line management for eLyXer
 
 import sys
+import codecs
 from util.trace import Trace
 
 
 class LineReader(object):
   "Reads a file line by line"
 
-  def __init__(self, file):
-    self.file = file
+  def __init__(self, filename):
+    if isinstance(filename, file):
+      self.file = filename
+    else:
+      self.file = codecs.open(filename, 'r', "utf-8")
     self.linenumber = 0
     self.current = None
     self.split = None
@@ -77,15 +81,18 @@ class LineReader(object):
   def close(self):
     self.file.close()
 
-class HtmlWriter(object):
-  "Writes an HTML file as a series of lists"
+class LineWriter(object):
+  "Writes a file as a series of lists"
 
-  def __init__(self, file):
-    self.file = file
+  def __init__(self, filename):
+    if isinstance(filename, file):
+      self.file = filename
+    else:
+      self.file = codecs.open(filename, 'w', "utf-8")
 
-  def write(self, html):
+  def write(self, lines):
     "Write a list of lines"
-    for line in html:
+    for line in lines:
       self.writeline(line)
 
   def writeline(self, line):

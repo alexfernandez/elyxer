@@ -36,9 +36,7 @@ def readall(filename):
 
 def getfiles(filename):
   "Get reader and writer for a file name"
-  filein = codecs.open(filename, 'r', "utf-8")
-  reader = LineReader(filein)
-  fileout = codecs.open(filename + '.temp', 'w', "utf-8")
-  writer = HtmlWriter(fileout)
+  reader = LineReader(filename)
+  writer = LineWriter(filename + '.temp')
   return reader, writer
 

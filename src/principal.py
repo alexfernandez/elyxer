@@ -25,7 +25,6 @@
 
 
 import sys
-import codecs
 from util.trace import Trace
 from io.fileline import *
 from gen.styles import *
@@ -67,16 +66,16 @@ def createbook(args):
     Options.directory = os.path.dirname(args[0])
     if Options.directory == '':
       Options.directory = '.'
-    filein = codecs.open(args[0], 'r', "utf-8")
+    filein = args[0]
     del args[0]
   if len(args) > 0:
-    fileout = codecs.open(args[0], 'w', "utf-8")
+    fileout = args[0]
     del args[0]
   if len(args) > 0:
     usage('Too many arguments')
     return
   reader = LineReader(filein)
-  writer = HtmlWriter(fileout)
+  writer = LineWriter(fileout)
   book = Book()
   book.parsecontents(reader, writer)
 
@@ -85,7 +84,7 @@ def usage(error):
   if not error:
     return
   Trace.error(error)
-  Trace.error('Usage: eLyXer [filein] [fileout].')
+  Trace.error('Usage: elyxer.py [filein] [fileout].')
   Trace.error('  Options:')
   Trace.error('    --nocopy: disables the copyright notice at the bottom')
   Trace.error('    --quiet: disables all runtime messages')

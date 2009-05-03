@@ -23,7 +23,6 @@
 # conflates (unifies) all into one file to generate an executable
 
 import sys
-import codecs
 from io.fileline import *
 from util.trace import Trace
 
@@ -36,25 +35,24 @@ def getreader(filename):
     # already parsed; skip
     return None
   files.append(filename)
-  filein = codecs.open(filename, 'r', "utf-8")
-  return LineReader(filein)
+  return LineReader(filename)
 
 def readargs(args):
   "Read arguments from the command line"
   del args[0]
   if len(args) == 0:
-    Trace.error('Usage: conflate.py filein [fileout]')
+    Trace.error('Usage: coalesce.py filein [fileout]')
     return
   reader = getreader(args[0])
   del args[0]
   fileout = sys.stdout
   if len(args) > 0:
-    fileout = codecs.open(args[0], 'w', "utf-8")
+    fileout = args[0]
     del args[0]
   if len(args) > 0:
     Trace.error('Usage: conflate.py filein [fileout]')
     return
-  writer = HtmlWriter(fileout)
+  writer = LineWriter(fileout)
   return reader, writer
 
 def conflate(reader, writer):
