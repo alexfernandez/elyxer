@@ -99,15 +99,19 @@ principal.py
 \end_layout
 
 \begin_layout Itemize
-Moved all parsing code to the new 
+Moved all parsing code to the new package 
 \family typewriter
 parse
 \family default
- package.
+, and configuration files to package 
+\family typewriter
+conf
+\family default
+.
 \end_layout
 
 \begin_layout Itemize
-All configuration is now read from (and written to) text files.
+All configuration is now read from (and written to) plain text files.
 \end_layout
 
 \end_deeper

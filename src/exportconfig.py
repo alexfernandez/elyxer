@@ -25,8 +25,8 @@
 import codecs
 from util.trace import Trace
 from util.options import *
-from config import *
-from parse.configparse import *
+from conf.config import *
+from conf.configparse import *
 
 
 linewriter = LineWriter('conf/base.cfg')
