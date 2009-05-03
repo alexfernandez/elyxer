@@ -98,6 +98,14 @@ principal.py
 , to avoid confusion.
 \end_layout
 
+\begin_layout Itemize
+Moved all parsing code to the new 
+\family typewriter
+parse
+\family default
+ package.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.17 (20090427):
