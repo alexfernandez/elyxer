@@ -101,9 +101,11 @@ class FormulaConfig(object):
       '\\hat':u'^', '\\grave':u'`', '\\ddot':u'¨', '\\tilde':u'˜',
       '\\acute':u'´'
       }
-  twofunctions = {
-      '\\frac':['span class="fraction"', 'span class="numerator"', 'span class="denominator"'],
-      '\\nicefrac':['span class="fraction"', 'span class="numerator"', 'span class="denominator"']
+  fractionfunctions = [ '\\frac', '\\nicefrac' ]
+  fractionspans = {
+      'whole':'span class="fraction"',
+      'first':'span class="numerator"',
+      'second':'span class="denominator"',
       }
 
 class ContainerConfig(object):

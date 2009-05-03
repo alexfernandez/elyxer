@@ -164,29 +164,31 @@ class DecoratingFunction(OneParamFunction):
       self.output = FixedOutput()
       self.html = FormulaConfig.alphacommands[self.original]
 
-class TwoParamFunction(FormulaCommand):
-  "A function of two parameters"
+class FractionFunction(FormulaCommand):
+  "A fraction with two parameters"
 
   def detect(self, pos):
     "Detect the start of the function"
-    if self.findcommand(pos, FormulaConfig.twofunctions):
+    if self.findcommand(pos, FormulaConfig.fractionfunctions):
       return True
     return False
 
   def parse(self, pos):
     "Parse a function of two parameters"
-    command = self.findcommand(pos, FormulaConfig.twofunctions)
+    command = self.findcommand(pos, FormulaConfig.fractionfunctions)
     self.addoriginal(command, pos)
-    tags = FormulaConfig.twofunctions[command]
-    self.output = TaggedOutput().settag(tags[0])
+    whole = FormulaConfig.fractionspans['whole']
+    first = FormulaConfig.fractionspans['first']
+    second = FormulaConfig.fractionspans['second']
+    self.output = TaggedOutput().settag(whole)
     bracket1 = self.parsebracket(pos)
     if not bracket1:
       return
-    bracket1.output = TaggedOutput().settag(tags[1])
+    bracket1.output = TaggedOutput().settag(first)
     bracket2 = self.parsebracket(pos)
     if not bracket2:
       return
-    bracket2.output = TaggedOutput().settag(tags[2])
+    bracket2.output = TaggedOutput().settag(second)
 
 class Bracket(FormulaBit):
   "A {} bracket inside a formula"
@@ -215,6 +217,6 @@ class Bracket(FormulaBit):
 
 WholeFormula.bits += [
     EmptyCommand(), OneParamFunction(), DecoratingFunction(),
-    TwoParamFunction(), FontFunction(), 
+    FractionFunction(), FontFunction(), 
     ]
 
