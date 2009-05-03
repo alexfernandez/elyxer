@@ -124,7 +124,11 @@ key "savannah-elyxer"
 \end_layout
 
 \begin_layout LyX-Code
-$ git clone git://git.sv.gnu.org/elyxer.git
+
+\color blue
+$
+\color inherit
+ git clone git://git.sv.gnu.org/elyxer.git
 \end_layout
 
 \begin_layout Standard
@@ -165,7 +169,11 @@ git
 \end_layout
 
 \begin_layout LyX-Code
-$ cd elyxer
+
+\color blue
+$
+\color inherit
+ cd elyxer
 \end_layout
 
 \begin_layout Standard
@@ -173,20 +181,33 @@ Your first task is to create the main executable file:
 \end_layout
 
 \begin_layout LyX-Code
-$ ./make
+
+\color blue
+$
+\color inherit
+ ./make
 \end_layout
 
 \begin_layout Standard
-eLyXer will compile it for you, and even run some basic tests.
+The build system for eLyXer will compile it for you, and even run some basic
+ tests.
  Now you can try it out:
 \end_layout
 
 \begin_layout LyX-Code
-$ cd docs/
+
+\color blue
+$
+\color inherit
+ cd docs/
 \end_layout
 
 \begin_layout LyX-Code
-$ ../elyxer devguide.lyx devguide2.html
+
+\color blue
+$
+\color inherit
+ ../elyxer.py devguide.lyx devguide2.html
 \end_layout
 
 \begin_layout Standard
@@ -198,19 +219,26 @@ devguide2.html
 \end_layout
 
 \begin_layout LyX-Code
-$ firefox-bin devguide2.html
+
+\color blue
+$
+\color inherit
+ firefox-bin devguide2.html
 \end_layout
 
 \begin_layout Standard
-Note for Windows developers: the commands shown should work without modification
-, except for maybe changing the slashes to backward-slashes (as in 
-\family typewriter
-..
+Note for Windows developers: on Windows eLyXer needs to be invoked using
+ the Python executable, and of course changing the slashes to backward-slashes:
+\end_layout
+
+\begin_layout LyX-Code
+
+\color blue
+>
+\color inherit
+ Python ..
 \backslash
-elyxer
-\family default
-).
- But it has not been tested.
+elyxer.py devguide.lyx devguide2.html
 \end_layout
 
 \begin_layout Standard
@@ -492,7 +520,7 @@ Parser
 \family default
 s reside in the file 
 \family typewriter
-parse.py
+parser.py
 \family default
 .
  Among them are the following usual classes:
@@ -526,6 +554,14 @@ ContainerFactory
 \family default
  to recursively parse its contents.
  Then the parser returns everything found inside as a list.
+\end_layout
+
+\begin_layout Standard
+Parsers are confined to the 
+\family typewriter
+parser
+\family default
+ package, so that any future format changes can be done easily.
 \end_layout
 
 \begin_layout Subsection

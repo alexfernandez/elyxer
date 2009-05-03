@@ -156,7 +156,7 @@ eLyXer is a command line tool written in Python.
 \color blue
 $
 \color inherit
- elyxer document.lyx page.html
+ elyxer.py document.lyx page.html
 \end_layout
 
 \begin_layout Standard
@@ -169,7 +169,7 @@ or, on Windows:
 \color blue
 >
 \color inherit
- Python.exe elyxer document.lyx page.html
+ Python.exe elyxer.py document.lyx page.html
 \end_layout
 
 \begin_layout Standard
@@ -191,7 +191,7 @@ page.html
 \color blue
 $
 \color inherit
- elyxer --help
+ elyxer.py --help
 \end_layout
 
 \begin_layout Standard

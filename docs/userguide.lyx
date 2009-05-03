@@ -186,7 +186,12 @@ A directory called
 elyxer
 \family default
  should appear.
- To test that everything works fine just run the included tests:
+ If you have 
+\family typewriter
+bash
+\family default
+ installed, to test that everything works fine you can just run the included
+ tests:
 \end_layout
 
 \begin_layout LyX-Code
@@ -201,7 +206,7 @@ $
 \begin_layout Standard
 It will run a number of test and check the results, so you can see if everything
  is well.
- You need to have installed the command-line tool 
+ You also need to have installed the command-line tool 
 \family typewriter
 diff
 \family default
@@ -209,7 +214,7 @@ diff
 \end_layout
 
 \begin_layout Standard
-You may also want to try to convert the user guide:
+In addition you may want to try to convert the user guide:
 \end_layout
 
 \begin_layout LyX-Code
@@ -218,7 +223,7 @@ You may also want to try to convert the user guide:
 \color blue
 $
 \color inherit
- ./elyxer --title "eLyXer User Guide" docs/userguide.lyx docs/userguide2.html
+ ./elyxer.py --title "eLyXer User Guide" docs/userguide.lyx docs/userguide2.html
 \end_layout
 
 \begin_layout Standard
@@ -231,8 +236,8 @@ On Windows you have to include the Python executable:
 \color blue
 >
 \color inherit
- Python.exe elyxer --title "eLyXer User Guide" docs/userguide.lyx docs/userguide2.h
-tml
+ Python.exe elyxer.py --title "eLyXer User Guide" docs/userguide.lyx docs/userguide
+2.html
 \end_layout
 
 \begin_layout Standard
@@ -258,7 +263,7 @@ Since nothing is installed you have to reference the full path to the executable
  file every time you run it.
  If you want to avoid the hassle just place 
 \family typewriter
-elyxer
+elyxer.py
 \family default
  someplace in the path (e.g.
  
@@ -283,7 +288,7 @@ eLyXer is a standalone command line tool.
 \color blue
 $
 \color inherit
- elyxer [options] [source file] [destination file]
+ elyxer.py [options] [source file] [destination file]
 \end_layout
 
 \begin_layout Standard
@@ -307,7 +312,7 @@ STDOUT
 \color blue
 >
 \color inherit
- Python.exe elyxer [options] [source file] [destination file]
+ Python.exe elyxer.py [options] [source file] [destination file]
 \end_layout
 
 \begin_layout Standard
@@ -320,7 +325,7 @@ Some examples:
 \color blue
 $
 \color inherit
- elyxer file.lyx file.html
+ elyxer.py file.lyx file.html
 \end_layout
 
 \begin_layout Standard
@@ -342,7 +347,7 @@ file.html
 \color blue
 $
 \color inherit
- cat file.lyx | elyxer > file.html
+ cat file.lyx | elyxer.py > file.html
 \end_layout
 
 \begin_layout Standard
@@ -364,7 +369,7 @@ file.html
 \color blue
 $
 \color inherit
- elyxer file.lyx | grep "<blockquote>" | wc
+ elyxer.py file.lyx | grep "<blockquote>" | wc
 \end_layout
 
 \begin_layout Standard
@@ -377,7 +382,7 @@ counts all blockquote paragraphs.
 \color blue
 $
 \color inherit
- elyxer file.lyx | wget --no-check-certificate --spider -nv -F -i -
+ elyxer.py file.lyx | wget --no-check-certificate --spider -nv -F -i -
 \end_layout
 
 \begin_layout Standard
@@ -605,7 +610,7 @@ custom.css
 ), and customize as needed.
  Then run 
 \family typewriter
-elyxer
+elyxer.py
 \family default
  with the following option:
 \end_layout
@@ -616,7 +621,7 @@ elyxer
 \color blue
 $
 \color inherit
- elyxer --css=custom.css document.lyx page.html
+ elyxer.py --css=custom.css document.lyx page.html
 \end_layout
 
 \begin_layout Standard
@@ -676,7 +681,7 @@ You can change the title of the web page (which is not the title of the
 \color blue
 $
 \color inherit
- elyxer --title "My Beautiful Document" document.lyx page.html
+ elyxer.py --title "My Beautiful Document" document.lyx page.html
 \end_layout
 
 \begin_layout Subsection
@@ -775,7 +780,11 @@ By the way, the previous note (and this one) should not appear on the HTML.
 \begin_layout Enumerate
 On Mac OS X the output of a message with Unicode characters may cause an
  error.
- Workaround: run elyxer with the 
+ Workaround: run 
+\family typewriter
+elyxer.py
+\family default
+ with the 
 \family typewriter
 --quiet
 \family default
@@ -828,7 +837,7 @@ Nomenclature
 \end_layout
 
 \begin_layout Enumerate
-Table formatting is not implemented in full.
+BibTex is not (yet) supported.
 \end_layout
 
 \begin_layout Enumerate
