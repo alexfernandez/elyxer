@@ -90,16 +90,20 @@ class LineWriter(object):
     else:
       self.file = codecs.open(filename, 'w', "utf-8")
 
-  def write(self, lines):
-    "Write a list of lines"
-    for line in lines:
-      self.writeline(line)
+  def write(self, strings):
+    "Write a list of strings"
+    for string in strings:
+      self.writestring(string)
+
+  def writestring(self, string):
+    "Write a string"
+    if self.file == sys.stdout:
+      string = string.encode('utf-8')
+    self.file.write(string)
 
   def writeline(self, line):
     "Write a line to file"
-    if self.file == sys.stdout:
-      line = line.encode('utf-8')
-    self.file.write(line)
+    self.writestring(line + '\n')
 
   def close(self):
     self.file.close()

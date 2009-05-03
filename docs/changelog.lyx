@@ -106,6 +106,10 @@ parse
  package.
 \end_layout
 
+\begin_layout Itemize
+All configuration is now read from (and written to) text files.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.17 (20090427):

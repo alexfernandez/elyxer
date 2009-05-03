@@ -35,12 +35,12 @@ mark = '# --end--'
 def process(reader, writer, license):
   "Conflate all Python files used in filein to fileout"
   for line in license:
-    writer.writeline(line)
+    writer.writestring(line)
   while not reader.currentline().startswith(mark):
     reader.nextline()
   while not reader.finished():
     line = reader.currentline()
-    writer.writeline(line)
+    writer.writestring(line)
     reader.nextline()
   reader.close()
 
