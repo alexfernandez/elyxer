@@ -23,7 +23,7 @@
 # eLyXer bibliography
 
 from util.trace import Trace
-from io.parse import *
+from parse.parser import *
 from io.output import *
 from ref.link import *
 from post.postprocess import *

@@ -23,7 +23,7 @@
 # LyX layout and derived classes
 
 from util.trace import Trace
-from io.parse import *
+from parse.parser import *
 from io.output import *
 from gen.structure import *
 from gen.container import *

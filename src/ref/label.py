@@ -23,7 +23,7 @@
 # eLyXer labels
 
 from util.trace import Trace
-from io.parse import *
+from parse.parser import *
 from io.output import *
 from gen.container import *
 from gen.styles import *

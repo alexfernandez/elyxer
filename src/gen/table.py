@@ -24,8 +24,9 @@
 
 from util.trace import Trace
 from gen.container import *
-from io.parse import *
+from parse.parser import *
 from io.output import *
+from parse.tableparse import *
 
 
 class Table(Container):
@@ -87,54 +88,6 @@ class Cell(Container):
   def setattribute(self, attribute, value):
     "Set a cell attribute in the tag"
     self.output.tag += ' ' + attribute + '="' + unicode(value) + '"'
-
-class TableParser(BoundedDummy):
-  "Parse the whole table"
-
-  ending = '</lyxtabular'
-  column = '<column'
-
-  def __init__(self):
-    BoundedDummy.__init__(self)
-    self.columns = list()
-
-  def parse(self, reader):
-    "Parse table header as parameters, rows and end of table"
-    contents = []
-    while not self.checkcurrent(reader, TableParser.ending):
-      if self.checkcurrent(reader, Row.start):
-        row = self.factory.create(reader)
-        row.setcolumns(self.columns)
-        contents.append(row)
-      elif self.checkcurrent(reader, TableParser.column):
-        self.parsecolumn(reader)
-      else:
-        self.parseparameter(reader)
-    BoundedDummy.parse(self, reader)
-    return contents
-
-  def checkcurrent(self, reader, start):
-    "Check if the current line starts with the given string"
-    return reader.currentline().strip().startswith(start)
-
-  def parsecolumn(self, reader):
-    "Parse a column definition"
-    self.parseparameter(reader)
-    self.columns.append(self.parameters['column'])
-
-class TablePartParser(BoundedParser):
-  "Parse a table part (row or cell)"
-
-  def parseheader(self, reader):
-    "Parse the header"
-    self.parsexml(reader)
-    parameters = dict()
-    if len(self.parameters) > 1:
-      Trace.error('Too many parameters in table part')
-    for key in self.parameters:
-      parameters = self.parameters[key]
-    self.parameters = parameters
-    return list()
 
 ContainerFactory.types += [Table, Row, Cell]
 

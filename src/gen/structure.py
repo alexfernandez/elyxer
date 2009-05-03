@@ -24,7 +24,7 @@
 
 from util.trace import Trace
 from util.numbering import *
-from io.parse import *
+from parse.parser import *
 from io.output import *
 from gen.container import *
 

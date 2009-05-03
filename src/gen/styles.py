@@ -23,7 +23,7 @@
 # LyX styles in containers
 
 from util.trace import Trace
-from io.parse import *
+from parse.parser import *
 from io.output import *
 from gen.container import *
 
