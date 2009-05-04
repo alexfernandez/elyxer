@@ -50,7 +50,6 @@ class Link(Container):
 class ListOf(Container):
   "A list of entities (figures, tables, algorithms)"
 
-  start = '\\begin_inset FloatList'
   ending = '\\end_inset'
 
   names = {'figure':'figures', 'table':'tables', 'algorithm':'listings'}
@@ -67,8 +66,6 @@ class ListOf(Container):
 class TableOfContents(Container):
   "Table of contents"
 
-  starts = ['\\begin_inset LatexCommand tableofcontents',
-      '\\begin_inset CommandInset toc']
   ending = '\\end_inset'
 
   def __init__(self):
@@ -82,7 +79,6 @@ class TableOfContents(Container):
 class IndexEntry(Link):
   "An entry in the alphabetical index"
 
-  start = '\\begin_inset LatexCommand index'
   ending = '\\end_inset'
 
   entries = dict()
@@ -111,7 +107,6 @@ class IndexEntry(Link):
 class LayoutIndexEntry(IndexEntry):
   "An entry with the name in a layout"
 
-  start = '\\begin_inset Index'
   ending = '\\end_inset'
 
   def process(self):
@@ -129,8 +124,6 @@ class LayoutIndexEntry(IndexEntry):
 class PrintIndex(Container):
   "Command to print an index"
 
-  starts = ['\\begin_inset LatexCommand printindex',
-      '\\begin_inset CommandInset index_print']
   ending = '\\end_inset'
 
   def __init__(self):
@@ -169,7 +162,6 @@ class PrintIndex(Container):
 class NomenclatureEntry(Link):
   "An entry of LyX nomenclature"
 
-  start = '\\begin_inset CommandInset nomenclature'
   ending = '\\end_inset'
 
   entries = {}
@@ -191,7 +183,6 @@ class NomenclatureEntry(Link):
 class NomenclaturePrint(Container):
   "Print all nomenclature entries"
 
-  start = '\\begin_inset CommandInset nomencl_print'
   ending = '\\end_inset'
 
   def __init__(self):
@@ -219,8 +210,6 @@ class NomenclaturePrint(Container):
 class URL(Link):
   "A clickable URL"
 
-  starts = ['\\begin_inset LatexCommand url',
-      '\\begin_inset LatexCommand htmlurl', '\\begin_inset CommandInset href']
   ending = '\\end_inset'
 
   def __init__(self):
@@ -240,7 +229,6 @@ class URL(Link):
 class FlexURL(URL):
   "A flexible URL"
 
-  start = '\\begin_inset Flex URL'
   ending = '\\end_inset'
 
   def process(self):
@@ -265,9 +253,4 @@ class LinkOutput(object):
       tag += ' href="' + container.url + '"'
     text = TaggedText().complete(container.contents, tag)
     return text.gethtml()
-
-ContainerFactory.types += [
-    ListOf, TableOfContents, IndexEntry, PrintIndex, URL,
-    FlexURL, NomenclatureEntry, NomenclaturePrint, LayoutIndexEntry
-    ]
 

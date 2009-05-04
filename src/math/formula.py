@@ -32,7 +32,6 @@ from parse.formulaparse import *
 class Formula(Container):
   "A LaTeX formula"
 
-  start = '\\begin_inset Formula'
   ending = '\\end_inset'
 
   def __init__(self):
@@ -235,6 +234,4 @@ class WholeFormula(FormulaBit):
     if pos.checkfor('\\end'):
       return True
     return False
-
-ContainerFactory.types.append(Formula)
 

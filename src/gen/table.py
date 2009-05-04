@@ -32,7 +32,6 @@ from parse.tableparse import *
 class Table(Container):
   "A lyx table"
 
-  start = '\\begin_inset Tabular'
   ending = '\\end_inset'
 
   def __init__(self):
@@ -42,7 +41,6 @@ class Table(Container):
 class Row(Container):
   "A row in a table"
 
-  start = '<row'
   ending = '</row'
 
   def __init__(self):
@@ -66,7 +64,6 @@ class Row(Container):
 class Cell(Container):
   "A cell in a table"
 
-  start = '<cell'
   ending = '</cell'
 
   def __init__(self):
@@ -88,6 +85,4 @@ class Cell(Container):
   def setattribute(self, attribute, value):
     "Set a cell attribute in the tag"
     self.output.tag += ' ' + attribute + '="' + unicode(value) + '"'
-
-ContainerFactory.types += [Table, Row, Cell]
 

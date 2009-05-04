@@ -35,12 +35,8 @@ class ParseTree(object):
   def __init__(self, types):
     "Create the parse tree"
     self.root = dict()
-    for type in types:
-      if hasattr(type, 'start'):
-        self.addstart(type, type.start)
-      elif hasattr(type, 'starts'):
-        for start in type.starts:
-          self.addstart(type, start)
+    for start, type in types.iteritems():
+      self.addstart(type, start)
 
   def addstart(self, type, start):
     "Add a start piece to the tree"

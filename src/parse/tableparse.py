@@ -32,6 +32,7 @@ class TableParser(BoundedDummy):
   "Parse the whole table"
 
   ending = '</lyxtabular'
+  row = '<row'
   column = '<column'
 
   def __init__(self):
@@ -42,7 +43,7 @@ class TableParser(BoundedDummy):
     "Parse table header as parameters, rows and end of table"
     contents = []
     while not self.checkcurrent(reader, TableParser.ending):
-      if self.checkcurrent(reader, Row.start):
+      if self.checkcurrent(reader, TableParser.row):
         row = self.factory.create(reader)
         row.setcolumns(self.columns)
         contents.append(row)

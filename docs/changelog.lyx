@@ -64,6 +64,25 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.19 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+More powerful configuration file manipulation: export to generic config
+ and Python files.
+\end_layout
+
+\begin_layout Itemize
+Start lines can now be configured in the global 
+\family typewriter
+base.cfg
+\family default
+ file.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.18 (20090504):
 \end_layout
 

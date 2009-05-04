@@ -34,19 +34,6 @@ class Container(object):
   def __init__(self):
     self.contents = list()
 
-  def comesnext(cls, reader):
-    "Return if the current line matches"
-    line = reader.currentline()
-    if hasattr(cls, 'start'):
-      return line.startswith(cls.start)
-    if hasattr(cls, 'starts'):
-      for start in cls.starts:
-        if line.startswith(start):
-          return True
-    return False
-
-  comesnext = classmethod(comesnext)
-
   def parse(self, reader):
     "Parse by lines"
     if hasattr(self, 'ending'):
@@ -138,8 +125,6 @@ class Container(object):
 class BlackBox(Container):
   "A container that does not output anything"
 
-  starts = BlackBoxConfig.starts
-
   def __init__(self):
     self.parser = LoneCommand()
     self.output = EmptyOutput()
@@ -147,8 +132,6 @@ class BlackBox(Container):
 
 class StringContainer(Container):
   "A container for a single string"
-
-  start = ''
 
   def __init__(self):
     self.parser = StringParser()
@@ -221,10 +204,8 @@ class TaggedText(Container):
 class ContainerFactory(object):
   "Creates containers depending on the first line"
 
-  types = [BlackBox, StringContainer]
-
-  def __init__(self):
-    self.tree = ParseTree(ContainerFactory.types)
+  def __init__(self, types):
+    self.tree = ParseTree(types)
 
   def create(self, reader):
     "Get the container and parse it"

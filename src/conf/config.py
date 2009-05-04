@@ -8,13 +8,6 @@ class BlackBoxConfig(object):
   "Configuration class from config file"
 
   starts = [
-      u'\\lyxformat', u'\\begin_document', u'\\begin_body', 
-      u'\\family default', u'\\color inherit', u'\\shape default', 
-      u'\\series default', u'\\emph off', u'\\bar no', u'\\noun off', 
-      u'\\emph default', u'\\bar default', u'\\noun default', 
-      u'\\family roman', u'\\series medium', u'\\shape up', u'\\size normal', 
-      u'\\color none', u'#LyX', u'\\noindent', u'\\labelwidthstring', 
-      u'\\paragraph_spacing', u'\\length', 
       ]
 
 class ContainerConfig(object):
@@ -35,6 +28,50 @@ class ContainerConfig(object):
 
   replaces = {
       u'\n':u'', u' -- ':u' — ', u'\'':u'’', u'`':u'‘', 
+      }
+
+  starts = {
+      '':'StringContainer',
+      u'\\lyxformat':'BlackBox', u'\\begin_document':'BlackBox', u'\\begin_body':'BlackBox', 
+      u'\\family default':'BlackBox', u'\\color inherit':'BlackBox', u'\\shape default':'BlackBox', 
+      u'\\series default':'BlackBox', u'\\emph off':'BlackBox', u'\\bar no':'BlackBox', u'\\noun off':'BlackBox', 
+      u'\\emph default':'BlackBox', u'\\bar default':'BlackBox', u'\\noun default':'BlackBox', 
+      u'\\family roman':'BlackBox', u'\\series medium':'BlackBox', u'\\shape up':'BlackBox', u'\\size normal':'BlackBox', 
+      u'\\color none':'BlackBox', u'#LyX':'BlackBox', u'\\noindent':'BlackBox', u'\\labelwidthstring':'BlackBox', 
+      u'\\paragraph_spacing':'BlackBox', u'\\length':'BlackBox',
+      '\\begin_inset Quotes':'QuoteContainer', '\\lyxline':'LyxLine', '\\emph on':'EmphaticText',
+      '\\shape':'ShapedText', '\\noun on':'VersalitasText', '\\color':'ColorText', '\\size':'SizeText',
+      '\\series bold':'BoldText', '\\family':'TextFamily', '\\hfill':'Hfill', '\\bar':'BarredText',
+      '\\begin_inset Flex CharStyle:Code':'FlexCode', '\\begin_inset Info':'InfoInset',
+      '\\lang':'LangLine', '\\begin_inset FloatList':'ListOf',
+      '\\begin_inset LatexCommand tableofcontents':'TableOfContents', '\\begin_inset CommandInset toc':'TableOfContents',
+      '\\begin_inset LatexCommand index':'IndexEntry',
+      '\\begin_inset Index':'LayoutIndexEntry', '\\begin_inset LatexCommand printindex':'PrintIndex',
+      '\\begin_inset CommandInset index_print':'PrintIndex',
+      '\\begin_inset CommandInset nomenclature':'NomenclatureEntry',
+      '\\begin_inset CommandInset nomencl_print':'NomenclaturePrint',
+      '\\begin_inset LatexCommand url':'URL', '\\begin_inset LatexCommand htmlurl':'URL',
+      '\\begin_inset CommandInset href':'URL', '\\begin_inset Flex URL':'FlexURL',
+      '\\begin_inset LatexCommand label':'Label', '\\begin_inset CommandInset label':'Label',
+      '\\begin_inset LatexCommand ref':'Reference', '\\begin_inset CommandInset ref':'Reference',
+      '\\begin_header':'LyxHeader', '\\end_body':'LyxFooter', '\\begin_inset Float':'Float',
+      '\\begin_inset Wrap':'Wrap','\\begin_inset Text':'InsetText',
+      '\\begin_inset Caption':'Caption', '\\align':'Align',
+      '\\begin_inset space':'Space', '\\begin_inset':'Inset',
+      '\\newline':'Newline', '\\begin_inset Newline':'NewlineInset',
+      '\\begin_inset Branch':'Branch', '\\begin_inset OptArg':'ShortTitle',
+      '\\begin_inset Foot':'Footnote', '\\begin_inset Marginal':'Footnote',
+      '\\begin_inset Note':'Note', '\\start_of_appendix':'Appendix',
+      '\\begin_layout Enumerate':'ListItem', '\\begin_layout Itemize':'ListItem',
+      '\\begin_deeper':'DeeperList', '\\begin_inset ERT':'ERT',
+      '\\begin_layout':'Layout', '\\begin_layout Title':'Title',
+      '\\begin_layout Author':'Author', '\\begin_layout Description':'Description',
+      '\\begin_layout List':'List',
+      '\\begin_inset LatexCommand cite':'BiblioCite', '\\begin_inset CommandInset citation':'BiblioCite',
+      '\\begin_layout Bibliography':'Bibliography',
+      '\\begin_inset LatexCommand bibitem':'BiblioEntry', '\\begin_inset CommandInset bibitem':'BiblioEntry',
+      '\\begin_inset Formula':'Formula', '\\begin_inset Tabular':'Table',
+      '<row':'Row', '<cell':'Cell', '\\begin_inset Graphics':'Image',
       }
 
 class FormulaConfig(object):
@@ -129,5 +166,8 @@ class TranslationConfig(object):
 
   floats = {
       u'algorithm':u'Listing ', u'figure':u'Figure ', u'table':u'Table ', 
+      }
+
+  constants = {
       }
 

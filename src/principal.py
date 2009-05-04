@@ -49,7 +49,10 @@ class Book(object):
 
   def parsecontents(self, reader, writer):
     "Parse the contents of the reader and write them"
-    factory = ContainerFactory()
+    types = ContainerConfig.starts
+    for start, typename in types.iteritems():
+      types[start] = globals()[typename]
+    factory = ContainerFactory(types)
     postproc = Postprocessor()
     while not reader.finished():
       container = factory.create(reader)

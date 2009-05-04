@@ -33,7 +33,6 @@ from io.output import MirrorOutput
 class Image(Container):
   "An embedded image"
 
-  start = '\\begin_inset Graphics'
   ending = '\\end_inset'
 
   converter = True
@@ -132,6 +131,4 @@ class ImageOutput(object):
       html.append(' src="' + container.url + '"')
     html.append('/>\n')
     return html
-
-ContainerFactory.types.append(Image)
 

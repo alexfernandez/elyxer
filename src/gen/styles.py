@@ -31,7 +31,6 @@ from gen.container import *
 class QuoteContainer(Container):
   "A container for a pretty quote"
 
-  start = '\\begin_inset Quotes'
   ending = '\\end_inset'
   outputs = {
       'eld':u'“', 'erd':u'”', 'els':u'‘', 'ers':u'’',
@@ -58,8 +57,6 @@ class QuoteContainer(Container):
 class LyxLine(Container):
   "A Lyx line"
 
-  start = '\\lyxline'
-
   def __init__(self):
     self.parser = LoneCommand()
     self.output = FixedOutput()
@@ -70,15 +67,11 @@ class LyxLine(Container):
 class EmphaticText(TaggedText):
   "Text with emphatic mode"
 
-  start = '\\emph on'
-
   def process(self):
     self.output.tag = 'i'
 
 class ShapedText(TaggedText):
   "Text shaped (italic, slanted)"
-
-  start = '\\shape'
 
   tags = {'slanted':'i', 'italic':'i', 'smallcaps':'span class="versalitas"'}
 
@@ -93,15 +86,11 @@ class ShapedText(TaggedText):
 class VersalitasText(TaggedText):
   "Text in versalitas"
 
-  start = '\\noun on'
-
   def process(self):
     self.output.tag = 'span class="versalitas"'
 
 class ColorText(TaggedText):
   "Colored text"
-
-  start = '\\color'
 
   def process(self):
     self.color = self.header[1]
@@ -110,8 +99,6 @@ class ColorText(TaggedText):
 class SizeText(TaggedText):
   "Sized text"
 
-  start = '\\size'
-
   def process(self):
     self.size = self.header[1]
     self.output.tag = 'span class="' + self.size + '"'
@@ -119,15 +106,12 @@ class SizeText(TaggedText):
 class BoldText(TaggedText):
   "Bold text"
 
-  start = '\\series bold'
-
   def process(self):
     self.output.tag = 'b'
 
 class TextFamily(TaggedText):
   "A bit of text from a different family"
 
-  start = '\\family'
   typetags = { 'typewriter':'tt', 'sans':'span class="sans"' }
 
   def process(self):
@@ -138,15 +122,12 @@ class TextFamily(TaggedText):
 class Hfill(TaggedText):
   "Horizontall fill"
 
-  start = '\\hfill'
-
   def process(self):
     self.output.tag = 'span class="right"'
 
 class BarredText(TaggedText):
   "Text with a bar somewhere"
 
-  start = '\\bar'
   typetags = { 'under':'u' }
 
   def process(self):
@@ -161,7 +142,6 @@ class BarredText(TaggedText):
 class FlexCode(Container):
   "A bit of inset code"
 
-  start = '\\begin_inset Flex CharStyle:Code'
   ending = '\\end_inset'
 
   def __init__(self):
@@ -171,7 +151,6 @@ class FlexCode(Container):
 class InfoInset(Container):
   "A LyX Info inset"
 
-  start = '\\begin_inset Info'
   ending = '\\end_inset'
 
   types = ['shortcut', 'shortcuts']
@@ -190,18 +169,10 @@ class InfoInset(Container):
 class LangLine(Container):
   "A line with language information"
 
-  start = '\\lang'
-
   def __init__(self):
     self.parser = LoneCommand()
     self.output = EmptyOutput()
 
   def process(self):
     self.lang = self.header[1]
-
-ContainerFactory.types += [
-    QuoteContainer, LyxLine, EmphaticText, ShapedText, VersalitasText,
-    ColorText, SizeText, BoldText, TextFamily, Hfill, FlexCode, BarredText,
-    InfoInset, LangLine
-    ]
 

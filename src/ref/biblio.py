@@ -32,7 +32,6 @@ from post.postprocess import *
 class BiblioCite(Container):
   "Cite of a bibliography entry"
 
-  starts = ['\\begin_inset LatexCommand cite', '\\begin_inset CommandInset citation']
   ending = '\\end_inset'
 
   index = 0
@@ -62,7 +61,6 @@ class BiblioCite(Container):
 class Bibliography(Container):
   "A bibliography layout containing an entry"
 
-  start = '\\begin_layout Bibliography'
   ending = '\\end_layout'
 
   def __init__(self):
@@ -72,7 +70,6 @@ class Bibliography(Container):
 class BiblioEntry(Container):
   "A bibliography entry"
 
-  starts = ['\\begin_inset LatexCommand bibitem', '\\begin_inset CommandInset bibitem']
   ending = '\\end_inset'
 
   def __init__(self):
@@ -93,10 +90,6 @@ class BiblioEntry(Container):
     if len(cites) > 0:
       self.contents.pop(-1)
     self.contents.append(Constant('] '))
-
-ContainerFactory.types += [
-    BiblioCite, Bibliography, BiblioEntry
-    ]
 
 class PostBiblio(object):
   "Insert a Bibliography legend before the first item"

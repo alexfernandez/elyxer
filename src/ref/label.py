@@ -34,7 +34,6 @@ from ref.link import *
 class Label(Container):
   "A label to be referenced"
 
-  starts = ['\\begin_inset LatexCommand label', '\\begin_inset CommandInset label']
   ending = '\\end_inset'
 
   names = dict()
@@ -51,7 +50,6 @@ class Label(Container):
 class Reference(Link):
   "A reference to a label"
 
-  starts = ['\\begin_inset LatexCommand ref', '\\begin_inset CommandInset ref']
   ending = '\\end_inset'
 
   def __init__(self):
@@ -66,8 +64,4 @@ class Reference(Link):
       # already seen
       self.direction = u'↑'
     self.contents = [Constant(self.direction)]
-
-ContainerFactory.types += [
-    Label, Reference
-    ]
 

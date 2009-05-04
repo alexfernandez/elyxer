@@ -32,7 +32,6 @@ from gen.container import *
 class Layout(Container):
   "A layout (block of text) inside a lyx file"
 
-  start = '\\begin_layout'
   ending = '\\end_layout'
 
   typetags = {
@@ -62,7 +61,6 @@ class Layout(Container):
 class Title(Layout):
   "The title of the whole document"
 
-  start = '\\begin_layout Title'
   ending = '\\end_layout'
 
   def process(self):
@@ -75,7 +73,6 @@ class Title(Layout):
 class Author(Layout):
   "The document author"
 
-  start = '\\begin_layout Author'
   ending = '\\end_layout'
 
   def process(self):
@@ -137,7 +134,6 @@ class FirstWorder(Layout):
 class Description(FirstWorder):
   "A description layout"
 
-  start = '\\begin_layout Description'
   ending = '\\end_layout'
 
   def process(self):
@@ -154,7 +150,6 @@ class Description(FirstWorder):
 class List(FirstWorder):
   "A list layout"
 
-  start = '\\begin_layout List'
   ending = '\\end_layout'
 
   def process(self):
@@ -166,8 +161,4 @@ class List(FirstWorder):
       return
     tag = 'span class="List-entry"'
     self.contents.insert(0, TaggedText().complete(firstword, tag))
-
-ContainerFactory.types += [
-    Layout, Title, Author, Description, List
-    ]
 

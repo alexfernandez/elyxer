@@ -32,7 +32,6 @@ from gen.container import *
 class LyxHeader(Container):
   "Reads the header, outputs the HTML header"
 
-  start = '\\begin_header'
   ending = '\\end_header'
 
   def __init__(self):
@@ -48,7 +47,6 @@ class LyxHeader(Container):
 class LyxFooter(Container):
   "Reads the footer, outputs the HTML footer"
 
-  start = '\\end_body'
   ending = '\\end_document'
 
   def __init__(self):
@@ -58,7 +56,6 @@ class LyxFooter(Container):
 class Float(Container):
   "A floating inset"
 
-  start = '\\begin_inset Float'
   ending = '\\end_inset'
 
   def __init__(self):
@@ -80,8 +77,6 @@ class Float(Container):
 class Wrap(Float):
   "A wrapped (floating) float"
 
-  start = '\\begin_inset Wrap'
-
   def process(self):
     "Get the wrap type"
     Float.process(self)
@@ -91,7 +86,6 @@ class Wrap(Float):
 class InsetText(Container):
   "An inset of text in a lyx file"
 
-  start = '\\begin_inset Text'
   ending = '\\end_inset'
 
   def __init__(self):
@@ -101,7 +95,6 @@ class InsetText(Container):
 class Caption(Container):
   "A caption for a figure or a table"
 
-  start = '\\begin_inset Caption'
   ending = '\\end_inset'
 
   def __init__(self):
@@ -111,7 +104,6 @@ class Caption(Container):
 class Align(Container):
   "Bit of aligned text"
 
-  start = '\\align'
   ending = '\\end_layout'
 
   def __init__(self):
@@ -124,7 +116,6 @@ class Align(Container):
 class Space(Container):
   "A space of several types"
 
-  start = '\\begin_inset space'
   ending = '\\end_inset'
 
   def __init__(self):
@@ -142,7 +133,6 @@ class Space(Container):
 class Inset(Container):
   "A generic inset in a LyX document"
 
-  start = '\\begin_inset'
   ending = '\\end_inset'
 
   def __init__(self):
@@ -160,8 +150,6 @@ class Inset(Container):
 class Newline(Container):
   "A newline"
 
-  start = '\\newline'
-
   def __init__(self):
     self.parser = LoneCommand()
     self.output = FixedOutput()
@@ -173,7 +161,6 @@ class Newline(Container):
 class NewlineInset(Newline):
   "A newline or line break in an inset"
 
-  start = '\\begin_inset Newline'
   ending = '\\end_inset'
 
   def __init__(self):
@@ -183,7 +170,6 @@ class NewlineInset(Newline):
 class Branch(Container):
   "A branch within a LyX document"
 
-  start = '\\begin_inset Branch'
   ending = '\\end_inset'
 
   def __init__(self):
@@ -207,7 +193,6 @@ class Branch(Container):
 class ShortTitle(Container):
   "A short title to display (always hidden)"
 
-  start = '\\begin_inset OptArg'
   ending = '\\end_inset'
 
   def __init__(self):
@@ -217,7 +202,6 @@ class ShortTitle(Container):
 class Footnote(Container):
   "A footnote to the main text"
 
-  starts = ['\\begin_inset Foot', '\\begin_inset Marginal']
   ending = '\\end_inset'
 
   order = 0
@@ -241,7 +225,6 @@ class Footnote(Container):
 class Note(Container):
   "A LyX note of several types"
 
-  start = '\\begin_inset Note'
   ending = '\\end_inset'
 
   typetags = {'Note':'', 'Comment':'', 'Greyedout':'span class="greyedout"'}
@@ -260,8 +243,6 @@ class Note(Container):
 class Appendix(Container):
   "An appendix to the main document"
 
-  start = '\\start_of_appendix'
-
   def __init__(self):
     self.parser = LoneCommand()
     self.output = EmptyOutput()
@@ -269,7 +250,6 @@ class Appendix(Container):
 class ListItem(Container):
   "An element in a list"
 
-  starts = ['\\begin_layout Enumerate', '\\begin_layout Itemize']
   ending = '\\end_layout'
 
   def __init__(self):
@@ -292,7 +272,6 @@ class ListItem(Container):
 class DeeperList(Container):
   "A nested list"
 
-  start = '\\begin_deeper'
   ending = '\\end_deeper'
 
   def __init__(self):
@@ -314,17 +293,9 @@ class DeeperList(Container):
 class ERT(Container):
   "Evil Red Text"
 
-  start = '\\begin_inset ERT'
   ending = '\\end_inset'
 
   def __init__(self):
     self.parser = InsetParser()
     self.output = EmptyOutput()
-
-
-ContainerFactory.types += [
-    LyxHeader, LyxFooter, InsetText, Caption, Inset, Align, Float, Wrap,
-    Newline, Space, NewlineInset, Branch, ShortTitle, Footnote, Appendix,
-    Note, ListItem, DeeperList, ERT
-    ]
 
