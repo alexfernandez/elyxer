@@ -26,7 +26,7 @@ import codecs
 from util.trace import Trace
 from util.options import *
 from conf.config import *
-from conf.configparse import *
+from conf.fileconfig import *
 
 
 linewriter = LineWriter('conf/base.cfg')
@@ -35,18 +35,7 @@ writer.writeall([FormulaConfig(), ContainerConfig(), BlackBoxConfig(), SpaceConf
 linereader = LineReader('conf/base.cfg')
 reader = ConfigReader(linereader)
 reader.parse()
-linewriter = LineWriter('conf/base.py')
+linewriter = LineWriter('conf/config.py')
 translator = ConfigTranslator(linewriter)
 translator.write(reader.objects)
-for section, object in reader.objects.iteritems():
-  print
-  print 'Section ' + section
-  if isinstance(object, list):
-    print '  ',
-    for piece in object:
-      print piece + ', ',
-    print
-  else:
-    for key, value in object.iteritems():
-      print '  ' + key + ': ' + value
 

@@ -1,150 +1,133 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#   eLyXer -- convert LyX source files to HTML output.
-#
-#   Copyright (C) 2009 Alex Fernández
-#
-#   This program is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#   (at your option) any later version.
-#
-#   This program is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-# --end--
-# Alex 20090320
-# eLyXer general configuration
-
-
-class FormulaConfig(object):
-  "Configuration for formulae"
-
-  unmodified = ['.', '*', u'€', '(', ')', '[', ']', ':', u'·', '!', ';']
-  modified = {'\'':u'’', '=':u' = ', ' ':'', '<':u' &lt; ', '>':u' &gt; ',
-      '-':u' − ', '+':u' + ',
-      ',':u', ', '/':u' ⁄ ', '\n':'', '&':u'\t'}
-  commands = {
-      # mathematical
-      '\\times':u' × ', '\\propto':u' ∝ ', '\\cdot':u'⋅', '\\approx':u' ≈ ',
-      '\\pm':u'±', '\\sim':u' ~ ', '\\implies':u'  ⇒  ', '\\not':u'¬',
-      '\\sum':u'<span class="bigsymbol">∑</span>',
-      '\\int':u'<span class="bigsymbol">∫</span>',
-      '\\intop':u'<span class="bigsymbol">∫</span>', '\\infty':u'∞',
-      '\\prime':u'′', '\\ddots':u'⋱',
-      '\\leq':u'≤', '\\geq':u'≥', '\\neq':u'≠', '\\in':u'∈',
-      # symbols
-      '\\rightarrow':u' → ', '\\rightsquigarrow':u' ⇝ ', '\\Rightarrow':u' ⇒ ',
-      '\\leftarrow':u' ← ',
-      '\\dashrightarrow':u' ⇢ ', '\\blacktriangleright':u'▶', '\\bullet':u'•',
-      '\\dagger':u'†', '\\ddagger':u'‡', '\\bigstar':u'★',
-      '\\to':u'→', '\\gets':u'←', '\\circ':u'○', '\\diamond':u'◇',
-      '\\triangleright':u'▷',
-      # common functions
-      '\\log':'log', '\\exp':'exp', '\\ln':'ln', '\\lim':'lim', '\\sin':'sin',
-      '\\cos':'cos',
-      # hyperbolic functions
-      '\\tanh':'tanh', '\\sinh':'sinh', '\\cosh':'cosh',
-      # LaTeX (ignored)
-      '\\nonumber':'', '\\lyxlock':'', '\\end{array}':'',
-      '\\displaystyle':'', '\\textstyle':'', '\\scriptstyle':'',
-      '\\scriptscriptstyle':'',
-      # spacing
-      '\\,':' ', '\\\\':'<br/>', '\\quad':u' ', '\\!':'', '\\:':u' ',
-      # typographical
-      '\\%':'%', '\\_':'_',
-      '\\left(':u'<span class="bigsymbol">(</span>',
-      '\\right)':u'<span class="bigsymbol">)</span>',
-      '\\left[':u'<span class="bigsymbol">[</span>',
-      '\\right]':u'<span class="bigsymbol">]</span>',
-      }
-  alphacommands = {
-      # regional
-      '\\tilde{n}':u'ñ', '\\tilde{N}':u'Ñ',
-      '\\acute{a}':u'á', '\\acute{e}':u'é', '\\acute{i}':u'í',
-      '\\acute{o}':u'ó', '\\acute{u}':u'ú',
-      '\\acute{A}':u'Á', '\\acute{E}':u'É', '\\acute{I}':u'Í',
-      '\\acute{O}':u'Ó', '\\acute{U}':u'Ú',
-      # greek
-      '\\alpha':u'α', '\\beta':u'β', '\\gamma':u'γ', '\\delta':u'δ',
-      '\\epsilon':u'ε', '\\lambda':u'λ', '\\Delta':u'Δ',
-      '\\sigma':u'σ', '\\pi':u'π',
-      }
-  onefunctions = {
-      # typographical
-      '^':'sup', '_':'sub', '\\underline':'u', '\\overline':'span class="overline"',
-      '\\bar':'span class="bar"', '\\mbox':'span class="mbox"',
-      # functions
-      '\\sqrt':'span class="sqrt"',
-      # hard functions
-      '\\begin{array}':'span class="arraydef"',
-      # LaTeX (ignored)
-      '\\label':''
-      }
-  fontfunctions = {
-      '\\mathsf':'span class="mathsf"', '\\mathbf':'b',
-      '\\textrm':'span class="mathrm"', '\\mathrm':'span class="mathrm"',
-      '\\text':'span class="text"', '\\textipa':'span class="textipa"',
-      '\\boldsymbol':'b', '\\mathit':'i', '\\mathtt':'tt',
-      '\\mathbb':'span class="blackboard"',
-      '\\mathfrak':'span class="fraktur"', '\\mathcal':'span class="script"',
-      }
-  decoratingfunctions = {
-      # symbols above (start with *)
-      '\\check':u'ˇ', '\\breve':u'˘', '\\vec':u'→', '\\dot':u'˙',
-      '\\hat':u'^', '\\grave':u'`', '\\ddot':u'¨', '\\tilde':u'˜',
-      '\\acute':u'´'
-      }
-  fractionfunctions = [ '\\frac', '\\nicefrac' ]
-  fractionspans = {
-      'whole':'span class="fraction"',
-      'first':'span class="numerator"',
-      'second':'span class="denominator"',
-      }
-
-class ContainerConfig(object):
-  "Low-level configuration for containers"
-
-  escapes = {'&':'&amp;', '<':'&lt;', '>':'&gt;'}
-  replaces = { '`':u'‘', '\'':u'’', '\n':'', ' -- ':u' — ' }
-  commands = { '\\SpecialChar \\ldots{}':u'…', '\\InsetSpace ~':'&nbsp;',
-      '\\InsetSpace \\space{}':'&nbsp;', '\\InsetSpace \\thinspace{}':u' ',
-      '\\backslash':'\\', '\\SpecialChar \\@.':'.',
-      '\\SpecialChar \\menuseparator':u'&nbsp;▷&nbsp;',
-      '\\SpecialChar \\textcompwordmark{}':u'', '\\SpecialChar \\nobreakdash-':'-',
-      '\\SpecialChar \\slash{}':'/'}
+# eLyXer configuration
+# autogenerated from config file on 2009-05-04
 
 class BlackBoxConfig(object):
-  "Configuration for lines ignored"
+  "Configuration class from config file"
 
-  starts = ['\\lyxformat', '\\begin_document', '\\begin_body',
-      '\\family default', '\\color inherit',
-      '\\shape default', '\\series default', '\\emph off',
-      '\\bar no', '\\noun off', '\\emph default', '\\bar default',
-      '\\noun default', '\\family roman', '\\series medium',
-      '\\shape up', '\\size normal', '\\color none', '#LyX', '\\noindent',
-      '\\labelwidthstring', '\\paragraph_spacing', '\\length']
+  starts = [
+      u'\\lyxformat', u'\\begin_document', u'\\begin_body', 
+      u'\\family default', u'\\color inherit', u'\\shape default', 
+      u'\\series default', u'\\emph off', u'\\bar no', u'\\noun off', 
+      u'\\emph default', u'\\bar default', u'\\noun default', 
+      u'\\family roman', u'\\series medium', u'\\shape up', u'\\size normal', 
+      u'\\color none', u'#LyX', u'\\noindent', u'\\labelwidthstring', 
+      u'\\paragraph_spacing', u'\\length', 
+      ]
+
+class ContainerConfig(object):
+  "Configuration class from config file"
+
+  commands = {
+      u'\\InsetSpace \\space{}':u'&nbsp;', u'\\InsetSpace \\thinspace{}':u' ', 
+      u'\\InsetSpace ~':u'&nbsp;', u'\\SpecialChar \\@.':u'.', 
+      u'\\SpecialChar \\ldots{}':u'…', 
+      u'\\SpecialChar \\menuseparator':u'&nbsp;▷&nbsp;', 
+      u'\\SpecialChar \\nobreakdash-':u'-', u'\\SpecialChar \\slash{}':u'/', 
+      u'\\SpecialChar \\textcompwordmark{}':u'', u'\\backslash':u'\\', 
+      }
+
+  escapes = {
+      u'&':u'&amp;', u'<':u'&lt;', u'>':u'&gt;', 
+      }
+
+  replaces = {
+      u'\n':u'', u' -- ':u' — ', u'\'':u'’', u'`':u'‘', 
+      }
+
+class FormulaConfig(object):
+  "Configuration class from config file"
+
+  alphacommands = {
+      u'\\Delta':u'Δ', u'\\acute{A}':u'Á', u'\\acute{E}':u'É', 
+      u'\\acute{I}':u'Í', u'\\acute{O}':u'Ó', u'\\acute{U}':u'Ú', 
+      u'\\acute{a}':u'á', u'\\acute{e}':u'é', u'\\acute{i}':u'í', 
+      u'\\acute{o}':u'ó', u'\\acute{u}':u'ú', u'\\alpha':u'α', u'\\beta':u'β', 
+      u'\\delta':u'δ', u'\\epsilon':u'ε', u'\\gamma':u'γ', u'\\lambda':u'λ', 
+      u'\\pi':u'π', u'\\sigma':u'σ', u'\\tilde{N}':u'Ñ', u'\\tilde{n}':u'ñ', 
+      }
+
+  commands = {
+      u'\\!':u'', u'\\%':u'%', u'\\,':u' ', u'\\:':u' ', 
+      u'\\Rightarrow':u' ⇒ ', u'\\\\':u'<br/>', u'\\_':u'_', 
+      u'\\approx':u' ≈ ', u'\\bigstar':u'★', u'\\blacktriangleright':u'▶', 
+      u'\\bullet':u'•', u'\\cdot':u'⋅', u'\\circ':u'○', u'\\cos':u'cos', 
+      u'\\cosh':u'cosh', u'\\dagger':u'†', u'\\dashrightarrow':u' ⇢ ', 
+      u'\\ddagger':u'‡', u'\\ddots':u'⋱', u'\\diamond':u'◇', 
+      u'\\displaystyle':u'', u'\\end{array}':u'', u'\\exp':u'exp', 
+      u'\\geq':u'≥', u'\\gets':u'←', u'\\implies':u'  ⇒  ', u'\\in':u'∈', 
+      u'\\infty':u'∞', u'\\int':u'<span class="bigsymbol">∫</span>', 
+      u'\\intop':u'<span class="bigsymbol">∫</span>', 
+      u'\\left(':u'<span class="bigsymbol">(</span>', 
+      u'\\left[':u'<span class="bigsymbol">[</span>', u'\\leftarrow':u' ← ', 
+      u'\\leq':u'≤', u'\\lim':u'lim', u'\\ln':u'ln', u'\\log':u'log', 
+      u'\\lyxlock':u'', u'\\neq':u'≠', u'\\nonumber':u'', u'\\not':u'¬', 
+      u'\\pm':u'±', u'\\prime':u'′', u'\\propto':u' ∝ ', u'\\quad':u' ', 
+      u'\\right)':u'<span class="bigsymbol">)</span>', 
+      u'\\right]':u'<span class="bigsymbol">]</span>', u'\\rightarrow':u' → ', 
+      u'\\rightsquigarrow':u' ⇝ ', u'\\scriptscriptstyle':u'', 
+      u'\\scriptstyle':u'', u'\\sim':u' ~ ', u'\\sin':u'sin', 
+      u'\\sinh':u'sinh', u'\\sum':u'<span class="bigsymbol">∑</span>', 
+      u'\\tanh':u'tanh', u'\\textstyle':u'', u'\\times':u' × ', u'\\to':u'→', 
+      u'\\triangleright':u'▷', 
+      }
+
+  decoratingfunctions = {
+      u'\\acute':u'´', u'\\breve':u'˘', u'\\check':u'ˇ', u'\\ddot':u'¨', 
+      u'\\dot':u'˙', u'\\grave':u'`', u'\\hat':u'^', u'\\tilde':u'˜', 
+      u'\\vec':u'→', 
+      }
+
+  fontfunctions = {
+      u'\\boldsymbol':u'b', u'\\mathbb':u'span class="blackboard"', 
+      u'\\mathbf':u'b', u'\\mathcal':u'span class="script"', 
+      u'\\mathfrak':u'span class="fraktur"', u'\\mathit':u'i', 
+      u'\\mathrm':u'span class="mathrm"', u'\\mathsf':u'span class="mathsf"', 
+      u'\\mathtt':u'tt', u'\\text':u'span class="text"', 
+      u'\\textipa':u'span class="textipa"', u'\\textrm':u'span class="mathrm"', 
+      }
+
+  fractionfunctions = [
+      u'\\frac', u'\\nicefrac', 
+      ]
+
+  fractionspans = {
+      u'first':u'span class="numerator"', 
+      u'second':u'span class="denominator"', u'whole':u'span class="fraction"', 
+      }
+
+  modified = {
+      u'\n':u'', u' ':u'', u'&':u'	', u'\'':u'’', u'+':u' + ', u',':u', ', 
+      u'-':u' − ', u'/':u' ⁄ ', u'<':u' &lt; ', u'=':u' = ', u'>':u' &gt; ', 
+      }
+
+  onefunctions = {
+      u'\\bar':u'span class="bar"', u'\\begin{array}':u'span class="arraydef"', 
+      u'\\label':u'', u'\\mbox':u'span class="mbox"', 
+      u'\\overline':u'span class="overline"', u'\\sqrt':u'span class="sqrt"', 
+      u'\\underline':u'u', u'^':u'sup', u'_':u'sub', 
+      }
+
+  unmodified = [
+      u'.', u'*', u'€', u'(', u')', u'[', u']', u':', u'·', u'!', u';', 
+      ]
 
 class SpaceConfig(object):
-  "Configuration for spaces"
+  "Configuration class from config file"
 
   spaces = {
-      '~':'&nbsp;', '\\space{}':'&nbsp;', '\\thinspace{}':u' ',
-      '\\hfill{}':u' ', '\\hspace*{\\fill}':u' ', '\\hspace{}':u' ',
-      '\\negthinspace{}':u'', '\\enskip{}':u' ', '\\quad{}': u' ',
-      '\\qquad{}':u'  '
+      u'\\enskip{}':u' ', u'\\hfill{}':u' ', u'\\hspace*{\\fill}':u' ', 
+      u'\\hspace{}':u' ', u'\\negthinspace{}':u'', u'\\qquad{}':u'  ', 
+      u'\\quad{}':u' ', u'\\space{}':u'&nbsp;', u'\\thinspace{}':u' ', 
+      u'~':u'&nbsp;', 
       }
 
 class TranslationConfig(object):
-  "Configuration for messages to translate"
+  "Configuration class from config file"
 
   floats = {
-      'figure':'Figure ', 'algorithm':'Listing ', 'table':'Table '
+      u'algorithm':u'Listing ', u'figure':u'Figure ', u'table':u'Table ', 
       }
 
