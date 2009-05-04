@@ -19,23 +19,82 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # --end--
-# Alex 20090203
-# eLyXer parsers
+# Alex 20090504
+# eLyXer configuration manipulation
 
-import codecs
+import sys
 from util.trace import Trace
 from util.options import *
 from conf.config import *
 from conf.fileconfig import *
 
 
-linewriter = LineWriter('conf/base.cfg')
-writer = ConfigWriter(linewriter)
-writer.writeall([FormulaConfig(), ContainerConfig(), BlackBoxConfig(), SpaceConfig(), TranslationConfig()])
-linereader = LineReader('conf/base.cfg')
-reader = ConfigReader(linereader)
-reader.parse()
-linewriter = LineWriter('conf/config.py')
-translator = ConfigTranslator(linewriter)
-translator.write(reader.objects)
+class Config(object):
+  "A configuration file"
+
+  cfg = 'conf/base.cfg'
+  py = 'conf/config.py'
+
+  def run(self, args):
+    "Parse command line options and run export to cfg or to py"
+    parser = CommandLineParser(Config)
+    error = parser.parseoptions(args)
+    if error == 'Help':
+      self.usage()
+      return
+    elif error:
+      Trace.error(error)
+      return
+    option = self.parseoption(args)
+    if not option:
+      self.usage()
+      return
+    if option == 'cfg':
+      self.exportcfg()
+      return
+    elif option == 'py':
+      self.exportpy()
+      return
+    else:
+      Trace.error('Unknown option ' + option)
+      self.usage()
+
+  def usage(self):
+    "Show tool usage"
+    Trace.error('Usage: exportconfig.py [options] [cfg|py]')
+    Trace.error('  cfg: export to text configuration file')
+    Trace.error('  py: export to python file')
+    Trace.error('  options: --cfg base.cfg, --py config.py')
+
+  def read(self):
+    "Read from configuration file"
+    linereader = LineReader(Config.cfg)
+    reader = ConfigReader(linereader)
+    reader.parse()
+    return reader
+
+  def exportcfg(self):
+    "Export configuration to a cfg file"
+    linewriter = LineWriter(Config.cfg)
+    writer = ConfigWriter(linewriter)
+    writer.writeall([FormulaConfig(), ContainerConfig(), BlackBoxConfig(), SpaceConfig(), TranslationConfig()])
+
+  def exportpy(self):
+    "Export configuration as a Python file"
+    reader = self.read()
+    linewriter = LineWriter(Config.py)
+    translator = ConfigTranslator(linewriter)
+    translator.write(reader.objects)
+
+  def parseoption(self, args):
+    "Parse the next option"
+    if len(args) == 0:
+      return None
+    option = args[0]
+    del args[0]
+    return option
+
+config = Config()
+del sys.argv[0]
+config.run(sys.argv)
 

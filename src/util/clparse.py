@@ -41,7 +41,7 @@ class CommandLineParser(object):
         return 'Help'
       key, value = self.readoption(args)
       if not key:
-        return 'Option ' + original + ' not recognized'
+        return 'Option ' + value + ' not recognized'
       if not value:
         return 'Option ' + key + ' needs a value'
       setattr(self.options, key, value)
@@ -55,7 +55,7 @@ class CommandLineParser(object):
       return self.readequals(arg, args)
     key = arg
     if not hasattr(self.options, key):
-      return None, None
+      return None, key
     current = getattr(self.options, key)
     if current.__class__ == bool:
       return key, True
