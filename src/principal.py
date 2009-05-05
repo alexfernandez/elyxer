@@ -25,6 +25,7 @@
 
 
 import sys
+import os.path
 from util.trace import Trace
 from io.fileline import *
 from gen.styles import *
