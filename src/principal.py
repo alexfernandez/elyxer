@@ -81,7 +81,11 @@ def createbook(args):
   reader = LineReader(filein)
   writer = LineWriter(fileout)
   book = Book()
-  book.parsecontents(reader, writer)
+  try:
+    book.parsecontents(reader, writer)
+  except (BaseException, Exception):
+    Trace.error('Failed at ' + reader.currentline())
+    raise
 
 def usage(error):
   "Show an error message and correct usage"
