@@ -94,6 +94,10 @@ textclass
 .
 \end_layout
 
+\begin_layout Itemize
+New formula symbols: up and down arrows, Gamma and Upsilon, backslash.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.18 (20090504):
