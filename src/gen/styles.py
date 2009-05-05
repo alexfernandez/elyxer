@@ -153,7 +153,7 @@ class InfoInset(Container):
 
   ending = '\\end_inset'
 
-  types = ['shortcut', 'shortcuts']
+  types = ['shortcut', 'shortcuts', 'package', 'textclass']
 
   def __init__(self):
     self.parser = InsetParser()

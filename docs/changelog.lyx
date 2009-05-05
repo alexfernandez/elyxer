@@ -82,6 +82,18 @@ base.cfg
  file.
 \end_layout
 
+\begin_layout Itemize
+New Info types 
+\family typewriter
+package
+\family default
+ and 
+\family typewriter
+textclass
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.18 (20090504):
