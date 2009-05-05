@@ -100,7 +100,7 @@ New formula symbols: up and down arrows, long double arrows, Gamma and Upsilon,
 \end_layout
 
 \begin_layout Itemize
-Show line number and contents for generic errors.
+Show line number and current line for generic errors.
 \end_layout
 
 \begin_layout Itemize
