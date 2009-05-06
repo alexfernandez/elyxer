@@ -28,6 +28,7 @@ from parse.parser import *
 from io.output import *
 from gen.container import *
 from gen.structure import *
+from gen.layout import *
 
 
 class Float(Container):
@@ -250,4 +251,35 @@ class ERT(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = EmptyOutput()
+
+class Listing(Container):
+  "A code listing"
+
+  ending = '\\end_inset'
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = TaggedOutput().settag('code class="listing"', True)
+
+  def process(self):
+    "Remove all layouts"
+    newcontents = []
+    for container in self.contents:
+      newcontents += self.extract(container)
+    self.contents = newcontents
+
+  def extract(self, container):
+    "Extract the container's contents and return them"
+    if isinstance(container, StringContainer):
+      return [container]
+    if isinstance(container, Layout):
+      if len(container.contents) == 0:
+        return []
+      last = container.contents[-1]
+      if isinstance(last, StringContainer):
+        last.contents.append('\n')
+      return container.contents
+    Trace.error('Unexpected container ' + container.__class__.__name__ +
+        ' in listing')
+    return []
 

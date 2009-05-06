@@ -82,6 +82,18 @@ class Author(Layout):
     FooterOutput.author = string.contents[0]
     Trace.debug('Author: ' + FooterOutput.author)
 
+class Abstract(Layout):
+  "A paper abstract"
+
+  ending = '\\end_layout'
+
+  def process(self):
+    self.type = 'abstract'
+    self.output.tag = 'div class="abstract"'
+    message = TranslationConfig.constants['abstract']
+    tagged = TaggedText().constant(message, 'p class="abstract-message"', True)
+    self.contents.insert(0, tagged)
+
 class FirstWorder(Layout):
   "A layout where the first word is extracted"
 

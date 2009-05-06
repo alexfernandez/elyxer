@@ -27,6 +27,7 @@ from util.trace import Trace
 from gen.structure import *
 from ref.label import *
 from gen.layout import *
+from gen.inset import *
 from util.numbering import *
 from ref.link import *
 

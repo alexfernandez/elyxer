@@ -38,6 +38,7 @@ from gen.table import *
 from gen.image import *
 from gen.structure import *
 from gen.container import *
+from gen.inset import *
 from util.options import *
 from post.postprocess import *
 from post.posttable import *
