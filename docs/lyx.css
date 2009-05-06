@@ -256,10 +256,6 @@ span.Marginal {
 span.Note {
 	display: none;
 }
-div.listings {
-	border: thin solid #c0c0c0;
-	white-space: pre;
-}
 span.code {
 	font-family: monospace;
 }
@@ -377,4 +373,14 @@ div.wrap-l, div.wrap-o, div.wrap-i {
 div.wrap-r {
 	margin: 2ex;
 	float: right;
+}
+div.abstract {
+	margin: 3em;
+	text-align: center;
+}
+p.abstract-message {
+	font-weight: bold;
+}
+code.listing {
+	white-space: pre;
 }
