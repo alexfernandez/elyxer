@@ -139,33 +139,6 @@ class BarredText(TaggedText):
       return
     self.output.tag = BarredText.typetags[self.type]
 
-class FlexCode(Container):
-  "A bit of inset code"
-
-  ending = '\\end_inset'
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = TaggedOutput().settag('span class="code"', True)
-
-class InfoInset(Container):
-  "A LyX Info inset"
-
-  ending = '\\end_inset'
-
-  types = ['shortcut', 'shortcuts', 'package', 'textclass']
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = TaggedOutput().settag('span class="Info"', False)
-
-  def process(self):
-    "Set the shortcut as text"
-    self.type = self.parser.parameters['type']
-    if self.type not in InfoInset.types:
-      Trace.error('Unknown Info type ' + self.type)
-    self.contents = [Constant(self.parser.parameters['arg'])]
-
 class LangLine(Container):
   "A line with language information"
 
