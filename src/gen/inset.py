@@ -27,6 +27,7 @@ from util.numbering import *
 from parse.parser import *
 from io.output import *
 from gen.container import *
+from gen.structure import *
 
 
 class Float(Container):
@@ -240,4 +241,13 @@ class InfoInset(Container):
     if self.type not in InfoInset.types:
       Trace.error('Unknown Info type ' + self.type)
     self.contents = [Constant(self.parser.parameters['arg'])]
+
+class ERT(Container):
+  "Evil Red Text"
+
+  ending = '\\end_inset'
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = EmptyOutput()
 
