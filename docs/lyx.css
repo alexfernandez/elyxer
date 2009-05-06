@@ -256,9 +256,9 @@ span.Marginal {
 span.Note {
 	display: none;
 }
-span.listings {
-	padding: 0.5em;
+div.listings {
 	border: thin solid #c0c0c0;
+	white-space: pre;
 }
 span.code {
 	font-family: monospace;
