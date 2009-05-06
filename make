@@ -21,6 +21,7 @@
 
 # create executable
 cd src
+./exportconfig.py py
 ./coalesce.py principal.py > elyxer.py
 mv elyxer.py ..
 cd ..
