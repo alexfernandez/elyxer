@@ -36,6 +36,7 @@ class Options(object):
   debug = False
   quiet = False
   version = False
+  help = False
   showlines = True
   css = 'http://www.nongnu.org/elyxer/lyx.css'
   title = 'Converted document'
@@ -46,11 +47,36 @@ class Options(object):
     "Parse command line options"
     parser = CommandLineParser(Options)
     result = parser.parseoptions(args)
+    if result:
+      Trace.error(result)
+      self.usage()
+    if Options.help:
+      self.usage()
+    if Options.version:
+      self.showversion()
     # set in Trace if necessary
     for param in dir(Options):
       if hasattr(Trace, param + 'mode'):
         setattr(Trace, param + 'mode', getattr(self, param))
-    return result
+
+  def usage(self):
+    "Show correct usage"
+    Trace.error('Usage: elyxer.py [filein] [fileout].')
+    Trace.error('  Options:')
+    Trace.error('    --nocopy: disables the copyright notice at the bottom')
+    Trace.error('    --quiet: disables all runtime messages')
+    Trace.error('    --debug: enable debugging messages (for developers)')
+    Trace.error('    --title <title>: set the generated page title')
+    Trace.error('    --css <file.css>: use a custom CSS file')
+    Trace.error('    --version: show version number and release date')
+    exit()
+
+  def showversion(self):
+    "Return the current eLyXer version string"
+    string = 'eLyXer version ' + GeneralConfig.version['number']
+    string += ' (' + GeneralConfig.version['date'] + ')'
+    Trace.error(string)
+    exit()
 
 class BranchOptions(object):
   "A set of options for a branch"

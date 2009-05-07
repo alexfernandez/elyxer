@@ -72,6 +72,10 @@ target "index.html"
 Command line option to show the current version number and date.
 \end_layout
 
+\begin_layout Itemize
+Release date is now automatically added to the configuration.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.19 (20090507):

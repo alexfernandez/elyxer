@@ -35,19 +35,20 @@ class Config(object):
 
   cfg = 'conf/base.cfg'
   py = 'conf/config.py'
+  help = False
 
   def run(self, args):
     "Parse command line options and run export to cfg or to py"
     parser = CommandLineParser(Config)
     error = parser.parseoptions(args)
-    if error == 'Help':
-      self.usage()
-      return
-    elif error:
+    if error:
       Trace.error(error)
-      return
+      self.usage()
+    elif Config.help:
+      self.usage()
     option = self.parseoption(args)
     if not option:
+      Trace.error('Choose cfg or py')
       self.usage()
       return
     if option == 'cfg':
@@ -66,6 +67,7 @@ class Config(object):
     Trace.error('  cfg: export to text configuration file')
     Trace.error('  py: export to python file')
     Trace.error('  options: --cfg base.cfg, --py config.py')
+    exit()
 
   def read(self):
     "Read from configuration file"

@@ -88,27 +88,9 @@ def createbook(args):
     Trace.error('Failed at ' + reader.currentline())
     raise
 
-def usage(error):
-  "Show an error message and correct usage"
-  if not error:
-    return
-  Trace.error(error)
-  Trace.error('Usage: elyxer.py [filein] [fileout].')
-  Trace.error('  Options:')
-  Trace.error('    --nocopy: disables the copyright notice at the bottom')
-  Trace.error('    --quiet: disables all runtime messages')
-  Trace.error('    --debug: enable debugging messages (for developers)')
-  Trace.error('    --title <title>: set the generated page title')
-  Trace.error('    --css <file.css>: use a custom CSS file')
-  Trace.error('    --version: show version number and release date')
-  exit()
-
 biblio = dict()
 args = sys.argv
 del args[0]
-error = Options().parseoptions(args)
-if error:
-  usage(error)
-  exit()
+Options().parseoptions(args)
 createbook(args)
 
