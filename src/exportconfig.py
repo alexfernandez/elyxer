@@ -50,7 +50,6 @@ class Config(object):
     if not option:
       Trace.error('Choose cfg or py')
       self.usage()
-      return
     if option == 'cfg':
       self.exportcfg()
       return
