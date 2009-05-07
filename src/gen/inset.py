@@ -283,3 +283,23 @@ class Listing(Container):
         ' in listing')
     return []
 
+class BoxInset(Container):
+  "A box inset"
+
+  ending = '\\end_inset'
+
+  typetags = {'Framed':'div class="framed"'}
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = TaggedOutput()
+
+  def process(self):
+    "Set the correct tag"
+    self.type = self.header[2]
+    if not self.type in BoxInset.typetags:
+      Trace.error('Uknown box type ' + self.type)
+      return
+    self.output.settag(BoxInset.typetags[self.type], True)
+
+
