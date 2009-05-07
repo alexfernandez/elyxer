@@ -100,6 +100,7 @@ def usage(error):
   Trace.error('    --debug: enable debugging messages (for developers)')
   Trace.error('    --title <title>: set the generated page title')
   Trace.error('    --css <file.css>: use a custom CSS file')
+  Trace.error('    --version: show version number and release date')
   exit()
 
 biblio = dict()

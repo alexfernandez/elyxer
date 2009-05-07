@@ -24,6 +24,7 @@
 
 import codecs
 from util.trace import *
+from conf.config import *
 
 
 class CommandLineParser(object):
@@ -39,6 +40,8 @@ class CommandLineParser(object):
     while args[0].startswith('--'):
       if args[0] == '--help':
         return 'Help'
+      if args[0] == '--version':
+        return self.versionstring()
       key, value = self.readoption(args)
       if not key:
         return 'Option ' + value + ' not recognized'
@@ -46,6 +49,12 @@ class CommandLineParser(object):
         return 'Option ' + key + ' needs a value'
       setattr(self.options, key, value)
     return None
+
+  def versionstring(self):
+    "Return the current eLyXer version string"
+    string = 'Version ' + GeneralConfig.version['number']
+    string += ' (' + GeneralConfig.version['date'] + ')'
+    return string
 
   def readoption(self, args):
     "Read the key and value for an option"

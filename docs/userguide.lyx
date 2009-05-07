@@ -509,6 +509,15 @@ title
  See below.
 \end_layout
 
+\begin_layout Description
+
+\family typewriter
+--version
+\family default
+: show version number and date.
+ Useful to check which version you are actually running.
+\end_layout
+
 \begin_layout Subsection
 CSS
 \begin_inset LatexCommand label

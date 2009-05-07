@@ -23,6 +23,7 @@
 # eLyXer configuration manipulation
 
 import sys
+import datetime
 from util.trace import Trace
 from util.options import *
 from conf.config import *
@@ -71,6 +72,7 @@ class Config(object):
     linereader = LineReader(Config.cfg)
     reader = ConfigReader(linereader)
     reader.parse()
+    reader.objects['GeneralConfig.version']['date'] = datetime.date.today().isoformat()
     return reader
 
   def exportcfg(self):

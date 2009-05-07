@@ -35,6 +35,7 @@ class Options(object):
   nocopy = False
   debug = False
   quiet = False
+  version = False
   showlines = True
   css = 'http://www.nongnu.org/elyxer/lyx.css'
   title = 'Converted document'
