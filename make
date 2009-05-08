@@ -35,10 +35,16 @@ rm -f test/*.lyx~
 ./elyxer.py --title="eLyxer Developer Guide" --css "lyx.css" docs/devguide.lyx docs/devguide.html
 ./elyxer.py --title=eLyXer --css "lyx.css" docs/index.lyx docs/index.html
 ./elyxer.py --title="eLyXer changelog" --css "lyx.css" docs/changelog.lyx docs/changelog.html
+# insert current version
+VERSION=$(./elyxer.py --hardversion)
+DATE=$(./elyxer.py --versiondate)
+cd src
+./textchange.py "the latest version" "the latest version $VERSION, created on $DATE," ../docs/index.html
+cd ..
 # make compressed files
 mkdir -p dist
 cd ..
-DATE=$(date +%Y%m%d)
+DATE=$(date "+%Y-%m-%d")
 tar --exclude "elyxer/dist" --exclude "elyxer/.git" \
   --exclude "elyxer/samples" --exclude "src/*.pyc" \
   --exclude "docs/cvs" -czf elyxer-$DATE.tar.gz elyxer

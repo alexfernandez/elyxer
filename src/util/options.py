@@ -36,6 +36,8 @@ class Options(object):
   debug = False
   quiet = False
   version = False
+  hardversion = False
+  versiondate = False
   help = False
   showlines = True
   css = 'http://www.nongnu.org/elyxer/lyx.css'
@@ -54,6 +56,10 @@ class Options(object):
       self.usage()
     if Options.version:
       self.showversion()
+    if Options.hardversion:
+      self.showhardversion()
+    if Options.versiondate:
+      self.showversiondate()
     # set in Trace if necessary
     for param in dir(Options):
       if hasattr(Trace, param + 'mode'):
@@ -76,6 +82,16 @@ class Options(object):
     string = 'eLyXer version ' + GeneralConfig.version['number']
     string += ' (' + GeneralConfig.version['date'] + ')'
     Trace.error(string)
+    exit()
+
+  def showhardversion(self):
+    "Return just the version string"
+    Trace.message(GeneralConfig.version['number'])
+    exit()
+
+  def showversiondate(self):
+    "Return just the version dte"
+    Trace.message(GeneralConfig.version['date'])
     exit()
 
 class BranchOptions(object):

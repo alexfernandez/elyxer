@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#   eLyXer -- convert LyX source files to HTML output.
+#
+#   Copyright (C) 2009 Alex Fernández
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Alex 20090316: create a release
+
+VERSION=$(./elyxer.py --hardversion)
+DATE=$(./elyxer.py --versiondate)
+echo "Creating version $VERSION from $DATE"
+cd dist
+
+# Rename packages
+mv elyxer-$DATE.tar.gz elyxer-$VERSION.tar.gz
+mv elyxer-$DATE.zip elyxer-$VERSION.zip
+
+# Sign packages
+gpg -b elyxer-$VERSION.tar.gz
+gpg -b elyxer-$VERSION.zip
+
+# Upload to savannah
+scp elyxer-$VERSION.tar.gz elyxer-$VERSION.tar.gz.sig alexfernandez@dl.sv.nongnu.org:/releases/elyxer/
+scp elyxer-$VERSION.zip elyxer-$VERSION.zip.sig alexfernandez@dl.sv.nongnu.org:/releases/elyxer/
+

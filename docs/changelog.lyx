@@ -64,7 +64,7 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
-0.20 (unreleased):
+0.20 (20090509):
 \end_layout
 
 \begin_deeper
@@ -98,6 +98,11 @@ Added
 Content-Type
 \family default
 , to ease importing into word processors.
+\end_layout
+
+\begin_layout Itemize
+Automated version generation, taking version number and date from config,
+ and updating current version in the main page.
 \end_layout
 
 \end_deeper
