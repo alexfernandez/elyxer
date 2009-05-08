@@ -296,10 +296,8 @@ class Listing(Container):
   def modifylayout(self, contents):
     "Modify a listing layout contents"
     if len(contents) == 0:
-      return []
-    last = contents[-1]
-    if isinstance(last, StringContainer):
-      last.contents.append('\n')
+      contents = [Constant(u'​')]
+    contents.append(Constant('\n'))
     if self.numbered:
       self.counter += 1
       tag = 'span class="number-' + self.numbered + '"'
