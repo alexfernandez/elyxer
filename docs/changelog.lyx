@@ -81,7 +81,11 @@ Release date is now automatically added to the configuration.
 \end_layout
 
 \begin_layout Itemize
-Support for inset boxes.
+Preliminary support for inset boxes.
+\end_layout
+
+\begin_layout Itemize
+Support for numbered listings.
 \end_layout
 
 \end_deeper

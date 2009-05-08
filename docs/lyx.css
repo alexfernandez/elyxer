@@ -387,3 +387,17 @@ code.listing {
 div.framed {
 	border: thin solid black;
 }
+span.number-left {
+	float: left;
+	background: #f0f0f0;
+	width: 3em;
+	text-align: right;
+	margin-right: 1em;
+}
+span.number-right {
+	float: right;
+	background: #f0f0f0;
+	width: 3em;
+	text-align: right;
+	margin-left: 1em;
+}
