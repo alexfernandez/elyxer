@@ -119,6 +119,7 @@ class HeaderOutput(object):
     html.append(u'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n')
     html.append(u'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n')
     html.append(u'<head>\n')
+    html.append(u'<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n')
     html.append(u'<meta name="generator" content="http://www.nongnu.org/elyxer/"/>\n')
     html.append(u'<meta name="create-date" content="' + datetime.date.today().isoformat() + '"/>\n')
     html.append(u'<link rel="stylesheet" href="' + Options.css + '" type="text/css" media="screen"/>\n')

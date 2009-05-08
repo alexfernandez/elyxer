@@ -88,6 +88,18 @@ Preliminary support for inset boxes.
 Support for numbered listings.
 \end_layout
 
+\begin_layout Itemize
+Added 
+\family typewriter
+<meta>
+\family default
+ tag for 
+\family typewriter
+Content-Type
+\family default
+, to ease importing into word processors.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.19 (20090507):
