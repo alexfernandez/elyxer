@@ -24,9 +24,11 @@ mkdir cvs
 cd cvs
 rm -Rf elyxer
 cvs -z3 -d:ext:alexfernandez@cvs.savannah.nongnu.org:/web/elyxer co elyxer
+# overwrite with current docs
 cp ../*.html elyxer/
 cp ../*.png elyxer/
 cp ../*.css elyxer/
+# commit
 cd elyxer
 cvs commit -m "Automatic upload"
 
