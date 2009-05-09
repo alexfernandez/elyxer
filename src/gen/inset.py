@@ -258,11 +258,11 @@ class Listing(Container):
 class BoxInset(Container):
   "A box inset"
 
-  typetags = {'Framed':'div class="framed"'}
+  typetags = {'Framed':'div class="framed"', 'Frameless':'div class="frameless"'}
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TaggedOutput()
+    self.output = TaggedOutput().settag('div', True)
 
   def process(self):
     "Set the correct tag"

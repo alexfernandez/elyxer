@@ -387,6 +387,8 @@ code.listing {
 div.framed {
 	border: thin solid black;
 }
+div.frameless {
+}
 span.number-left {
 	float: left;
 	background: #f0f0f0;
