@@ -77,7 +77,7 @@ Command line option
 \end_layout
 
 \begin_layout Itemize
-Container endings are now configurable.
+Container endings are now configurable from the main config file.
 \end_layout
 
 \end_deeper
