@@ -27,6 +27,7 @@ from parse.parser import *
 from io.output import *
 from gen.structure import *
 from gen.container import *
+from gen.inset import *
 
 
 class Layout(Container):
