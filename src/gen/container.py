@@ -194,34 +194,3 @@ class TaggedText(Container):
   def __str__(self):
     return 'Tagged <' + self.tag + '>'
 
-class ContainerFactory(object):
-  "Creates containers depending on the first line"
-
-  def __init__(self, types):
-    self.tree = ParseTree(types)
-
-  def create(self, reader):
-    "Get the container and parse it"
-    #Trace.debug('processing "' + reader.currentline() + '"')
-    type = self.tree.find(reader)
-    container = type.__new__(type)
-    container.__init__()
-    self.parse(container, reader)
-    return container
-
-  def parse(self, container, reader):
-    "Parse a container"
-    parser = container.parser
-    if hasattr(container, 'ending'):
-      Trace.error('Pending ending in ' + container.__class__.__name__)
-      parser.ending = container.ending
-    parser.factory = self
-    container.header = parser.parseheader(reader)
-    container.begin = parser.begin
-    container.contents = parser.parse(reader)
-    container.parameters = parser.parameters
-    container.process()
-    container.parser = None
-
-
-

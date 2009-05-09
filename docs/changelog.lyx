@@ -76,6 +76,10 @@ Command line option
  to export to HTML 4.0.
 \end_layout
 
+\begin_layout Itemize
+Container endings are now configurable.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.20 (20090509):

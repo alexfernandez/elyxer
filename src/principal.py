@@ -28,22 +28,11 @@ import sys
 import os.path
 from util.trace import Trace
 from io.fileline import *
-from gen.styles import *
-from ref.link import *
-from ref.label import *
-from ref.biblio import *
-from math.formula import *
-from math.command import *
-from gen.table import *
-from gen.image import *
-from gen.structure import *
-from gen.container import *
-from gen.inset import *
 from util.options import *
 from post.postprocess import *
 from post.posttable import *
 from math.postformula import *
-from math.array import *
+from gen.factory import *
 
 
 class Book(object):
@@ -51,10 +40,7 @@ class Book(object):
 
   def parsecontents(self, reader, writer):
     "Parse the contents of the reader and write them"
-    types = ContainerConfig.starts
-    for start, typename in types.iteritems():
-      types[start] = globals()[typename]
-    factory = ContainerFactory(types)
+    factory = ContainerFactory()
     postproc = Postprocessor()
     while not reader.finished():
       container = factory.create(reader)
