@@ -173,7 +173,7 @@ class GeneralConfig(object):
   "Configuration class from config file"
 
   version = {
-      u'date':u'2009-05-09', u'number':u'0.20', 
+      u'date':u'2009-05-09', u'number':u'0.21', 
       }
 
 class SpaceConfig(object):

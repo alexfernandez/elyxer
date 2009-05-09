@@ -26,13 +26,13 @@ for file in test/*.lyx; do
   ./elyxer.py --quiet "$name.lyx" "$name-test.html"
   diff --ignore-matching-lines="create-date" "$name-test.html" "$name-good.html"
 done
-# now tests from with the directory
+# now a limited subset of tests from with the directory
 cd test
-for file in *.lyx; do
-  name=$(basename "$file" .lyx)
-  ../elyxer.py --quiet "$name.lyx" "$name-test.html"
-  diff --ignore-matching-lines="create-date" "$name-test.html" "$name-good.html"
-done
+name="with images"
+../elyxer.py --quiet "$name.lyx" "$name-test.html"
+diff --ignore-matching-lines="create-date" "$name-test.html" "$name-good.html"
+../elyxer.py --html --quiet "$name.lyx" "$name-html-test.html"
+diff --ignore-matching-lines="create-date" "$name-html-test.html" "$name-html-good.html"
 # cleanup
 cd ..
 rm -f "*-test.html"
