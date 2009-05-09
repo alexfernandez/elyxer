@@ -38,6 +38,7 @@ class Options(object):
   version = False
   hardversion = False
   versiondate = False
+  html = False
   help = False
   showlines = True
   css = 'http://www.nongnu.org/elyxer/lyx.css'

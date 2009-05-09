@@ -64,6 +64,20 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.21 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Command line option 
+\family typewriter
+--html
+\family default
+ to export to HTML 4.0.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.20 (20090509):
 \end_layout
 

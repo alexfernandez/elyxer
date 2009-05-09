@@ -515,7 +515,16 @@ title
 --version
 \family default
 : show version number and date.
- Useful to check which version you are actually running.
+ Use to check which version you are actually running.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--html
+\family default
+: generate HTML 4.0 (instead of XHTML).
+ The resulting pages should be easier to import from certain word processors.
 \end_layout
 
 \begin_layout Subsection

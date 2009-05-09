@@ -56,7 +56,12 @@ class Container(object):
 
   def gethtml(self):
     "Get the resulting HTML"
-    return self.output.gethtml(self)
+    html = self.output.gethtml(self)
+    if Options.html:
+      for index, piece in enumerate(html):
+        piece = piece.replace('/>', '>')
+        html[index] = piece
+    return html
 
   def __str__(self):
     "Get a description"

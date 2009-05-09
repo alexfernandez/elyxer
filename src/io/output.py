@@ -115,9 +115,13 @@ class HeaderOutput(object):
 
   def gethtml(self, container):
     "Return a constant header"
-    html = [u'<?xml version="1.0" encoding="UTF-8"?>\n']
-    html.append(u'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n')
-    html.append(u'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n')
+    if not Options.html:
+      html = [u'<?xml version="1.0" encoding="UTF-8"?>\n']
+      html.append(u'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n')
+      html.append(u'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n')
+    else:
+      html = [u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">']
+      html.append(u'<html lang="en">\n')
     html.append(u'<head>\n')
     html.append(u'<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>\n')
     html.append(u'<meta name="generator" content="http://www.nongnu.org/elyxer/"/>\n')
