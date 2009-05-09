@@ -32,16 +32,12 @@ from parse.tableparse import *
 class Table(Container):
   "A lyx table"
 
-  ending = '\\end_inset'
-
   def __init__(self):
     self.parser = TableParser()
     self.output = TaggedOutput().settag('table', True)
 
 class Row(Container):
   "A row in a table"
-
-  ending = '</row'
 
   def __init__(self):
     self.parser = TablePartParser()
@@ -63,8 +59,6 @@ class Row(Container):
 
 class Cell(Container):
   "A cell in a table"
-
-  ending = '</cell'
 
   def __init__(self):
     self.parser = TablePartParser()

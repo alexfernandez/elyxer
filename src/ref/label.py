@@ -34,8 +34,6 @@ from ref.link import *
 class Label(Container):
   "A label to be referenced"
 
-  ending = '\\end_inset'
-
   names = dict()
 
   def __init__(self):
@@ -49,8 +47,6 @@ class Label(Container):
 
 class Reference(Link):
   "A reference to a label"
-
-  ending = '\\end_inset'
 
   def __init__(self):
     self.parser = InsetParser()

@@ -34,8 +34,6 @@ from gen.layout import *
 class Float(Container):
   "A floating inset"
 
-  ending = '\\end_inset'
-
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('div class="float"', True)
@@ -64,8 +62,6 @@ class Wrap(Float):
 class InsetText(Container):
   "An inset of text in a lyx file"
 
-  ending = '\\end_inset'
-
   def __init__(self):
     self.parser = BoundedParser()
     self.output = ContentsOutput()
@@ -73,16 +69,12 @@ class InsetText(Container):
 class Caption(Container):
   "A caption for a figure or a table"
 
-  ending = '\\end_inset'
-
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('div class="caption"', True)
 
 class Space(Container):
   "A space of several types"
-
-  ending = '\\end_inset'
 
   def __init__(self):
     self.parser = InsetParser()
@@ -99,8 +91,6 @@ class Space(Container):
 class Inset(Container):
   "A generic inset in a LyX document"
 
-  ending = '\\end_inset'
-
   def __init__(self):
     self.contents = list()
     self.parser = InsetParser()
@@ -116,16 +106,12 @@ class Inset(Container):
 class NewlineInset(Newline):
   "A newline or line break in an inset"
 
-  ending = '\\end_inset'
-
   def __init__(self):
     self.parser = InsetParser()
     self.output = FixedOutput()
 
 class Branch(Container):
   "A branch within a LyX document"
-
-  ending = '\\end_inset'
 
   def __init__(self):
     self.parser = InsetParser()
@@ -148,16 +134,12 @@ class Branch(Container):
 class ShortTitle(Container):
   "A short title to display (always hidden)"
 
-  ending = '\\end_inset'
-
   def __init__(self):
     self.parser = InsetParser()
     self.output = EmptyOutput()
 
 class Footnote(Container):
   "A footnote to the main text"
-
-  ending = '\\end_inset'
 
   order = 0
   list = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -180,8 +162,6 @@ class Footnote(Container):
 class Note(Container):
   "A LyX note of several types"
 
-  ending = '\\end_inset'
-
   typetags = {'Note':'', 'Comment':'', 'Greyedout':'span class="greyedout"'}
 
   def __init__(self):
@@ -195,31 +175,8 @@ class Note(Container):
       return
     self.output = TaggedOutput().settag(Note.typetags[self.type], True)
 
-class DeeperList(Container):
-  "A nested list"
-
-  ending = '\\end_deeper'
-
-  def __init__(self):
-    self.parser = BoundedParser()
-    self.output = ContentsOutput()
-
-  def process(self):
-    "Create the deeper list"
-    if len(self.contents) == 0:
-      Trace.error('Empty deeper list')
-      return
-
-  def __str__(self):
-    result = 'deeper list @ ' + str(self.begin) + ': ['
-    for element in self.contents:
-      result += str(element) + ', '
-    return result[:-2] + ']'
-
 class FlexCode(Container):
   "A bit of inset code"
-
-  ending = '\\end_inset'
 
   def __init__(self):
     self.parser = InsetParser()
@@ -227,8 +184,6 @@ class FlexCode(Container):
 
 class InfoInset(Container):
   "A LyX Info inset"
-
-  ending = '\\end_inset'
 
   types = ['shortcut', 'shortcuts', 'package', 'textclass']
 
@@ -246,16 +201,12 @@ class InfoInset(Container):
 class ERT(Container):
   "Evil Red Text"
 
-  ending = '\\end_inset'
-
   def __init__(self):
     self.parser = InsetParser()
     self.output = EmptyOutput()
 
 class Listing(Container):
   "A code listing"
-
-  ending = '\\end_inset'
 
   def __init__(self):
     self.parser = InsetParser()
@@ -306,8 +257,6 @@ class Listing(Container):
 
 class BoxInset(Container):
   "A box inset"
-
-  ending = '\\end_inset'
 
   typetags = {'Framed':'div class="framed"'}
 

@@ -32,8 +32,6 @@ from post.postprocess import *
 class BiblioCite(Container):
   "Cite of a bibliography entry"
 
-  ending = '\\end_inset'
-
   index = 0
   entries = dict()
 
@@ -61,16 +59,12 @@ class BiblioCite(Container):
 class Bibliography(Container):
   "A bibliography layout containing an entry"
 
-  ending = '\\end_layout'
-
   def __init__(self):
     self.parser = BoundedParser()
     self.output = TaggedOutput().settag('p class="biblio"', True)
 
 class BiblioEntry(Container):
   "A bibliography entry"
-
-  ending = '\\end_inset'
 
   def __init__(self):
     self.parser = InsetParser()

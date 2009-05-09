@@ -32,8 +32,6 @@ from parse.formulaparse import *
 class Formula(Container):
   "A LaTeX formula"
 
-  ending = '\\end_inset'
-
   def __init__(self):
     self.parser = FormulaParser()
     self.output = TaggedOutput().settag('span class="formula"')

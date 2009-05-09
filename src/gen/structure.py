@@ -32,8 +32,6 @@ from gen.container import *
 class LyxHeader(Container):
   "Reads the header, outputs the HTML header"
 
-  ending = '\\end_header'
-
   def __init__(self):
     self.parser = HeaderParser()
     self.output = HeaderOutput()
@@ -47,16 +45,12 @@ class LyxHeader(Container):
 class LyxFooter(Container):
   "Reads the footer, outputs the HTML footer"
 
-  ending = '\\end_document'
-
   def __init__(self):
     self.parser = BoundedDummy()
     self.output = FooterOutput()
 
 class Align(Container):
   "Bit of aligned text"
-
-  ending = '\\end_layout'
 
   def __init__(self):
     self.parser = ExcludingParser()
@@ -86,8 +80,6 @@ class Appendix(Container):
 class ListItem(Container):
   "An element in a list"
 
-  ending = '\\end_layout'
-
   def __init__(self):
     "Output should be empty until the postprocessor can group items"
     self.contents = list()
@@ -107,8 +99,6 @@ class ListItem(Container):
 
 class DeeperList(Container):
   "A nested list"
-
-  ending = '\\end_deeper'
 
   def __init__(self):
     self.parser = BoundedParser()

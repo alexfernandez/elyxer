@@ -50,8 +50,6 @@ class Link(Container):
 class ListOf(Container):
   "A list of entities (figures, tables, algorithms)"
 
-  ending = '\\end_inset'
-
   names = {'figure':'figures', 'table':'tables', 'algorithm':'listings'}
 
   def __init__(self):
@@ -66,8 +64,6 @@ class ListOf(Container):
 class TableOfContents(Container):
   "Table of contents"
 
-  ending = '\\end_inset'
-
   def __init__(self):
     self.parser = BoundedParser()
     self.output = TaggedOutput().settag('div class="toc"', True)
@@ -78,8 +74,6 @@ class TableOfContents(Container):
 
 class IndexEntry(Link):
   "An entry in the alphabetical index"
-
-  ending = '\\end_inset'
 
   entries = dict()
 
@@ -107,8 +101,6 @@ class IndexEntry(Link):
 class LayoutIndexEntry(IndexEntry):
   "An entry with the name in a layout"
 
-  ending = '\\end_inset'
-
   def process(self):
     "Read entry from layout and put in index"
     name = ''
@@ -123,8 +115,6 @@ class LayoutIndexEntry(IndexEntry):
 
 class PrintIndex(Container):
   "Command to print an index"
-
-  ending = '\\end_inset'
 
   def __init__(self):
     self.parser = BoundedParser()
@@ -162,8 +152,6 @@ class PrintIndex(Container):
 class NomenclatureEntry(Link):
   "An entry of LyX nomenclature"
 
-  ending = '\\end_inset'
-
   entries = {}
 
   def __init__(self):
@@ -182,8 +170,6 @@ class NomenclatureEntry(Link):
 
 class NomenclaturePrint(Container):
   "Print all nomenclature entries"
-
-  ending = '\\end_inset'
 
   def __init__(self):
     self.parser = InsetParser()
@@ -210,8 +196,6 @@ class NomenclaturePrint(Container):
 class URL(Link):
   "A clickable URL"
 
-  ending = '\\end_inset'
-
   def __init__(self):
     self.parser = InsetParser()
     self.output = LinkOutput()
@@ -228,8 +212,6 @@ class URL(Link):
 
 class FlexURL(URL):
   "A flexible URL"
-
-  ending = '\\end_inset'
 
   def process(self):
     "Read URL from contents"

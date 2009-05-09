@@ -31,7 +31,6 @@ from io.output import *
 class TableParser(BoundedDummy):
   "Parse the whole table"
 
-  ending = '</lyxtabular'
   row = '<row'
   column = '<column'
 
@@ -42,7 +41,7 @@ class TableParser(BoundedDummy):
   def parse(self, reader):
     "Parse table header as parameters, rows and end of table"
     contents = []
-    while not self.checkcurrent(reader, TableParser.ending):
+    while not self.checkcurrent(reader, ContainerConfig.endings[TableParser.__name__]):
       if self.checkcurrent(reader, TableParser.row):
         row = self.factory.create(reader)
         row.setcolumns(self.columns)

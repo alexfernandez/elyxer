@@ -33,8 +33,6 @@ from io.output import MirrorOutput
 class Image(Container):
   "An embedded image"
 
-  ending = '\\end_inset'
-
   converter = True
 
   def __init__(self):

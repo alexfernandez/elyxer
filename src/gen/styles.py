@@ -31,7 +31,6 @@ from gen.container import *
 class QuoteContainer(Container):
   "A container for a pretty quote"
 
-  ending = '\\end_inset'
   outputs = {
       'eld':u'“', 'erd':u'”', 'els':u'‘', 'ers':u'’',
       'sld':u'”', 'srd':u'”',

@@ -33,8 +33,6 @@ from gen.inset import *
 class Layout(Container):
   "A layout (block of text) inside a lyx file"
 
-  ending = '\\end_layout'
-
   typetags = {
       'Quote':'blockquote', 'Standard':'div', 'Part':'h1',
       'Chapter':'h1', 'Section':'h2', 'Subsection':'h3', 'Subsubsection':'h4',
@@ -62,8 +60,6 @@ class Layout(Container):
 class Title(Layout):
   "The title of the whole document"
 
-  ending = '\\end_layout'
-
   def process(self):
     self.type = 'title'
     self.output.tag = 'h1 class="title"'
@@ -74,8 +70,6 @@ class Title(Layout):
 class Author(Layout):
   "The document author"
 
-  ending = '\\end_layout'
-
   def process(self):
     self.type = 'author'
     self.output.tag = 'h2 class="author"'
@@ -85,8 +79,6 @@ class Author(Layout):
 
 class Abstract(Layout):
   "A paper abstract"
-
-  ending = '\\end_layout'
 
   def process(self):
     self.type = 'abstract'
@@ -147,8 +139,6 @@ class FirstWorder(Layout):
 class Description(FirstWorder):
   "A description layout"
 
-  ending = '\\end_layout'
-
   def process(self):
     "Set the first word to bold"
     self.type = 'Description'
@@ -162,8 +152,6 @@ class Description(FirstWorder):
 
 class List(FirstWorder):
   "A list layout"
-
-  ending = '\\end_layout'
 
   def process(self):
     "Set the first word to bold"

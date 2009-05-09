@@ -38,10 +38,6 @@ class Container(object):
     "Process contents"
     pass
 
-  def finished(self, reader):
-    "Find out if we are at the end"
-    return reader.currentline().startswith(self.ending)
-
   def gethtml(self):
     "Get the resulting HTML"
     html = self.output.gethtml(self)

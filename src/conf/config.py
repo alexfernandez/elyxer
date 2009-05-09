@@ -16,6 +16,34 @@ class ContainerConfig(object):
       u'\\SpecialChar \\textcompwordmark{}':u'', u'\\backslash':u'\\', 
       }
 
+  endings = {
+      u'Abstract':u'\\end_layout', u'Align':u'\\end_layout', 
+      u'Author':u'\\end_layout', u'BiblioCite':u'\\end_inset', 
+      u'BiblioEntry':u'\\end_inset', u'Bibliography':u'\\end_layout', 
+      u'BoxInset':u'\\end_inset', u'Branch':u'\\end_inset', 
+      u'Caption':u'\\end_inset', u'Cell':u'</cell', 
+      u'DeeperList':u'\\end_deeper', u'Description':u'\\end_layout', 
+      u'ERT':u'\\end_inset', u'FlexCode':u'\\end_inset', 
+      u'FlexURL':u'\\end_inset', u'Float':u'\\end_inset', 
+      u'Footnote':u'\\end_inset', u'Formula':u'\\end_inset', 
+      u'FormulaArray':u'\\end{array}', u'FormulaCases':u'\\end{cases}', 
+      u'Image':u'\\end_inset', u'IndexEntry':u'\\end_inset', 
+      u'InfoInset':u'\\end_inset', u'Inset':u'\\end_inset', 
+      u'InsetText':u'\\end_inset', u'Label':u'\\end_inset', 
+      u'Layout':u'\\end_layout', u'LayoutIndexEntry':u'\\end_inset', 
+      u'List':u'\\end_layout', u'ListItem':u'\\end_layout', 
+      u'ListOf':u'\\end_inset', u'Listing':u'\\end_inset', 
+      u'LyxFooter':u'\\end_document', u'LyxHeader':u'\\end_header', 
+      u'NewlineInset':u'\\end_inset', u'NomenclatureEntry':u'\\end_inset', 
+      u'NomenclaturePrint':u'\\end_inset', u'Note':u'\\end_inset', 
+      u'PrintIndex':u'\\end_inset', u'QuoteContainer':u'\\end_inset', 
+      u'Reference':u'\\end_inset', u'Row':u'</row', 
+      u'ShortTitle':u'\\end_inset', u'Space':u'\\end_inset', 
+      u'Table':u'\\end_inset', u'TableOfContents':u'\\end_inset', 
+      u'TableParser':u'</lyxtabular', u'Title':u'\\end_layout', 
+      u'URL':u'\\end_inset', 
+      }
+
   escapes = {
       u'&':u'&amp;', u'<':u'&lt;', u'>':u'&gt;', 
       }
@@ -163,6 +191,10 @@ class FormulaConfig(object):
       u'\\label':u'', u'\\mbox':u'span class="mbox"', 
       u'\\overline':u'span class="overline"', u'\\sqrt':u'span class="sqrt"', 
       u'\\underline':u'u', u'^':u'sup', u'_':u'sub', 
+      }
+
+  starts = {
+      u'FormulaArray':u'\\begin{array}', u'FormulaCases':u'\\begin{cases}', 
       }
 
   unmodified = [

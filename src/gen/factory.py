@@ -62,8 +62,11 @@ class ContainerFactory(object):
   def parse(self, container, reader):
     "Parse a container"
     parser = container.parser
+    classname = container.__class__.__name__
+    if classname in ContainerConfig.endings:
+      parser.ending = ContainerConfig.endings[classname]
     if hasattr(container, 'ending'):
-      #Trace.error('Pending ending in ' + container.__class__.__name__)
+      Trace.error('Pending ending in ' + container.__class__.__name__)
       parser.ending = container.ending
     parser.factory = self
     container.header = parser.parseheader(reader)
