@@ -34,18 +34,6 @@ class Container(object):
   def __init__(self):
     self.contents = list()
 
-  def parse(self, reader):
-    "Parse by lines"
-    if hasattr(self, 'ending'):
-      self.parser.ending = self.ending
-    self.parser.factory = self.factory
-    self.header = self.parser.parseheader(reader)
-    self.begin = self.parser.begin
-    self.contents = self.parser.parse(reader)
-    self.parameters = self.parser.parameters
-    self.process()
-    self.parser = None
-
   def process(self):
     "Process contents"
     pass
@@ -218,7 +206,22 @@ class ContainerFactory(object):
     type = self.tree.find(reader)
     container = type.__new__(type)
     container.__init__()
-    container.factory = self
-    container.parse(reader)
+    self.parse(container, reader)
     return container
+
+  def parse(self, container, reader):
+    "Parse a container"
+    parser = container.parser
+    if hasattr(container, 'ending'):
+      Trace.error('Pending ending in ' + container.__class__.__name__)
+      parser.ending = container.ending
+    parser.factory = self
+    container.header = parser.parseheader(reader)
+    container.begin = parser.begin
+    container.contents = parser.parse(reader)
+    container.parameters = parser.parameters
+    container.process()
+    container.parser = None
+
+
 
