@@ -250,10 +250,15 @@ class TranslationConfig(object):
   "Configuration class from config file"
 
   constants = {
-      u'abstract':u'Abstract', 
+      u'abstract':u'Abstract', u'toc':u'Table of Contents', 
       }
 
   floats = {
       u'algorithm':u'Listing ', u'figure':u'Figure ', u'table':u'Table ', 
+      }
+
+  lists = {
+      u'algorithm':u'List of Listings', u'figure':u'List of Figures', 
+      u'table':u'List of Tables', 
       }
 

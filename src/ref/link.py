@@ -50,8 +50,6 @@ class Link(Container):
 class ListOf(Container):
   "A list of entities (figures, tables, algorithms)"
 
-  names = {'figure':'figures', 'table':'tables', 'algorithm':'listings'}
-
   def __init__(self):
     self.parser = BoundedParser()
     self.output = TaggedOutput().settag('div class="list"', True)
@@ -59,7 +57,7 @@ class ListOf(Container):
   def process(self):
     "Parse the header and get the type"
     self.type = self.header[2]
-    self.contents = [Constant(u'List of ' + ListOf.names[self.type])]
+    self.contents = [Constant(TranslationConfig.lists[self.type])]
 
 class TableOfContents(Container):
   "Table of contents"
@@ -70,7 +68,7 @@ class TableOfContents(Container):
 
   def process(self):
     "Parse the header and get the type"
-    self.contents = [Constant(u'Table of Contents')]
+    self.contents = [Constant(TranslationConfig.constants['toc'])]
 
 class IndexEntry(Link):
   "An entry in the alphabetical index"
@@ -177,7 +175,8 @@ class NomenclaturePrint(Container):
 
   def process(self):
     self.keys = self.sortentries()
-    self.contents = [TaggedText().constant('Nomenclature', 'h1 class="nomenclature"')]
+    nomenclature = TranslationConfig.constants['Nomenclature']
+    self.contents = [TaggedText().constant(nomenclature, 'h1 class="nomenclature"')]
     for key in self.keys:
       entry = NomenclatureEntry.entries[key]
       contents = [Link().complete(u'↑', 'nom-' + key, '#noment-' + key)]

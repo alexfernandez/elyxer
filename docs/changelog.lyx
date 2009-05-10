@@ -94,6 +94,18 @@ in blue
 ).
 \end_layout
 
+\begin_layout Itemize
+All constant strings (such as 
+\begin_inset Quotes eld
+\end_inset
+
+Table of contents
+\begin_inset Quotes erd
+\end_inset
+
+) should now be configurable.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.20 (20090509):
