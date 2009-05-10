@@ -80,6 +80,20 @@ Command line option
 Container endings are now configurable from the main config file.
 \end_layout
 
+\begin_layout Itemize
+Styles can be mixed and matched at will (like 
+\family typewriter
+typewriter 
+\series bold
+bold 
+\color blue
+in blue
+\family default
+\series default
+\color inherit
+).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.20 (20090509):

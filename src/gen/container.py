@@ -172,7 +172,10 @@ class TaggedText(Container):
   "Text inside a tag"
 
   def __init__(self):
-    self.parser = TextParser()
+    ending = None
+    if self.__class__.__name__ in ContainerConfig.endings:
+      ending = ContainerConfig.endings[self.__class__.__name__]
+    self.parser = TextParser(ending)
     self.output = TaggedOutput()
 
   def complete(self, contents, tag, breaklines=False):

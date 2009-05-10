@@ -135,8 +135,10 @@ class LoneCommand(Parser):
 class TextParser(Parser):
   "A parser for a command and a bit of text"
 
-  endings = ['\\end_layout', '\\end_inset', '\\emph', '\\family', '\\noun',
-      '\\color', '\\size', '\\series']
+  def __init__(self, ending):
+    Parser.__init__(self)
+    self.endings = [ContainerConfig.endings['Layout'],
+        ContainerConfig.endings['Inset'], ending]
 
   def parse(self, reader):
     "Parse lines as long as they are text"
@@ -151,7 +153,7 @@ class TextParser(Parser):
     current = reader.currentsplit()
     if len(current) == 0:
       return True
-    return current[0] in TextParser.endings
+    return current[0] in self.endings
 
 class ExcludingParser(Parser):
   "A parser that excludes the final line"

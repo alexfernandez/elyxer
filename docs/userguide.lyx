@@ -766,19 +766,6 @@ Document structure is not preserved for certain document categories: for
 <h1>
 \family default
 ).
-\end_layout
-
-\begin_layout Enumerate
-Text styles do not mix and match correctly.
- E.g.
- typewriter bold text will appear as typewriter or bold, but not both.
- An example: 
-\family typewriter
-\series bold
-typewriter bold text
-\family default
-\series default
-.
  
 \begin_inset Note Note
 status open
