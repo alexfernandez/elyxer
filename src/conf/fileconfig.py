@@ -64,6 +64,8 @@ class ConfigReader(object):
 
   def parseparam(self, line):
     "Parse a parameter line"
+    if len(line.strip()) == 0:
+      return
     if line.startswith(ConfigWriter.listmarker):
       self.parselist(line)
       return
