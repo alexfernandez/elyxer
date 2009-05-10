@@ -225,11 +225,11 @@ class WholeFormula(FormulaBit):
     "Parse the end of a formula in array mode"
     if not self.arraymode:
       return False
-    if pos.checkfor('&'):
+    if pos.checkfor(FormulaConfig.endings['Cell']):
       return True
-    if pos.checkfor('\\\\'):
+    if pos.checkfor(FormulaConfig.endings['Row']):
       return True
-    if pos.checkfor('\\end'):
+    if pos.checkfor(FormulaConfig.endings['common']):
       return True
     return False
 

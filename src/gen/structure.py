@@ -38,8 +38,9 @@ class LyxHeader(Container):
 
   def process(self):
     "Find pdf title"
-    if '\\pdf_title' in self.parser.parameters:
-      Options.title = self.parser.parameters['\\pdf_title']
+    key = ContainerConfig.header['pdftitle']
+    if key in self.parameters:
+      Options.title = self.parameters[key]
       Trace.debug('PDF Title: ' + Options.title)
 
 class LyxFooter(Container):

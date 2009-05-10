@@ -48,6 +48,11 @@ class ContainerConfig(object):
       u'&':u'&amp;', u'<':u'&lt;', u'>':u'&gt;', 
       }
 
+  header = {
+      u'branch':u'\\branch', u'endbranch':u'\\end_branch', 
+      u'pdftitle':u'\\pdf_title', 
+      }
+
   replaces = {
       u'\n':u'', u' -- ':u' — ', u'\'':u'’', u'`':u'‘', 
       }
@@ -163,6 +168,10 @@ class FormulaConfig(object):
       u'\\vec':u'→', 
       }
 
+  endings = {
+      u'Cell':u'&', u'Row':u'\\\\', u'common':u'\\end', 
+      }
+
   fontfunctions = {
       u'\\boldsymbol':u'b', u'\\mathbb':u'span class="blackboard"', 
       u'\\mathbf':u'b', u'\\mathcal':u'span class="script"', 
@@ -181,6 +190,14 @@ class FormulaConfig(object):
       u'second':u'span class="denominator"', u'whole':u'span class="fraction"', 
       }
 
+  limited = [
+      u'\\sum', u'\\int', u'\\intop', 
+      ]
+
+  limits = [
+      u'^', u'_', 
+      ]
+
   modified = {
       u'\n':u'', u' ':u'', u'&':u'	', u'\'':u'’', u'+':u' + ', u',':u', ', 
       u'-':u' − ', u'/':u' ⁄ ', u'<':u' &lt; ', u'=':u' = ', u'>':u' &gt; ', 
@@ -195,6 +212,7 @@ class FormulaConfig(object):
 
   starts = {
       u'FormulaArray':u'\\begin{array}', u'FormulaCases':u'\\begin{cases}', 
+      u'FormulaCommand':u'\\', u'root':u'\\sqrt', 
       }
 
   unmodified = [

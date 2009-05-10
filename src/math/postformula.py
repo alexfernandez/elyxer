@@ -30,9 +30,6 @@ from post.postprocess import *
 class PostFormula(object):
   "Postprocess a formula"
 
-  limited = ['\\sum', '\\int', '\\intop']
-  limits = ['^', '_']
-
   def postprocess(self, current, last):
     "Postprocess any formulae"
     for formula in current.searchall(Formula):
@@ -52,7 +49,7 @@ class PostFormula(object):
     bit = contents[index]
     if not hasattr(bit, 'command'):
       return
-    if not bit.command in PostFormula.limited:
+    if not bit.command in FormulaConfig.limited:
       return
     limits = self.findlimits(contents, index + 1)
     limits.reverse()
@@ -76,7 +73,7 @@ class PostFormula(object):
     bit = contents[index]
     if not hasattr(bit, 'command'):
       return False
-    if not bit.command in PostFormula.limits:
+    if not bit.command in FormulaConfig.limits:
       return False
     bit.output.tag += ' class="bigsymbol"'
     return True
@@ -86,7 +83,7 @@ class PostFormula(object):
     bit = contents[index]
     if not hasattr(bit, 'original'):
       return
-    if not bit.original.startswith('\\sqrt'):
+    if not bit.original.startswith(FormulaConfig.starts['root']):
       return
     radical = TaggedText().constant(u'√', 'span class="radical"')
     root = TaggedText().complete(bit.contents, 'span class="root"')

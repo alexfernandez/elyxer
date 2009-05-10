@@ -56,24 +56,26 @@ class FormulaCommand(FormulaBit):
 
   def findalphacommand(self, oldpos):
     "Find a command with \\alpha"
+    commandstart = FormulaConfig.starts['FormulaCommand']
     pos = oldpos.clone()
-    if pos.current() != '\\':
+    if pos.current() != commandstart:
       return None
-    pos.skip('\\')
+    pos.skip(commandstart)
     if pos.isout():
       return None
     if not pos.current().isalpha():
       return None
     command = self.glob(pos, lambda(p): p.current().isalpha())
-    return '\\' + command
+    return commandstart + command
 
   def findsymbolcommand(self, oldpos):
     "Find a command made with optional \\alpha and one symbol"
+    commandstart = FormulaConfig.starts['FormulaCommand']
     pos = oldpos.clone()
     backslash = ''
-    if pos.current() == '\\':
-      backslash = '\\'
-      pos.skip('\\')
+    if pos.current() == commandstart:
+      backslash = commandstart
+      pos.skip(commandstart)
     alpha = self.glob(pos, lambda(p): p.current().isalpha())
     pos.skip(alpha)
     if pos.isout():

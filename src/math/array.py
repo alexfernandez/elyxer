@@ -72,21 +72,21 @@ class FormulaArray(FormulaCommand):
 
   def detect(self, pos):
     "Detect an array"
-    if not pos.checkfor(FormulaConfig.starts[FormulaArray.__name__]):
+    if not pos.checkfor(FormulaConfig.starts['FormulaArray']):
       return False
     return True
 
   def parse(self, pos):
     "Parse the array"
-    self.addoriginal(FormulaConfig.starts[FormulaArray.__name__], pos)
+    self.addoriginal(FormulaConfig.starts['FormulaArray'], pos)
     self.parsealignments(pos)
     self.contents.pop()
     while not pos.isout():
       row = FormulaRow(self.alignments)
       row.parse(pos)
       self.add(row)
-      if pos.checkfor(ContainerConfig.endings[FormulaArray.__name__]):
-        self.addoriginal(ContainerConfig.endings[FormulaArray.__name__], pos)
+      if pos.checkfor(ContainerConfig.endings['FormulaArray']):
+        self.addoriginal(ContainerConfig.endings['FormulaArray'], pos)
         return
       self.parserowend(pos)
 
@@ -111,11 +111,12 @@ class FormulaArray(FormulaCommand):
 
   def parserowend(self, pos):
     "Parse the end of a row"
-    if not pos.checkfor('\\\\'):
+    endline = FormulaConfig.endings['Row']
+    if not pos.checkfor(endline):
       Trace.error('No row end at ' + pos.remaining())
       self.addoriginal(pos.current(), pos)
       return
-    self.addoriginal('\\\\', pos)
+    self.addoriginal(endline, pos)
 
 class FormulaCases(FormulaArray):
   "A cases statement"
@@ -127,19 +128,19 @@ class FormulaCases(FormulaArray):
 
   def detect(self, pos):
     "Detect a cases statement"
-    if not pos.checkfor(FormulaConfig.starts[FormulaCases.__name__]):
+    if not pos.checkfor(FormulaConfig.starts['FormulaCases']):
       return False
     return True
 
   def parse(self, pos):
     "Parse the cases"
-    self.addoriginal(FormulaConfig.starts[FormulaCases.__name__], pos)
+    self.addoriginal(FormulaConfig.starts['FormulaCases'], pos)
     while not pos.isout():
       row = FormulaRow(self.alignments)
       row.parse(pos)
       self.add(row)
-      if pos.checkfor(ContainerConfig.endings[FormulaCases.__name__]):
-        self.addoriginal(ContainerConfig.endings[FormulaCases.__name__], pos)
+      if pos.checkfor(ContainerConfig.endings['FormulaCases']):
+        self.addoriginal(ContainerConfig.endings['FormulaCases'], pos)
         return
       self.parserowend(pos)
 
