@@ -204,7 +204,8 @@ class InsetParser(BoundedParser):
 
   def parse(self, reader):
     "Parse inset parameters into a dictionary"
-    while reader.currentline() != '\n' and not reader.currentline().startswith('\\'):
+    startcommand = ContainerConfig.string['startcommand']
+    while reader.currentline() != '\n' and not reader.currentline().startswith(startcommand):
       self.parseparameter(reader)
     return BoundedParser.parse(self, reader)
 

@@ -121,6 +121,10 @@ class ContainerConfig(object):
       u'\\size normal':u'BlackBox', u'\\start_of_appendix':u'Appendix', 
       }
 
+  string = {
+      u'startcommand':u'\\', 
+      }
+
 class FormulaConfig(object):
   "Configuration class from config file"
 
@@ -169,7 +173,8 @@ class FormulaConfig(object):
       }
 
   endings = {
-      u'Cell':u'&', u'Row':u'\\\\', u'common':u'\\end', 
+      u'Cell':u'&', u'Row':u'\\\\', u'common':u'\\end', u'complex':u'\\]', 
+      u'endafter':u'}', u'endbefore':u'\\end{', 
       }
 
   fontfunctions = {
@@ -212,7 +217,8 @@ class FormulaConfig(object):
 
   starts = {
       u'FormulaArray':u'\\begin{array}', u'FormulaCases':u'\\begin{cases}', 
-      u'FormulaCommand':u'\\', u'root':u'\\sqrt', 
+      u'FormulaCommand':u'\\', u'beginafter':u'}', u'beginbefore':u'\\begin{', 
+      u'complex':u'\\[', u'root':u'\\sqrt', u'simple':u'$', 
       }
 
   unmodified = [

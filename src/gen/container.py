@@ -132,14 +132,14 @@ class StringContainer(Container):
     replaced = self.escape(line)
     replaced = self.changeline(replaced)
     self.contents = [replaced]
-    if '\\' in replaced and len(replaced) > 1:
+    if ContainerConfig.string['startcommand'] in replaced and len(replaced) > 1:
       # unprocessed commands
       Trace.error('Unknown command at ' + str(self.parser.begin) + ': '
           + replaced.strip())
 
   def changeline(self, line):
     line = self.replacemap(line, ContainerConfig.replaces)
-    if not '\\' in line:
+    if not ContainerConfig.string['startcommand'] in line:
       return line
     line = self.replacemap(line, ContainerConfig.commands)
     return line

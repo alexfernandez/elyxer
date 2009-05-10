@@ -34,30 +34,33 @@ class FormulaParser(Parser):
   def parseheader(self, reader):
     "See if the formula is inlined"
     self.begin = reader.linenumber + 1
-    if reader.currentline().find('$') > 0:
+    if reader.currentline().find(FormulaConfig.starts['simple']) > 0:
       return ['inline']
     else:
       return ['block']
   
   def parse(self, reader):
     "Parse the formula"
-    if '$' in reader.currentline():
-      rest = reader.currentline().split('$', 1)[1]
-      if '$' in rest:
+    simple = FormulaConfig.starts['simple']
+    beginbefore = FormulaConfig.starts['beginbefore']
+    beginafter = FormulaConfig.starts['beginafter']
+    if simple in reader.currentline():
+      rest = reader.currentline().split(simple, 1)[1]
+      if simple in rest:
         # formula is $...$
-        formula = reader.currentline().split('$')[1]
+        formula = reader.currentline().split(simple)[1]
         reader.nextline()
       else:
         # formula is multiline $...$
-        formula = self.parsemultiliner(reader, '$', '$')
-    elif '\\[' in reader.currentline():
+        formula = self.parsemultiliner(reader, simple, simple)
+    elif FormulaConfig.starts['complex'] in reader.currentline():
       # formula of the form \[...\]
-      formula = self.parsemultiliner(reader, '\\[', '\\]')
-    elif '\\begin{' in reader.currentline() and reader.currentline().endswith('}\n'):
+      formula = self.parsemultiliner(reader, FormulaConfig.starts['complex'], FormulaConfig.endings['complex'])
+    elif beginbefore in reader.currentline() and reader.currentline().strip().endswith(beginafter):
       current = reader.currentline().strip()
-      endsplit = current.split('\\begin{')[1].split('}')
-      startpiece = '\\begin{' + endsplit[0] + '}'
-      endpiece = '\\end{' + endsplit[0] + '}'
+      endsplit = current.split(beginbefore)[1].split(beginafter)
+      startpiece = beginbefore + endsplit[0] + beginafter
+      endpiece = FormulaConfig.endings['endbefore'] + endsplit[0] + FormulaConfig.endings['endafter']
       formula = self.parsemultiliner(reader, startpiece, endpiece)
     else:
       Trace.error('Formula beginning ' + reader.currentline().strip +

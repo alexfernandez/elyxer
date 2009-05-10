@@ -105,9 +105,9 @@ class BranchOptions(object):
 
   def set(self, key, value):
     "Set a branch option"
-    if not key.startswith('\\'):
+    if not key.startswith(ContainerConfig.string['startcommand']):
       Trace.error('Invalid branch option ' + key)
       return
-    key = key.replace('\\', '')
+    key = key.replace(ContainerConfig.string['startcommand'], '')
     setattr(self, key, value)
 
