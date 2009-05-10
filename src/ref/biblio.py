@@ -94,7 +94,8 @@ class PostBiblio(object):
     "If we have the first bibliography insert a tag"
     if isinstance(last, Bibliography):
       return element
-    tag = TaggedText().constant('Bibliography', 'h1 class="biblio"')
+    bibliography = TranslationConfig.constants['bibliography']
+    tag = TaggedText().constant(bibliography, 'h1 class="biblio"')
     return Group().contents([tag, element])
 
 Postprocessor.stages.append(PostBiblio)

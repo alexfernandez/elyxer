@@ -129,6 +129,13 @@ class ContainerConfig(object):
       u'startcommand':u'\\', 
       }
 
+class FootnoteConfig(object):
+  "Configuration class from config file"
+
+  constants = {
+      u'postfrom':u'] ', u'postto':u'→] ', u'prefrom':u'[→', u'preto':u' [', 
+      }
+
 class FormulaConfig(object):
   "Configuration class from config file"
 
@@ -250,7 +257,9 @@ class TranslationConfig(object):
   "Configuration class from config file"
 
   constants = {
-      u'abstract':u'Abstract', u'toc':u'Table of Contents', 
+      u'abstract':u'Abstract', u'bibliography':u'Bibliography', 
+      u'index':u'Index', u'nomenclature':u'Nomenclature', 
+      u'toc':u'Table of Contents', 
       }
 
   floats = {

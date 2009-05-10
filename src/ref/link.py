@@ -120,7 +120,8 @@ class PrintIndex(Container):
 
   def process(self):
     "Create the alphabetic index"
-    self.contents = [TaggedText().constant('Index', 'h1 class="index"'),
+    index = TranslationConfig.constants['index']
+    self.contents = [TaggedText().constant(index, 'h1 class="index"'),
         Constant('\n')]
     for key in self.sortentries():
       name = IndexEntry.entries[key][0].name
@@ -175,7 +176,7 @@ class NomenclaturePrint(Container):
 
   def process(self):
     self.keys = self.sortentries()
-    nomenclature = TranslationConfig.constants['Nomenclature']
+    nomenclature = TranslationConfig.constants['nomenclature']
     self.contents = [TaggedText().constant(nomenclature, 'h1 class="nomenclature"')]
     for key in self.keys:
       entry = NomenclatureEntry.entries[key]

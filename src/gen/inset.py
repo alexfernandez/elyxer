@@ -152,10 +152,14 @@ class Footnote(Container):
     "Add a letter for the order, rotating"
     letter = Footnote.list[Footnote.order % len(Footnote.list)]
     span = 'span class="FootMarker"'
-    fromfoot = TaggedText().constant(u'[→' + letter + u'] ', span)
+    pre = FootnoteConfig.constants['prefrom']
+    post = FootnoteConfig.constants['postfrom']
+    fromfoot = TaggedText().constant(pre + letter + post, span)
     self.contents.insert(0, fromfoot)
     tag = TaggedText().complete(self.contents, 'span class="Foot"', True)
-    tofoot = TaggedText().constant(' [' + letter + u'→] ', span)
+    pre = FootnoteConfig.constants['preto']
+    post = FootnoteConfig.constants['postto']
+    tofoot = TaggedText().constant(pre + letter + post, span)
     self.contents = [tofoot, tag]
     Footnote.order += 1
 
