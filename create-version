@@ -37,6 +37,6 @@ scp elyxer-$VERSION.tar.gz elyxer-$VERSION.tar.gz.sig alexfernandez@dl.sv.nongnu
 scp elyxer-$VERSION.zip elyxer-$VERSION.zip.sig alexfernandez@dl.sv.nongnu.org:/releases/elyxer/
 
 # Upload docs
-cd docs
+cd ../docs
 ./upload.sh
 
