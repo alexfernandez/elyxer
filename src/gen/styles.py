@@ -117,7 +117,6 @@ class TextFamily(TaggedText):
     "Parse the type of family"
     self.type = self.header[1]
     self.output.tag = TextFamily.typetags[self.type]
-    Trace.debug('Family ' + self.type + ', text: ' + str(self.contents))
 
 class Hfill(TaggedText):
   "Horizontall fill"
