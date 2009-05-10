@@ -87,5 +87,38 @@ An even
  more difficult description with change of type in the middle.
 \end_layout
 
+\begin_layout Description
+A description which leads to 
+\family typewriter
+fixed 
+\color blue
+text 
+\color red
+in
+\color inherit
+ 
+\color green
+dif
+\family default
+(fere)
+\family typewriter
+nt
+\color inherit
+ 
+\color magenta
+colors
+\family default
+\color inherit
+.
+ And now 
+\family typewriter
+\series bold
+some
+\series default
+ more
+\family default
+.
+\end_layout
+
 \end_body
 \end_document

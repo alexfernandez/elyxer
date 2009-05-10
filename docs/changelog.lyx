@@ -106,6 +106,30 @@ Table of contents
 ) should now be configurable.
 \end_layout
 
+\begin_layout Itemize
+Added a few more colors: 
+\color green
+green
+\color inherit
+, 
+\color magenta
+magenta
+\color inherit
+, 
+\color cyan
+cyan
+\color inherit
+, 
+\color yellow
+yellow
+\color inherit
+, 
+\color white
+white
+\color inherit
+ (those two were yellow and white).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.20 (20090509):

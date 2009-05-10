@@ -135,13 +135,19 @@ class LoneCommand(Parser):
 class TextParser(Parser):
   "A parser for a command and a bit of text"
 
+  stack = []
+
   def __init__(self, ending):
     Parser.__init__(self)
-    self.endings = [ContainerConfig.endings['Layout'],
-        ContainerConfig.endings['Inset'], ending]
+    self.ending = ending
+    self.endings = []
 
   def parse(self, reader):
     "Parse lines as long as they are text"
+    TextParser.stack.append(self.ending)
+    self.endings = TextParser.stack + [ContainerConfig.endings['Layout'],
+        ContainerConfig.endings['Inset'], self.ending]
+    Trace.debug('Stack: ' + str(TextParser.stack))
     contents = []
     while not self.isending(reader):
       container = self.factory.create(reader)
@@ -152,8 +158,15 @@ class TextParser(Parser):
     "Check if text is ending"
     current = reader.currentsplit()
     if len(current) == 0:
+      return False
+    if current[0] in self.endings:
+      Trace.debug('Ending ' + current[0])
+      if current[0] in TextParser.stack:
+        TextParser.stack.remove(current[0])
+      else:
+        TextParser.stack = []
       return True
-    return current[0] in self.endings
+    return False
 
 class ExcludingParser(Parser):
   "A parser that excludes the final line"
