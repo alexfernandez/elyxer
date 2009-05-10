@@ -228,6 +228,7 @@ class HeaderParser(Parser):
     line = reader.currentline()
     if line.startswith(ContainerConfig.header['branch']):
       self.parsebranch(reader)
+      return
     # no match
     self.parseparameter(reader)
 
