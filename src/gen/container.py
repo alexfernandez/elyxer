@@ -41,8 +41,8 @@ class Container(object):
   def gethtml(self):
     "Get the resulting HTML"
     html = self.output.gethtml(self)
-    if isinstance(html, unicode):
-      Trace.error('Unicode ' + html)
+    if isinstance(html, basestring):
+      Trace.error('Raw string ' + html)
     if Options.html:
       for index, piece in enumerate(html):
         piece = piece.replace('/>', '>')
