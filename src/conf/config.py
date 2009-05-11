@@ -21,35 +21,15 @@ class ContainerConfig(object):
       }
 
   endings = {
-      u'Abstract':u'\\end_layout', u'Align':u'\\end_layout', 
-      u'Author':u'\\end_layout', u'BarredText':u'\\bar', 
-      u'BiblioCite':u'\\end_inset', u'BiblioEntry':u'\\end_inset', 
-      u'Bibliography':u'\\end_layout', u'BoldText':u'\\series', 
-      u'BoxInset':u'\\end_inset', u'Branch':u'\\end_inset', 
-      u'Caption':u'\\end_inset', u'Cell':u'</cell', u'ColorText':u'\\color', 
-      u'DeeperList':u'\\end_deeper', u'Description':u'\\end_layout', 
-      u'ERT':u'\\end_inset', u'EmphaticText':u'\\emph', 
-      u'FlexCode':u'\\end_inset', u'FlexURL':u'\\end_inset', 
-      u'Float':u'\\end_inset', u'Footnote':u'\\end_inset', 
-      u'Formula':u'\\end_inset', u'FormulaArray':u'\\end{array}', 
+      u'Align':u'\\end_layout', u'BarredText':u'\\bar', 
+      u'BoldText':u'\\series', u'Cell':u'</cell', u'ColorText':u'\\color', 
+      u'EmphaticText':u'\\emph', u'FormulaArray':u'\\end{array}', 
       u'FormulaCases':u'\\end{cases}', u'Hfill':u'\\hfill', 
-      u'Image':u'\\end_inset', u'IndexEntry':u'\\end_inset', 
-      u'InfoInset':u'\\end_inset', u'Inset':u'\\end_inset', 
-      u'InsetText':u'\\end_inset', u'Label':u'\\end_inset', 
-      u'Layout':u'\\end_layout', u'LayoutIndexEntry':u'\\end_inset', 
-      u'List':u'\\end_layout', u'ListItem':u'\\end_layout', 
-      u'ListOf':u'\\end_inset', u'Listing':u'\\end_inset', 
+      u'Inset':u'\\end_inset', u'Layout':u'\\end_layout', 
       u'LyxFooter':u'\\end_document', u'LyxHeader':u'\\end_header', 
-      u'NewlineInset':u'\\end_inset', u'NomenclatureEntry':u'\\end_inset', 
-      u'NomenclaturePrint':u'\\end_inset', u'Note':u'\\end_inset', 
-      u'PrintIndex':u'\\end_inset', u'QuoteContainer':u'\\end_inset', 
-      u'Reference':u'\\end_inset', u'Row':u'</row', u'ShapedText':u'\\shape', 
-      u'ShortTitle':u'\\end_inset', u'SizeText':u'\\size', 
-      u'Space':u'\\end_inset', u'StandardLayout':u'\\end_layout', 
-      u'Table':u'\\end_inset', u'TableOfContents':u'\\end_inset', 
+      u'Row':u'</row', u'ShapedText':u'\\shape', u'SizeText':u'\\size', 
       u'TableParser':u'</lyxtabular', u'TextFamily':u'\\family', 
-      u'Title':u'\\end_layout', u'URL':u'\\end_inset', 
-      u'VersalitasText':u'\\noun', u'Wrap':u'\\end_inset', 
+      u'VersalitasText':u'\\noun', 
       }
 
   escapes = {
@@ -81,7 +61,8 @@ class ContainerConfig(object):
       }
 
   startendings = {
-      u'\\begin_inset':u'\\end_inset', u'\\begin_layout':u'\\end_layout', 
+      u'\\begin_deeper':u'\\end_deeper', u'\\begin_inset':u'\\end_inset', 
+      u'\\begin_layout':u'\\end_layout', 
       }
 
   starts = {
