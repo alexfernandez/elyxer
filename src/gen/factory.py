@@ -56,18 +56,14 @@ class ContainerFactory(object):
     type = self.tree.find(reader)
     container = type.__new__(type)
     container.__init__()
+    container.start = reader.currentline().strip()
     self.parse(container, reader)
     return container
 
   def parse(self, container, reader):
     "Parse a container"
     parser = container.parser
-    classname = container.__class__.__name__
-    if classname in ContainerConfig.endings:
-      parser.ending = ContainerConfig.endings[classname]
-    if hasattr(container, 'ending'):
-      Trace.error('Pending ending in ' + container.__class__.__name__)
-      parser.ending = container.ending
+    parser.ending = self.getending(container)
     parser.factory = self
     container.header = parser.parseheader(reader)
     container.begin = parser.begin
@@ -75,6 +71,22 @@ class ContainerFactory(object):
     container.parameters = parser.parameters
     container.process()
     container.parser = None
+
+  def getending(self, container):
+    "Get the ending for a container"
+    split = container.start.split()
+    if len(split) == 0:
+      return None
+    start = split[0]
+    if start in ContainerConfig.startendings:
+      return ContainerConfig.startendings[start]
+    classname = container.__class__.__name__
+    if classname in ContainerConfig.endings:
+      return ContainerConfig.endings[classname]
+    if hasattr(container, 'ending'):
+      Trace.error('Pending ending in ' + container.__class__.__name__)
+      return container.ending
+    return None
 
 class ParseTree(object):
   "A parsing tree"

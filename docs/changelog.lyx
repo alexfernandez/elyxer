@@ -106,7 +106,7 @@ Standard layouts can now be translated to
 \end_layout
 
 \begin_layout Itemize
-Command endings can be deduced from starts.
+Command endings can be deduced from starts in configuration file.
 \end_layout
 
 \end_deeper

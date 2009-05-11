@@ -80,6 +80,10 @@ class ContainerConfig(object):
       u'\n':u'', u' -- ':u' — ', u'\'':u'’', u'`':u'‘', 
       }
 
+  startendings = {
+      u'\\begin_inset':u'\\end_inset', u'\\begin_layout':u'\\end_layout', 
+      }
+
   starts = {
       u'':u'StringContainer', u'#LyX':u'BlackBox', u'<cell':u'Cell', 
       u'<row':u'Row', u'\\align':u'Align', u'\\bar':u'BarredText', 
