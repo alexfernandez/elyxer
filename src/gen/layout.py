@@ -49,6 +49,13 @@ class Layout(Container):
   def __str__(self):
     return 'Layout of type ' + self.type
 
+class StandardLayout(Layout):
+  "A standard layout -- can be a true div or a span"
+
+  def process(self):
+    self.type = 'standard'
+    self.output.tag = 'span class="Standard"'
+
 class Title(Layout):
   "The title of the whole document"
 

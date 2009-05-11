@@ -89,6 +89,26 @@ More configurable containers: quote types, barred text, boxes, info insets\Speci
 
 \end_layout
 
+\begin_layout Itemize
+Added note on the main page about slow mirrors and latest versions.
+\end_layout
+
+\begin_layout Itemize
+Standard layouts can now be translated to 
+\family typewriter
+<div>
+\family default
+ or to 
+\family typewriter
+<span>
+\family default
+, depending on the context.
+\end_layout
+
+\begin_layout Itemize
+Command endings can be deduced from starts.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.21 (20090511):
