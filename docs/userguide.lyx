@@ -725,9 +725,37 @@ HTML Code
 \end_layout
 
 \begin_layout Standard
-The HTML code generated is technically XHTML Transitional, version 1.0, using
- UTF-8 encoding.
- It passes the W3C tests 
+The HTML code generated is technically XHTML Transitional, version 1.0 
+\begin_inset LatexCommand cite
+key "xhtml"
+
+\end_inset
+
+, using UTF-8 encoding.
+ Some programs have (in this day and age) trouble importing XHTML, notably
+ some popular word processors.
+ To work around this problem and provide more flexible output in general
+ you can output HTML 4.0:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --html document.lyx page-to-import.html
+\end_layout
+
+\begin_layout Standard
+Again, technically the code generated is HTML 4.01 Transitional 
+\begin_inset LatexCommand cite
+key "html-401"
+
+\end_inset
+
+ using UTF-8 encoding.
+ Both versions should pass the W3C tests 
 \begin_inset LatexCommand cite
 key "w3c-validator"
 
@@ -1005,6 +1033,54 @@ definition of elixir
  
 \begin_inset LatexCommand url
 target "http://www.wordreference.com/definition/elixir"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "xhtml"
+
+\end_inset
+
+W3C: 
+\begin_inset Quotes eld
+\end_inset
+
+XHTML™ 1.0 The Extensible HyperText Markup Language (Second Edition)
+\begin_inset Quotes erd
+\end_inset
+
+, revised 1 August 2002.
+ 
+\begin_inset LatexCommand url
+target "http://www.w3.org/TR/xhtml1/"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset LatexCommand bibitem
+key "html-401"
+
+\end_inset
+
+W3C: 
+\begin_inset Quotes eld
+\end_inset
+
+HTML 4.01 Specification
+\begin_inset Quotes erd
+\end_inset
+
+, 24 December 1999.
+ 
+\begin_inset LatexCommand url
+target "http://www.w3.org/TR/REC-html40/"
 
 \end_inset
 
