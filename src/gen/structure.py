@@ -117,3 +117,10 @@ class DeeperList(Container):
       result += str(element) + ', '
     return result[:-2] + ']'
 
+class ERT(Container):
+  "Evil Red Text"
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = EmptyOutput()
+

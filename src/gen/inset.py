@@ -187,13 +187,6 @@ class InfoInset(Container):
       Trace.error('Unknown Info type ' + self.type)
     self.contents = [Constant(self.parser.parameters['arg'])]
 
-class ERT(Container):
-  "Evil Red Text"
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = EmptyOutput()
-
 class Listing(Container):
   "A code listing"
 

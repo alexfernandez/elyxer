@@ -42,7 +42,7 @@ class Container(object):
     "Get the resulting HTML"
     html = self.output.gethtml(self)
     if isinstance(html, unicode):
-      Trace.debug('Unicode ' + html)
+      Trace.error('Unicode ' + html)
     if Options.html:
       for index, piece in enumerate(html):
         piece = piece.replace('/>', '>')
