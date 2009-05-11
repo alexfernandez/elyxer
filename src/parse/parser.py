@@ -147,7 +147,6 @@ class TextParser(Parser):
     TextParser.stack.append(self.ending)
     self.endings = TextParser.stack + [ContainerConfig.endings['Layout'],
         ContainerConfig.endings['Inset'], self.ending]
-    Trace.debug('Stack: ' + str(TextParser.stack))
     contents = []
     while not self.isending(reader):
       container = self.factory.create(reader)
@@ -160,7 +159,6 @@ class TextParser(Parser):
     if len(current) == 0:
       return False
     if current[0] in self.endings:
-      Trace.debug('Ending ' + current[0])
       if current[0] in TextParser.stack:
         TextParser.stack.remove(current[0])
       else:
