@@ -164,7 +164,7 @@ class DecoratingFunction(OneParamFunction):
     # simplify if possible
     if self.original in FormulaConfig.alphacommands:
       self.output = FixedOutput()
-      self.html = FormulaConfig.alphacommands[self.original]
+      self.html = [FormulaConfig.alphacommands[self.original]]
 
 class FractionFunction(FormulaCommand):
   "A fraction with two parameters"

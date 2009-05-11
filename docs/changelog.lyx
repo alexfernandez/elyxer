@@ -74,7 +74,11 @@ Modified user guide to explain
 --html
 \family default
  option.
- Solved a bug (quote generation) manifested when exporting HTML.
+\end_layout
+
+\begin_layout Itemize
+Solved a few bugs (quote generation, decorated text) manifested when exporting
+ HTML.
 \end_layout
 
 \begin_layout Itemize
