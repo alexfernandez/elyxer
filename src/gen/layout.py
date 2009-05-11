@@ -32,13 +32,6 @@ from gen.container import *
 class Layout(Container):
   "A layout (block of text) inside a lyx file"
 
-  typetags = {
-      'Quote':'blockquote', 'Standard':'div', 'Part':'h1',
-      'Chapter':'h1', 'Section':'h2', 'Subsection':'h3', 'Subsubsection':'h4',
-      'Quotation':'blockquote', 'Center':'div', 'Paragraph':'div',
-      'LyX-Code':'pre'
-      }
-
   def __init__(self):
     self.contents = list()
     self.parser = BoundedParser()
@@ -46,10 +39,10 @@ class Layout(Container):
 
   def process(self):
     self.type = self.header[1]
-    if self.type in Layout.typetags:
-      self.output.tag = Layout.typetags[self.type] + ' class="' + self.type + '"'
-    elif self.type.replace('*', '') in Layout.typetags:
-      self.output.tag = Layout.typetags[self.type.replace('*', '')] + ' class="' +  self.type.replace('*', '-') + '"'
+    if self.type in ContainerConfig.layouts:
+      self.output.tag = ContainerConfig.layouts[self.type] + ' class="' + self.type + '"'
+    elif self.type.replace('*', '') in ContainerConfig.layouts:
+      self.output.tag = ContainerConfig.layouts[self.type.replace('*', '')] + ' class="' +  self.type.replace('*', '-') + '"'
     else:
       self.output.tag = 'div class="' + self.type + '"'
 

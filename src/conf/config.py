@@ -7,6 +7,10 @@
 class ContainerConfig(object):
   "Configuration class from config file"
 
+  boxes = {
+      u'Framed':u'div class="framed"', u'Frameless':u'div class="frameless"', 
+      }
+
   commands = {
       u'\\InsetSpace \\space{}':u'&nbsp;', u'\\InsetSpace \\thinspace{}':u' ', 
       u'\\InsetSpace ~':u'&nbsp;', u'\\SpecialChar \\@.':u'.', 
@@ -60,6 +64,13 @@ class ContainerConfig(object):
   infoinsets = [
       u'shortcut', u'shortcuts', u'package', u'textclass', 
       ]
+
+  layouts = {
+      u'Center':u'div', u'Chapter':u'h1', u'LyX-Code':u'pre', 
+      u'Paragraph':u'div', u'Part':u'h1', u'Quotation':u'blockquote', 
+      u'Quote':u'blockquote', u'Section':u'h2', u'Standard':u'div', 
+      u'Subsection':u'h3', u'Subsubsection':u'h4', 
+      }
 
   notes = {
       u'Comment':u'', u'Greyedout':u'span class="greyedout"', u'Note':u'', 
