@@ -73,21 +73,6 @@ class Caption(Container):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('div class="caption"', True)
 
-class Space(Container):
-  "A space of several types"
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = FixedOutput()
-
-  def process(self):
-    self.type = self.header[2]
-    if self.type not in SpaceConfig.spaces:
-      Trace.error('Unknown space type ' + self.type)
-      self.html = [' ']
-      return
-    self.html = [SpaceConfig.spaces[self.type]]
-
 class Inset(Container):
   "A generic inset in a LyX document"
 

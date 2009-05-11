@@ -31,15 +31,6 @@ from gen.container import *
 class QuoteContainer(Container):
   "A container for a pretty quote"
 
-  outputs = {
-      'eld':u'“', 'erd':u'”', 'els':u'‘', 'ers':u'’',
-      'sld':u'”', 'srd':u'”',
-      'gld':u'„', 'grd':u'“', 'gls':u'‚', 'grs':u'‘',
-      'pld':u'„', 'prd':u'”', 'pls':u'‚', 'prs':u'’',
-      'fld':u'«', 'frd':u'»', 'fls':u'‹', 'frs':u'›',
-      'ald':u'»', 'ard':u'«', 'als':u'›', 'ars':u'‹'
-      }
-
   def __init__(self):
     self.parser = BoundedParser()
     self.output = FixedOutput()
@@ -47,11 +38,11 @@ class QuoteContainer(Container):
   def process(self):
     "Process contents"
     self.type = self.header[2]
-    if not self.type in QuoteContainer.outputs:
+    if not self.type in StyleConfig.quotes:
       Trace.error('Quote type ' + self.type + ' not found')
-      self.html = '"'
+      self.html = ['"']
       return
-    self.html = QuoteContainer.outputs[self.type]
+    self.html = [StyleConfig.quotes[self.type]]
 
 class LyxLine(Container):
   "A Lyx line"
@@ -147,4 +138,20 @@ class LangLine(Container):
 
   def process(self):
     self.lang = self.header[1]
+
+class Space(Container):
+  "A space of several types"
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = FixedOutput()
+  
+  def process(self):
+    self.type = self.header[2]
+    if self.type not in StyleConfig.spaces:
+      Trace.error('Unknown space type ' + self.type)
+      self.html = [' ']
+      return
+    self.html = [StyleConfig.spaces[self.type]]
+
 

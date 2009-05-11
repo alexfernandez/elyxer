@@ -69,7 +69,16 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-Nothing yet.
+Modified user guide to explain 
+\family typewriter
+--html
+\family default
+ option.
+ Solved a bug (quote generation) manifested when exporting HTML.
+\end_layout
+
+\begin_layout Itemize
+Quote types are now configurable.
 \end_layout
 
 \end_deeper

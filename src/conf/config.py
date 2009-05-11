@@ -243,8 +243,16 @@ class GeneralConfig(object):
       u'date':u'2009-05-11', u'number':u'0.22', 
       }
 
-class SpaceConfig(object):
+class StyleConfig(object):
   "Configuration class from config file"
+
+  quotes = {
+      u'ald':u'»', u'als':u'›', u'ard':u'«', u'ars':u'‹', u'eld':u'“', 
+      u'els':u'‘', u'erd':u'”', u'ers':u'’', u'fld':u'«', u'fls':u'‹', 
+      u'frd':u'»', u'frs':u'›', u'gld':u'„', u'gls':u'‚', u'grd':u'“', 
+      u'grs':u'‘', u'pld':u'„', u'pls':u'‚', u'prd':u'”', u'prs':u'’', 
+      u'sld':u'”', u'srd':u'”', 
+      }
 
   spaces = {
       u'\\enskip{}':u' ', u'\\hfill{}':u' ', u'\\hspace*{\\fill}':u' ', 
