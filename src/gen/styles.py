@@ -118,16 +118,14 @@ class Hfill(TaggedText):
 class BarredText(TaggedText):
   "Text with a bar somewhere"
 
-  typetags = { 'under':'u' }
-
   def process(self):
     "Parse the type of bar"
     self.type = self.header[1]
-    if not self.type in BarredText.typetags:
+    if not self.type in StyleConfig.barred:
       Trace.error('Unknown bar type ' + self.type)
       self.output.tag = 'span'
       return
-    self.output.tag = BarredText.typetags[self.type]
+    self.output.tag = StyleConfig.barred[self.type]
 
 class LangLine(Container):
   "A line with language information"

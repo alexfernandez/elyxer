@@ -57,6 +57,14 @@ class ContainerConfig(object):
       u'pdftitle':u'\\pdf_title', 
       }
 
+  infoinsets = [
+      u'shortcut', u'shortcuts', u'package', u'textclass', 
+      ]
+
+  notes = {
+      u'Comment':u'', u'Greyedout':u'span class="greyedout"', u'Note':u'', 
+      }
+
   replaces = {
       u'\n':u'', u' -- ':u' — ', u'\'':u'’', u'`':u'‘', 
       }
@@ -245,6 +253,10 @@ class GeneralConfig(object):
 
 class StyleConfig(object):
   "Configuration class from config file"
+
+  barred = {
+      u'under':u'u', 
+      }
 
   quotes = {
       u'ald':u'»', u'als':u'›', u'ard':u'«', u'ars':u'‹', u'eld':u'“', 

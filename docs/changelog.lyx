@@ -85,7 +85,8 @@ Solved a few bugs manifested when exporting to HTML 4.0 with
 \end_layout
 
 \begin_layout Itemize
-Quote types are now configurable.
+More configurable containers: quote types, barred text, boxes, info insets\SpecialChar \ldots{}
+
 \end_layout
 
 \end_deeper

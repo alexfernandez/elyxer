@@ -151,8 +151,6 @@ class Footnote(Container):
 class Note(Container):
   "A LyX note of several types"
 
-  typetags = {'Note':'', 'Comment':'', 'Greyedout':'span class="greyedout"'}
-
   def __init__(self):
     self.parser = InsetParser()
     self.output = EmptyOutput()
@@ -160,9 +158,9 @@ class Note(Container):
   def process(self):
     "Hide note and comment, dim greyed out"
     self.type = self.header[2]
-    if Note.typetags[self.type] == '':
+    if ContainerConfig.notes[self.type] == '':
       return
-    self.output = TaggedOutput().settag(Note.typetags[self.type], True)
+    self.output = TaggedOutput().settag(ContainerConfig.notes[self.type], True)
 
 class FlexCode(Container):
   "A bit of inset code"
@@ -174,8 +172,6 @@ class FlexCode(Container):
 class InfoInset(Container):
   "A LyX Info inset"
 
-  types = ['shortcut', 'shortcuts', 'package', 'textclass']
-
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('span class="Info"', False)
@@ -183,7 +179,7 @@ class InfoInset(Container):
   def process(self):
     "Set the shortcut as text"
     self.type = self.parser.parameters['type']
-    if self.type not in InfoInset.types:
+    if self.type not in ContainerConfig.infoinsets:
       Trace.error('Unknown Info type ' + self.type)
     self.contents = [Constant(self.parser.parameters['arg'])]
 
@@ -240,8 +236,6 @@ class Listing(Container):
 class BoxInset(Container):
   "A box inset"
 
-  typetags = {'Framed':'div class="framed"', 'Frameless':'div class="frameless"'}
-
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('div', True)
@@ -249,9 +243,9 @@ class BoxInset(Container):
   def process(self):
     "Set the correct tag"
     self.type = self.header[2]
-    if not self.type in BoxInset.typetags:
+    if not self.type in ContainerConfig.boxes:
       Trace.error('Uknown box type ' + self.type)
       return
-    self.output.settag(BoxInset.typetags[self.type], True)
+    self.output.settag(ContainerConfig.boxes[self.type], True)
 
 
