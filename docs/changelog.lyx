@@ -77,8 +77,11 @@ Modified user guide to explain
 \end_layout
 
 \begin_layout Itemize
-Solved a few bugs (quote generation, decorated text) manifested when exporting
- HTML.
+Solved a few bugs manifested when exporting to HTML 4.0 with 
+\family typewriter
+--html
+\family default
+.
 \end_layout
 
 \begin_layout Itemize

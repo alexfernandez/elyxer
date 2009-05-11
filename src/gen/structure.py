@@ -69,7 +69,7 @@ class Newline(Container):
 
   def process(self):
     "Process contents"
-    self.html = '<br/>'
+    self.html = ['<br/>']
 
 class Appendix(Container):
   "An appendix to the main document"
