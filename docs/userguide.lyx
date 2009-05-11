@@ -779,8 +779,8 @@ Known Issues
 \end_layout
 
 \begin_layout Standard
-The following issues (including bugs and missing features) are acknowledged
- and should be solved soon.
+The following issues (including bugs and missing features) are acknowledged.
+ Some of them should be solved soon; others may take longer.
 \end_layout
 
 \begin_layout Enumerate
@@ -794,28 +794,6 @@ Document structure is not preserved for certain document categories: for
 <h1>
 \family default
 ).
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Standard
-This happens only in the HTML file converted with eLyXer, not from within
- LyX.
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Comment
-status open
-
-\begin_layout Standard
-By the way, the previous note (and this one) should not appear on the HTML.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Enumerate
@@ -839,6 +817,28 @@ Phonetic alphabet symbols are not supported -- they appear in dark cyan:
 \end_inset
 
 .
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Standard
+This happens only in the HTML file converted with eLyXer, not from within
+ LyX.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Comment
+status open
+
+\begin_layout Standard
+By the way, the previous note (and this one) should not appear on the HTML.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
@@ -959,8 +959,9 @@ Q: What can we expect from the tool in the future?
 \begin_layout Description
 A: eLyXer should support a widening set of LyX features, and a couple of
  tricks of its own (such as page segmenting).
- Eventually it may be integrated with LyX so that it can be accessed from
+ Eventually it should be recognized LyX so that it can be accessed from
  within the editor.
+ Joint distribution is also a possibility.
 \end_layout
 
 \begin_layout Description
@@ -975,7 +976,7 @@ Q: Why did you leave out my favorite feature
 A: In short, because I wasn't using it.
  Usually it is better to first aim for your own needs and then worry about
  others, or you will never get anything done.
- But if you let me know, I will be glad to help.
+ But if you let me know I will be glad to help.
 \end_layout
 
 \begin_layout Description
@@ -1006,13 +1007,14 @@ target "mailto:elyxer@gmail.com"
 
 \end_inset
 
-, or report it to the Savannah interface: 
+.
+ You can also report it to the Savannah interface: 
 \begin_inset LatexCommand url
 target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 
 \end_inset
 
-.
+ (although at this point in time you would be the first to use it).
 \end_layout
 
 \begin_layout Bibliography
