@@ -7,10 +7,6 @@
 class ContainerConfig(object):
   "Configuration class from config file"
 
-  boxes = {
-      u'Framed':u'div class="framed"', u'Frameless':u'div class="frameless"', 
-      }
-
   commands = {
       u'\\InsetSpace \\space{}':u'&nbsp;', u'\\InsetSpace \\thinspace{}':u' ', 
       u'\\InsetSpace ~':u'&nbsp;', u'\\SpecialChar \\@.':u'.', 
@@ -44,17 +40,6 @@ class ContainerConfig(object):
   infoinsets = [
       u'shortcut', u'shortcuts', u'package', u'textclass', 
       ]
-
-  layouts = {
-      u'Center':u'div', u'Chapter':u'h1', u'LyX-Code':u'pre', 
-      u'Paragraph':u'div', u'Part':u'h1', u'Quotation':u'blockquote', 
-      u'Quote':u'blockquote', u'Section':u'h2', u'Subsection':u'h3', 
-      u'Subsubsection':u'h4', 
-      }
-
-  notes = {
-      u'Comment':u'', u'Greyedout':u'span class="greyedout"', u'Note':u'', 
-      }
 
   replaces = {
       u'\n':u'', u' -- ':u' — ', u'\'':u'’', u'`':u'‘', 
@@ -251,10 +236,6 @@ class GeneralConfig(object):
 class StyleConfig(object):
   "Configuration class from config file"
 
-  barred = {
-      u'under':u'u', 
-      }
-
   quotes = {
       u'ald':u'»', u'als':u'›', u'ard':u'«', u'ars':u'‹', u'eld':u'“', 
       u'els':u'‘', u'erd':u'”', u'ers':u'’', u'fld':u'«', u'fls':u'‹', 
@@ -268,6 +249,40 @@ class StyleConfig(object):
       u'\\hspace*{}':u'', u'\\hspace{}':u' ', u'\\negthinspace{}':u'', 
       u'\\qquad{}':u'  ', u'\\quad{}':u' ', u'\\space{}':u'&nbsp;', 
       u'\\thinspace{}':u' ', u'~':u'&nbsp;', 
+      }
+
+class TagConfig(object):
+  "Configuration class from config file"
+
+  barred = {
+      u'under':u'u', 
+      }
+
+  boxes = {
+      u'Framed':u'div class="framed"', u'Frameless':u'div class="frameless"', 
+      }
+
+  family = {
+      u'sans':u'span class="sans"', u'typewriter':u'tt', 
+      }
+
+  layouts = {
+      u'Center':u'div', u'Chapter':u'h1', u'LyX-Code':u'pre', 
+      u'Paragraph':u'div', u'Part':u'h1', u'Quotation':u'blockquote', 
+      u'Quote':u'blockquote', u'Section':u'h2', u'Subsection':u'h3', 
+      u'Subsubsection':u'h4', 
+      }
+
+  listitems = {
+      u'Enumerate':u'ol', u'Itemize':u'ul', 
+      }
+
+  notes = {
+      u'Comment':u'', u'Greyedout':u'span class="greyedout"', u'Note':u'', 
+      }
+
+  shaped = {
+      u'italic':u'i', u'slanted':u'i', u'smallcaps':u'span class="versalitas"', 
       }
 
 class TranslationConfig(object):

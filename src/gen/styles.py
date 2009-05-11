@@ -63,15 +63,13 @@ class EmphaticText(TaggedText):
 class ShapedText(TaggedText):
   "Text shaped (italic, slanted)"
 
-  tags = {'slanted':'i', 'italic':'i', 'smallcaps':'span class="versalitas"'}
-
   def process(self):
     self.type = self.header[1]
-    if not self.type in ShapedText.tags:
+    if not self.type in TagConfig.shaped:
       Trace.error('Unrecognized shape ' + self.header[1])
       self.output.tag = 'span'
       return
-    self.output.tag = ShapedText.tags[self.type]
+    self.output.tag = TagConfig.shaped[self.type]
 
 class VersalitasText(TaggedText):
   "Text in versalitas"
@@ -102,12 +100,14 @@ class BoldText(TaggedText):
 class TextFamily(TaggedText):
   "A bit of text from a different family"
 
-  typetags = { 'typewriter':'tt', 'sans':'span class="sans"' }
-
   def process(self):
     "Parse the type of family"
     self.type = self.header[1]
-    self.output.tag = TextFamily.typetags[self.type]
+    if not self.type in TagConfig.family:
+      Trace.error('Unrecognized family ' + type)
+      self.output.tag = 'span'
+      return
+    self.output.tag = TagConfig.family[self.type]
 
 class Hfill(TaggedText):
   "Horizontall fill"
@@ -121,11 +121,11 @@ class BarredText(TaggedText):
   def process(self):
     "Parse the type of bar"
     self.type = self.header[1]
-    if not self.type in StyleConfig.barred:
+    if not self.type in TagConfig.barred:
       Trace.error('Unknown bar type ' + self.type)
       self.output.tag = 'span'
       return
-    self.output.tag = StyleConfig.barred[self.type]
+    self.output.tag = TagConfig.barred[self.type]
 
 class LangLine(Container):
   "A line with language information"

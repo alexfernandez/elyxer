@@ -87,8 +87,6 @@ class ListItem(Container):
     self.parser = BoundedParser()
     self.output = EmptyOutput()
 
-  typetags = {'Enumerate':'ol', 'Itemize':'ul'}
-
   def process(self):
     "Set the correct type and contents."
     self.type = self.header[1]

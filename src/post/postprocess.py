@@ -83,7 +83,7 @@ class PendingList(object):
     "Get the resulting list"
     if not self.type:
       return Group().contents(self.contents)
-    tag = ListItem.typetags[self.type]
+    tag = TagConfig.listitems[self.type]
     return TaggedText().complete(self.contents, tag, True)
 
   def empty(self):

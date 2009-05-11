@@ -39,10 +39,10 @@ class Layout(Container):
 
   def process(self):
     self.type = self.header[1]
-    if self.type in ContainerConfig.layouts:
-      self.output.tag = ContainerConfig.layouts[self.type] + ' class="' + self.type + '"'
-    elif self.type.replace('*', '') in ContainerConfig.layouts:
-      self.output.tag = ContainerConfig.layouts[self.type.replace('*', '')] + ' class="' +  self.type.replace('*', '-') + '"'
+    if self.type in TagConfig.layouts:
+      self.output.tag = TagConfig.layouts[self.type] + ' class="' + self.type + '"'
+    elif self.type.replace('*', '') in TagConfig.layouts:
+      self.output.tag = TagConfig.layouts[self.type.replace('*', '')] + ' class="' +  self.type.replace('*', '-') + '"'
     else:
       self.output.tag = 'div class="' + self.type + '"'
 

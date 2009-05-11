@@ -158,9 +158,9 @@ class Note(Container):
   def process(self):
     "Hide note and comment, dim greyed out"
     self.type = self.header[2]
-    if ContainerConfig.notes[self.type] == '':
+    if TagConfig.notes[self.type] == '':
       return
-    self.output = TaggedOutput().settag(ContainerConfig.notes[self.type], True)
+    self.output = TaggedOutput().settag(TagConfig.notes[self.type], True)
 
 class FlexCode(Container):
   "A bit of inset code"
@@ -243,9 +243,9 @@ class BoxInset(Container):
   def process(self):
     "Set the correct tag"
     self.type = self.header[2]
-    if not self.type in ContainerConfig.boxes:
+    if not self.type in TagConfig.boxes:
       Trace.error('Uknown box type ' + self.type)
       return
-    self.output.settag(ContainerConfig.boxes[self.type], True)
+    self.output.settag(TagConfig.boxes[self.type], True)
 
 
