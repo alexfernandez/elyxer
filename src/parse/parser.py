@@ -27,42 +27,6 @@ from util.trace import Trace
 from util.options import *
 
 
-class ParseTree(object):
-  "A parsing tree"
-
-  default = '~~default~~'
-
-  def __init__(self, types):
-    "Create the parse tree"
-    self.root = dict()
-    for start, type in types.iteritems():
-      self.addstart(type, start)
-
-  def addstart(self, type, start):
-    "Add a start piece to the tree"
-    tree = self.root
-    for piece in start.split():
-      if not piece in tree:
-        tree[piece] = dict()
-      tree = tree[piece]
-    if ParseTree.default in tree:
-      Trace.error('Start ' + start + ' duplicated')
-    tree[ParseTree.default] = type
-
-  def find(self, reader):
-    "Find the current sentence in the tree"
-    branches = [self.root]
-    for piece in reader.currentsplit():
-      current = branches[-1]
-      piece = piece.rstrip('>')
-      if piece in current:
-        branches.append(current[piece])
-    while not ParseTree.default in branches[-1]:
-      Trace.error('Line ' + reader.currentline().strip() + ' not found')
-      branches.pop()
-    last = branches[-1]
-    return last[ParseTree.default]
-
 class Parser(object):
   "A generic parser"
 
