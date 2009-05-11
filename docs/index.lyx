@@ -224,7 +224,8 @@ target "changelog.html"
 status open
 
 \begin_layout Standard
-Note: if the latest version hasn't yet hit the mirrors, please visit 
+Note: if this latest version hasn't yet hit the mirrors and you are impatient
+ to try it out, please visit 
 \begin_inset LatexCommand url
 name "the Savannah direct download page"
 target "http://download.savannah.gnu.org/releases-noredirect/elyxer/"
