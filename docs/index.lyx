@@ -211,6 +211,14 @@ target "https://savannah.nongnu.org/files/?group=elyxer"
 \end_inset
 
 .
+ See the 
+\begin_inset LatexCommand url
+name "change log"
+target "changelog.html"
+
+\end_inset
+
+ for information about past versions.
  
 \begin_inset Note Greyedout
 status open
@@ -228,14 +236,7 @@ target "http://download.savannah.gnu.org/releases-noredirect/elyxer/"
 
 \end_inset
 
- See the 
-\begin_inset LatexCommand url
-name "change log"
-target "changelog.html"
 
-\end_inset
-
- for information about past versions.
 \end_layout
 
 \begin_layout Standard
