@@ -168,8 +168,6 @@ class PostLayout(object):
     elif layout.type in PostLayout.ordered:
       level = PostLayout.ordered.index(layout.type)
       number = self.generator.generate(level)
-    elif layout.type == 'Standard':
-      return self.checkforfloat(layout)
     else:
       return layout
     layout.contents.insert(0, Constant(number + u' '))
@@ -185,6 +183,16 @@ class PostLayout(object):
   def activateappendix(self):
     "Change first number to letter, and chapter to appendix"
     self.generator.number = ['-']
+
+class PostStandard(object):
+  "Convert any standard spans in root to divs"
+
+  processedclass = StandardLayout
+
+  def postprocess(self, standard, last):
+    "Switch span to div"
+    standard.output.tag = 'div class="Standard"'
+    return self.checkforfloat(standard)
 
   def checkforfloat(self, standard):
     "Check a standard layout for a float inset"
@@ -204,16 +212,6 @@ class PostLayout(object):
     float.contents.insert(0, element)
     index = layout.contents.index(element)
     layout.contents[index] = BlackBox()
-
-class PostStandard(object):
-  "Convert any standard spans in root to divs"
-
-  processedclass = StandardLayout
-
-  def postprocess(self, standard, last):
-    "Switch span to div"
-    standard.output.tag = 'div class="Standard"'
-    return standard
 
 class Postprocessor(object):
   "Postprocess an element keeping some context"
