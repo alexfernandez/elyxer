@@ -170,38 +170,23 @@ class Number(FormulaBit):
 class WholeFormula(FormulaBit):
   "Parse a whole formula"
 
-  # more bits may be appended later
-  bits = [ FormulaSymbol(), RawText(), Number() ]
-
   def __init__(self):
     FormulaBit.__init__(self)
+    self.factory = FormulaFactory()
     self.arraymode = False
 
   def detect(self, pos):
     "Check if inside bounds"
-    return not pos.isout()
+    return self.factory.detectbit(pos)
 
   def parse(self, pos):
     "Parse with any formula bit"
-    while not pos.isout() and not pos.checkfor('}'):
+    while self.factory.detectbit(pos):
       if self.parsearrayend(pos):
         return
-      bit = self.parsebit(pos)
+      bit = self.factory.parsebit(pos)
       #Trace.debug(bit.original + ' -> ' + str(bit.gethtml()))
       self.add(bit)
-
-  def parsebit(self, pos):
-    "Parse a formula bit"
-    for bit in WholeFormula.bits:
-      if bit.detect(pos):
-        # get a fresh bit and parse it
-        newbit = bit.clone()
-        newbit.parse(pos)
-        return newbit
-    Trace.error('Unrecognized formula at ' + pos.remaining())
-    constant = FormulaConstant(pos.current())
-    pos.skip(pos.current())
-    return constant
 
   def process(self):
     "Process the whole formula"
@@ -232,4 +217,74 @@ class WholeFormula(FormulaBit):
     if pos.checkfor(FormulaConfig.endings['common']):
       return True
     return False
+
+class Bracket(FormulaBit):
+  "A {} bracket inside a formula"
+
+  def __init__(self):
+    "Create a (possibly literal) new bracket"
+    FormulaBit.__init__(self)
+    self.literal = False
+    self.inside = None
+
+  def detect(self, pos):
+    "Detect the start of a bracket"
+    return pos.checkfor('{')
+
+  def parse(self, pos):
+    "Parse the bracket"
+    if not pos.checkfor('{'):
+      Trace.error('Bracket should start with {')
+      return
+    self.addoriginal('{', pos)
+    self.parseinside(pos)
+    if pos.isout() or pos.current() != '}':
+      Trace.error('Missing } in ' + pos.remaining())
+      return
+    self.addoriginal('}', pos)
+
+  def parseinside(self, pos):
+    "Parse the inside of the bracket"
+    if self.literal:
+      self.addconstant(self.glob(pos, lambda(p): p.current() != '}'), pos)
+      return
+    self.inside = WholeFormula()
+    if not self.inside.detect(pos):
+      Trace.error('Dangling {')
+      return
+    self.inside.parse(pos)
+    self.add(self.inside)
+
+  def process(self):
+    "Process the bracket"
+    if self.inside:
+      self.inside.process()
+
+class FormulaFactory(object):
+  "Construct bits of formula"
+
+  # more bits may be appended later
+  bits = [ FormulaSymbol(), RawText(), Number(), Bracket() ]
+
+  def detectbit(self, pos):
+    "Detect if there is a next bit"
+    if pos.isout():
+      return False
+    for bit in FormulaFactory.bits:
+      if bit.detect(pos):
+        return True
+    return False
+
+  def parsebit(self, pos):
+    "Parse just one formula bit"
+    for bit in FormulaFactory.bits:
+      if bit.detect(pos):
+        # get a fresh bit and parse it
+        newbit = bit.clone()
+        newbit.parse(pos)
+        return newbit
+    Trace.error('Unrecognized formula at ' + pos.remaining())
+    constant = FormulaConstant(pos.current())
+    pos.skip(pos.current())
+    return constant
 

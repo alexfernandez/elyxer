@@ -34,7 +34,8 @@ class FormulaCommand(FormulaBit):
  
   def parsebracket(self, pos, literal=False):
     "Parse a bracket at the current position"
-    bracket = Bracket(literal)
+    bracket = Bracket()
+    bracket.literal = True
     if not bracket.detect(pos):
       Trace.error('Expected {} at: ' + pos.remaining())
       return
@@ -210,46 +211,7 @@ class FractionFunction(FormulaCommand):
       return
     bracket2.output = TaggedOutput().settag(second)
 
-class Bracket(FormulaBit):
-  "A {} bracket inside a formula"
-
-  def __init__(self, literal):
-    "Create a (possibly literal) new bracket"
-    FormulaBit.__init__(self)
-    self.literal = literal
-    self.inside = None
-
-  def detect(self, pos):
-    "Detect the start of a bracket"
-    return pos.checkfor('{')
-
-  def parse(self, pos):
-    "Parse the bracket"
-    self.addoriginal('{', pos)
-    self.parseinside(pos)
-    if pos.isout() or pos.current() != '}':
-      Trace.error('Missing } in ' + pos.remaining())
-      return
-    self.addoriginal('}', pos)
-
-  def parseinside(self, pos):
-    "Parse the inside of the bracket"
-    if self.literal:
-      self.addconstant(self.glob(pos, lambda(p): p.current() != '}'), pos)
-      return
-    self.inside = WholeFormula()
-    if not self.inside.detect(pos):
-      Trace.error('Dangling {')
-      return
-    self.inside.parse(pos)
-    self.add(self.inside)
-
-  def process(self):
-    "Process the bracket"
-    if self.inside:
-      self.inside.process()
-
-WholeFormula.bits += [
+FormulaFactory.bits += [
     EmptyCommand(), OneParamFunction(), DecoratingFunction(),
     FractionFunction(), FontFunction(), LiteralFunction(),
     ]

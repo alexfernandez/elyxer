@@ -144,5 +144,5 @@ class FormulaCases(FormulaArray):
         return
       self.parserowend(pos)
 
-WholeFormula.bits += [FormulaArray(), FormulaCases()]
+FormulaFactory.bits += [FormulaArray(), FormulaCases()]
 
