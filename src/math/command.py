@@ -32,13 +32,12 @@ from math.formula import *
 class FormulaCommand(FormulaBit):
   "A LaTeX command inside a formula"
  
-  def parsebracket(self, pos, literal=False):
+  def parsebracket(self, pos):
     "Parse a bracket at the current position"
-    bracket = Bracket()
-    bracket.literal = True
-    if not bracket.detect(pos):
+    if not self.factory.detectbit(pos):
       Trace.error('Expected {} at: ' + pos.remaining())
       return
+    bracket = self.factory.parsebit(pos)
     bracket.parse(pos)
     self.add(bracket)
     return bracket

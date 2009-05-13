@@ -281,6 +281,7 @@ class FormulaFactory(object):
       if bit.detect(pos):
         # get a fresh bit and parse it
         newbit = bit.clone()
+        newbit.factory = self
         newbit.parse(pos)
         return newbit
     Trace.error('Unrecognized formula at ' + pos.remaining())
