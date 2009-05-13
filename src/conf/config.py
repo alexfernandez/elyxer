@@ -203,6 +203,10 @@ class FormulaConfig(object):
       u'^', u'_', 
       ]
 
+  literalfunctions = {
+      u'\\label':u'a class="eqnumber" name="#"', 
+      }
+
   modified = {
       u'\n':u'', u' ':u'', u'&':u'	', u'\'':u'’', u'+':u' + ', u',':u', ', 
       u'-':u' − ', u'/':u' ⁄ ', u'<':u' &lt; ', u'=':u' = ', u'>':u' &gt; ', 
@@ -213,10 +217,6 @@ class FormulaConfig(object):
       u'\\mbox':u'span class="mbox"', u'\\overline':u'span class="overline"', 
       u'\\sqrt':u'span class="sqrt"', u'\\underline':u'u', u'^':u'sup', 
       u'_':u'sub', 
-      }
-
-  specialfunctions = {
-      u'\\label':u'a class="eqnumber" name="#"', 
       }
 
   starts = {

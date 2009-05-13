@@ -152,7 +152,7 @@ class LiteralFunction(FormulaCommand):
     command = self.findcommand(pos, self.functions)
     self.addoriginal(command, pos)
     self.output = TaggedOutput().settag(self.functions[command])
-    self.parsebracket(pos)
+    self.parsebracket(pos, True)
 
 class FontFunction(OneParamFunction):
   "A function of one parameter that changes the font"
@@ -226,7 +226,7 @@ class Bracket(FormulaBit):
   def parse(self, pos):
     "Parse the bracket"
     self.addoriginal('{', pos)
-    self.add(self.parseinside(pos))
+    self.parseinside(pos)
     if pos.isout() or pos.current() != '}':
       Trace.error('Missing } in ' + pos.remaining())
       return
@@ -235,13 +235,14 @@ class Bracket(FormulaBit):
   def parseinside(self, pos):
     "Parse the inside of the bracket"
     if self.literal:
-      return self.glob(pos, lambda(p): p.current() != '}')
+      self.addconstant(self.glob(pos, lambda(p): p.current() != '}'), pos)
+      return
     self.inside = WholeFormula()
     if not self.inside.detect(pos):
       Trace.error('Dangling {')
       return
     self.inside.parse(pos)
-    return self.inside
+    self.add(self.inside)
 
   def process(self):
     "Process the bracket"
