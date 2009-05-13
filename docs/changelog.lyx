@@ -109,6 +109,15 @@ Standard layouts can now be translated to
 Command endings can be deduced from starts in configuration file.
 \end_layout
 
+\begin_layout Itemize
+A bunch of new math symbols: nu, angle brackets.
+ Generalized big brackets.
+\end_layout
+
+\begin_layout Itemize
+Equation numbering is working.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.21 (20090511):

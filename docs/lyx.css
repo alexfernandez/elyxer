@@ -182,6 +182,7 @@ div.formula {
 	padding: 0.5ex;
 	margin-left: auto;
 	margin-right: auto;
+	background: #f0ffff;
 }
 span.overline {
 	text-decoration: overline;
@@ -417,4 +418,10 @@ span.number-right {
 	width: 3em;
 	text-align: right;
 	margin-left: 1em;
+}
+a.eqnumber {
+	display: inline-block;
+	float: right;
+	font-weight: bold;
+	background: #ffc0c0;
 }
