@@ -153,11 +153,10 @@ class FormulaConfig(object):
       u'\\gets':u'←', u'\\implies':u'  ⇒  ', u'\\in':u' ∈ ', u'\\infty':u'∞', 
       u'\\int':u'<span class="bigsymbol">∫</span>', 
       u'\\intop':u'<span class="bigsymbol">∫</span>', u'\\langle':u'⟨', 
-      u'\\left':u'<span class="huge" />', u'\\leftarrow':u' ← ', 
-      u'\\leq':u' ≤ ', u'\\lim':u'lim', u'\\ln':u'ln', u'\\log':u'log', 
-      u'\\lyxlock':u'', u'\\ne':u' ≠ ', u'\\neq':u'≠', u'\\nonumber':u'', 
-      u'\\not':u'¬', u'\\pm':u'±', u'\\prime':u'′', u'\\propto':u' ∝ ', 
-      u'\\quad':u' ', u'\\rangle':u'⟩', u'\\right':u'<span class="huge" />', 
+      u'\\leftarrow':u' ← ', u'\\leq':u' ≤ ', u'\\lim':u'lim', u'\\ln':u'ln', 
+      u'\\log':u'log', u'\\lyxlock':u'', u'\\ne':u' ≠ ', u'\\neq':u'≠', 
+      u'\\nonumber':u'', u'\\not':u'¬', u'\\pm':u'±', u'\\prime':u'′', 
+      u'\\propto':u' ∝ ', u'\\quad':u' ', u'\\rangle':u'⟩', 
       u'\\rightarrow':u' → ', u'\\rightsquigarrow':u' ⇝ ', 
       u'\\scriptscriptstyle':u'', u'\\scriptstyle':u'', u'\\sim':u' ~ ', 
       u'\\sin':u'sin', u'\\sinh':u'sinh', 
@@ -214,9 +213,10 @@ class FormulaConfig(object):
 
   onefunctions = {
       u'\\bar':u'span class="bar"', u'\\begin{array}':u'span class="arraydef"', 
-      u'\\mbox':u'span class="mbox"', u'\\overline':u'span class="overline"', 
-      u'\\sqrt':u'span class="sqrt"', u'\\underline':u'u', u'^':u'sup', 
-      u'_':u'sub', 
+      u'\\left':u'span class="bigsymbol"', u'\\mbox':u'span class="mbox"', 
+      u'\\overline':u'span class="overline"', 
+      u'\\right':u'span class="bigsymbol"', u'\\sqrt':u'span class="sqrt"', 
+      u'\\underline':u'u', u'^':u'sup', u'_':u'sub', 
       }
 
   starts = {
