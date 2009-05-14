@@ -135,10 +135,10 @@ class OneParamFunction(FormulaCommand):
     self.output = TaggedOutput().settag(self.functions[command])
     self.parseparameter(pos)
 
-class LiteralFunction(FormulaCommand):
-  "A function with one parameter which is not parsed"
+class LabelFunction(FormulaCommand):
+  "A function that acts as a label"
 
-  functions = FormulaConfig.literalfunctions
+  functions = FormulaConfig.labelfunctions
 
   def detect(self, pos):
     "Detect the start of the function"
@@ -147,14 +147,14 @@ class LiteralFunction(FormulaCommand):
     return False
 
   def parse(self, pos):
-    "Parse a literal function"
+    "Parse a literal parameter"
     command = self.findcommand(pos, self.functions)
     self.addoriginal(command, pos)
     self.output = TaggedOutput().settag(self.functions[command])
     bracket = Bracket()
     bracket.literal = True
     if not bracket.detect(pos):
-      Trace.error('No parameter for function ' + self.command)
+      Trace.error('No parameter for label ' + self.command)
       return
     bracket.parse(pos)
     self.add(bracket)
@@ -217,6 +217,6 @@ class FractionFunction(FormulaCommand):
 
 FormulaFactory.bits += [
     EmptyCommand(), OneParamFunction(), DecoratingFunction(),
-    FractionFunction(), FontFunction(), LiteralFunction(),
+    FractionFunction(), FontFunction(), LabelFunction(),
     ]
 

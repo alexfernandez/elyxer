@@ -194,6 +194,10 @@ class FormulaConfig(object):
       u'second':u'span class="denominator"', u'whole':u'span class="fraction"', 
       }
 
+  labelfunctions = {
+      u'\\label':u'a class="eqnumber" name="#"', 
+      }
+
   limited = [
       u'\\sum', u'\\int', u'\\intop', 
       ]
@@ -201,10 +205,6 @@ class FormulaConfig(object):
   limits = [
       u'^', u'_', 
       ]
-
-  literalfunctions = {
-      u'\\label':u'a class="eqnumber" name="#"', 
-      }
 
   modified = {
       u'\n':u'', u' ':u'', u'&':u'	', u'\'':u'’', u'+':u' + ', u',':u', ', 

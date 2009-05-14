@@ -182,6 +182,7 @@ div.formula {
 	padding: 0.5ex;
 	margin-left: auto;
 	margin-right: auto;
+	background: #f0ffff;
 }
 span.overline {
 	text-decoration: overline;

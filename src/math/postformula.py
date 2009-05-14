@@ -41,6 +41,7 @@ class PostFormula(object):
     for index, bit in enumerate(contents):
       self.checklimited(contents, index)
       self.checkroot(contents, index)
+      self.checknumber(contents, index)
       if isinstance(bit, FormulaBit):
         self.postcontents(bit.contents)
 
@@ -88,6 +89,19 @@ class PostFormula(object):
     radical = TaggedText().constant(u'√', 'span class="radical"')
     root = TaggedText().complete(bit.contents, 'span class="root"')
     bit.contents = [radical, root]
+
+  def checknumber(self, contents, index):
+    "Check for equation numbering"
+    label = contents[index]
+    if not isinstance(label, LabelFunction):
+      return
+    if len(label.contents) != 1:
+      Trace.error('Wrong contents for label ' + str(label))
+    parameter = label.contents[0]
+    Trace.debug('Numbering: ' + str(parameter))
+    # place at the beginning
+    del contents[index]
+    contents.insert(0, label)
 
 Postprocessor.unconditional.append(PostFormula)
 
