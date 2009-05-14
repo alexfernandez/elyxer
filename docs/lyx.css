@@ -214,6 +214,9 @@ span.root {
 	border-top: thin #000040 solid;
 	padding: 0;
 }
+span.symbol {
+	font-size: 125%;
+}
 span.bigsymbol {
 	font-size: 150%;
 }
