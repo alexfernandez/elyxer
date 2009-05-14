@@ -197,6 +197,34 @@ c & dio\end{array}\right]$
 .
 \end_layout
 
+\begin_layout Standard
+There are also big brackets: 
+\begin_inset Formula $\left(a\right)$
+\end_inset
+
+ 
+\begin_inset Formula $\left[b\right]$
+\end_inset
+
+ 
+\begin_inset Formula $\left\{ c\right\} $
+\end_inset
+
+ 
+\begin_inset Formula $\left\langle d\right\rangle $
+\end_inset
+
+ 
+\begin_inset Formula $\left|e\right|$
+\end_inset
+
+ 
+\begin_inset Formula $\bigl\langle f\bigr\rangle$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Chapter
 Fraction
 \end_layout

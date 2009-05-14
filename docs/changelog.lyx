@@ -111,7 +111,11 @@ Command endings can be deduced from starts in configuration file.
 
 \begin_layout Itemize
 A bunch of new math symbols: nu, angle brackets.
- Generalized big brackets.
+\end_layout
+
+\begin_layout Itemize
+Generalized big brackets of several types.
+ Consolidated parameter parsing in formulas.
 \end_layout
 
 \begin_layout Itemize

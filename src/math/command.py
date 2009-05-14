@@ -32,15 +32,14 @@ from math.formula import *
 class FormulaCommand(FormulaBit):
   "A LaTeX command inside a formula"
  
-  def parsebracket(self, pos):
-    "Parse a bracket at the current position"
+  def parseparameter(self, pos):
+    "Parse a parameter at the current position"
     if not self.factory.detectbit(pos):
-      Trace.error('Expected {} at: ' + pos.remaining())
+      Trace.error('No parameter found at: ' + pos.remaining())
       return
-    bracket = self.factory.parsebit(pos)
-    #bracket.parse(pos)
-    self.add(bracket)
-    return bracket
+    parameter = self.factory.parsebit(pos)
+    self.add(parameter)
+    return parameter
 
   def findcommand(self, pos, map):
     "Find any type of command in a map"
@@ -134,7 +133,7 @@ class OneParamFunction(FormulaCommand):
     command = self.findcommand(pos, self.functions)
     self.addoriginal(command, pos)
     self.output = TaggedOutput().settag(self.functions[command])
-    self.parsebracket(pos)
+    self.parseparameter(pos)
 
 class LiteralFunction(FormulaCommand):
   "A function with one parameter which is not parsed"
@@ -152,7 +151,7 @@ class LiteralFunction(FormulaCommand):
     command = self.findcommand(pos, self.functions)
     self.addoriginal(command, pos)
     self.output = TaggedOutput().settag(self.functions[command])
-    self.parsebracket(pos, True)
+    self.parseparameter(pos, True)
 
 class FontFunction(OneParamFunction):
   "A function of one parameter that changes the font"
@@ -177,8 +176,8 @@ class DecoratingFunction(OneParamFunction):
     symbol = FormulaConfig.decoratingfunctions[command]
     tagged = TaggedBit().constant(symbol, 'span class="symbolover"')
     self.contents.append(tagged)
-    bracket = self.parsebracket(pos)
-    bracket.output = TaggedOutput().settag('span class="undersymbol"')
+    parameter = self.parseparameter(pos)
+    parameter.output = TaggedOutput().settag('span class="undersymbol"')
     # simplify if possible
     if self.original in FormulaConfig.alphacommands:
       self.output = FixedOutput()
@@ -201,14 +200,14 @@ class FractionFunction(FormulaCommand):
     first = FormulaConfig.fractionspans['first']
     second = FormulaConfig.fractionspans['second']
     self.output = TaggedOutput().settag(whole)
-    bracket1 = self.parsebracket(pos)
-    if not bracket1:
+    parameter1 = self.parseparameter(pos)
+    if not parameter1:
       return
-    bracket1.output = TaggedOutput().settag(first)
-    bracket2 = self.parsebracket(pos)
-    if not bracket2:
+    parameter1.output = TaggedOutput().settag(first)
+    parameter2 = self.parseparameter(pos)
+    if not parameter2:
       return
-    bracket2.output = TaggedOutput().settag(second)
+    parameter2.output = TaggedOutput().settag(second)
 
 FormulaFactory.bits += [
     EmptyCommand(), OneParamFunction(), DecoratingFunction(),

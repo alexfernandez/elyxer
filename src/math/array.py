@@ -101,12 +101,12 @@ class FormulaArray(FormulaCommand):
         Trace.error('Vertical alignment ' + self.valign + ' not closed')
       self.addoriginal(']', pos)
     # horizontal
-    bracket = self.parsebracket(pos)
-    if not bracket:
+    parameter = self.parseparameter(pos)
+    if not parameter:
       Trace.error('No alignments for array in ' + pos.remaining())
       return
     self.alignments = []
-    for l in bracket.original[1:-1]:
+    for l in parameter.original[1:-1]:
       self.alignments.append(l)
 
   def parserowend(self, pos):
