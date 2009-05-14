@@ -147,11 +147,17 @@ class LiteralFunction(FormulaCommand):
     return False
 
   def parse(self, pos):
-    "Parse a function with one parameter"
+    "Parse a literal function"
     command = self.findcommand(pos, self.functions)
     self.addoriginal(command, pos)
     self.output = TaggedOutput().settag(self.functions[command])
-    self.parseparameter(pos, True)
+    bracket = Bracket()
+    bracket.literal = True
+    if not bracket.detect(pos):
+      Trace.error('No parameter for function ' + self.command)
+      return
+    bracket.parse(pos)
+    self.add(bracket)
 
 class FontFunction(OneParamFunction):
   "A function of one parameter that changes the font"
