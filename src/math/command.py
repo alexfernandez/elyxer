@@ -38,7 +38,7 @@ class FormulaCommand(FormulaBit):
       Trace.error('Expected {} at: ' + pos.remaining())
       return
     bracket = self.factory.parsebit(pos)
-    bracket.parse(pos)
+    #bracket.parse(pos)
     self.add(bracket)
     return bracket
 
