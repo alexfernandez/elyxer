@@ -118,6 +118,10 @@ class FormulaConstant(FormulaBit):
     self.output = FixedOutput()
     self.html = [string]
 
+  def set(self, string):
+    "Set the contents again"
+    self.html = [string]
+
 class RawText(FormulaBit):
   "A bit of text inside a formula"
 

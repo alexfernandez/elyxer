@@ -30,6 +30,9 @@ from post.postprocess import *
 class PostFormula(object):
   "Postprocess a formula"
 
+  def __init__(self):
+    self.generator = NumberGenerator()
+
   def postprocess(self, current, last):
     "Postprocess any formulae"
     for formula in current.searchall(Formula):
@@ -97,8 +100,15 @@ class PostFormula(object):
       return
     if len(label.contents) != 1:
       Trace.error('Wrong contents for label ' + str(label))
+      return
     parameter = label.contents[0]
-    Trace.debug('Numbering: ' + str(parameter))
+    if len(parameter.contents) != 1:
+      Trace.error('Wrong contents for label parameter ' + str(parameter))
+      return
+    labelname = parameter.contents[0]
+    number = '(' + self.generator.generate(1) + ')'
+    Trace.debug('Numbering: ' + str(labelname) + ' is ' + number)
+    labelname.set(number)
     # place at the beginning
     del contents[index]
     contents.insert(0, label)
