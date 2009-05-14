@@ -403,13 +403,30 @@ Image Processing
 \end_layout
 
 \begin_layout Standard
-If the ImageMagick package is installed eLyXer will use the 
+HTML pages do not contain images, as PDF documents; rather they have pointers
+ to image locations on disk.
+ (Luckily LyX documents are the same in this respect.) eLyXer will generate
+ pages that point to the same locations as the original images, when they
+ are PNG images.
+ Other image types like Encapsulated PostScript cannot be used directly
+ from within pages.
+ If the ImageMagick package is installed eLyXer will use the 
 \family typewriter
 convert
 \family default
  tool to create PNG versions of the images embedded in the document.
  If it is not installed eLyXer will show an error message and will not try
  to convert further images.
+\end_layout
+
+\begin_layout Standard
+Image location is fragile.
+ All images should be placed in the same location (and with the same structure)
+ as the original document; and they should all be referenced relatively
+ to the current document.
+ During conversion from within LyX (in those versions where it is available)
+ image locations can be lost.
+ Your best bet is to do conversion in place.
 \end_layout
 
 \begin_layout Section
@@ -858,6 +875,11 @@ BibTeX is not (yet) supported.
 
 \begin_layout Enumerate
 ERT (bare TeX code) is ignored.
+\end_layout
+
+\begin_layout Enumerate
+Images are lost during conversion from within LyX.
+ We are working with LyX developers to solve the issue.
 \end_layout
 
 \begin_layout Subsection
