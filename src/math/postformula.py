@@ -107,7 +107,7 @@ class PostFormula(object):
       return
     labelname = parameter.contents[0]
     number = '(' + self.generator.generate(1) + ') '
-    Trace.debug('Numbering: ' + str(labelname) + ' is ' + number)
+    Label.names[labelname.get()] = label
     tag = label.output.tag.replace('#', labelname.get())
     label.output.settag(tag)
     labelname.set(number)
