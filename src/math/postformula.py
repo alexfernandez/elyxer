@@ -106,7 +106,7 @@ class PostFormula(object):
       Trace.error('Wrong contents for label parameter ' + str(parameter))
       return
     labelname = parameter.contents[0]
-    number = '(' + self.generator.generate(1) + ')'
+    number = '(' + self.generator.generate(1) + ') '
     Trace.debug('Numbering: ' + str(labelname) + ' is ' + number)
     tag = label.output.tag.replace('#', labelname.get())
     label.output.settag(tag)
