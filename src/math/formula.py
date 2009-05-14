@@ -118,6 +118,9 @@ class FormulaConstant(FormulaBit):
     self.output = FixedOutput()
     self.html = [string]
 
+  def get(self):
+    return self.original
+
   def set(self, string):
     "Set the contents again"
     self.html = [string]

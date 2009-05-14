@@ -108,8 +108,10 @@ class PostFormula(object):
     labelname = parameter.contents[0]
     number = '(' + self.generator.generate(1) + ')'
     Trace.debug('Numbering: ' + str(labelname) + ' is ' + number)
+    tag = label.output.tag.replace('#', labelname.get())
+    label.output.settag(tag)
     labelname.set(number)
-    # place at the beginning
+    # place number at the beginning
     del contents[index]
     contents.insert(0, label)
 

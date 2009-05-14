@@ -175,6 +175,70 @@ where the sum's limits should appear below (
 \end_layout
 
 \begin_layout Chapter
+Numeration
+\end_layout
+
+\begin_layout Standard
+Equations can be numbered, like 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:first"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+y=x\label{eq:first}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And also like 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:second"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+x=3\label{eq:second}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notice that eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:second"
+
+\end_inset
+
+ comes after eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:first"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Chapter
 Parentheses
 \end_layout
 
@@ -272,70 +336,6 @@ x+1 & i<3\end{cases}$
 \end_inset
 
 
-\end_layout
-
-\begin_layout Chapter
-Numeration
-\end_layout
-
-\begin_layout Standard
-Equations can be numbered, like 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:first"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula \begin{equation}
-y=x\label{eq:first}\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-And also like 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:second"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula \begin{equation}
-x=3\label{eq:second}\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Notice that eq.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:second"
-
-\end_inset
-
- comes after eq.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:first"
-
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Chapter
