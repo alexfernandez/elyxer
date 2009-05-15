@@ -22,9 +22,12 @@
 VERSION=$(./elyxer.py --hardversion)
 DATE=$(./elyxer.py --versiondate)
 echo "Creating version $VERSION from $DATE"
-cd dist
+
+# Push code
+git push
 
 # Rename packages
+cd dist
 mv elyxer-$DATE.tar.gz elyxer-$VERSION.tar.gz
 mv elyxer-$DATE.zip elyxer-$VERSION.zip
 
