@@ -536,6 +536,21 @@ reference "tab:anger-time-again"
 \end_inset
 
 , proving we were right all along.
+ Also subtables 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Only-Anger"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Only-Time"
+
+\end_inset
+
+ show anger and time, respectively.
 \end_layout
 
 \begin_layout Standard
@@ -546,10 +561,16 @@ status open
 
 \begin_layout Plain Layout
 \align center
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="2">
+<lyxtabular version="3" rows="2" columns="1">
 <features>
-<column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
 <row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
@@ -561,15 +582,6 @@ Anger
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Time
-\end_layout
-
-\end_inset
-</cell>
 </row>
 <row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
@@ -577,15 +589,6 @@ Time
 
 \begin_layout Plain Layout
 1
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2
 \end_layout
 
 \end_inset
@@ -604,11 +607,92 @@ Time
 \begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
+name "tab:Only-Anger"
+
+\end_inset
+
+Only Anger.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="1">
+<features>
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Time
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Only-Time"
+
+\end_inset
+
+Only Time.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "tab:anger-time-again"
 
 \end_inset
 
-Laurinda's anger quantified, again.
+Laurinda's anger quantified, divided in two.
 \end_layout
 
 \end_inset
@@ -622,7 +706,15 @@ Laurinda's anger quantified, again.
 \end_layout
 
 \begin_layout Standard
-Interested in that last table? Let us repeat it but without a label.
+Interested in that last table? Let us repeat it but without a label and
+ with a subimage and a subtable 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:rabbit-walrus-encore"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -633,6 +725,48 @@ status open
 
 \begin_layout Plain Layout
 \align center
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+Censored.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\align center
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:rabbit-walrus-encore"
+
+\end_inset
+
+The rabbit-walrus does an encore.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \begin_inset Tabular
 <lyxtabular version="3" rows="2" columns="2">
 <features>
