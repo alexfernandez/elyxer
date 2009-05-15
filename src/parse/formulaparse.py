@@ -48,8 +48,7 @@ class FormulaParser(Parser):
       rest = reader.currentline().split(simple, 1)[1]
       if simple in rest:
         # formula is $...$
-        formula = reader.currentline().split(simple)[1]
-        reader.nextline()
+        formula = self.parsesingleliner(reader, simple, simple)
       else:
         # formula is multiline $...$
         formula = self.parsemultiliner(reader, simple, simple)
@@ -73,15 +72,29 @@ class FormulaParser(Parser):
     reader.nextline()
     return [formula]
 
+  def parsesingleliner(self, reader, start, ending):
+    "Parse a formula in one line"
+    line = reader.currentline().strip()
+    if not start in line:
+      Trace.error('Line ' + line + ' does not contain formula start ' + start)
+      return ''
+    if not line.endswith(ending):
+      Trace.error('Formula ' + line + ' does not end with ' + ending)
+      return ''
+    index = line.index(start)
+    rest = line[index + len(start):-len(ending)]
+    reader.nextline()
+    return rest
+
   def parsemultiliner(self, reader, start, ending):
     "Parse a formula in multiple lines"
     formula = ''
-    if not start in reader.currentline():
-      Trace.error('Line ' + reader.currentline().strip() +
-          ' does not contain formula start ' + start)
+    line = reader.currentline()
+    if not start in line:
+      Trace.error('Line ' + line.strip() + ' does not contain formula start ' + start)
       return ''
-    index = reader.currentline().index(start)
-    formula = reader.currentline()[index + len(start):].strip()
+    index = line.index(start)
+    formula = line[index + len(start):]
     reader.nextline()
     while not reader.currentline().endswith(ending + '\n'):
       formula += reader.currentline()

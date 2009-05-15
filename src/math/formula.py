@@ -40,7 +40,6 @@ class Formula(Container):
     "Convert the formula to tags"
     pos = Position(self.contents[0])
     whole = WholeFormula()
-    Trace.debug('Formula: ' + pos.remaining())
     if not whole.detect(pos):
       Trace.error('Unknown formula at: ' + pos.remaining())
       constant = TaggedBit().constant(pos.remaining(), 'span class="unknown"')
