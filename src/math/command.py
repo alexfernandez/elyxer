@@ -225,6 +225,8 @@ class UnknownCommand(FormulaCommand):
   def parse(self, pos):
     "Parse just the command"
     command = self.findalphacommand(pos)
+    if not command:
+      command = self.findsymbolcommand(pos)
     self.addconstant(command, pos)
     Trace.error('Unknown command ' + command)
     self.output = TaggedOutput().settag('span class="unknown"')

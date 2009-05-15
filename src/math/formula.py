@@ -40,9 +40,10 @@ class Formula(Container):
     "Convert the formula to tags"
     pos = Position(self.contents[0])
     whole = WholeFormula()
+    Trace.debug('Formula: ' + pos.remaining())
     if not whole.detect(pos):
-      Trace.debug('Unknown formula at: ' + pos.remaining())
-      constant = TaggedBit.constant(pos.remaining(), 'span class="unknown"')
+      Trace.error('Unknown formula at: ' + pos.remaining())
+      constant = TaggedBit().constant(pos.remaining(), 'span class="unknown"')
       self.contents = [constant]
       return
     whole.parse(pos)
@@ -260,11 +261,15 @@ class Bracket(FormulaBit):
       return
     self.inside = WholeFormula()
     self.add(self.inside)
-    if not self.inside.detect(pos):
-      if pos.current() != '}':
-        Trace.error('No formula in bracket at ' + pos.remaining())
+    if self.inside.detect(pos):
+      self.inside.parse(pos)
       return
-    self.inside.parse(pos)
+    if pos.isout():
+      Trace.error('Unexpected end of bracket')
+      return
+    if pos.current() != '}':
+      Trace.error('No formula in bracket at ' + pos.remaining())
+    return
 
   def process(self):
     "Process the bracket"
