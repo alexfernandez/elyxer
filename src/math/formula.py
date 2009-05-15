@@ -259,11 +259,12 @@ class Bracket(FormulaBit):
       self.addconstant(self.glob(pos, lambda(p): p.current() != '}'), pos)
       return
     self.inside = WholeFormula()
+    self.add(self.inside)
     if not self.inside.detect(pos):
-      Trace.error('Dangling {')
+      if pos.current() != '}':
+        Trace.error('No formula in bracket at ' + pos.remaining())
       return
     self.inside.parse(pos)
-    self.add(self.inside)
 
   def process(self):
     "Process the bracket"
