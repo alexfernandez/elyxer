@@ -259,9 +259,9 @@ class Bracket(FormulaBit):
   def innerformula(self, pos):
     "Parse a whole formula inside the bracket"
     self.inner = WholeFormula()
-    self.add(self.inner)
     if self.inner.detect(pos):
       self.inner.parse(pos)
+      self.add(self.inner)
       return
     if pos.isout():
       Trace.error('Unexpected end of bracket')
