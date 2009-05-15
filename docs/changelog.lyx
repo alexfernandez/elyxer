@@ -123,14 +123,6 @@ Equation numbering is working.
 \end_layout
 
 \begin_layout Itemize
-Umlaut generation in formulas: 
-\begin_inset Formula $"i$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Itemize
 Unknown commands are shown in red: 
 \begin_inset Formula $\Game$
 \end_inset
