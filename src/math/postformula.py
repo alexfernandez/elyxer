@@ -101,16 +101,13 @@ class PostFormula(object):
     if len(label.contents) != 1:
       Trace.error('Wrong contents for label ' + str(label))
       return
-    parameter = label.contents[0]
-    if len(parameter.contents) != 1:
-      Trace.error('Wrong contents for label parameter ' + str(parameter))
-      return
-    labelname = parameter.contents[0]
+    bracket = label.contents[0]
+    labelname = bracket.contents
     number = '(' + self.generator.generate(1) + ') '
-    Label.names[labelname.get()] = label
-    tag = label.output.tag.replace('#', labelname.get())
+    Label.names[labelname] = label
+    tag = label.output.tag.replace('#', labelname)
     label.output.settag(tag)
-    labelname.set(number)
+    label.contents = [FormulaConstant(number)]
     # place number at the beginning
     del contents[index]
     contents.insert(0, label)

@@ -151,12 +151,7 @@ class LabelFunction(FormulaCommand):
     command = self.findcommand(pos, self.functions)
     self.addoriginal(command, pos)
     self.output = TaggedOutput().settag(self.functions[command])
-    bracket = Bracket()
-    bracket.literal = True
-    if not bracket.detect(pos):
-      Trace.error('No parameter for label ' + self.command)
-      return
-    bracket.parse(pos)
+    bracket = Bracket().parseliteral(pos)
     self.add(bracket)
 
 class FontFunction(OneParamFunction):

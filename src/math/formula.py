@@ -121,13 +121,6 @@ class FormulaConstant(FormulaBit):
     self.output = FixedOutput()
     self.html = [string]
 
-  def get(self):
-    return self.original
-
-  def set(self, string):
-    "Set the contents again"
-    self.html = [string]
-
 class RawText(FormulaBit):
   "A bit of text inside a formula"
 
@@ -234,8 +227,7 @@ class Bracket(FormulaBit):
   def __init__(self):
     "Create a (possibly literal) new bracket"
     FormulaBit.__init__(self)
-    self.literal = False
-    self.inside = None
+    self.inner = None
 
   def detect(self, pos):
     "Detect the start of a bracket"
@@ -243,25 +235,33 @@ class Bracket(FormulaBit):
 
   def parse(self, pos):
     "Parse the bracket"
+    self.parsecomplete(pos, self.innerformula)
+
+  def parseliteral(self, pos):
+    "Parse a literal bracket"
+    if not self.detect(pos):
+      Trace.error('No bracket at ' + pos.remaining())
+      return self
+    self.parsecomplete(pos, self.innerliteral)
+    return self
+
+  def parsecomplete(self, pos, innerparser):
     if not pos.checkfor('{'):
       Trace.error('Bracket should start with {')
       return
     self.addoriginal('{', pos)
-    self.parseinside(pos)
+    innerparser(pos)
     if pos.isout() or pos.current() != '}':
       Trace.error('Missing } in ' + pos.remaining())
       return
     self.addoriginal('}', pos)
 
-  def parseinside(self, pos):
-    "Parse the inside of the bracket"
-    if self.literal:
-      self.addconstant(self.glob(pos, lambda(p): p.current() != '}'), pos)
-      return
-    self.inside = WholeFormula()
-    self.add(self.inside)
-    if self.inside.detect(pos):
-      self.inside.parse(pos)
+  def innerformula(self, pos):
+    "Parse a whole formula inside the bracket"
+    self.inner = WholeFormula()
+    self.add(self.inner)
+    if self.inner.detect(pos):
+      self.inner.parse(pos)
       return
     if pos.isout():
       Trace.error('Unexpected end of bracket')
@@ -270,10 +270,16 @@ class Bracket(FormulaBit):
       Trace.error('No formula in bracket at ' + pos.remaining())
     return
 
+  def innerliteral(self, pos):
+    "Parse a literal inside the bracket, which cannot generate html"
+    literal = self.glob(pos, lambda(p): p.current() != '}')
+    self.addoriginal(literal, pos)
+    self.contents = literal
+
   def process(self):
     "Process the bracket"
-    if self.inside:
-      self.inside.process()
+    if self.inner:
+      self.inner.process()
 
 class FormulaFactory(object):
   "Construct bits of formula"

@@ -80,7 +80,6 @@ class FormulaArray(FormulaCommand):
     "Parse the array"
     self.addoriginal(FormulaConfig.starts['FormulaArray'], pos)
     self.parsealignments(pos)
-    self.contents.pop()
     while not pos.isout():
       row = FormulaRow(self.alignments)
       row.parse(pos)
@@ -101,12 +100,9 @@ class FormulaArray(FormulaCommand):
         Trace.error('Vertical alignment ' + self.valign + ' not closed')
       self.addoriginal(']', pos)
     # horizontal
-    parameter = self.parseparameter(pos)
-    if not parameter:
-      Trace.error('No alignments for array in ' + pos.remaining())
-      return
+    bracket = Bracket().parseliteral(pos)
     self.alignments = []
-    for l in parameter.original[1:-1]:
+    for l in bracket.contents:
       self.alignments.append(l)
 
   def parserowend(self, pos):

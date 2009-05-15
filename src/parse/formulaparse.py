@@ -94,7 +94,7 @@ class FormulaParser(Parser):
       Trace.error('Line ' + line.strip() + ' does not contain formula start ' + start)
       return ''
     index = line.index(start)
-    formula = line[index + len(start):]
+    formula = line[index + len(start):].strip()
     reader.nextline()
     while not reader.currentline().endswith(ending + '\n'):
       formula += reader.currentline()
