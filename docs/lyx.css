@@ -427,3 +427,6 @@ a.eqnumber {
 	font-weight: bold;
 	color: #000040;
 }
+span.unknown {
+	color: #800000;
+}

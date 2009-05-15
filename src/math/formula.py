@@ -41,10 +41,13 @@ class Formula(Container):
     pos = Position(self.contents[0])
     whole = WholeFormula()
     if not whole.detect(pos):
+      Trace.debug('Unknown formula at: ' + pos.remaining())
+      constant = TaggedBit.constant(pos.remaining(), 'span class="unknown"')
+      self.contents = [constant]
       return
-    self.contents = [whole]
     whole.parse(pos)
     whole.process()
+    self.contents = [whole]
     if self.header[0] != 'inline':
       self.output.settag('div class="formula"', True)
 
@@ -183,7 +186,7 @@ class WholeFormula(FormulaBit):
     self.arraymode = False
 
   def detect(self, pos):
-    "Check if inside bounds"
+    "Check in the factory"
     return self.factory.detectbit(pos)
 
   def parse(self, pos):
@@ -272,19 +275,20 @@ class FormulaFactory(object):
 
   # more bits may be appended later
   bits = [ FormulaSymbol(), RawText(), Number(), Bracket() ]
+  unknownbits = []
 
   def detectbit(self, pos):
     "Detect if there is a next bit"
     if pos.isout():
       return False
-    for bit in FormulaFactory.bits:
+    for bit in FormulaFactory.bits + FormulaFactory.unknownbits:
       if bit.detect(pos):
         return True
     return False
 
   def parsebit(self, pos):
     "Parse just one formula bit"
-    for bit in FormulaFactory.bits:
+    for bit in FormulaFactory.bits + FormulaFactory.unknownbits:
       if bit.detect(pos):
         # get a fresh bit and parse it
         newbit = bit.clone()

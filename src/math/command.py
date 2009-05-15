@@ -215,8 +215,24 @@ class FractionFunction(FormulaCommand):
       return
     parameter2.output = TaggedOutput().settag(second)
 
+class UnknownCommand(FormulaCommand):
+  "An unknown command in a formula"
+
+  def detect(self, pos):
+    "Detect an unknown command"
+    return pos.current() == '\\'
+
+  def parse(self, pos):
+    "Parse just the command"
+    command = self.findalphacommand(pos)
+    self.addconstant(command, pos)
+    Trace.error('Unknown command ' + command)
+    self.output = TaggedOutput().settag('span class="unknown"')
+
 FormulaFactory.bits += [
     EmptyCommand(), OneParamFunction(), DecoratingFunction(),
     FractionFunction(), FontFunction(), LabelFunction(),
     ]
+
+FormulaFactory.unknownbits += [ UnknownCommand() ]
 
