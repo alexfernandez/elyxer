@@ -234,7 +234,7 @@ class GeneralConfig(object):
   "Configuration class from config file"
 
   version = {
-      u'date':u'2009-05-15', u'number':u'0.22', 
+      u'date':u'2009-05-15', u'number':u'0.23', 
       }
 
 class StyleConfig(object):

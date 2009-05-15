@@ -64,6 +64,16 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.23 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Corrected numbering in subfloats.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.22 (20090515):
 \end_layout
 
