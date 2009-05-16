@@ -72,6 +72,14 @@ target "index.html"
 Corrected numbering and appearance of subfloats.
 \end_layout
 
+\begin_layout Itemize
+Plain layouts are not reflected in HTML output.
+\end_layout
+
+\begin_layout Itemize
+Finally moved table starts to configuration file.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.22 (20090515):

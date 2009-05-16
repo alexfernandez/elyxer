@@ -162,3 +162,10 @@ class List(FirstWorder):
     tag = 'span class="List-entry"'
     self.contents.insert(0, TaggedText().complete(firstword, tag))
 
+class PlainLayout(Layout):
+  "A plain layout"
+
+  def process(self):
+    "Do nothing"
+    self.type = 'Plain'
+

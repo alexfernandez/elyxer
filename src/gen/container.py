@@ -113,6 +113,13 @@ class Container(object):
     while len(container.contents) > 0:
       self.contents.insert(index, container.contents.pop())
 
+  def debug(self, level = 0):
+    "Show the contents in debug mode"
+    Trace.debug('  ' * level + unicode(self))
+    for element in self.contents:
+      if isinstance(element, Container):
+        element.debug(level + 1)
+
 class BlackBox(Container):
   "A container that does not output anything"
 

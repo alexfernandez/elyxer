@@ -36,6 +36,12 @@ class Table(Container):
     self.parser = TableParser()
     self.output = TaggedOutput().settag('table', True)
 
+  def process(self):
+    "Set the columns on every row"
+    self.columns = self.parser.columns
+    for row in self.contents:
+      row.setcolumns(self.columns)
+
 class Row(Container):
   "A row in a table"
 
@@ -51,8 +57,6 @@ class Row(Container):
       return
     for index, column in enumerate(columns):
       alignment = column['alignment']
-      if alignment == 'block':
-        alignment = 'justify'
       self.contents[index].setalignment(alignment)
       valignment = column['valignment']
       self.contents[index].setvalignment(valignment)
@@ -70,6 +74,8 @@ class Cell(Container):
 
   def setalignment(self, alignment):
     "Set the alignment for the cell"
+    if alignment == 'block':
+      alignment = 'justify'
     self.setattribute('align', alignment)
 
   def setvalignment(self, valignment):

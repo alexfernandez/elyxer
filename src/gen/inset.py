@@ -40,6 +40,7 @@ class Float(Container):
 
   def process(self):
     "Get the float type"
+    self.debug()
     self.type = self.header[2]
     tagged = TaggedText().complete(self.contents, 'div class="' + self.type + '"')
     self.contents = [tagged]

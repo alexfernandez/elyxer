@@ -43,9 +43,8 @@ class TableParser(BoundedDummy):
     contents = []
     while not self.checkcurrent(reader, ContainerConfig.endings[TableParser.__name__]):
       if self.checkcurrent(reader, TableParser.row):
-        row = self.factory.create(reader)
-        row.setcolumns(self.columns)
-        contents.append(row)
+        rows = self.factory.createsome(reader)
+        contents += rows
       elif self.checkcurrent(reader, TableParser.column):
         self.parsecolumn(reader)
       else:
