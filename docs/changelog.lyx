@@ -77,7 +77,7 @@ Plain layouts are not reflected in HTML output.
 \end_layout
 
 \begin_layout Itemize
-Finally moved table starts to configuration file.
+Unified table parsing, moved table starts to configuration file.
 \end_layout
 
 \end_deeper

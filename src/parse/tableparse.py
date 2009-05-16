@@ -31,48 +31,36 @@ from io.output import *
 class TableParser(BoundedDummy):
   "Parse the whole table"
 
-  row = '<row'
-  column = '<column'
-
   def __init__(self):
     BoundedDummy.__init__(self)
     self.columns = list()
 
-  def parse(self, reader):
-    "Parse table header as parameters, rows and end of table"
-    contents = []
-    while not self.checkcurrent(reader, ContainerConfig.endings[TableParser.__name__]):
-      if self.checkcurrent(reader, TableParser.row):
-        rows = self.factory.createsome(reader)
-        contents += rows
-      elif self.checkcurrent(reader, TableParser.column):
-        self.parsecolumn(reader)
-      else:
-        self.parseparameter(reader)
-    BoundedDummy.parse(self, reader)
-    return contents
+  def parseheader(self, reader):
+    "Parse table headers"
+    while self.startswithlist(reader, ContainerConfig.tableheaders):
+      self.parseparameter(reader)
 
-  def checkcurrent(self, reader, start):
-    "Check if the current line starts with the given string"
-    return reader.currentline().strip().startswith(start)
-
-  def parsecolumn(self, reader):
-    "Parse a column definition"
-    self.parseparameter(reader)
-    self.columns.append(self.parameters['column'])
+  def startswithlist(self, reader, list):
+    "Check if the current line starts with any of the given strings"
+    for start in list:
+      if reader.currentline().strip().startswith(start):
+        return True
+    return False
 
 class TablePartParser(BoundedParser):
   "Parse a table part (row or cell)"
 
   def parseheader(self, reader):
     "Parse the header"
-    self.parsexml(reader)
-    parameters = dict()
-    if len(self.parameters) > 1:
-      Trace.error('Too many parameters in table part')
-    for key in self.parameters:
-      parameters = self.parameters[key]
+    tablekey, parameters = self.parsexml(reader)
     self.parameters = parameters
     return list()
 
+class ColumnParser(LoneCommand):
+  "Parse column properties"
+
+  def parse(self, reader):
+    "Parse the column definition"
+    key, parameters = self.parsexml(reader)
+    self.parameters = parameters
 

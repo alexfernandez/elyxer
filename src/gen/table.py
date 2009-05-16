@@ -35,12 +35,18 @@ class Table(Container):
   def __init__(self):
     self.parser = TableParser()
     self.output = TaggedOutput().settag('table', True)
+    self.columns = []
 
   def process(self):
     "Set the columns on every row"
-    self.columns = self.parser.columns
-    for row in self.contents:
-      row.setcolumns(self.columns)
+    for element in self.contents:
+      if isinstance(element, Column):
+        self.columns.append(element)
+      elif isinstance(element, Row):
+        element.setcolumns(self.columns)
+      else:
+        Trace.error('Unknown element type ' + element.__class__.__name__ +
+            ' in table')
 
 class Row(Container):
   "A row in a table"
@@ -55,11 +61,24 @@ class Row(Container):
     if len(columns) != len(self.contents):
       Trace.error('Columns: ' + str(len(columns)) + ', cells: ' + str(len(self.contents)))
       return
-    for index, column in enumerate(columns):
-      alignment = column['alignment']
-      self.contents[index].setalignment(alignment)
-      valignment = column['valignment']
-      self.contents[index].setvalignment(valignment)
+    for index, cell in enumerate(self.contents):
+      columns[index].set(cell)
+
+class Column(Container):
+  "A column definition in a table"
+
+  def __init__(self):
+    self.parser = ColumnParser()
+    self.output = EmptyOutput()
+
+  def set(self, cell):
+    "Set alignments in the corresponding cell"
+    alignment = self.parameters['alignment']
+    if alignment == 'block':
+      alignment = 'justify'
+    cell.setattribute('align', alignment)
+    valignment = self.parameters['valignment']
+    cell.setattribute('valign', valignment)
 
 class Cell(Container):
   "A cell in a table"
@@ -71,16 +90,6 @@ class Cell(Container):
   def setmulticolumn(self, span):
     "Set the cell as multicolumn"
     self.setattribute('colspan', span)
-
-  def setalignment(self, alignment):
-    "Set the alignment for the cell"
-    if alignment == 'block':
-      alignment = 'justify'
-    self.setattribute('align', alignment)
-
-  def setvalignment(self, valignment):
-    "Set the vertical alignment"
-    self.setattribute('valign', valignment)
 
   def setattribute(self, attribute, value):
     "Set a cell attribute in the tag"

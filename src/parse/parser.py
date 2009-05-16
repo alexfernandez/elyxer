@@ -44,7 +44,8 @@ class Parser(object):
   def parseparameter(self, reader):
     "Parse a parameter"
     if reader.currentline().strip().startswith('<'):
-      self.parsexml(reader)
+      key, value = self.parsexml(reader)
+      self.parameters[key] = value
       return
     split = reader.currentline().strip().split(' ', 1)
     reader.nextline()
@@ -68,22 +69,22 @@ class Parser(object):
       Trace.error('XML parameter ' + strip + ' should be <...>')
     split = strip[1:-1].split()
     if len(split) == 0:
-      return
+      Trace.error('Empty XML parameter <>')
+      return None, None
     key = split[0]
     del split[0]
     if len(split) == 0:
-      self.parameters[key] = dict()
-      return
+      return key, dict()
     attrs = dict()
     for attr in split:
       if not '=' in attr:
         Trace.error('Erroneous attribute ' + attr)
-        return
+        attr += '="0"'
       parts = attr.split('=')
       attrkey = parts[0]
       value = parts[1].split('"')[1]
       attrs[attrkey] = value
-    self.parameters[key] = attrs
+    return key, attrs
 
   def __str__(self):
     "Return a description"
