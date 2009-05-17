@@ -94,11 +94,7 @@ Finally got UTF-8 output right (hopefully).
 \end_layout
 
 \begin_layout Itemize
-Removed a useless level of 
-\family typewriter
-<div>
-\family default
-s in floats; kept in the CSS for backwards compatibility.
+Display floats with tables properly aligned, and on a white background.
 \end_layout
 
 \end_deeper
