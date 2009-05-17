@@ -76,10 +76,6 @@ class TaggedOutput(ContentsOutput):
 
   def gethtml(self, container):
     "Return the HTML code"
-    if hasattr(container, 'breaklines'):
-      self.breaklines = container.breaklines
-    if hasattr(container, 'tag'):
-      self.tag = container.tag
     html = [self.getopen(container)]
     html += ContentsOutput.gethtml(self, container)
     html.append(self.getclose(container))

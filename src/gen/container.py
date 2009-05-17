@@ -115,6 +115,8 @@ class Container(object):
 
   def debug(self, level = 0):
     "Show the contents in debug mode"
+    #if not Trace.debugmode:
+    #  return
     Trace.debug('  ' * level + unicode(self))
     for element in self.contents:
       if isinstance(element, Container):
@@ -190,8 +192,8 @@ class TaggedText(Container):
   def complete(self, contents, tag, breaklines=False):
     "Complete the tagged text and return it"
     self.contents = contents
-    self.tag = tag
-    self.breaklines = breaklines
+    self.output.tag = tag
+    self.output.breaklines = breaklines
     return self
 
   def constant(self, text, tag, breaklines=False):
@@ -200,5 +202,5 @@ class TaggedText(Container):
     return self.complete([constant], tag, breaklines)
 
   def __str__(self):
-    return 'Tagged <' + self.tag + '>'
+    return 'Tagged <' + self.output.tag + '>'
 
