@@ -115,8 +115,8 @@ class Container(object):
 
   def debug(self, level = 0):
     "Show the contents in debug mode"
-    #if not Trace.debugmode:
-    #  return
+    if not Trace.debugmode:
+      return
     Trace.debug('  ' * level + unicode(self))
     for element in self.contents:
       if isinstance(element, Container):
@@ -176,8 +176,8 @@ class Constant(StringContainer):
     self.contents = [text]
     self.output = MirrorOutput()
 
-  def __str__(self):
-    return 'Constant'
+  def __unicode__(self):
+    return 'Constant: ' + self.contents[0]
 
 class TaggedText(Container):
   "Text inside a tag"
