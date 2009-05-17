@@ -61,15 +61,13 @@ a.printindex {
 	color: black;
 }
 div.float {
-	text-align: center;
-	padding: 0.5ex;
 	display: inline-block;
+	padding: 0.5ex;
 	margin-top: 1ex;
 	margin-bottom: 1ex;
 	margin-left: auto;
 	margin-right: auto;
-	background: #fbfbfb;
-	border: thin solid #c0c0c0;
+	width: 100%;
 }
 # kept for backwards compatibility
 div.figure {
@@ -112,7 +110,10 @@ img.figure {
 table {
 	text-align: center;
 	border-collapse: collapse;
-	margin: 1em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	margin-left: auto;
+	margin-right: auto;
 }
 tr.header {
 	border-bottom: thin solid #c0c0c0;
