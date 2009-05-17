@@ -53,7 +53,7 @@ class Container(object):
     "Get a description"
     if not hasattr(self, 'begin'):
       return self.__class__.__name__
-    return self.__class__.__name__ + '@' + str(self.begin)
+    return self.__class__.__name__ + '@' + unicode(self.begin)
 
   def escape(self, line, escapes = ContainerConfig.escapes):
     "Escape a line to appear in HTML"
@@ -145,7 +145,7 @@ class StringContainer(Container):
     self.contents = [replaced]
     if ContainerConfig.string['startcommand'] in replaced and len(replaced) > 1:
       # unprocessed commands
-      Trace.error('Unknown command at ' + str(self.parser.begin) + ': '
+      Trace.error('Unknown command at ' + unicode(self.parser.begin) + ': '
           + replaced.strip())
 
   def changeline(self, line):
@@ -165,9 +165,9 @@ class StringContainer(Container):
     length = ''
     descr = ''
     if len(self.contents) > 0:
-      length = str(len(self.contents[0]))
+      length = unicode(len(self.contents[0]))
       descr = self.contents[0].strip()
-    return 'StringContainer@' + str(self.begin) + '(' + str(length) + ')'
+    return 'StringContainer@' + unicode(self.begin) + '(' + unicode(length) + ')'
 
 class Constant(StringContainer):
   "A constant string"

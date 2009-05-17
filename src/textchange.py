@@ -80,11 +80,11 @@ def processall(args):
     del args[0]
     counter = process(reader, writer, change)
     total += counter
-    Trace.message('  ' + str(counter) + ' occurrences in ' + filename)
+    Trace.message('  ' + unicode(counter) + ' occurrences in ' + filename)
     temp = filename + '.temp'
     os.chmod(temp, os.stat(filename).st_mode)
     os.rename(temp, filename)
-  Trace.message('Total replacements: ' + str(total))
+  Trace.message('Total replacements: ' + unicode(total))
 
 processall(sys.argv)
 

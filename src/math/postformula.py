@@ -99,7 +99,7 @@ class PostFormula(object):
     if not isinstance(label, LabelFunction):
       return
     if len(label.contents) != 1:
-      Trace.error('Wrong contents for label ' + str(label))
+      Trace.error('Wrong contents for label ' + unicode(label))
       return
     bracket = label.contents[0]
     labelname = bracket.contents

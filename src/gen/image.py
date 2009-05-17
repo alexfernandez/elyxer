@@ -81,14 +81,14 @@ class Image(Container):
     if len(dir) > 0 and not os.path.exists(dir):
       os.makedirs(dir)
     try:
-      result = os.system('convert -density ' + str(density) + ' "' + origin +
+      result = os.system('convert -density ' + unicode(density) + ' "' + origin +
           '" "' + destination + '"')
       if result != 0:
         Trace.error('ImageMagick not installed; images will not be processed')
         Image.converter = False
         return
       Trace.message('Converted ' + origin + ' to ' + destination + ' at ' +
-          str(density) + '%')
+          unicode(density) + '%')
     except OSError:
       Trace.error('Error while converting image ' + origin)
 
@@ -124,7 +124,7 @@ class ImageOutput(object):
     if hasattr(container, 'destination'):
       html.append(' src="' + container.destination +
           '" alt="figure ' + container.destination + '" width="' +
-          str(container.width) + '" height="' + str(container.height) + '"')
+          unicode(container.width) + '" height="' + unicode(container.height) + '"')
     else:
       html.append(' src="' + container.url + '"')
     html.append('/>\n')

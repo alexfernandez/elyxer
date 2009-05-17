@@ -42,8 +42,8 @@ class Group(Container):
     self.contents = contents
     return self
 
-  def __str__(self):
-    return 'Group: ' + str(self.contents)
+  def __unicode__(self):
+    return 'Group: ' + unicode(self.contents)
 
 class PostNestedList(object):
   "Postprocess a nested list"
@@ -95,10 +95,10 @@ class PendingList(object):
     self.contents = [item]
     self.type = 'Itemize'
 
-  def __str__(self):
-    result = 'pending ' + str(self.type) + ': ['
+  def __unicode__(self):
+    result = 'pending ' + unicode(self.type) + ': ['
     for element in self.contents:
-      result += str(element) + ', '
+      result += unicode(element) + ', '
     if len(self.contents) > 0:
       result = result[:-2]
     return result + ']'
@@ -241,8 +241,9 @@ class Postprocessor(object):
 
   def postprocess(self, container):
     "Postprocess the root container and its contents"
-    container = self.postprocessroot(self, container)
-    self.postprocesscontents(self, container.contents)
+    container = self.postprocessroot(container)
+    self.postprocesscontents(container.contents)
+    return container
 
   def postprocessroot(self, original):
     "Postprocess an element taking into account the last one"

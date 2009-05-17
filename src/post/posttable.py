@@ -82,7 +82,7 @@ class PostTable(object):
       return
     mc = cell.parameters['multicolumn']
     if mc != '1':
-      Trace.error('Unprocessed multicolumn=' + str(multicolumn) + ' cell ' + str(cell))
+      Trace.error('Unprocessed multicolumn=' + unicode(multicolumn) + ' cell ' + unicode(cell))
       return
     total = 1
     index += 1

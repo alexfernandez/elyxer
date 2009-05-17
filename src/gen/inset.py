@@ -231,7 +231,7 @@ class Listing(Container):
     if self.numbered:
       self.counter += 1
       tag = 'span class="number-' + self.numbered + '"'
-      contents.insert(0, TaggedText().constant(str(self.counter), tag))
+      contents.insert(0, TaggedText().constant(unicode(self.counter), tag))
     return contents
 
 class BoxInset(Container):

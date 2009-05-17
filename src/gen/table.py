@@ -66,7 +66,7 @@ class Row(Container):
   def setcolumns(self, columns):
     "Process alignments for every column"
     if len(columns) != len(self.contents):
-      Trace.error('Columns: ' + str(len(columns)) + ', cells: ' + str(len(self.contents)))
+      Trace.error('Columns: ' + unicode(len(columns)) + ', cells: ' + unicode(len(self.contents)))
       return
     for index, cell in enumerate(self.contents):
       columns[index].set(cell)

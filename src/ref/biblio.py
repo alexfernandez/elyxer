@@ -45,7 +45,7 @@ class BiblioCite(Container):
     keys = self.parser.parameters['key'].split(',')
     for key in keys:
       BiblioCite.index += 1
-      number = str(BiblioCite.index)
+      number = unicode(BiblioCite.index)
       link = Link().complete(number, 'cite-' + number, '#' + number)
       self.contents.append(link)
       self.contents.append(Constant(','))

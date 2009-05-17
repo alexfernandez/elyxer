@@ -43,7 +43,7 @@ class NumberGenerator(object):
     if not type in self.uniques:
       self.uniques[type] = 0
     self.uniques[type] = self.increase(self.uniques[type])
-    return type + ' ' + str(self.uniques[type]) + '.'
+    return type + ' ' + unicode(self.uniques[type]) + '.'
 
   def generate(self, level):
     "Generate a number in the given level"
@@ -88,7 +88,7 @@ class NumberGenerator(object):
       Trace.error('Empty number')
       return '.'
     for piece in number:
-      dotsep += '.' + str(piece)
+      dotsep += '.' + unicode(piece)
     return dotsep[1:]
 
 NumberGenerator.instance = NumberGenerator()

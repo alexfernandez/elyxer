@@ -94,7 +94,7 @@ class ListItem(Container):
     self.contents = [tag]
 
   def __unicode__(self):
-    return self.type + ' item @ ' + str(self.begin)
+    return self.type + ' item @ ' + unicode(self.begin)
 
 class DeeperList(Container):
   "A nested list"
@@ -110,9 +110,9 @@ class DeeperList(Container):
       return
 
   def __unicode__(self):
-    result = 'deeper list @ ' + str(self.begin) + ': ['
+    result = 'deeper list @ ' + unicode(self.begin) + ': ['
     for element in self.contents:
-      result += str(element) + ', '
+      result += unicode(element) + ', '
     return result[:-2] + ']'
 
 class ERT(Container):

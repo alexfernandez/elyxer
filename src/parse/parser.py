@@ -88,7 +88,7 @@ class Parser(object):
 
   def __unicode__(self):
     "Return a description"
-    return self.__class__.__name__ + ' (' + str(self.begin) + ')'
+    return self.__class__.__name__ + ' (' + unicode(self.begin) + ')'
 
 class LoneCommand(Parser):
   "A parser for just one command line"

@@ -92,7 +92,7 @@ class IndexEntry(Link):
       IndexEntry.entries[self.key] = list()
     self.index = len(IndexEntry.entries[self.key])
     IndexEntry.entries[self.key].append(self)
-    self.anchor = 'entry-' + self.key + '-' + str(self.index)
+    self.anchor = 'entry-' + self.key + '-' + unicode(self.index)
     self.url = '#index-' + self.key
     self.contents = [Constant(u'↓')]
 
@@ -144,7 +144,7 @@ class PrintIndex(Container):
     arrows = []
     for entry in entries:
       link = Link().complete(u'↑', 'index-' + entry.key,
-          '#entry-' + entry.key + '-' + str(entry.index))
+          '#entry-' + entry.key + '-' + unicode(entry.index))
       arrows += [link, Constant(u', \n')]
     return arrows[:-1]
 

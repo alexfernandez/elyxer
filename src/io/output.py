@@ -140,7 +140,7 @@ class FooterOutput(object):
     if FooterOutput.author and not Options.nocopy:
       html.append('<hr/>\n')
       year = datetime.date.today().year
-      html.append('<p>Copyright (C) ' + str(year) + ' ' + FooterOutput.author
+      html.append('<p>Copyright (C) ' + unicode(year) + ' ' + FooterOutput.author
           + '</p>\n')
     html.append('</div>\n')
     html.append('</body>\n')
