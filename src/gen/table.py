@@ -39,15 +39,21 @@ class Table(Container):
 
   def process(self):
     "Set the columns on every row"
-    for element in self.contents:
-      Trace.debug('Table element: ' + unicode(element))
+    index = 0
+    while index < len(self.contents):
+      element = self.contents[index]
       if isinstance(element, Column):
         self.columns.append(element)
+        del self.contents[index]
+      elif isinstance(element, BlackBox):
+        del self.contents[index]
       elif isinstance(element, Row):
         element.setcolumns(self.columns)
+        index += 1
       else:
         Trace.error('Unknown element type ' + element.__class__.__name__ +
-            ' in table')
+            ' in table: ' + unicode(element.contents[0]))
+        index += 1
 
 class Row(Container):
   "A row in a table"

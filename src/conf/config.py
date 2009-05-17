@@ -24,8 +24,7 @@ class ContainerConfig(object):
       u'Inset':u'\\end_inset', u'Layout':u'\\end_layout', 
       u'LyxFooter':u'\\end_document', u'LyxHeader':u'\\end_header', 
       u'Row':u'</row', u'ShapedText':u'\\shape', u'SizeText':u'\\size', 
-      u'Table':u'</lyxtabular', u'TextFamily':u'\\family', 
-      u'VersalitasText':u'\\noun', 
+      u'TextFamily':u'\\family', u'VersalitasText':u'\\noun', 
       }
 
   escapes = {
@@ -51,14 +50,14 @@ class ContainerConfig(object):
       }
 
   starts = {
-      u'':u'StringContainer', u'#LyX':u'BlackBox', u'<cell':u'Cell', 
-      u'<column':u'Column', u'<row':u'Row', u'\\align':u'Align', 
-      u'\\bar':u'BarredText', u'\\bar default':u'BlackBox', 
-      u'\\bar no':u'BlackBox', u'\\begin_body':u'BlackBox', 
-      u'\\begin_deeper':u'DeeperList', u'\\begin_document':u'BlackBox', 
-      u'\\begin_header':u'LyxHeader', u'\\begin_inset':u'Inset', 
-      u'\\begin_inset Box':u'BoxInset', u'\\begin_inset Branch':u'Branch', 
-      u'\\begin_inset Caption':u'Caption', 
+      u'':u'StringContainer', u'#LyX':u'BlackBox', u'</lyxtabular':u'BlackBox', 
+      u'<cell':u'Cell', u'<column':u'Column', u'<row':u'Row', 
+      u'\\align':u'Align', u'\\bar':u'BarredText', 
+      u'\\bar default':u'BlackBox', u'\\bar no':u'BlackBox', 
+      u'\\begin_body':u'BlackBox', u'\\begin_deeper':u'DeeperList', 
+      u'\\begin_document':u'BlackBox', u'\\begin_header':u'LyxHeader', 
+      u'\\begin_inset':u'Inset', u'\\begin_inset Box':u'BoxInset', 
+      u'\\begin_inset Branch':u'Branch', u'\\begin_inset Caption':u'Caption', 
       u'\\begin_inset CommandInset bibitem':u'BiblioEntry', 
       u'\\begin_inset CommandInset citation':u'BiblioCite', 
       u'\\begin_inset CommandInset href':u'URL', 

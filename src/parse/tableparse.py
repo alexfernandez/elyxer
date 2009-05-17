@@ -40,7 +40,6 @@ class TableParser(BoundedParser):
     reader.nextline()
     while self.startswithlist(reader, ContainerConfig.tableheaders):
       self.parseparameter(reader)
-      reader.nextline()
     return []
 
   def startswithlist(self, reader, list):
@@ -62,8 +61,9 @@ class TablePartParser(BoundedParser):
 class ColumnParser(LoneCommand):
   "Parse column properties"
 
-  def parse(self, reader):
+  def parseheader(self, reader):
     "Parse the column definition"
     key, parameters = self.parsexml(reader)
     self.parameters = parameters
+    return []
 
