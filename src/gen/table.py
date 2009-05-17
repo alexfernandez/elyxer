@@ -40,6 +40,7 @@ class Table(Container):
   def process(self):
     "Set the columns on every row"
     for element in self.contents:
+      Trace.debug('Table element: ' + unicode(element))
       if isinstance(element, Column):
         self.columns.append(element)
       elif isinstance(element, Row):

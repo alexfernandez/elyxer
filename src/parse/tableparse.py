@@ -28,17 +28,20 @@ from parse.parser import *
 from io.output import *
 
 
-class TableParser(BoundedDummy):
+class TableParser(BoundedParser):
   "Parse the whole table"
 
   def __init__(self):
-    BoundedDummy.__init__(self)
+    BoundedParser.__init__(self)
     self.columns = list()
 
   def parseheader(self, reader):
     "Parse table headers"
+    reader.nextline()
     while self.startswithlist(reader, ContainerConfig.tableheaders):
       self.parseparameter(reader)
+      reader.nextline()
+    return []
 
   def startswithlist(self, reader, list):
     "Check if the current line starts with any of the given strings"
