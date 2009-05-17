@@ -37,11 +37,12 @@ class Float(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TaggedOutput().settag('div class="float"', True)
+    self.output = TaggedOutput().settag('div', True)
 
   def process(self):
     "Get the float type"
     self.type = self.header[2]
+    self.output.settag('div class="' + self.type + '"', True)
     caption = self.searchshallow(Caption)
     if not caption:
       return

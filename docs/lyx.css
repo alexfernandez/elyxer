@@ -61,40 +61,30 @@ a.printindex {
 	color: black;
 }
 div.float {
-	display: inline-block;
-	padding: 0.5ex;
 	margin-top: 1ex;
 	margin-bottom: 1ex;
-	margin-left: auto;
-	margin-right: auto;
-	width: 100%;
+	text-align: center;
 }
-# kept for backwards compatibility
 div.figure {
 	display: inline-block;
-	padding: 0.5ex;
+	padding: 0.2ex;
 	margin-left: auto;
 	margin-right: auto;
-	background: #fbfbfb;
 	border: thin solid #c0c0c0;
 }
-# kept for backwards compatibility
 div.table {
 	display: inline-block;
-	padding: 0ex;
+	padding: 0.2ex;
 	margin-left: auto;
 	margin-right: auto;
-	background: #fbfbfb;
 	border: thin solid #c0c0c0;
 }
-# kept for backwards compatibility
 div.algorithm {
 	display: inline-block;
 	text-align: left;
 	padding: 0.2ex;
 	margin-left: auto;
 	margin-right: auto;
-	background: #fdfdfd;
 	border: thin solid #c0c0c0;
 }
 div.caption {

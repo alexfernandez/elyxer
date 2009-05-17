@@ -202,6 +202,8 @@ class PostFloat(object):
 
   def postprocess(self, float, last):
     "Move the caption to the main level of the float"
+    Trace.debug('Tontico')
+    return TaggedText().complete([float], 'div class="float"')
     float.debug()
     caption = float.searchshallow(Caption)
     if not caption:
@@ -261,13 +263,13 @@ class Postprocessor(object):
   def postprocesscontents(self, contents):
     "Postprocess the container contents"
     last = None
-    for element in contents:
-      if element.__class__ in self.contentsdict:
-        stage = self.contentsdict[element.__class__]
-        element = stage.postprocess(element, last)
+    for index, element in enumerate(contents):
       if isinstance(element, Container):
         self.postprocesscontents(element.contents)
-      last = element
+      if element.__class__ in self.contentsdict:
+        stage = self.contentsdict[element.__class__]
+        contents[index] = stage.postprocess(element, last)
+      last = contents[index]
 
   def instantiate(self, classes):
     "Instantiate an element from each class"
