@@ -86,7 +86,7 @@ class Parser(object):
       attrs[attrkey] = value
     return key, attrs
 
-  def __str__(self):
+  def __unicode__(self):
     "Return a description"
     return self.__class__.__name__ + ' (' + str(self.begin) + ')'
 

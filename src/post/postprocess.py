@@ -54,10 +54,10 @@ class PostNestedList(object):
     "Run the postprocessor on the nested list"
     postproc = Postprocessor()
     for index, part in enumerate(deeper.contents):
-      result = postproc.postprocess(part)
+      result = postproc.postprocessroot(part)
       deeper.contents[index] = result
     # one additional item to flush the list
-    deeper.contents.append(postproc.postprocess(BlackBox()))
+    deeper.contents.append(postproc.postprocessroot(BlackBox()))
     return deeper
 
 class PendingList(object):
@@ -192,18 +192,29 @@ class PostStandard(object):
   def postprocess(self, standard, last):
     "Switch span to div"
     standard.output.tag = 'div class="Standard"'
-    return self.checkforfloat(standard)
+    return standard
 
-  def checkforfloat(self, standard):
-    "Check a standard layout for a float inset"
-    float = standard.searchfor(Float)
-    if not float:
-      return standard
-    caption = float.searchfor(Caption)
+class PostFloat(object):
+  "Postprocess floats embedded at any level"
+
+  processedclass = Float
+
+  def postprocess(self, float, last):
+    "Move the caption to the main level of the float"
+    caption = self.findcaption(float)
+    if not caption:
+      return float
     for layout in caption.contents:
       for element in layout.contents:
         self.movelabel(float, layout, element)
     return float
+
+  def findcaption(self, float):
+    "Find the caption of the float, if present"
+    for element in float.contents:
+      if isinstance(element, Caption):
+        return element
+    return None
 
   def movelabel(self, float, layout, element):
     "Move any labels to the start of the float"
@@ -214,18 +225,26 @@ class PostStandard(object):
     layout.contents[index] = BlackBox()
 
 class Postprocessor(object):
-  "Postprocess an element keeping some context"
+  "Postprocess a container keeping some context"
 
   stages = [PostNestedList, PostLayout, PostStandard]
   unconditional = [PostListPending]
+  contents = [PostFloat]
 
   def __init__(self):
     self.stages = self.instantiate(Postprocessor.stages)
     self.stagedict = dict([(x.processedclass, x) for x in self.stages])
     self.unconditional = self.instantiate(Postprocessor.unconditional)
+    self.contents = self.instantiate(Postprocessor.contents)
+    self.contentsdict = dict([(x.processedclass, x) for x in self.contents])
     self.last = None
 
-  def postprocess(self, original):
+  def postprocess(self, container):
+    "Postprocess the root container and its contents"
+    container = self.postprocessroot(self, container)
+    self.postprocesscontents(self, container.contents)
+
+  def postprocessroot(self, original):
     "Postprocess an element taking into account the last one"
     element = original
     if element.__class__ in self.stagedict:
@@ -235,6 +254,15 @@ class Postprocessor(object):
       element = stage.postprocess(element, self.last)
     self.last = original
     return element
+
+  def postprocesscontents(self, contents):
+    "Postprocess the container contents"
+    last = None
+    for element in contents:
+      if element.__class__ in self.contentsdict:
+        stage = self.contentsdict[element.__class__]
+        element = stage.postprocess(element, last)
+      last = element
 
   def instantiate(self, classes):
     "Instantiate an element from each class"

@@ -46,7 +46,7 @@ class Layout(Container):
     else:
       self.output.tag = 'div class="' + self.type + '"'
 
-  def __str__(self):
+  def __unicode__(self):
     return 'Layout of type ' + self.type
 
 class StandardLayout(Layout):

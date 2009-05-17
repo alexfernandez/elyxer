@@ -92,7 +92,7 @@ class FormulaBit(Container):
     self.original += string
     pos.skip(string)
 
-  def __str__(self):
+  def __unicode__(self):
     "Get a string representation"
     return self.__class__.__name__ + ' read in ' + self.original
 

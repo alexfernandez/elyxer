@@ -86,7 +86,7 @@ class Inset(Container):
     self.type = self.header[1]
     self.output.tag = 'span class="' + self.type + '"'
 
-  def __str__(self):
+  def __unicode__(self):
     return 'Inset of type ' + self.type
 
 class NewlineInset(Newline):

@@ -93,7 +93,7 @@ class ListItem(Container):
     tag = TaggedText().complete(self.contents, 'li', True)
     self.contents = [tag]
 
-  def __str__(self):
+  def __unicode__(self):
     return self.type + ' item @ ' + str(self.begin)
 
 class DeeperList(Container):
@@ -109,7 +109,7 @@ class DeeperList(Container):
       Trace.error('Empty deeper list')
       return
 
-  def __str__(self):
+  def __unicode__(self):
     result = 'deeper list @ ' + str(self.begin) + ': ['
     for element in self.contents:
       result += str(element) + ', '

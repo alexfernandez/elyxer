@@ -49,7 +49,7 @@ class Container(object):
         html[index] = piece
     return html
 
-  def __str__(self):
+  def __unicode__(self):
     "Get a description"
     if not hasattr(self, 'begin'):
       return self.__class__.__name__
@@ -161,7 +161,7 @@ class StringContainer(Container):
         line = line.replace(piece, map[piece])
     return line
   
-  def __str__(self):
+  def __unicode__(self):
     length = ''
     descr = ''
     if len(self.contents) > 0:
@@ -201,6 +201,6 @@ class TaggedText(Container):
     constant = Constant(text)
     return self.complete([constant], tag, breaklines)
 
-  def __str__(self):
+  def __unicode__(self):
     return 'Tagged <' + self.output.tag + '>'
 
