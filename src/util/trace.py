@@ -35,8 +35,9 @@ class Trace(object):
 
   def debug(cls, message):
     "Show a debug message"
-    if Trace.debugmode and not Trace.quietmode:
-      print message
+    if not Trace.debugmode or Trace.quietmode:
+      return
+    Trace.show(message, sys.stdout)
 
   def message(cls, message):
     "Show a trace message"
@@ -44,16 +45,21 @@ class Trace(object):
       return
     if Trace.prefix and Trace.showlinesmode:
       message = Trace.prefix + message
-    print message
+    Trace.show(message, sys.stdout)
 
   def error(cls, message):
     "Show an error message"
     if Trace.prefix and Trace.showlinesmode:
       message = Trace.prefix + message
+    Trace.show(message, sys.stderr)
+
+  def show(cls, message, channel):
+    "Show a message out of a channel"
     message = message.encode('utf-8')
-    sys.stderr.write(message + '\n')
+    channel.write(message + '\n')
 
   debug = classmethod(debug)
   message = classmethod(message)
   error = classmethod(error)
+  show = classmethod(show)
 

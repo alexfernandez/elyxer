@@ -89,6 +89,10 @@ Automated testing now shows unified diff, to show the file that doesn't
  pass the tests.
 \end_layout
 
+\begin_layout Itemize
+Finally got UTF-8 output right (hopefully).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.22 (20090515):
