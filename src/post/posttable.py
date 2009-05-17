@@ -40,6 +40,7 @@ class PostTable(object):
       while index < len(row.contents):
         self.checkmulticolumn(row, index)
         index += 1
+    return table
 
   def longtable(self, table):
     "Postprocess a long table, removing unwanted rows"
