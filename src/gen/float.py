@@ -37,12 +37,11 @@ class Float(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TaggedOutput().settag('div', True)
+    self.output = TaggedOutput().settag('div class="float"', True)
 
   def process(self):
     "Get the float type"
     self.type = self.header[2]
-    self.output.settag('div class="' + self.type + '"', True)
     caption = self.searchshallow(Caption)
     if not caption:
       return
@@ -54,6 +53,12 @@ class Float(Container):
       return
     caption.contents.remove(label)
     self.contents.insert(0, label)
+    self.embed()
+
+  def embed(self):
+    "Embed the whole contents in a div"
+    tagged = TaggedText().complete(self.contents, 'div class="' + self.type + '"')
+    self.contents = [tagged]
 
 class Wrap(Float):
   "A wrapped (floating) float"

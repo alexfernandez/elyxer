@@ -195,45 +195,12 @@ class PostStandard(object):
     standard.output.tag = 'div class="Standard"'
     return standard
 
-class PostFloat(object):
-  "Postprocess floats embedded at any level"
-
-  processedclass = Float
-
-  def postprocess(self, float, last):
-    "Move the caption to the main level of the float"
-    Trace.debug('Tontico')
-    return TaggedText().complete([float], 'div class="float"')
-    float.debug()
-    caption = float.searchshallow(Caption)
-    if not caption:
-      return float
-    for layout in caption.contents:
-      for element in layout.contents:
-        self.movelabel(float, layout, element)
-    return float
-
-  def findcaption(self, float):
-    "Find the caption of the float, if present"
-    for element in float.contents:
-      if isinstance(element, Caption):
-        return element
-    return None
-
-  def movelabel(self, float, layout, element):
-    "Move any labels to the start of the float"
-    if not isinstance(element, Label):
-      return
-    float.contents.insert(0, element)
-    index = layout.contents.index(element)
-    layout.contents[index] = BlackBox()
-
 class Postprocessor(object):
   "Postprocess a container keeping some context"
 
   stages = [PostNestedList, PostLayout, PostStandard]
   unconditional = [PostListPending]
-  contents = [PostFloat]
+  contents = []
 
   def __init__(self):
     self.stages = self.instantiate(Postprocessor.stages)
