@@ -84,6 +84,11 @@ Unified table parsing, moved table starts to configuration file.
 Use unicode output in debug and error messages.
 \end_layout
 
+\begin_layout Itemize
+Automated testing now shows unified diff, to show the file that doesn't
+ pass the tests.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.22 (20090515):
