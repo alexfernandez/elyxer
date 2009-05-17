@@ -93,6 +93,14 @@ Automated testing now shows unified diff, to show the file that doesn't
 Finally got UTF-8 output right (hopefully).
 \end_layout
 
+\begin_layout Itemize
+Removed a useless level of 
+\family typewriter
+<div>
+\family default
+s in floats; kept in the CSS for backwards compatibility.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.22 (20090515):

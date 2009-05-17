@@ -31,47 +31,12 @@ from gen.structure import *
 from gen.layout import *
 
 
-class Float(Container):
-  "A floating inset"
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = TaggedOutput().settag('div class="float"', True)
-
-  def process(self):
-    "Get the float type"
-    self.type = self.header[2]
-    tagged = TaggedText().complete(self.contents, 'div class="' + self.type + '"')
-    self.contents = [tagged]
-    caption = self.searchshallow(Caption)
-    if caption:
-      number = NumberGenerator.instance.generatechaptered(self.type)
-      prefix = TranslationConfig.floats[self.type]
-      layout = caption.contents[0]
-      layout.contents.insert(0, Constant(prefix + number + u' '))
-
-class Wrap(Float):
-  "A wrapped (floating) float"
-
-  def process(self):
-    "Get the wrap type"
-    Float.process(self)
-    placement = self.parameters['placement']
-    self.output.tag = 'div class="wrap-' + placement + '"'
-
 class InsetText(Container):
   "An inset of text in a lyx file"
 
   def __init__(self):
     self.parser = BoundedParser()
     self.output = ContentsOutput()
-
-class Caption(Container):
-  "A caption for a figure or a table"
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = TaggedOutput().settag('div class="caption"', True)
 
 class Inset(Container):
   "A generic inset in a LyX document"
@@ -182,56 +147,6 @@ class InfoInset(Container):
     if self.type not in ContainerConfig.infoinsets:
       Trace.error('Unknown Info type ' + self.type)
     self.contents = [Constant(self.parser.parameters['arg'])]
-
-class Listing(Container):
-  "A code listing"
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = TaggedOutput().settag('code class="listing"', True)
-    self.numbered = None
-    self.counter = 0
-
-  def process(self):
-    "Remove all layouts"
-    self.processparams()
-    newcontents = []
-    for container in self.contents:
-      newcontents += self.extract(container)
-    self.contents = newcontents
-
-  def processparams(self):
-    "Process listing parameteres"
-    paramlist = self.parameters['lstparams'].split(',')
-    for param in paramlist:
-      if not '=' in param:
-        Trace.error('Invalid listing parameter ' + param)
-      else:
-        key, value = param.split('=', 1)
-        self.parameters[key] = value
-        if key == 'numbers':
-          self.numbered = value
-
-  def extract(self, container):
-    "Extract the container's contents and return them"
-    if isinstance(container, StringContainer):
-      return [container]
-    if isinstance(container, Layout):
-      return self.modifylayout(container.contents)
-    Trace.error('Unexpected container ' + container.__class__.__name__ +
-        ' in listing')
-    return []
-
-  def modifylayout(self, contents):
-    "Modify a listing layout contents"
-    if len(contents) == 0:
-      contents = [Constant(u'​')]
-    contents.append(Constant('\n'))
-    if self.numbered:
-      self.counter += 1
-      tag = 'span class="number-' + self.numbered + '"'
-      contents.insert(0, TaggedText().constant(unicode(self.counter), tag))
-    return contents
 
 class BoxInset(Container):
   "A box inset"

@@ -36,6 +36,7 @@ from gen.table import *
 from gen.image import *
 from gen.structure import *
 from gen.inset import *
+from gen.float import *
 from math.array import *
 
 
