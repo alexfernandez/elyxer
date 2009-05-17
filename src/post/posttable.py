@@ -30,17 +30,10 @@ from post.postprocess import *
 class PostTable(object):
   "Postprocess a table"
 
-  def postprocess(self, current, last):
-    "Look for a table and postprocess it"
-    tables = current.searchall(Table)
-    if len(tables) == 0:
-      return current
-    for table in current.searchall(Table):
-      self.posttable(table)
-    return current
+  processedclass = Table
 
-  def posttable(self, table):
-    "Postprocess the table"
+  def postprocess(self, table, last):
+    "Postprocess a table: long table, multicolumn rows"
     self.longtable(table)
     for row in table.contents:
       index = 0
@@ -101,5 +94,5 @@ class PostTable(object):
       return False
     return True
 
-Postprocessor.unconditional.append(PostTable)
+Postprocessor.contents.append(PostTable)
 

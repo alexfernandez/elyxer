@@ -30,14 +30,15 @@ from post.postprocess import *
 class PostFormula(object):
   "Postprocess a formula"
 
+  processedclass = Formula
+
   def __init__(self):
     self.generator = NumberGenerator()
 
-  def postprocess(self, current, last):
+  def postprocess(self, formula, last):
     "Postprocess any formulae"
-    for formula in current.searchall(Formula):
-      self.postcontents(formula.contents)
-    return current
+    self.postcontents(formula.contents)
+    return formula
 
   def postcontents(self, contents):
     "Search for sum or integral"
@@ -112,5 +113,5 @@ class PostFormula(object):
     del contents[index]
     contents.insert(0, label)
 
-Postprocessor.unconditional.append(PostFormula)
+Postprocessor.contents.append(PostFormula)
 

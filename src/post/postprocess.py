@@ -263,6 +263,8 @@ class Postprocessor(object):
       if element.__class__ in self.contentsdict:
         stage = self.contentsdict[element.__class__]
         element = stage.postprocess(element, last)
+      if isinstance(element, Container):
+        self.postprocesscontents(element.contents)
       last = element
 
   def instantiate(self, classes):
