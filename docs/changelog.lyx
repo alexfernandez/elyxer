@@ -80,6 +80,10 @@ Plain layouts are not reflected in HTML output.
 Unified table parsing, moved table starts to configuration file.
 \end_layout
 
+\begin_layout Itemize
+Use unicode output in debug and error messages.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.22 (20090515):
