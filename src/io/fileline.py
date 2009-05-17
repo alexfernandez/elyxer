@@ -93,6 +93,9 @@ class LineWriter(object):
   def write(self, strings):
     "Write a list of strings"
     for string in strings:
+      if not isinstance(string, basestring):
+        Trace.error('Not a string: ' + unicode(string) + ' in ' + unicode(strings))
+        return
       self.writestring(string)
 
   def writestring(self, string):
