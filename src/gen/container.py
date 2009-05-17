@@ -65,15 +65,11 @@ class Container(object):
         line = line.replace(piece, escapes[piece])
     return line
 
-  def searchfor(self, type):
-    "Search for an embedded container of a given type recursively"
+  def searchshallow(self, type):
+    "Search for an embedded container of a given type on the first level"
     for element in self.contents:
-      if isinstance(element, Container):
-        if isinstance(element, type):
-          return element
-        result = element.searchfor(type)
-        if result:
-          return result
+      if isinstance(element, type):
+        return element
     return None
 
   def searchall(self, type):
@@ -85,6 +81,14 @@ class Container(object):
           list.append(element)
         list += element.searchall(type)
     return list
+
+  def extracttext(self):
+    "Search for all the strings and extract the text they contain"
+    text = ''
+    strings = self.searchall(StringContainer)
+    for string in strings:
+      text += string.contents[0]
+    return text
 
   def restyle(self, type, restyler):
     "Restyle contents with a restyler function"

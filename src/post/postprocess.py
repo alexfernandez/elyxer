@@ -201,7 +201,7 @@ class PostFloat(object):
 
   def postprocess(self, float, last):
     "Move the caption to the main level of the float"
-    caption = self.findcaption(float)
+    caption = float.searchshallow(Caption)
     if not caption:
       return float
     for layout in caption.contents:

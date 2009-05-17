@@ -44,7 +44,7 @@ class Float(Container):
     self.type = self.header[2]
     tagged = TaggedText().complete(self.contents, 'div class="' + self.type + '"')
     self.contents = [tagged]
-    caption = self.searchfor(Caption)
+    caption = self.searchshallow(Caption)
     if caption:
       number = NumberGenerator.instance.generatechaptered(self.type)
       prefix = TranslationConfig.floats[self.type]

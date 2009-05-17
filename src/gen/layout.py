@@ -62,8 +62,7 @@ class Title(Layout):
   def process(self):
     self.type = 'title'
     self.output.tag = 'h1 class="title"'
-    string = self.searchfor(StringContainer)
-    self.title = string.contents[0]
+    self.title = self.extracttext()
     Trace.message('Title: ' + self.title)
 
 class Author(Layout):
@@ -72,8 +71,7 @@ class Author(Layout):
   def process(self):
     self.type = 'author'
     self.output.tag = 'h2 class="author"'
-    string = self.searchfor(StringContainer)
-    FooterOutput.author = string.contents[0]
+    FooterOutput.author = self.extracttext()
     Trace.debug('Author: ' + FooterOutput.author)
 
 class Abstract(Layout):
