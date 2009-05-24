@@ -46,14 +46,14 @@ class Float(Container):
   def process(self):
     "Get the float type"
     self.type = self.header[2]
-    self.embed()
+    self.embed('div class="' + self.type + '"')
     for float in self.searchall(Float):
       float.parent = self
       self.children.append(float)
 
-  def embed(self):
+  def embed(self, tag):
     "Embed the whole contents in a div"
-    tagged = TaggedText().complete(self.contents, 'div class="' + self.type + '"', True)
+    tagged = TaggedText().complete(self.contents, tag, True)
     self.contents = [tagged]
 
 class Wrap(Float):
@@ -72,24 +72,28 @@ class Caption(Container):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('div class="caption"', True)
 
-class Listing(Container):
+class Listing(Float):
   "A code listing"
 
   def __init__(self):
-    self.parser = InsetParser()
-    self.output = TaggedOutput().settag('code class="listing"', True)
+    Float.__init__(self)
     self.numbered = None
     self.counter = 0
 
   def process(self):
     "Remove all layouts"
     self.processparams()
+    contents = self.contents
+    self.type = 'listing'
     newcontents = []
     for container in self.contents:
       newcontents += self.extract(container)
     Trace.debug('Contents: ' + unicode(newcontents))
     self.contents = newcontents
     Trace.debug('HTML: ' + unicode(self.gethtml()))
+    self.embed('code class="listing"')
+    captions = self.searchremove(Caption)
+    self.contents = captions + self.contents
 
   def processparams(self):
     "Process listing parameteres"
@@ -135,24 +139,17 @@ class PostFloat(object):
 
   def postprocess(self, float, last):
     "Postprocess captions and subfloats"
-    if float.parent:
-      return float
-    float.number = NumberGenerator.instance.generatechaptered(float.type)
     self.postcaptions(float)
-    self.postsubfloats(float)
     return float
 
   def postcaptions(self, float):
     "Move the label to the top and number the caption"
     captions = self.searchcaptions(float.contents)
     if len(captions) == 0:
-      Trace.debug('No captions')
       return
-    if len(captions) != 1:
-      Trace.error('Too many captions in float: ' + unicode(len(captions)))
     for caption in captions:
       self.postlabels(float, caption)
-    self.postnumber(captions[0], float)
+      self.postnumber(caption, float)
 
   def searchcaptions(self, contents):
     "Search for captions in the contents"
@@ -166,7 +163,6 @@ class PostFloat(object):
     if isinstance(element, Float):
       return []
     if isinstance(element, Caption):
-      Trace.debug('Caption!')
       return [element]
     if not isinstance(element, Container):
       return []
@@ -174,32 +170,38 @@ class PostFloat(object):
 
   def postlabels(self, float, caption):
     "Search for labels and move them to the top"
-    labels = []
-    caption.searchprocess(Label,
-        lambda contents, index: self.searchremovelabels(labels, contents, index))
+    labels = caption.searchremove(Label)
     if len(labels) == 0:
       return
     float.contents = labels + float.contents
 
-  def searchremovelabels(self, list, contents, index):
-    "Search for labels and remove them, returning the list"
-    list.append(contents[index])
-    del contents[index]
-
   def postnumber(self, caption, float):
     "Number the caption"
+    self.numberfloat(float)
     Trace.debug('Post float ' + float.type + ': ' + unicode(float.number))
     prefix = TranslationConfig.floats[float.type]
     caption.contents.insert(0, Constant(prefix + float.number + u' '))
 
-  def postsubfloats(self, float):
-    "Postprocess subfloats"
-    if not float.number:
+  def numberfloat(self, float):
+    "Number a float if it isn't numbered"
+    if float.number:
       return
-    prefix = TranslationConfig.floats[float.type]
-    for index, subfloat in enumerate(float.children):
-      subfloat.number = float.number + NumberGenerator.letters[index + 1]
-      self.postcaptions(subfloat)
+    if float.parent:
+      self.numberfloat(float.parent)
+      index = float.parent.children.index(float)
+      float.number = float.parent.number + NumberGenerator.letters[index + 1]
+    else:
+      float.number = NumberGenerator.instance.generatechaptered(float.type)
 
-Postprocessor.contents.append(PostFloat)
+class PostWrap(PostFloat):
+  "For a wrap: exactly like a float"
+
+  processedclass = Wrap
+
+class PostListing(PostFloat):
+  "For a listing: exactly like a float"
+
+  processedclass = Listing
+
+Postprocessor.contents += [PostFloat, PostWrap, PostListing]
 

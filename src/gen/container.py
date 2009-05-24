@@ -68,9 +68,21 @@ class Container(object):
   def searchall(self, type):
     "Search for all embedded containers of a given type"
     list = []
-    appender = lambda contents, index: list.append(contents[index])
-    self.searchprocess(type, appender)
+    self.searchprocess(type,
+        lambda contents, index: list.append(contents[index]))
     return list
+
+  def searchremove(self, type):
+    "Search for all containers of a type and remove them"
+    list = []
+    self.searchprocess(type,
+        lambda contents, index: self.appendremove(list, contents, index))
+    return list
+
+  def appendremove(self, list, contents, index):
+    "Append to a list and remove from contents"
+    list.append(contents[index])
+    del contents[index]
 
   def searchprocess(self, type, process):
     "Search for all embedded containers and process them"
