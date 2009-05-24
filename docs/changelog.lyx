@@ -131,6 +131,11 @@ Added nomenclature commands for 1.5.
 .
 \end_layout
 
+\begin_layout Itemize
+Got Index and nomenclature working again, added test file so they don't
+ break anymore.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.22 (20090515):

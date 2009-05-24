@@ -84,7 +84,10 @@ class IndexEntry(Link):
 
   def process(self):
     "Put entry in index"
-    name = self.parser.parameters['name'].strip()
+    if 'name' in self.parameters:
+      name = self.parameters['name'].strip()
+    else:
+      name = self.extracttext()
     self.name = self.escape(name, IndexEntry.namescapes)
     self.key = self.escape(self.name, IndexEntry.keyescapes)
     if not self.key in IndexEntry.entries:
@@ -95,21 +98,6 @@ class IndexEntry(Link):
     self.anchor = 'entry-' + self.key + '-' + unicode(self.index)
     self.url = '#index-' + self.key
     self.contents = [Constant(u'↓')]
-
-class LayoutIndexEntry(IndexEntry):
-  "An entry with the name in a layout"
-
-  def process(self):
-    "Read entry from layout and put in index"
-    name = ''
-    layout = self.contents[0]
-    for element in layout.contents:
-      if isinstance(element, StringContainer):
-        name += element.contents[0]
-      else:
-        name += ' '
-    self.parser.parameters['name'] = name
-    IndexEntry.process(self)
 
 class PrintIndex(Container):
   "Command to print an index"
