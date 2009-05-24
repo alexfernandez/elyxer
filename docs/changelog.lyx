@@ -105,6 +105,24 @@ Show warning when document is created with LyX 1.4.
 .
 \end_layout
 
+\begin_layout Itemize
+Transform 
+\family typewriter
+
+\backslash
+newpage
+\family default
+ to an empty paragraph.
+\end_layout
+
+\begin_layout Itemize
+Standard layouts can be 
+\family typewriter
+<div>
+\family default
+ or nothing at all, generating valid XHTML.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.22 (20090515):

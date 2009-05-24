@@ -50,11 +50,11 @@ class Layout(Container):
     return 'Layout of type ' + self.type
 
 class StandardLayout(Layout):
-  "A standard layout -- can be a true div or a span"
+  "A standard layout -- can be a true div or nothing at all"
 
   def process(self):
     self.type = 'standard'
-    self.output.tag = 'span class="Standard"'
+    self.output = ContentsOutput()
 
 class Title(Layout):
   "The title of the whole document"

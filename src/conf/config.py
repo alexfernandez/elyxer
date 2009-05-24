@@ -108,13 +108,14 @@ class ContainerConfig(object):
       u'\\labelwidthstring':u'BlackBox', u'\\lang':u'LangLine', 
       u'\\length':u'BlackBox', u'\\lyxformat':u'LyXFormat', 
       u'\\lyxline':u'LyxLine', u'\\newline':u'Newline', 
-      u'\\noindent':u'BlackBox', u'\\noun default':u'BlackBox', 
-      u'\\noun off':u'BlackBox', u'\\noun on':u'VersalitasText', 
-      u'\\paragraph_spacing':u'BlackBox', u'\\series bold':u'BoldText', 
-      u'\\series default':u'BlackBox', u'\\series medium':u'BlackBox', 
-      u'\\shape':u'ShapedText', u'\\shape default':u'BlackBox', 
-      u'\\shape up':u'BlackBox', u'\\size':u'SizeText', 
-      u'\\size normal':u'BlackBox', u'\\start_of_appendix':u'Appendix', 
+      u'\\newpage':u'NewPage', u'\\noindent':u'BlackBox', 
+      u'\\noun default':u'BlackBox', u'\\noun off':u'BlackBox', 
+      u'\\noun on':u'VersalitasText', u'\\paragraph_spacing':u'BlackBox', 
+      u'\\series bold':u'BoldText', u'\\series default':u'BlackBox', 
+      u'\\series medium':u'BlackBox', u'\\shape':u'ShapedText', 
+      u'\\shape default':u'BlackBox', u'\\shape up':u'BlackBox', 
+      u'\\size':u'SizeText', u'\\size normal':u'BlackBox', 
+      u'\\start_of_appendix':u'Appendix', 
       }
 
   string = {

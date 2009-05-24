@@ -69,7 +69,14 @@ class Newline(Container):
 
   def process(self):
     "Process contents"
-    self.html = ['<br/>']
+    self.html = ['<br/>\n']
+
+class NewPage(Newline):
+  "A new page"
+
+  def process(self):
+    "Process contents"
+    self.html = ['<p><br/>\n</p>\n']
 
 class Appendix(Container):
   "An appendix to the main document"

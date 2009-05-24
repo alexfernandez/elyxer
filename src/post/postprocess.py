@@ -191,8 +191,8 @@ class PostStandard(object):
   processedclass = StandardLayout
 
   def postprocess(self, standard, last):
-    "Switch span to div"
-    standard.output.tag = 'div class="Standard"'
+    "Switch to div"
+    standard.output = TaggedOutput().settag('div class="Standard"', True)
     return standard
 
 class Postprocessor(object):
