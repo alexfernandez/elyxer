@@ -86,7 +86,6 @@ class Listing(Float):
     self.type = 'listing'
     captions = self.searchremove(Caption)
     newcontents = []
-    Trace.debug('Listing contents: ' + unicode(self.contents))
     for container in self.contents:
       newcontents += self.extract(container)
     tagged = TaggedText().complete(newcontents, 'code class="listing"', True)
