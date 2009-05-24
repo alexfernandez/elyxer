@@ -796,7 +796,7 @@ target "http://www.nongnu.org/elyxer/lyx.css"
 
 , it can be changed via command line option 
 \family typewriter
-‐‐css
+--css
 \family default
 .
 \end_layout
@@ -816,7 +816,7 @@ Added meta generator tag to all pages.
 \begin_layout Itemize
 Added option 
 \family typewriter
-‐‐title
+--title
 \family default
  to change the default page title.
 \end_layout
