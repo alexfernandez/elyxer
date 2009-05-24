@@ -83,17 +83,15 @@ class Listing(Float):
   def process(self):
     "Remove all layouts"
     self.processparams()
-    contents = self.contents
     self.type = 'listing'
+    captions = self.searchremove(Caption)
     newcontents = []
+    Trace.debug('Listing contents: ' + unicode(self.contents))
     for container in self.contents:
       newcontents += self.extract(container)
-    Trace.debug('Contents: ' + unicode(newcontents))
-    self.contents = newcontents
-    Trace.debug('HTML: ' + unicode(self.gethtml()))
-    self.embed('code class="listing"')
-    captions = self.searchremove(Caption)
-    self.contents = captions + self.contents
+    tagged = TaggedText().complete(newcontents, 'code class="listing"', True)
+    self.contents = [TaggedText().complete(captions + [tagged],
+      'div class="listing"', True)]
 
   def processparams(self):
     "Process listing parameteres"
@@ -112,20 +110,16 @@ class Listing(Float):
   def extract(self, container):
     "Extract the container's contents and return them"
     if isinstance(container, StringContainer):
-      return [container]
-    if isinstance(container, Layout):
-      return self.modifylayout(container.contents)
-    if isinstance(container, Caption):
-      return [container]
+      return self.modifystring(container)
     Trace.error('Unexpected container ' + container.__class__.__name__ +
         ' in listing')
     return []
 
-  def modifylayout(self, contents):
-    "Modify a listing layout contents"
-    if len(contents) == 0:
-      contents = [Constant(u'​')]
-    contents.append(Constant('\n'))
+  def modifystring(self, string):
+    "Modify a listing string"
+    if len(string.contents) == 0:
+      string.contents = [Constant(u'​')]
+    contents = [string, Constant('\n')]
     if self.numbered:
       self.counter += 1
       tag = 'span class="number-' + self.numbered + '"'
@@ -138,18 +132,12 @@ class PostFloat(object):
   processedclass = Float
 
   def postprocess(self, float, last):
-    "Postprocess captions and subfloats"
-    self.postcaptions(float)
-    return float
-
-  def postcaptions(self, float):
     "Move the label to the top and number the caption"
     captions = self.searchcaptions(float.contents)
-    if len(captions) == 0:
-      return
     for caption in captions:
       self.postlabels(float, caption)
       self.postnumber(caption, float)
+    return float
 
   def searchcaptions(self, contents):
     "Search for captions in the contents"
@@ -178,7 +166,6 @@ class PostFloat(object):
   def postnumber(self, caption, float):
     "Number the caption"
     self.numberfloat(float)
-    Trace.debug('Post float ' + float.type + ': ' + unicode(float.number))
     prefix = TranslationConfig.floats[float.type]
     caption.contents.insert(0, Constant(prefix + float.number + u' '))
 

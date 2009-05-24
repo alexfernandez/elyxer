@@ -399,6 +399,13 @@ div.abstract {
 p.abstract-message {
 	font-weight: bold;
 }
+div.listing {
+	display: inline-block;
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
+	border: thin solid #c0c0c0;
+}
 code.listing {
 	white-space: pre;
 }
