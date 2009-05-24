@@ -123,6 +123,14 @@ Standard layouts can be
  or nothing at all, generating valid XHTML.
 \end_layout
 
+\begin_layout Itemize
+Added nomenclature commands for 1.5.
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.22 (20090515):
