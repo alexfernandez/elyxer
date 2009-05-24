@@ -39,28 +39,17 @@ class Float(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('div class="float"', True)
+    self.parent = None
+    self.children = []
+    self.number = None
 
   def process(self):
     "Get the float type"
     self.type = self.header[2]
-    self.processcaption()
     self.embed()
-  
-  def processcaption(self):
-    "Number the caption and move the label to the top"
-    captions = self.searchall(Caption)
-    if len(captions) == 0:
-      return
-    caption = captions[0]
-    number = NumberGenerator.instance.generatechaptered(self.type)
-    prefix = TranslationConfig.floats[self.type]
-    caption.contents.insert(0, Constant(prefix + number + u' '))
-    labels = caption.searchall(Label)
-    if len(labels) == 0:
-      return
-    label = labels[0]
-    #caption.contents.remove(label)
-    self.contents.insert(0, label)
+    for float in self.searchall(Float):
+      float.parent = self
+      self.children.append(float)
 
   def embed(self):
     "Embed the whole contents in a div"
@@ -100,6 +89,7 @@ class Listing(Container):
       newcontents += self.extract(container)
     Trace.debug('Contents: ' + unicode(newcontents))
     self.contents = newcontents
+    Trace.debug('HTML: ' + unicode(self.gethtml()))
 
   def processparams(self):
     "Process listing parameteres"
@@ -137,4 +127,79 @@ class Listing(Container):
       tag = 'span class="number-' + self.numbered + '"'
       contents.insert(0, TaggedText().constant(unicode(self.counter), tag))
     return contents
+
+class PostFloat(object):
+  "Postprocess a float: number it and move the label"
+
+  processedclass = Float
+
+  def postprocess(self, float, last):
+    "Postprocess captions and subfloats"
+    if float.parent:
+      return float
+    float.number = NumberGenerator.instance.generatechaptered(float.type)
+    self.postcaptions(float)
+    self.postsubfloats(float)
+    return float
+
+  def postcaptions(self, float):
+    "Move the label to the top and number the caption"
+    captions = self.searchcaptions(float.contents)
+    if len(captions) == 0:
+      Trace.debug('No captions')
+      return
+    if len(captions) != 1:
+      Trace.error('Too many captions in float: ' + unicode(len(captions)))
+    for caption in captions:
+      self.postlabels(float, caption)
+    self.postnumber(captions[0], float)
+
+  def searchcaptions(self, contents):
+    "Search for captions in the contents"
+    list = []
+    for element in contents:
+      list += self.searchcaptionelement(element)
+    return list
+
+  def searchcaptionelement(self, element):
+    "Search for captions outside floats"
+    if isinstance(element, Float):
+      return []
+    if isinstance(element, Caption):
+      Trace.debug('Caption!')
+      return [element]
+    if not isinstance(element, Container):
+      return []
+    return self.searchcaptions(element.contents)
+
+  def postlabels(self, float, caption):
+    "Search for labels and move them to the top"
+    labels = []
+    caption.searchprocess(Label,
+        lambda contents, index: self.searchremovelabels(labels, contents, index))
+    if len(labels) == 0:
+      return
+    float.contents = labels + float.contents
+
+  def searchremovelabels(self, list, contents, index):
+    "Search for labels and remove them, returning the list"
+    list.append(contents[index])
+    del contents[index]
+
+  def postnumber(self, caption, float):
+    "Number the caption"
+    Trace.debug('Post float ' + float.type + ': ' + unicode(float.number))
+    prefix = TranslationConfig.floats[float.type]
+    caption.contents.insert(0, Constant(prefix + float.number + u' '))
+
+  def postsubfloats(self, float):
+    "Postprocess subfloats"
+    if not float.number:
+      return
+    prefix = TranslationConfig.floats[float.type]
+    for index, subfloat in enumerate(float.children):
+      subfloat.number = float.number + NumberGenerator.letters[index + 1]
+      self.postcaptions(subfloat)
+
+Postprocessor.contents.append(PostFloat)
 
