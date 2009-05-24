@@ -97,6 +97,14 @@ Finally got UTF-8 output right (hopefully).
 Display floats with tables properly aligned, and on a white background.
 \end_layout
 
+\begin_layout Itemize
+Show warning when document is created with LyX 1.4.
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.22 (20090515):

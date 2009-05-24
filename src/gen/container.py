@@ -134,6 +134,15 @@ class BlackBox(Container):
     self.output = EmptyOutput()
     self.contents = []
 
+class LyXFormat(BlackBox):
+  "Read the lyxformat command"
+
+  def process(self):
+    "Show warning if version < 276"
+    version = int(self.header[1])
+    if version < 276:
+      Trace.error('Warning: unsupported format version ' + str(version))
+
 class StringContainer(Container):
   "A container for a single string"
 
