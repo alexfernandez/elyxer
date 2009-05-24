@@ -64,6 +64,16 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.24 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.23 (20090524):
 \end_layout
 
@@ -95,6 +105,7 @@ Finally got UTF-8 output right (hopefully).
 
 \begin_layout Itemize
 Display floats with tables properly aligned, and on a white background.
+ Listings are working too.
 \end_layout
 
 \begin_layout Itemize
