@@ -53,7 +53,7 @@ def createbook(args):
   filein = sys.stdin
   fileout = sys.stdout
   if len(args) < 2:
-    Options.quiet = True
+    Trace.quietmode = True
   if len(args) > 0:
     Options.directory = os.path.dirname(args[0])
     if Options.directory == '':
