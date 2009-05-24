@@ -83,6 +83,7 @@ class ContainerConfig(object):
       u'\\begin_inset LatexCommand ref':u'Reference', 
       u'\\begin_inset LatexCommand tableofcontents':u'TableOfContents', 
       u'\\begin_inset LatexCommand url':u'URL', 
+      u'\\begin_inset LatexCommand vref':u'Reference', 
       u'\\begin_inset Marginal':u'Footnote', 
       u'\\begin_inset Newline':u'NewlineInset', u'\\begin_inset Note':u'Note', 
       u'\\begin_inset OptArg':u'ShortTitle', 
