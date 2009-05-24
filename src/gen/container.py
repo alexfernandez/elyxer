@@ -65,22 +65,20 @@ class Container(object):
         line = line.replace(piece, escapes[piece])
     return line
 
-  def searchshallow(self, type):
-    "Search for an embedded container of a given type on the first level"
-    for element in self.contents:
-      if isinstance(element, type):
-        return element
-    return None
-
   def searchall(self, type):
     "Search for all embedded containers of a given type"
     list = []
-    for element in self.contents:
-      if isinstance(element, Container):
-        if isinstance(element, type):
-          list.append(element)
-        list += element.searchall(type)
+    appender = lambda contents, index: list.append(contents[index])
+    self.searchprocess(type, appender)
     return list
+
+  def searchprocess(self, type, process):
+    "Search for all embedded containers and process them"
+    for index, element in enumerate(self.contents):
+      if isinstance(element, Container):
+        element.searchprocess(type, process)
+      if isinstance(element, type):
+        process(self.contents, index)
 
   def extracttext(self):
     "Search for all the strings and extract the text they contain"

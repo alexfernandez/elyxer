@@ -30,6 +30,7 @@ from gen.container import *
 from gen.structure import *
 from gen.layout import *
 from ref.label import *
+from post.postprocess import *
 
 
 class Float(Container):
@@ -42,22 +43,28 @@ class Float(Container):
   def process(self):
     "Get the float type"
     self.type = self.header[2]
-    caption = self.searchshallow(Caption)
-    if not caption:
+    self.processcaption()
+    self.embed()
+  
+  def processcaption(self):
+    "Number the caption and move the label to the top"
+    captions = self.searchall(Caption)
+    if len(captions) == 0:
       return
+    caption = captions[0]
     number = NumberGenerator.instance.generatechaptered(self.type)
     prefix = TranslationConfig.floats[self.type]
     caption.contents.insert(0, Constant(prefix + number + u' '))
-    label = caption.searchshallow(Label)
-    if not label:
+    labels = caption.searchall(Label)
+    if len(labels) == 0:
       return
-    caption.contents.remove(label)
+    label = labels[0]
+    #caption.contents.remove(label)
     self.contents.insert(0, label)
-    self.embed()
 
   def embed(self):
     "Embed the whole contents in a div"
-    tagged = TaggedText().complete(self.contents, 'div class="' + self.type + '"')
+    tagged = TaggedText().complete(self.contents, 'div class="' + self.type + '"', True)
     self.contents = [tagged]
 
 class Wrap(Float):
@@ -91,6 +98,7 @@ class Listing(Container):
     newcontents = []
     for container in self.contents:
       newcontents += self.extract(container)
+    Trace.debug('Contents: ' + unicode(newcontents))
     self.contents = newcontents
 
   def processparams(self):
@@ -113,6 +121,8 @@ class Listing(Container):
       return [container]
     if isinstance(container, Layout):
       return self.modifylayout(container.contents)
+    if isinstance(container, Caption):
+      return [container]
     Trace.error('Unexpected container ' + container.__class__.__name__ +
         ' in listing')
     return []
