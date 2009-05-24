@@ -308,7 +308,7 @@ class TranslationConfig(object):
       }
 
   floats = {
-      u'algorithm':u'Listing ', u'figure':u'Figure ', u'listing':u'Listing', 
+      u'algorithm':u'Listing ', u'figure':u'Figure ', u'listing':u'Listing ', 
       u'table':u'Table ', 
       }
 
