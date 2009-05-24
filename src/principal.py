@@ -32,6 +32,7 @@ from util.options import *
 from post.postprocess import *
 from post.posttable import *
 from math.postformula import *
+from post.postlist import *
 from gen.factory import *
 
 

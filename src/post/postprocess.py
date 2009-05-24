@@ -46,109 +46,6 @@ class Group(Container):
   def __unicode__(self):
     return 'Group: ' + unicode(self.contents)
 
-class PostNestedList(object):
-  "Postprocess a nested list"
-
-  processedclass = DeeperList
-
-  def postprocess(self, deeper, last):
-    "Run the postprocessor on the nested list"
-    postproc = Postprocessor()
-    for index, part in enumerate(deeper.contents):
-      result = postproc.postprocessroot(part)
-      deeper.contents[index] = result
-    # one additional item to flush the list
-    deeper.contents.append(postproc.postprocessroot(BlackBox()))
-    return deeper
-
-class PendingList(object):
-  "A pending list"
-
-  def __init__(self):
-    self.contents = []
-    self.type = None
-
-  def additem(self, item):
-    "Add a list item"
-    self.contents += item.contents
-    self.type = item.type
-
-  def addnested(self, nested):
-    "Add a nested list item"
-    if self.empty():
-      self.insertfake()
-    item = self.contents[-1]
-    self.contents[-1].contents.append(nested)
-
-  def generatelist(self):
-    "Get the resulting list"
-    if not self.type:
-      return Group().contents(self.contents)
-    tag = TagConfig.listitems[self.type]
-    return TaggedText().complete(self.contents, tag, True)
-
-  def empty(self):
-    return len(self.contents) == 0
-
-  def insertfake(self):
-    "Insert a fake item"
-    item = TaggedText().constant('', 'li class="nested"', True)
-    self.contents = [item]
-    self.type = 'Itemize'
-
-  def __unicode__(self):
-    result = 'pending ' + unicode(self.type) + ': ['
-    for element in self.contents:
-      result += unicode(element) + ', '
-    if len(self.contents) > 0:
-      result = result[:-2]
-    return result + ']'
-
-class PostListPending(object):
-  "Check if there is a pending list"
-
-  def __init__(self):
-    self.pending = PendingList()
-
-  def postprocess(self, element, last):
-    "If a list element do not return anything;"
-    "otherwise return the whole pending list"
-    list = None
-    if self.generatepending(element):
-      list = self.pending.generatelist()
-      self.pending.__init__()
-    if isinstance(element, ListItem):
-      element = self.processitem(element)
-    elif isinstance(element, DeeperList):
-      element = self.processnested(element)
-    if not list:
-      return element
-    return Group().contents([list, element])
-
-  def processitem(self, item):
-    "Process a list item"
-    self.pending.additem(item)
-    return BlackBox()
-
-  def processnested(self, nested):
-    "Process a nested list"
-    self.pending.addnested(nested)
-    return BlackBox()
-
-  def generatepending(self, element):
-    "Decide whether to generate the pending list"
-    if self.pending.empty():
-      return False
-    if isinstance(element, ListItem):
-      if not self.pending.type:
-        return False
-      if self.pending.type != element.type:
-        return True
-      return False
-    if isinstance(element, DeeperList):
-      return False
-    return True
-
 class PostLayout(object):
   "Numerate an indexed layout"
 
@@ -198,8 +95,8 @@ class PostStandard(object):
 class Postprocessor(object):
   "Postprocess a container keeping some context"
 
-  stages = [PostNestedList, PostLayout, PostStandard]
-  unconditional = [PostListPending]
+  stages = [PostLayout, PostStandard]
+  unconditional = []
   contents = []
 
   def __init__(self):
