@@ -69,7 +69,12 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-Show sum and integral limits correctly in Safari and Chrome.
+Show sum and integral limits correctly in Konqueror, Safari and Chrome.
+\end_layout
+
+\begin_layout Itemize
+Also show roots and arrays correctly in those browsers.
+ Larger radical symbol looks better.
 \end_layout
 
 \end_deeper

@@ -201,17 +201,19 @@ span.denominator {
 }
 span.sqrt {
 	display: inline-block;
+	vertical-align: middle;
 }
 span.radical {
 	display: inline-block;
 	padding: 0;
-	font-size: 100%;
+	font-size: 150%;
 	vertical-align: top;
 }
 span.root {
 	display: inline-block;
 	border-top: thin #000040 solid;
 	padding: 0;
+	vertical-align: middle;
 }
 span.symbol {
 	font-size: 125%;
@@ -322,10 +324,11 @@ h1.biblio {
 	font-size: 140%;
 }
 table.formula {
-	display: inline;
+	display: inline-block;
 	text-align: center;
 	border-collapse: collapse;
 	margin: 0em;
+	vertical-align: middle;
 }
 td.formula-l {
 	text-align: left;
