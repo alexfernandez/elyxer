@@ -221,7 +221,7 @@ span.bigsymbol {
 }
 span.limits {
 	display: inline-table;
-	vertical-align: 1.5ex;
+	vertical-align: middle;
 }
 sub.bigsymbol {
 	display: table-row;

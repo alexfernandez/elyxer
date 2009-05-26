@@ -69,7 +69,7 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Show sum and integral limits correctly in Safari and Chrome.
 \end_layout
 
 \end_deeper
