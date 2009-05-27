@@ -77,6 +77,17 @@ Also show roots and arrays correctly in those browsers.
  Larger radical symbol looks better.
 \end_layout
 
+\begin_layout Itemize
+Added Math Showcase to test on 
+\begin_inset LatexCommand url
+name "browsershots.org"
+target "http://browsershots.org/"
+
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.23 (20090524):

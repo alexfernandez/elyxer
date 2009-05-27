@@ -1,0 +1,471 @@
+#LyX 1.6.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+% DO NOT ALTER THIS PREAMBLE!!!
+%
+% This preamble is designed to ensure that the User's Guide prints
+% out as advertised. If you mess with this preamble,
+% parts of the User's Guide may not print out as expected.  If you
+% have problems LaTeXing this file, please contact 
+% the documentation team
+% email: lyx-docs@lists.lyx.org
+
+\usepackage{ifpdf} % part of the hyperref bundle
+\ifpdf % if pdflatex is used
+
+ % set fonts for nicer pdf view
+ \IfFileExists{lmodern.sty}{\usepackage{lmodern}}{}
+
+\fi % end if pdflatex is used
+
+% for correct jump positions whe clicking on a link to a float
+\usepackage[figure]{hypcap}
+
+% the pages of the TOC is numbered roman
+% and a pdf-bookmark for the TOC is added
+\let\myTOC\tableofcontents
+\renewcommand\tableofcontents{%
+  \frontmatter
+  \pdfbookmark[1]{\contentsname}{}
+  \myTOC
+  \mainmatter }
+
+% redefine the \LyX macro for PDF bookmarks
+\def\LyX{\texorpdfstring{%
+  L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+  {LyX}}
+
+% define a short command for \textvisiblespace
+\newcommand{\spce}{\textvisiblespace}
+
+% macro for italic page numbers in the index
+\newcommand{\IndexDef}[1]{\textit{#1}}
+
+% redefine the greyed out note
+\end_preamble
+\options intoc,bibtotoc,idxtotoc,BCOR7mm,tablecaptionabove
+\use_default_options false
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_title "eLyXer Math Showcase"
+\pdf_author "Alex Fernández"
+\pdf_subject "The amazing all-time-wonder eLyXer Math Showcase"
+\pdf_keywords "LyX"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels,pdftex"
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\branch Pregunta
+\selected 1
+\color #00ff00
+\end_branch
+\branch Respuesta
+\selected 0
+\color #aa55ff
+\end_branch
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+\begin_inset Graphics
+	filename /home/chenno/bulk/elyxer/docs/elyxer.svg
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+eLyXer Math Showcase
+\end_layout
+
+\begin_layout Author
+Alex Fernández (elyxer@gmail.com)
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+This document is intended as a showcase of the mathematical abilities of
+ eLyXer.
+\end_layout
+
+\begin_layout Section
+Characters
+\end_layout
+
+\begin_layout Standard
+Math characters are all over the map.
+\end_layout
+
+\begin_layout Subsection
+Greek Symbols
+\end_layout
+
+\begin_layout Standard
+Greek symbols are very important in equations: 
+\begin_inset Formula $\phi$
+\end_inset
+
+, 
+\begin_inset Formula $\pi$
+\end_inset
+
+, 
+\begin_inset Formula $\Omega$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Other Symbols
+\end_layout
+
+\begin_layout Standard
+Like arrows: 
+\begin_inset Formula $\leftarrow\rightarrow$
+\end_inset
+
+.
+ Or geometrical shapes: 
+\begin_inset Formula $\circ$
+\end_inset
+
+, 
+\begin_inset Formula $\square$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Spaces
+\end_layout
+
+\begin_layout Standard
+Equations look good when items are properly separated.
+ The main separation is the Medium Mathematical Space: 
+\begin_inset Formula $x=3$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Numeration
+\end_layout
+
+\begin_layout Standard
+Equations can be numbered, like 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:first"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+y=x\label{eq:first}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And also like 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:second"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+x=3\label{eq:second}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notice that eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:second"
+
+\end_inset
+
+ comes after eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:first"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Simple Structures
+\end_layout
+
+\begin_layout Subsection
+Fractions
+\end_layout
+
+\begin_layout Standard
+A simple fraction: 
+\begin_inset Formula \[
+\frac{1}{2}.\]
+
+\end_inset
+
+Inlined: 
+\begin_inset Formula $\frac{2}{3}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A big recursive fraction: 
+\begin_inset Formula \[
+\frac{1}{\left(1+\left(\frac{1}{1+\left(\frac{1}{1+2x}\lyxlock\right)}\lyxlock\right)\right)}\lyxlock\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Limits
+\end_layout
+
+\begin_layout Standard
+A limit must appear below the main symbol: 
+\begin_inset Formula \[
+\lim_{x\rightarrow\infty}\lyxlock f(x),\]
+
+\end_inset
+
+which should appear as 
+\begin_inset Formula $x\rightarrow\infty$
+\end_inset
+
+ in italics, and 
+\begin_inset Quotes fld
+\end_inset
+
+lim
+\begin_inset Quotes frd
+\end_inset
+
+ in plain style.
+ Note that the limit does not appear below the 
+\begin_inset Quotes fld
+\end_inset
+
+lim
+\begin_inset Quotes frd
+\end_inset
+
+ but to the right.
+ Inlined: 
+\begin_inset Formula $\lim_{x\rightarrow\infty}\lyxlock f(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Limits are also used in sums: 
+\begin_inset Formula \[
+\sum_{i=1}^{\infty}x,\]
+
+\end_inset
+
+where the sum's limits should appear below (
+\begin_inset Formula $i=1$
+\end_inset
+
+) and above (
+\begin_inset Formula $\infty$
+\end_inset
+
+) the 
+\begin_inset Formula $\sum$
+\end_inset
+
+.
+ Inlined: 
+\begin_inset Formula $\sum_{i=1}^{\infty}x.$
+\end_inset
+
+ Also in integrals: 
+\begin_inset Formula $\intop_{i=1}^{\infty}x.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Roots
+\end_layout
+
+\begin_layout Standard
+A square root: 
+\begin_inset Formula $\sqrt{3}.$
+\end_inset
+
+ A more complex root in a fraction:
+\begin_inset Formula \[
+\frac{1}{\left(1+\sqrt{2}\left(\frac{1}{1+\sqrt{2}}\lyxlock\right)+\sqrt{\frac{1}{2}}\right)}\lyxlock.\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Complex Structures
+\end_layout
+
+\begin_layout Standard
+In this section we will explore arrays and related constructs.
+\end_layout
+
+\begin_layout Subsection
+Arrays
+\end_layout
+
+\begin_layout Standard
+An inline array 
+\begin_inset Formula $\left[\begin{array}{cc}
+a & b\\
+c & dio\end{array}\right]$
+\end_inset
+
+: is always shown in the same line.
+\end_layout
+
+\begin_layout Standard
+An independent array is shown on its own line: 
+\begin_inset Formula \[
+\left[\begin{array}{lc}
+12 & 2\\
+3 & 4\times y^{x}\end{array}\right]\]
+
+\end_inset
+
+Apart from that the appearance should be the same.
+\end_layout
+
+\begin_layout Subsection
+Brackets
+\end_layout
+
+\begin_layout Standard
+Arrays are separated by brackets: 
+\begin_inset Formula $\left(a\right)$
+\end_inset
+
+ 
+\begin_inset Formula $\left[b\right]$
+\end_inset
+
+ 
+\begin_inset Formula $\left\{ c\right\} $
+\end_inset
+
+ 
+\begin_inset Formula $\left\langle d\right\rangle $
+\end_inset
+
+ 
+\begin_inset Formula $\left|e\right|$
+\end_inset
+
+.
+ There are also big brackets: 
+\begin_inset Formula $\bigl\langle f\bigr\rangle$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Cases
+\end_layout
+
+\begin_layout Standard
+Used to switch several values.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $y=\begin{cases}
+x & i=0,\\
+x+1 & i<3\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+That's all folks!
+\end_layout
+
+\end_body
+\end_document
