@@ -45,9 +45,15 @@ class Container(object):
       Trace.error('Raw string ' + html)
       html = [html]
     if Options.html:
-      for index, line in enumerate(html):
-        html[index] = self.escape(line, EscapeConfig.html)
+      self.escapeall(html, EscapeConfig.html)
+    if not Options.unicode:
+      self.escapeall(html, EscapeConfig.nonunicode)
     return html
+
+  def escapeall(self, lines, replacements):
+    "Escape all lines in an array with the replacements"
+    for index, line in enumerate(lines):
+      lines[index] = self.escape(line, replacements)
 
   def escape(self, line, replacements = EscapeConfig.entities):
     "Escape a line with replacements from a map"

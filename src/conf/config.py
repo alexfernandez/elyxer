@@ -134,6 +134,10 @@ class EscapeConfig(object):
       u'/>':u'>', 
       }
 
+  nonunicode = {
+      u' ':u' ', 
+      }
+
 class FootnoteConfig(object):
   "Configuration class from config file"
 

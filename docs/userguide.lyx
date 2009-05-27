@@ -544,6 +544,15 @@ title
  The resulting pages should be easier to import from certain word processors.
 \end_layout
 
+\begin_layout Description
+
+\family typewriter
+--unicode
+\family default
+: restore full Unicode output.
+ Right now switches midspaces to medium mathematical spaces.
+\end_layout
+
 \begin_layout Subsection
 CSS
 \begin_inset LatexCommand label
@@ -781,6 +790,44 @@ key "w3c-validator"
 .
  If your particular web page doesn't pass the tests, then it is a bug and
  it will be treated as such.
+\end_layout
+
+\begin_layout Standard
+For better browser compatibility, mathematical spaces are substituted in
+ the output with midspaces -- improving the output for some popular browsers.
+ If you want your mathematical spaces back, just use the 
+\family typewriter
+--unicode
+\family default
+ option:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --unicode document.lyx page-to-import.html
+\end_layout
+
+\begin_layout Standard
+Check the 
+\begin_inset LatexCommand url
+name "Math Showcase"
+target "math.html"
+
+\end_inset
+
+ and also the 
+\begin_inset LatexCommand url
+name "Math Showcase with Unicode"
+target "math-unicode.html"
+
+\end_inset
+
+ to see the results.
+ In the future other non-Unicode substitutions might be used.
 \end_layout
 
 \begin_layout Section

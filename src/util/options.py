@@ -41,6 +41,7 @@ class Options(object):
   html = False
   help = False
   showlines = True
+  unicode = False
   css = 'http://www.nongnu.org/elyxer/lyx.css'
   title = 'Converted document'
   directory = '.'
@@ -77,6 +78,7 @@ class Options(object):
     Trace.error('    --css <file.css>: use a custom CSS file')
     Trace.error('    --version: show version number and release date')
     Trace.error('    --html: output HTML 4.0 instead of the default XHTML')
+    Trace.error('    --unicode: full Unicode output')
     exit()
 
   def showversion(self):

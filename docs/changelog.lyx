@@ -88,6 +88,20 @@ target "http://browsershots.org/"
 .
 \end_layout
 
+\begin_layout Itemize
+Substituted medium mathematical spaces with midspaces for better browser
+ compatibility.
+\end_layout
+
+\begin_layout Itemize
+Added 
+\family typewriter
+--unicode
+\family default
+ option to switch on full Unicode output; right now only re-adds mathematical
+ spaces.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.23 (20090524):

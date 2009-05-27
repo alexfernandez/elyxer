@@ -256,6 +256,14 @@ target "devguide.html"
 \end_inset
 
  can also be accessed online.
+ For the mathematically inclined: be sure to visit the 
+\begin_inset LatexCommand url
+name "Math Showcase"
+target "math.html"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection*

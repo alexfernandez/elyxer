@@ -35,6 +35,8 @@ rm -f test/*.lyx~
 ./elyxer.py --title="eLyxer Developer Guide" --css "lyx.css" docs/devguide.lyx docs/devguide.html
 ./elyxer.py --title=eLyXer --css "lyx.css" docs/index.lyx docs/index.html
 ./elyxer.py --title="eLyXer changelog" --css "lyx.css" docs/changelog.lyx docs/changelog.html
+./elyxer.py --title="eLyxer Math Showcase" --css "lyx.css" docs/math.lyx docs/math.html
+./elyxer.py --title="eLyxer Math Showcase (Unicode edition)" --unicode --css "lyx.css" docs/math.lyx docs/math-unicode.html
 # insert current version
 VERSION=$(./elyxer.py --hardversion)
 DATE=$(./elyxer.py --versiondate)
