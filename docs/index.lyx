@@ -321,11 +321,18 @@ target "http://www.zipcon.net/~swhite/resume/"
 
 \end_inset
 
- for encouraging me to publish the tool; to Christian Ridderström for helping
- me out right at the start; to Ignacio García for relentless encouragement;
- to Abdelrazak Younes, Pavel Sanda, Günther Milde, Olivier Ripoll, José
- Matos, Iain Mac Donald, Uwe Stöhr for their interesting suggestions; to
- Nikos Alexandris, Joachim Kreimer-de Fries (Osnabryg), Richard Talley,
+ for encouraging me to publish the tool; to 
+\begin_inset LatexCommand url
+name "John D. Cook"
+target "http://www.johndcook.com/"
+
+\end_inset
+
+ for his wonderful lists of TeX and Unicode equivalents; to Christian Ridderströ
+m for helping me out right at the start; to Ignacio García for relentless
+ encouragement; to Abdelrazak Younes, Pavel Sanda, Günther Milde, Olivier
+ Ripoll, José Matos, Iain Mac Donald, Uwe Stöhr for their interesting suggestion
+s; to Nikos Alexandris, Joachim Kreimer-de Fries (Osnabryg), Richard Talley,
  Wolfgang Keller, Murray Eisenberg, Robert Orr, a Linux guy in Singapore,
  Anders Ekberg, Pavel Sanda, Steve Hastings, Sven Hoexter, Xie Chao for
  their testing.
@@ -341,17 +348,6 @@ thank you
  satisfaction (or were not bugged enough to write about it).
  And finally thanks to all those who have helped and yet I am now forgetting
  about them, for not hating me for it.
-\end_layout
-
-\begin_layout Standard
-Thanks to 
-\begin_inset LatexCommand url
-name "John D. Cook"
-target "http://www.johndcook.com/"
-
-\end_inset
-
- for his wonderful lists of TeX and Unicode equivalents.
 \end_layout
 
 \end_body
