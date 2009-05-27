@@ -43,26 +43,20 @@ class Container(object):
     html = self.output.gethtml(self)
     if isinstance(html, basestring):
       Trace.error('Raw string ' + html)
+      html = [html]
     if Options.html:
-      for index, piece in enumerate(html):
-        piece = piece.replace('/>', '>')
-        html[index] = piece
+      for index, line in enumerate(html):
+        html[index] = self.escape(line, EscapeConfig.html)
     return html
 
-  def __unicode__(self):
-    "Get a description"
-    if not hasattr(self, 'begin'):
-      return self.__class__.__name__
-    return self.__class__.__name__ + '@' + unicode(self.begin)
-
-  def escape(self, line, escapes = ContainerConfig.escapes):
-    "Escape a line to appear in HTML"
-    pieces = escapes.keys()
-    # do the '&' first
+  def escape(self, line, replacements = EscapeConfig.entities):
+    "Escape a line with replacements from a map"
+    pieces = replacements.keys()
+    # do them in order
     pieces.sort()
     for piece in pieces:
       if piece in line:
-        line = line.replace(piece, escapes[piece])
+        line = line.replace(piece, replacements[piece])
     return line
 
   def searchall(self, type):
@@ -136,6 +130,12 @@ class Container(object):
       if isinstance(element, Container):
         element.debug(level + 1)
 
+  def __unicode__(self):
+    "Get a description"
+    if not hasattr(self, 'begin'):
+      return self.__class__.__name__
+    return self.__class__.__name__ + '@' + unicode(self.begin)
+
 class BlackBox(Container):
   "A container that does not output anything"
 
@@ -163,7 +163,7 @@ class StringContainer(Container):
   def process(self):
     "Replace special chars"
     line = self.contents[0]
-    replaced = self.escape(line)
+    replaced = self.escape(line, EscapeConfig.entities)
     replaced = self.changeline(replaced)
     self.contents = [replaced]
     if ContainerConfig.string['startcommand'] in replaced and len(replaced) > 1:
@@ -172,16 +172,10 @@ class StringContainer(Container):
           + replaced.strip())
 
   def changeline(self, line):
-    line = self.replacemap(line, ContainerConfig.replaces)
+    line = self.escape(line, EscapeConfig.chars)
     if not ContainerConfig.string['startcommand'] in line:
       return line
-    line = self.replacemap(line, ContainerConfig.commands)
-    return line
-
-  def replacemap(self, line, map):
-    for piece in map:
-      if piece in line:
-        line = line.replace(piece, map[piece])
+    line = self.escape(line, EscapeConfig.commands)
     return line
   
   def __unicode__(self):
