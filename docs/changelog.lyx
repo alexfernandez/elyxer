@@ -78,7 +78,14 @@ Also show roots and arrays correctly in those browsers.
 \end_layout
 
 \begin_layout Itemize
-Added Math Showcase to test on 
+Added 
+\begin_inset LatexCommand url
+name "Math Showcase"
+target "math.html"
+
+\end_inset
+
+ to test on 
 \begin_inset LatexCommand url
 name "browsershots.org"
 target "http://browsershots.org/"
