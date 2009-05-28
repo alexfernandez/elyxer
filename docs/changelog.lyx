@@ -110,15 +110,11 @@ Added
 \end_layout
 
 \begin_layout Itemize
-Included all Greek letters, upper and lower case; and common math symbols
- from 
-\begin_inset LatexCommand url
-name "John D. Cook's page"
-target "http://www.johndcook.com/math_symbols.html"
+Included all Greek letters, upper and lower case; and common math symbols.
+\end_layout
 
-\end_inset
-
-.
+\begin_layout Itemize
+Make title from command line option prevail over PDF title.
 \end_layout
 
 \end_deeper

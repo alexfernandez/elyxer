@@ -40,8 +40,7 @@ class LyxHeader(Container):
     "Find pdf title"
     key = ContainerConfig.header['pdftitle']
     if key in self.parameters:
-      Options.title = self.parameters[key]
-      Trace.debug('PDF Title: ' + Options.title)
+      TitleOutput.pdftitle = self.parameters[key]
 
 class LyxFooter(Container):
   "Reads the footer, outputs the HTML footer"

@@ -123,11 +123,28 @@ class HeaderOutput(object):
     html.append(u'<meta name="generator" content="http://www.nongnu.org/elyxer/"/>\n')
     html.append(u'<meta name="create-date" content="' + datetime.date.today().isoformat() + '"/>\n')
     html.append(u'<link rel="stylesheet" href="' + Options.css + '" type="text/css" media="screen"/>\n')
-    html.append(u'<title>' + Options.title + '</title>\n')
+    html += TitleOutput().gethtml(container)
     html.append('</head>\n')
     html.append('<body>\n')
     html.append('<div id="globalWrapper">\n')
     return html
+
+class TitleOutput(object):
+  "Return the HTML title tag"
+
+  pdftitle = None
+
+  def gethtml(self, container):
+    "Return the title tag"
+    return ['<title>' + self.gettitle() + '</title>\n']
+
+  def gettitle(self):
+    "Return the correct title from the option or the PDF title"
+    if Options.title:
+      return Options.title
+    if TitleOutput.pdftitle:
+      return TitleOutput.pdftitle
+    return 'Converted document'
 
 class FooterOutput(object):
   "Return the HTML code for the footer"

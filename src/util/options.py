@@ -43,7 +43,7 @@ class Options(object):
   showlines = True
   unicode = False
   css = 'http://www.nongnu.org/elyxer/lyx.css'
-  title = 'Converted document'
+  title = None
   directory = '.'
   branches = dict()
 
