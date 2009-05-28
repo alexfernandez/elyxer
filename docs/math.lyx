@@ -129,7 +129,41 @@ Introduction
 
 \begin_layout Standard
 This document is intended as a showcase of the mathematical abilities of
- eLyXer.
+ eLyXer; for more information be sure to visit the 
+\begin_inset CommandInset href
+LatexCommand href
+name "main page"
+target "index.html"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+There is a 
+\begin_inset CommandInset href
+LatexCommand href
+name "non-Unicode version"
+target "math.html"
+
+\end_inset
+
+ of this page with midspaces and a 
+\begin_inset CommandInset href
+LatexCommand href
+name "Unicode version"
+target "math-unicode.html"
+
+\end_inset
+
+ with mathematical spaces (generated with 
+\family typewriter
+--unicode
+\family default
+).
+ Mind you, despite the name spaces are the only difference.
+ Check the one that best suits you.
 \end_layout
 
 \begin_layout Section
@@ -154,7 +188,41 @@ Greek symbols are very important in equations:
 \end_inset
 
 , 
-\begin_inset Formula $\Omega$
+\begin_inset Formula $\Xi$
+\end_inset
+
+.
+ eLyXer offers a complete set in both upper case: 
+\begin_inset Formula $A\Omega$
+\end_inset
+
+ and lower case: 
+\begin_inset Formula $\alpha\omega$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Math Symbols
+\end_layout
+
+\begin_layout Standard
+eLyXer supports the whole set of math symbols in 
+\begin_inset CommandInset href
+LatexCommand href
+name "John D. Cook's list."
+target "http://www.johndcook.com/math_symbols.html"
+
+\end_inset
+
+: 
+\begin_inset Formula $\exists\partial\nabla\geq$
+\end_inset
+
+.
+ It can also render a few more: 
+\begin_inset Formula $\propto\times$
 \end_inset
 
 .
@@ -165,12 +233,11 @@ Other Symbols
 \end_layout
 
 \begin_layout Standard
-Like arrows: 
+There are other symbols like arrows: 
 \begin_inset Formula $\leftarrow\rightarrow$
 \end_inset
 
-.
- Or geometrical shapes: 
+, or geometrical shapes: 
 \begin_inset Formula $\circ$
 \end_inset
 
@@ -179,6 +246,7 @@ Like arrows:
 \end_inset
 
 .
+ eLyXer offers limited support for them.
 \end_layout
 
 \begin_layout Subsection
@@ -192,6 +260,48 @@ Equations look good when items are properly separated.
 \end_inset
 
 .
+ 
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+Note: if you are viewing the 
+\begin_inset CommandInset href
+LatexCommand href
+name "non-Unicode version"
+target "math.html"
+
+\end_inset
+
+ of this page then you are in fact seeing midspaces, which are very similar
+ but not exactly the same: 
+\begin_inset Formula $\frac{4}{18}\mathrm{em}$
+\end_inset
+
+ for medium mathematical spaces versus 
+\begin_inset Formula $\frac{1}{2}\mathrm{en}$
+\end_inset
+
+, where 
+\begin_inset Formula $1\mathrm{em}=2\mathrm{en}$
+\end_inset
+
+.
+ Try out the 
+\begin_inset CommandInset href
+LatexCommand href
+name "Unicode version"
+target "math-unicode.html"
+
+\end_inset
+
+ -- and viceversa.
+ You can check the page title.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -262,6 +372,10 @@ reference "eq:first"
 Simple Structures
 \end_layout
 
+\begin_layout Standard
+Let's now see a few of the simpler structures that eLyXer can output.
+\end_layout
+
 \begin_layout Subsection
 Fractions
 \end_layout
@@ -314,7 +428,7 @@ lim
 \end_inset
 
  in plain style.
- Note that the limit does not appear below the 
+ Note that in HTML the limit does not actually appear below the 
 \begin_inset Quotes fld
 \end_inset
 

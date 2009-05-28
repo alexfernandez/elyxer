@@ -112,6 +112,32 @@ LICENSE
  file for details.
 \end_layout
 
+\begin_layout Standard
+The 
+\begin_inset LatexCommand htmlurl
+name "user guide"
+target "userguide.html"
+
+\end_inset
+
+ and the 
+\begin_inset LatexCommand url
+name "developer guide"
+target "devguide.html"
+
+\end_inset
+
+ can also be accessed online.
+ For the mathematically inclined: be sure to visit the 
+\begin_inset LatexCommand url
+name "Math Showcase"
+target "math.html"
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsection*
 Requirements
 \end_layout
@@ -195,7 +221,14 @@ $
 \end_layout
 
 \begin_layout Standard
-or see the user guide for details.
+or see the 
+\begin_inset LatexCommand htmlurl
+name "user guide"
+target "userguide.html"
+
+\end_inset
+
+ for details.
 \end_layout
 
 \begin_layout Subsection*
@@ -238,32 +271,6 @@ target "http://download.savannah.gnu.org/releases-noredirect/elyxer/"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-The 
-\begin_inset LatexCommand htmlurl
-name "user guide"
-target "userguide.html"
-
-\end_inset
-
- and the 
-\begin_inset LatexCommand url
-name "developer guide"
-target "devguide.html"
-
-\end_inset
-
- can also be accessed online.
- For the mathematically inclined: be sure to visit the 
-\begin_inset LatexCommand url
-name "Math Showcase"
-target "math.html"
-
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Subsection*
