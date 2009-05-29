@@ -793,8 +793,23 @@ key "w3c-validator"
 \end_layout
 
 \begin_layout Standard
-For better browser compatibility, mathematical spaces are substituted in
- the output with midspaces -- improving the output for some popular browsers.
+The CSS file for eLyXer uses some CSS2 features for math structures (fractions,
+ arrays).
+ This makes the output incompatible with older browsers; it requires Microsoft
+ Internet Explorer 7, Firefox 3, Safari 3 or Chrome 1.
+ Check the 
+\begin_inset LatexCommand url
+name "Math Showcase"
+target "math.html"
+
+\end_inset
+
+ to see if your browser can render eLyXer output correctly.
+\end_layout
+
+\begin_layout Standard
+For better browser compatibility, medium mathematical spaces are substituted
+ in the output with midspaces -- improving the output for some popular browsers.
  If you want your mathematical spaces back, just use the 
 \family typewriter
 --unicode
@@ -812,14 +827,7 @@ $
 \end_layout
 
 \begin_layout Standard
-Check the 
-\begin_inset LatexCommand url
-name "Math Showcase"
-target "math.html"
-
-\end_inset
-
- and also the 
+See the 
 \begin_inset LatexCommand url
 name "Math Showcase with Unicode"
 target "math-unicode.html"

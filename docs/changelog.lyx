@@ -105,8 +105,8 @@ Added
 \family typewriter
 --unicode
 \family default
- option to switch on full Unicode output; right now only re-adds mathematical
- spaces.
+ option to switch on full Unicode output; right now only re-adds medium
+ mathematical spaces.
 \end_layout
 
 \begin_layout Itemize
@@ -115,6 +115,10 @@ Included all Greek letters, upper and lower case; and common math symbols.
 
 \begin_layout Itemize
 Make title from command line option prevail over PDF title.
+\end_layout
+
+\begin_layout Itemize
+Specified minimum browser versions in the user guide and in the requirements.
 \end_layout
 
 \end_deeper

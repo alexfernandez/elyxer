@@ -167,6 +167,13 @@ Resource usage is minimum.
  Memory usage is also quite frugal, remaining always below 10 MB.
 \end_layout
 
+\begin_layout Standard
+The output requires XHTML, CSS2 and Unicode; therefore a CSS2-compatible
+ browser is required.
+ Minimum browser versions for some popular programs are: Microsoft Internet
+ Explorer 7, Mozilla Firefox 3, Safari 3 and Chrome 1.
+\end_layout
+
 \begin_layout Subsection*
 Usage
 \end_layout
