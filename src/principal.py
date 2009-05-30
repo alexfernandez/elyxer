@@ -39,15 +39,33 @@ from gen.factory import *
 class Book(object):
   "book in a lyx file"
 
-  def parsecontents(self, reader, writer):
+  def generatecontents(self, reader, writer):
     "Parse the contents of the reader and write them"
+    self.processcontents(reader,
+        lambda container: writer.write(container.gethtml()))
+
+  def generatetoc(self, reader, writer):
+    "Parse the contents of the reader and write a Table of Contents"
+    self.processcontents(reader,
+        lambda container: self.processtoc(container, writer))
+
+  def processtoc(self, container, writer):
+    "Postprocess a container and write it"
+    if hasattr(container, 'number'):
+      writer.write(container.type + ' ' + container.number + '\n')
+    floats = container.searchall(Float)
+    for float in floats:
+      writer.write(float.type + ' ' + float.number + '\n')
+
+  def processcontents(self, reader, process):
+    "Parse the contents and do some processing"
     factory = ContainerFactory()
     postproc = Postprocessor()
     while not reader.finished():
       containers = factory.createsome(reader)
       for container in containers:
         container = postproc.postprocess(container)
-        writer.write(container.gethtml())
+        process(container)
 
 def createbook(args):
   "Read a whole book, write it"
@@ -71,7 +89,10 @@ def createbook(args):
   writer = LineWriter(fileout)
   book = Book()
   try:
-    book.parsecontents(reader, writer)
+    if Options.toc:
+      book.generatetoc(reader, writer)
+    else:
+      book.generatecontents(reader, writer)
   except (BaseException, Exception):
     Trace.error('Failed at ' + reader.currentline())
     raise

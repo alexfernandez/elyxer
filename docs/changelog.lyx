@@ -129,6 +129,15 @@ Documented option
  (it existed already but was not in the docs).
 \end_layout
 
+\begin_layout Itemize
+Option 
+\family typewriter
+--toc
+\family default
+ can generate a Table Of Contents.
+ Not documented because it is only a start for bigger things.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.23 (20090524):

@@ -45,6 +45,7 @@ class Options(object):
   css = 'http://www.nongnu.org/elyxer/lyx.css'
   title = None
   directory = '.'
+  toc = False
   branches = dict()
 
   def parseoptions(self, args):
