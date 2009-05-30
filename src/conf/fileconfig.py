@@ -107,9 +107,10 @@ class ConfigWriter(object):
   def __init__(self, writer):
     self.writer = writer
 
-  def writeall(self, objects):
-    "Write a list of configuration objects"
-    for object in objects:
+  def writeall(self, types):
+    "Write a list of configuration objects given their class names"
+    for type in types:
+      object = type.__new__(type)
       self.write(object)
 
   def write(self, object):
@@ -128,7 +129,8 @@ class ConfigWriter(object):
     elif isinstance(value, dict):
       self.writedict(attr, value)
     else:
-      Trace.error('Unknown config type ' + value.__class__)
+      Trace.error('Unknown config type ' + value.__class__.__name__ +
+          ' in ' + attr)
 
   def writelist(self, attr, values):
     "Write a list attribute"

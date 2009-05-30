@@ -24,6 +24,7 @@
 
 import sys
 import datetime
+import conf.config
 from util.trace import Trace
 from util.options import *
 from conf.config import *
@@ -80,7 +81,8 @@ class Config(object):
     "Export configuration to a cfg file"
     linewriter = LineWriter(Config.cfg)
     writer = ConfigWriter(linewriter)
-    writer.writeall([FormulaConfig(), ContainerConfig(), BlackBoxConfig(), SpaceConfig(), TranslationConfig()])
+    configs = [globals()[x] for x in dir(conf.config) if x.endswith('Config')]
+    writer.writeall(configs)
 
   def exportpy(self):
     "Export configuration as a Python file"

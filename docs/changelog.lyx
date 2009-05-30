@@ -138,6 +138,18 @@ Option
  Not documented because it is only a start for bigger things.
 \end_layout
 
+\begin_layout Itemize
+Repaired configuration export to 
+\family typewriter
+base.cfg
+\family default
+: now all objects in 
+\family typewriter
+config.py
+\family default
+ are automatically exported.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.23 (20090524):
