@@ -121,6 +121,14 @@ Make title from command line option prevail over PDF title.
 Specified minimum browser versions in the user guide and in the requirements.
 \end_layout
 
+\begin_layout Itemize
+Documented option 
+\family typewriter
+--directory
+\family default
+ (it existed already but was not in the docs).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.23 (20090524):

@@ -519,8 +519,17 @@ title
 \begin_layout Description
 
 \family typewriter
+--
+\family default
+directory\InsetSpace ~
+<images_dir>: look for images in the directory specified.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
 --css\InsetSpace ~
-[new.css]
+<new.css>
 \family default
 : change default CSS.
  See below.
