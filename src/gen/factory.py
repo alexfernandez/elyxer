@@ -45,9 +45,8 @@ class ContainerFactory(object):
 
   def __init__(self):
     "Read table that convert start lines to containers"
-    typenames = ContainerConfig.starts
     types = dict()
-    for start, typename in typenames.iteritems():
+    for start, typename in ContainerConfig.starts.iteritems():
       types[start] = globals()[typename]
     self.tree = ParseTree(types)
 
