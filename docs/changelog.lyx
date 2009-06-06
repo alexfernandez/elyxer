@@ -78,7 +78,7 @@ Automatic insertion of release date in the changelog upon version release.
 
 \end_deeper
 \begin_layout Itemize
-0.24 (20090602):
+0.24 (2009-06-02):
 \end_layout
 
 \begin_deeper
@@ -166,7 +166,7 @@ config.py
 
 \end_deeper
 \begin_layout Itemize
-0.23 (20090524):
+0.23 (2009-05-24):
 \end_layout
 
 \begin_deeper
@@ -241,7 +241,7 @@ Got Index and nomenclature working again, added test file so they don't
 
 \end_deeper
 \begin_layout Itemize
-0.22 (20090515):
+0.22 (2009-05-15):
 \end_layout
 
 \begin_deeper
@@ -309,7 +309,7 @@ Unknown commands are shown in red:
 
 \end_deeper
 \begin_layout Itemize
-0.21 (20090511):
+0.21 (2009-05-11):
 \end_layout
 
 \begin_deeper
@@ -377,7 +377,7 @@ white
 
 \end_deeper
 \begin_layout Itemize
-0.20 (20090509):
+0.20 (2009-05-09):
 \end_layout
 
 \begin_deeper
@@ -420,7 +420,7 @@ Automated version generation, taking version number and date from config,
 
 \end_deeper
 \begin_layout Itemize
-0.19 (20090507):
+0.19 (2009-05-07):
 \end_layout
 
 \begin_deeper
@@ -465,7 +465,7 @@ Listings and document abstracts are displayed properly.
 
 \end_deeper
 \begin_layout Itemize
-0.18 (20090504):
+0.18 (2009-05-04):
 \end_layout
 
 \begin_deeper
@@ -517,7 +517,7 @@ All configuration is now read from (and written to) plain text files.
 
 \end_deeper
 \begin_layout Itemize
-0.17 (20090427):
+0.17 (2009-04-27):
 \end_layout
 
 \begin_deeper
@@ -581,7 +581,7 @@ Cases are working (not perfect: with a bar instead of a bracket, but working).
 
 \end_deeper
 \begin_layout Itemize
-0.16 (20090422):
+0.16 (2009-04-22):
 \end_layout
 
 \begin_deeper
@@ -608,7 +608,7 @@ Sums and integral limits are properly displayed with respect to the symbol:
 
 \end_deeper
 \begin_layout Itemize
-0.15 (20090419):
+0.15 (2009-04-19):
 \end_layout
 
 \begin_deeper
@@ -642,7 +642,7 @@ Float links point to the start of the table or figure, not to the caption.
 
 \end_deeper
 \begin_layout Itemize
-0.14 (20090413):
+0.14 (2009-04-13):
 \end_layout
 
 \begin_deeper
@@ -674,7 +674,7 @@ Arrays with vertical alignment are correctly parsed.
 
 \end_deeper
 \begin_layout Itemize
-0.13 (20090412):
+0.13 (2009-04-12):
 \end_layout
 
 \begin_deeper
@@ -722,7 +722,7 @@ Error messages now show the line where they happen.
 
 \end_deeper
 \begin_layout Itemize
-0.12 (20090405):
+0.12 (2009-04-05):
 \end_layout
 
 \begin_deeper
@@ -757,7 +757,7 @@ LyX guides parse completely.
 
 \end_deeper
 \begin_layout Itemize
-0.11 (20090327):
+0.11 (2009-03-27):
 \end_layout
 
 \begin_deeper
@@ -783,7 +783,7 @@ Floats appear centered on-screen.
 
 \end_deeper
 \begin_layout Itemize
-0.10 (20090323):
+0.10 (2009-03-23):
 \end_layout
 
 \begin_deeper
@@ -808,7 +808,7 @@ Added a few font families for equations.
 
 \end_deeper
 \begin_layout Itemize
-0.9 (20090321):
+0.9 (2009-03-21):
 \end_layout
 
 \begin_deeper
@@ -861,7 +861,7 @@ UserGuide.lyx
 
 \end_deeper
 \begin_layout Itemize
-0.8 (20090320):
+0.8 (2009-03-20):
 \end_layout
 
 \begin_deeper
@@ -907,7 +907,7 @@ Intro.lyx
 
 \end_deeper
 \begin_layout Itemize
-0.7 (20090316):
+0.7 (2009-03-16):
 \end_layout
 
 \begin_deeper
@@ -982,7 +982,7 @@ Math.lyx
 
 \end_deeper
 \begin_layout Itemize
-0.6 (20090315):
+0.6 (2009-03-15):
 \end_layout
 
 \begin_deeper
@@ -1008,7 +1008,7 @@ Added index page and logo.
 
 \end_deeper
 \begin_layout Itemize
-0.5 (20090314):
+0.5 (2009-03-14):
 \end_layout
 
 \begin_deeper
@@ -1042,7 +1042,7 @@ Nested lists working.
 
 \end_deeper
 \begin_layout Itemize
-0.4 (20090312):
+0.4 (2009-03-12):
 \end_layout
 
 \begin_deeper
@@ -1081,15 +1081,15 @@ Container
 
 \end_deeper
 \begin_layout Itemize
-0.3 (20090311): Now works with generic Insets.
+0.3 (2009-03-11): Now works with generic Insets.
 \end_layout
 
 \begin_layout Itemize
-0.2 (20090311): ImageMagick is not required anymore.
+0.2 (2009-03-11): ImageMagick is not required anymore.
 \end_layout
 
 \begin_layout Itemize
-0.1 (20090310): first public version.
+0.1 (2009-03-10): first public version.
 \end_layout
 
 \end_body
