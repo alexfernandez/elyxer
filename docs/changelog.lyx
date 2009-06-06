@@ -64,7 +64,17 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
-0.24 (unreleased):
+0.25 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Added new characters: German dash separator, a few arrows.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+0.24 (20090602):
 \end_layout
 
 \begin_deeper
