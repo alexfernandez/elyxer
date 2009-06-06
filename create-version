@@ -23,6 +23,10 @@ VERSION=$(./elyxer.py --hardversion)
 DATE=$(./elyxer.py --versiondate)
 echo "Creating version $VERSION from $DATE"
 
+# Insert version date in changelog
+src/textchange.py "unreleased" $DATE docs/changelog.lyx
+./elyxer.py --title="eLyXer changelog" --css "lyx.css" docs/changelog.lyx docs/changelog.html
+
 # Push code
 git push
 

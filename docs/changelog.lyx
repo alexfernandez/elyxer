@@ -72,6 +72,10 @@ target "index.html"
 Added new characters: German dash separator, a few arrows.
 \end_layout
 
+\begin_layout Itemize
+Automatic insertion of release date in the changelog upon version release.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.24 (20090602):
