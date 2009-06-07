@@ -946,6 +946,13 @@ Images are lost during conversion from within LyX.
  We are working with LyX developers to solve the issue.
 \end_layout
 
+\begin_layout Enumerate
+The table of contents (and lists of objects) are lost in translation.
+ Since eLyXer is currently a single-pass converter, it cannot know beforehand
+ what the document will contain.
+ A second processing pass might be added in the future to address this issue.
+\end_layout
+
 \begin_layout Subsection
 Contact Information
 \end_layout
