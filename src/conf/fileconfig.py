@@ -40,11 +40,13 @@ class ConfigReader(object):
   def parse(self):
     "Parse the whole file"
     while not self.reader.finished():
-      self.parseline(self.reader.currentnonblank())
+      self.parseline(self.reader.currentline())
       self.reader.nextline()
 
   def parseline(self, line):
     "Parse a single line"
+    if line == '\n':
+      return
     line = line[:-1]
     if line.startswith('#'):
       return

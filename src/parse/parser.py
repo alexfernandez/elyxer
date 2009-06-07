@@ -88,7 +88,7 @@ class Parser(object):
 
   def parseending(self, reader, ending, process):
     "Parse the contents of the container"
-    while not reader.currentnonblank().startswith(self.ending):
+    while not reader.currentline().startswith(self.ending):
       process()
 
   def __unicode__(self):
@@ -212,7 +212,6 @@ class HeaderParser(Parser):
       return
     # no match
     self.parseparameter(reader)
-    reader.nextline()
 
   def parsebranch(self, reader):
     branch = reader.currentline().split()[1]

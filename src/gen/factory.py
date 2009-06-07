@@ -52,7 +52,10 @@ class ContainerFactory(object):
 
   def createsome(self, reader):
     "Parse a list of containers"
-    #Trace.debug('processing "' + reader.currentline() + '"')
+    #Trace.debug('processing "' + reader.currentline().strip() + '"')
+    if reader.currentline() == '\n':
+      reader.nextline()
+      return []
     type = self.tree.find(reader)
     container = type.__new__(type)
     container.__init__()

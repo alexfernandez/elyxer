@@ -45,16 +45,10 @@ class LineReader(object):
       self.readline()
     return self.current
 
-  def currentnonblank(self):
-    "Get the current nonblank line"
-    while (self.currentline() == '\n'):
-      self.nextline()
-    return self.currentline()
-
   def currentsplit(self):
     "Get the current nonblank line, split into words"
     if not self.split:
-      self.split = self.currentnonblank().split()
+      self.split = self.currentline().split()
     return self.split
 
   def nextline(self):
