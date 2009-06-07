@@ -39,7 +39,7 @@ class ConfigReader(object):
 
   def parse(self):
     "Parse the whole file"
-    while not self.reader.finished():
+    while not self.reader.finished:
       self.parseline(self.reader.currentline())
       self.reader.nextline()
 

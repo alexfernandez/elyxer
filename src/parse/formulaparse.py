@@ -64,7 +64,9 @@ class FormulaParser(Parser):
     else:
       Trace.error('Formula beginning ' + reader.currentline().strip +
           ' is unknown')
+    Trace.debug('Current: ' + reader.currentline())
     while not reader.currentline().startswith(self.ending):
+      Trace.debug('Starts: "' + unicode(reader.currentline().startswith(self.ending)) + '"')
       stripped = reader.currentline().strip()
       if len(stripped) > 0:
         Trace.error('Unparsed formula line ' + stripped)
@@ -96,10 +98,10 @@ class FormulaParser(Parser):
     index = line.index(start)
     formula = line[index + len(start):].strip()
     reader.nextline()
-    while not reader.currentline().endswith(ending + '\n'):
+    while not reader.currentline().endswith(ending):
       formula += reader.currentline()
       reader.nextline()
-    formula += reader.currentline()[:-len(ending) - 1]
+    formula += reader.currentline()[:-len(ending)]
     reader.nextline()
     return formula
 

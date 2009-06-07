@@ -36,7 +36,7 @@ class Parser(object):
 
   def parseheader(self, reader):
     "Parse the header"
-    header = reader.currentsplit()
+    header = reader.currentline().split()
     reader.nextline()
     self.begin = reader.linenumber
     return header
@@ -86,8 +86,8 @@ class Parser(object):
       attrs[attrkey] = value
     return key, attrs
 
-  def parseending(self, reader, ending, process):
-    "Parse the contents of the container"
+  def parseending(self, reader, process):
+    "Parse until the current ending is found"
     while not reader.currentline().startswith(self.ending):
       process()
 
@@ -125,7 +125,7 @@ class TextParser(Parser):
 
   def isending(self, reader):
     "Check if text is ending"
-    current = reader.currentsplit()
+    current = reader.currentline().split()
     if len(current) == 0:
       return False
     if current[0] in self.endings:
@@ -142,8 +142,7 @@ class ExcludingParser(Parser):
   def parse(self, reader):
     "Parse everything up to (and excluding) the final line"
     contents = []
-    self.parseending(reader, self.ending,
-        lambda: self.parsecontainers(reader, contents))
+    self.parseending(reader, lambda: self.parsecontainers(reader, contents))
     return contents
 
   def parsecontainers(self, reader, contents):
@@ -165,7 +164,7 @@ class BoundedDummy(Parser):
 
   def parse(self, reader):
     "Parse the contents of the container"
-    self.parseending(reader, self.ending, lambda: reader.nextline())
+    self.parseending(reader, lambda: reader.nextline())
     # skip last line
     reader.nextline()
     return []
@@ -199,7 +198,7 @@ class HeaderParser(Parser):
 
   def parse(self, reader):
     "Parse header parameters into a dictionary"
-    self.parseending(reader, self.ending, lambda: self.parseline(reader))
+    self.parseending(reader, lambda: self.parseline(reader))
     # skip last line
     reader.nextline()
     return []

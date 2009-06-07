@@ -53,7 +53,7 @@ class ContainerFactory(object):
   def createsome(self, reader):
     "Parse a list of containers"
     #Trace.debug('processing "' + reader.currentline().strip() + '"')
-    if reader.currentline() == '\n':
+    if reader.currentline() == '':
       reader.nextline()
       return []
     type = self.tree.find(reader)
@@ -123,7 +123,7 @@ class ParseTree(object):
   def find(self, reader):
     "Find the current sentence in the tree"
     branches = [self.root]
-    for piece in reader.currentsplit():
+    for piece in reader.currentline().split():
       current = branches[-1]
       piece = piece.rstrip('>')
       if piece in current:

@@ -38,7 +38,7 @@ def process(reader, writer, license):
     writer.writestring(line)
   while not reader.currentline().startswith(mark):
     reader.nextline()
-  while not reader.finished():
+  while not reader.finished:
     line = reader.currentline()
     writer.writestring(line)
     reader.nextline()

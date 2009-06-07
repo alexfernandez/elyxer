@@ -106,6 +106,31 @@ Display a FATAL error (and terminate) when trying to read beyond the end
  of the document.
 \end_layout
 
+\begin_layout Itemize
+Cross-platform support for newlines.
+ Besides the Unix 
+\family typewriter
+
+\backslash
+n
+\family default
+, now supports Windows (
+\family typewriter
+
+\backslash
+r
+\backslash
+n
+\family default
+) and Mac OS X (
+\family typewriter
+
+\backslash
+r
+\family default
+) newlines.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.24 (2009-06-02):

@@ -34,45 +34,37 @@ class LineReader(object):
     if isinstance(filename, file):
       self.file = filename
     else:
-      self.file = codecs.open(filename, 'r', "utf-8")
+      self.file = codecs.open(filename, 'rU', "utf-8")
     self.linenumber = 0
     self.current = None
-    self.split = None
+    self.mustread = True
+    self.finished = False
 
   def currentline(self):
     "Get the current line"
-    if not self.current:
+    if self.mustread:
       self.readline()
     return self.current
 
-  def currentsplit(self):
-    "Get the current nonblank line, split into words"
-    if not self.split:
-      self.split = self.currentline().split()
-    return self.split
-
   def nextline(self):
     "Go to next line"
-    if self.finished():
+    if self.finished:
       Trace.fatal('Read beyond file end')
-    self.current = None
-    self.split = None
+    self.mustread = True
 
   def readline(self):
     "Read a line from file"
     self.current = self.file.readline()
     if self.file == sys.stdin:
       self.current = self.current.decode('utf-8')
+    if len(self.current) == 0:
+      self.finished = True
+    self.current = self.current.rstrip('\n\r')
     self.linenumber += 1
+    self.mustread = False
     Trace.prefix = 'Line ' + unicode(self.linenumber) + ': '
     if self.linenumber % 1000 == 0:
       Trace.message('Parsing')
-
-  def finished(self):
-    "Have we finished reading the file"
-    if len(self.currentline()) == 0:
-      return True
-    return False
 
   def close(self):
     self.file.close()

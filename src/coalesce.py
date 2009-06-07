@@ -59,7 +59,7 @@ def conflate(reader, writer):
   "Conflate all Python files used in filein to fileout"
   if not reader:
     return
-  while not reader.finished():
+  while not reader.finished:
     line = reader.currentline()
     if line.startswith('from'):
       filename = line.split()[1].replace('.', '/') + '.py'
