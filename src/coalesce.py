@@ -66,7 +66,7 @@ def conflate(reader, writer):
       newreader = getreader(filename)
       conflate(newreader, writer)
     else:
-      writer.writestring(line)
+      writer.writeline(line)
     reader.nextline()
   reader.close()
 
