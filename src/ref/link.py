@@ -190,10 +190,11 @@ class URL(Link):
 
   def process(self):
     "Read URL from parameters"
-    self.url = self.escape(self.parser.parameters['target'])
+    name = self.escape(self.parser.parameters['target'])
     if 'type' in self.parser.parameters:
-      self.url = self.escape(self.parser.parameters['type']) + self.url
-    name = self.url
+      self.url = self.escape(self.parser.parameters['type']) + name
+    else:
+      self.url = name
     if 'name' in self.parser.parameters:
       name = self.parser.parameters['name']
     self.contents = [Constant(name)]
@@ -203,9 +204,6 @@ class FlexURL(URL):
 
   def process(self):
     "Read URL from contents"
-    strings = self.searchall(StringContainer)
-    Trace.debug('Contents: ' + unicode(strings))
-    self.contents = strings
     self.url = self.extracttext()
 
 class LinkOutput(object):
