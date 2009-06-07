@@ -45,9 +45,8 @@ class ConfigReader(object):
 
   def parseline(self, line):
     "Parse a single line"
-    if line == '\n':
+    if line == '':
       return
-    line = line[:-1]
     if line.startswith('#'):
       return
     if line.startswith('['):
