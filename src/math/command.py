@@ -135,16 +135,10 @@ class OneParamFunction(FormulaCommand):
     self.output = TaggedOutput().settag(self.functions[command])
     self.parseparameter(pos)
 
-class LabelFunction(FormulaCommand):
-  "A function that acts as a label"
+class LiteralFunction(OneParamFunction):
+  "A function where parameters are read literally"
 
-  functions = FormulaConfig.labelfunctions
-
-  def detect(self, pos):
-    "Detect the start of the function"
-    if self.findcommand(pos, self.functions):
-      return True
-    return False
+  functions = FormulaConfig.literalfunctions
 
   def parse(self, pos):
     "Parse a literal parameter"
@@ -153,6 +147,21 @@ class LabelFunction(FormulaCommand):
     self.output = TaggedOutput().settag(self.functions[command])
     bracket = Bracket().parseliteral(pos)
     self.add(bracket)
+
+  def process(self):
+    "Move the bracket contents to a constant"
+    self.type = 'font'
+    text = self.contents[0].contents
+    self.contents = [FormulaConstant(text)]
+
+class LabelFunction(LiteralFunction):
+  "A function that acts as a label"
+
+  functions = FormulaConfig.labelfunctions
+
+  def process(self):
+    "Do not process the inside"
+    self.type = 'font'
 
 class FontFunction(OneParamFunction):
   "A function of one parameter that changes the font"
@@ -228,7 +237,7 @@ class UnknownCommand(FormulaCommand):
 
 FormulaFactory.bits += [
     EmptyCommand(), OneParamFunction(), DecoratingFunction(),
-    FractionFunction(), FontFunction(), LabelFunction(),
+    FractionFunction(), FontFunction(), LabelFunction(), LiteralFunction(),
     ]
 
 FormulaFactory.unknownbits += [ UnknownCommand() ]

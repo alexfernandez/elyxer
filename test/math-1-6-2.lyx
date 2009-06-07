@@ -339,6 +339,66 @@ x+1 & i<3\end{cases}$
 \end_layout
 
 \begin_layout Chapter
+Fonts
+\end_layout
+
+\begin_layout Standard
+Fonts can be switched on and on.
+\end_layout
+
+\begin_layout Standard
+Regular text is shown italicized.
+ Variable: 
+\begin_inset Formula $meters$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Some font styles.
+ Roman: 
+\begin_inset Formula $1\mathrm{mathrm}$
+\end_inset
+
+.
+ Sans serif: 
+\begin_inset Formula $2\mathsf{mathsf}$
+\end_inset
+
+.
+ Typewriter: 
+\begin_inset Formula $3\mathtt{mathtt}$
+\end_inset
+
+.
+ Bold: 
+\begin_inset Formula $4\mathbf{mathbf}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Regular text.
+ Normal text: 
+\begin_inset Formula $5\textrm{textfm}$
+\end_inset
+
+.
+ Literal text: 
+\begin_inset Formula $6\mbox{mbox text}$
+\end_inset
+
+.
+ Phonetic alphabet: 
+\begin_inset Formula $7\text{\textipa{abcde}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Chapter
 Bye-bye
 \end_layout
 

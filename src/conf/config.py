@@ -240,6 +240,10 @@ class FormulaConfig(object):
       u'^', u'_', 
       ]
 
+  literalfunctions = {
+      u'\\mbox':u'span class="mbox"', 
+      }
+
   modified = {
       u'\n':u'', u' ':u'', u'&':u'	', u'\'':u'’', u'+':u' + ', u',':u', ', 
       u'-':u' − ', u'/':u' ⁄ ', u'<':u' &lt; ', u'=':u' = ', u'>':u' &gt; ', 
@@ -248,10 +252,11 @@ class FormulaConfig(object):
   onefunctions = {
       u'\\bar':u'span class="bar"', u'\\begin{array}':u'span class="arraydef"', 
       u'\\bigl':u'span class="bigsymbol"', u'\\bigr':u'span class="bigsymbol"', 
-      u'\\left':u'span class="symbol"', u'\\mbox':u'span class="mbox"', 
+      u'\\hphantom':u'span class="phantom"', u'\\left':u'span class="symbol"', 
       u'\\overline':u'span class="overline"', 
-      u'\\right':u'span class="symbol"', u'\\sqrt':u'span class="sqrt"', 
-      u'\\underline':u'u', u'^':u'sup', u'_':u'sub', 
+      u'\\phantom':u'span class="phantom"', u'\\right':u'span class="symbol"', 
+      u'\\sqrt':u'span class="sqrt"', u'\\underline':u'u', 
+      u'\\vphantom':u'span class="phantom"', u'^':u'sup', u'_':u'sub', 
       }
 
   starts = {
@@ -268,7 +273,7 @@ class GeneralConfig(object):
   "Configuration class from config file"
 
   version = {
-      u'date':u'2009-06-07', u'number':u'0.24', 
+      u'date':u'2009-06-07', u'number':u'0.25', 
       }
 
 class NumberingConfig(object):
