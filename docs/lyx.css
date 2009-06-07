@@ -289,6 +289,9 @@ h1.title {
 h2.author {
 	text-align: center;
 }
+h2.Date {
+	text-align: center;
+}
 span.text {
 	font-style: normal;
 }
@@ -383,9 +386,6 @@ pre {
 a.Label {
 	text-decoration: none;
 	color: #000000;
-}
-div.Date {
-	text-align: center;
 }
 div.wrap-l, div.wrap-o, div.wrap-i {
 	margin: 2ex;

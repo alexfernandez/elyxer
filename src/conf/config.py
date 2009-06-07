@@ -321,7 +321,7 @@ class TagConfig(object):
       }
 
   layouts = {
-      u'Center':u'div', u'Chapter':u'h1', u'LyX-Code':u'pre', 
+      u'Center':u'div', u'Chapter':u'h1', u'Date':u'h2', u'LyX-Code':u'pre', 
       u'Paragraph':u'div', u'Part':u'h1', u'Quotation':u'blockquote', 
       u'Quote':u'blockquote', u'Section':u'h2', u'Subsection':u'h3', 
       u'Subsubsection':u'h4', 

@@ -81,7 +81,24 @@ New formula commands: phantom text (for spacing), mbox (literal text).
 \end_layout
 
 \begin_layout Itemize
-Solved bug in URLs: make FlexURLs point to the link in their contents.
+Solved two bugs in URLs: make FlexURLs point to the link in their contents,
+ and do not show 
+\begin_inset Quotes eld
+\end_inset
+
+mailto:
+\begin_inset Quotes erd
+\end_inset
+
+ in email links.
+\end_layout
+
+\begin_layout Itemize
+Properly display Date layouts as 
+\family typewriter
+<h2>
+\family default
+.
 \end_layout
 
 \end_deeper
