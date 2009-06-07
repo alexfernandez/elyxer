@@ -59,6 +59,8 @@ class LineReader(object):
 
   def nextline(self):
     "Go to next line"
+    if self.finished():
+      Trace.fatal('Read beyond file end')
     self.current = None
     self.split = None
 

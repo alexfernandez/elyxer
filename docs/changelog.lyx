@@ -101,6 +101,11 @@ Properly display Date layouts as
 .
 \end_layout
 
+\begin_layout Itemize
+Display a FATAL error (and terminate) when trying to read beyond the end
+ of the document.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.24 (2009-06-02):

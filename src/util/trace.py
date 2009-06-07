@@ -53,6 +53,11 @@ class Trace(object):
       message = Trace.prefix + message
     Trace.show(message, sys.stderr)
 
+  def fatal(cls, message):
+    "Show an error message and terminate"
+    Trace.error('FATAL: ' + message)
+    exit(-1)
+
   def show(cls, message, channel):
     "Show a message out of a channel"
     message = message.encode('utf-8')
@@ -61,5 +66,6 @@ class Trace(object):
   debug = classmethod(debug)
   message = classmethod(message)
   error = classmethod(error)
+  fatal = classmethod(fatal)
   show = classmethod(show)
 
