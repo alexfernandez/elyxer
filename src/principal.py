@@ -61,7 +61,7 @@ class Book(object):
     "Parse the contents and do some processing"
     factory = ContainerFactory()
     postproc = Postprocessor()
-    while not reader.finished:
+    while not reader.finished():
       containers = factory.createsome(reader)
       for container in containers:
         container = postproc.postprocess(container)

@@ -38,7 +38,7 @@ class LineReader(object):
     self.linenumber = 0
     self.current = None
     self.mustread = True
-    self.finished = False
+    self.depleted = False
 
   def currentline(self):
     "Get the current line"
@@ -48,7 +48,7 @@ class LineReader(object):
 
   def nextline(self):
     "Go to next line"
-    if self.finished:
+    if self.depleted:
       Trace.fatal('Read beyond file end')
     self.mustread = True
 
@@ -58,13 +58,19 @@ class LineReader(object):
     if self.file == sys.stdin:
       self.current = self.current.decode('utf-8')
     if len(self.current) == 0:
-      self.finished = True
+      self.depleted = True
     self.current = self.current.rstrip('\n\r')
     self.linenumber += 1
     self.mustread = False
     Trace.prefix = 'Line ' + unicode(self.linenumber) + ': '
     if self.linenumber % 1000 == 0:
       Trace.message('Parsing')
+
+  def finished(self):
+    "Find out if the file is finished"
+    if self.mustread:
+      self.readline()
+    return self.depleted
 
   def close(self):
     self.file.close()

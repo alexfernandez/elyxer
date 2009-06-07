@@ -51,7 +51,7 @@ class TextChange(object):
 def process(reader, writer, change):
   "Change all lines in the file"
   counter = 0
-  while not reader.finished:
+  while not reader.finished():
     line = reader.currentline()
     if change.affects(line):
       line = change.do(line)
