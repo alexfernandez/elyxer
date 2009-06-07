@@ -80,6 +80,10 @@ Automatic insertion of release date in the changelog upon version release.
 New formula commands: phantom text (for spacing), mbox (literal text).
 \end_layout
 
+\begin_layout Itemize
+Solved bug in URLs: make FlexURLs point to the link in their contents.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.24 (2009-06-02):
