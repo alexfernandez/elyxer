@@ -204,7 +204,9 @@ class FlexURL(URL):
   def process(self):
     "Read URL from contents"
     strings = self.searchall(StringContainer)
+    Trace.debug('Contents: ' + unicode(strings))
     self.contents = strings
+    self.url = self.extracttext()
 
 class LinkOutput(object):
   "A link pointing to some destination"
