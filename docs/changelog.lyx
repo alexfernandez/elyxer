@@ -131,6 +131,16 @@ r
 ) newlines.
 \end_layout
 
+\begin_layout Itemize
+Support for 
+\family typewriter
+
+\backslash
+unit
+\family default
+ command, showing units for a magnitude.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.24 (2009-06-02):

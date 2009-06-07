@@ -224,6 +224,9 @@ class WholeFormula(FormulaBit):
 class Bracket(FormulaBit):
   "A {} bracket inside a formula"
 
+  start = FormulaConfig.starts['bracket']
+  ending = FormulaConfig.endings['bracket']
+
   def __init__(self):
     "Create a (possibly literal) new bracket"
     FormulaBit.__init__(self)
@@ -231,7 +234,7 @@ class Bracket(FormulaBit):
 
   def detect(self, pos):
     "Detect the start of a bracket"
-    return pos.checkfor('{')
+    return pos.checkfor(self.start)
 
   def parse(self, pos):
     "Parse the bracket"
@@ -239,22 +242,19 @@ class Bracket(FormulaBit):
 
   def parseliteral(self, pos):
     "Parse a literal bracket"
-    if not self.detect(pos):
-      Trace.error('No bracket at ' + pos.remaining())
-      return self
     self.parsecomplete(pos, self.innerliteral)
     return self
 
   def parsecomplete(self, pos, innerparser):
-    if not pos.checkfor('{'):
-      Trace.error('Bracket should start with {')
+    if not pos.checkfor(self.start):
+      Trace.error('Bracket should start with ' + self.start)
       return
-    self.addoriginal('{', pos)
+    self.addoriginal(self.start, pos)
     innerparser(pos)
-    if pos.isout() or pos.current() != '}':
-      Trace.error('Missing } in ' + pos.remaining())
+    if pos.isout() or pos.current() != self.ending:
+      Trace.error('Missing ' + self.ending + ' in ' + pos.remaining())
       return
-    self.addoriginal('}', pos)
+    self.addoriginal(self.ending, pos)
 
   def innerformula(self, pos):
     "Parse a whole formula inside the bracket"
@@ -266,13 +266,13 @@ class Bracket(FormulaBit):
     if pos.isout():
       Trace.error('Unexpected end of bracket')
       return
-    if pos.current() != '}':
+    if pos.current() != self.ending:
       Trace.error('No formula in bracket at ' + pos.remaining())
     return
 
   def innerliteral(self, pos):
     "Parse a literal inside the bracket, which cannot generate html"
-    literal = self.glob(pos, lambda(p): p.current() != '}')
+    literal = self.glob(pos, lambda(p): p.current() != self.ending)
     self.addoriginal(literal, pos)
     self.contents = literal
 
@@ -280,6 +280,12 @@ class Bracket(FormulaBit):
     "Process the bracket"
     if self.inner:
       self.inner.process()
+
+class SquareBracket(Bracket):
+  "A [] bracket inside a formula"
+
+  start = FormulaConfig.starts['squarebracket']
+  ending = FormulaConfig.endings['squarebracket']
 
 class FormulaFactory(object):
   "Construct bits of formula"

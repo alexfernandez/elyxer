@@ -193,6 +193,34 @@ class DecoratingFunction(OneParamFunction):
       self.output = FixedOutput()
       self.html = [FormulaConfig.alphacommands[self.original]]
 
+class HybridFunction(FormulaCommand):
+  "Read a function with two parameters: [] and {}"
+
+  def detect(self, pos):
+    "Detect the start of the function"
+    if self.findcommand(pos, FormulaConfig.hybridfunctions):
+      return True
+    return False
+
+  def parse(self, pos):
+    "Parse a function with [] and {} parameters"
+    command = self.findcommand(pos, FormulaConfig.hybridfunctions)
+    self.addoriginal(command, pos)
+    self.parsemagnitude(pos)
+    unit = FormulaConstant(Bracket().parseliteral(pos).contents)
+    unit.type = 'font'
+    self.contents[0].add(unit)
+
+  def parsemagnitude(self, pos):
+    "Parse the magnitude bit"
+    magnitude = SquareBracket().parseliteral(pos).contents
+    Trace.debug('Magnitude: ' + magnitude)
+    newpos = Position(magnitude)
+    whole = WholeFormula()
+    whole.parse(newpos)
+    whole.process()
+    self.contents = [whole]
+
 class FractionFunction(FormulaCommand):
   "A fraction with two parameters"
 
@@ -238,6 +266,7 @@ class UnknownCommand(FormulaCommand):
 FormulaFactory.bits += [
     EmptyCommand(), OneParamFunction(), DecoratingFunction(),
     FractionFunction(), FontFunction(), LabelFunction(), LiteralFunction(),
+    HybridFunction(),
     ]
 
 FormulaFactory.unknownbits += [ UnknownCommand() ]

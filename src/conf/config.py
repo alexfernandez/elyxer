@@ -206,8 +206,9 @@ class FormulaConfig(object):
       }
 
   endings = {
-      u'Cell':u'&', u'Row':u'\\\\', u'common':u'\\end', u'complex':u'\\]', 
-      u'endafter':u'}', u'endbefore':u'\\end{', 
+      u'Cell':u'&', u'Row':u'\\\\', u'bracket':u'}', u'common':u'\\end', 
+      u'complex':u'\\]', u'endafter':u'}', u'endbefore':u'\\end{', 
+      u'squarebracket':u']', 
       }
 
   fontfunctions = {
@@ -226,6 +227,10 @@ class FormulaConfig(object):
   fractionspans = {
       u'first':u'span class="numerator"', 
       u'second':u'span class="denominator"', u'whole':u'span class="fraction"', 
+      }
+
+  hybridfunctions = {
+      u'\\unit':u'span class="unit"', 
       }
 
   labelfunctions = {
@@ -262,7 +267,8 @@ class FormulaConfig(object):
   starts = {
       u'FormulaArray':u'\\begin{array}', u'FormulaCases':u'\\begin{cases}', 
       u'FormulaCommand':u'\\', u'beginafter':u'}', u'beginbefore':u'\\begin{', 
-      u'complex':u'\\[', u'root':u'\\sqrt', u'simple':u'$', 
+      u'bracket':u'{', u'complex':u'\\[', u'root':u'\\sqrt', u'simple':u'$', 
+      u'squarebracket':u'[', 
       }
 
   unmodified = [
