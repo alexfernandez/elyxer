@@ -40,30 +40,8 @@ class FormulaParser(Parser):
       return ['block']
   
   def parse(self, reader):
-    "Parse the formula"
-    simple = FormulaConfig.starts['simple']
-    beginbefore = FormulaConfig.starts['beginbefore']
-    beginafter = FormulaConfig.starts['beginafter']
-    if simple in reader.currentline():
-      rest = reader.currentline().split(simple, 1)[1]
-      if simple in rest:
-        # formula is $...$
-        formula = self.parsesingleliner(reader, simple, simple)
-      else:
-        # formula is multiline $...$
-        formula = self.parsemultiliner(reader, simple, simple)
-    elif FormulaConfig.starts['complex'] in reader.currentline():
-      # formula of the form \[...\]
-      formula = self.parsemultiliner(reader, FormulaConfig.starts['complex'], FormulaConfig.endings['complex'])
-    elif beginbefore in reader.currentline() and reader.currentline().strip().endswith(beginafter):
-      current = reader.currentline().strip()
-      endsplit = current.split(beginbefore)[1].split(beginafter)
-      startpiece = beginbefore + endsplit[0] + beginafter
-      endpiece = FormulaConfig.endings['endbefore'] + endsplit[0] + FormulaConfig.endings['endafter']
-      formula = self.parsemultiliner(reader, startpiece, endpiece)
-    else:
-      Trace.error('Formula beginning ' + reader.currentline().strip +
-          ' is unknown')
+    "Parse the formula until the end"
+    formula = self.parseformula(reader)
     while not reader.currentline().startswith(self.ending):
       stripped = reader.currentline().strip()
       if len(stripped) > 0:
@@ -71,6 +49,41 @@ class FormulaParser(Parser):
       reader.nextline()
     reader.nextline()
     return [formula]
+
+  def parseformula(self, reader):
+    "Parse the formula contents"
+    simple = FormulaConfig.starts['simple']
+    if simple in reader.currentline():
+      rest = reader.currentline().split(simple, 1)[1]
+      if simple in rest:
+        # formula is $...$
+        return self.parsesingleliner(reader, simple, simple)
+      # formula is multiline $...$
+      return self.parsemultiliner(reader, simple, simple)
+    if FormulaConfig.starts['complex'] in reader.currentline():
+      # formula of the form \[...\]
+      return self.parsemultiliner(reader, FormulaConfig.starts['complex'],
+          FormulaConfig.endings['complex'])
+    beginbefore = FormulaConfig.starts['beginbefore']
+    beginafter = FormulaConfig.starts['beginafter']
+    if beginbefore in reader.currentline():
+      if reader.currentline().strip().endswith(beginafter):
+        current = reader.currentline().strip()
+        endsplit = current.split(beginbefore)[1].split(beginafter)
+        startpiece = beginbefore + endsplit[0] + beginafter
+        endbefore = FormulaConfig.endings['endbefore']
+        endafter = FormulaConfig.endings['endafter']
+        endpiece = endbefore + endsplit[0] + endafter
+        return self.parsemultiliner(reader, startpiece, endpiece)
+      Trace.error('Missing ' + beginafter + ' in ' + reader.currentline())
+      return ''
+    begincommand = FormulaConfig.starts['FormulaCommand']
+    beginbracket = FormulaConfig.starts['bracket']
+    if begincommand in reader.currentline() and beginbracket in reader.currentline():
+      endbracket = FormulaConfig.endings['bracket']
+      return self.parsemultiliner(reader, beginbracket, endbracket)
+    Trace.error('Formula beginning ' + reader.currentline() + ' is unknown')
+    return ''
 
   def parsesingleliner(self, reader, start, ending):
     "Parse a formula in one line"
