@@ -32,8 +32,8 @@ from io.fileline import *
 class ConfigReader(object):
   "Read a configuration file"
 
-  def __init__(self, reader):
-    self.reader = reader
+  def __init__(self, filename):
+    self.reader = LineReader(filename)
     self.objects = dict()
     self.section = None
 
@@ -42,6 +42,7 @@ class ConfigReader(object):
     while not self.reader.finished():
       self.parseline(self.reader.currentline())
       self.reader.nextline()
+    return self
 
   def parseline(self, line):
     "Parse a single line"

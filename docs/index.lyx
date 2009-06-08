@@ -342,14 +342,21 @@ target "http://www.johndcook.com/"
 
 \end_inset
 
- for his wonderful lists of TeX and Unicode equivalents; to Christian Ridderströ
-m for helping me out right at the start; to Ignacio García for relentless
- encouragement; to Abdelrazak Younes, Pavel Sanda, Günther Milde, Olivier
- Ripoll, José Matos, Iain Mac Donald, Uwe Stöhr for their interesting suggestion
-s; to Nikos Alexandris, Joachim Kreimer-de Fries (Osnabryg), Richard Talley,
- Wolfgang Keller, Murray Eisenberg, Robert Orr, a Linux guy in Singapore,
- Anders Ekberg, Pavel Sanda, Steve Hastings, Sven Hoexter, Xie Chao, Uwe
- Stöhr for their testing and bug reporting.
+ and 
+\begin_inset LatexCommand url
+name "rikal"
+target "http://community.jedit.org/?q=node/view/1746"
+
+\end_inset
+
+ for their wonderful lists of TeX and Unicode equivalents; to Christian
+ Ridderström for helping me out right at the start; to Ignacio García for
+ relentless encouragement; to Abdelrazak Younes, Pavel Sanda, Günther Milde,
+ Olivier Ripoll, José Matos, Iain Mac Donald, Uwe Stöhr for their interesting
+ suggestions; to Nikos Alexandris, Joachim Kreimer-de Fries (Osnabryg),
+ Richard Talley, Wolfgang Keller, Murray Eisenberg, Robert Orr, a Linux
+ guy in Singapore, Anders Ekberg, Pavel Sanda, Steve Hastings, Sven Hoexter,
+ Xie Chao, Uwe Stöhr for their testing and bug reporting.
  A silent 
 \begin_inset Quotes eld
 \end_inset

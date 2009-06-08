@@ -64,7 +64,29 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
-0.25 (unreleased):
+0.26 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Added a lot of new LaTeX commands.
+\end_layout
+
+\begin_layout Itemize
+New mechanism to include new lists of 
+\begin_inset Quotes eld
+\end_inset
+
+command:Unicode
+\begin_inset Quotes erd
+\end_inset
+
+ equivalents.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+0.25 (2009-06-08):
 \end_layout
 
 \begin_deeper
@@ -139,6 +161,31 @@ Support for
 unit
 \family default
  command, showing units for a magnitude.
+\end_layout
+
+\begin_layout Itemize
+New format for formulae (instead of 
+\family typewriter
+$\SpecialChar \ldots{}
+$
+\family default
+ or 
+\family typewriter
+
+\backslash
+[\SpecialChar \ldots{}
+
+\backslash
+]
+\family default
+): 
+\family typewriter
+
+\backslash
+command{\SpecialChar \ldots{}
+}
+\family default
+.
 \end_layout
 
 \end_deeper

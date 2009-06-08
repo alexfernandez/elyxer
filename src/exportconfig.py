@@ -36,6 +36,7 @@ class Config(object):
 
   cfg = 'conf/base.cfg'
   py = 'conf/config.py'
+  addcfg = None
   help = False
 
   def run(self, args):
@@ -66,14 +67,18 @@ class Config(object):
     Trace.error('Usage: exportconfig.py [options] [cfg|py]')
     Trace.error('  cfg: export to text configuration file')
     Trace.error('  py: export to python file')
-    Trace.error('  options: --cfg base.cfg, --py config.py')
+    Trace.error('  options:')
+    Trace.error('    --cfg base.cfg: choose base config file')
+    Trace.error('    --addcfg add.cfg: load additional config file')
+    Trace.error('    --py config.py: choose Python config file')
     exit()
 
   def read(self):
     "Read from configuration file"
-    linereader = LineReader(Config.cfg)
-    reader = ConfigReader(linereader)
-    reader.parse()
+    reader = ConfigReader(Config.cfg).parse()
+    if Config.addcfg:
+      addreader = ConfigReader(Config.addcfg).parse()
+      self.mix(reader, addreader)
     reader.objects['GeneralConfig.version']['date'] = datetime.date.today().isoformat()
     return reader
 
@@ -98,6 +103,14 @@ class Config(object):
     option = args[0]
     del args[0]
     return option
+
+  def mix(self, reader, addreader):
+    "Mix two configuration files"
+    for name, object in addreader.objects.iteritems():
+      equiv = reader.objects[name]
+      for key, value in object.iteritems():
+        if not key in equiv:
+          equiv[key] = value
 
 config = Config()
 del sys.argv[0]
