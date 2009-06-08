@@ -56,7 +56,7 @@ def process(reader, writer, change):
     if change.affects(line):
       line = change.do(line)
       counter += 1
-    writer.writestring(line)
+    writer.writeline(line)
     reader.nextline()
   reader.close()
   return counter
