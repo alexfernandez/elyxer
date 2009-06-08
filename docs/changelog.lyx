@@ -69,7 +69,8 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-Added a lot of new LaTeX commands.
+Added a lot of new LaTeX commands, both for Unicode symbols and for math
+ functions.
 \end_layout
 
 \begin_layout Itemize
