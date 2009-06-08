@@ -111,6 +111,7 @@ class Config(object):
       for key, value in object.iteritems():
         if not key in equiv:
           equiv[key] = value
+          Trace.message('Key ' + key + ' not in base: ' + unicode(value))
 
 config = Config()
 del sys.argv[0]
