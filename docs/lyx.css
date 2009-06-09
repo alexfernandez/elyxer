@@ -236,14 +236,13 @@ sup.bigsymbol {
 	line-height: 150%;
 }
 span.symbolover {
-	font-style: italic;
+	display: inline-block;
 	text-align: center;
 	position: relative;
-	bottom: 0.4em;
-	left: -1.3ex;
-	padding: 0ex;
-	width: 0ex;
 	float: right;
+	right: 100%;
+	bottom: 0.5em;
+	width: 0px;
 }
 span.withsymbol {
 	display: inline-block;

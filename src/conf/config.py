@@ -235,8 +235,8 @@ class FormulaConfig(object):
 
   decoratingfunctions = {
       u'\\acute':u'´', u'\\breve':u'˘', u'\\check':u'ˇ', u'\\ddot':u'¨', 
-      u'\\dot':u'˙', u'\\grave':u'`', u'\\hat':u'^', u'\\tilde':u'˜', 
-      u'\\vec':u'→', 
+      u'\\dot':u'˙', u'\\grave':u'`', u'\\hat':u'^', u'\\overleftarrow':u'⟵', 
+      u'\\overrightarrow':u'⟶', u'\\tilde':u'˜', u'\\vec':u'→', 
       }
 
   endings = {

@@ -85,6 +85,24 @@ command:Unicode
  equivalents.
 \end_layout
 
+\begin_layout Itemize
+New decoration command 
+\family typewriter
+
+\backslash
+overrightarrow
+\family default
+, to show a long arrow above some text.
+\end_layout
+
+\begin_layout Itemize
+Solved bug: 
+\family typewriter
+--directory
+\family default
+ option was not working.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.25 (2009-06-08):
