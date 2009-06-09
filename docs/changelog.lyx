@@ -101,6 +101,7 @@ Solved bug:
 --directory
 \family default
  option was not working.
+ A new test for this option added.
 \end_layout
 
 \end_deeper
