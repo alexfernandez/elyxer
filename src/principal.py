@@ -67,6 +67,14 @@ class Book(object):
         container = postproc.postprocess(container)
         process(container)
 
+def readdir(filename):
+  "Read the current directory if needed"
+  if Options.directory != '.':
+    return
+  Options.directory = os.path.dirname(args[0])
+  if Options.directory == '':
+    Options.directory = '.'
+
 def createbook(args):
   "Read a whole book, write it"
   filein = sys.stdin
@@ -74,9 +82,7 @@ def createbook(args):
   if len(args) < 2:
     Trace.quietmode = True
   if len(args) > 0:
-    Options.directory = os.path.dirname(args[0])
-    if Options.directory == '':
-      Options.directory = '.'
+    readdir(args[0])
     filein = args[0]
     del args[0]
   if len(args) > 0:
