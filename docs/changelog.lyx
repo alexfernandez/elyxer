@@ -76,6 +76,10 @@ Units without the magnitude (the number) are working.
 Complex roots now working, added to the math showcase.
 \end_layout
 
+\begin_layout Itemize
+Leave JPEG images untransformed instead of converting them to PNG.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.26 (2009-06-10):

@@ -75,5 +75,14 @@ Second image: convoluted path.
 Third image: from another directory.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Graphics
+	filename mini-elyxer.jpg
+
+\end_inset
+
+Fourth image: from a JPEG file.
+\end_layout
+
 \end_body
 \end_document

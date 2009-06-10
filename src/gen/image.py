@@ -65,7 +65,11 @@ class Image(Container):
       dest = os.path.basename(origin)
     else:
       dest = origin
-    return os.path.splitext(dest)[0] + '.png'
+    base, ext = os.path.splitext(dest)
+    Trace.debug('Ext: ' + ext.lower())
+    if ext.lower() != '.jpg':
+      ext = '.png'
+    return base + ext
 
   def convert(self, origin, destination, density):
     "Convert an image to PNG"
