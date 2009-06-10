@@ -167,11 +167,11 @@ target "math-unicode.html"
 \end_layout
 
 \begin_layout Section
-Characters
+Typography
 \end_layout
 
 \begin_layout Standard
-Math characters are all over the map.
+Math formulae use a lot of different symbols and fonts.
 \end_layout
 
 \begin_layout Subsection
@@ -304,6 +304,93 @@ target "math-unicode.html"
 
 \end_layout
 
+\begin_layout Subsection
+Fonts
+\end_layout
+
+\begin_layout Standard
+Many fonts are used in equations.
+\end_layout
+
+\begin_layout Standard
+Regular text is shown italicized.
+ Variable: 
+\begin_inset Formula $length$
+\end_inset
+
+, 
+\begin_inset Formula $\alpha$
+\end_inset
+
+, 
+\begin_inset Formula $Speed$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Some font styles can be used in equations.
+ Roman: 
+\begin_inset Formula $1\mathrm{mathrm}$
+\end_inset
+
+.
+ Sans serif: 
+\begin_inset Formula $2\mathsf{mathsf}$
+\end_inset
+
+.
+ Typewriter: 
+\begin_inset Formula $3\mathtt{mathtt}$
+\end_inset
+
+.
+ Bold: 
+\begin_inset Formula $4\mathbf{mathbf}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Regular text.
+ Normal text: 
+\begin_inset Formula $5\textrm{textfm}$
+\end_inset
+
+.
+ Literal text: 
+\begin_inset Formula $6\mbox{mbox text}$
+\end_inset
+
+.
+ Phonetic alphabet: 
+\begin_inset Formula $7\text{\textipa{abcde}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Units can be shown with or without a magnitude.
+ Withouth: 
+\begin_inset Formula $\unit{km}$
+\end_inset
+
+.
+ With: 
+\begin_inset Formula $\unit[57]{km}$
+\end_inset
+
+.
+ Now with a fraction: 
+\begin_inset Formula $\unitfrac[3x]{km}{h}$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Section
 Numeration
 \end_layout
@@ -404,6 +491,14 @@ A big recursive fraction:
 
 \end_layout
 
+\begin_layout Standard
+A nice fraction: 
+\begin_inset Formula $\nicefrac{5}{6}$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsection
 Limits
 \end_layout
@@ -487,6 +582,21 @@ A square root:
  A more complex root in a fraction:
 \begin_inset Formula \[
 \frac{1}{\left(1+\sqrt{2}\left(\frac{1}{1+\sqrt{2}}\lyxlock\right)+\sqrt{\frac{1}{2}}\right)}\lyxlock.\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+eLyXer can also do higher-order roots: 
+\begin_inset Formula $\sqrt[3]{x+y}$
+\end_inset
+
+.
+ A devilish case mixing everything we have seen so far:
+\begin_inset Formula \[
+\frac{\sqrt[\nicefrac{7}{8}]{\frac{8}{4}x}+\sum_{i=1}^{\infty}x}{\sqrt[s+5]{\frac{(78x+45y)\times\sqrt{\Omega}}{\sin(x+1)}+\unit[38]{km}}}\lyxlock.\]
 
 \end_inset
 

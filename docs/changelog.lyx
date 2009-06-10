@@ -64,6 +64,20 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.27 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Units without the magnitude (the number) are working.
+\end_layout
+
+\begin_layout Itemize
+Complex roots now working, added to the math showcase.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.26 (2009-06-10):
 \end_layout
 

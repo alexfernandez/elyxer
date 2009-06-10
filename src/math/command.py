@@ -209,12 +209,15 @@ class HybridFunction(FormulaCommand):
     self.parsemagnitude(pos)
     unit = FormulaConstant(Bracket().parseliteral(pos).contents)
     unit.type = 'font'
-    self.contents[0].add(unit)
+    self.add(unit)
 
   def parsemagnitude(self, pos):
     "Parse the magnitude bit"
+    bracket = SquareBracket()
+    if not bracket.detect(pos):
+      return
     magnitude = SquareBracket().parseliteral(pos).contents
-    Trace.debug('Magnitude: ' + magnitude)
+    Trace.debug('Magnitude: ' + unicode(magnitude))
     newpos = Position(magnitude)
     whole = WholeFormula()
     whole.parse(newpos)

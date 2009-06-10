@@ -303,6 +303,14 @@ A big recursive fraction:
 
 \end_layout
 
+\begin_layout Standard
+A nice fraction: 
+\begin_inset Formula $\nicefrac{5}{6}$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Chapter
 Roots
 \end_layout
@@ -312,9 +320,28 @@ A square root:
 \begin_inset Formula $\sqrt{3}.$
 \end_inset
 
- A more complex root in a fraction:
+ A more complex square root in a fraction:
 \begin_inset Formula \[
 \frac{1}{\left(1+\sqrt{2}\left(\frac{1}{1+\sqrt{2}}\lyxlock\right)+\sqrt{\frac{1}{2}}\right)}\lyxlock.\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Higher order roots: 
+\begin_inset Formula $\sqrt[3]{x+y}$
+\end_inset
+
+, 
+\begin_inset Formula $\sqrt[x+1]{Weight}$
+\end_inset
+
+.
+ In a fraction:
+\begin_inset Formula \[
+\frac{\sqrt[\nicefrac{7}{8}]{\frac{8}{4}x}}{\sqrt[s+5]{\frac{(78x+45y)\times\sqrt{Height}}{\sin(x+1)}+5}}\lyxlock.\]
 
 \end_inset
 
@@ -343,7 +370,7 @@ Fonts
 \end_layout
 
 \begin_layout Standard
-Fonts can be switched on and on.
+Fonts can be switched on and off.
 \end_layout
 
 \begin_layout Standard
@@ -393,6 +420,25 @@ Regular text.
 .
  Phonetic alphabet: 
 \begin_inset Formula $7\text{\textipa{abcde}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Units can be shown with or without a magnitude.
+ Withouth: 
+\begin_inset Formula $\unit{km}$
+\end_inset
+
+.
+ With: 
+\begin_inset Formula $\unit[57]{km}$
+\end_inset
+
+.
+ Now with a fraction: 
+\begin_inset Formula $\unitfrac[3x]{km}{h}$
 \end_inset
 
 .
