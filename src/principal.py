@@ -67,13 +67,13 @@ class Book(object):
         container = postproc.postprocess(container)
         process(container)
 
-def readdir(filename):
+def readdir(filename, diroption):
   "Read the current directory if needed"
-  if Options.directory != '.':
+  if getattr(Options, diroption) != '.':
     return
-  Options.directory = os.path.dirname(args[0])
-  if Options.directory == '':
-    Options.directory = '.'
+  setattr(Options, diroption, os.path.dirname(args[0]))
+  if getattr(Options, diroption) == '':
+    setattr(Options, diroption, '.')
 
 def createbook(args):
   "Read a whole book, write it"
@@ -82,10 +82,11 @@ def createbook(args):
   if len(args) < 2:
     Trace.quietmode = True
   if len(args) > 0:
-    readdir(args[0])
+    readdir(args[0], 'directory')
     filein = args[0]
     del args[0]
   if len(args) > 0:
+    readdir(args[0], 'destdirectory')
     fileout = args[0]
     del args[0]
   if len(args) > 0:

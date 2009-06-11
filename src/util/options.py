@@ -45,6 +45,7 @@ class Options(object):
   css = 'http://www.nongnu.org/elyxer/lyx.css'
   title = None
   directory = '.'
+  destdirectory = '.'
   toc = False
   branches = dict()
 
@@ -77,6 +78,7 @@ class Options(object):
     Trace.error('    --debug: enable debugging messages (for developers)')
     Trace.error('    --title <title>: set the generated page title')
     Trace.error('    --directory <images_dir>: look for images in the specified directory')
+    Trace.error('    --destdirectory <dest_dir>: put converted images into this directory')
     Trace.error('    --css <file.css>: use a custom CSS file')
     Trace.error('    --version: show version number and release date')
     Trace.error('    --html: output HTML 4.0 instead of the default XHTML')

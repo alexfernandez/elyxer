@@ -84,6 +84,19 @@ Leave JPEG images untransformed instead of converting them to PNG.
 More flexible configuration options for lists of values.
 \end_layout
 
+\begin_layout Itemize
+Added 
+\family typewriter
+--destdirectory
+\family default
+ option to convert images into.
+\end_layout
+
+\begin_layout Itemize
+Image conversion from a different directory (or even with absolute paths)
+ should work now.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.26 (2009-06-10):
