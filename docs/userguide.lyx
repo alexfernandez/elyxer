@@ -528,6 +528,15 @@ directory\InsetSpace ~
 \begin_layout Description
 
 \family typewriter
+--
+\family default
+destdirectory\InsetSpace ~
+<dest_dir>: converted images will end up into this directory.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
 --css\InsetSpace ~
 <new.css>
 \family default
