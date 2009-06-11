@@ -901,8 +901,8 @@ elyxer.py
 \end_layout
 
 \begin_layout Enumerate
-Phonetic alphabet symbols are not supported -- they appear in dark cyan:
- 
+Phonetic alphabet symbols are not supported -- if generated with LyX they
+ appear with a weird command syntax: 
 \begin_inset Formula $\text{\textipa{[sample]}}$
 \end_inset
 

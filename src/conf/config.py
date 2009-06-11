@@ -246,8 +246,7 @@ class FormulaConfig(object):
       u'\\mathbf':u'b', u'\\mathcal':u'span class="script"', 
       u'\\mathfrak':u'span class="fraktur"', u'\\mathit':u'i', 
       u'\\mathrm':u'span class="mathrm"', u'\\mathsf':u'span class="mathsf"', 
-      u'\\mathtt':u'tt', u'\\text':u'span class="text"', 
-      u'\\textipa':u'span class="textipa"', u'\\textrm':u'span class="mathrm"', 
+      u'\\mathtt':u'tt', u'\\textrm':u'span class="mathrm"', 
       }
 
   fractionfunctions = {
@@ -265,11 +264,12 @@ class FormulaConfig(object):
       }
 
   limits = {
-      u'commands=':[u'\\sum',u'\\int',u'\\intop',], u'operands=':[u'^',u'_',], 
+      u'commands':[u'\\sum',u'\\int',u'\\intop',], u'operands':[u'^',u'_',], 
       }
 
   literalfunctions = {
-      u'\\mbox':u'span class="mbox"', 
+      u'\\mbox':u'span class="mbox"', u'\\text':u'span class="text"', 
+      u'\\textipa':u'span class="textipa"', 
       }
 
   modified = {

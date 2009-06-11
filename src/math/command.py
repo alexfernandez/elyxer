@@ -253,7 +253,7 @@ class UnknownCommand(FormulaCommand):
 
   def detect(self, pos):
     "Detect an unknown command"
-    return pos.current() == '\\'
+    return pos.current() == FormulaConfig.starts['FormulaCommand']
 
   def parse(self, pos):
     "Parse just the command"
