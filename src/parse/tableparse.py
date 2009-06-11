@@ -40,13 +40,13 @@ class TableParser(BoundedParser):
   def parseheader(self, reader):
     "Parse table headers"
     reader.nextline()
-    while self.startswithlist(reader, TableParser.headers):
+    while self.startswithheader(reader):
       self.parseparameter(reader)
     return []
 
-  def startswithlist(self, reader, list):
-    "Check if the current line starts with any of the given strings"
-    for start in list:
+  def startswithheader(self, reader):
+    "Check if the current line starts with a header line"
+    for start in TableParser.headers:
       if reader.currentline().strip().startswith(start):
         return True
     return False

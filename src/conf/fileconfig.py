@@ -116,7 +116,7 @@ class ConfigWriter(object):
     names = valuedict.keys()
     names.sort()
     for name in names:
-      value = self.serializer.serialize(valuedict[name], ConfigReader.escapes)
+      value = self.serializer.serialize(valuedict[name])
       self.writer.writeline(self.escape(name) + ':' + value)
 
   def writesection(self, object, attr):
@@ -170,8 +170,8 @@ class ConfigTranslator(ConfigWriter):
     names = contents.keys()
     names.sort()
     for name in names:
-      value = self.serializer.serialize(contents[name])
-      piece = 'u\'' + self.serializer.escape(name) + '\':u\'' + value + '\', '
+      value = self.serializer.pyserialize(contents[name])
+      piece = 'u\'' + self.serializer.escape(name) + '\':' + value + ', '
       string = self.append(string, piece)
     self.writer.writeline(string)
     self.writer.writeline('      }')
@@ -216,6 +216,17 @@ class ConfigSerializer(object):
     if len(object) > 0:
       result = result[:-1]
     return result
+
+  def pyserialize(self, object):
+    "Convert an object to a Python definition"
+    if not isinstance(object, list):
+      return 'u\'' + self.escape(object) + '\''
+    result = '[u\''
+    for value in object:
+      result += self.escape(value) + '\',u\''
+    if len(object) > 0:
+      result = result[:-2]
+    return result + ']'
 
   def escape(self, string):
     "Escape a string or a list"

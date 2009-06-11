@@ -102,8 +102,8 @@ class ContainerConfig(object):
       u'startcommand':u'\\', 
       }
 
-  tableheaders = {
-      u'headers':u'<lyxtabular,<features', 
+  table = {
+      u'headers':[u'<lyxtabular',u'<features',], 
       }
 
 class EscapeConfig(object):
@@ -252,8 +252,8 @@ class FormulaConfig(object):
 
   fractionfunctions = {
       
-      u'\\frac':u'span class="fraction",span class="numerator",span class="denominator"', 
-      u'\\nicefrac':u'span class="fraction",span class="numerator",span class="denominator"', 
+      u'\\frac':[u'span class="fraction"',u'span class="numerator"',u'span class="denominator"',], 
+      u'\\nicefrac':[u'span class="fraction"',u'span class="numerator"',u'span class="denominator"',], 
       }
 
   hybridfunctions = {
@@ -265,7 +265,7 @@ class FormulaConfig(object):
       }
 
   limits = {
-      u'commands=':u'\\sum,\\int,\\intop', u'operands=':u'^,_', 
+      u'commands=':[u'\\sum',u'\\int',u'\\intop',], u'operands=':[u'^',u'_',], 
       }
 
   literalfunctions = {
@@ -295,7 +295,8 @@ class FormulaConfig(object):
       }
 
   unmodified = {
-      u'characters':u'.,*,€,(,),[,],:,·,!,;,|', 
+      
+      u'characters':[u'.',u'*',u'€',u'(',u')',u'[',u']',u':',u'·',u'!',u';',u'|',], 
       }
 
 class GeneralConfig(object):
@@ -309,8 +310,9 @@ class NumberingConfig(object):
   "Configuration class from config file"
 
   layouts = {
-      u'ordered':u'Chapter,Section,Subsection,Subsubsection,Paragraph', 
-      u'unique':u'Part,Book', 
+      
+      u'ordered':[u'Chapter',u'Section',u'Subsection',u'Subsubsection',u'Paragraph',], 
+      u'unique':[u'Part',u'Book',], 
       }
 
 class StyleConfig(object):
