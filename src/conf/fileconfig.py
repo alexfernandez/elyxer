@@ -32,10 +32,15 @@ from io.fileline import *
 class ConfigReader(object):
   "Read a configuration file"
 
+  escapes = [
+      ('\n', '&10;'), (':', '&58;'), ('#', '&35;'), (',', '&44;')
+      ]
+
   def __init__(self, filename):
     self.reader = LineReader(filename)
     self.objects = dict()
     self.section = None
+    self.serializer = ConfigSerializer(ConfigReader.escapes)
 
   def parse(self):
     "Parse the whole file"
@@ -68,9 +73,6 @@ class ConfigReader(object):
     "Parse a parameter line"
     if len(line.strip()) == 0:
       return
-    if line.startswith(ConfigWriter.listmarker):
-      self.parselist(line)
-      return
     if not ':' in line:
       Trace.error('Invalid configuration parameter ' + line)
       return
@@ -78,36 +80,17 @@ class ConfigReader(object):
     if len(pieces) > 2:
       Trace.error('Too many colons in ' + line)
       return
-    key = self.unescape(pieces[0])
-    value = self.unescape(pieces[1])
+    key = self.serializer.unescape(pieces[0])
+    value = self.serializer.deserialize(pieces[1])
     object = self.objects[self.section]
     object[key] = value
-
-  def parselist(self, line):
-    "Parse a list"
-    result = []
-    contents = line[len(ConfigWriter.listmarker):].split(',')
-    for piece in contents:
-      result.append(self.unescape(piece))
-    self.objects[self.section] = result
-
-  def unescape(self, string):
-    "Escape a string"
-    for escape, value in ConfigWriter.escapes:
-      string = string.replace(value, escape)
-    return string
 
 class ConfigWriter(object):
   "Write a configuration file"
 
-  escapes = [
-      ('\n', '&10;'), (':', '&58;'), ('#', '&35;'), (',', '&44;')
-      ]
-
-  listmarker = ',list:'
-
   def __init__(self, writer):
     self.writer = writer
+    self.serializer = ConfigSerializer(ConfigReader.escapes)
 
   def writeall(self, types):
     "Write a list of configuration objects given their class names"
@@ -126,30 +109,15 @@ class ConfigWriter(object):
       return
     self.writesection(object, attr)
     value = getattr(object, attr)
-    if isinstance(value, list):
-      self.writelist(attr, value)
-    elif isinstance(value, dict):
-      self.writedict(attr, value)
-    else:
+    if not isinstance(value, dict):
       Trace.error('Unknown config type ' + value.__class__.__name__ +
           ' in ' + attr)
-
-  def writelist(self, attr, values):
-    "Write a list attribute"
-    result = ''
-    for value in values:
-      result += self.escape(value) + ','
-    if len(values) > 0:
-      result = result[:-1]
-    self.writer.writeline(ConfigWriter.listmarker + result)
-
-  def writedict(self, attr, valuedict):
-    "Write a dictionary attribute"
+      return
     names = valuedict.keys()
     names.sort()
     for name in names:
-      value = valuedict[name]
-      self.writer.writeline(self.escape(name) + ':' + self.escape(value))
+      value = self.serializer.serialize(valuedict[name], ConfigReader.escapes)
+      self.writer.writeline(self.escape(name) + ':' + value)
 
   def writesection(self, object, attr):
     "Write a new section"
@@ -157,19 +125,14 @@ class ConfigWriter(object):
     header = '[' + object.__class__.__name__ + '.' + attr + ']'
     self.writer.writeline(header)
 
-  def escape(self, string):
-    "Escape a string"
-    for escape, value in ConfigWriter.escapes:
-      string = string.replace(escape, value)
-    return string
-
-class ConfigTranslator(object):
+class ConfigTranslator(ConfigWriter):
   "Translates a number of dictionaries from a config file to a Python class"
 
   escapes = [ ('\\', '\\\\'), ('\n', '\\n'), ('\'', '\\\'') ]
 
   def __init__(self, writer):
     self.writer = writer
+    self.serializer = ConfigSerializer(ConfigTranslator.escapes)
 
   def write(self, objects):
     "Write the whole set of objects"
@@ -197,38 +160,22 @@ class ConfigTranslator(object):
       self.writeattr(attrname, current[attrname])
 
   def writeattr(self, name, contents):
-    "Write an attribute"
-    self.writer.writestring('  ' + name + ' = ')
-    if isinstance(contents, list):
-      self.writelist(contents)
-    elif isinstance(contents, dict):
-      self.writedict(contents)
-    else:
+    "Write a dictionary attribute"
+    if not isinstance(contents, dict):
       Trace.error('Unknown config type ' + contents.__class__.__name__)
-    self.writer.writeline('')
-
-  def writelist(self, values):
-    "Write a list of values"
-    self.writer.writeline('[')
-    string = '      '
-    for value in values:
-      piece = 'u\'' + self.escape(value) + '\', '
-      string = self.append(string, piece)
-    self.writer.writeline(string)
-    self.writer.writeline('      ]')
-
-  def writedict(self, values):
-    "Write a dictionary of values"
+      return
+    self.writer.writestring('  ' + name + ' = ')
     self.writer.writeline('{')
     string = '      '
-    names = values.keys()
+    names = contents.keys()
     names.sort()
     for name in names:
-      value = values[name]
-      piece = 'u\'' + self.escape(name) + '\':u\'' + self.escape(value) + '\', '
+      value = self.serializer.serialize(contents[name])
+      piece = 'u\'' + self.serializer.escape(name) + '\':u\'' + value + '\', '
       string = self.append(string, piece)
     self.writer.writeline(string)
     self.writer.writeline('      }')
+    self.writer.writeline('')
 
   def append(self, string, piece):
     "Write a piece to the string or to disk"
@@ -253,9 +200,43 @@ class ConfigTranslator(object):
       currentclass[methodname] = object
     return classes
 
+class ConfigSerializer(object):
+  "Serialize and deserialize config object"
+
+  def __init__(self, escapes):
+    self.escapes = escapes
+
+  def serialize(self, object):
+    "Convert an object to a string"
+    if not isinstance(object, list):
+      return self.escape(object)
+    result = ''
+    for value in object:
+      result += self.escape(value) + ','
+    if len(object) > 0:
+      result = result[:-1]
+    return result
+
   def escape(self, string):
+    "Escape a string or a list"
+    for escape, value in self.escapes:
+      if escape in string:
+        string = string.replace(escape, value)
+    return string
+
+  def deserialize(self, string):
+    "Parse a string into an object (string or list)"
+    if not ',' in string:
+      return self.unescape(string)
+    result = []
+    contents = string.split(',')
+    for piece in contents:
+      result.append(self.unescape(piece))
+    return result
+
+  def unescape(self, string):
     "Escape a string"
-    for escape, value in ConfigTranslator.escapes:
-      string = string.replace(escape, value)
+    for escape, value in self.escapes:
+      string = string.replace(value, escape)
     return string
 

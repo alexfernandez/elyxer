@@ -49,6 +49,8 @@ class PostLayout(object):
   "Numerate an indexed layout"
 
   processedclass = Layout
+  unique = NumberingConfig.layouts['unique']
+  ordered = NumberingConfig.layouts['ordered']
 
   def __init__(self):
     self.generator = NumberGenerator.instance
@@ -57,10 +59,10 @@ class PostLayout(object):
     "Generate a number and place it before the text"
     if self.containsappendix(layout):
       self.activateappendix()
-    if layout.type in NumberingConfig.unique:
+    if layout.type in PostLayout.unique:
       number = self.generator.generateunique(layout.type)
-    elif layout.type in NumberingConfig.ordered:
-      level = NumberingConfig.ordered.index(layout.type)
+    elif layout.type in PostLayout.ordered:
+      level = PostLayout.ordered.index(layout.type)
       number = self.generator.generate(level)
     else:
       return layout

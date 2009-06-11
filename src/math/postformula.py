@@ -54,7 +54,7 @@ class PostFormula(object):
     bit = contents[index]
     if not hasattr(bit, 'command'):
       return
-    if not bit.command in FormulaConfig.limited:
+    if not bit.command in FormulaConfig.limits['commands']:
       return
     limits = self.findlimits(contents, index + 1)
     limits.reverse()
@@ -78,7 +78,7 @@ class PostFormula(object):
     bit = contents[index]
     if not hasattr(bit, 'command'):
       return False
-    if not bit.command in FormulaConfig.limits:
+    if not bit.command in FormulaConfig.limits['operands']:
       return False
     bit.output.tag += ' class="bigsymbol"'
     return True

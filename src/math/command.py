@@ -237,18 +237,16 @@ class FractionFunction(FormulaCommand):
     "Parse a function of two parameters"
     command = self.findcommand(pos, FormulaConfig.fractionfunctions)
     self.addoriginal(command, pos)
-    whole = FormulaConfig.fractionspans['whole']
-    first = FormulaConfig.fractionspans['first']
-    second = FormulaConfig.fractionspans['second']
-    self.output = TaggedOutput().settag(whole)
+    values = FormulaConfig.fractionfunctions[command]
+    self.output = TaggedOutput().settag(values[0])
     parameter1 = self.parseparameter(pos)
     if not parameter1:
       return
-    parameter1.output = TaggedOutput().settag(first)
+    parameter1.output = TaggedOutput().settag(values[1])
     parameter2 = self.parseparameter(pos)
     if not parameter2:
       return
-    parameter2.output = TaggedOutput().settag(second)
+    parameter2.output = TaggedOutput().settag(values[2])
 
 class UnknownCommand(FormulaCommand):
   "An unknown command in a formula"

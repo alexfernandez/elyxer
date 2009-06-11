@@ -80,6 +80,10 @@ Complex roots now working, added to the math showcase.
 Leave JPEG images untransformed instead of converting them to PNG.
 \end_layout
 
+\begin_layout Itemize
+More flexible configuration options for lists of values.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.26 (2009-06-10):

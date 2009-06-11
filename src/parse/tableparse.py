@@ -31,6 +31,8 @@ from io.output import *
 class TableParser(BoundedParser):
   "Parse the whole table"
 
+  headers = ContainerConfig.table['headers']
+
   def __init__(self):
     BoundedParser.__init__(self)
     self.columns = list()
@@ -38,7 +40,7 @@ class TableParser(BoundedParser):
   def parseheader(self, reader):
     "Parse table headers"
     reader.nextline()
-    while self.startswithlist(reader, ContainerConfig.tableheaders):
+    while self.startswithlist(reader, TableParser.headers):
       self.parseparameter(reader)
     return []
 

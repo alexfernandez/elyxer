@@ -23,10 +23,6 @@ class ContainerConfig(object):
       u'pdftitle':u'\\pdf_title', 
       }
 
-  infoinsets = [
-      u'shortcut', u'shortcuts', u'package', u'textclass', 
-      ]
-
   startendings = {
       u'\\begin_deeper':u'\\end_deeper', u'\\begin_inset':u'\\end_inset', 
       u'\\begin_layout':u'\\end_layout', 
@@ -106,9 +102,9 @@ class ContainerConfig(object):
       u'startcommand':u'\\', 
       }
 
-  tableheaders = [
-      u'<lyxtabular', u'<features', 
-      ]
+  tableheaders = {
+      u'headers':u'<lyxtabular,<features', 
+      }
 
 class EscapeConfig(object):
   "Configuration class from config file"
@@ -254,13 +250,10 @@ class FormulaConfig(object):
       u'\\textipa':u'span class="textipa"', u'\\textrm':u'span class="mathrm"', 
       }
 
-  fractionfunctions = [
-      u'\\frac', u'\\nicefrac', 
-      ]
-
-  fractionspans = {
-      u'first':u'span class="numerator"', 
-      u'second':u'span class="denominator"', u'whole':u'span class="fraction"', 
+  fractionfunctions = {
+      
+      u'\\frac':u'span class="fraction",span class="numerator",span class="denominator"', 
+      u'\\nicefrac':u'span class="fraction",span class="numerator",span class="denominator"', 
       }
 
   hybridfunctions = {
@@ -271,13 +264,9 @@ class FormulaConfig(object):
       u'\\label':u'a class="eqnumber" name="#"', 
       }
 
-  limited = [
-      u'\\sum', u'\\int', u'\\intop', 
-      ]
-
-  limits = [
-      u'^', u'_', 
-      ]
+  limits = {
+      u'commands=':u'\\sum,\\int,\\intop', u'operands=':u'^,_', 
+      }
 
   literalfunctions = {
       u'\\mbox':u'span class="mbox"', 
@@ -305,9 +294,9 @@ class FormulaConfig(object):
       u'squarebracket':u'[', 
       }
 
-  unmodified = [
-      u'.', u'*', u'€', u'(', u')', u'[', u']', u':', u'·', u'!', u';', u'|', 
-      ]
+  unmodified = {
+      u'characters':u'.,*,€,(,),[,],:,·,!,;,|', 
+      }
 
 class GeneralConfig(object):
   "Configuration class from config file"
@@ -319,13 +308,10 @@ class GeneralConfig(object):
 class NumberingConfig(object):
   "Configuration class from config file"
 
-  ordered = [
-      u'Chapter', u'Section', u'Subsection', u'Subsubsection', u'Paragraph', 
-      ]
-
-  unique = [
-      u'Part', u'Book', 
-      ]
+  layouts = {
+      u'ordered':u'Chapter,Section,Subsection,Subsubsection,Paragraph', 
+      u'unique':u'Part,Book', 
+      }
 
 class StyleConfig(object):
   "Configuration class from config file"

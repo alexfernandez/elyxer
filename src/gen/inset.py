@@ -144,8 +144,6 @@ class InfoInset(Container):
   def process(self):
     "Set the shortcut as text"
     self.type = self.parser.parameters['type']
-    if self.type not in ContainerConfig.infoinsets:
-      Trace.error('Unknown Info type ' + self.type)
     self.contents = [Constant(self.parser.parameters['arg'])]
 
 class BoxInset(Container):
