@@ -48,7 +48,6 @@ class Image(Container):
       return
     self.destination = self.getdestination(self.url)
     destination = self.getdestinationpath(self.destination)
-    Trace.debug('Image destination: ' + destination)
     density = 100
     if 'scale' in self.parser.parameters:
       density = int(self.parser.parameters['scale'])
@@ -107,18 +106,67 @@ class Image(Container):
       return None, None
     if filename in Image.dimensions:
       return Image.dimensions[filename]
+    base, ext = os.path.splitext(filename)
+    dimensions = (None, None)
+    if ext == '.png':
+      dimensions = self.getpngdimensions(filename)
+    elif ext == '.jpg':
+      dimensions = self.getjpgdimensions(filename)
+    Image.dimensions[filename] = dimensions
+    return dimensions
+
+  def getpngdimensions(self, filename):
+    "Get the dimensions of a PNG image"
     pngfile = codecs.open(filename, 'rb')
     pngfile.seek(16)
     width = self.readlong(pngfile)
     height = self.readlong(pngfile)
-    dimensions = (width, height)
     pngfile.close()
-    Image.dimensions[filename] = dimensions
-    return dimensions
+    return (width, height)
+
+  def getjpgdimensions(self, filename):
+    "Get the dimensions of a JPEG image"
+    jpgfile = codecs.open(filename, 'rb')
+    start = self.readword(jpgfile)
+    if start != int('ffd8', 16):
+      Trace.error(filename + ' not a JPEG file')
+      return (None, None)
+    self.skipheaders(jpgfile, ['ffc0', 'ffc2'])
+    jpgfile.seek(3, os.SEEK_CUR)
+    width = self.readword(jpgfile)
+    height = self.readword(jpgfile)
+    jpgfile.close()
+    return (width, height)
+
+  def skipheaders(self, file, hexvalues):
+    "Skip JPEG headers until one of the parameter headers is found"
+    headervalues = [int(value, 16) for value in hexvalues]
+    header = self.readword(file)
+    safetycounter = 0
+    while header not in headervalues and safetycounter < 30:
+      length = self.readword(file)
+      if length == 0:
+        Trace.error('End of file ' + file.name)
+        return
+      file.seek(length - 2, os.SEEK_CUR)
+      header = self.readword(file)
+      safetycounter += 1
 
   def readlong(self, file):
-    "Read a long value"
-    tuple = struct.unpack('>L', file.read(4))
+    "Read a long (32-bit) value from file"
+    return self.readformat(file, '>L', 4)
+
+  def readword(self, file):
+    "Read a 16-bit value from file"
+    return self.readformat(file, '>H', 2)
+
+  def readformat(self, file, format, bytes):
+    "Read any format from file"
+    read = file.read(bytes)
+    if read == '':
+      Trace.error('EOF reached')
+      return 0
+    tuple = struct.unpack(format, read)
     return tuple[0]
 
 class ImageOutput(object):

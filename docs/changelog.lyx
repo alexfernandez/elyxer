@@ -77,7 +77,9 @@ Complex roots now working, added to the math showcase.
 \end_layout
 
 \begin_layout Itemize
-Leave JPEG images untransformed instead of converting them to PNG.
+Leave JPEG images untransformed instead of converting them to PNG (or at
+ least transform them to JPEG).
+ Read JPEG image sizes.
 \end_layout
 
 \begin_layout Itemize
