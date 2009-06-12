@@ -40,33 +40,39 @@ class Image(Container):
     self.output = ImageOutput()
 
   def process(self):
+    "Place the url, convert the image if necessary."
     self.url = self.parser.parameters['filename']
-    origin = self.getorigin(self.url)
+    origin = self.getoriginpath(self.url)
     if not os.path.exists(origin):
       Trace.error('Image ' + origin + ' not found')
       return
-    destination = self.getdestination(self.url)
+    self.destination = self.getdestination(self.url)
+    destination = self.getdestinationpath(self.destination)
+    Trace.debug('Image destination: ' + destination)
     density = 100
     if 'scale' in self.parser.parameters:
       density = int(self.parser.parameters['scale'])
     self.convert(origin, destination, density)
     self.width, self.height = self.getdimensions(destination)
 
-  def getorigin(self, path):
-    "Get the correct origin path for the image"
+  def getoriginpath(self, path):
+    "Get the correct origin path for the image."
     if os.path.isabs(path):
       return path
     return Options.directory + os.path.sep + path
 
-  def getdestination(self, origin):
-    "Get the destination URL for an image URL"
-    if os.path.isabs(origin):
-      origin = os.path.basename(origin)
-    dest = Options.destdirectory + os.path.sep + origin
-    base, ext = os.path.splitext(dest)
+  def getdestination(self, path):
+    "Get the destination path to use in the web page."
+    if os.path.isabs(path):
+      path = os.path.basename(path)
+    base, ext = os.path.splitext(path)
     if ext.lower() != '.jpg':
       ext = '.png'
     return base + ext
+
+  def getdestinationpath(self, path):
+    "Get the destination path on disk for the image."
+    return Options.destdirectory + os.path.sep + path
 
   def convert(self, origin, destination, density):
     "Convert an image to PNG"

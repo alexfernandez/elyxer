@@ -44,8 +44,8 @@ class Options(object):
   unicode = False
   css = 'http://www.nongnu.org/elyxer/lyx.css'
   title = None
-  directory = '.'
-  destdirectory = '.'
+  directory = None
+  destdirectory = None
   toc = False
   branches = dict()
 

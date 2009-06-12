@@ -69,8 +69,10 @@ class Book(object):
 
 def readdir(filename, diroption):
   "Read the current directory if needed"
-  if getattr(Options, diroption) != '.':
+  if getattr(Options, diroption) != None:
+    Trace.debug('Not changing ' + diroption)
     return
+  Trace.debug('Changing ' + diroption + ' from "' + getattr(Options, diroption) + '"')
   setattr(Options, diroption, os.path.dirname(args[0]))
   if getattr(Options, diroption) == '':
     setattr(Options, diroption, '.')
@@ -85,10 +87,14 @@ def createbook(args):
     readdir(args[0], 'directory')
     filein = args[0]
     del args[0]
+  else:
+    Options.directory = '.'
   if len(args) > 0:
     readdir(args[0], 'destdirectory')
     fileout = args[0]
     del args[0]
+  else:
+    Options.destdirectory = '.'
   if len(args) > 0:
     usage('Too many arguments')
     return
