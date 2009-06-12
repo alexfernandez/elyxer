@@ -137,21 +137,24 @@ class RawText(FormulaBit):
 class FormulaSymbol(FormulaBit):
   "A symbol inside a formula"
 
+  modified = FormulaConfig.modified
+  unmodified = FormulaConfig.unmodified['characters']
+
   def detect(self, pos):
     "Detect a symbol"
-    if pos.current() in FormulaConfig.unmodified:
+    if pos.current() in FormulaSymbol.unmodified:
       return True
-    if pos.current() in FormulaConfig.modified:
+    if pos.current() in FormulaSymbol.modified:
       return True
     return False
 
   def parse(self, pos):
     "Parse the symbol"
-    if pos.current() in FormulaConfig.unmodified:
+    if pos.current() in FormulaSymbol.unmodified:
       self.addconstant(pos.current(), pos)
       return
-    if pos.current() in FormulaConfig.modified:
-      symbol = FormulaConfig.modified[pos.current()]
+    if pos.current() in FormulaSymbol.modified:
+      symbol = FormulaSymbol.modified[pos.current()]
       self.addoriginal(pos.current(), pos)
       self.contents.append(FormulaConstant(symbol))
       return
