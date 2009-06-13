@@ -134,9 +134,14 @@ class Position(object):
 
   def finished(self):
     "Find out if the current formula has finished"
+    if self.isout():
+      if len(self.endings) != 0:
+        Trace.error('Pending endings ' + unicode(self.endings))
+      return True
     if len(self.endings) == 0:
-      return self.isout()
-    return self.checkfor(self.endings[-1])
+      return False
+    if self.checkfor(self.endings[-1]):
+      self.endings.pop()
 
   def isout(self):
     "Find out if we are out of the formula yet"
