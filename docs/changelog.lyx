@@ -99,6 +99,10 @@ Image conversion from a different directory (or even with absolute paths)
  should work now.
 \end_layout
 
+\begin_layout Itemize
+More structured parsing in formulae.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.26 (2009-06-10):

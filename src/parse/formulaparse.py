@@ -122,6 +122,7 @@ class Position(object):
   def __init__(self, text):
     self.text = text
     self.pos = 0
+    self.endings = []
 
   def skip(self, string):
     "Skip a string"
@@ -131,12 +132,21 @@ class Position(object):
     "Return the text remaining for parsing"
     return self.text[self.pos:]
 
+  def finished(self):
+    "Find out if the current formula has finished"
+    if len(self.endings) == 0:
+      return self.isout()
+    return self.checkfor(self.endings[-1])
+
   def isout(self):
     "Find out if we are out of the formula yet"
     return self.pos >= len(self.text)
 
   def current(self):
     "Return the current character"
+    if self.isout():
+      Trace.error('Out of the formula')
+      return ''
     return self.text[self.pos]
 
   def checkfor(self, string):
@@ -144,6 +154,10 @@ class Position(object):
     if self.pos + len(string) > len(self.text):
       return False
     return self.text[self.pos : self.pos + len(string)] == string
+
+  def pushending(self, ending):
+    "Push a new ending to the bottom"
+    self.endings.append(ending)
 
   def clone(self):
     "Return a copy of self"

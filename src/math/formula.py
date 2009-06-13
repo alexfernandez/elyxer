@@ -65,7 +65,7 @@ class FormulaBit(Container):
     "Glob a bit of text that satisfies a check"
     glob = ''
     pos = oldpos.clone()
-    while not pos.isout() and check(pos):
+    while not pos.finished() and check(pos):
       glob += pos.current()
       pos.skip(pos.current())
     return glob
@@ -254,7 +254,7 @@ class Bracket(FormulaBit):
       return
     self.addoriginal(self.start, pos)
     innerparser(pos)
-    if pos.isout() or pos.current() != self.ending:
+    if pos.finished() or pos.current() != self.ending:
       Trace.error('Missing ' + self.ending + ' in ' + pos.remaining())
       return
     self.addoriginal(self.ending, pos)
@@ -266,7 +266,7 @@ class Bracket(FormulaBit):
       self.inner.parse(pos)
       self.add(self.inner)
       return
-    if pos.isout():
+    if pos.finished():
       Trace.error('Unexpected end of bracket')
       return
     if pos.current() != self.ending:
@@ -299,7 +299,7 @@ class FormulaFactory(object):
 
   def detectbit(self, pos):
     "Detect if there is a next bit"
-    if pos.isout():
+    if pos.finished():
       return False
     for bit in FormulaFactory.bits + FormulaFactory.unknownbits:
       if bit.detect(pos):

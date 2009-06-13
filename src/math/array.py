@@ -80,7 +80,7 @@ class FormulaArray(FormulaCommand):
     "Parse the array"
     self.addoriginal(FormulaConfig.starts['FormulaArray'], pos)
     self.parsealignments(pos)
-    while not pos.isout():
+    while not pos.finished():
       row = FormulaRow(self.alignments)
       row.parse(pos)
       self.add(row)
@@ -131,7 +131,7 @@ class FormulaCases(FormulaArray):
   def parse(self, pos):
     "Parse the cases"
     self.addoriginal(FormulaConfig.starts['FormulaCases'], pos)
-    while not pos.isout():
+    while not pos.finished():
       row = FormulaRow(self.alignments)
       row.parse(pos)
       self.add(row)

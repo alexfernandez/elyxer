@@ -60,7 +60,7 @@ class FormulaCommand(FormulaBit):
     if pos.current() != commandstart:
       return None
     pos.skip(commandstart)
-    if pos.isout():
+    if pos.finished():
       return None
     if not pos.current().isalpha():
       return None
@@ -77,7 +77,7 @@ class FormulaCommand(FormulaBit):
       pos.skip(commandstart)
     alpha = self.glob(pos, lambda(p): p.current().isalpha())
     pos.skip(alpha)
-    if pos.isout():
+    if pos.finished():
       return None
     return backslash + alpha + pos.current()
 
