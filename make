@@ -30,6 +30,7 @@ chmod 755 elyxer.py
 rm -f docs/*.png
 rm -f docs/*.lyx~
 rm -f test/*.lyx~
+rm -f test/subdir/*.lyx~
 # prepare documentation
 ./elyxer.py --title "eLyXer User Guide" --css "lyx.css" docs/userguide.lyx docs/userguide.html
 ./elyxer.py --title="eLyxer Developer Guide" --css "lyx.css" docs/devguide.lyx docs/devguide.html
