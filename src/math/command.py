@@ -222,7 +222,7 @@ class HybridFunction(FormulaCommand):
     whole = WholeFormula()
     whole.parse(newpos)
     whole.process()
-    self.contents = [whole]
+    self.add(whole)
 
 class FractionFunction(FormulaCommand):
   "A fraction with two parameters"
@@ -242,10 +242,12 @@ class FractionFunction(FormulaCommand):
     parameter1 = self.parseparameter(pos)
     if not parameter1:
       return
+    Trace.debug('Fraction numerator: ' + parameter1.original)
     parameter1.output = TaggedOutput().settag(values[1])
     parameter2 = self.parseparameter(pos)
     if not parameter2:
       return
+    Trace.debug('Fraction numerator: ' + parameter2.original)
     parameter2.output = TaggedOutput().settag(values[2])
 
 class UnknownCommand(FormulaCommand):
