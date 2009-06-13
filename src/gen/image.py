@@ -133,8 +133,8 @@ class Image(Container):
       return (None, None)
     self.skipheaders(jpgfile, ['ffc0', 'ffc2'])
     jpgfile.seek(3, os.SEEK_CUR)
-    width = self.readword(jpgfile)
     height = self.readword(jpgfile)
+    width = self.readword(jpgfile)
     jpgfile.close()
     return (width, height)
 
