@@ -1134,5 +1134,23 @@ Fargo
  And remember: a hero under the belt is a feather on the hat.
 \end_layout
 
+\begin_layout Chapter
+Brought to You By
+\end_layout
+
+\begin_layout Standard
+eLyXer, no less.
+ (Cheap excuse to insert a JPEG image.)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename mini-elyxer.jpg
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
