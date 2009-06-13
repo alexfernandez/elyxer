@@ -191,7 +191,7 @@ class WholeFormula(FormulaBit):
       if self.parsearrayend(pos):
         return
       bit = self.factory.parsebit(pos)
-      #Trace.debug(bit.original + ' -> ' + unicode(bit.gethtml()))
+      Trace.debug(bit.original + ' -> ' + unicode(bit.gethtml()))
       self.add(bit)
 
   def process(self):
@@ -249,12 +249,18 @@ class Bracket(FormulaBit):
     return self
 
   def parsecomplete(self, pos, innerparser):
+    "Parse the start and end marks"
     if not pos.checkfor(self.start):
       Trace.error('Bracket should start with ' + self.start)
       return
     self.addoriginal(self.start, pos)
+    pos.pushending(self.ending)
     innerparser(pos)
-    if pos.finished() or pos.current() != self.ending:
+    if pos.isout():
+      Trace.error('Bracket ' + self.original + ' should end with ' +
+          self.ending)
+      return
+    if not pos.checkfor(self.ending):
       Trace.error('Missing ' + self.ending + ' in ' + pos.remaining())
       return
     self.addoriginal(self.ending, pos)
