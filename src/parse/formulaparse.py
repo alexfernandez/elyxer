@@ -136,12 +136,15 @@ class Position(object):
     "Find out if the current formula has finished"
     if self.isout():
       if len(self.endings) != 0:
-        Trace.error('Pending endings ' + unicode(self.endings))
+        Trace.error('Pending endings ' + unicode(self.endings) + ' in ' + self.text)
       return True
     if len(self.endings) == 0:
       return False
     if self.checkfor(self.endings[-1]):
+      Trace.debug('Found ' + self.endings[-1])
       self.endings.pop()
+      return True
+    return False
 
   def isout(self):
     "Find out if we are out of the formula yet"
@@ -162,6 +165,7 @@ class Position(object):
 
   def pushending(self, ending):
     "Push a new ending to the bottom"
+    Trace.debug('Adding ' + ending)
     self.endings.append(ending)
 
   def clone(self):

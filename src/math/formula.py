@@ -191,7 +191,7 @@ class WholeFormula(FormulaBit):
       if self.parsearrayend(pos):
         return
       bit = self.factory.parsebit(pos)
-      Trace.debug(bit.original + ' -> ' + unicode(bit.gethtml()))
+      #Trace.debug(bit.original + ' -> ' + unicode(bit.gethtml()))
       self.add(bit)
 
   def process(self):
