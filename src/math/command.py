@@ -151,12 +151,11 @@ class LiteralFunction(CommandBit):
     self.output = TaggedOutput().settag(self.translated)
     bracket = Bracket().parseliteral(pos)
     self.add(bracket)
+    self.contents.append(FormulaConstant(bracket.literal))
 
   def process(self):
-    "Move the bracket contents to a constant"
+    "Set the type to font"
     self.type = 'font'
-    text = self.contents[0].contents
-    self.contents = [FormulaConstant(text)]
 
 class LabelFunction(LiteralFunction):
   "A function that acts as a label"

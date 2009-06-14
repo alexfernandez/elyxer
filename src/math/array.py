@@ -67,12 +67,9 @@ class FormulaArray(CommandBit):
 
   piece = 'array'
 
-  def __init__(self):
-    self.output = TaggedOutput().settag('table class="formula"', True)
-    self.valign = 'c'
-
   def parse(self, pos):
     "Parse the array"
+    self.output = TaggedOutput().settag('table class="formula"', True)
     self.parsealignments(pos)
     while not pos.finished():
       row = FormulaRow(self.alignments)
@@ -83,17 +80,18 @@ class FormulaArray(CommandBit):
   def parsealignments(self, pos):
     "Parse the different alignments"
     # vertical
+    self.valign = 'c'
     vbracket = SquareBracket()
     if vbracket.detect(pos):
       vbracket.parseliteral(pos)
-      self.original += vbracket.original
-      self.valign = vbracket.contents
+      self.valign = vbracket.literal
+      self.add(vbracket)
     # horizontal
     bracket = Bracket().parseliteral(pos)
+    self.add(bracket)
     self.alignments = []
-    for l in bracket.contents:
+    for l in bracket.literal:
       self.alignments.append(l)
-    self.original += bracket.original
 
   def parserowend(self, pos):
     "Parse the end of a row"
@@ -109,13 +107,10 @@ class FormulaCases(FormulaArray):
 
   piece = 'cases'
 
-  def __init__(self):
-    FormulaCommand.__init__(self)
-    self.output = TaggedOutput().settag('table class="cases"', True)
-    self.alignments = ['l', 'l']
-
   def parse(self, pos):
     "Parse the cases"
+    self.output = TaggedOutput().settag('table class="cases"', True)
+    self.alignments = ['l', 'l']
     while not pos.finished():
       row = FormulaRow(self.alignments)
       row.parse(pos)
@@ -135,18 +130,18 @@ class BeginCommand(CommandBit):
   def parse(self, pos):
     "Parse the begin command"
     bracket = Bracket().parseliteral(pos)
-    self.original += bracket.original
-    bit = self.findbit(bracket.contents)
+    self.original += bracket.literal
+    bit = self.findbit(bracket.literal)
     if not bit:
       return
-    ending = FormulaConfig.array['ending'] + '{' + bracket.contents + '}'
+    ending = FormulaConfig.array['end'] + '{' + bracket.literal + '}'
     pos.pushending(ending)
     bit.parse(pos)
     self.add(bit)
     if not pos.checkfor(ending):
       Trace.error('No ending for ' + ending)
       return
-    self.addoriginal(ending)
+    self.addoriginal(ending, pos)
     return
 
   def findbit(self, piece):
@@ -158,5 +153,5 @@ class BeginCommand(CommandBit):
     Trace.error('Unknown command \\begin{' + piece + '}')
     return None
 
-FormulaFactory.bits += [BeginCommand()]
+FormulaCommand.commandbits += [BeginCommand()]
 

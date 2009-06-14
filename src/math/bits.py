@@ -111,7 +111,7 @@ class Bracket(FormulaBit):
   def parsecomplete(self, pos, innerparser):
     "Parse the start and end marks"
     if not pos.checkfor(self.start):
-      Trace.error('Bracket should start with ' + self.start)
+      Trace.error('Bracket should start with ' + self.start + ' at ' + pos.remaining())
       return
     self.addoriginal(self.start, pos)
     pos.pushending(self.ending)
@@ -121,7 +121,7 @@ class Bracket(FormulaBit):
           self.ending)
       return
     if not pos.checkfor(self.ending):
-      Trace.error('Missing ' + self.ending + ' in ' + pos.remaining())
+      Trace.error('Missing ending ' + self.ending + ' in ' + pos.remaining())
       return
     self.addoriginal(self.ending, pos)
 
@@ -141,9 +141,9 @@ class Bracket(FormulaBit):
 
   def innerliteral(self, pos):
     "Parse a literal inside the bracket, which cannot generate html"
-    literal = self.glob(pos, lambda(p): p.current() != self.ending)
-    self.addoriginal(literal, pos)
-    self.contents = literal
+    self.literal = self.glob(pos, lambda(p): p.current() != self.ending)
+    self.original += self.literal
+    Trace.debug('Literal: ' + self.literal + ' and ' + pos.current())
 
   def process(self):
     "Process the bracket"
