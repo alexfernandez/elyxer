@@ -58,14 +58,17 @@ class FormulaSymbol(FormulaBit):
   def parse(self, pos):
     "Parse the symbol"
     if pos.current() in FormulaSymbol.unmodified:
-      self.addconstant(pos.current(), pos)
+      self.addsymbol(pos.current, pos)
       return
     if pos.current() in FormulaSymbol.modified:
-      symbol = FormulaSymbol.modified[pos.current()]
-      self.addoriginal(pos.current(), pos)
-      self.contents.append(FormulaConstant(symbol))
+      self.addsymbol(FormulaSymbol.modified[pos.current()])
       return
     Trace.error('Symbol ' + pos.current() + ' not found')
+
+  def addsymbol(self, symbol, pos):
+    "Add a symbol"
+    self.addoriginal(pos.current(), pos)
+    self.contents.append(FormulaConstant(symbol))
 
 class Number(FormulaBit):
   "A string of digits in a formula"
@@ -98,6 +101,7 @@ class Bracket(FormulaBit):
   def parse(self, pos):
     "Parse the bracket"
     self.parsecomplete(pos, self.innerformula)
+    return self
 
   def parseliteral(self, pos):
     "Parse a literal bracket"

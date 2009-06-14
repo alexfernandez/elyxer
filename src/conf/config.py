@@ -283,8 +283,7 @@ class FormulaConfig(object):
       u'\\hphantom':u'span class="phantom"', u'\\left':u'span class="symbol"', 
       u'\\overline':u'span class="overline"', 
       u'\\phantom':u'span class="phantom"', u'\\right':u'span class="symbol"', 
-      u'\\underline':u'u', u'\\vphantom':u'span class="phantom"', u'^':u'sup', 
-      u'_':u'sub', 
+      u'\\underline':u'u', u'\\vphantom':u'span class="phantom"', 
       }
 
   starts = {
@@ -292,6 +291,10 @@ class FormulaConfig(object):
       u'FormulaCommand':u'\\', u'beginafter':u'}', u'beginbefore':u'\\begin{', 
       u'bracket':u'{', u'complex':u'\\[', u'root':u'\\sqrt', u'simple':u'$', 
       u'squarebracket':u'[', 
+      }
+
+  symbolfunctions = {
+      u'^':u'sup', u'_':u'sub', 
       }
 
   unmodified = {

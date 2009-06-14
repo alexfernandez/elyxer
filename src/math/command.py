@@ -32,6 +32,59 @@ from math.bits import *
 
 class FormulaCommand(FormulaBit):
   "A LaTeX command inside a formula"
+
+  commandbits = []
+
+  def detect(self, pos):
+    "Find the current command"
+    return pos.checkfor(FormulaConfig.starts['FormulaCommand'])
+
+  def parse(self, pos):
+    "Parse the command"
+    command = self.extractcommand(pos)
+    for bit in FormulaCommand.commandbits:
+      if bit.recognize(command):
+        newbit = bit.clone()
+        newbit.setcommand(command)
+        bit.parse(pos)
+        self.add(newbit)
+        return
+    Trace.error('Unknown command ' + command)
+    self.output = TaggedOutput().settag('span class="unknown"')
+    self.addconstant(self.command)
+
+  def extractcommand(self, pos):
+    "Extract the command from the current position"
+    start = FormulaConfig.starts['FormulaCommand']
+    if not pos.checkfor(start):
+      Trace.error('Missing command start ' + start)
+      return
+    pos.skip(start)
+    if pos.current().isalpha():
+      # alpha command
+      return start + self.glob(pos, lambda p: p.current().isalpha())
+    # symbol command
+    command = start + pos.current()
+    pos.skip(pos.current())
+    return command
+
+  def process(self):
+    "Process the internals"
+    for bit in self.contents:
+      bit.process()
+
+class CommandBit(FormulaCommand):
+  "A formula bit that includes a command"
+
+  def recognize(self, command):
+    "Recognize the command as own"
+    return command in self.commandmap
+
+  def setcommand(self, command):
+    "Set the command in the bit"
+    self.command = command
+    self.original += command
+    self.translated = self.commandmap[self.command]
  
   def parseparameter(self, pos):
     "Parse a parameter at the current position"
@@ -42,110 +95,55 @@ class FormulaCommand(FormulaBit):
     self.add(parameter)
     return parameter
 
-  def findcommand(self, pos, map):
-    "Find any type of command in a map"
-    command = self.findalphacommand(pos)
-    if command and command in map:
-      self.command = command
-      return command
-    command = self.findsymbolcommand(pos)
-    if command and command in map:
-      self.command = command
-      return command
-    return None
-
-  def findalphacommand(self, oldpos):
-    "Find a command with \\alpha"
-    commandstart = FormulaConfig.starts['FormulaCommand']
-    pos = oldpos.clone()
-    if pos.current() != commandstart:
-      return None
-    pos.skip(commandstart)
-    if pos.finished():
-      return None
-    if not pos.current().isalpha():
-      return None
-    command = self.glob(pos, lambda(p): p.current().isalpha())
-    return commandstart + command
-
-  def findsymbolcommand(self, oldpos):
-    "Find a command made with optional \\alpha and one symbol"
-    commandstart = FormulaConfig.starts['FormulaCommand']
-    pos = oldpos.clone()
-    backslash = ''
-    if pos.current() == commandstart:
-      backslash = commandstart
-      pos.skip(commandstart)
-    alpha = self.glob(pos, lambda(p): p.current().isalpha())
-    pos.skip(alpha)
-    if pos.finished():
-      return None
-    return backslash + alpha + pos.current()
-
-  def process(self):
-    "Process the internals"
-    for bit in self.contents:
-      bit.process()
-
-class EmptyCommand(FormulaCommand):
+class EmptyCommand(CommandBit):
   "An empty command (without parameters)"
 
-  def detect(self, pos):
-    "Detect the start of an empty command"
-    if self.findcommand(pos, FormulaConfig.commands):
-      return True
-    if self.findcommand(pos, FormulaConfig.alphacommands):
-      return True
-    return False
+  commandmap = FormulaConfig.commands
 
   def parse(self, pos):
     "Parse a command without parameters"
-    command = self.findcommand(pos, FormulaConfig.commands)
-    if command:
-      self.addtranslated(command, FormulaConfig.commands, pos)
-      return
-    command = self.findcommand(pos, FormulaConfig.alphacommands)
-    if command:
-      self.addtranslated(command, FormulaConfig.alphacommands, pos)
-      self.type = 'alpha'
-      return
-    Trace.error('No command found in ' + pos.remaining())
-    return
+    self.contents = [FormulaConstant(self. translated)]
 
-  def addtranslated(self, command, map, pos):
-    "Add a command and find its translation"
-    translated = map[command]
-    self.addoriginal(command, pos)
-    self.contents = [FormulaConstant(translated)]
+class AlphaCommand(CommandBit):
+  "A command without paramters whose result is alphabetical"
 
-class OneParamFunction(FormulaCommand):
+  commandmap = FormulaConfig.alphacommands
+
+  def parse(self, pos):
+    "Parse the command and set type to alpha"
+    EmptyCommand.parse(self, pos)
+    self.type = 'alpha'
+
+class OneParamFunction(CommandBit):
   "A function of one parameter"
 
-  functions = FormulaConfig.onefunctions
-
-  def detect(self, pos):
-    "Detect the start of the function"
-    if self.findcommand(pos, self.functions):
-      return True
-    return False
+  commandmap = FormulaConfig.onefunctions
 
   def parse(self, pos):
     "Parse a function with one parameter"
-    command = self.findcommand(pos, self.functions)
-    self.addoriginal(command, pos)
-    self.output = TaggedOutput().settag(self.functions[command])
+    self.output = TaggedOutput().settag(self.translated)
     self.parseparameter(pos)
 
-class LiteralFunction(OneParamFunction):
+class SymbolFunction(CommandBit):
+  "Find a function which is represented by a symbol (like _ or ^)"
+
+  def detect(self, pos):
+    "Find the symbol"
+    return self.current() in FormulaConfig.symbolfunctions
+
+  def parse(self, pos):
+    "Parse the symbol"
+    self.addconstant(self.current())
+    pos.skip(self.current())
+
+class LiteralFunction(CommandBit):
   "A function where parameters are read literally"
 
-  functions = FormulaConfig.literalfunctions
+  commandmap = FormulaConfig.literalfunctions
 
   def parse(self, pos):
     "Parse a literal parameter"
-    command = self.findcommand(pos, self.functions)
-    self.addoriginal(command, pos)
-    self.output = TaggedOutput().settag(self.functions[command])
+    self.output = TaggedOutput().settag(self.translated)
     bracket = Bracket().parseliteral(pos)
     self.add(bracket)
 
@@ -158,7 +156,7 @@ class LiteralFunction(OneParamFunction):
 class LabelFunction(LiteralFunction):
   "A function that acts as a label"
 
-  functions = FormulaConfig.labelfunctions
+  commandmap = FormulaConfig.labelfunctions
 
   def process(self):
     "Do not process the inside"
@@ -167,7 +165,7 @@ class LabelFunction(LiteralFunction):
 class FontFunction(OneParamFunction):
   "A function of one parameter that changes the font"
 
-  functions = FormulaConfig.fontfunctions
+  commandmap = FormulaConfig.fontfunctions
 
   def process(self):
     "Do not process the inside"
@@ -176,15 +174,13 @@ class FontFunction(OneParamFunction):
 class DecoratingFunction(OneParamFunction):
   "A function that decorates some bit of text"
 
-  functions = FormulaConfig.decoratingfunctions
+  commandmap = FormulaConfig.decoratingfunctions
 
   def parse(self, pos):
     "Parse a decorating function"
-    command = self.findcommand(pos, FormulaConfig.decoratingfunctions)
-    self.addoriginal(command, pos)
     self.output = TaggedOutput().settag('span class="withsymbol"')
     self.type = 'alpha'
-    symbol = FormulaConfig.decoratingfunctions[command]
+    symbol = self.translated
     tagged = TaggedBit().constant(symbol, 'span class="symbolover"')
     self.contents.append(tagged)
     parameter = self.parseparameter(pos)
@@ -194,84 +190,49 @@ class DecoratingFunction(OneParamFunction):
       self.output = FixedOutput()
       self.html = [FormulaConfig.alphacommands[self.original]]
 
-class HybridFunction(FormulaCommand):
+class HybridFunction(CommandBit):
   "Read a function with two parameters: [] and {}"
 
-  def detect(self, pos):
-    "Detect the start of the function"
-    if self.findcommand(pos, FormulaConfig.hybridfunctions):
-      return True
-    return False
+  commandmap = FormulaConfig.hybridfunctions
 
   def parse(self, pos):
     "Parse a function with [] and {} parameters"
-    command = self.findcommand(pos, FormulaConfig.hybridfunctions)
-    self.addoriginal(command, pos)
     self.parsemagnitude(pos)
-    unit = FormulaConstant(Bracket().parseliteral(pos).contents)
-    unit.type = 'font'
-    self.add(unit)
+    self.parseparameter(pos)
+    self.contents[-1].type = 'font'
 
-  def parsemagnitude(self, pos):
-    "Parse the magnitude bit"
+  def parsesquare(self, pos):
+    "Parse a square bracket"
     bracket = SquareBracket()
     if not bracket.detect(pos):
       return
-    magnitude = SquareBracket().parseliteral(pos).contents
-    Trace.debug('Magnitude: ' + unicode(magnitude))
-    newpos = Position(magnitude)
-    whole = WholeFormula()
-    whole.parse(newpos)
-    whole.process()
-    self.add(whole)
+    bracket.parse(pos)
+    self.add(bracket)
 
-class FractionFunction(FormulaCommand):
+class FractionFunction(CommandBit):
   "A fraction with two parameters"
 
-  def detect(self, pos):
-    "Detect the start of the function"
-    if self.findcommand(pos, FormulaConfig.fractionfunctions):
-      return True
-    return False
+  commandmap = FormulaConfig.fractionfunctions
 
   def parse(self, pos):
-    "Parse a function of two parameters"
-    command = self.findcommand(pos, FormulaConfig.fractionfunctions)
-    self.addoriginal(command, pos)
-    values = FormulaConfig.fractionfunctions[command]
-    self.output = TaggedOutput().settag(values[0])
+    "Parse a fraction function with two parameters"
+    tags = FractionFunction.commands[self.command]
+    self.output = TaggedOutput().settag(tags[0])
     parameter1 = self.parseparameter(pos)
     if not parameter1:
       return
     Trace.debug('Fraction numerator: ' + parameter1.original)
-    parameter1.output = TaggedOutput().settag(values[1])
+    parameter1.output = TaggedOutput().settag(tags[1])
     parameter2 = self.parseparameter(pos)
     if not parameter2:
       return
     Trace.debug('Fraction numerator: ' + parameter2.original)
-    parameter2.output = TaggedOutput().settag(values[2])
+    parameter2.output = TaggedOutput().settag(tags[2])
 
-class UnknownCommand(FormulaCommand):
-  "An unknown command in a formula"
-
-  def detect(self, pos):
-    "Detect an unknown command"
-    return pos.current() == FormulaConfig.starts['FormulaCommand']
-
-  def parse(self, pos):
-    "Parse just the command"
-    command = self.findalphacommand(pos)
-    if not command:
-      command = self.findsymbolcommand(pos)
-    self.addconstant(command, pos)
-    Trace.error('Unknown command ' + command)
-    self.output = TaggedOutput().settag('span class="unknown"')
-
-FormulaFactory.bits += [
+FormulaFactory.bits += [FormulaCommand(), SymbolFunction()]
+FormulaCommand.commandbits = [
     EmptyCommand(), OneParamFunction(), DecoratingFunction(),
     FractionFunction(), FontFunction(), LabelFunction(), LiteralFunction(),
     HybridFunction(),
     ]
-
-FormulaFactory.unknownbits += [ UnknownCommand() ]
 

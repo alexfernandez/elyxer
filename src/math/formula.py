@@ -61,10 +61,9 @@ class FormulaBit(Container):
     self.contents = []
     self.output = ContentsOutput()
 
-  def glob(self, oldpos, check):
+  def glob(self, pos, check):
     "Glob a bit of text that satisfies a check"
     glob = ''
-    pos = oldpos.clone()
     while not pos.finished() and check(pos):
       glob += pos.current()
       pos.skip(pos.current())
@@ -79,8 +78,7 @@ class FormulaBit(Container):
 
   def addconstant(self, string, pos):
     "add a constant string"
-    self.contents.append(FormulaConstant(string))
-    self.addoriginal(string, pos)
+    self.add(FormulaConstant(string))
 
   def add(self, bit):
     "Add any kind of formula bit already processed"
@@ -177,20 +175,21 @@ class FormulaFactory(object):
 
   # bits will be appended later
   bits = []
-  unknownbits = []
 
   def detectbit(self, pos):
     "Detect if there is a next bit"
     if pos.finished():
       return False
-    for bit in FormulaFactory.bits + FormulaFactory.unknownbits:
+    for bit in FormulaFactory.bits:
       if bit.detect(pos):
         return True
     return False
 
   def parsebit(self, pos):
-    "Parse just one formula bit"
-    for bit in FormulaFactory.bits + FormulaFactory.unknownbits:
+    "Parse just one formula bit."
+    "Unknown bits always come last, since the unknown command is the last one"
+    "  to try."
+    for bit in FormulaFactory.bits:
       if bit.detect(pos):
         # get a fresh bit and parse it
         newbit = bit.clone()

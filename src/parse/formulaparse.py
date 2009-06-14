@@ -168,10 +168,3 @@ class Position(object):
     Trace.debug('Adding ' + ending)
     self.endings.append(ending)
 
-  def clone(self):
-    "Return a copy of self"
-    clone = Position(self.text)
-    clone.pos = self.pos
-    return clone
-
-
