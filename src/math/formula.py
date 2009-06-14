@@ -166,8 +166,6 @@ class WholeFormula(FormulaBit):
       return True
     if pos.checkfor(FormulaConfig.endings['Row']):
       return True
-    if pos.checkfor(FormulaConfig.endings['common']):
-      return True
     return False
 
 class FormulaFactory(object):

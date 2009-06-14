@@ -253,7 +253,7 @@ Some delimiters also taken from the Spanish Lyx User's Guide.
 \end_inset
 
 And inline array 
-\begin_inset Formula $\left[\begin{array}{cc}
+\begin_inset Formula $\left[\begin{array}[t]{cc}
 a & b\\
 c & dio\end{array}\right]$
 \end_inset

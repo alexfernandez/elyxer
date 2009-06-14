@@ -62,48 +62,38 @@ class FormulaRow(FormulaCommand):
       if pos.checkfor('&'):
         self.addoriginal('&', pos)
 
-class FormulaArray(FormulaCommand):
+class FormulaArray(CommandBit):
   "An array within a formula"
 
+  piece = 'array'
+
   def __init__(self):
-    FormulaCommand.__init__(self)
     self.output = TaggedOutput().settag('table class="formula"', True)
     self.valign = 'c'
 
-  def detect(self, pos):
-    "Detect an array"
-    if not pos.checkfor(FormulaConfig.starts['FormulaArray']):
-      return False
-    return True
-
   def parse(self, pos):
     "Parse the array"
-    self.addoriginal(FormulaConfig.starts['FormulaArray'], pos)
     self.parsealignments(pos)
     while not pos.finished():
       row = FormulaRow(self.alignments)
       row.parse(pos)
       self.add(row)
-      if pos.checkfor(ContainerConfig.endings['FormulaArray']):
-        self.addoriginal(ContainerConfig.endings['FormulaArray'], pos)
-        return
       self.parserowend(pos)
 
   def parsealignments(self, pos):
     "Parse the different alignments"
     # vertical
-    if pos.checkfor('['):
-      self.addoriginal('[', pos)
-      self.valign = pos.current()
-      self.addoriginal(self.valign, pos)
-      if not pos.checkfor(']'):
-        Trace.error('Vertical alignment ' + self.valign + ' not closed')
-      self.addoriginal(']', pos)
+    vbracket = SquareBracket()
+    if vbracket.detect(pos):
+      vbracket.parseliteral(pos)
+      self.original += vbracket.original
+      self.valign = vbracket.contents
     # horizontal
     bracket = Bracket().parseliteral(pos)
     self.alignments = []
     for l in bracket.contents:
       self.alignments.append(l)
+    self.original += bracket.original
 
   def parserowend(self, pos):
     "Parse the end of a row"
@@ -117,20 +107,15 @@ class FormulaArray(FormulaCommand):
 class FormulaCases(FormulaArray):
   "A cases statement"
 
+  piece = 'cases'
+
   def __init__(self):
     FormulaCommand.__init__(self)
     self.output = TaggedOutput().settag('table class="cases"', True)
     self.alignments = ['l', 'l']
 
-  def detect(self, pos):
-    "Detect a cases statement"
-    if not pos.checkfor(FormulaConfig.starts['FormulaCases']):
-      return False
-    return True
-
   def parse(self, pos):
     "Parse the cases"
-    self.addoriginal(FormulaConfig.starts['FormulaCases'], pos)
     while not pos.finished():
       row = FormulaRow(self.alignments)
       row.parse(pos)
@@ -140,5 +125,38 @@ class FormulaCases(FormulaArray):
         return
       self.parserowend(pos)
 
-FormulaFactory.bits += [FormulaArray(), FormulaCases()]
+class BeginCommand(CommandBit):
+  "A \\begin command and what it entails (array or cases)"
+
+  commandmap = {FormulaConfig.array['begin']:''}
+
+  innerbits = [FormulaArray(), FormulaCases()]
+
+  def parse(self, pos):
+    "Parse the begin command"
+    bracket = Bracket().parseliteral(pos)
+    self.original += bracket.original
+    bit = self.findbit(bracket.contents)
+    if not bit:
+      return
+    ending = FormulaConfig.array['ending'] + '{' + bracket.contents + '}'
+    pos.pushending(ending)
+    bit.parse(pos)
+    self.add(bit)
+    if not pos.checkfor(ending):
+      Trace.error('No ending for ' + ending)
+      return
+    self.addoriginal(ending)
+    return
+
+  def findbit(self, piece):
+    "Find the command bit corresponding to the \\begin{piece}"
+    for bit in BeginCommand.innerbits:
+      if bit.piece == piece:
+        newbit = bit.clone()
+        return newbit
+    Trace.error('Unknown command \\begin{' + piece + '}')
+    return None
+
+FormulaFactory.bits += [BeginCommand()]
 

@@ -155,6 +155,10 @@ class FormulaConfig(object):
       u'\\tilde{n}':u'ñ', u'\\varphi':u'φ', 
       }
 
+  array = {
+      u'begin':u'\\begin', u'end':u'\\end', 
+      }
+
   commands = {
       u'\\!':u'', u'\\%':u'%', u'\\,':u' ', u'\\:':u' ', u'\\Delta':u'Δ', 
       u'\\Downarrow':u'⇓', u'\\Gamma':u'Γ', u'\\Im':u'ℑ', u'\\Lambda':u'Λ', 
@@ -236,9 +240,8 @@ class FormulaConfig(object):
       }
 
   endings = {
-      u'Cell':u'&', u'Row':u'\\\\', u'bracket':u'}', u'common':u'\\end', 
-      u'complex':u'\\]', u'endafter':u'}', u'endbefore':u'\\end{', 
-      u'squarebracket':u']', 
+      u'Cell':u'&', u'Row':u'\\\\', u'bracket':u'}', u'complex':u'\\]', 
+      u'endafter':u'}', u'endbefore':u'\\end{', u'squarebracket':u']', 
       }
 
   fontfunctions = {
@@ -287,7 +290,6 @@ class FormulaConfig(object):
       }
 
   starts = {
-      u'FormulaArray':u'\\begin{array}', u'FormulaCases':u'\\begin{cases}', 
       u'FormulaCommand':u'\\', u'beginafter':u'}', u'beginbefore':u'\\begin{', 
       u'bracket':u'{', u'complex':u'\\[', u'root':u'\\sqrt', u'simple':u'$', 
       u'squarebracket':u'[', 
