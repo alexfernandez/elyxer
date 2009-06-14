@@ -45,13 +45,14 @@ class FormulaCommand(FormulaBit):
     for bit in FormulaCommand.commandbits:
       if bit.recognize(command):
         newbit = bit.clone()
+        newbit.factory = self.factory
         newbit.setcommand(command)
-        bit.parse(pos)
+        newbit.parse(pos)
         self.add(newbit)
         return
     Trace.error('Unknown command ' + command)
     self.output = TaggedOutput().settag('span class="unknown"')
-    self.addconstant(self.command)
+    self.addconstant(command, pos)
 
   def extractcommand(self, pos):
     "Extract the command from the current position"
@@ -102,7 +103,7 @@ class EmptyCommand(CommandBit):
 
   def parse(self, pos):
     "Parse a command without parameters"
-    self.contents = [FormulaConstant(self. translated)]
+    self.contents = [FormulaConstant(self.translated)]
 
 class AlphaCommand(CommandBit):
   "A command without paramters whose result is alphabetical"
@@ -127,14 +128,18 @@ class OneParamFunction(CommandBit):
 class SymbolFunction(CommandBit):
   "Find a function which is represented by a symbol (like _ or ^)"
 
+  commandmap = FormulaConfig.symbolfunctions
+
   def detect(self, pos):
     "Find the symbol"
-    return self.current() in FormulaConfig.symbolfunctions
+    return pos.current() in SymbolFunction.commandmap
 
   def parse(self, pos):
     "Parse the symbol"
-    self.addconstant(self.current())
-    pos.skip(self.current())
+    self.setcommand(pos.current())
+    pos.skip(self.command)
+    self.output = TaggedOutput().settag(self.translated)
+    self.parseparameter(pos)
 
 class LiteralFunction(CommandBit):
   "A function where parameters are read literally"
@@ -197,7 +202,7 @@ class HybridFunction(CommandBit):
 
   def parse(self, pos):
     "Parse a function with [] and {} parameters"
-    self.parsemagnitude(pos)
+    self.parsesquare(pos)
     self.parseparameter(pos)
     self.contents[-1].type = 'font'
 
@@ -216,7 +221,7 @@ class FractionFunction(CommandBit):
 
   def parse(self, pos):
     "Parse a fraction function with two parameters"
-    tags = FractionFunction.commands[self.command]
+    tags = self.translated
     self.output = TaggedOutput().settag(tags[0])
     parameter1 = self.parseparameter(pos)
     if not parameter1:

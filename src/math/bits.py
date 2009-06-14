@@ -58,10 +58,10 @@ class FormulaSymbol(FormulaBit):
   def parse(self, pos):
     "Parse the symbol"
     if pos.current() in FormulaSymbol.unmodified:
-      self.addsymbol(pos.current, pos)
+      self.addsymbol(pos.current(), pos)
       return
     if pos.current() in FormulaSymbol.modified:
-      self.addsymbol(FormulaSymbol.modified[pos.current()])
+      self.addsymbol(FormulaSymbol.modified[pos.current()], pos)
       return
     Trace.error('Symbol ' + pos.current() + ' not found')
 
