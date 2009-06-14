@@ -77,7 +77,7 @@ class FormulaParser(Parser):
         return self.parsemultiliner(reader, startpiece, endpiece)
       Trace.error('Missing ' + beginafter + ' in ' + reader.currentline())
       return ''
-    begincommand = FormulaConfig.starts['FormulaCommand']
+    begincommand = FormulaConfig.starts['command']
     beginbracket = FormulaConfig.starts['bracket']
     if begincommand in reader.currentline() and beginbracket in reader.currentline():
       endbracket = FormulaConfig.endings['bracket']
@@ -122,7 +122,7 @@ class Position(object):
   def __init__(self, text):
     self.text = text
     self.pos = 0
-    self.endings = []
+    self.endinglist = EndingList()
 
   def skip(self, string):
     "Skip a string"
@@ -135,16 +135,9 @@ class Position(object):
   def finished(self):
     "Find out if the current formula has finished"
     if self.isout():
-      if len(self.endings) != 0:
-        Trace.error('Pending endings ' + unicode(self.endings) + ' in ' + self.text)
+      self.endinglist.checkpending()
       return True
-    if len(self.endings) == 0:
-      return False
-    if self.checkfor(self.endings[-1]):
-      Trace.debug('Found ' + self.endings[-1])
-      self.endings.pop()
-      return True
-    return False
+    return self.endinglist.checkin(self)
 
   def isout(self):
     "Find out if we are out of the formula yet"
@@ -163,8 +156,59 @@ class Position(object):
       return False
     return self.text[self.pos : self.pos + len(string)] == string
 
-  def pushending(self, ending):
+  def pushending(self, ending, optional = False):
     "Push a new ending to the bottom"
     Trace.debug('Adding ' + ending)
-    self.endings.append(ending)
+    self.endinglist.add(ending, optional)
+
+class EndingList(object):
+  "A list of position endings"
+
+  def __init__(self):
+    self.endings = []
+
+  def add(self, ending, optional):
+    "Add a new ending to the list"
+    self.endings.append(PositionEnding(ending, optional))
+
+  def checkin(self, pos):
+    "Search for an ending"
+    if len(self.endings) == 0:
+      return False
+    for index, ending in enumerate(reversed(self.endings)):
+      if ending.checkin(pos):
+        Trace.debug('Found ' + unicode(ending))
+        self.remove(index + 1)
+        return True
+      if not ending.optional:
+        return False
+    return False
+
+  def remove(self, number):
+    "Remove a number of endings"
+    for i in range(number):
+      self.endings.pop()
+
+  def checkpending(self):
+    "Check if there are any pending endings"
+    if len(self.endings) != 0:
+      Trace.error('Pending endings ' + unicode(self.endings) + ' in ' + self.text)
+
+class PositionEnding(object):
+  "An ending for a formula position"
+
+  def __init__(self, ending, optional):
+    self.ending = ending
+    self.optional = optional
+
+  def checkin(self, pos):
+    "Check for the ending"
+    return pos.checkfor(self.ending)
+
+  def __unicode__(self):
+    "Printable representation"
+    string = 'Ending ' + self.ending
+    if self.optional:
+      string += ' (optional)'
+    return string
 

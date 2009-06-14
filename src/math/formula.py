@@ -125,7 +125,6 @@ class WholeFormula(FormulaBit):
   def __init__(self):
     FormulaBit.__init__(self)
     self.factory = FormulaFactory()
-    self.arraymode = False
 
   def detect(self, pos):
     "Check in the factory"
@@ -134,8 +133,6 @@ class WholeFormula(FormulaBit):
   def parse(self, pos):
     "Parse with any formula bit"
     while self.factory.detectbit(pos):
-      if self.parsearrayend(pos):
-        return
       bit = self.factory.parsebit(pos)
       #Trace.debug(bit.original + ' -> ' + unicode(bit.gethtml()))
       self.add(bit)
@@ -152,21 +149,6 @@ class WholeFormula(FormulaBit):
         if last.type == 'number':
           #separate
           last.contents.append(FormulaConstant(u' '))
-
-  def setarraymode(self):
-    "Set array mode for parsing"
-    self.arraymode = True
-    return self
-
-  def parsearrayend(self, pos):
-    "Parse the end of a formula in array mode"
-    if not self.arraymode:
-      return False
-    if pos.checkfor(FormulaConfig.endings['Cell']):
-      return True
-    if pos.checkfor(FormulaConfig.endings['Row']):
-      return True
-    return False
 
 class FormulaFactory(object):
   "Construct bits of formula"

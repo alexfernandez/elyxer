@@ -37,7 +37,7 @@ class FormulaCommand(FormulaBit):
 
   def detect(self, pos):
     "Find the current command"
-    return pos.checkfor(FormulaConfig.starts['FormulaCommand'])
+    return pos.checkfor(FormulaConfig.starts['command'])
 
   def parse(self, pos):
     "Parse the command"
@@ -56,7 +56,7 @@ class FormulaCommand(FormulaBit):
 
   def extractcommand(self, pos):
     "Extract the command from the current position"
-    start = FormulaConfig.starts['FormulaCommand']
+    start = FormulaConfig.starts['command']
     if not pos.checkfor(start):
       Trace.error('Missing command start ' + start)
       return

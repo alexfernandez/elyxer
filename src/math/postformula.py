@@ -99,11 +99,11 @@ class PostFormula(object):
     label = contents[index]
     if not isinstance(label, LabelFunction):
       return
-    if len(label.contents) != 1:
+    if len(label.contents) < 1 or not isinstance(label.contents[0], Bracket):
       Trace.error('Wrong contents for label ' + unicode(label))
       return
     bracket = label.contents[0]
-    labelname = bracket.contents
+    labelname = bracket.literal
     number = '(' + self.generator.generate(1) + ') '
     Label.names[labelname] = label
     tag = label.output.tag.replace('#', labelname)

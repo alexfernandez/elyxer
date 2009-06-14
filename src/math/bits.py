@@ -143,7 +143,6 @@ class Bracket(FormulaBit):
     "Parse a literal inside the bracket, which cannot generate html"
     self.literal = self.glob(pos, lambda(p): p.current() != self.ending)
     self.original += self.literal
-    Trace.debug('Literal: ' + self.literal + ' and ' + pos.current())
 
   def process(self):
     "Process the bracket"

@@ -39,7 +39,7 @@ class FormulaCell(FormulaCommand):
     self.output = TaggedOutput().settag('td class="formula-' + alignment +'"', True)
 
   def parse(self, pos):
-    formula = WholeFormula().setarraymode()
+    formula = WholeFormula()
     if not formula.detect(pos):
       Trace.error('Unexpected end of array cell at ' + pos.remaining())
       return
@@ -55,12 +55,27 @@ class FormulaRow(FormulaCommand):
     self.output = TaggedOutput().settag('tr', True)
 
   def parse(self, pos):
-    for i in self.alignments:
-      cell = FormulaCell(i)
+    "Parse a whole row"
+    for cell in self.parsecells(pos):
       cell.parse(pos)
       self.add(cell)
-      if pos.checkfor('&'):
-        self.addoriginal('&', pos)
+
+  def parsecells(self, pos):
+    "Parse all cells, finish when count ends"
+    cellseparator = FormulaConfig.array['cellseparator']
+    for index, alignment in enumerate(self.alignments):
+      if self.anybutlast(index):
+        pos.pushending(cellseparator)
+      yield FormulaCell(alignment)
+      if self.anybutlast(index):
+        if not pos.checkfor(cellseparator):
+          Trace.error('No cell separator ' + cellseparator)
+        else:
+          self.addoriginal(cellseparator, pos)
+
+  def anybutlast(self, index):
+    "Return true for all cells but the last"
+    return index < len(self.alignments) - 1
 
 class FormulaArray(CommandBit):
   "An array within a formula"
@@ -71,11 +86,20 @@ class FormulaArray(CommandBit):
     "Parse the array"
     self.output = TaggedOutput().settag('table class="formula"', True)
     self.parsealignments(pos)
-    while not pos.finished():
-      row = FormulaRow(self.alignments)
+    for row in self.parserows(pos):
       row.parse(pos)
       self.add(row)
-      self.parserowend(pos)
+
+  def parserows(self, pos):
+    "Parse all rows, finish when no more row ends"
+    rowseparator = FormulaConfig.array['rowseparator']
+    while True:
+      pos.pushending(rowseparator, True)
+      yield FormulaRow(self.alignments)
+      if pos.checkfor(rowseparator):
+        self.addoriginal(rowseparator, pos)
+      else:
+        return
 
   def parsealignments(self, pos):
     "Parse the different alignments"
@@ -93,15 +117,6 @@ class FormulaArray(CommandBit):
     for l in bracket.literal:
       self.alignments.append(l)
 
-  def parserowend(self, pos):
-    "Parse the end of a row"
-    endline = FormulaConfig.endings['Row']
-    if not pos.checkfor(endline):
-      Trace.error('No row end at ' + pos.remaining())
-      self.addoriginal(pos.current(), pos)
-      return
-    self.addoriginal(endline, pos)
-
 class FormulaCases(FormulaArray):
   "A cases statement"
 
@@ -111,14 +126,9 @@ class FormulaCases(FormulaArray):
     "Parse the cases"
     self.output = TaggedOutput().settag('table class="cases"', True)
     self.alignments = ['l', 'l']
-    while not pos.finished():
-      row = FormulaRow(self.alignments)
+    for row in self.parserows(pos):
       row.parse(pos)
       self.add(row)
-      if pos.checkfor(ContainerConfig.endings['FormulaCases']):
-        self.addoriginal(ContainerConfig.endings['FormulaCases'], pos)
-        return
-      self.parserowend(pos)
 
 class BeginCommand(CommandBit):
   "A \\begin command and what it entails (array or cases)"
