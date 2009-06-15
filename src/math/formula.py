@@ -45,7 +45,7 @@ class Formula(Container):
       constant = TaggedBit().constant(pos.remaining(), 'span class="unknown"')
       self.contents = [constant]
       return
-    whole.parse(pos)
+    whole.parsebit(pos)
     whole.process()
     self.contents = [whole]
     if self.header[0] != 'inline':
@@ -75,10 +75,6 @@ class FormulaBit(Container):
     clone = type.__new__(type)
     clone.__init__()
     return clone
-
-  def addconstant(self, string, pos):
-    "add a constant string"
-    self.add(FormulaConstant(string))
 
   def add(self, bit):
     "Add any kind of formula bit already processed"
@@ -132,7 +128,7 @@ class WholeFormula(FormulaBit):
     "Check in the factory"
     return self.factory.detectbit(pos)
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse with any formula bit"
     while self.factory.detectbit(pos):
       bit = self.factory.parsebit(pos)
@@ -169,14 +165,12 @@ class FormulaFactory(object):
 
   def parsebit(self, pos):
     "Parse just one formula bit."
-    "Unknown bits always come last, since the unknown command is the last one"
-    "  to try."
     for bit in FormulaFactory.bits:
       if bit.detect(pos):
         # get a fresh bit and parse it
         newbit = bit.clone()
         newbit.factory = self
-        returnedbit = newbit.parse(pos)
+        returnedbit = newbit.parsebit(pos)
         if returnedbit:
           return returnedbit
         return newbit

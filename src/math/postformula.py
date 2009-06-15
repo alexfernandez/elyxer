@@ -56,7 +56,6 @@ class PostFormula(object):
       return
     if not bit.command in FormulaConfig.limits['commands']:
       return
-    Trace.debug('Limited ' + bit.command)
     limits = self.findlimits(contents, index + 1)
     limits.reverse()
     if len(limits) == 0:
@@ -77,12 +76,10 @@ class PostFormula(object):
   def checklimits(self, contents, index):
     "Check for a command making the limits"
     bit = contents[index]
-    Trace.debug('Possible limit: ' + unicode(bit))
     if not isinstance(bit, SymbolFunction):
       return False
     if not bit.command in FormulaConfig.limits['operands']:
       return False
-    Trace.debug('Limit: ' + unicode(bit))
     bit.output.tag += ' class="bigsymbol"'
     return True
 

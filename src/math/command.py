@@ -39,7 +39,7 @@ class FormulaCommand(FormulaBit):
     "Find the current command"
     return pos.checkfor(FormulaConfig.starts['command'])
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse the command"
     command = self.extractcommand(pos)
     for bit in FormulaCommand.commandbits:
@@ -47,12 +47,12 @@ class FormulaCommand(FormulaBit):
         newbit = bit.clone()
         newbit.factory = self.factory
         newbit.setcommand(command)
-        newbit.parse(pos)
+        newbit.parsebit(pos)
         self.add(newbit)
         return newbit
     Trace.error('Unknown command ' + command)
     self.output = TaggedOutput().settag('span class="unknown"')
-    self.addconstant(command, pos)
+    self.add(FormulaConstant(command))
 
   def extractcommand(self, pos):
     "Extract the command from the current position"
@@ -101,7 +101,7 @@ class EmptyCommand(CommandBit):
 
   commandmap = FormulaConfig.commands
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse a command without parameters"
     self.contents = [FormulaConstant(self.translated)]
 
@@ -110,9 +110,9 @@ class AlphaCommand(CommandBit):
 
   commandmap = FormulaConfig.alphacommands
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse the command and set type to alpha"
-    EmptyCommand.parse(self, pos)
+    EmptyCommand.parsebit(self, pos)
     self.type = 'alpha'
 
 class OneParamFunction(CommandBit):
@@ -120,7 +120,7 @@ class OneParamFunction(CommandBit):
 
   commandmap = FormulaConfig.onefunctions
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse a function with one parameter"
     self.output = TaggedOutput().settag(self.translated)
     self.parseparameter(pos)
@@ -134,7 +134,7 @@ class SymbolFunction(CommandBit):
     "Find the symbol"
     return pos.current() in SymbolFunction.commandmap
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse the symbol"
     self.setcommand(pos.current())
     pos.skip(self.command)
@@ -146,7 +146,7 @@ class LiteralFunction(CommandBit):
 
   commandmap = FormulaConfig.literalfunctions
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse a literal parameter"
     self.output = TaggedOutput().settag(self.translated)
     bracket = Bracket().parseliteral(pos)
@@ -180,7 +180,7 @@ class DecoratingFunction(OneParamFunction):
 
   commandmap = FormulaConfig.decoratingfunctions
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse a decorating function"
     self.output = TaggedOutput().settag('span class="withsymbol"')
     self.type = 'alpha'
@@ -199,7 +199,7 @@ class HybridFunction(CommandBit):
 
   commandmap = FormulaConfig.hybridfunctions
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse a function with [] and {} parameters"
     self.parsesquare(pos)
     self.parseparameter(pos)
@@ -210,7 +210,7 @@ class HybridFunction(CommandBit):
     bracket = SquareBracket()
     if not bracket.detect(pos):
       return
-    bracket.parse(pos)
+    bracket.parsebit(pos)
     self.add(bracket)
 
 class FractionFunction(CommandBit):
@@ -218,7 +218,7 @@ class FractionFunction(CommandBit):
 
   commandmap = FormulaConfig.fractionfunctions
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse a fraction function with two parameters"
     tags = self.translated
     self.output = TaggedOutput().settag(tags[0])

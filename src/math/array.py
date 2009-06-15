@@ -38,12 +38,12 @@ class FormulaCell(FormulaCommand):
     self.alignment = alignment
     self.output = TaggedOutput().settag('td class="formula-' + alignment +'"', True)
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     formula = WholeFormula()
     if not formula.detect(pos):
       Trace.error('Unexpected end of array cell at ' + pos.remaining())
       return
-    formula.parse(pos)
+    formula.parsebit(pos)
     self.add(formula)
 
 class FormulaRow(FormulaCommand):
@@ -54,10 +54,10 @@ class FormulaRow(FormulaCommand):
     self.alignments = alignments
     self.output = TaggedOutput().settag('tr', True)
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse a whole row"
     for cell in self.parsecells(pos):
-      cell.parse(pos)
+      cell.parsebit(pos)
       self.add(cell)
 
   def parsecells(self, pos):
@@ -82,12 +82,12 @@ class FormulaArray(CommandBit):
 
   piece = 'array'
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse the array"
     self.output = TaggedOutput().settag('table class="formula"', True)
     self.parsealignments(pos)
     for row in self.parserows(pos):
-      row.parse(pos)
+      row.parsebit(pos)
       self.add(row)
 
   def parserows(self, pos):
@@ -122,12 +122,12 @@ class FormulaCases(FormulaArray):
 
   piece = 'cases'
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse the cases"
     self.output = TaggedOutput().settag('table class="cases"', True)
     self.alignments = ['l', 'l']
     for row in self.parserows(pos):
-      row.parse(pos)
+      row.parsebit(pos)
       self.add(row)
 
 class BeginCommand(CommandBit):
@@ -137,7 +137,7 @@ class BeginCommand(CommandBit):
 
   innerbits = [FormulaArray(), FormulaCases()]
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse the begin command"
     bracket = Bracket().parseliteral(pos)
     self.original += bracket.literal
@@ -146,7 +146,7 @@ class BeginCommand(CommandBit):
       return
     ending = FormulaConfig.array['end'] + '{' + bracket.literal + '}'
     pos.pushending(ending)
-    bit.parse(pos)
+    bit.parsebit(pos)
     self.add(bit)
     self.original += pos.popending(ending)
 

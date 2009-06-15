@@ -35,10 +35,10 @@ class RawText(FormulaBit):
     "Detect a bit of raw text"
     return pos.current().isalpha()
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse alphabetic text"
     alpha = self.glob(pos, lambda(p): p.current().isalpha())
-    self.addconstant(alpha, pos)
+    self.add(FormulaConstant(alpha))
     self.type = 'alpha'
 
 class FormulaSymbol(FormulaBit):
@@ -55,7 +55,7 @@ class FormulaSymbol(FormulaBit):
       return True
     return False
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse the symbol"
     if pos.current() in FormulaSymbol.unmodified:
       self.addsymbol(pos.current(), pos)
@@ -77,10 +77,10 @@ class Number(FormulaBit):
     "Detect a digit"
     return pos.current().isdigit()
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse a bunch of digits"
     digits = self.glob(pos, lambda(p): p.current().isdigit())
-    self.addconstant(digits, pos)
+    self.add(FormulaConstant(digits))
     self.type = 'number'
 
 class Bracket(FormulaBit):
@@ -98,7 +98,7 @@ class Bracket(FormulaBit):
     "Detect the start of a bracket"
     return pos.checkfor(self.start)
 
-  def parse(self, pos):
+  def parsebit(self, pos):
     "Parse the bracket"
     self.parsecomplete(pos, self.innerformula)
     return self
@@ -122,7 +122,7 @@ class Bracket(FormulaBit):
     "Parse a whole formula inside the bracket"
     self.inner = WholeFormula()
     if self.inner.detect(pos):
-      self.inner.parse(pos)
+      self.inner.parsebit(pos)
       self.add(self.inner)
       return
     if pos.finished():
