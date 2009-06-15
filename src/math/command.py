@@ -201,6 +201,7 @@ class HybridFunction(CommandBit):
 
   def parsebit(self, pos):
     "Parse a function with [] and {} parameters"
+    self.output = TaggedOutput().settag(self.translated)
     self.parsesquare(pos)
     self.parseparameter(pos)
     self.contents[-1].type = 'font'
