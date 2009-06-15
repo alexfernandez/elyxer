@@ -176,7 +176,9 @@ class FormulaFactory(object):
         # get a fresh bit and parse it
         newbit = bit.clone()
         newbit.factory = self
-        newbit.parse(pos)
+        returnedbit = newbit.parse(pos)
+        if returnedbit:
+          return returnedbit
         return newbit
     Trace.error('Unrecognized formula at ' + pos.remaining())
     constant = FormulaConstant(pos.current())

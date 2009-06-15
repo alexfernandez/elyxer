@@ -49,7 +49,7 @@ class FormulaCommand(FormulaBit):
         newbit.setcommand(command)
         newbit.parse(pos)
         self.add(newbit)
-        return
+        return newbit
     Trace.error('Unknown command ' + command)
     self.output = TaggedOutput().settag('span class="unknown"')
     self.addconstant(command, pos)
