@@ -52,10 +52,11 @@ class PostFormula(object):
   def checklimited(self, contents, index):
     "Check for a command with limits"
     bit = contents[index]
-    if not hasattr(bit, 'command'):
+    if not isinstance(bit, EmptyCommand):
       return
     if not bit.command in FormulaConfig.limits['commands']:
       return
+    Trace.debug('Limited ' + bit.command)
     limits = self.findlimits(contents, index + 1)
     limits.reverse()
     if len(limits) == 0:

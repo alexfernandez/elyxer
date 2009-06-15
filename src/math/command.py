@@ -225,12 +225,10 @@ class FractionFunction(CommandBit):
     parameter1 = self.parseparameter(pos)
     if not parameter1:
       return
-    Trace.debug('Fraction numerator: ' + parameter1.original)
     parameter1.output = TaggedOutput().settag(tags[1])
     parameter2 = self.parseparameter(pos)
     if not parameter2:
       return
-    Trace.debug('Fraction numerator: ' + parameter2.original)
     parameter2.output = TaggedOutput().settag(tags[2])
 
 FormulaFactory.bits += [FormulaCommand(), SymbolFunction()]

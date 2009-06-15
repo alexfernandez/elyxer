@@ -158,7 +158,6 @@ class Position(object):
 
   def pushending(self, ending, optional = False):
     "Push a new ending to the bottom"
-    Trace.debug('Adding ' + ending)
     self.endinglist.add(ending, optional)
 
   def popending(self, expected = None):
@@ -206,7 +205,6 @@ class EndingList(object):
       return None
     for index, ending in enumerate(reversed(self.endings)):
       if ending.checkin(pos):
-        Trace.debug('Found ' + unicode(ending))
         return ending
       if not ending.optional:
         return None

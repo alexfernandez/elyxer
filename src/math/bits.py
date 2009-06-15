@@ -117,7 +117,6 @@ class Bracket(FormulaBit):
     pos.pushending(self.ending)
     innerparser(pos)
     self.original += pos.popending(self.ending)
-    Trace.debug('Complete: ' + self.original)
 
   def innerformula(self, pos):
     "Parse a whole formula inside the bracket"

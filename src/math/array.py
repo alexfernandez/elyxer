@@ -141,7 +141,6 @@ class BeginCommand(CommandBit):
     "Parse the begin command"
     bracket = Bracket().parseliteral(pos)
     self.original += bracket.literal
-    Trace.debug('Remaining: ' + pos.remaining())
     bit = self.findbit(bracket.literal)
     if not bit:
       return
