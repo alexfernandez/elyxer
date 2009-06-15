@@ -71,7 +71,7 @@ class FormulaRow(FormulaCommand):
         if not pos.checkfor(cellseparator):
           Trace.error('No cell separator ' + cellseparator)
         else:
-          self.addoriginal(cellseparator, pos)
+          self.original += pos.popending(cellseparator)
 
   def anybutlast(self, index):
     "Return true for all cells but the last"
@@ -97,7 +97,7 @@ class FormulaArray(CommandBit):
       pos.pushending(rowseparator, True)
       yield FormulaRow(self.alignments)
       if pos.checkfor(rowseparator):
-        self.addoriginal(rowseparator, pos)
+        self.original += pos.popending(rowseparator)
       else:
         return
 
@@ -141,6 +141,7 @@ class BeginCommand(CommandBit):
     "Parse the begin command"
     bracket = Bracket().parseliteral(pos)
     self.original += bracket.literal
+    Trace.debug('Remaining: ' + pos.remaining())
     bit = self.findbit(bracket.literal)
     if not bit:
       return
@@ -148,11 +149,7 @@ class BeginCommand(CommandBit):
     pos.pushending(ending)
     bit.parse(pos)
     self.add(bit)
-    if not pos.checkfor(ending):
-      Trace.error('No ending for ' + ending)
-      return
-    self.addoriginal(ending, pos)
-    return
+    self.original += pos.popending(ending)
 
   def findbit(self, piece):
     "Find the command bit corresponding to the \\begin{piece}"

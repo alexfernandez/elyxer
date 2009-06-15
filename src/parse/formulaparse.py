@@ -161,6 +161,14 @@ class Position(object):
     Trace.debug('Adding ' + ending)
     self.endinglist.add(ending, optional)
 
+  def popending(self, expected = None):
+    "Pop the ending found at the current position"
+    ending = self.endinglist.pop(self)
+    if expected and expected != ending:
+      Trace.error('Expected ending ' + expected + ', got ' + ending)
+    self.skip(ending)
+    return ending
+
 class EndingList(object):
   "A list of position endings"
 
@@ -173,21 +181,36 @@ class EndingList(object):
 
   def checkin(self, pos):
     "Search for an ending"
+    if self.findending(pos):
+      return True
+    return False
+
+  def pop(self, pos):
+    "Remove the ending at the current position"
+    ending = self.findending(pos)
+    if not ending:
+      Trace.error('No ending at ' + pos.remaining())
+      return ''
+    for each in reversed(self.endings):
+      self.endings.remove(each)
+      if each == ending:
+        return each.ending
+      elif not each.optional:
+        Trace.error('Removed non-optional ending ' + each)
+    Trace.error('No endings left')
+    return ''
+
+  def findending(self, pos):
+    "Find the ending at the current position"
     if len(self.endings) == 0:
-      return False
+      return None
     for index, ending in enumerate(reversed(self.endings)):
       if ending.checkin(pos):
         Trace.debug('Found ' + unicode(ending))
-        self.remove(index + 1)
-        return True
+        return ending
       if not ending.optional:
-        return False
-    return False
-
-  def remove(self, number):
-    "Remove a number of endings"
-    for i in range(number):
-      self.endings.pop()
+        return None
+    return None
 
   def checkpending(self):
     "Check if there are any pending endings"

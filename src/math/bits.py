@@ -67,7 +67,7 @@ class FormulaSymbol(FormulaBit):
 
   def addsymbol(self, symbol, pos):
     "Add a symbol"
-    self.addoriginal(pos.current(), pos)
+    self.skiporiginal(pos.current(), pos)
     self.contents.append(FormulaConstant(symbol))
 
 class Number(FormulaBit):
@@ -113,17 +113,11 @@ class Bracket(FormulaBit):
     if not pos.checkfor(self.start):
       Trace.error('Bracket should start with ' + self.start + ' at ' + pos.remaining())
       return
-    self.addoriginal(self.start, pos)
+    self.skiporiginal(self.start, pos)
     pos.pushending(self.ending)
     innerparser(pos)
-    if pos.isout():
-      Trace.error('Bracket ' + self.original + ' should end with ' +
-          self.ending)
-      return
-    if not pos.checkfor(self.ending):
-      Trace.error('Missing ending ' + self.ending + ' in ' + pos.remaining())
-      return
-    self.addoriginal(self.ending, pos)
+    self.original += pos.popending(self.ending)
+    Trace.debug('Complete: ' + self.original)
 
   def innerformula(self, pos):
     "Parse a whole formula inside the bracket"

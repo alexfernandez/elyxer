@@ -85,9 +85,11 @@ class FormulaBit(Container):
     self.contents.append(bit)
     self.original += bit.original
 
-  def addoriginal(self, string, pos):
-    "Add a constant to the original formula only"
+  def skiporiginal(self, string, pos):
+    "Skip a string and add it to the original formula"
     self.original += string
+    if not pos.checkfor(string):
+      Trace.error('String ' + string + ' not at ' + pos.remaining())
     pos.skip(string)
 
   def __unicode__(self):
