@@ -259,7 +259,8 @@ class FormulaConfig(object):
       }
 
   hybridfunctions = {
-      u'\\sqrt':u'span class="sqrt"', u'\\unit':u'span class="unit"', 
+      u'\\sqrt':[u'span class="sqrt"',u'sup',], 
+      u'\\unit':[u'span class="unit"',u'',], 
       }
 
   labelfunctions = {
@@ -291,7 +292,7 @@ class FormulaConfig(object):
 
   starts = {
       u'beginafter':u'}', u'beginbefore':u'\\begin{', u'bracket':u'{', 
-      u'command':u'\\', u'complex':u'\\[', u'root':u'\\sqrt', u'simple':u'$', 
+      u'command':u'\\', u'complex':u'\\[', u'simple':u'$', 
       u'squarebracket':u'[', 
       }
 
