@@ -113,6 +113,12 @@ Implemented nice fractions:
 .
 \end_layout
 
+\begin_layout Itemize
+Redid basic typography: default font is now sans-serif, which looks better
+ on your average browser.
+ Formulae have a bit more space around.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.26 (2009-06-10):
