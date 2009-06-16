@@ -100,7 +100,9 @@ Image conversion from a different directory (or even with absolute paths)
 \end_layout
 
 \begin_layout Itemize
-More structured parsing in formulae.
+Changed the whole infrastructure for formulae parsing.
+ More structured parsing should now be possible, e.g.
+ square brackets are first-class citizens.
 \end_layout
 
 \end_deeper
