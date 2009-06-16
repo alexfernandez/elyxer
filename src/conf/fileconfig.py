@@ -108,16 +108,16 @@ class ConfigWriter(object):
     if attr.startswith('__'):
       return
     self.writesection(object, attr)
-    value = getattr(object, attr)
-    if not isinstance(value, dict):
-      Trace.error('Unknown config type ' + value.__class__.__name__ +
+    valuedict = getattr(object, attr)
+    if not isinstance(valuedict, dict):
+      Trace.error('Unknown config type ' + valuedict.__class__.__name__ +
           ' in ' + attr)
       return
     names = valuedict.keys()
     names.sort()
     for name in names:
       value = self.serializer.serialize(valuedict[name])
-      self.writer.writeline(self.escape(name) + ':' + value)
+      self.writer.writeline(self.serializer.escape(name) + ':' + value)
 
   def writesection(self, object, attr):
     "Write a new section"

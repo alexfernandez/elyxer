@@ -29,6 +29,7 @@ from util.trace import Trace
 from util.options import *
 from conf.config import *
 from conf.fileconfig import *
+from conf.importconfig import *
 
 
 class Config(object):
@@ -37,6 +38,7 @@ class Config(object):
   cfg = 'conf/base.cfg'
   py = 'conf/config.py'
   addcfg = None
+  importcfg = None
   help = False
 
   def run(self, args):
@@ -71,6 +73,7 @@ class Config(object):
     Trace.error('    --cfg base.cfg: choose base config file')
     Trace.error('    --addcfg add.cfg: load additional config file')
     Trace.error('    --py config.py: choose Python config file')
+    Trace.error('    --importcfg unicodesymbols: import LyX unicode symbols file')
     exit()
 
   def read(self):
@@ -78,6 +81,9 @@ class Config(object):
     reader = ConfigReader(Config.cfg).parse()
     if Config.addcfg:
       addreader = ConfigReader(Config.addcfg).parse()
+      self.mix(reader, addreader)
+    if Config.importcfg:
+      addreader = ImportCommands(Config.importcfg).parse()
       self.mix(reader, addreader)
     reader.objects['GeneralConfig.version']['date'] = datetime.date.today().isoformat()
     return reader

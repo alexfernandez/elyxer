@@ -119,6 +119,14 @@ Redid basic typography: default font is now sans-serif, which looks better
  Formulae have a bit more space around.
 \end_layout
 
+\begin_layout Itemize
+Imported the complete symbol list from the 
+\family typewriter
+unicodesymbols
+\family default
+ file in LyX.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.26 (2009-06-10):
