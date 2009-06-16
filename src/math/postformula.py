@@ -86,7 +86,9 @@ class PostFormula(object):
   def checkroot(self, contents, index):
     "Check for a root, insert the radical in front"
     bit = contents[index]
-    if not hasattr(bit, 'sqrt'):
+    if not hasattr(bit, 'mark'):
+      return
+    if bit.mark != 'sqrt':
       return
     radical = TaggedText().constant(u'√', 'span class="radical"')
     root = TaggedText().complete(bit.contents, 'span class="root"')

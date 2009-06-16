@@ -255,12 +255,12 @@ class FormulaConfig(object):
   fractionfunctions = {
       
       u'\\frac':[u'span class="fraction"',u'span class="numerator"',u'span class="denominator"',], 
-      u'\\nicefrac':[u'span class="fraction"',u'span class="numerator"',u'span class="denominator"',], 
+      u'\\nicefrac':[u'span class="fraction"',u'sup class="numerator"',u'sub class="denominator"',], 
       }
 
   hybridfunctions = {
-      u'\\sqrt':[u'span class="sqrt"',u'sup',], 
-      u'\\unit':[u'span class="unit"',u'',], 
+      u'\\sqrt':[u'sqrt',u'span class="sqrt"',u'sup',], 
+      u'\\unit':[u'font',u'span class="unit"',u'',], 
       }
 
   labelfunctions = {

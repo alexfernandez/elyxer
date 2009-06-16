@@ -203,9 +203,8 @@ class HybridFunction(CommandBit):
     "Parse a function with [] and {} parameters"
     self.parsesquare(pos)
     parameter = self.parseparameter(pos)
-    parameter.output = TaggedOutput().settag(self.translated[0])
-    parameter.type = 'font'
-    parameter.sqrt = True
+    parameter.mark = self.translated[0]
+    parameter.output = TaggedOutput().settag(self.translated[1])
 
   def parsesquare(self, pos):
     "Parse a square bracket"
@@ -213,7 +212,7 @@ class HybridFunction(CommandBit):
     if not bracket.detect(pos):
       return
     bracket.parsebit(pos)
-    bracket.output = TaggedOutput().settag(self.translated[1])
+    bracket.output = TaggedOutput().settag(self.translated[2])
     self.add(bracket)
     Trace.debug('Square bracket: ' + unicode(bracket))
 
