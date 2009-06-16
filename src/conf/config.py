@@ -254,8 +254,8 @@ class FormulaConfig(object):
 
   fractionfunctions = {
       
-      u'\\frac':[u'span class="fraction"',u'span class="numerator"',u'span class="denominator"',], 
-      u'\\nicefrac':[u'span class="fraction"',u'sup class="numerator"',u'sub class="denominator"',], 
+      u'\\frac':[u'span class="fraction"',u'span class="numerator"',u'',u'span class="denominator"',], 
+      u'\\nicefrac':[u'span class="fraction"',u'sup class="numerator"',u'⁄',u'sub class="denominator"',], 
       }
 
   hybridfunctions = {

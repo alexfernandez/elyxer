@@ -224,15 +224,16 @@ class FractionFunction(CommandBit):
   def parsebit(self, pos):
     "Parse a fraction function with two parameters"
     tags = self.translated
-    self.output = TaggedOutput().settag(tags[0])
+    self.output = TaggedOutput().settag(self.translated[0])
     parameter1 = self.parseparameter(pos)
     if not parameter1:
       return
-    parameter1.output = TaggedOutput().settag(tags[1])
+    parameter1.output = TaggedOutput().settag(self.translated[1])
+    self.contents.append(FormulaConstant(self.translated[2]))
     parameter2 = self.parseparameter(pos)
     if not parameter2:
       return
-    parameter2.output = TaggedOutput().settag(tags[2])
+    parameter2.output = TaggedOutput().settag(self.translated[3])
 
 FormulaFactory.bits += [FormulaCommand(), SymbolFunction()]
 FormulaCommand.commandbits = [

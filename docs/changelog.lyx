@@ -105,6 +105,14 @@ Changed the whole infrastructure for formulae parsing.
  square brackets are first-class citizens.
 \end_layout
 
+\begin_layout Itemize
+Implemented nice fractions: 
+\begin_inset Formula $\nicefrac{7}{8}$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.26 (2009-06-10):
