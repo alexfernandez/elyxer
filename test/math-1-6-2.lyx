@@ -437,11 +437,6 @@ Units can be shown with or without a magnitude.
 \end_inset
 
 .
- Now with a fraction: 
-\begin_inset Formula $\unitfrac[3x]{km}{h}$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Chapter
