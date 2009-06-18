@@ -203,7 +203,8 @@ class HybridFunction(CommandBit):
     "Parse a function with [] and {} parameters"
     self.parsesquare(pos)
     parameter = self.parseparameter(pos)
-    parameter.mark = self.translated[0]
+    parameter.type = self.translated[0]
+    Trace.debug('Type: ' + parameter.type + ' for ' + unicode(parameter.contents[0]) + ' (' + unicode(parameter.contents[0].type) + ')')
     parameter.output = TaggedOutput().settag(self.translated[1])
 
   def parsesquare(self, pos):

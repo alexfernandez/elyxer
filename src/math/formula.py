@@ -140,6 +140,7 @@ class WholeFormula(FormulaBit):
     for index, bit in enumerate(self.contents):
       bit.process()
       if bit.type == 'alpha':
+        Trace.debug('Alpha ' + unicode(bit))
         # make variable
         self.contents[index] = TaggedBit().complete([bit], 'i')
       elif bit.type == 'font' and index > 0:
