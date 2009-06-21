@@ -335,7 +335,8 @@ target "http://www.zipcon.net/~swhite/resume/"
 
 \end_inset
 
- for encouraging me to publish the tool; to 
+ for encouraging me to publish the tool.
+ Thanks also to 
 \begin_inset LatexCommand url
 name "John D. Cook"
 target "http://www.johndcook.com/"
@@ -356,15 +357,22 @@ target "http://www.seanet.com/~bradbell/omhelp/stdfun.htm"
 
 \end_inset
 
- for their wonderful lists of TeX commands; to Christian Ridderström for
- helping me out right at the start; to Ignacio García for relentless encourageme
-nt; to Abdelrazak Younes, Pavel Sanda, Günther Milde, Olivier Ripoll, José
- Matos, Iain Mac Donald, Uwe Stöhr for their interesting suggestions; to
- Nikos Alexandris, Joachim Kreimer-de Fries (Osnabryg), Richard Talley,
- Wolfgang Keller, Murray Eisenberg, Robert Orr, a Linux guy in Singapore,
- Anders Ekberg, Pavel Sanda, Steve Hastings, Sven Hoexter, Xie Chao, Uwe
- Stöhr, Jürgen Spitzmüller for their testing and bug reporting.
- A silent 
+ and LyX developers Georg Baum, Uwe Stöhr and Jürgen Spitzmüller for their
+ wonderful lists of TeX commands and Unicode equivalents.
+ More thanks go to Christian Ridderström for helping me out right at the
+ start; to Ignacio García for relentless encouragement; to Abdelrazak Younes,
+ Pavel Sanda, Günther Milde, Olivier Ripoll, José Matos, Iain Mac Donald,
+ Uwe Stöhr for their interesting suggestions; to Nikos Alexandris, Joachim
+ Kreimer-de Fries (Osnabryg), Richard Talley, Wolfgang Keller, Murray Eisenberg,
+ Robert Orr, a Linux guy in Singapore, Anders Ekberg, Pavel Sanda, Steve
+ Hastings, Sven Hoexter, Xie Chao, Uwe Stöhr, Jürgen Spitzmüller and Olivier
+ Ripoll for their testing and bug reporting.
+ Packagers Sven Hoexter (for Debian) and Uwe Stöhr (on Windows) have helped
+ with their work to make it easy to try it out.
+\end_layout
+
+\begin_layout Standard
+A silent 
 \begin_inset Quotes eld
 \end_inset
 
@@ -374,6 +382,8 @@ thank you
 
  goes to all those who downloaded the tool and silently tested it to their
  satisfaction (or were not bugged enough to write about it).
+ Thanks to those who have criticized the tool for making eLyXer improve
+ every day, if only to prove you wrong.
  And finally thanks to all those who have helped and yet I am now forgetting
  about them, for not hating me for it.
 \end_layout
