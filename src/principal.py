@@ -104,7 +104,7 @@ def createbook(args):
       book.generatetoc(reader, writer)
     else:
       book.generatecontents(reader, writer)
-  except (BaseException, Exception):
+  except (Exception):
     Trace.error('Failed at ' + reader.currentline())
     raise
 
