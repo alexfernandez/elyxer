@@ -213,7 +213,7 @@ class EndingList(object):
   def checkpending(self):
     "Check if there are any pending endings"
     if len(self.endings) != 0:
-      Trace.error('Pending endings ' + unicode(self.endings) + ' in ' + self.text)
+      Trace.error('Pending endings ' + unicode(self.endings) + ' left open')
 
 class PositionEnding(object):
   "An ending for a formula position"
