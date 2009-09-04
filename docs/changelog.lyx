@@ -64,6 +64,20 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.28 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Various fixes related to Windows integration.
+\end_layout
+
+\begin_layout Itemize
+Documented integration with LyX in the user guide.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.27 (2009-06-17):
 \end_layout
 

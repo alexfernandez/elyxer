@@ -279,6 +279,13 @@ elyxer.py
 /usr/bin
 \family default
  on Linux).
+ See 
+\begin_inset LatexCommand ref
+reference "sub:LyX-Integration"
+
+\end_inset
+
+ for LyX integration.
 \end_layout
 
 \begin_layout Subsection
@@ -427,6 +434,77 @@ Image location is fragile.
  During conversion from within LyX (in those versions where it is available)
  image locations can be lost.
  Your best bet is to do conversion in place.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset LatexCommand label
+name "sub:LyX-Integration"
+
+\end_inset
+
+LyX Integration
+\end_layout
+
+\begin_layout Standard
+Integration of eLyXer within LyX requires a few steps that depend on your
+ operating system.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+Unix/Linux: Make sure that the eLyXer program file (
+\family typewriter
+elyxer.py
+\family default
+) is in the execution path (e.g.
+ 
+\family typewriter
+/usr/bin
+\family default
+ on Linux).
+ Now run LyX and click on Tools\SpecialChar \menuseparator
+Reconfigure.
+ HTML export should now run 
+\family typewriter
+elyxer.py
+\family default
+.
+\end_layout
+
+\begin_layout List
+\labelwidthstring 00.00.0000
+Windows: Locate the directory where LyX was installed, and inside it the
+ directory called 
+\family typewriter
+bin
+\family default
+.
+ Now place the eLyXer program file (
+\family typewriter
+elyxer.py
+\family default
+) in the 
+\family typewriter
+bin
+\family default
+ directory, and run Tools\SpecialChar \menuseparator
+Reconfigure.
+ As before, HTML export should now run 
+\family typewriter
+elyxer.py
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+On Windows, the 
+\begin_inset LatexCommand url
+name "alternate installer"
+target "http://wiki.lyx.org/Windows/LyXWinInstaller"
+
+\end_inset
+
+ comes bundled with a version of eLyXer since 1.6.4.1.
 \end_layout
 
 \begin_layout Section
