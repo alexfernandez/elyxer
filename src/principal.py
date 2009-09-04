@@ -94,7 +94,7 @@ def createbook(args):
   else:
     Options.destdirectory = '.'
   if len(args) > 0:
-    Trace.error('Unused arguments: ' + str(args))
+    Trace.error('Unused arguments: ' + unicode(args))
     return
   reader = LineReader(filein)
   writer = LineWriter(fileout)
