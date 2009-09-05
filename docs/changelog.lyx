@@ -64,7 +64,17 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
-0.28 (unreleased):
+0.29 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Preliminary support for BibTeX.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+0.28 (2009-09-05):
 \end_layout
 
 \begin_deeper
