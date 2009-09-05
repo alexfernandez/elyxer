@@ -63,7 +63,7 @@ class FormulaCommand(FormulaBit):
     pos.skip(start)
     if pos.current().isalpha():
       # alpha command
-      return start + pos.glob(lambda p: p.current().isalpha())
+      return start + pos.glob(lambda current: current.isalpha())
     # symbol command
     command = start + pos.current()
     pos.skip(pos.current())

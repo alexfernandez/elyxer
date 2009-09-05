@@ -37,7 +37,7 @@ class RawText(FormulaBit):
 
   def parsebit(self, pos):
     "Parse alphabetic text"
-    alpha = pos.glob(lambda(p): p.current().isalpha())
+    alpha = pos.glob(lambda current: current.isalpha())
     self.add(FormulaConstant(alpha))
     self.type = 'alpha'
 
@@ -79,7 +79,7 @@ class Number(FormulaBit):
 
   def parsebit(self, pos):
     "Parse a bunch of digits"
-    digits = pos.glob(lambda(p): p.current().isdigit())
+    digits = pos.glob(lambda current: current.isdigit())
     self.add(FormulaConstant(digits))
     self.type = 'number'
 
@@ -134,7 +134,7 @@ class Bracket(FormulaBit):
 
   def innerliteral(self, pos):
     "Parse a literal inside the bracket, which cannot generate html"
-    self.literal = pos.glob(lambda(p): p.current() != self.ending)
+    self.literal = pos.glob(lambda current: current != self.ending)
     self.original += self.literal
 
   def process(self):

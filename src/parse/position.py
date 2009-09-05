@@ -68,10 +68,10 @@ class Position(object):
       return False
     return self.text[self.pos : self.pos + len(string)] == string
 
-  def glob(self, check):
+  def glob(self, currentcheck):
     "Glob a bit of text that satisfies a check"
     glob = ''
-    while not self.finished() and check(self):
+    while not self.finished() and currentcheck(self.current()):
       glob += self.current()
       self.skip(self.current())
     return glob

@@ -63,7 +63,7 @@ class BibTeX(Container):
     "Extract all the references in a piece of text"
     refs = list()
     pos = Position(text)
-    whitespace = pos.glob(lambda p: p.current().isspace())
+    whitespace = pos.glob(lambda current: current.isspace())
     return refs
 
 class Fake(Container):
