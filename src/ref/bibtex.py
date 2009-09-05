@@ -47,24 +47,47 @@ class BibTeX(Container):
     self.contents.append(tag)
     files = self.parser.parameters['bibfiles'].split(',')
     for file in files:
-      self.refs += self.readbib(file + ".bib")
+      bibfile = BibFile(file)
+      self.refs += bibfile.getrefs()
 
-  def readbib(self, filename):
-    "Read a bibtex file"
-    bibpath = InputPath(filename)
+class BibFile(object):
+  "A BibTeX file"
+
+  def __init__(self, filename):
+    "Create and parse the BibTeX file"
+    bibpath = InputPath(filename + '.bib')
     bibfile = BulkFile(bibpath.path)
     parsed = list()
     for line in bibfile.readall():
       if not line.startswith('%') and not line.strip() == '':
         parsed.append(line)
-    return self.getrefs('\n'.join(parsed))
+    self.parserefs('\n'.join(parsed))
 
-  def getrefs(self, text):
+  def parserefs(self, text):
     "Extract all the references in a piece of text"
     refs = list()
     pos = Position(text)
-    whitespace = pos.glob(lambda current: current.isspace())
-    return refs
+    pos.skipspace()
+    while not pos.finished():
+      self.parseref(pos)
+
+  def parseref(self, pos):
+    "Parse a single reference"
+    if not pos.checkskip('@'):
+      self.lineerror(pos)
+      return
+    type = pos.globalpha()
+    Trace.debug('Reference type: ' + type)
+    pos.skipspace()
+    if pos.checkskip('{'):
+      self.lineerror(pos)
+      return
+    pos.pushending('}')
+
+  def lineerror(self, pos):
+    "Skip the whole line, and show it as an error"
+    toline = pos.glob(lambda current: current != '\n')
+    Trace.error('Wrong line in ' + toline)
 
 class Fake(Container):
   "A leftover to copy content from"

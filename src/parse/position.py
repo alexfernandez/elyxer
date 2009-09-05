@@ -68,6 +68,13 @@ class Position(object):
       return False
     return self.text[self.pos : self.pos + len(string)] == string
 
+  def checkskip(self, string):
+    "Check for a string at the given position; if there, skip it"
+    if not self.checkfor(string):
+      return False
+    self.skip(string)
+    return True
+
   def glob(self, currentcheck):
     "Glob a bit of text that satisfies a check"
     glob = ''
@@ -75,6 +82,14 @@ class Position(object):
       glob += self.current()
       self.skip(self.current())
     return glob
+
+  def globalpha(self):
+    "Glob a bit of alpha text"
+    return self.glob(lambda current: current.isalpha())
+
+  def skipspace(self):
+    "Skip all whitespace at current position"
+    return self.glob(lambda current: current.isspace())
 
   def pushending(self, ending, optional = False):
     "Push a new ending to the bottom"

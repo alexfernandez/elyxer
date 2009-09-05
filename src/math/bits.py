@@ -37,7 +37,7 @@ class RawText(FormulaBit):
 
   def parsebit(self, pos):
     "Parse alphabetic text"
-    alpha = pos.glob(lambda current: current.isalpha())
+    alpha = pos.globalpha()
     self.add(FormulaConstant(alpha))
     self.type = 'alpha'
 
