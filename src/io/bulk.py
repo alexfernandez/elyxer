@@ -36,17 +36,12 @@ class BulkFile(object):
     self.filename = filename
     self.temp = self.filename + '.temp'
 
-  def readall(filename):
+  def readall(self):
     "Read the whole file"
     filein = codecs.open(self.filename, 'r', "utf-8")
     lines = filein.readlines()
     filein.close()
     return lines
-
-  def readtext(self):
-    "Read the whole file as text"
-    lines = self.readall()
-    return lines.join('\n')
 
   def getfiles(self):
     "Get reader and writer for a file name"
