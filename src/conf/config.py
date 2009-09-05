@@ -37,6 +37,7 @@ class ContainerConfig(object):
       u'\\begin_inset':u'Inset', u'\\begin_inset Box':u'BoxInset', 
       u'\\begin_inset Branch':u'Branch', u'\\begin_inset Caption':u'Caption', 
       u'\\begin_inset CommandInset bibitem':u'BiblioEntry', 
+      u'\\begin_inset CommandInset bibtex':u'BibTeX', 
       u'\\begin_inset CommandInset citation':u'BiblioCite', 
       u'\\begin_inset CommandInset href':u'URL', 
       u'\\begin_inset CommandInset index_print':u'PrintIndex', 
@@ -429,7 +430,7 @@ class GeneralConfig(object):
   "Configuration class from config file"
 
   version = {
-      u'date':u'2009-09-05', u'number':u'0.28', 
+      u'date':u'2009-09-05', u'number':u'0.29', 
       }
 
 class NumberingConfig(object):

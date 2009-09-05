@@ -23,11 +23,11 @@
 # eLyXer image treatment
 
 import os
-import os.path
 import struct
 from util.trace import Trace
 from gen.container import *
 from io.output import MirrorOutput
+from io.path import *
 
 
 class Image(Container):
@@ -41,92 +41,70 @@ class Image(Container):
 
   def process(self):
     "Place the url, convert the image if necessary."
-    self.url = self.parser.parameters['filename']
-    origin = self.getoriginpath(self.url)
-    if not os.path.exists(origin):
-      Trace.error('Image ' + origin + ' not found')
+    self.origin = InputPath(self.parser.parameters['filename'])
+    if not self.origin.exists():
+      Trace.error('Image ' + self.origin.path + ' not found')
       return
-    self.destination = self.getdestination(self.url)
-    destination = self.getdestinationpath(self.destination)
+    self.destination = OutputPath(self.origin)
+    if not self.destination.hasext('.jpg'):
+      self.destination.changeext('.png')
     density = 100
     if 'scale' in self.parser.parameters:
       density = int(self.parser.parameters['scale'])
-    self.convert(origin, destination, density)
-    self.width, self.height = self.getdimensions(destination)
-
-  def getoriginpath(self, path):
-    "Get the correct origin path for the image."
-    if os.path.isabs(path):
-      return path
-    return Options.directory + os.path.sep + path
-
-  def getdestination(self, path):
-    "Get the destination path to use in the web page."
-    if os.path.isabs(path):
-      path = os.path.basename(path)
-    base, ext = os.path.splitext(path)
-    if ext.lower() != '.jpg':
-      ext = '.png'
-    return base + ext
-
-  def getdestinationpath(self, path):
-    "Get the destination path on disk for the image."
-    return Options.destdirectory + os.path.sep + path
+    self.convert(self.origin, self.destination, density)
+    self.width, self.height = self.getdimensions(self.destination)
 
   def convert(self, origin, destination, density):
     "Convert an image to PNG"
     if not Image.converter:
       return
-    if origin == destination:
+    if origin.path == destination.path:
       return
-    if os.path.exists(destination):
-      if os.path.getmtime(origin) <= os.path.getmtime(destination):
+    if destination.exists():
+      if origin.getmtime() <= destination.getmtime():
         # file has not changed; do not convert
         return
-    dir = os.path.dirname(destination)
-    if len(dir) > 0 and not os.path.exists(dir):
-      os.makedirs(dir)
+    destination.createdirs()
     try:
-      result = os.system('convert -density ' + unicode(density) + ' "' + origin +
-          '" "' + destination + '"')
+      result = os.system('convert -density ' + unicode(density) + ' "' + origin.path +
+          '" "' + destination.path + '"')
       if result != 0:
         Trace.error('ImageMagick not installed; images will not be processed')
         Image.converter = False
         return
-      Trace.message('Converted ' + origin + ' to ' + destination + ' at ' +
-          unicode(density) + '%')
+      Trace.message('Converted ' + origin.path + ' to ' + destination.path +
+          ' at ' + unicode(density) + '%')
     except OSError:
       Trace.error('Error while converting image ' + origin)
 
   dimensions = dict()
 
-  def getdimensions(self, filename):
-    "Get the dimensions of a PNG image"
-    if not os.path.exists(filename):
+  def getdimensions(self, file):
+    "Get the dimensions of a JPG or PNG image"
+    if not file.exists():
       return None, None
-    if filename in Image.dimensions:
-      return Image.dimensions[filename]
-    base, ext = os.path.splitext(filename)
+    if file.path in Image.dimensions:
+      return Image.dimensions[file.path]
     dimensions = (None, None)
-    if ext == '.png':
-      dimensions = self.getpngdimensions(filename)
-    elif ext == '.jpg':
-      dimensions = self.getjpgdimensions(filename)
-    Image.dimensions[filename] = dimensions
+    if file.hasext('.png'):
+      dimensions = self.getpngdimensions(file)
+    elif file.hasext('.jpg'):
+      dimensions = self.getjpgdimensions(file)
+    Image.dimensions[file.path] = dimensions
     return dimensions
 
-  def getpngdimensions(self, filename):
+  def getpngdimensions(self, file):
     "Get the dimensions of a PNG image"
-    pngfile = codecs.open(filename, 'rb')
+    pngfile = file.open()
     pngfile.seek(16)
     width = self.readlong(pngfile)
     height = self.readlong(pngfile)
     pngfile.close()
     return (width, height)
 
-  def getjpgdimensions(self, filename):
+  def getjpgdimensions(self, file):
     "Get the dimensions of a JPEG image"
-    jpgfile = codecs.open(filename, 'rb')
+    jpgfile = file.open()
     start = self.readword(jpgfile)
     if start != int('ffd8', 16):
       Trace.error(filename + ' not a JPEG file')
@@ -176,12 +154,12 @@ class ImageOutput(object):
     "Get the HTML output of the image as a list"
     cssclass = 'embedded'
     html = ['<img class="' + cssclass + '"']
-    if hasattr(container, 'destination'):
-      html.append(' src="' + container.destination +
-          '" alt="figure ' + container.destination + '" width="' +
+    if container.origin.exists():
+      html.append(' src="' + container.destination.url +
+          '" alt="figure ' + container.destination.url + '" width="' +
           unicode(container.width) + '" height="' + unicode(container.height) + '"')
     else:
-      html.append(' src="' + container.url + '"')
+      html.append(' src="' + container.origin.url + '"')
     html.append('/>\n')
     return html
 

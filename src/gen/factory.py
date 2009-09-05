@@ -38,6 +38,7 @@ from gen.structure import *
 from gen.inset import *
 from gen.float import *
 from math.array import *
+from ref.bibtex import *
 
 
 class ContainerFactory(object):
