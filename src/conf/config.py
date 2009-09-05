@@ -53,6 +53,7 @@ class ContainerConfig(object):
       u'\\begin_inset Formula':u'Formula', u'\\begin_inset Graphics':u'Image', 
       u'\\begin_inset Index':u'IndexEntry', u'\\begin_inset Info':u'InfoInset', 
       u'\\begin_inset LatexCommand bibitem':u'BiblioEntry', 
+      u'\\begin_inset LatexCommand bibtex':u'BibTeX', 
       u'\\begin_inset LatexCommand cite':u'BiblioCite', 
       u'\\begin_inset LatexCommand htmlurl':u'URL', 
       u'\\begin_inset LatexCommand index':u'IndexEntry', 
