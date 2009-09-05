@@ -68,6 +68,14 @@ class Position(object):
       return False
     return self.text[self.pos : self.pos + len(string)] == string
 
+  def glob(self, check):
+    "Glob a bit of text that satisfies a check"
+    glob = ''
+    while not self.finished() and check(self):
+      glob += self.current()
+      self.skip(self.current())
+    return glob
+
   def pushending(self, ending, optional = False):
     "Push a new ending to the bottom"
     self.endinglist.add(ending, optional)

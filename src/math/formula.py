@@ -61,14 +61,6 @@ class FormulaBit(Container):
     self.contents = []
     self.output = ContentsOutput()
 
-  def glob(self, pos, check):
-    "Glob a bit of text that satisfies a check"
-    glob = ''
-    while not pos.finished() and check(pos):
-      glob += pos.current()
-      pos.skip(pos.current())
-    return glob
-
   def clone(self):
     "Return an exact copy of self"
     type = self.__class__
