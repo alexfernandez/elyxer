@@ -26,6 +26,7 @@ from util.trace import Trace
 from io.output import *
 from io.path import *
 from io.bulk import *
+from parse.position import *
 from ref.link import *
 from ref.biblio import *
 
@@ -33,12 +34,10 @@ from ref.biblio import *
 class BibTeX(Container):
   "Show a BibTeX bibliography and all referenced entries"
 
-  entries = dict()
-
   def __init__(self):
     self.parser = InsetParser()
     self.output = ContentsOutput()
-    self.refs = list()
+    self.entries = list()
 
   def process(self):
     "Read all bibtex files and process them"
@@ -48,46 +47,141 @@ class BibTeX(Container):
     files = self.parser.parameters['bibfiles'].split(',')
     for file in files:
       bibfile = BibFile(file)
-      self.refs += bibfile.getrefs()
+      self.entries += bibfile.entries
 
 class BibFile(object):
   "A BibTeX file"
 
   def __init__(self, filename):
     "Create and parse the BibTeX file"
+    self.entries = []
     bibpath = InputPath(filename + '.bib')
     bibfile = BulkFile(bibpath.path)
     parsed = list()
     for line in bibfile.readall():
       if not line.startswith('%') and not line.strip() == '':
         parsed.append(line)
-    self.parserefs('\n'.join(parsed))
+    self.parseentries('\n'.join(parsed))
 
-  def parserefs(self, text):
-    "Extract all the references in a piece of text"
-    refs = list()
+  def parseentries(self, text):
+    "Extract all the entries in a piece of text"
     pos = Position(text)
     pos.skipspace()
     while not pos.finished():
-      self.parseref(pos)
+      self.parseentry(pos)
 
-  def parseref(self, pos):
-    "Parse a single reference"
-    if not pos.checkskip('@'):
-      self.lineerror(pos)
-      return
-    type = pos.globalpha()
-    Trace.debug('Reference type: ' + type)
+  def parseentry(self, pos):
+    "Parse a single entry"
+    for entry in Entry.entries:
+      if entry.detect(pos):
+        newentry = entry.clone()
+        newentry.parse(pos)
+        self.entries.append(newentry)
+        return
+    self.lineerror(pos, 'Unidentified entry: ')
+
+  def lineerror(self, pos, error):
+    "Skip the whole line, and show it as an error"
+    pos.checkskip('\n')
+    toline = pos.glob(lambda current: current != '\n')
+    Trace.error(error + toline)
+
+class Entry(object):
+  "An entry in a BibTeX file"
+
+  entries = []
+  structure = ['{', ',', '=', '"']
+  quotes = ['{', '"', '#']
+
+  def __init__(self):
+    self.tags = dict()
+
+  def parse(self, pos):
+    "Parse the entry between {}"
+    self.type = self.parsepiece(pos, Entry.structure)
+    Trace.debug('Entry of type ' + self.type)
     pos.skipspace()
-    if pos.checkskip('{'):
-      self.lineerror(pos)
+    if not pos.checkskip('{'):
+      self.lineerror(pos, 'Entry should start with {: ')
       return
     pos.pushending('}')
+    self.parsetags(pos)
+    pos.popending('}')
+    pos.skipspace()
 
-  def lineerror(self, pos):
-    "Skip the whole line, and show it as an error"
-    toline = pos.glob(lambda current: current != '\n')
-    Trace.error('Wrong line in ' + toline)
+  def parsetags(self, pos):
+    "Parse all tags in the entry"
+    pos.skipspace()
+    while not pos.finished():
+      self.parsetag(pos)
+  
+  def parsetag(self, pos):
+    piece = self.parsepiece(pos, Entry.structure)
+    if pos.checkskip(','):
+      Trace.debug('Reference: ' + piece + '')
+      self.ref = piece
+      return
+    if pos.checkskip('='):
+      piece = piece.lower().strip()
+      pos.skipspace()
+      value = self.parsequoted(pos)
+      Trace.debug('Tag: ' + piece + '->' + value)
+      self.tags[piece] = value
+      pos.checkskip(',')
+      return
+    Trace.debug('No more tags: ' + pos.current())
+
+  def parsepiece(self, pos, undesired):
+    "Parse a piece not structure"
+    return pos.glob(lambda current: not current in undesired)
+
+  def parsequoted(self, pos):
+    "Parse a piece of quoted text"
+    pos.skipspace()
+    if pos.checkfor(','):
+      Trace.error('Unexpected ,')
+      return ''
+    if pos.checkskip('{'):
+      pos.pushending('}')
+    elif pos.checkskip('"'):
+      pos.pushending('"')
+    else:
+      return self.parsepiece(pos, Entry.quotes)
+    quoted = self.parsequoted(pos)
+    pos.popending()
+    pos.skipspace()
+    if pos.checkskip('#'):
+      pos.skipspace()
+      quoted += self.parsequoted(pos)
+    return quoted
+
+  def clone(self):
+    "Return an exact copy of self"
+    type = self.__class__
+    clone = type.__new__(type)
+    clone.__init__()
+    return clone
+
+class SpecialEntry(Entry):
+  "A special entry"
+
+  types = ['@STRING', '@PREAMBLE', '@COMMENT']
+
+  def detect(self, pos):
+    "Detect the special entry"
+    for type in SpecialEntry.types:
+      if pos.checkfor(type):
+        return True
+    return False
+
+class PubEntry(Entry):
+  "A publication entry"
+
+  def detect(self, pos):
+    "Detect a publication entry"
+    return pos.checkfor('@')
+
+Entry.entries += [SpecialEntry(), PubEntry()]
 
 class Fake(Container):
   "A leftover to copy content from"
