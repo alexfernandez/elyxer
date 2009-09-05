@@ -25,7 +25,7 @@
 from util.trace import Trace
 from io.output import *
 from io.path import *
-from io.fileline import *
+from io.bulk import *
 from ref.link import *
 from ref.biblio import *
 
@@ -38,6 +38,7 @@ class BibTeX(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = ContentsOutput()
+    self.refs = list()
 
   def process(self):
     "Read all bibtex files and process them"
@@ -46,13 +47,24 @@ class BibTeX(Container):
     self.contents.append(tag)
     files = self.parser.parameters['bibfiles'].split(',')
     for file in files:
-      self.readfile(file + ".bib")
+      self.refs += self.readbib(file + ".bib")
 
-  def readfile(self, filename):
+  def readbib(self, filename):
     "Read a bibtex file"
-    path = InputPath(filename)
-    reader = LineReader(path.path)
-    reader.close()
+    bibpath = InputPath(filename)
+    bibfile = BulkFile(bibpath.path)
+    parsed = list()
+    for line in bibfile.readall():
+      if not line.startswith('%') and not line.strip() == '':
+        parsed.append(line)
+    return self.getrefs('\n'.join(parsed))
+
+  def getrefs(self, text):
+    "Extract all the references in a piece of text"
+    refs = list()
+    pos = Position(text)
+    whitespace = pos.glob(lambda p: p.current().isspace())
+    return refs
 
 class Fake(Container):
   "A leftover to copy content from"
