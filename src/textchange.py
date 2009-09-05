@@ -22,9 +22,7 @@
 # Alex 20090416
 # Change text in some files at once
 
-import os
 import sys
-import codecs
 from io.fileline import *
 from io.bulk import *
 from util.trace import Trace
@@ -75,15 +73,14 @@ def processall(args):
   change = TextChange(original, changed)
   total = 0
   while len(args) > 0:
-    filename = args[0]
-    reader, writer = getfiles(filename)
+    pythonfile = BulkFile(args[0])
+    reader, writer = pythonfile.getfiles()
     del args[0]
     counter = process(reader, writer, change)
     total += counter
-    Trace.message('  ' + unicode(counter) + ' occurrences in ' + filename)
-    temp = filename + '.temp'
-    os.chmod(temp, os.stat(filename).st_mode)
-    os.rename(temp, filename)
+    Trace.message('  ' + unicode(counter) + ' occurrences in ' +
+        unicode(pythonfile))
+    pythonfile.swaptemp()
   Trace.message('Total replacements: ' + unicode(total))
 
 processall(sys.argv)

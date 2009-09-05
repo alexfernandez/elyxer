@@ -22,9 +22,7 @@
 # Alex 20090314
 # Modifies the license of a Python source file
 
-import os
 import sys
-import codecs
 from io.fileline import *
 from io.bulk import *
 from util.trace import Trace
@@ -51,14 +49,14 @@ def processall(args):
     Trace.error('Usage: licensify.py licensefile [file...]')
     return
   licensefile = args[0]
-  license = readall(licensefile)
+  license = licensefile.readall()
   del args[0]
   while len(args) > 0:
-    filename = args[0]
-    reader, writer = getfiles(filename)
+    pythonfile = BulkFile(args[0])
+    reader, writer = pythonfile.getfiles()
     del args[0]
     process(reader, writer, license)
-    os.rename(filename + '.temp', filename)
+    pythonfile.swaptemp()
 
 processall(sys.argv)
 

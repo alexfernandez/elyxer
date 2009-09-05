@@ -29,14 +29,37 @@ from io.fileline import *
 from util.trace import Trace
 
 
-def readall(filename):
-  "Read the whole file"
-  filein = codecs.open(filename, 'r', "utf-8")
-  return filein.readlines()
+class BulkFile(object):
+  "A file to treat in bulk"
 
-def getfiles(filename):
-  "Get reader and writer for a file name"
-  reader = LineReader(filename)
-  writer = LineWriter(filename + '.temp')
-  return reader, writer
+  def __init__(self, filename):
+    self.filename = filename
+    self.temp = self.filename + '.temp'
+
+  def readall(filename):
+    "Read the whole file"
+    filein = codecs.open(self.filename, 'r', "utf-8")
+    lines = filein.readlines()
+    filein.close()
+    return lines
+
+  def readtext(self):
+    "Read the whole file as text"
+    lines = self.readall()
+    return lines.join('\n')
+
+  def getfiles(self):
+    "Get reader and writer for a file name"
+    reader = LineReader(self.filename)
+    writer = LineWriter(self.temp)
+    return reader, writer
+
+  def swaptemp(self):
+    "Swap the temp file for the original"
+    os.chmod(self.temp, os.stat(self.filename).st_mode)
+    os.rename(self.temp, self.filename)
+
+  def __unicode__(self):
+    "Get the unicode representation"
+    return 'file ' + self.filename
 
