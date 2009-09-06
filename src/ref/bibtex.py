@@ -52,8 +52,6 @@ class BibTeX(Container):
       Trace.message('Parsed ' + unicode(bibfile))
     entries.sort(key = unicode)
     self.contents += entries
-    for entry in entries:
-      self.contents.append(tag)
 
 class BibFile(object):
   "A BibTeX file"
@@ -123,7 +121,6 @@ class Entry(Container):
   def parse(self, pos):
     "Parse the entry between {}"
     self.type = self.parsepiece(pos, Entry.structure)
-    Trace.debug('Entry of type ' + self.type)
     pos.skipspace()
     if not pos.checkskip('{'):
       self.lineerror(pos, 'Entry should start with {: ')
@@ -145,7 +142,6 @@ class Entry(Container):
   def parsetag(self, pos):
     piece = self.parsepiece(pos, Entry.structure)
     if pos.checkskip(','):
-      Trace.debug('Reference: ' + piece + '')
       self.key = piece
       return
     if pos.checkskip('='):
@@ -156,7 +152,6 @@ class Entry(Container):
       if not pos.finished() and not pos.checkskip(','):
         Trace.error('Missing , in BibTeX tag')
       return
-    Trace.debug('No more tags: ' + pos.current())
 
   def parsevalue(self, pos):
     "Parse the value for a tag"
