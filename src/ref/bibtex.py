@@ -37,17 +37,21 @@ class BibTeX(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = ContentsOutput()
-    self.entries = list()
 
   def process(self):
     "Read all bibtex files and process them"
+    entries = []
     bibliography = TranslationConfig.constants['bibliography']
     tag = TaggedText().constant(bibliography, 'h1 class="biblio"')
     self.contents.append(tag)
     files = self.parser.parameters['bibfiles'].split(',')
     for file in files:
       bibfile = BibFile(file)
-      self.entries += bibfile.entries
+      entries += bibfile.entries
+    entries.sort(key = unicode)
+    for entry in entries:
+      tag = TaggedText().constant(unicode(entry), 'p class="biblio"')
+      self.contents.append(tag)
 
 class BibFile(object):
   "A BibTeX file"
@@ -76,15 +80,16 @@ class BibFile(object):
       if entry.detect(pos):
         newentry = entry.clone()
         newentry.parse(pos)
-        self.entries.append(newentry)
+        if newentry.isreferenced():
+          Trace.debug('Adding ' + unicode(newentry))
+          self.entries.append(newentry)
+        else:
+          Trace.debug('Ignoring ' + unicode(newentry))
         return
-    self.lineerror(pos, 'Unidentified entry: ')
-
-  def lineerror(self, pos, error):
-    "Skip the whole line, and show it as an error"
+    # Skip the whole line, and show it as an error
     pos.checkskip('\n')
     toline = pos.glob(lambda current: current != '\n')
-    Trace.error(error + toline)
+    Trace.error('Unidentified entry: ' + toline)
 
 class Entry(object):
   "An entry in a BibTeX file"
@@ -94,6 +99,7 @@ class Entry(object):
   quotes = ['{', '"', '#']
 
   def __init__(self):
+    self.key = None
     self.tags = dict()
 
   def parse(self, pos):
@@ -119,13 +125,13 @@ class Entry(object):
     piece = self.parsepiece(pos, Entry.structure)
     if pos.checkskip(','):
       Trace.debug('Reference: ' + piece + '')
-      self.ref = piece
+      self.key = piece
       return
     if pos.checkskip('='):
       piece = piece.lower().strip()
       pos.skipspace()
       value = self.parsequoted(pos)
-      Trace.debug('Tag: ' + piece + '->' + value)
+      Trace.debug('Tag: ' + piece + ' -> ' + value)
       self.tags[piece] = value
       pos.checkskip(',')
       return
@@ -174,12 +180,37 @@ class SpecialEntry(Entry):
         return True
     return False
 
+  def isreferenced(self):
+    "A special entry is never referenced"
+    return False
+
+  def __unicode__(self):
+    "Return a string representation"
+    return self.type
+
 class PubEntry(Entry):
   "A publication entry"
 
   def detect(self, pos):
     "Detect a publication entry"
     return pos.checkfor('@')
+
+  def isreferenced(self):
+    "Check if the entry is referenced"
+    if not self.key:
+      return False
+    return self.key in BiblioCite.entries
+
+  def __unicode__(self):
+    "Return a string representation"
+    string = ''
+    author = self.tags['author']
+    if author:
+      string += author + ': '
+    title = self.tags['title']
+    if title:
+      string += '"' + title + '"'
+    return string
 
 Entry.entries += [SpecialEntry(), PubEntry()]
 
