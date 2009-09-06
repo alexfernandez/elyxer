@@ -123,7 +123,7 @@ class EndingList(object):
     "Remove the ending at the current position"
     ending = self.findending(pos)
     if not ending:
-      Trace.error('No ending at ' + pos.remaining())
+      Trace.error('No ending at ' + pos.current())
       return ''
     for each in reversed(self.endings):
       self.endings.remove(each)

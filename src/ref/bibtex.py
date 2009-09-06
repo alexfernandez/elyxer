@@ -121,6 +121,9 @@ class Entry(Container):
     "Parse all tags in the entry"
     pos.skipspace()
     while not pos.finished():
+      if pos.checkskip('{'):
+        Trace.error('Unmatched {')
+        return
       self.parsetag(pos)
   
   def parsetag(self, pos):
@@ -132,8 +135,8 @@ class Entry(Container):
     if pos.checkskip('='):
       piece = piece.lower().strip()
       pos.skipspace()
-      value = self.parsequoted(pos)
-      Trace.debug('Tag: ' + piece + ' -> ' + value)
+      value = self.parsequoted(pos, Entry.structure)
+      Trace.debug('Tag ' + piece + ': ' + value)
       self.tags[piece] = value
       pos.checkskip(',')
       return
@@ -143,7 +146,7 @@ class Entry(Container):
     "Parse a piece not structure"
     return pos.glob(lambda current: not current in undesired)
 
-  def parsequoted(self, pos):
+  def parsequoted(self, pos, undesired):
     "Parse a piece of quoted text"
     pos.skipspace()
     if pos.checkfor(','):
@@ -154,13 +157,13 @@ class Entry(Container):
     elif pos.checkskip('"'):
       pos.pushending('"')
     else:
-      return self.parsepiece(pos, Entry.quotes)
-    quoted = self.parsequoted(pos)
+      return self.parsepiece(pos, undesired)
+    quoted = self.parsequoted(pos, Entry.quotes)
     pos.popending()
     pos.skipspace()
     if pos.checkskip('#'):
       pos.skipspace()
-      quoted += self.parsequoted(pos)
+      quoted += self.parsequoted(pos, Entry.quotes)
     return quoted
 
   def clone(self):
@@ -214,13 +217,19 @@ class PubEntry(Entry):
   def __unicode__(self):
     "Return a string representation"
     string = ''
-    author = self.tags['author']
+    author = self.gettag('author')
     if author:
       string += author + ': '
-    title = self.tags['title']
+    title = self.gettag('title')
     if title:
       string += '"' + title + '"'
     return string
+
+  def gettag(self, key):
+    "Get a tag with the given key"
+    if not key in self.tags:
+      return None
+    return self.tags[key]
 
 Entry.entries += [SpecialEntry(), PubEntry()]
 
