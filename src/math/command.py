@@ -204,7 +204,6 @@ class HybridFunction(CommandBit):
     self.parsesquare(pos)
     parameter = self.parseparameter(pos)
     parameter.type = self.translated[0]
-    Trace.debug('Type: ' + parameter.type + ' for ' + unicode(parameter.contents[0]) + ' (' + unicode(parameter.contents[0].type) + ')')
     parameter.output = TaggedOutput().settag(self.translated[1])
 
   def parsesquare(self, pos):
@@ -215,7 +214,6 @@ class HybridFunction(CommandBit):
     bracket.parsebit(pos)
     bracket.output = TaggedOutput().settag(self.translated[2])
     self.add(bracket)
-    Trace.debug('Square bracket: ' + unicode(bracket))
 
 class FractionFunction(CommandBit):
   "A fraction with two parameters"
