@@ -93,6 +93,22 @@ prettyref
 .
 \end_layout
 
+\begin_layout Itemize
+A couple of new math commands: 
+\family typewriter
+
+\backslash
+ldots
+\family default
+, 
+\family typewriter
+
+\backslash
+qquad
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.28 (2009-09-05):
