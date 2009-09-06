@@ -26,6 +26,7 @@ from util.trace import Trace
 from io.output import *
 from io.path import *
 from io.bulk import *
+from conf.config import *
 from parse.position import *
 from ref.link import *
 from ref.biblio import *
@@ -40,7 +41,7 @@ class BibTeX(Container):
 
   def process(self):
     "Read all bibtex files and process them"
-    entries = []
+    self.entries = []
     bibliography = TranslationConfig.constants['bibliography']
     tag = TaggedText().constant(bibliography, 'h1 class="biblio"')
     self.contents.append(tag)
@@ -48,10 +49,28 @@ class BibTeX(Container):
     for file in files:
       bibfile = BibFile(file)
       bibfile.parse()
-      entries += bibfile.entries
+      self.entries += bibfile.entries
       Trace.message('Parsed ' + unicode(bibfile))
-    entries.sort(key = unicode)
-    self.contents += entries
+    self.entries.sort(key = unicode)
+    self.applystyle()
+
+  def applystyle(self):
+    "Read the style and apply it to all entries"
+    style = self.readstyle()
+    for entry in self.entries:
+      entry.template = style['default']
+      if entry.type in style:
+        entry.template = style[entry.type]
+      entry.process()
+      self.contents.append(entry)
+
+  def readstyle(self):
+    "Read the style from the bibliography options"
+    options = self.parser.parameters['options'].split(',')
+    for option in options:
+      if hasattr(BibStylesConfig, option):
+        return getattr(BibStylesConfig, option)
+    return BibStylesConfig.default
 
 class BibFile(object):
   "A BibTeX file"
@@ -88,7 +107,6 @@ class BibFile(object):
         newentry.parse(pos)
         if newentry.isreferenced():
           Trace.debug('Adding ' + unicode(newentry))
-          newentry.process()
           self.entries.append(newentry)
           self.added += 1
         else:
@@ -255,7 +273,23 @@ class PubEntry(Entry):
     biblio.processcites(self.key)
     self.contents = [biblio]
     self.contents.append(Constant(' '))
-    self.contents.append(Constant(unicode(self)))
+    self.contents.append(self.getcontents())
+
+  def getcontents(self):
+    "Get the contents as a constant"
+    contents = self.template
+    while contents.find('$') >= 0:
+      tag = self.extracttag(contents)
+      value = self.gettag(tag)
+      contents = contents.replace('$' + tag, value)
+    return Constant(contents)
+
+  def extracttag(self, string):
+    "Extract the first tag in the form $tag"
+    pos = Position(string)
+    pos.glob(lambda c: c != '$')
+    pos.skip('$')
+    return pos.globalpha()
 
   def __unicode__(self):
     "Return a string representation"
@@ -271,7 +305,7 @@ class PubEntry(Entry):
   def gettag(self, key):
     "Get a tag with the given key"
     if not key in self.tags:
-      return None
+      return ''
     return self.tags[key]
 
 Entry.entries += [SpecialEntry(), PubEntry()]

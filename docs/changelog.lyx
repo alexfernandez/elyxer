@@ -70,6 +70,7 @@ target "index.html"
 \begin_deeper
 \begin_layout Itemize
 Preliminary support for BibTeX.
+ Configurable output styles (albeit cumbersome and quite primitive).
 \end_layout
 
 \begin_layout Itemize
