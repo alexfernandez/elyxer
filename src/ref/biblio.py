@@ -71,9 +71,12 @@ class BiblioEntry(Container):
     self.output = TaggedOutput().settag('span class="entry"')
 
   def process(self):
+    "Process the cites for the entry's key"
+    self.processcites(self.parser.parameters['key'])
+
+  def processcites(self, key):
     "Get all the cites of the entry"
     cites = list()
-    key = self.parser.parameters['key']
     if key in BiblioCite.entries:
       cites = BiblioCite.entries[key]
     self.contents = [Constant('[')]

@@ -49,8 +49,8 @@ class BibTeX(Container):
       bibfile = BibFile(file)
       entries += bibfile.entries
     entries.sort(key = unicode)
+    self.contents += entries
     for entry in entries:
-      tag = TaggedText().constant(unicode(entry), 'p class="biblio"')
       self.contents.append(tag)
 
 class BibFile(object):
@@ -82,6 +82,7 @@ class BibFile(object):
         newentry.parse(pos)
         if newentry.isreferenced():
           Trace.debug('Adding ' + unicode(newentry))
+          newentry.process()
           self.entries.append(newentry)
         else:
           Trace.debug('Ignoring ' + unicode(newentry))
@@ -91,7 +92,7 @@ class BibFile(object):
     toline = pos.glob(lambda current: current != '\n')
     Trace.error('Unidentified entry: ' + toline)
 
-class Entry(object):
+class Entry(Container):
   "An entry in a BibTeX file"
 
   entries = []
@@ -101,6 +102,7 @@ class Entry(object):
   def __init__(self):
     self.key = None
     self.tags = dict()
+    self.output = TaggedOutput().settag('p class="biblio"')
 
   def parse(self, pos):
     "Parse the entry between {}"
@@ -201,6 +203,14 @@ class PubEntry(Entry):
       return False
     return self.key in BiblioCite.entries
 
+  def process(self):
+    "Process the entry"
+    biblio = BiblioEntry()
+    biblio.processcites(self.key)
+    self.contents = [biblio]
+    self.contents.append(Constant(' '))
+    self.contents.append(Constant(unicode(self)))
+
   def __unicode__(self):
     "Return a string representation"
     string = ''
@@ -213,52 +223,4 @@ class PubEntry(Entry):
     return string
 
 Entry.entries += [SpecialEntry(), PubEntry()]
-
-class Fake(Container):
-  "A leftover to copy content from"
-
-  def process(self):
-    self.contents = list()
-    keys = self.parser.parameters['key'].split(',')
-    for key in keys:
-      BiblioCite.index += 1
-      number = unicode(BiblioCite.index)
-      link = Link().complete(number, 'cite-' + number, '#' + number)
-      self.contents.append(link)
-      self.contents.append(Constant(','))
-      if not key in BiblioCite.entries:
-        BiblioCite.entries[key] = []
-      BiblioCite.entries[key].append(number)
-    if len(keys) > 0:
-      # remove trailing ,
-      self.contents.pop()
-
-class Bibliography(Container):
-  "A bibliography layout containing an entry"
-
-  def __init__(self):
-    self.parser = BoundedParser()
-    self.output = TaggedOutput().settag('p class="biblio"', True)
-
-class BiblioEntry(Container):
-  "A bibliography entry"
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = TaggedOutput().settag('span class="entry"')
-
-  def process(self):
-    "Get all the cites of the entry"
-    cites = list()
-    key = self.parser.parameters['key']
-    if key in BiblioCite.entries:
-      cites = BiblioCite.entries[key]
-    self.contents = [Constant('[')]
-    for cite in cites:
-      link = Link().complete(cite, cite, '#cite-' + cite)
-      self.contents.append(link)
-      self.contents.append(Constant(','))
-    if len(cites) > 0:
-      self.contents.pop(-1)
-    self.contents.append(Constant('] '))
 
