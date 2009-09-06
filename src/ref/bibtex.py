@@ -47,7 +47,9 @@ class BibTeX(Container):
     files = self.parser.parameters['bibfiles'].split(',')
     for file in files:
       bibfile = BibFile(file)
+      bibfile.parse()
       entries += bibfile.entries
+      Trace.message('Parsed ' + unicode(bibfile))
     entries.sort(key = unicode)
     self.contents += entries
     for entry in entries:
@@ -57,9 +59,15 @@ class BibFile(object):
   "A BibTeX file"
 
   def __init__(self, filename):
-    "Create and parse the BibTeX file"
+    "Create the BibTeX file"
+    self.filename = filename + '.bib'
+    self.added = 0
+    self.ignored = 0
     self.entries = []
-    bibpath = InputPath(filename + '.bib')
+
+  def parse(self):
+    "Parse the BibTeX file"
+    bibpath = InputPath(self.filename)
     bibfile = BulkFile(bibpath.path)
     parsed = list()
     for line in bibfile.readall():
@@ -84,13 +92,21 @@ class BibFile(object):
           Trace.debug('Adding ' + unicode(newentry))
           newentry.process()
           self.entries.append(newentry)
+          self.added += 1
         else:
           Trace.debug('Ignoring ' + unicode(newentry))
+          self.ignored += 1
         return
     # Skip the whole line, and show it as an error
     pos.checkskip('\n')
     toline = pos.glob(lambda current: current != '\n')
     Trace.error('Unidentified entry: ' + toline)
+
+  def __unicode__(self):
+    "String representation"
+    string = self.filename + ': ' + unicode(self.added) + ' entries added, '
+    string += unicode(self.ignored) + ' entries ignored'
+    return string
 
 class Entry(Container):
   "An entry in a BibTeX file"
@@ -135,36 +151,68 @@ class Entry(Container):
     if pos.checkskip('='):
       piece = piece.lower().strip()
       pos.skipspace()
-      value = self.parsequoted(pos, Entry.structure)
-      Trace.debug('Tag ' + piece + ': ' + value)
+      value = self.parsevalue(pos)
       self.tags[piece] = value
-      pos.checkskip(',')
+      if not pos.finished() and not pos.checkskip(','):
+        Trace.error('Missing , in BibTeX tag')
       return
     Trace.debug('No more tags: ' + pos.current())
 
-  def parsepiece(self, pos, undesired):
-    "Parse a piece not structure"
-    return pos.glob(lambda current: not current in undesired)
-
-  def parsequoted(self, pos, undesired):
-    "Parse a piece of quoted text"
+  def parsevalue(self, pos):
+    "Parse the value for a tag"
     pos.skipspace()
     if pos.checkfor(','):
       Trace.error('Unexpected ,')
       return ''
-    if pos.checkskip('{'):
-      pos.pushending('}')
-    elif pos.checkskip('"'):
-      pos.pushending('"')
+    if pos.checkfor('{'):
+      return self.parsebracket(pos)
+    elif pos.checkfor('"'):
+      return self.parsequoted(pos)
     else:
-      return self.parsepiece(pos, undesired)
-    quoted = self.parsequoted(pos, Entry.quotes)
-    pos.popending()
+      return self.parsepiece(pos, Entry.structure)
+
+  def parsebracket(self, pos):
+    "Parse a {} bracket"
+    if not pos.checkskip('{'):
+      Trace.error('Missing opening { in bracket')
+      return ''
+    pos.pushending('}')
+    bracket = self.parserecursive(pos)
+    pos.popending('}')
+    return bracket
+
+  def parsequoted(self, pos):
+    "Parse a piece of quoted text"
+    if not pos.checkskip('"'):
+      Trace.error('Missing opening " in quote')
+      return
+    pos.pushending('"')
+    quoted = self.parserecursive(pos)
+    pos.popending('"')
     pos.skipspace()
     if pos.checkskip('#'):
       pos.skipspace()
-      quoted += self.parsequoted(pos, Entry.quotes)
+      quoted += self.parsequoted(pos)
     return quoted
+
+  def parserecursive(self, pos):
+    "Parse brackets or quotes recursively"
+    piece = ''
+    while not pos.finished():
+      piece += self.parsepiece(pos, Entry.quotes)
+      if not pos.finished():
+        if pos.checkfor('{'):
+          piece += self.parsebracket(pos)
+        elif pos.checkfor('"'):
+          piece += self.parsequoted(pos)
+        else:
+          Trace.error('Missing opening { or ": ' + pos.current())
+          return piece
+    return piece
+
+  def parsepiece(self, pos, undesired):
+    "Parse a piece not structure"
+    return pos.glob(lambda current: not current in undesired)
 
   def clone(self):
     "Return an exact copy of self"
