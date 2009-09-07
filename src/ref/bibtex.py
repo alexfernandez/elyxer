@@ -106,11 +106,9 @@ class BibFile(object):
         newentry = entry.clone()
         newentry.parse(pos)
         if newentry.isreferenced():
-          Trace.debug('Adding ' + unicode(newentry))
           self.entries.append(newentry)
           self.added += 1
         else:
-          Trace.debug('Ignoring ' + unicode(newentry))
           self.ignored += 1
         return
     # Skip the whole line, and show it as an error
