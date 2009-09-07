@@ -76,10 +76,7 @@ class ConfigReader(object):
     if not ':' in line:
       Trace.error('Invalid configuration parameter ' + line)
       return
-    pieces = line.split(':')
-    if len(pieces) > 2:
-      Trace.error('Too many colons in ' + line)
-      return
+    pieces = line.split(':', 1)
     key = self.serializer.unescape(pieces[0])
     value = self.serializer.deserialize(pieces[1])
     object = self.objects[self.section]
