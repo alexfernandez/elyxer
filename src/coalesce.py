@@ -20,7 +20,7 @@
 
 # --end--
 # Alex 20090309
-# conflates (unifies) all into one file to generate an executable
+# Coalesces (unifies) all into one file to generate an executable
 
 import sys
 from io.fileline import *
@@ -41,7 +41,7 @@ def readargs(args):
   "Read arguments from the command line"
   del args[0]
   if len(args) == 0:
-    Trace.error('Usage: coalesce.py filein [fileout]')
+    usage()
     return
   reader = getreader(args[0])
   del args[0]
@@ -50,29 +50,42 @@ def readargs(args):
     fileout = args[0]
     del args[0]
   if len(args) > 0:
-    Trace.error('Usage: conflate.py filein [fileout]')
+    usage()
     return
   writer = LineWriter(fileout)
   return reader, writer
 
-def conflate(reader, writer):
-  "Conflate all Python files used in filein to fileout"
-  if not reader:
-    return
-  while not reader.finished():
-    line = reader.currentline()
-    if line.startswith('from'):
-      filename = line.split()[1].replace('.', '/') + '.py'
-      newreader = getreader(filename)
-      conflate(newreader, writer)
-    else:
-      writer.writeline(line)
-    reader.nextline()
-  reader.close()
+def usage():
+  Trace.error('Usage: coalesce.py filein [fileout]')
+  return
+
+class Coalescer(object):
+
+  def __init__(self):
+    self.comments = True
+
+  def coalesce(self, reader, writer):
+    "Coalesce all Python files used in filein to fileout"
+    if not reader:
+      return
+    while not reader.finished():
+      line = reader.currentline()
+      if line.startswith('from'):
+        self.comments = False
+        filename = line.split()[1].replace('.', '/') + '.py'
+        newreader = getreader(filename)
+        self.coalesce(newreader, writer)
+      elif line.startswith('#'):
+        if self.comments:
+          writer.writeline(line)
+      else:
+        writer.writeline(line)
+      reader.nextline()
+    reader.close()
 
 reader, writer = readargs(sys.argv)
 if reader:
-  conflate(reader, writer)
+  Coalescer().coalesce(reader, writer)
   writer.close()
 
   
