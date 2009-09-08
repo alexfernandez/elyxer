@@ -64,6 +64,31 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.30 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Removed most comments from the final distributed file 
+\family typewriter
+elyxer.py
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+Added 
+\begin_inset LatexCommand url
+name "distutils"
+target "http://docs.python.org/distutils/index.html"
+
+\end_inset
+
+ support for cross-platform distribution.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.29 (2009-09-08):
 \end_layout
 
