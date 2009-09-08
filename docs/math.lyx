@@ -1,9 +1,27 @@
-#LyX 1.6.2 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.3 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
 \textclass article
 \begin_preamble
+% Commands inserted by lyx2lyx for PDF properties
+\usepackage{babel}
+\usepackage[unicode=true,
+ bookmarks=true,
+ bookmarksnumbered=true,
+ bookmarksopen=false,
+ breaklinks=false,
+ pdfborder={0 0 1},
+ backref=false,
+ colorlinks=true]
+ {hyperref}
+\hypersetup{%
+ pdftitle={eLyXer Math Showcase},
+ pdfauthor={Alex Fernández},
+ pdfsubject={The amazing all-time-wonder eLyXer Math Showcase},
+ pdfkeywords={LyX},
+ linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels,pdftex }
+
 % DO NOT ALTER THIS PREAMBLE!!!
 %
 % This preamble is designed to ensure that the User's Guide prints
@@ -62,21 +80,7 @@
 \graphics default
 \paperfontsize 12
 \spacing single
-\use_hyperref true
-\pdf_title "eLyXer Math Showcase"
-\pdf_author "Alex Fernández"
-\pdf_subject "The amazing all-time-wonder eLyXer Math Showcase"
-\pdf_keywords "LyX"
-\pdf_bookmarks true
-\pdf_bookmarksnumbered true
-\pdf_bookmarksopen false
-\pdf_bookmarksopenlevel 1
-\pdf_breaklinks false
-\pdf_pdfborder false
-\pdf_colorlinks true
-\pdf_backref false
-\pdf_pdfusetitle false
-\pdf_quoted_options "linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels,pdftex"
+\use_hyperref false
 \papersize default
 \use_geometry false
 \use_amsmath 1
@@ -110,7 +114,7 @@
 
 \begin_layout Title
 \begin_inset Graphics
-	filename /home/chenno/bulk/elyxer/docs/elyxer.svg
+	filename elyxer.svg
 	lyxscale 50
 	scale 50
 
@@ -129,11 +133,14 @@ Introduction
 
 \begin_layout Standard
 This document is intended as a showcase of the mathematical abilities of
- eLyXer; for more information be sure to visit the 
-\begin_inset CommandInset href
-LatexCommand href
-name "main page"
-target "index.html"
+ eLyXer; for more information be sure to visit the main page 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+index.html
+\end_layout
 
 \end_inset
 
@@ -141,19 +148,25 @@ target "index.html"
 \end_layout
 
 \begin_layout Standard
-There is a 
-\begin_inset CommandInset href
-LatexCommand href
-name "non-Unicode version"
-target "math.html"
+There is a non-Unicode version 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+math.html
+\end_layout
 
 \end_inset
 
- of this page with midspaces and a 
-\begin_inset CommandInset href
-LatexCommand href
-name "Unicode version"
-target "math-unicode.html"
+ of this page with midspaces and a Unicode version 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+math-unicode.html
+\end_layout
 
 \end_inset
 
@@ -208,11 +221,16 @@ Math Symbols
 \end_layout
 
 \begin_layout Standard
-eLyXer supports the whole set of math symbols in 
-\begin_inset CommandInset href
-LatexCommand href
-name "John D. Cook's list."
-target "http://www.johndcook.com/math_symbols.html"
+eLyXer supports the whole set of math symbols in John D.
+ Cook's list.
+ 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.johndcook.com/math_symbols.html
+\end_layout
 
 \end_inset
 
@@ -265,11 +283,14 @@ Equations look good when items are properly separated.
 status open
 
 \begin_layout Plain Layout
-Note: if you are viewing the 
-\begin_inset CommandInset href
-LatexCommand href
-name "non-Unicode version"
-target "math.html"
+Note: if you are viewing the non-Unicode version 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+math.html
+\end_layout
 
 \end_inset
 
@@ -287,11 +308,14 @@ target "math.html"
 \end_inset
 
 .
- Try out the 
-\begin_inset CommandInset href
-LatexCommand href
-name "Unicode version"
-target "math-unicode.html"
+ Try out the Unicode version 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+math-unicode.html
+\end_layout
 
 \end_inset
 
