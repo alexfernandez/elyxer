@@ -600,7 +600,19 @@ title
 --
 \family default
 directory\InsetSpace ~
-<images_dir>: look for images in the directory specified.
+
+\family typewriter
+\series bold
+"
+\family default
+\series default
+images_dir
+\family typewriter
+\series bold
+"
+\family default
+\series default
+: look for images in the directory specified.
 \end_layout
 
 \begin_layout Description
@@ -609,15 +621,34 @@ directory\InsetSpace ~
 --
 \family default
 destdirectory\InsetSpace ~
-<dest_dir>: converted images will end up into this directory.
+
+\family typewriter
+\series bold
+"
+\family default
+\series default
+dest_dir
+\family typewriter
+\series bold
+"
+\family default
+\series default
+: converted images will end up into this directory.
 \end_layout
 
 \begin_layout Description
 
 \family typewriter
 --css\InsetSpace ~
-<new.css>
+
+\series bold
+"
+\series default
+new.css
+\series bold
+"
 \family default
+\series default
 : change default CSS.
  See below.
 \end_layout
@@ -647,6 +678,29 @@ destdirectory\InsetSpace ~
 \family default
 : restore full Unicode output.
  Right now switches midspaces to medium mathematical spaces.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--forceformat\InsetSpace ~
+
+\series bold
+"
+\family default
+\series default
+.extension
+\family typewriter
+\series bold
+"
+\family default
+\series default
+: Force the format implied by the extension (e.g.
+ 
+\family typewriter
+".jpg"
+\family default
+ for JPEG) for output images.
 \end_layout
 
 \begin_layout Subsection
