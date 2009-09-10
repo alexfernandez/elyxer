@@ -47,6 +47,7 @@ class Options(object):
   directory = None
   destdirectory = None
   toc = False
+  forceformat = None
   branches = dict()
 
   def parseoptions(self, args):
@@ -83,6 +84,7 @@ class Options(object):
     Trace.error('    --version: show version number and release date')
     Trace.error('    --html: output HTML 4.0 instead of the default XHTML')
     Trace.error('    --unicode: full Unicode output')
+    Trace.error('    --forceformat ".extension": force image output format')
     exit()
 
   def showversion(self):

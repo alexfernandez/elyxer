@@ -44,6 +44,16 @@ class Path(object):
     "Return last modification time"
     return os.path.getmtime(self.path)
 
+  def __unicode__(self):
+    "Return a unicode string representation"
+    return self.path
+
+  def __eq__(self, path):
+    "Compare to another path"
+    if not hasattr(path, 'path'):
+      return False
+    return self.path == path.path
+
 class InputPath(Path):
   "Represents an input file"
 

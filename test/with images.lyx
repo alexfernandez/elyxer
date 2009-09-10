@@ -1,4 +1,4 @@
-#LyX 1.5.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.5.7 created this file. For more info see http://www.lyx.org/
 \lyxformat 276
 \begin_document
 \begin_header
@@ -82,6 +82,17 @@ Third image: from another directory.
 \end_inset
 
 Fourth image: from a JPEG file.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename square.png
+	lyxscale 1000
+	scale 1000
+
+\end_inset
+
+Fifth image: from a PNG file.
 \end_layout
 
 \end_body

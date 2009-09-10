@@ -43,22 +43,32 @@ class Image(Container):
     "Place the url, convert the image if necessary."
     self.origin = InputPath(self.parser.parameters['filename'])
     if not self.origin.exists():
-      Trace.error('Image ' + self.origin.path + ' not found')
+      Trace.error('Image ' + unicode(self.origin) + ' not found')
       return
-    self.destination = OutputPath(self.origin)
-    if not self.destination.hasext('.jpg'):
-      self.destination.changeext('.png')
+    self.destination = self.checkext(OutputPath(self.origin))
     density = 100
     if 'scale' in self.parser.parameters:
       density = int(self.parser.parameters['scale'])
     self.convert(self.origin, self.destination, density)
-    self.width, self.height = self.getdimensions(self.destination)
+    imagefile = ImageFile(self.destination)
+    self.width, self.height = imagefile.getdimensions()
+
+  def checkext(self, destination):
+    "Convert extension of destination to output image format"
+    forceformat = '.jpg'
+    forcedest = '.png'
+    if Options.forceformat:
+      forceformat = Options.forceformat
+      forcedest = Options.forceformat
+    if not destination.hasext(forceformat):
+      destination.changeext(forcedest)
+    return destination
 
   def convert(self, origin, destination, density):
     "Convert an image to PNG"
     if not Image.converter:
       return
-    if origin.path == destination.path:
+    if origin == destination:
       return
     if destination.exists():
       if origin.getmtime() <= destination.getmtime():
@@ -66,48 +76,57 @@ class Image(Container):
         return
     destination.createdirs()
     try:
-      result = os.system('convert -density ' + unicode(density) + ' "' + origin.path +
-          '" "' + destination.path + '"')
+      command = 'convert -density ' + unicode(density) + ' "'
+      command += unicode(origin) + '" "' + unicode(destination) + '"'
+      result = os.system(command)
+      Trace.message(command)
       if result != 0:
         Trace.error('ImageMagick not installed; images will not be processed')
         Image.converter = False
         return
-      Trace.message('Converted ' + origin.path + ' to ' + destination.path +
+      Trace.message('Converted ' + unicode(origin) + ' to ' + unicode(destination) +
           ' at ' + unicode(density) + '%')
     except OSError:
       Trace.error('Error while converting image ' + origin)
 
+class ImageFile(object):
+  "A file corresponding to an image (JPG or PNG)"
+
   dimensions = dict()
 
-  def getdimensions(self, file):
+  def __init__(self, path):
+    "Create the file based on its path"
+    self.path = path
+
+  def getdimensions(self):
     "Get the dimensions of a JPG or PNG image"
-    if not file.exists():
+    if not self.path.exists():
       return None, None
-    if file.path in Image.dimensions:
-      return Image.dimensions[file.path]
+    if unicode(self.path) in ImageFile.dimensions:
+      return ImageFile.dimensions[unicode(self.path)]
     dimensions = (None, None)
-    if file.hasext('.png'):
-      dimensions = self.getpngdimensions(file)
-    elif file.hasext('.jpg'):
-      dimensions = self.getjpgdimensions(file)
-    Image.dimensions[file.path] = dimensions
+    if self.path.hasext('.png'):
+      dimensions = self.getpngdimensions()
+    elif self.path.hasext('.jpg'):
+      dimensions = self.getjpgdimensions()
+    ImageFile.dimensions[unicode(self.path)] = dimensions
     return dimensions
 
-  def getpngdimensions(self, file):
+  def getpngdimensions(self):
     "Get the dimensions of a PNG image"
-    pngfile = file.open()
+    pngfile = self.path.open()
     pngfile.seek(16)
     width = self.readlong(pngfile)
     height = self.readlong(pngfile)
     pngfile.close()
     return (width, height)
 
-  def getjpgdimensions(self, file):
+  def getjpgdimensions(self):
     "Get the dimensions of a JPEG image"
-    jpgfile = file.open()
+    jpgfile = self.path.open()
     start = self.readword(jpgfile)
     if start != int('ffd8', 16):
-      Trace.error(filename + ' not a JPEG file')
+      Trace.error(unicode(self.path) + ' not a JPEG file')
       return (None, None)
     self.skipheaders(jpgfile, ['ffc0', 'ffc2'])
     jpgfile.seek(3, os.SEEK_CUR)

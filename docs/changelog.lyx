@@ -87,6 +87,42 @@ target "http://docs.python.org/distutils/index.html"
  support for cross-platform distribution.
 \end_layout
 
+\begin_layout Itemize
+Added command line option 
+\family typewriter
+--forceformat
+\family default
+: force eLyXer to convert all images to the given output format.
+\end_layout
+
+\begin_layout Itemize
+Switched all options in command line help to quotes: 
+\family typewriter
+--title\InsetSpace ~
+
+\series bold
+<
+\series default
+title
+\series bold
+>
+\family default
+\series default
+ is now 
+\family typewriter
+--title\InsetSpace ~
+
+\series bold
+"
+\series default
+title
+\series bold
+"
+\family default
+\series default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.29 (2009-09-08):
