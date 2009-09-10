@@ -37,6 +37,13 @@ setup(name = 'eLyXer',
     author_email = 'elyxer@gmail.com',
     url = 'http://www.nongnu.org/elyxer/',
     py_modules = ['elyxer'],
+    classifiers = [
+      'License :: OSI Approved :: GNU General Public License (GPL)',
+      'Development Status :: 5 - Production/Stable', 'Environment :: Console',
+      'Operating System :: OS Independent', 'Programming Language :: Python :: 2.4',
+      'Topic :: Printing', 'Topic :: Text Processing :: Markup :: HTML',
+      'Topic :: Utilities', 'Topic :: Internet :: WWW/HTTP :: Dynamic Content'
+      ],
     license = 'GPL version 3 or later',
     platforms = ['Windows NT/2000/XP', 'Mac OS X', 'GNU/Linux'],
     )
