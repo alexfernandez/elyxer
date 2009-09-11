@@ -6,6 +6,39 @@ Introduction
 ============
 eLyXer converts a LyX source file to a HTML page.
 
+Installation
+============
+To install eLyXer get to the distributed file and just write at the command
+line prompt:
+  $ tar -xzf elyxer-[version].tar.gz
+Or for the .zip version:
+  $ unzip elyxer-[version].zip
+A directory called elyxer should appear, where the main file elyxer.py can be
+found. This file can be copied to a directory included in the execution path.
+On Linux type as root:
+  # cp elyxer.py /usr/bin
+or, on Windows:
+  > copy elyxer.py c:\windows\
+You can also put elyxer.py on any other directory in your path, like ~/bin,
+or even use an absolute path:
+  $ /home/pepito/software/elyxer.py
+or, on Windows:
+  > c:\my documents\software\elyxer.py
+
+To install the eLyXer Python package using Python distutils just write as
+root:
+  # python setup.py install
+or, on Windows:
+  > python setup.py install
+This will ensure that any Python packages trying to access eLyXer will find
+it.
+
+LyX Integration
+===============
+
+To integrate eLyXer with LyX you have to copy elyxer.py into the LyX
+directory, and reconfigure it.
+
 Usage
 =====
 eLyXer can be invoked from the command line as:
@@ -16,14 +49,14 @@ file is specified eLyXer will output to STDOUT. This allows its use in pipes
 and other flexible configurations.
 
 Examples:
-  $ elyxer file.lyx file.html
+  $ elyxer.py file.lyx file.html
 converts file.lyx to file.html. Debug messages are shown.
   $ cat file.lyx | elyxer > file.html
 converts file.lyx to file.html, as before. This time debug messages are not
 shown.
-  $ elyxer file.lyx | grep "<blockquote>" | wc
+  $ elyxer.py file.lyx | grep "<blockquote>" | wc
 counts all blockquote paragraphs.
-  $ elyxer file.lyx | wget --no-check-certificate --spider -nv -F -i -
+  $ elyxer.py file.lyx | wget --no-check-certificate --spider -nv -F -i -
 checks all external links in a document recursively. (Local links will appear
 as unresolved, but they can be ignored.)
 
