@@ -165,8 +165,9 @@ class Entry(Container):
       pos.skipspace()
       value = self.parsevalue(pos)
       self.tags[piece] = value
+      pos.skipspace()
       if not pos.finished() and not pos.checkskip(','):
-        Trace.error('Missing , in BibTeX tag')
+        Trace.error('Missing , in BibTeX tag at ' + pos.current())
       return
 
   def parsevalue(self, pos):
