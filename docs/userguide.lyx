@@ -193,13 +193,211 @@ A directory called
 \family typewriter
 elyxer
 \family default
- should appear.
+ should appear, where the main file 
+\family typewriter
+elyxer.py
+\family default
+ resides.
+ You may choose to place this file in a more prominent position, preferably
+ in the execution path.
+ To do this on Linux, type as root:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+#
+\color inherit
+ cp elyxer.py /usr/bin
+\end_layout
+
+\begin_layout Standard
+# cp elyxer.py /usr/bin
+\end_layout
+
+\begin_layout Standard
+or, on Windows:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+>
+\color inherit
+ copy elyxer.py c:
+\backslash
+Windows
+\backslash
+
+\end_layout
+
+\begin_layout Standard
+You can also put 
+\family typewriter
+elyxer.py
+\family default
+ on any other directory in your path, like 
+\family typewriter
+~/bin
+\family default
+, or even use an absolute path.
+ In this case you will have to reference the whole path every time you use
+ eLyXer:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ /home/pepito/software/elyxer.py ...
+\end_layout
+
+\begin_layout Standard
+or, on Windows: 
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+#
+\color inherit
+ c:
+\backslash
+my documents
+\backslash
+software
+\backslash
+elyxer.py ...
+\end_layout
+
+\begin_layout Standard
+To install the eLyXer Python package using Python distutils just write as
+ root:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+#
+\color inherit
+ python setup.py install
+\end_layout
+
+\begin_layout Standard
+or, on Windows:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+>
+\color inherit
+ python setup.py install
+\end_layout
+
+\begin_layout Standard
+This will ensure that any Python packages trying to access eLyXer will find
+ it.
+ See 
+\begin_inset LatexCommand ref
+reference "sub:LyX-Integration"
+
+\end_inset
+
+ for LyX integration.
+\end_layout
+
+\begin_layout Standard
+Now you may want to try to convert the user guide:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx docs/usergu
+ide2.html
+\end_layout
+
+\begin_layout Standard
+On Windows you have to include the Python executable:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+>
+\color inherit
+ Python.exe elyxer.py --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx
+ docs/userguide2.html
+\end_layout
+
+\begin_layout Standard
+It should generate a working web page identical to the one distributed:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ diff docs/userguide.html docs/userguide2.html
+\end_layout
+
+\begin_layout Standard
+The typical output will contain just the changed lines, which in this case
+ should be only the header with the file creation date:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Standard
+7c7
+\end_layout
+
+\begin_layout Standard
+< <meta name="create-date" content="2009-09-11"/>
+\end_layout
+
+\begin_layout Standard
+---
+\end_layout
+
+\begin_layout Standard
+> <meta name="create-date" content="2009-09-12"/>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If nothing else appears (i.e.
+ both files are functionally equal) then everything is working fine.
  If you have 
 \family typewriter
 bash
 \family default
- installed, to test that everything works fine you can just run the included
- tests:
+ installed, to test that everything 
+\emph on
+really
+\emph default
+ works fine you can just run the included tests:
 \end_layout
 
 \begin_layout LyX-Code
@@ -219,73 +417,6 @@ It will run a number of test and check the results, so you can see if everything
 diff
 \family default
  to show differences between two files.
-\end_layout
-
-\begin_layout Standard
-In addition you may want to try to convert the user guide:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
-$
-\color inherit
- ./elyxer.py --title "eLyXer User Guide" docs/userguide.lyx docs/userguide2.html
-\end_layout
-
-\begin_layout Standard
-On Windows you have to include the Python executable:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
->
-\color inherit
- Python.exe elyxer.py --title "eLyXer User Guide" docs/userguide.lyx docs/userguide
-2.html
-\end_layout
-
-\begin_layout Standard
-It should generate a working web page identical to the one distributed:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
-$
-\color inherit
- diff docs/userguide.html docs/userguide2.html
-\end_layout
-
-\begin_layout Standard
-If nothing appears (i.e.
- both files are equal) then everything is working fine.
-\end_layout
-
-\begin_layout Standard
-Since nothing is installed you have to reference the full path to the executable
- file every time you run it.
- If you want to avoid the hassle just place 
-\family typewriter
-elyxer.py
-\family default
- someplace in the path (e.g.
- 
-\family typewriter
-/usr/bin
-\family default
- on Linux).
- See 
-\begin_inset LatexCommand ref
-reference "sub:LyX-Integration"
-
-\end_inset
-
- for LyX integration.
 \end_layout
 
 \begin_layout Subsection
