@@ -46,10 +46,7 @@ class Image(Container):
       Trace.error('Image ' + unicode(self.origin) + ' not found')
       return
     self.destination = self.checkext(OutputPath(self.origin))
-    density = 100
-    if 'scale' in self.parser.parameters:
-      density = int(self.parser.parameters['scale'])
-    self.convert(self.origin, self.destination, density)
+    self.convert(self.origin, self.destination, self.getparams())
     imagefile = ImageFile(self.destination)
     self.width, self.height = imagefile.getdimensions()
 
@@ -64,7 +61,19 @@ class Image(Container):
       destination.changeext(forcedest)
     return destination
 
-  def convert(self, origin, destination, density):
+  def getparams(self):
+    "Get the parameters for ImageMagick conversion"
+    params = dict()
+    scale = 100
+    if 'scale' in self.parser.parameters:
+      scale = int(self.parser.parameters['scale'])
+    if self.destination.hasext('.svg'):
+      params['density'] = scale
+    elif self.destination.hasext('.jpg') or self.destination.hasext('.png'):
+      params['resize'] = unicode(scale) + '%'
+    return params
+
+  def convert(self, origin, destination, params):
     "Convert an image to PNG"
     if not Image.converter:
       return
@@ -75,17 +84,18 @@ class Image(Container):
         # file has not changed; do not convert
         return
     destination.createdirs()
+    command = 'convert '
+    for param in params:
+      command += '-' + param + ' ' + unicode(params[param]) + ' '
+    command += '"' + unicode(origin) + '" "' + unicode(destination) + '"'
     try:
-      command = 'convert -density ' + unicode(density) + ' "'
-      command += unicode(origin) + '" "' + unicode(destination) + '"'
       result = os.system(command)
       Trace.message(command)
       if result != 0:
         Trace.error('ImageMagick not installed; images will not be processed')
         Image.converter = False
         return
-      Trace.message('Converted ' + unicode(origin) + ' to ' + unicode(destination) +
-          ' at ' + unicode(density) + '%')
+      Trace.message('Converted ' + unicode(origin) + ' to ' + unicode(destination))
     except OSError:
       Trace.error('Error while converting image ' + origin)
 
