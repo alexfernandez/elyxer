@@ -26,6 +26,7 @@ import os
 import sys
 import codecs
 from io.fileline import *
+from conf.config import *
 from util.trace import Trace
 
 
@@ -38,8 +39,19 @@ class BulkFile(object):
 
   def readall(self):
     "Read the whole file"
-    filein = codecs.open(self.filename, 'r', "utf-8")
-    lines = filein.readlines()
+    for encoding in FileConfig.parsing['encodings']:
+      lines = self.readcodec(encoding)
+      if lines:
+        return lines
+    return []
+
+  def readcodec(self, encoding):
+    "Read the whole file with the given encoding"
+    filein = codecs.open(self.filename, 'r', encoding)
+    try:
+      lines = filein.readlines()
+    except:
+      lines = None
     filein.close()
     return lines
 

@@ -123,6 +123,12 @@ title
 .
 \end_layout
 
+\begin_layout Itemize
+Solved bug reported by Uwe Stoehr when reading Windows BibTeX file generated
+ by JabRef.
+ Now eLyXer tries several encodings for each file, initially UTF-8 and Cp1252.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.29 (2009-09-08):

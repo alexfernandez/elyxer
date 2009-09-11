@@ -180,6 +180,13 @@ class EscapeConfig(object):
       u' ':u' ', 
       }
 
+class FileConfig(object):
+  "Configuration class from config file"
+
+  parsing = {
+      u'encodings':[u'utf-8',u'Cp1252',], 
+      }
+
 class FootnoteConfig(object):
   "Configuration class from config file"
 
