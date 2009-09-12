@@ -71,6 +71,7 @@ class Branch(Container):
     "Disable inactive branches"
     self.branch = self.header[2]
     if not self.isactive():
+      Trace.debug('Branch ' + self.branch + ' not active')
       self.output = EmptyOutput()
 
   def isactive(self):
@@ -79,7 +80,7 @@ class Branch(Container):
       Trace.error('Invalid branch ' + self.branch)
       return True
     branch = Options.branches[self.branch]
-    return branch.selected == 1
+    return branch.isselected()
 
 class ShortTitle(Container):
   "A short title to display (always hidden)"

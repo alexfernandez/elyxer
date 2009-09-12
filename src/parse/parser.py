@@ -217,7 +217,7 @@ class HeaderParser(Parser):
     reader.nextline()
     subparser = HeaderParser().complete(ContainerConfig.header['endbranch'])
     subparser.parse(reader)
-    options = BranchOptions()
+    options = BranchOptions(branch)
     for key in subparser.parameters:
       options.set(key, subparser.parameters[key])
     Options.branches[branch] = options
