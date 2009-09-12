@@ -84,14 +84,6 @@
 \cite_engine basic
 \use_bibtopic false
 \paperorientation portrait
-\branch Pregunta
-\selected 1
-\color #00ff00
-\end_branch
-\branch Respuesta
-\selected 0
-\color #aa55ff
-\end_branch
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
