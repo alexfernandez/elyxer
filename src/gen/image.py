@@ -90,7 +90,7 @@ class Image(Container):
     command += '"' + unicode(origin) + '" "' + unicode(destination) + '"'
     try:
       result = os.system(command)
-      Trace.message(command)
+      Trace.debug('ImageMagick Command: "' + command + '"')
       if result != 0:
         Trace.error('ImageMagick not installed; images will not be processed')
         Image.converter = False
