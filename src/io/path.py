@@ -44,6 +44,11 @@ class Path(object):
     "Return last modification time"
     return os.path.getmtime(self.path)
 
+  def hasext(self, ext):
+    "Check if the file has the given extension"
+    base, oldext = os.path.splitext(self.path)
+    return oldext == ext
+
   def __unicode__(self):
     "Return a unicode string representation"
     return self.path
@@ -73,11 +78,6 @@ class OutputPath(Path):
     if os.path.isabs(self.url):
       self.url = os.path.basename(self.url)
     self.path = Options.destdirectory + os.path.sep + self.url
-
-  def hasext(self, ext):
-    "Check if the file has the given extension"
-    base, oldext = os.path.splitext(self.path)
-    return oldext == ext
   
   def changeext(self, ext):
     "Change extension to the given one"

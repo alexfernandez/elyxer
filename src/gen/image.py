@@ -46,7 +46,7 @@ class Image(Container):
       Trace.error('Image ' + unicode(self.origin) + ' not found')
       return
     self.destination = self.checkext(OutputPath(self.origin))
-    self.convert(self.origin, self.destination, self.getparams())
+    self.convert(self.getparams())
     imagefile = ImageFile(self.destination)
     self.width, self.height = imagefile.getdimensions()
 
@@ -61,33 +61,22 @@ class Image(Container):
       destination.changeext(forcedest)
     return destination
 
-  def getparams(self):
-    "Get the parameters for ImageMagick conversion"
-    params = dict()
-    scale = 100
-    if 'scale' in self.parser.parameters:
-      scale = int(self.parser.parameters['scale'])
-    if self.destination.hasext('.svg'):
-      params['density'] = scale
-    elif self.destination.hasext('.jpg') or self.destination.hasext('.png'):
-      params['resize'] = unicode(scale) + '%'
-    return params
-
-  def convert(self, origin, destination, params):
+  def convert(self, params):
     "Convert an image to PNG"
     if not Image.converter:
       return
-    if origin == destination:
+    if self.origin == self.destination:
       return
-    if destination.exists():
-      if origin.getmtime() <= destination.getmtime():
+    if self.destination.exists():
+      if self.origin.getmtime() <= self.destination.getmtime():
         # file has not changed; do not convert
         return
-    destination.createdirs()
+    self.destination.createdirs()
     command = 'convert '
     for param in params:
       command += '-' + param + ' ' + unicode(params[param]) + ' '
-    command += '"' + unicode(origin) + '" "' + unicode(destination) + '"'
+    command += '"' + unicode(self.origin) + '" "'
+    command += unicode(self.destination) + '"'
     try:
       result = os.system(command)
       Trace.debug('ImageMagick Command: "' + command + '"')
@@ -95,9 +84,22 @@ class Image(Container):
         Trace.error('ImageMagick not installed; images will not be processed')
         Image.converter = False
         return
-      Trace.message('Converted ' + unicode(origin) + ' to ' + unicode(destination))
+      Trace.message('Converted ' + unicode(self.origin) + ' to ' +
+          unicode(self.destination))
     except OSError:
-      Trace.error('Error while converting image ' + origin)
+      Trace.error('Error while converting image ' + self.origin)
+
+  def getparams(self):
+    "Get the parameters for ImageMagick conversion"
+    params = dict()
+    scale = 100
+    if 'scale' in self.parser.parameters:
+      scale = int(self.parser.parameters['scale'])
+    if self.origin.hasext('.svg'):
+      params['density'] = scale
+    elif self.origin.hasext('.jpg') or self.origin.hasext('.png'):
+      params['resize'] = unicode(scale) + '%'
+    return params
 
 class ImageFile(object):
   "A file corresponding to an image (JPG or PNG)"
