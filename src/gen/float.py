@@ -110,6 +110,8 @@ class Listing(Float):
     "Extract the container's contents and return them"
     if isinstance(container, StringContainer):
       return self.modifystring(container)
+    if isinstance(container, StandardLayout):
+      return self.modifystring(container)
     Trace.error('Unexpected container ' + container.__class__.__name__ +
         ' in listing')
     return []
