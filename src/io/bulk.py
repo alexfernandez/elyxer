@@ -40,18 +40,17 @@ class BulkFile(object):
   def readall(self):
     "Read the whole file"
     for encoding in FileConfig.parsing['encodings']:
-      lines = self.readcodec(encoding)
-      if lines:
-        return lines
+      try:
+        return self.readcodec(encoding)
+      except UnicodeDecodeError:
+        pass
+    Trace.error('No suitable encoding for ' + self.filename)
     return []
 
   def readcodec(self, encoding):
     "Read the whole file with the given encoding"
     filein = codecs.open(self.filename, 'r', encoding)
-    try:
-      lines = filein.readlines()
-    except:
-      lines = None
+    lines = filein.readlines()
     filein.close()
     return lines
 
