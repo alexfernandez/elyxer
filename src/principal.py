@@ -27,45 +27,9 @@
 import sys
 import os.path
 from util.trace import Trace
-from io.fileline import *
 from util.options import *
-from post.postprocess import *
-from post.posttable import *
-from math.postformula import *
-from post.postlist import *
-from gen.factory import *
+from elyxerconv import *
 
-
-class Book(object):
-  "book in a lyx file"
-
-  def generatecontents(self, reader, writer):
-    "Parse the contents of the reader and write them"
-    self.processcontents(reader,
-        lambda container: writer.write(container.gethtml()))
-
-  def generatetoc(self, reader, writer):
-    "Parse the contents of the reader and write a Table of Contents"
-    self.processcontents(reader,
-        lambda container: self.processtoc(container, writer))
-
-  def processtoc(self, container, writer):
-    "Postprocess a container and write it"
-    if hasattr(container, 'number'):
-      writer.write(container.type + ' ' + container.number + '\n')
-    floats = container.searchall(Float)
-    for float in floats:
-      writer.write(float.type + ' ' + float.number + '\n')
-
-  def processcontents(self, reader, process):
-    "Parse the contents and do some processing"
-    factory = ContainerFactory()
-    postproc = Postprocessor()
-    while not reader.finished():
-      containers = factory.createsome(reader)
-      for container in containers:
-        container = postproc.postprocess(container)
-        process(container)
 
 def readdir(filename, diroption):
   "Read the current directory if needed"
@@ -96,17 +60,8 @@ def createbook(args):
   if len(args) > 0:
     Trace.error('Unused arguments: ' + unicode(args))
     return
-  reader = LineReader(filein)
-  writer = LineWriter(fileout)
-  book = Book()
-  try:
-    if Options.toc:
-      book.generatetoc(reader, writer)
-    else:
-      book.generatecontents(reader, writer)
-  except (Exception):
-    Trace.error('Failed at ' + reader.currentline())
-    raise
+  converter = eLyXerConverter(filein, fileout)
+  converter.convert()
 
 biblio = dict()
 args = sys.argv
