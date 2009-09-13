@@ -22,8 +22,8 @@
 # create executable
 cd src
 ./exportconfig.py py
-./coalesce.py principal.py > elyxer.py
-mv elyxer.py ..
+./coalesce.py principal.py > ../elyxer.py
+./coalesce.py elyxerconv.py > ../elyxerconv.py
 cd ..
 chmod 755 elyxer.py
 # remove artifacts

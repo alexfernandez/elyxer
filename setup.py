@@ -36,7 +36,7 @@ setup(name = 'eLyXer',
     author = 'Alex Fernandez',
     author_email = 'elyxer@gmail.com',
     url = 'http://www.nongnu.org/elyxer/',
-    py_modules = ['elyxer'],
+    py_modules = ['elyxerconv'],
     classifiers = [
       'License :: OSI Approved :: GNU General Public License (GPL)',
       'Development Status :: 5 - Production/Stable', 'Environment :: Console',

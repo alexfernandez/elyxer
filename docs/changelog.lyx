@@ -85,6 +85,11 @@ target "http://docs.python.org/distutils/index.html"
 \end_inset
 
  support for cross-platform distribution.
+ The library 
+\family typewriter
+elyxerconv
+\family default
+ is added to local Python libraries.
 \end_layout
 
 \begin_layout Itemize
