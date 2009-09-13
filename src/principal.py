@@ -39,7 +39,7 @@ def readdir(filename, diroption):
   if getattr(Options, diroption) == '':
     setattr(Options, diroption, '.')
 
-def createbook(args):
+def convertdoc(args):
   "Read a whole book, write it"
   filein = sys.stdin
   fileout = sys.stdout
@@ -67,5 +67,5 @@ biblio = dict()
 args = sys.argv
 del args[0]
 Options().parseoptions(args)
-createbook(args)
+convertdoc(args)
 
