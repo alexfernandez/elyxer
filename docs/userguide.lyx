@@ -276,45 +276,6 @@ elyxer.py ...
 \end_layout
 
 \begin_layout Standard
-To install the eLyXer Python package using Python distutils just write as
- root:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
-#
-\color inherit
- python setup.py install
-\end_layout
-
-\begin_layout Standard
-or, on Windows:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
->
-\color inherit
- python setup.py install
-\end_layout
-
-\begin_layout Standard
-This will ensure that any Python packages trying to access eLyXer will find
- it.
- See 
-\begin_inset LatexCommand ref
-reference "sub:LyX-Integration"
-
-\end_inset
-
- for LyX integration.
-\end_layout
-
-\begin_layout Standard
 Now you may want to try to convert the user guide:
 \end_layout
 
@@ -366,18 +327,22 @@ inline false
 status open
 
 \begin_layout Standard
+
 7c7
 \end_layout
 
 \begin_layout Standard
+
 < <meta name="create-date" content="2009-09-11"/>
 \end_layout
 
 \begin_layout Standard
+
 ---
 \end_layout
 
 \begin_layout Standard
+
 > <meta name="create-date" content="2009-09-12"/>
 \end_layout
 
@@ -417,6 +382,46 @@ It will run a number of test and check the results, so you can see if everything
 diff
 \family default
  to show differences between two files.
+\end_layout
+
+\begin_layout Standard
+eLyXer can also be installed as a Python library.
+ To install the eLyXer Python package using Python distutils just write
+ as root:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+#
+\color inherit
+ python setup.py install
+\end_layout
+
+\begin_layout Standard
+or, on Windows:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+>
+\color inherit
+ python setup.py install
+\end_layout
+
+\begin_layout Standard
+This will ensure that any Python packages trying to access eLyXer will find
+ it.
+ See 
+\begin_inset LatexCommand ref
+reference "sub:LyX-Integration"
+
+\end_inset
+
+ for LyX integration.
 \end_layout
 
 \begin_layout Subsection
