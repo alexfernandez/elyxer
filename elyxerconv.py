@@ -648,7 +648,7 @@ class GeneralConfig(object):
   "Configuration class from config file"
 
   version = {
-      u'date':u'2009-09-13', u'number':u'0.30', 
+      u'date':u'2009-09-18', u'number':u'0.31', 
       }
 
 class NumberingConfig(object):
@@ -3798,7 +3798,7 @@ class ImageFile(object):
       Trace.error(unicode(self.path) + ' not a JPEG file')
       return (None, None)
     self.skipheaders(jpgfile, ['ffc0', 'ffc2'])
-    jpgfile.seek(3, os.SEEK_CUR)
+    self.seek(jpgfile, 3)
     height = self.readword(jpgfile)
     width = self.readword(jpgfile)
     jpgfile.close()
@@ -3814,7 +3814,7 @@ class ImageFile(object):
       if length == 0:
         Trace.error('End of file ' + file.name)
         return
-      file.seek(length - 2, os.SEEK_CUR)
+      self.seek(file, length - 2)
       header = self.readword(file)
       safetycounter += 1
 
@@ -3834,6 +3834,10 @@ class ImageFile(object):
       return 0
     tuple = struct.unpack(format, read)
     return tuple[0]
+
+  def seek(self, file, bytes):
+    "Seek forward, just by reading the given number of bytes"
+    file.read(bytes)
 
 class ImageOutput(object):
   "Returns an image in the output"

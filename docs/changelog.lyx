@@ -64,6 +64,21 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.31 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Modified image parsing code to remove dependency on Python 2.5, expurging
+ 
+\family typewriter
+os.SEEK_CUR
+\family default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.30 (2009-09-13):
 \end_layout
 

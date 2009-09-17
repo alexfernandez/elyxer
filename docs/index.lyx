@@ -1,4 +1,4 @@
-#LyX 1.5.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.5.7 created this file. For more info see http://www.lyx.org/
 \lyxformat 276
 \begin_document
 \begin_header
@@ -365,8 +365,8 @@ target "http://www.seanet.com/~bradbell/omhelp/stdfun.htm"
  Uwe Stöhr for their interesting suggestions; to Nikos Alexandris, Joachim
  Kreimer-de Fries (Osnabryg), Richard Talley, Wolfgang Keller, Murray Eisenberg,
  Robert Orr, a Linux guy in Singapore, Anders Ekberg, Pavel Sanda, Steve
- Hastings, Sven Hoexter, Xie Chao, Uwe Stöhr, Jürgen Spitzmüller and Olivier
- Ripoll for their testing and bug reporting.
+ Hastings, Sven Hoexter, Xie Chao, Uwe Stöhr, Jürgen Spitzmüller, Olivier
+ Ripoll and Konrad Hofbauer for their testing and bug reporting.
  Packagers Sven Hoexter (for Debian) and Uwe Stöhr (on Windows) have helped
  with their work to make it easy to try it out.
 \end_layout
