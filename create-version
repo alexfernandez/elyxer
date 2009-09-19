@@ -49,7 +49,6 @@ cd ../docs
 ./upload.sh
 cd ..
 
-# Upload to PyPI
-# python setup.py --sign sdist upload
-
+# Register with the PyPI
+python setup.py register
 
