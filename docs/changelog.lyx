@@ -77,6 +77,39 @@ os.SEEK_CUR
 .
 \end_layout
 
+\begin_layout Itemize
+Removed the ill-fated 
+\family typewriter
+elyxerconv.py
+\family default
+ library file (but kept 
+\family typewriter
+io/convert.py
+\family default
+).
+ Now the file 
+\family typewriter
+elyxer.py
+\family default
+ itself can be installed as a library, and run as a module with 
+\family typewriter
+python -m
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+eLyXer was added to the Python Package Index (
+\begin_inset LatexCommand htmlurl
+name "PyPI"
+target "http://pypi.python.org/pypi"
+
+\end_inset
+
+) starting with 0.30.
+ Now it should be automatically uploaded for each release.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.30 (2009-09-13):

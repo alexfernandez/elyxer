@@ -149,9 +149,9 @@ Installation
 \end_layout
 
 \begin_layout Standard
-There is no complex installation procedure; just uncompress the distributed
- file to a suitable directory.
- Just write at the command line prompt:
+There are two ways to install eLyXer: the easy way and the elegant way.
+ Both start by uncompressing the distributed file to a suitable directory.
+ Just write at the command prompt:
 \end_layout
 
 \begin_layout LyX-Code
@@ -193,13 +193,20 @@ A directory called
 \family typewriter
 elyxer
 \family default
- should appear, where the main file 
+ should appear, where the main executable file 
 \family typewriter
 elyxer.py
 \family default
  resides.
- You may choose to place this file in a more prominent position, preferably
- in the execution path.
+\end_layout
+
+\begin_layout Subsubsection*
+The Easy Way
+\end_layout
+
+\begin_layout Standard
+The easy way to install is just using this file directly, preferably placing
+ it in the execution path.
  To do this on Linux, type as root:
 \end_layout
 
@@ -209,15 +216,11 @@ elyxer.py
 \color blue
 #
 \color inherit
- cp elyxer.py /usr/bin
+ cp elyxer.py /usr/bin/
 \end_layout
 
 \begin_layout Standard
-# cp elyxer.py /usr/bin
-\end_layout
-
-\begin_layout Standard
-or, on Windows:
+On Windows you can type (as a normal user):
 \end_layout
 
 \begin_layout LyX-Code
@@ -234,6 +237,20 @@ Windows
 \end_layout
 
 \begin_layout Standard
+And on Mac OS X any user with administrative privileges (like the default
+ user):
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+%
+\color inherit
+ sudo cp elyxer.py /usr/local/bin/
+\end_layout
+
+\begin_layout Standard
 You can also put 
 \family typewriter
 elyxer.py
@@ -243,8 +260,11 @@ elyxer.py
 ~/bin
 \family default
 , or even use an absolute path.
- In this case you will have to reference the whole path every time you use
- eLyXer:
+ In any instance you will be able to access 
+\family typewriter
+elyxer.py
+\family default
+ as an executable file:
 \end_layout
 
 \begin_layout LyX-Code
@@ -253,11 +273,66 @@ elyxer.py
 \color blue
 $
 \color inherit
- /home/pepito/software/elyxer.py ...
+ elyxer.py --help
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+>
+\color inherit
+ elyxer.py --help
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+%
+\color inherit
+ elyxer.py --help
 \end_layout
 
 \begin_layout Standard
-or, on Windows: 
+On Windows you may also call explicitly the Python executable, and locate
+ the file 
+\family typewriter
+elyxer.py
+\family default
+ on your disk:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+>
+\color inherit
+ Python.exe "c:
+\backslash
+route to
+\backslash
+elyxer.py" --help
+\end_layout
+
+\begin_layout Standard
+This last usage may be useful if you are having trouble with file paths
+ that include spaces.
+\end_layout
+
+\begin_layout Subsubsection*
+The Elegant Way
+\end_layout
+
+\begin_layout Standard
+The elegant (and not much more complicated) way of installing eLyXer is
+ using Python distutils.
+ Go to the 
+\family typewriter
+elyxer
+\family default
+ directory and type, as root:
 \end_layout
 
 \begin_layout LyX-Code
@@ -266,13 +341,79 @@ or, on Windows:
 \color blue
 #
 \color inherit
- c:
-\backslash
-my documents
-\backslash
-software
-\backslash
-elyxer.py ...
+ python setup.py install
+\end_layout
+
+\begin_layout Standard
+Once again, on Windows you don't have to be root:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+>
+\color inherit
+ python setup.py install
+\end_layout
+
+\begin_layout Standard
+On Mac OS X you can use 
+\family typewriter
+sudo
+\family default
+ to have permission:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+%
+\color inherit
+ sudo python setup.py install
+\end_layout
+
+\begin_layout Standard
+Now you can run eLyXer as a Python module:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ python -m elyxer --help
+\end_layout
+
+\begin_layout Standard
+This procedure will also ensure that any Python packages trying to access
+ eLyXer will find it.
+ See 
+\begin_inset LatexCommand ref
+reference "sub:LyX-Integration"
+
+\end_inset
+
+ for LyX integration.
+\end_layout
+
+\begin_layout Standard
+From now on we will assume that you are running 
+\family typewriter
+elyxer.py
+\family default
+ as an executable file, but you should substitute that for 
+\family typewriter
+python -m elyxer
+\family default
+ if you have used this elegant procedure.
+ 
+\end_layout
+
+\begin_layout Subsection
+Test Drive
 \end_layout
 
 \begin_layout Standard
@@ -287,20 +428,6 @@ $
 \color inherit
  elyxer.py --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx docs/usergu
 ide2.html
-\end_layout
-
-\begin_layout Standard
-On Windows you have to include the Python executable:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
->
-\color inherit
- Python.exe elyxer.py --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx
- docs/userguide2.html
 \end_layout
 
 \begin_layout Standard
@@ -384,46 +511,6 @@ diff
  to show differences between two files.
 \end_layout
 
-\begin_layout Standard
-eLyXer can also be installed as a Python library.
- To install the eLyXer Python package using Python distutils just write
- as root:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
-#
-\color inherit
- python setup.py install
-\end_layout
-
-\begin_layout Standard
-or, on Windows:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
->
-\color inherit
- python setup.py install
-\end_layout
-
-\begin_layout Standard
-This will ensure that any Python packages trying to access eLyXer will find
- it.
- See 
-\begin_inset LatexCommand ref
-reference "sub:LyX-Integration"
-
-\end_inset
-
- for LyX integration.
-\end_layout
-
 \begin_layout Subsection
 Usage
 \end_layout
@@ -454,20 +541,7 @@ STDOUT
 \family default
 .
  This allows its use in pipes and other flexible configurations.
- Once again, on Windows you have to explicitly call the Python executable:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
->
-\color inherit
- Python.exe elyxer.py [options] [source file] [destination file]
-\end_layout
-
-\begin_layout Standard
-Some examples:
+ Some examples:
 \end_layout
 
 \begin_layout LyX-Code

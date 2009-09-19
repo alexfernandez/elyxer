@@ -8,17 +8,22 @@ eLyXer converts a LyX source file to a HTML page.
 
 Installation
 ============
-To install eLyXer get to the distributed file and just write at the command
-line prompt:
+To install eLyXer download a distributed file from
+http://www.nongnu.org/elyxer/, open a terminal window in the directory that
+contains this file and just write at the command line prompt:
   $ tar -xzf elyxer-[version].tar.gz
 Or for the .zip version:
   $ unzip elyxer-[version].zip
-A directory called elyxer should appear, where the main file elyxer.py can be
-found. This file can be copied to a directory included in the execution path.
-On Linux type as root:
-  # cp elyxer.py /usr/bin
-or, on Windows:
+On Windows or Mac OS X you can unzip the file using the graphical tool of your
+choice. In any case, a directory called elyxer should appear, where the main
+file elyxer.py can be found. This file can be copied to a directory included
+in the execution path. On Linux type as root:
+  # cp elyxer.py /usr/bin/
+or on Windows as any user:
   > copy elyxer.py c:\windows\
+and on Mac OS X as an admin user:
+  % sudo cp elyxer.py /usr/local/bin/
+
 You can also put elyxer.py on any other directory in your path, like ~/bin,
 or even use an absolute path:
   $ /home/pepito/software/elyxer.py
@@ -30,6 +35,8 @@ root:
   # python setup.py install
 or, on Windows:
   > python setup.py install
+and on Mac OS X:
+  % sudo python setup.py install
 This will ensure that any Python packages trying to access eLyXer will find
 it.
 
@@ -37,12 +44,13 @@ LyX Integration
 ===============
 
 To integrate eLyXer with LyX you have to copy elyxer.py into the LyX
-directory, and reconfigure it.
+directory, and reconfigure it. Later versions may recognize eLyXer
+automatically if you install it using distutils.
 
 Usage
 =====
 eLyXer can be invoked from the command line as:
-  $ elyxer [source file] [destination file]
+  $ elyxer.py [source file] [destination file]
 
 If the source file is omitted then STDIN is used; likewise, if no destination
 file is specified eLyXer will output to STDOUT. This allows its use in pipes
