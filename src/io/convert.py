@@ -28,6 +28,9 @@ from io.fileline import *
 from util.options import *
 from gen.factory import *
 from post.postprocess import *
+from post.postlist import *
+from post.posttable import *
+from math.postformula import *
 
 
 class eLyXerConverter(object):
