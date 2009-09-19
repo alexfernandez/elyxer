@@ -47,4 +47,9 @@ scp elyxer-$VERSION.zip elyxer-$VERSION.zip.sig alexfernandez@dl.sv.nongnu.org:/
 # Upload docs
 cd ../docs
 ./upload.sh
+cd ..
+
+# Upload to PyPI
+# python setup.py --sign sdist upload
+
 
