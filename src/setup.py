@@ -23,20 +23,16 @@
 # eLyXer distutils management
 
 import sys
-sys.path.append('src')
-
-from conf.config import *
-#from util.trace import Trace
 from distutils.core import setup
 
 setup(name = 'eLyXer',
-    version = GeneralConfig.version['number'],
+    version = "unreleased",
     description = 'LyX to HTML converter',
     long_description = 'eLyXer is a LyX to HTML converter, with a focus on flexibility and elegant output.',
     author = 'Alex Fernandez',
     author_email = 'elyxer@gmail.com',
     url = 'http://www.nongnu.org/elyxer/',
-    py_modules = ['elyxerconv'],
+    py_modules = ['elyxer'],
     classifiers = [
       'License :: OSI Approved :: GNU General Public License (GPL)',
       'Development Status :: 5 - Production/Stable', 'Environment :: Console',

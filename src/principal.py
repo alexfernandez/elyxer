@@ -35,7 +35,7 @@ def readdir(filename, diroption):
   "Read the current directory if needed"
   if getattr(Options, diroption) != None:
     return
-  setattr(Options, diroption, os.path.dirname(args[0]))
+  setattr(Options, diroption, os.path.dirname(filename))
   if getattr(Options, diroption) == '':
     setattr(Options, diroption, '.')
 
@@ -63,9 +63,14 @@ def convertdoc(args):
   converter = eLyXerConverter(filein, fileout)
   converter.convert()
 
-biblio = dict()
-args = sys.argv
-del args[0]
-Options().parseoptions(args)
-convertdoc(args)
+def main():
+  "Main function, called if invoked from the command line"
+  biblio = dict()
+  args = sys.argv
+  del args[0]
+  Options().parseoptions(args)
+  convertdoc(args)
+
+if __name__ == '__main__':
+  main()
 
