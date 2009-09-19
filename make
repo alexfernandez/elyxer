@@ -23,7 +23,7 @@
 cd src
 ./exportconfig.py py
 ./coalesce.py principal.py > ../elyxer.py
-./coalesce.py elyxerconv.py > ../elyxerconv.py
+cp setup.py ../setup.py
 cd ..
 chmod 755 elyxer.py
 # remove artifacts

@@ -26,7 +26,7 @@ import sys
 from distutils.core import setup
 
 setup(name = 'eLyXer',
-    version = "unreleased",
+    version = 'unknown',
     description = 'LyX to HTML converter',
     long_description = 'eLyXer is a LyX to HTML converter, with a focus on flexibility and elegant output.',
     author = 'Alex Fernandez',

@@ -26,9 +26,9 @@
 
 import sys
 import os.path
+from io.convert import *
 from util.trace import Trace
 from util.options import *
-from elyxerconv import *
 
 
 def readdir(filename, diroption):
@@ -40,7 +40,7 @@ def readdir(filename, diroption):
     setattr(Options, diroption, '.')
 
 def convertdoc(args):
-  "Read a whole book, write it"
+  "Read a whole document and write it"
   filein = sys.stdin
   fileout = sys.stdout
   if len(args) < 2:

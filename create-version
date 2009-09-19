@@ -25,6 +25,7 @@ echo "Creating version $VERSION from $DATE"
 
 # Insert version date in changelog
 src/textchange.py "unreleased" $DATE docs/changelog.lyx
+src/textchange.py "unknown" $VERSION setup.py
 ./elyxer.py --title="eLyXer changelog" --css "lyx.css" docs/changelog.lyx docs/changelog.html
 
 # Push code
