@@ -367,8 +367,9 @@ target "http://www.seanet.com/~bradbell/omhelp/stdfun.htm"
  Robert Orr, a Linux guy in Singapore, Anders Ekberg, Pavel Sanda, Steve
  Hastings, Sven Hoexter, Xie Chao, Uwe Stöhr, Jürgen Spitzmüller, Olivier
  Ripoll and Konrad Hofbauer for their testing and bug reporting.
- Packagers Sven Hoexter (for Debian) and Uwe Stöhr (on Windows) have helped
- with their work to make it easy to try it out.
+ Packagers Sven Hoexter (for Debian), Uwe Stöhr (on Windows) and Bennet
+ Helm (for Mac OS X) have helped with their work to make it easy to try
+ it out.
 \end_layout
 
 \begin_layout Standard
