@@ -126,7 +126,6 @@ class FirstWorder(Layout):
   def extractfirststring(self, container):
     "Extract the first word from a string container"
     string = container.string
-    Trace.debug('String: ' + string)
     if not ' ' in string:
       return [container], False
     split = string.split(' ', 1)
