@@ -164,14 +164,16 @@ class StringContainer(Container):
 
   def __init__(self):
     self.parser = StringParser()
-    self.output = MirrorOutput()
+    self.output = StringOutput()
+    self.string = ''
 
   def process(self):
     "Replace special chars"
     line = self.contents[0]
+    self.contents = []
     replaced = self.escape(line, EscapeConfig.entities)
     replaced = self.changeline(replaced)
-    self.contents = [replaced]
+    self.string = replaced
     if ContainerConfig.string['startcommand'] in replaced and len(replaced) > 1:
       # unprocessed commands
       Trace.error('Unknown command at ' + unicode(self.parser.begin) + ': '
@@ -185,22 +187,18 @@ class StringContainer(Container):
     return line
   
   def __unicode__(self):
-    length = ''
-    descr = ''
-    if len(self.contents) > 0:
-      length = unicode(len(self.contents[0]))
-      descr = self.contents[0].strip()
-    return 'StringContainer@' + unicode(self.begin) + '(' + unicode(length) + ')'
+    result = 'StringContainer@' + unicode(self.begin)
+    return result + '(' + unicode(len(self.string)) + ')'
 
 class Constant(StringContainer):
   "A constant string"
 
   def __init__(self, text):
-    self.contents = [text]
-    self.output = MirrorOutput()
+    self.string = text
+    self.output = StringOutput()
 
   def __unicode__(self):
-    return 'Constant: ' + self.contents[0]
+    return 'Constant: ' + self.string
 
 class TaggedText(Container):
   "Text inside a tag"

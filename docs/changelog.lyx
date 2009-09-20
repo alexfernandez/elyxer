@@ -125,6 +125,26 @@ README
  file) with details of distutils installation.
 \end_layout
 
+\begin_layout Itemize
+Modified single string 
+\family typewriter
+Container
+\family default
+s (
+\family typewriter
+StringContainer
+\family default
+, 
+\family typewriter
+Constant
+\family default
+) so that they appear as empty 
+\family typewriter
+Container
+\family default
+s -- should speed up postprocessing.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.30 (2009-09-13):

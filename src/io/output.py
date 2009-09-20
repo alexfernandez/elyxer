@@ -99,12 +99,12 @@ class TaggedOutput(ContentsOutput):
       return '\n' + close + '\n'
     return close
 
-class MirrorOutput(object):
-  "Returns as output whatever comes along"
+class StringOutput(object):
+  "Returns a bare string as output"
 
   def gethtml(self, container):
-    "Return what is put in"
-    return container.contents
+    "Return a bare string"
+    return [container.string]
 
 class HeaderOutput(object):
   "Returns the HTML headers"
