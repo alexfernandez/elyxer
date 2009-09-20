@@ -88,7 +88,8 @@ class BibFile(object):
     bibfile = BulkFile(bibpath.path)
     parsed = list()
     for line in bibfile.readall():
-      if not line.startswith('%') and not line.strip() == '':
+      line = line.strip()
+      if not line.startswith('%') and not line == '':
         parsed.append(line)
     self.parseentries('\n'.join(parsed))
 
@@ -115,6 +116,7 @@ class BibFile(object):
     pos.checkskip('\n')
     toline = pos.glob(lambda current: current != '\n')
     Trace.error('Unidentified entry: ' + toline)
+    pos.checkskip('\n')
 
   def __unicode__(self):
     "String representation"
