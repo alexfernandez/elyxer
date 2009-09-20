@@ -145,6 +145,10 @@ Container
 s -- should speed up postprocessing.
 \end_layout
 
+\begin_layout Itemize
+Solved bug when parsing BibTeX files with incorrect lines.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.30 (2009-09-13):
