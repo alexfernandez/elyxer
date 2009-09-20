@@ -99,11 +99,9 @@ class Postprocessor(object):
   recursive = []
 
   def __init__(self):
-    self.stages = self.instantiate(Postprocessor.stages)
-    self.stagedict = dict([(x.processedclass, x) for x in self.stages])
+    self.stagedict = self.instantiatedict(Postprocessor.stages)
     self.unconditional = self.instantiate(Postprocessor.unconditional)
-    self.recursive = self.instantiate(Postprocessor.recursive)
-    self.recursivedict = dict([(x.processedclass, x) for x in self.recursive])
+    self.recursivedict = self.instantiatedict(Postprocessor.recursive)
     self.last = None
 
   def postprocess(self, container):
@@ -140,4 +138,9 @@ class Postprocessor(object):
     for element in list:
       element.__init__()
     return list
+
+  def instantiatedict(self, classes):
+    "Instantiate an element from each class and return a dictionary"
+    instances = self.instantiate(classes)
+    return dict([(x.processedclass, x) for x in instances])
 
