@@ -51,7 +51,7 @@ class eLyXerConverter(object):
         # generate converted document
         self.processcontents(lambda container: self.writer.write(container.gethtml()))
     except (Exception):
-      Trace.error('Conversion failed at ' + reader.currentline())
+      Trace.error('Conversion failed at ' + self.reader.currentline())
       raise
 
   def writetoc(self, container):
