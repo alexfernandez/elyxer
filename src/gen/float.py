@@ -191,5 +191,5 @@ class PostListing(PostFloat):
 
   processedclass = Listing
 
-Postprocessor.contents += [PostFloat, PostWrap, PostListing]
+Postprocessor.recursive += [PostFloat, PostWrap, PostListing]
 

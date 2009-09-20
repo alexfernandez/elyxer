@@ -113,5 +113,5 @@ class PostFormula(object):
     del contents[index]
     contents.insert(0, label)
 
-Postprocessor.contents.append(PostFormula)
+Postprocessor.recursive.append(PostFormula)
 

@@ -96,20 +96,20 @@ class Postprocessor(object):
 
   stages = [PostLayout, PostStandard]
   unconditional = []
-  contents = []
+  recursive = []
 
   def __init__(self):
     self.stages = self.instantiate(Postprocessor.stages)
     self.stagedict = dict([(x.processedclass, x) for x in self.stages])
     self.unconditional = self.instantiate(Postprocessor.unconditional)
-    self.contents = self.instantiate(Postprocessor.contents)
-    self.contentsdict = dict([(x.processedclass, x) for x in self.contents])
+    self.recursive = self.instantiate(Postprocessor.recursive)
+    self.recursivedict = dict([(x.processedclass, x) for x in self.recursive])
     self.last = None
 
   def postprocess(self, container):
     "Postprocess the root container and its contents"
     container = self.postprocessroot(container)
-    self.postprocesscontents(container.contents)
+    self.postprocessrecursive(container.contents)
     return container
 
   def postprocessroot(self, original):
@@ -123,14 +123,14 @@ class Postprocessor(object):
     self.last = original
     return element
 
-  def postprocesscontents(self, contents):
-    "Postprocess the container contents"
+  def postprocessrecursive(self, contents):
+    "Postprocess the container contents recursively"
     last = None
     for index, element in enumerate(contents):
       if isinstance(element, Container):
-        self.postprocesscontents(element.contents)
-      if element.__class__ in self.contentsdict:
-        stage = self.contentsdict[element.__class__]
+        self.postprocessrecursive(element.contents)
+      if element.__class__ in self.recursivedict:
+        stage = self.recursivedict[element.__class__]
         contents[index] = stage.postprocess(element, last)
       last = contents[index]
 
