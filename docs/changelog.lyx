@@ -107,7 +107,22 @@ target "http://pypi.python.org/pypi"
 \end_inset
 
 ) starting with 0.30.
- Now it should be automatically uploaded for each release.
+ Now it should be automatically registered for each release.
+\end_layout
+
+\begin_layout Itemize
+Updated documentation (
+\begin_inset LatexCommand htmlurl
+name "user guide"
+target "userguide.html"
+
+\end_inset
+
+, 
+\family typewriter
+README
+\family default
+ file) with details of distutils installation.
 \end_layout
 
 \end_deeper
