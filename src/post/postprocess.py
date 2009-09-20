@@ -126,7 +126,8 @@ class Postprocessor(object):
     last = None
     for index, element in enumerate(contents):
       if isinstance(element, Container):
-        self.postprocessrecursive(element.contents)
+        if len(element.contents) > 0:
+          self.postprocessrecursive(element.contents)
       if element.__class__ in self.recursivedict:
         stage = self.recursivedict[element.__class__]
         contents[index] = stage.postprocess(element, last)

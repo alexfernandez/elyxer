@@ -118,8 +118,8 @@ class Listing(Float):
 
   def modifystring(self, string):
     "Modify a listing string"
-    if len(string.contents) == 0:
-      string.contents = [Constant(u'​')]
+    if string.string == '':
+      string.string = u'​'
     contents = [string, Constant('\n')]
     if self.numbered:
       self.counter += 1

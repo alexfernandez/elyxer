@@ -97,7 +97,7 @@ class Container(object):
     text = ''
     strings = self.searchall(StringContainer)
     for string in strings:
-      text += string.contents[0]
+      text += string.string
     return text
 
   def restyle(self, type, restyler):
@@ -194,6 +194,7 @@ class Constant(StringContainer):
   "A constant string"
 
   def __init__(self, text):
+    self.contents = []
     self.string = text
     self.output = StringOutput()
 

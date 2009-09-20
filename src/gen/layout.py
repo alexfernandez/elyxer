@@ -73,7 +73,7 @@ class Author(Layout):
     self.output.tag = 'h2 class="author"'
     strings = self.searchall(StringContainer)
     if len(strings) > 0:
-      FooterOutput.author = strings[0].contents[0]
+      FooterOutput.author = strings[0].string
       Trace.debug('Author: ' + FooterOutput.author)
 
 class Abstract(Layout):
@@ -110,16 +110,13 @@ class FirstWorder(Layout):
 
   def extractfirstcontainer(self, container):
     "Extract the first word from a string container"
-    if len(container.contents) == 0:
-      # empty container
-      return [container], False
     if isinstance(container, StringContainer):
       return self.extractfirststring(container)
-    elif isinstance(container, ERT):
+    if isinstance(container, ERT):
       return [container], False
     if len(container.contents) == 0:
       # empty container
-      return None, False
+      return [container], False
     first, found = self.extractfirsttuple(container.contents)
     if isinstance(container, TaggedText) and hasattr(container, 'tag'):
       newtag = TaggedText().complete(first, container.tag)
@@ -128,11 +125,12 @@ class FirstWorder(Layout):
 
   def extractfirststring(self, container):
     "Extract the first word from a string container"
-    string = container.contents[0]
+    string = container.string
+    Trace.debug('String: ' + string)
     if not ' ' in string:
       return [container], False
     split = string.split(' ', 1)
-    container.contents[0] = split[1]
+    container.string = split[1]
     return [Constant(split[0])], True
 
 class Description(FirstWorder):
