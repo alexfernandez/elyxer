@@ -148,7 +148,16 @@ class EndingList(object):
   def checkpending(self):
     "Check if there are any pending endings"
     if len(self.endings) != 0:
-      Trace.error('Pending endings ' + unicode(self.endings) + ' left open')
+      Trace.error('Pending ' + unicode(self) + ' left open')
+
+  def __unicode__(self):
+    "Printable representation"
+    string = 'endings ['
+    for ending in self.endings:
+      string += unicode(ending) + ','
+    if len(self.endings) > 0:
+      string = string[:-1]
+    return string + ']'
 
 class PositionEnding(object):
   "An ending for a parsing position"
