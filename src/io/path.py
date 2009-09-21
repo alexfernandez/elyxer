@@ -67,7 +67,7 @@ class InputPath(Path):
     self.url = url
     self.path = url
     if not os.path.isabs(url):
-      self.path = Options.directory + os.path.sep + url
+      self.path = os.path.join(Options.directory, url)
 
 class OutputPath(Path):
   "Represents an output file"
@@ -77,7 +77,7 @@ class OutputPath(Path):
     self.url = inputpath.url
     if os.path.isabs(self.url):
       self.url = os.path.basename(self.url)
-    self.path = Options.destdirectory + os.path.sep + self.url
+    self.path = os.path.join(Options.destdirectory, self.url)
   
   def changeext(self, ext):
     "Change extension to the given one"
