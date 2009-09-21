@@ -111,7 +111,7 @@ class Listing(Float):
     if isinstance(container, StringContainer):
       return self.modifystring(container)
     if isinstance(container, StandardLayout):
-      return self.modifystring(container)
+      return self.modifylayout(container)
     Trace.error('Unexpected container ' + container.__class__.__name__ +
         ' in listing')
     return []
@@ -120,7 +120,17 @@ class Listing(Float):
     "Modify a listing string"
     if string.string == '':
       string.string = u'​'
-    contents = [string, Constant('\n')]
+    return self.modifycontainer(string)
+
+  def modifylayout(self, layout):
+    "Modify a standard layout"
+    if len(layout.contents) == 0:
+      layout.contents = [Constant(u'​')]
+    return self.modifycontainer(layout)
+
+  def modifycontainer(self, container):
+    "Modify a listing container"
+    contents = [container, Constant('\n')]
     if self.numbered:
       self.counter += 1
       tag = 'span class="number-' + self.numbered + '"'
