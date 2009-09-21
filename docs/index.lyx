@@ -307,7 +307,8 @@ target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
 
 \end_inset
 
-, although there is not much activity in it yet (meaning zero messages overall).
+, although there is not much activity in it yet (mostly announcements of
+ new versions).
  Bugs can be reported at 
 \begin_inset LatexCommand url
 name "the Savannah page"
