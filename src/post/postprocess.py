@@ -96,11 +96,10 @@ class Postprocessor(object):
 
   stages = [PostLayout, PostStandard]
   unconditional = []
-  recursive = []
 
   def __init__(self):
     self.unconditional = StageList(Postprocessor.unconditional)
-    self.stages = StageDict(Postprocessor.stages + Postprocessor.recursive)
+    self.stages = StageDict(Postprocessor.stages)
     self.last = None
 
   def postprocess(self, container):

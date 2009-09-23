@@ -95,5 +95,5 @@ class PostTable(object):
       return False
     return True
 
-Postprocessor.recursive.append(PostTable)
+Postprocessor.stages.append(PostTable)
 
