@@ -81,11 +81,11 @@ class PostDeeperList(object):
 
   def postprocess(self, deeper, last):
     "Return the list in the postprocessor"
-    if not hasattr(self.stages, 'list'):
-      self.stages.list = PendingList()
-    self.stages.list.adddeeper(deeper)
-    Trace.debug('New deeper list: ' + unicode(deeper.postprocessor.stages.list))
-    return deeper
+    if not hasattr(self.postprocessor, 'list'):
+      self.postprocessor.list = PendingList()
+    self.postprocessor.list.adddeeper(deeper)
+    Trace.debug('New deeper list: ' + unicode(deeper.postprocessor.list))
+    return deeper.postprocessor.list.generatelist()
 
 class PostListItem(object):
   "Postprocess a list item"
@@ -94,41 +94,48 @@ class PostListItem(object):
 
   def postprocess(self, item, last):
     "Add the item to pending and return an empty item"
-    if not hasattr(self.stages, 'list'):
-      self.stages.list = Pending()
-    self.stages.list.additem(item)
-    Trace.debug('New list item' + unicode(item))
+    if not hasattr(self.postprocessor, 'list'):
+      self.postprocessor.list = PendingList()
+    self.postprocessor.list.additem(item)
+    Trace.debug('New item ' + unicode(item))
     return BlackBox()
 
-class PostListPending(object):
-  "Check if there is a pending list"
+class PostLastItem(object):
+  "Last element was a list item"
+
+  processedclass = ListItem
 
   def postprocess(self, element, last):
-    "If a list element do not return anything;"
-    "otherwise return the whole pending list"
-    list = None
+    "If a pending list is due return it"
     if not self.generatepending(element):
       return element
     Trace.debug('Generate pending')
-    list = self.stages.list.generatelist()
-    self.stages.list = PendingList()
+    list = self.postprocessor.list.generatelist()
+    self.postprocessor.list = PendingList()
     Trace.debug('Returning list')
     return Group().contents([list, element])
 
   def generatepending(self, element):
     "Decide whether to generate the pending list"
-    if not hasattr(self.stages, 'list') or self.stages.list.empty():
+    if not hasattr(self.postprocessor, 'list') or self.postprocessor.list.empty():
+      Trace.debug('Not now')
       return False
     if isinstance(element, ListItem):
-      if not self.stages.list.type:
+      Trace.debug('Item')
+      if not self.postprocessor.list.type:
         return False
-      if self.stages.list.type != element.type:
+      if self.postprocessor.list.type != element.type:
         return True
       return False
     if isinstance(element, DeeperList):
       return False
     return True
 
-Postprocessor.stages += [PostDeeperList]
-Postprocessor.unconditional += [PostListPending]
+class PostLastDeeper(PostLastItem):
+  "Last element was a deeper list"
+
+  processedclass = DeeperList
+
+Postprocessor.stages += [PostDeeperList, PostListItem]
+Postprocessor.laststages += [PostLastItem, PostLastDeeper]
 

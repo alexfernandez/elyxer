@@ -95,27 +95,22 @@ class Postprocessor(object):
   "Postprocess a container keeping some context"
 
   stages = [PostLayout, PostStandard]
-  unconditional = []
+  laststages = []
 
   def __init__(self):
-    self.unconditional = StageList(Postprocessor.unconditional)
-    self.stages = StageDict(Postprocessor.stages)
+    self.stages = StageDict(Postprocessor.stages, self)
+    self.laststages = StageDict(Postprocessor.laststages, self)
     self.last = None
 
   def postprocess(self, container):
     "Postprocess the root container and its contents"
+    original = container
     container.postprocessor = self
     self.postprocessrecursive(container.contents)
-    container = self.postprocessroot(container)
-    return container
-
-  def postprocessroot(self, original):
-    "Postprocess an element taking into account the last one"
-    element = original
-    element = self.stages.postprocess(element, self.last)
-    element = self.unconditional.postprocess(element, self.last)
+    container = self.postprocesscurrent(container)
+    container = self.postprocesslast(container)
     self.last = original
-    return element
+    return container
 
   def postprocessrecursive(self, contents):
     "Postprocess the container contents recursively"
@@ -126,33 +121,41 @@ class Postprocessor(object):
       if isinstance(element, Container):
         contents[index] = postprocessor.postprocess(element)
 
-class StageList(object):
-  "A list of stages, always applied"
+  def postprocesscurrent(self, element):
+    "Postprocess the current element taking into account the last one"
+    return self.postprocessstage(element, self.stages.getstage(element))
 
-  def __init__(self, classes):
-    self.stages = self.instantiate(classes)
+  def postprocesslast(self, element):
+    "Postprocess the current element after the type of the last"
+    return self.postprocessstage(element, self.laststages.getstage(self.last))
 
-  def instantiate(self, classes):
+  def postprocessstage(self, element, stage):
+    "Postprocess the current element after finding the stage"
+    if not stage:
+      return element
+    return stage.postprocess(element, self.last)
+
+class StageDict(object):
+  "A dictionary of stages corresponding to classes"
+
+  def __init__(self, classes, postprocessor):
+    "Instantiate an element from each class and store as a dictionary"
+    instances = self.instantiate(classes, postprocessor)
+    self.stagedict = dict([(x.processedclass, x) for x in instances])
+
+  def instantiate(self, classes, postprocessor):
     "Instantiate an element from each class"
     stages = [x.__new__(x) for x in classes]
     for element in stages:
       element.__init__()
-      element.stages = self
+      element.postprocessor = postprocessor
     return stages
 
-  def postprocess(self, element, last):
-    "Postprocess an element using the relevant stages"
-    for stage in self.stages:
-      element = stage.postprocess(element, last)
-    return element
-
-class StageDict(StageList):
-  "A dictionary of stages corresponding to classes"
-
-  def __init__(self, classes):
-    "Instantiate an element from each class and store as a dictionary"
-    instances = self.instantiate(classes)
-    self.stagedict = dict([(x.processedclass, x) for x in instances])
+  def getstage(self, element):
+    "Get the stage for a given element, if the type is in the dict"
+    if not element.__class__ in self.stagedict:
+      return None
+    return self.stagedict[element.__class__]
 
   def postprocess(self, element, last):
     "Postprocess an element using the relevant stage"
