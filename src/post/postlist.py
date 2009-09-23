@@ -31,21 +31,6 @@ from ref.link import *
 from post.postprocess import *
 
 
-class PostNestedList(object):
-  "Postprocess a nested list"
-
-  processedclass = DeeperList
-
-  def postprocess(self, deeper, last):
-    "Run the postprocessor on the nested list"
-    postproc = Postprocessor()
-    for index, part in enumerate(deeper.contents):
-      result = postproc.postprocessroot(part)
-      deeper.contents[index] = result
-    # one additional item to flush the list
-    deeper.contents.append(postproc.postprocessroot(BlackBox()))
-    return deeper
-
 class PendingList(object):
   "A pending list"
 
@@ -58,12 +43,12 @@ class PendingList(object):
     self.contents += item.contents
     self.type = item.type
 
-  def addnested(self, nested):
-    "Add a nested list item"
+  def adddeeper(self, deeper):
+    "Add a deeper list item"
     if self.empty():
       self.insertfake()
     item = self.contents[-1]
-    self.contents[-1].contents.append(nested)
+    self.contents[-1].contents.append(deeper)
 
   def generatelist(self):
     "Get the resulting list"
@@ -89,57 +74,61 @@ class PendingList(object):
       result = result[:-2]
     return result + ']'
 
+class PostDeeperList(object):
+  "Postprocess a deeper list"
+
+  processedclass = DeeperList
+
+  def postprocess(self, deeper, last):
+    "Return the list in the postprocessor"
+    if not hasattr(self.stages, 'list'):
+      self.stages.list = PendingList()
+    self.stages.list.adddeeper(deeper)
+    Trace.debug('New deeper list: ' + unicode(deeper.postprocessor.stages.list))
+    return deeper
+
+class PostListItem(object):
+  "Postprocess a list item"
+
+  processedclass = ListItem
+
+  def postprocess(self, item, last):
+    "Add the item to pending and return an empty item"
+    if not hasattr(self.stages, 'list'):
+      self.stages.list = Pending()
+    self.stages.list.additem(item)
+    Trace.debug('New list item' + unicode(item))
+    return BlackBox()
+
 class PostListPending(object):
   "Check if there is a pending list"
-
-  def __init__(self):
-    self.pending = PendingList()
 
   def postprocess(self, element, last):
     "If a list element do not return anything;"
     "otherwise return the whole pending list"
     list = None
-    Trace.debug('Element ' + unicode(element) + ' after ' + unicode(last))
-    if self.generatepending(element):
-      Trace.debug('Generate pending')
-      list = self.pending.generatelist()
-      self.pending.__init__()
-    if isinstance(element, ListItem):
-      element = self.processitem(element)
-      Trace.debug('New list item')
-    elif isinstance(element, DeeperList):
-      element = self.processnested(element)
-      Trace.debug('New deeper list')
-    if not list:
-      Trace.debug('No list to return')
+    if not self.generatepending(element):
       return element
+    Trace.debug('Generate pending')
+    list = self.stages.list.generatelist()
+    self.stages.list = PendingList()
     Trace.debug('Returning list')
     return Group().contents([list, element])
 
-  def processitem(self, item):
-    "Process a list item"
-    self.pending.additem(item)
-    return BlackBox()
-
-  def processnested(self, nested):
-    "Process a nested list"
-    self.pending.addnested(nested)
-    return BlackBox()
-
   def generatepending(self, element):
     "Decide whether to generate the pending list"
-    if self.pending.empty():
+    if not hasattr(self.stages, 'list') or self.stages.list.empty():
       return False
     if isinstance(element, ListItem):
-      if not self.pending.type:
+      if not self.stages.list.type:
         return False
-      if self.pending.type != element.type:
+      if self.stages.list.type != element.type:
         return True
       return False
     if isinstance(element, DeeperList):
       return False
     return True
 
-#Postprocessor.stages += [PostNestedList]
+Postprocessor.stages += [PostDeeperList]
 Postprocessor.unconditional += [PostListPending]
 

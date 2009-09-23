@@ -104,6 +104,7 @@ class Postprocessor(object):
 
   def postprocess(self, container):
     "Postprocess the root container and its contents"
+    container.postprocessor = self
     self.postprocessrecursive(container.contents)
     container = self.postprocessroot(container)
     return container
@@ -123,7 +124,6 @@ class Postprocessor(object):
     postprocessor = Postprocessor()
     for index, element in enumerate(contents):
       if isinstance(element, Container):
-        Trace.debug('Postprocessing ' + unicode(element))
         contents[index] = postprocessor.postprocess(element)
 
 class StageList(object):
@@ -137,7 +137,7 @@ class StageList(object):
     stages = [x.__new__(x) for x in classes]
     for element in stages:
       element.__init__()
-      element.chain = self
+      element.stages = self
     return stages
 
   def postprocess(self, element, last):
