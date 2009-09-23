@@ -100,14 +100,13 @@ class Postprocessor(object):
 
   def __init__(self):
     self.unconditional = StageList(Postprocessor.unconditional)
-    self.stages = StageDict(Postprocessor.stages)
-    self.recursives = StageDict(Postprocessor.recursive)
+    self.stages = StageDict(Postprocessor.stages + Postprocessor.recursive)
     self.last = None
 
   def postprocess(self, container):
     "Postprocess the root container and its contents"
-    container = self.postprocessroot(container)
     self.postprocessrecursive(container.contents)
+    container = self.postprocessroot(container)
     return container
 
   def postprocessroot(self, original):
@@ -120,13 +119,13 @@ class Postprocessor(object):
 
   def postprocessrecursive(self, contents):
     "Postprocess the container contents recursively"
-    last = None
+    if len(contents) == 0:
+      return
+    postprocessor = Postprocessor()
     for index, element in enumerate(contents):
       if isinstance(element, Container):
-        if len(element.contents) > 0:
-          self.postprocessrecursive(element.contents)
-      contents[index] = self.recursives.postprocess(element, last)
-      last = contents[index]
+        Trace.debug('Postprocessing ' + unicode(element))
+        contents[index] = postprocessor.postprocess(element)
 
 class StageList(object):
   "A list of stages, always applied"
@@ -139,6 +138,7 @@ class StageList(object):
     stages = [x.__new__(x) for x in classes]
     for element in stages:
       element.__init__()
+      element.chain = self
     return stages
 
   def postprocess(self, element, last):

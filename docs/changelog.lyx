@@ -149,6 +149,11 @@ s -- should speed up postprocessing.
 Solved bug when parsing BibTeX files with incorrect lines.
 \end_layout
 
+\begin_layout Itemize
+Modified postprocessing to correctly process lists within tables.
+ In the process refurbished postprocessing completely.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.30 (2009-09-13):

@@ -99,15 +99,21 @@ class PostListPending(object):
     "If a list element do not return anything;"
     "otherwise return the whole pending list"
     list = None
+    Trace.debug('Element ' + unicode(element) + ' after ' + unicode(last))
     if self.generatepending(element):
+      Trace.debug('Generate pending')
       list = self.pending.generatelist()
       self.pending.__init__()
     if isinstance(element, ListItem):
       element = self.processitem(element)
+      Trace.debug('New list item')
     elif isinstance(element, DeeperList):
       element = self.processnested(element)
+      Trace.debug('New deeper list')
     if not list:
+      Trace.debug('No list to return')
       return element
+    Trace.debug('Returning list')
     return Group().contents([list, element])
 
   def processitem(self, item):
@@ -134,6 +140,6 @@ class PostListPending(object):
       return False
     return True
 
-Postprocessor.stages += [PostNestedList]
+#Postprocessor.stages += [PostNestedList]
 Postprocessor.unconditional += [PostListPending]
 
