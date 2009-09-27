@@ -51,7 +51,7 @@ class PendingList(object):
     item = self.contents[-1]
     self.contents[-1].contents += deeper.contents
 
-  def generatelist(self):
+  def generate(self):
     "Get the resulting list"
     if not self.type:
       return Group().contents(self.contents)
@@ -107,12 +107,13 @@ class PostListItem(object):
 
   def postprocess(self, item, last):
     "Add the item to pending and return an empty item"
+    self.postprocessor.addhook(PostListHook())
     result = BlackBox()
     if not hasattr(self.postprocessor, 'list'):
       self.postprocessor.list = PendingList()
     if self.postprocessor.list.isduewithitem(item):
       Trace.debug('Generating list before ' + unicode(item))
-      result = Group().contents([item, self.postprocessor.list.generatelist()])
+      result = Group().contents([item, self.postprocessor.list.generate()])
     Trace.debug('New item ' + unicode(item))
     self.postprocessor.list.additem(item)
     return result
@@ -120,7 +121,7 @@ class PostListItem(object):
   def generatepending(self, element):
     "Return a pending list"
     Trace.debug('Generate pending')
-    list = self.postprocessor.list.generatelist()
+    list = self.postprocessor.list.generate()
     Trace.debug('Returning list ' + unicode(list))
     if not element:
       return list
@@ -132,11 +133,31 @@ class PostDeeperList(object):
   processedclass = DeeperList
 
   def postprocess(self, deeper, last):
-    "Return the list in the postprocessor"
+    "Append to the list in the postprocessor"
+    self.postprocessor.addhook(PostListHook())
     if not hasattr(self.postprocessor, 'list'):
       self.postprocessor.list = PendingList()
     self.postprocessor.list.adddeeper(deeper)
     return deeper
+
+class PostListHook(PostHook):
+  "After a list is completed"
+
+  def applies(self, element, last):
+    "Applies only if the list is finished"
+    Trace.debug('Does hook apply to ' + unicode(element) + ' after ' + unicode(last))
+    if not isinstance(last, ListItem) and not isinstance(last, DeeperList):
+      return False
+    if isinstance(element, ListItem) or isinstance(element, DeeperList):
+      return False
+    Trace.debug('Hook applies to ' + unicode(element) + ' after ' + unicode(last))
+    return True
+
+  def postprocess(self, element, last):
+    "Return the list and current element, remove hook and return"
+    list = self.postprocessor.list.generate()
+    self.postprocessor.hooks.remove(self)
+    return Group().contents([list, element])
 
 class PostLastItem(PostListItem):
   "Last element was a list item"
@@ -145,6 +166,8 @@ class PostLastItem(PostListItem):
 
   def postprocess(self, element, last):
     "If a pending list is due return it"
+    if isinstance(element, ListItem):
+      return element
     if not self.mustgeneratepending(element):
       Trace.debug('Do not generate pending yet')
       return element
@@ -156,5 +179,5 @@ class PostLastDeeper(PostLastItem):
   processedclass = DeeperList
 
 Postprocessor.stages += [PostListItem, PostDeeperList]
-Postprocessor.laststages += [PostLastItem] #, PostLastDeeper]
+# Postprocessor.laststages += [PostLastItem] #, PostLastDeeper]
 
