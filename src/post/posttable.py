@@ -72,11 +72,12 @@ class PostTable(object):
   def checkmulticolumn(self, row, index):
     "Process a multicolumn attribute"
     cell = row.contents[index]
-    if not 'multicolumn' in cell.parameters:
+    if not hasattr(cell, 'parameters') or not 'multicolumn' in cell.parameters:
       return
     mc = cell.parameters['multicolumn']
     if mc != '1':
-      Trace.error('Unprocessed multicolumn=' + unicode(multicolumn) + ' cell ' + unicode(cell))
+      Trace.error('Unprocessed multicolumn=' + unicode(multicolumn) +
+          ' cell ' + unicode(cell))
       return
     total = 1
     index += 1

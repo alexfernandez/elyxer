@@ -84,9 +84,7 @@ class PostDeeperList(object):
     if not hasattr(self.postprocessor, 'list'):
       self.postprocessor.list = PendingList()
     self.postprocessor.list.adddeeper(deeper)
-    return deeper
-    Trace.debug('New deeper list: ' + unicode(deeper.postprocessor.list))
-    return deeper.postprocessor.list.generatelist()
+    return BlackBox()
 
 class PostListItem(object):
   "Postprocess a list item"
@@ -114,6 +112,8 @@ class PostLastItem(object):
     list = self.postprocessor.list.generatelist()
     self.postprocessor.list = PendingList()
     Trace.debug('Returning list ' + unicode(list))
+    if not element:
+      return list
     return Group().contents([list, element])
 
   def generatepending(self, element):
