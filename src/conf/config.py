@@ -483,7 +483,7 @@ class GeneralConfig(object):
   "Configuration class from config file"
 
   version = {
-      u'date':u'2009-09-27', u'number':u'0.31', 
+      u'date':u'2009-09-27', u'number':u'0.32', 
       }
 
 class NumberingConfig(object):
