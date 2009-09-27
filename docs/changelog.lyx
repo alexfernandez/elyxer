@@ -86,7 +86,14 @@ elyxerconv.py
 \family typewriter
 io/convert.py
 \family default
-).
+), see 
+\begin_inset LatexCommand htmlurl
+name "lyx-devel thread"
+target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154647.html"
+
+\end_inset
+
+.
  Now the file 
 \family typewriter
 elyxer.py
@@ -95,6 +102,13 @@ elyxer.py
 \family typewriter
 python -m
 \family default
+.; see also 
+\begin_inset LatexCommand htmlurl
+name "lyx-devel thread"
+target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154749.html"
+
+\end_inset
+
 .
 \end_layout
 
