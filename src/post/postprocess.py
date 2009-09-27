@@ -104,12 +104,11 @@ class Postprocessor(object):
 
   def postprocess(self, container):
     "Postprocess the root container and its contents"
-    original = container
     self.postprocessrecursive(container)
-    container = self.postprocesscurrent(container)
-    container = self.postprocesslast(container)
-    self.last = original
-    return container
+    result = self.postprocesscurrent(container)
+    result = self.postprocesslast(container)
+    self.last = container
+    return result
 
   def postprocessrecursive(self, container):
     "Postprocess the container contents recursively"

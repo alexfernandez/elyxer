@@ -41,7 +41,8 @@ class PendingList(object):
   def additem(self, item):
     "Add a list item"
     self.contents += item.contents
-    self.type = item.type
+    if not self.type:
+      self.type = item.type
 
   def adddeeper(self, deeper):
     "Add a deeper list item"
@@ -55,7 +56,32 @@ class PendingList(object):
     if not self.type:
       return Group().contents(self.contents)
     tag = TagConfig.listitems[self.type]
-    return TaggedText().complete(self.contents, tag, True)
+    text = TaggedText().complete(self.contents, tag, True)
+    self.__init__()
+    return text
+
+  def isduewithitem(self, item):
+    "Decide whether the pending list must be generated before the given item"
+    if not self.type:
+      return False
+    Trace.debug('List type: ' + self.type + ', item type: ' + item.type)
+    if self.type != item.type:
+      return True
+    return False
+
+  def isdue(self, element):
+    "Decide whether the pending list has to be generated with the given item"
+    Trace.debug('Deciding to generate pending for ' + unicode(element))
+    if isinstance(element, ListItem):
+      Trace.debug('List type: ' + self.type + ', element type: ' + element.type)
+      if not self.type:
+        return False
+      if self.type != element.type:
+        return True
+      return False
+    if isinstance(element, DeeperList):
+      return False
+    return True
 
   def empty(self):
     return len(self.contents) == 0
@@ -74,6 +100,32 @@ class PendingList(object):
       result = result[:-2]
     return result + ']'
 
+class PostListItem(object):
+  "Postprocess a list item"
+
+  processedclass = ListItem
+
+  def postprocess(self, item, last):
+    "Add the item to pending and return an empty item"
+    result = BlackBox()
+    if not hasattr(self.postprocessor, 'list'):
+      self.postprocessor.list = PendingList()
+    if self.postprocessor.list.isduewithitem(item):
+      Trace.debug('Generating list before ' + unicode(item))
+      result = Group().contents([item, self.postprocessor.list.generatelist()])
+    Trace.debug('New item ' + unicode(item))
+    self.postprocessor.list.additem(item)
+    return result
+
+  def generatepending(self, element):
+    "Return a pending list"
+    Trace.debug('Generate pending')
+    list = self.postprocessor.list.generatelist()
+    Trace.debug('Returning list ' + unicode(list))
+    if not element:
+      return list
+    return Group().contents([list, element])
+
 class PostDeeperList(object):
   "Postprocess a deeper list"
 
@@ -86,53 +138,17 @@ class PostDeeperList(object):
     self.postprocessor.list.adddeeper(deeper)
     return deeper
 
-class PostListItem(object):
-  "Postprocess a list item"
-
-  processedclass = ListItem
-
-  def postprocess(self, item, last):
-    "Add the item to pending and return an empty item"
-    if not hasattr(self.postprocessor, 'list'):
-      self.postprocessor.list = PendingList()
-    self.postprocessor.list.additem(item)
-    Trace.debug('New item ' + unicode(item))
-    return item
-
-class PostLastItem(object):
+class PostLastItem(PostListItem):
   "Last element was a list item"
 
   processedclass = ListItem
 
   def postprocess(self, element, last):
     "If a pending list is due return it"
-    if not self.generatepending(element):
+    if not self.mustgeneratepending(element):
       Trace.debug('Do not generate pending yet')
       return element
-    Trace.debug('Generate pending')
-    list = self.postprocessor.list.generatelist()
-    self.postprocessor.list = PendingList()
-    Trace.debug('Returning list ' + unicode(list))
-    if not element:
-      return list
-    return Group().contents([list, element])
-
-  def generatepending(self, element):
-    "Decide whether to generate the pending list"
-    Trace.debug('Deciding to generate pending for ' + unicode(element))
-    if not hasattr(self.postprocessor, 'list') or self.postprocessor.list.empty():
-      Trace.debug('No pending list')
-      return False
-    if isinstance(element, ListItem):
-      Trace.debug('Item')
-      if not self.postprocessor.list.type:
-        return False
-      if self.postprocessor.list.type != element.type:
-        return True
-      return False
-    if isinstance(element, DeeperList):
-      return False
-    return True
+    return self.generatepending(element)
 
 class PostLastDeeper(PostLastItem):
   "Last element was a deeper list"
@@ -140,5 +156,5 @@ class PostLastDeeper(PostLastItem):
   processedclass = DeeperList
 
 Postprocessor.stages += [PostListItem, PostDeeperList]
-Postprocessor.laststages += [PostLastItem, PostLastDeeper]
+Postprocessor.laststages += [PostLastItem] #, PostLastDeeper]
 
