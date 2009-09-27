@@ -129,7 +129,6 @@ class WholeFormula(FormulaBit):
 
   def process(self):
     "Process the whole formula"
-    Trace.debug('Processing ' + self.original)
     for index, bit in enumerate(self.contents):
       bit.process()
       # no units processing
