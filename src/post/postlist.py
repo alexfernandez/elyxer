@@ -48,7 +48,7 @@ class PendingList(object):
     if self.empty():
       self.insertfake()
     item = self.contents[-1]
-    self.contents[-1].contents.append(deeper)
+    self.contents[-1].contents += deeper.contents
 
   def generatelist(self):
     "Get the resulting list"
@@ -84,7 +84,7 @@ class PostDeeperList(object):
     if not hasattr(self.postprocessor, 'list'):
       self.postprocessor.list = PendingList()
     self.postprocessor.list.adddeeper(deeper)
-    return BlackBox()
+    return deeper
 
 class PostListItem(object):
   "Postprocess a list item"
@@ -97,7 +97,7 @@ class PostListItem(object):
       self.postprocessor.list = PendingList()
     self.postprocessor.list.additem(item)
     Trace.debug('New item ' + unicode(item))
-    return BlackBox()
+    return item
 
 class PostLastItem(object):
   "Last element was a list item"
@@ -107,6 +107,7 @@ class PostLastItem(object):
   def postprocess(self, element, last):
     "If a pending list is due return it"
     if not self.generatepending(element):
+      Trace.debug('Do not generate pending yet')
       return element
     Trace.debug('Generate pending')
     list = self.postprocessor.list.generatelist()
@@ -118,8 +119,9 @@ class PostLastItem(object):
 
   def generatepending(self, element):
     "Decide whether to generate the pending list"
+    Trace.debug('Deciding to generate pending for ' + unicode(element))
     if not hasattr(self.postprocessor, 'list') or self.postprocessor.list.empty():
-      Trace.debug('Not now')
+      Trace.debug('No pending list')
       return False
     if isinstance(element, ListItem):
       Trace.debug('Item')

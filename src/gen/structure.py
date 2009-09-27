@@ -106,8 +106,9 @@ class DeeperList(Container):
   "A nested list"
 
   def __init__(self):
+    "Output should be empty until the postprocessor can group items"
     self.parser = BoundedParser()
-    self.output = ContentsOutput()
+    self.output = EmptyOutput()
 
   def process(self):
     "Create the deeper list"
