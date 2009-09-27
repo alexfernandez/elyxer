@@ -95,21 +95,22 @@ class Postprocessor(object):
   "Postprocess a container keeping some context"
 
   stages = [PostLayout, PostStandard]
+  laststages = []
 
   def __init__(self):
     self.stages = StageDict(Postprocessor.stages, self)
-    self.hooks = []
+    self.laststages = StageDict(Postprocessor.laststages, self)
     self.last = None
 
   def postprocess(self, container):
     "Postprocess the root container and its contents"
-    self.postrecursive(container)
-    result = self.postcurrent(container)
-    result = self.posthooks(container, result)
+    self.postprocessrecursive(container)
+    result = self.postprocesscurrent(container)
+    result = self.postprocesslast(container)
     self.last = container
     return result
 
-  def postrecursive(self, container):
+  def postprocessrecursive(self, container):
     "Postprocess the container contents recursively"
     if not hasattr(container, 'contents'):
       return
@@ -124,29 +125,19 @@ class Postprocessor(object):
     if postlast:
       contents.append(postlast)
 
-  def postcurrent(self, element):
+  def postprocesscurrent(self, element):
     "Postprocess the current element taking into account the last one"
-    stage = self.stages.getstage(element)
+    return self.postprocessstage(element, self.stages.getstage(element))
+
+  def postprocesslast(self, element):
+    "Postprocess the current element after the type of the last"
+    return self.postprocessstage(element, self.laststages.getstage(self.last))
+
+  def postprocessstage(self, element, stage):
+    "Postprocess the current element after finding the stage"
     if not stage:
       return element
     return stage.postprocess(element, self.last)
-
-  def addhook(self, hook):
-    "Add a postprocessing hook; only one of each type allowed."
-    for element in self.hooks:
-      if isinstance(element, hook.__class__):
-        return
-    self.hooks.append(hook)
-    hook.postprocessor = self
-
-  def posthooks(self, element, result):
-    "Postprocess the current element using the hooks."
-    "The element is used to see if the hook applies, but the previous"
-    "result is actually used in postprocessing."
-    for hook in self.hooks:
-      if hook.applies(element, self.last):
-        result = hook.postprocess(result, self.last)
-    return result
 
 class StageDict(object):
   "A dictionary of stages corresponding to classes"
@@ -170,16 +161,11 @@ class StageDict(object):
       return None
     return self.stagedict[element.__class__]
 
-class PostHook(object):
-  "A postprocessing hook inserted by another postprocessing stage."
-  "It can only add an element, not modify an existing one."
-  "Only a hook of a given class is allowed."
-
-  def applies(self, element, last):
-    "Decide if the hook applies or not"
-    Trace.error("applies() in PostHook")
-
-  def getresult(self, element, last):
-    "Get the result of postprocessing"
-    Trace.error("getresult() in PostHook")
+  def postprocess(self, element, last):
+    "Postprocess an element using the relevant stage"
+    "(if its class is in the dictionary)"
+    if not element.__class__ in self.stagedict:
+      return element
+    stage = self.stagedict[element.__class__]
+    return stage.postprocess(element, last)
 
