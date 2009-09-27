@@ -31,9 +31,7 @@ class PostFormula(object):
   "Postprocess a formula"
 
   processedclass = Formula
-
-  def __init__(self):
-    self.generator = NumberGenerator()
+  generator = NumberGenerator()
 
   def postprocess(self, formula, last):
     "Postprocess any formulae"
@@ -104,7 +102,7 @@ class PostFormula(object):
       return
     bracket = label.contents[0]
     labelname = bracket.literal
-    number = '(' + self.generator.generate(1) + ') '
+    number = '(' + PostFormula.generator.generate(1) + ') '
     Label.names[labelname] = label
     tag = label.output.tag.replace('#', labelname)
     label.output.settag(tag)
