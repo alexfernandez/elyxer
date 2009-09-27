@@ -151,7 +151,12 @@ Solved bug when parsing BibTeX files with incorrect lines.
 
 \begin_layout Itemize
 Modified postprocessing to correctly process lists within tables.
- In the process refurbished postprocessing completely.
+\end_layout
+
+\begin_layout Itemize
+In the process refactored postprocessing completely: now instead of unconditiona
+l postprocessor stages, each stage can add a postprocessing hook.
+ Should be faster -- but is indeed a bit slower.
 \end_layout
 
 \end_deeper
