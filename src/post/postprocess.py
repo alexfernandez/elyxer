@@ -105,21 +105,26 @@ class Postprocessor(object):
   def postprocess(self, container):
     "Postprocess the root container and its contents"
     original = container
-    container.postprocessor = self
-    self.postprocessrecursive(container.contents)
+    self.postprocessrecursive(container)
     container = self.postprocesscurrent(container)
     container = self.postprocesslast(container)
     self.last = original
     return container
 
-  def postprocessrecursive(self, contents):
+  def postprocessrecursive(self, container):
     "Postprocess the container contents recursively"
+    if not hasattr(container, 'contents'):
+      return
+    contents = container.contents
     if len(contents) == 0:
       return
     postprocessor = Postprocessor()
     for index, element in enumerate(contents):
       if isinstance(element, Container):
         contents[index] = postprocessor.postprocess(element)
+    postlast = postprocessor.postprocess(None)
+    if postlast:
+      contents.append(postlast)
 
   def postprocesscurrent(self, element):
     "Postprocess the current element taking into account the last one"
