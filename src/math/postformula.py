@@ -43,7 +43,6 @@ class PostFormula(object):
     "Search for sum or integral"
     for index, bit in enumerate(contents):
       self.checklimited(contents, index)
-      self.checkroot(contents, index)
       self.checknumber(contents, index)
       if isinstance(bit, FormulaBit):
         self.postcontents(bit.contents)
