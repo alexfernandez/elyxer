@@ -103,10 +103,8 @@ class PostFormula(object):
   def posttraverse(self, formula):
     "Traverse over the contents to alter variables and space units."
     flat = self.flatten(formula)
-    Trace.debug('Flattened: ' + unicode(flat))
     last = None
     for bit, contents in self.traverse(flat):
-      Trace.debug('Bit type ' + bit.type + ': ' + unicode(bit))
       if bit.type == 'alpha':
         self.italicize(bit, contents)
       elif bit.type == 'font' and last and last.type == 'number':
