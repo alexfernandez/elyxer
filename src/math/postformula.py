@@ -36,6 +36,7 @@ class PostFormula(object):
   def postprocess(self, formula, last):
     "Postprocess any formulae"
     self.postcontents(formula.contents)
+    self.posttraverse(formula)
     return formula
 
   def postcontents(self, contents):
@@ -58,7 +59,7 @@ class PostFormula(object):
     limits.reverse()
     if len(limits) == 0:
       return
-    tagged = TaggedText().complete(limits, 'span class="limits"')
+    tagged = TaggedBit().complete(limits, 'span class="limits"')
     contents.insert(index + 1, tagged)
 
   def findlimits(self, contents, index):
@@ -81,17 +82,6 @@ class PostFormula(object):
     bit.output.tag += ' class="bigsymbol"'
     return True
 
-  def checkroot(self, contents, index):
-    "Check for a root, insert the radical in front"
-    bit = contents[index]
-    if not hasattr(bit, 'type'):
-      return
-    if bit.type != 'sqrt':
-      return
-    radical = TaggedText().constant(u'√', 'span class="radical"')
-    root = TaggedText().complete(bit.contents, 'span class="root"')
-    bit.contents = [radical, root]
-
   def checknumber(self, contents, index):
     "Check for equation numbering"
     label = contents[index]
@@ -110,6 +100,28 @@ class PostFormula(object):
     # place number at the beginning
     del contents[index]
     contents.insert(0, label)
+
+  def posttraverse(self, formula):
+    "Traverse over the contents to alter variables and space units."
+    flat = self.flatten(formula)
+    Trace.debug('Flattened: ' + unicode(flat))
+    for number in self.traverse(flat):
+      Trace.debug('Number: ' + unicode(number))
+
+  def flatten(self, bit):
+    "Return all bits as a single list."
+    flat = []
+    for element in bit.contents:
+      if element.type:
+        flat.append(element)
+      elif isinstance(element, FormulaBit):
+        flat += self.flatten(element)
+    return flat
+
+  def traverse(self, flattened):
+    "Traverse each bit of the formula."
+    for element in flattened:
+      yield element
 
 Postprocessor.stages.append(PostFormula)
 

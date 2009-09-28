@@ -425,8 +425,8 @@ class FormulaConfig(object):
       }
 
   hybridfunctions = {
-      u'\\sqrt':[u'sqrt',u'span class="sqrt"',u'sup',], 
-      u'\\unit':[u'font',u'span class="unit"',u'',], 
+      u'\\sqrt':[u'sqrt',u'span class="sqrt"',], 
+      u'\\unit':[u'font',u'span class="unit"',], 
       }
 
   labelfunctions = {

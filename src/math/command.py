@@ -196,15 +196,22 @@ class DecoratingFunction(OneParamFunction):
 
 class HybridFunction(CommandBit):
   "Read a function with two parameters: [] and {}"
+  "The [] parameter is optional"
 
   commandmap = FormulaConfig.hybridfunctions
 
   def parsebit(self, pos):
     "Parse a function with [] and {} parameters"
-    self.parsesquare(pos)
-    parameter = self.parseparameter(pos)
-    parameter.type = self.translated[0]
-    parameter.output = TaggedOutput().settag(self.translated[1])
+    square = self.parsesquare(pos)
+    bracket = self.parseparameter(pos)
+    bracket.output = TaggedOutput().settag(self.translated[1])
+    if self.translated[0] == 'sqrt':
+      self.sqrt(square, bracket)
+    elif self.translated[0] == 'unit':
+      self.unit(square, bracket)
+    else:
+      Trace.error('Unknown hybrid function ' + self.translated[0])
+      return
 
   def parsesquare(self, pos):
     "Parse a square bracket"
@@ -212,8 +219,20 @@ class HybridFunction(CommandBit):
     if not bracket.detect(pos):
       return
     bracket.parsebit(pos)
-    bracket.output = TaggedOutput().settag(self.translated[2])
     self.add(bracket)
+    return bracket
+
+  def sqrt(self, root, radical):
+    "A square root -- process the root"
+    if root:
+      root.output = TaggedOutput().settag('sup')
+    radix = TaggedBit().constant(u'√', 'span class="radical"')
+    underroot = TaggedBit().complete(radical.contents, 'span class="root"')
+    radical.contents = [radix, underroot]
+
+  def unit(self, value, units):
+    "A unit -- mark the units as font"
+    units.type = 'font'
 
 class FractionFunction(CommandBit):
   "A fraction with two parameters"
