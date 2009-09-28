@@ -923,8 +923,8 @@ new.css
 \family typewriter
 lyx2lyx
 \family default
- integration, so that this latter tool knows if it must convert the file
- to a lower LyX format.
+ integration, so that this tool knows if it must convert the file to a lower
+ LyX format.
 \end_layout
 
 \begin_layout Subsection
