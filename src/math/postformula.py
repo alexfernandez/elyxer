@@ -105,28 +105,33 @@ class PostFormula(object):
     flat = self.flatten(formula)
     Trace.debug('Flattened: ' + unicode(flat))
     last = None
-    for bit in self.traverse(flat):
+    for bit, contents in self.traverse(flat):
       Trace.debug('Bit type ' + bit.type + ': ' + unicode(bit))
       if bit.type == 'alpha':
-        bit.contents = [TaggedBit().complete(bit.contents, 'i')]
-      if last and last.type == 'number' and bit.type == 'font':
+        self.italicize(bit, contents)
+      elif bit.type == 'font' and last and last.type == 'number':
         last.contents.append(FormulaConstant(u' '))
       last = bit
 
   def flatten(self, bit):
-    "Return all bits as a single list."
+    "Return all bits as a single list of (bit, list) pairs."
     flat = []
     for element in bit.contents:
       if element.type:
-        flat.append(element)
+        flat.append((element, bit.contents))
       elif isinstance(element, FormulaBit):
         flat += self.flatten(element)
     return flat
 
   def traverse(self, flattened):
-    "Traverse each bit of the formula."
+    "Traverse each (bit, list) pairs of the formula."
     for element in flattened:
       yield element
+
+  def italicize(self, bit, contents):
+    "Italicize the given bit of text."
+    index = contents.index(bit)
+    contents[index] = TaggedBit().complete([bit], 'i')
 
 Postprocessor.stages.append(PostFormula)
 
