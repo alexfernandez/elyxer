@@ -73,6 +73,33 @@ Fixed unit processing.
  Now units appear separated by a space after the number.
 \end_layout
 
+\begin_layout Itemize
+Repaired 
+\family typewriter
+AlphaCommand
+\family default
+s.
+ Decorations so defined in the configuration file appear again as a single
+ symbol: 
+\begin_inset Formula $\hat{a}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Added option 
+\family typewriter
+--lyxformat
+\family default
+ to return the highest LyX format that eLyXer understands.
+ Should help when integrating with 
+\family typewriter
+lyx2lyx
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.31 (2009-09-27):

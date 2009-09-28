@@ -48,6 +48,7 @@ class Options(object):
   destdirectory = None
   toc = False
   forceformat = None
+  lyxformat = False
   branches = dict()
 
   def parseoptions(self, args):
@@ -65,6 +66,8 @@ class Options(object):
       self.showhardversion()
     if Options.versiondate:
       self.showversiondate()
+    if Options.lyxformat:
+      self.showlyxformat()
     # set in Trace if necessary
     for param in dir(Options):
       if hasattr(Trace, param + 'mode'):
@@ -85,6 +88,7 @@ class Options(object):
     Trace.error('    --html: output HTML 4.0 instead of the default XHTML')
     Trace.error('    --unicode: full Unicode output')
     Trace.error('    --forceformat ".extension": force image output format')
+    Trace.error('    --lyxformat: return the highest LyX version that can be converted')
     exit()
 
   def showversion(self):
@@ -102,6 +106,11 @@ class Options(object):
   def showversiondate(self):
     "Return just the version dte"
     Trace.message(GeneralConfig.version['date'])
+    exit()
+
+  def showlyxformat(self):
+    "Return just the lyxformat parameter"
+    Trace.message(GeneralConfig.version['lyxformat'])
     exit()
 
 class BranchOptions(object):

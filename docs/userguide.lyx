@@ -913,6 +913,20 @@ new.css
  for JPEG) for output images.
 \end_layout
 
+\begin_layout Description
+
+\family typewriter
+--lyxformat
+\family default
+: Return the highest LyX version that eLyXer understands.
+ This parameter is provided to help with 
+\family typewriter
+lyx2lyx
+\family default
+ integration, so that this latter tool knows if it must convert the file
+ to a lower LyX format.
+\end_layout
+
 \begin_layout Subsection
 CSS
 \begin_inset LatexCommand label

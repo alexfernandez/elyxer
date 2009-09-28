@@ -475,7 +475,7 @@ class GeneralConfig(object):
   "Configuration class from config file"
 
   version = {
-      u'date':u'2009-09-29', u'number':u'0.32', 
+      u'date':u'2009-09-29', u'lyxformat':u'345', u'number':u'0.32', 
       }
 
 class NumberingConfig(object):
