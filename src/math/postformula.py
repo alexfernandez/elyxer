@@ -104,8 +104,14 @@ class PostFormula(object):
     "Traverse over the contents to alter variables and space units."
     flat = self.flatten(formula)
     Trace.debug('Flattened: ' + unicode(flat))
-    for number in self.traverse(flat):
-      Trace.debug('Number: ' + unicode(number))
+    last = None
+    for bit in self.traverse(flat):
+      Trace.debug('Bit type ' + bit.type + ': ' + unicode(bit))
+      if bit.type == 'alpha':
+        bit.output = TaggedOutput().settag('i')
+      if last and last.type == 'number' and bit.type == 'font':
+        last.contents.append(FormulaConstant(u' '))
+      last = bit
 
   def flatten(self, bit):
     "Return all bits as a single list."

@@ -255,7 +255,7 @@ class FractionFunction(CommandBit):
 
 FormulaFactory.bits += [FormulaCommand(), SymbolFunction()]
 FormulaCommand.commandbits = [
-    EmptyCommand(), OneParamFunction(), DecoratingFunction(),
+    EmptyCommand(), AlphaCommand(), OneParamFunction(), DecoratingFunction(),
     FractionFunction(), FontFunction(), LabelFunction(), LiteralFunction(),
     HybridFunction(),
     ]
