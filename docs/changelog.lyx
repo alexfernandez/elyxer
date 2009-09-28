@@ -69,7 +69,8 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Fixed unit processing.
+ Now units appear separated by a space after the number.
 \end_layout
 
 \end_deeper

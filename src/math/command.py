@@ -105,7 +105,7 @@ class EmptyCommand(CommandBit):
     "Parse a command without parameters"
     self.contents = [FormulaConstant(self.translated)]
 
-class AlphaCommand(CommandBit):
+class AlphaCommand(EmptyCommand):
   "A command without paramters whose result is alphabetical"
 
   commandmap = FormulaConfig.alphacommands

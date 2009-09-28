@@ -108,7 +108,7 @@ class PostFormula(object):
     for bit in self.traverse(flat):
       Trace.debug('Bit type ' + bit.type + ': ' + unicode(bit))
       if bit.type == 'alpha':
-        bit.output = TaggedOutput().settag('i')
+        bit.contents = [TaggedBit().complete(bit.contents, 'i')]
       if last and last.type == 'number' and bit.type == 'font':
         last.contents.append(FormulaConstant(u' '))
       last = bit
