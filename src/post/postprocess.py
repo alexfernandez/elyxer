@@ -61,13 +61,15 @@ class PostLayout(object):
       self.activateappendix()
     if layout.type in PostLayout.unique:
       number = self.generator.generateunique(layout.type)
+      text = TranslationConfig.constants[layout.type] + ' ' + number + u'. '
     elif layout.type in PostLayout.ordered:
       level = PostLayout.ordered.index(layout.type)
       number = self.generator.generate(level)
+      text = number + u' '
     else:
       return layout
     layout.number = number
-    layout.contents.insert(0, Constant(number + u' '))
+    layout.contents.insert(0, Constant(text))
     return layout
 
   def containsappendix(self, layout):
