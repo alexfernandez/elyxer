@@ -55,22 +55,32 @@ class eLyXerConverter(object):
       raise
 
   def writetoc(self, container):
-    "Write the table of contents for a container"
+    "Write the table of contents for a container."
     if not hasattr(container, 'number'):
       return
     if container.type in NumberingConfig.layouts['unique']:
-      self.writer.write('+' + container.number + '\n')
+      stars = '+ '
     if container.type in NumberingConfig.layouts['ordered']:
       order = NumberingConfig.layouts['ordered'].index(container.type)
       stars = '*'
       for i in range(order):
         stars += '*'
-      self.writer.write(stars + container.number + '\n')
-    return
-    if hasattr(container, 'number'):
-      self.writer.write(container.type + ' ' + container.number + '\n')
+    self.writer.write(stars + ' ' + container.type + ' ' + container.number)
+    self.writer.write(': ' + self.flattencontents(container) + '\n')
     for float in container.searchall(Float):
       self.writer.write(float.type + ' ' + float.number + '\n')
+
+  def flattencontents(self, container):
+    "Flatten the contents of the container."
+    if len(container.contents) < 2:
+      return '[]'
+    index = 1
+    while len(container.contents[index].gethtml()) == 0:
+      index += 1
+    text = ''
+    for line in container.contents[index].gethtml():
+      text += line
+    return text
 
   def processcontents(self, process):
     "Parse the contents and process it by containers"
