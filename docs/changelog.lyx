@@ -100,6 +100,15 @@ lyx2lyx
 .
 \end_layout
 
+\begin_layout Itemize
+Improved TOC generation.
+ Documented option 
+\family typewriter
+--toc
+\family default
+ to generate TOC.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.31 (2009-09-27):
