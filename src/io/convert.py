@@ -56,10 +56,20 @@ class eLyXerConverter(object):
 
   def writetoc(self, container):
     "Write the table of contents for a container"
+    if not hasattr(container, 'number'):
+      return
+    if container.type in NumberingConfig.layouts['unique']:
+      self.writer.write('+' + container.number + '\n')
+    if container.type in NumberingConfig.layouts['ordered']:
+      order = NumberingConfig.layouts['ordered'].index(container.type)
+      stars = '*'
+      for i in range(order):
+        stars += '*'
+      self.writer.write(stars + container.number + '\n')
+    return
     if hasattr(container, 'number'):
       self.writer.write(container.type + ' ' + container.number + '\n')
-    floats = container.searchall(Float)
-    for float in floats:
+    for float in container.searchall(Float):
       self.writer.write(float.type + ' ' + float.number + '\n')
 
   def processcontents(self, process):
