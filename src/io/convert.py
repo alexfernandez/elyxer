@@ -27,6 +27,7 @@
 from io.fileline import *
 from util.options import *
 from gen.factory import *
+from gen.structure import *
 from post.postprocess import *
 from post.postlist import *
 from post.posttable import *
@@ -46,7 +47,8 @@ class eLyXerConverter(object):
     try:
       if Options.toc:
         # generate TOC
-        self.processcontents(lambda container: self.writetoc(container))
+        writer = TOCWriter(self.writer)
+        self.processcontents(lambda container: writer.writetoc(container))
       else:
         # generate converted document
         self.processcontents(lambda container: self.writer.write(container.gethtml()))
@@ -54,26 +56,50 @@ class eLyXerConverter(object):
       Trace.error('Conversion failed at ' + self.reader.currentline())
       raise
 
+  def processcontents(self, write):
+    "Parse the contents and write it by containers"
+    factory = ContainerFactory()
+    postproc = Postprocessor()
+    while not self.reader.finished():
+      containers = factory.createsome(self.reader)
+      for container in containers:
+        container = postproc.postprocess(container)
+        write(container)
+
+class TOCWriter(object):
+  "A class to write the TOC of a document."
+
+  def __init__(self, writer):
+    self.writer = writer
+    self.depth = 0
+
   def writetoc(self, container):
     "Write the table of contents for a container."
+    if container.__class__ in [LyxHeader, LyxFooter]:
+      self.writeheaderfooter(container)
+      return
     if not hasattr(container, 'number'):
       return
     if container.type in NumberingConfig.layouts['unique']:
-      stars = '+ '
+      depth = 0
     if container.type in NumberingConfig.layouts['ordered']:
-      order = NumberingConfig.layouts['ordered'].index(container.type)
-      stars = '*'
-      for i in range(order):
-        stars += '*'
-    self.writer.write(stars + ' ' + container.type + ' ' + container.number)
-    self.writer.write(': ' + self.flattencontents(container) + '\n')
+      depth = NumberingConfig.layouts['ordered'].index(container.type) + 1
+    if depth > self.depth:
+      self.openindent(depth - self.depth)
+    elif depth < self.depth:
+      self.closeindent(self.depth - depth)
+    result = TranslationConfig.constants[container.type] + ' ' + container.number
+    result += ': ' + self.gettitle(container) + '\n'
+    toc = TaggedText().constant(result, 'div class="toc"', True)
+    self.writer.write(toc.gethtml())
+    self.depth = depth
     for float in container.searchall(Float):
-      self.writer.write(float.type + ' ' + float.number + '\n')
+      self.writer.writeline(float.type + ' ' + float.number + '\n')
 
-  def flattencontents(self, container):
-    "Flatten the contents of the container."
+  def gettitle(self, container):
+    "Get the title of the container."
     if len(container.contents) < 2:
-      return '[]'
+      return '-'
     index = 1
     while len(container.contents[index].gethtml()) == 0:
       index += 1
@@ -82,13 +108,19 @@ class eLyXerConverter(object):
       text += line
     return text
 
-  def processcontents(self, process):
-    "Parse the contents and process it by containers"
-    factory = ContainerFactory()
-    postproc = Postprocessor()
-    while not self.reader.finished():
-      containers = factory.createsome(self.reader)
-      for container in containers:
-        container = postproc.postprocess(container)
-        process(container)
+  def writeheaderfooter(self, container):
+    "Write the header or the footer."
+    if isinstance(container, LyxFooter):
+      self.closeindent(self.depth)
+    self.writer.write(container.gethtml())
+
+  def openindent(self, times):
+    "Open the indenting div a few times."
+    for i in range(times):
+      self.writer.writeline('<div class="tocindent">')
+
+  def closeindent(self, times):
+    "Close the indenting div a few times."
+    for i in range(times):
+      self.writer.writeline('</div>')
 
