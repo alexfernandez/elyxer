@@ -84,7 +84,7 @@ class TOCWriter(object):
     self.indent(container)
     title = TranslationConfig.constants[container.type] + ' ' + container.number
     title += ': ' + self.gettitle(container) + '\n'
-    url = Options.toc + '#toc-' + container.number
+    url = Options.toc + '#toc-' + container.type + '-' + container.number
     link = Link().complete(title, url=url)
     toc = TaggedText().complete([link], 'div class="toc"', True)
     self.writer.write(toc.gethtml())
