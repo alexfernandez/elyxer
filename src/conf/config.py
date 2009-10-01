@@ -543,8 +543,9 @@ class TranslationConfig(object):
   "Configuration class from config file"
 
   constants = {
-      u'Book':u'Book', u'Chapter':u'Chapter', u'Part':u'Part', 
-      u'Section':u'Section', u'abstract':u'Abstract', 
+      u'Book':u'Book', u'Chapter':u'Chapter', u'Paragraph':u'Paragraph', 
+      u'Part':u'Part', u'Section':u'Section', u'Subsection':u'Subsection', 
+      u'Subsubsection':u'Subsubsection', u'abstract':u'Abstract', 
       u'bibliography':u'Bibliography', u'index':u'Index', 
       u'nomenclature':u'Nomenclature', u'toc':u'Table of Contents', 
       }

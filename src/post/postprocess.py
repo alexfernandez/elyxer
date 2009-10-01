@@ -69,8 +69,8 @@ class PostLayout(object):
     else:
       return layout
     layout.number = number
-    link = Link().complete(number, anchor='toc-' + number)
-    layout.contents.insert(0, Constant(text))
+    link = Link().complete(text, anchor='toc-' + number, type='toc')
+    layout.contents.insert(0, link)
     return layout
 
   def containsappendix(self, layout):

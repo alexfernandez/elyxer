@@ -83,7 +83,7 @@ class TOCWriter(object):
     self.indent(container)
     title = TranslationConfig.constants[container.type] + ' ' + container.number
     title += ': ' + self.gettitle(container) + '\n'
-    link = Link().complete(title, url='http://www.nongnu.org/elyxer')
+    link = Link().complete(title, url='#toc-' + container.number)
     toc = TaggedText().complete([link], 'div class="toc"', True)
     self.writer.write(toc.gethtml())
     for float in container.searchall(Float):
