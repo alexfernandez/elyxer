@@ -45,6 +45,8 @@ class Link(Container):
       self.url = url
     if type:
       self.type = type
+    if Options.target:
+      self.target = Options.target
     return self
 
 class ListOf(Container):
@@ -220,6 +222,8 @@ class LinkOutput(object):
       tag += ' name="' + container.anchor + '"'
     if hasattr(container, 'url'):
       tag += ' href="' + container.url + '"'
+    if hasattr(container, 'target'):
+      tag += ' target="' + container.target + '"'
     text = TaggedText().complete(container.contents, tag)
     return text.gethtml()
 

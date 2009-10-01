@@ -46,9 +46,10 @@ class Options(object):
   title = None
   directory = None
   destdirectory = None
-  toc = False
+  toc = None
   forceformat = None
   lyxformat = False
+  target = None
   branches = dict()
 
   def parseoptions(self, args):

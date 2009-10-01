@@ -72,6 +72,7 @@ class TOCWriter(object):
   def __init__(self, writer):
     self.writer = writer
     self.depth = 0
+    Options.nocopy = True
 
   def writetoc(self, container):
     "Write the table of contents for a container."
@@ -83,7 +84,8 @@ class TOCWriter(object):
     self.indent(container)
     title = TranslationConfig.constants[container.type] + ' ' + container.number
     title += ': ' + self.gettitle(container) + '\n'
-    link = Link().complete(title, url='#toc-' + container.number)
+    url = Options.toc + '#toc-' + container.number
+    link = Link().complete(title, url=url)
     toc = TaggedText().complete([link], 'div class="toc"', True)
     self.writer.write(toc.gethtml())
     for float in container.searchall(Float):
@@ -119,6 +121,7 @@ class TOCWriter(object):
   def writeheaderfooter(self, container):
     "Write the header or the footer."
     if isinstance(container, LyxFooter):
+      
       self.closeindent(self.depth)
     self.writer.write(container.gethtml())
 
