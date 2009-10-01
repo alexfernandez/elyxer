@@ -69,6 +69,7 @@ class PostLayout(object):
     else:
       return layout
     layout.number = number
+    link = Link().complete(number, anchor='toc-' + number)
     layout.contents.insert(0, Constant(text))
     return layout
 
