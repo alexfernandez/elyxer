@@ -11,7 +11,7 @@ body {
 
 #globalWrapper {
 	font-size: 115%;
-	margin: 10px 80px 10px 80px;
+	margin: 5px 20px 5px 20px;
 	padding: 0px;
 	background: #ffffff;
 	line-height: 1.5em;
@@ -36,4 +36,5 @@ div.tocindent {
 }
 div.toc {
 	margin: 0.5em 0;
+	font-size: 0.95em;
 }
