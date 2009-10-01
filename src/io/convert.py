@@ -80,21 +80,29 @@ class TOCWriter(object):
       return
     if not hasattr(container, 'number'):
       return
+    self.indent(container)
+    title = TranslationConfig.constants[container.type] + ' ' + container.number
+    title += ': ' + self.gettitle(container) + '\n'
+    link = Link().complete(title, url='http://www.nongnu.org/elyxer')
+    toc = TaggedText().complete([link], 'div class="toc"', True)
+    self.writer.write(toc.gethtml())
+    for float in container.searchall(Float):
+      self.writer.writeline(float.type + ' ' + float.number + '\n')
+
+  def indent(self, container):
+    "Indent the line according to the container type."
     if container.type in NumberingConfig.layouts['unique']:
       depth = 0
-    if container.type in NumberingConfig.layouts['ordered']:
+    elif container.type in NumberingConfig.layouts['ordered']:
       depth = NumberingConfig.layouts['ordered'].index(container.type) + 1
+    else:
+      Trace.error('Unknown numbered container ' + container)
+      return
     if depth > self.depth:
       self.openindent(depth - self.depth)
     elif depth < self.depth:
       self.closeindent(self.depth - depth)
-    result = TranslationConfig.constants[container.type] + ' ' + container.number
-    result += ': ' + self.gettitle(container) + '\n'
-    toc = TaggedText().constant(result, 'div class="toc"', True)
-    self.writer.write(toc.gethtml())
     self.depth = depth
-    for float in container.searchall(Float):
-      self.writer.writeline(float.type + ' ' + float.number + '\n')
 
   def gettitle(self, container):
     "Get the title of the container."

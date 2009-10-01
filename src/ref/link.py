@@ -37,7 +37,7 @@ class Link(Container):
     self.contents = list()
     self.output = LinkOutput()
 
-  def complete(self, text, anchor, url, type = None):
+  def complete(self, text, anchor = None, url = None, type = None):
     self.contents = [Constant(text)]
     if anchor:
       self.anchor = anchor
