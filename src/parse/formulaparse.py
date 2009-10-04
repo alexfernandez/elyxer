@@ -37,8 +37,10 @@ class FormulaParser(Parser):
     self.begin = reader.linenumber + 1
     if reader.currentline().find(FormulaConfig.starts['simple']) > 0:
       return ['inline']
-    else:
+    elif reader.currentline().find(FormulaConfig.starts['complex']) > 0:
       return ['block']
+    else:
+      return ['numbered']
   
   def parse(self, reader):
     "Parse the formula until the end"

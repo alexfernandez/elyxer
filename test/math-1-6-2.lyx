@@ -1,4 +1,4 @@
-#LyX 1.6.2 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -204,6 +204,19 @@ reference "eq:second"
 \begin_layout Standard
 \begin_inset Formula \begin{equation}
 x=3\label{eq:second}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Some equations can also be numbered, even if they don't have a label.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+x=2y\end{equation}
 
 \end_inset
 

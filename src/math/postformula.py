@@ -25,6 +25,8 @@
 from util.trace import Trace
 from math.command import *
 from post.postprocess import *
+from ref.link import *
+from ref.label import *
 
 
 class PostFormula(object):
@@ -35,9 +37,18 @@ class PostFormula(object):
 
   def postprocess(self, formula, last):
     "Postprocess any formulae"
+    self.postnumbering(formula)
     self.postcontents(formula.contents)
     self.posttraverse(formula)
     return formula
+
+  def postnumbering(self, formula):
+    "Check if it's a numbered equation, insert number."
+    if formula.header[0] != 'numbered':
+      return
+    number = '(' + PostFormula.generator.generate(1) + ') '
+    link = Link().complete(number, type="eqnumber")
+    formula.contents.insert(0, link)
 
   def postcontents(self, contents):
     "Search for sum or integral"
@@ -90,15 +101,11 @@ class PostFormula(object):
       Trace.error('Wrong contents for label ' + unicode(label))
       return
     bracket = label.contents[0]
-    labelname = bracket.literal
-    number = '(' + PostFormula.generator.generate(1) + ') '
-    Label.names[labelname] = label
-    tag = label.output.tag.replace('#', labelname)
-    label.output.settag(tag)
-    label.contents = [FormulaConstant(number)]
-    # place number at the beginning
-    del contents[index]
-    contents.insert(0, label)
+    label.anchor = bracket.literal
+    label.contents = []
+    label.output = LinkOutput()
+    # store as a Label so we know it's been seen
+    Label.names[label.anchor] = label
 
   def posttraverse(self, formula):
     "Traverse over the contents to alter variables and space units."

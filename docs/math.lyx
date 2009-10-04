@@ -1,5 +1,5 @@
-#LyX 1.6.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 345
+#LyX 1.5.7 created this file. For more info see http://www.lyx.org/
+\lyxformat 276
 \begin_document
 \begin_header
 \textclass article
@@ -65,7 +65,6 @@
 % redefine the greyed out note
 \end_preamble
 \options intoc,bibtotoc,idxtotoc,BCOR7mm,tablecaptionabove
-\use_default_options false
 \language english
 \inputencoding auto
 \font_roman default
@@ -76,11 +75,9 @@
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
-
 \graphics default
 \paperfontsize 12
 \spacing single
-\use_hyperref false
 \papersize default
 \use_geometry false
 \use_amsmath 1
@@ -134,13 +131,8 @@ Introduction
 \begin_layout Standard
 This document is intended as a showcase of the mathematical abilities of
  eLyXer; for more information be sure to visit the main page 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-index.html
-\end_layout
+\begin_inset LatexCommand url
+target "index.html"
 
 \end_inset
 
@@ -149,24 +141,14 @@ index.html
 
 \begin_layout Standard
 There is a non-Unicode version 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-math.html
-\end_layout
+\begin_inset LatexCommand url
+target "math.html"
 
 \end_inset
 
  of this page with midspaces and a Unicode version 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-math-unicode.html
-\end_layout
+\begin_inset LatexCommand url
+target "math-unicode.html"
 
 \end_inset
 
@@ -224,13 +206,8 @@ Math Symbols
 eLyXer supports the whole set of math symbols in John D.
  Cook's list.
  
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-http://www.johndcook.com/math_symbols.html
-\end_layout
+\begin_inset LatexCommand url
+target "http://www.johndcook.com/math_symbols.html"
 
 \end_inset
 
@@ -282,15 +259,10 @@ Equations look good when items are properly separated.
 \begin_inset Note Greyedout
 status open
 
-\begin_layout Plain Layout
+\begin_layout Standard
 Note: if you are viewing the non-Unicode version 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-math.html
-\end_layout
+\begin_inset LatexCommand url
+target "math.html"
 
 \end_inset
 
@@ -309,13 +281,8 @@ math.html
 
 .
  Try out the Unicode version 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-math-unicode.html
-\end_layout
+\begin_inset LatexCommand url
+target "math-unicode.html"
 
 \end_inset
 
@@ -416,8 +383,7 @@ Numeration
 
 \begin_layout Standard
 Equations can be numbered, like 
-\begin_inset CommandInset ref
-LatexCommand ref
+\begin_inset LatexCommand ref
 reference "eq:first"
 
 \end_inset
@@ -436,8 +402,7 @@ y=x\label{eq:first}\end{equation}
 
 \begin_layout Standard
 And also like 
-\begin_inset CommandInset ref
-LatexCommand ref
+\begin_inset LatexCommand ref
 reference "eq:second"
 
 \end_inset
@@ -455,18 +420,29 @@ x=3\label{eq:second}\end{equation}
 \end_layout
 
 \begin_layout Standard
+Some equations can be numbered even if they don't have a label.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+x=2y\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Notice that eq.
  
-\begin_inset CommandInset ref
-LatexCommand ref
+\begin_inset LatexCommand ref
 reference "eq:second"
 
 \end_inset
 
  comes after eq.
  
-\begin_inset CommandInset ref
-LatexCommand ref
+\begin_inset LatexCommand ref
 reference "eq:first"
 
 \end_inset
