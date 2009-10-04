@@ -110,13 +110,8 @@ class TOCWriter(object):
     "Get the title of the container."
     if len(container.contents) < 2:
       return '-'
-    index = 1
-    while len(container.contents[index].gethtml()) == 0:
-      index += 1
-    text = ''
-    for line in container.contents[index].gethtml():
-      text += line
-    return text
+    withoutlabel = TaggedText().complete(container.contents[1:], 'x')
+    return withoutlabel.extracttext()
 
   def writeheaderfooter(self, container):
     "Write the header or the footer."
