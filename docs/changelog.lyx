@@ -101,12 +101,20 @@ lyx2lyx
 \end_layout
 
 \begin_layout Itemize
-Improved TOC generation.
- Documented option 
+Improved TOC (table of contents) generation.
+ Modified option 
 \family typewriter
 --toc
 \family default
- to generate TOC.
+ to accept an URL, and documented it.
+\end_layout
+
+\begin_layout Itemize
+Added option 
+\family typewriter
+--target
+\family default
+ to add a target frame to every link.
 \end_layout
 
 \end_deeper

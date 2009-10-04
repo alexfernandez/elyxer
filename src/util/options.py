@@ -90,6 +90,8 @@ class Options(object):
     Trace.error('    --unicode: full Unicode output')
     Trace.error('    --forceformat ".extension": force image output format')
     Trace.error('    --lyxformat: return the highest LyX version that can be converted')
+    Trace.error('    --toc "original.html": create a TOC with links to the original')
+    Trace.error('    --target "frame": make all links point to the given frame')
     exit()
 
   def showversion(self):

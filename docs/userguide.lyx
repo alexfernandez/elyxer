@@ -408,7 +408,7 @@ elyxer.py
 \family typewriter
 python -m elyxer
 \family default
- if you have used this elegant procedure.
+ if you have opted for this elegant procedure.
  
 \end_layout
 
@@ -445,32 +445,65 @@ $
 
 \begin_layout Standard
 The typical output will contain just the changed lines, which in this case
- should be only the header with the file creation date:
+ should be only the header with the file creation date.
+ An example is shown on listing 
+\begin_inset LatexCommand ref
+reference "alg:diff"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-\begin_inset listings
-inline false
+\begin_inset Float algorithm
+wide false
+sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Quotation
 
+\family typewriter
 7c7
 \end_layout
 
-\begin_layout Standard
+\begin_layout Quotation
 
+\family typewriter
 < <meta name="create-date" content="2009-09-11"/>
 \end_layout
 
-\begin_layout Standard
+\begin_layout Quotation
 
+\family typewriter
 ---
 \end_layout
 
-\begin_layout Standard
+\begin_layout Quotation
 
+\family typewriter
 > <meta name="create-date" content="2009-09-12"/>
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "alg:diff"
+
+\end_inset
+
+Example of 
+\family typewriter
+diff
+\family default
+ output for functionally identical HTML files.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -860,7 +893,13 @@ new.css
 \family default
 \series default
 : change default CSS.
- See below.
+ See section 
+\begin_inset LatexCommand ref
+reference "sub:CSS"
+
+\end_inset
+
+: CSS.
 \end_layout
 
 \begin_layout Description
@@ -925,6 +964,86 @@ lyx2lyx
 \family default
  integration, so that this tool knows if it must convert the file to a lower
  LyX format.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--toc\InsetSpace ~
+
+\series bold
+"
+\series default
+original.html
+\series bold
+"
+\family default
+\series default
+: Generate a table of contents with links to the original HTML file.
+ See section 
+\begin_inset LatexCommand ref
+reference "sub:TOC"
+
+\end_inset
+
+: TOC.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--target\InsetSpace ~
+
+\series bold
+"
+\series default
+frame
+\series bold
+"
+\family default
+\series default
+: Add a 
+\family typewriter
+target
+\family default
+ attribute to every link in the generated HTML, making all links point to
+ the provided frame.
+ Again, see section 
+\begin_inset LatexCommand ref
+reference "sub:TOC"
+
+\end_inset
+
+: TOC.
+\end_layout
+
+\begin_layout Standard
+When an option accepts an argument it can be added after a space as 
+\family typewriter
+--target\InsetSpace ~
+
+\series bold
+"
+\series default
+frame
+\series bold
+"
+\family default
+\series default
+, or with an equals sign as in 
+\family typewriter
+--target=
+\series bold
+"
+\series default
+frame
+\series bold
+"
+\family default
+\series default
+.
+ The quotes are optional and can be useful if your arguments include e.g.
+ spaces.
 \end_layout
 
 \begin_layout Subsection
@@ -1088,7 +1207,7 @@ Converted Document
  If a PDF title is found then it is used instead.
  eLyXer does not try to use the proper LyX title, since it may be found
  in the middle of the document or not be present at all; scanning for it
- would mean doing two passes, one to look for the title in the document
+ would mean doing two passes, one to look for the title in all the document
  and another to output the web page.
 \end_layout
 
@@ -1108,6 +1227,179 @@ You can change the title of the web page (which is not the title of the
 $
 \color inherit
  elyxer.py --title "My Beautiful Document" document.lyx page.html
+\end_layout
+
+\begin_layout Subsection
+Table Of Contents
+\begin_inset LatexCommand label
+name "sub:TOC"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A table of contents (or TOC) can be generated for every converted LyX document.
+ You can optionally also add a target frame to every link.
+ The trick is to combine both options to generate a TOC that links to the
+ original document on a different frame.
+ For example, if the original page is called 
+\family typewriter
+page.html
+\family default
+ and you generated it with this command:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py document.lyx page.html
+\end_layout
+
+\begin_layout Standard
+you can generate the TOC linking to this page, and at the same time point
+ it to frame 
+\family typewriter
+contents
+\family default
+:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --toc page.html --target contents document.lyx page-toc.html
+\end_layout
+
+\begin_layout Standard
+Then you can put it all together with a simple frameset generated manually.
+ Just remember to place the original document in the frame called 
+\family typewriter
+contents
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+
+\family typewriter
+<html>
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+<frameset cols="30%,70%">
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+<frame name="toc" src="page-toc.html" />
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+\InsetSpace ~
+<frame name="contents" src="page.html" />
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\InsetSpace ~
+\InsetSpace ~
+</frameset>
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+</html>
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+\begin_inset LatexCommand label
+name "alg:frameset"
+
+\end_inset
+
+An example frameset for TOC navegation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+TOC generation accepts the same options as normal document conversion.
+ For example, if you follow these instructions literally you will notice
+ that the TOC has very wide margins and looks a bit weird; that is because
+ it is using the default CSS.
+ A special CSS file for TOC files is provided in 
+\family typewriter
+docs/toc.css
+\family default
+., so better results should be obtained with the 
+\family typewriter
+--css
+\family default
+ option:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --toc page.html --css docs/toc.css --target contents document.lyx
+ page-toc.html
+\end_layout
+
+\begin_layout Standard
+With a little bit of practice you will be able to generate useful (and nice
+ looking) TOC files.
+ You can see an 
+\begin_inset LatexCommand htmlurl
+name "example for the user guide"
+target "userguide-frameset.html"
+
+\end_inset
+
+ (if you are not already looking at it).
 \end_layout
 
 \begin_layout Subsection
