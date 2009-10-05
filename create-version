@@ -37,7 +37,8 @@ mv elyxer-$DATE.tar.gz elyxer-$VERSION.tar.gz
 mv elyxer-$DATE.zip elyxer-$VERSION.zip
 
 # Sign packages
-gpg -b elyxer-$VERSION.tar.gz elyxer-$VERSION.zip
+gpg -b elyxer-$VERSION.tar.gz
+gpg -b elyxer-$VERSION.zip
 
 # Upload to savannah
 scp elyxer-$VERSION.tar.gz elyxer-$VERSION.tar.gz.sig alexfernandez@dl.sv.nongnu.org:/releases/elyxer/
