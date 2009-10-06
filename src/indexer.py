@@ -33,14 +33,31 @@ class Indexer(eLyXerConverter):
   "Creates a TOC from an already processed eLyXer HTML output."
 
   def index(self):
-    "Create the index (TOC)"
+    "Create the index (TOC)."
     while not self.reader.finished():
       line = self.reader.currentline()
-      Trace.message('Line: ' + line)
-      self.writer.write([line, '\n'])
+      tag, part = self.readtag(line)
+      if tag:
+        Trace.message('Tag: ' + tag + ' for part ' + part)
+        self.writer.write(['<', tag, '>', '\n'])
+        self.writer.write(self.readcontents(tag))
       self.reader.nextline()
     self.reader.close()
     self.writer.close()
+
+  def readtag(self, line):
+    "Read the tag and the part name, from something like:"
+    """<tag class="part">"""
+    if not line.startswith('<') or not line.endswith('>'):
+      return None, None
+    words = line[1:-1].split()
+    if len(words) != 2 or not words[1].startswith('class="'):
+      return None, None
+    return words[0], words[1].split('"')[1]
+
+  def readcontents(self, tag):
+    "Read the contents of a tag"
+    return []
 
 def convertdoc(args):
   "Read a whole document and write it"
