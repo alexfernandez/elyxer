@@ -41,26 +41,16 @@ def readdir(filename, diroption):
 
 def convertdoc(args):
   "Read a whole document and write it"
-  filein = sys.stdin
-  fileout = sys.stdout
-  if len(args) < 2:
-    Trace.quietmode = True
-  if len(args) > 0:
-    readdir(args[0], 'directory')
-    filein = args[0]
-    del args[0]
+  ioparser = InOutParser().parse(args)
+  if ioparser.parsedin:
+    readdir(ioparser.filein, 'directory')
   else:
     Options.directory = '.'
-  if len(args) > 0:
-    readdir(args[0], 'destdirectory')
-    fileout = args[0]
-    del args[0]
+  if ioparser.parsedout:
+    readdir(ioparser.fileout, 'destdirectory')
   else:
     Options.destdirectory = '.'
-  if len(args) > 0:
-    Trace.error('Unused arguments: ' + unicode(args))
-    return
-  converter = eLyXerConverter(filein, fileout)
+  converter = eLyXerConverter(ioparser)
   converter.convert()
 
 def main():

@@ -38,10 +38,10 @@ from math.postformula import *
 class eLyXerConverter(object):
   "Converter for a document in a lyx file"
 
-  def __init__(self, filein, fileout):
+  def __init__(self, ioparser):
     "Create the converter"
-    self.reader = LineReader(filein)
-    self.writer = LineWriter(fileout)
+    self.reader = LineReader(ioparser.filein)
+    self.writer = LineWriter(ioparser.fileout)
 
   def convert(self):
     "Perform the conversion for the document"
@@ -67,4 +67,30 @@ class eLyXerConverter(object):
         container = postproc.postprocess(container)
         write(container)
 
+class InOutParser(object):
+  "Parse in and out arguments"
+
+  def __init__(self):
+    self.filein = sys.stdin
+    self.parsedin = False
+    self.fileout = sys.stdout
+    self.parsedout = False
+
+  def parse(self, args):
+    "Parse command line arguments"
+    self.filein = sys.stdin
+    self.fileout = sys.stdout
+    if len(args) < 2:
+      Trace.quietmode = True
+    if len(args) > 0:
+      self.filein = args[0]
+      del args[0]
+      self.parsedin = True
+    if len(args) > 0:
+      self.fileout = args[0]
+      del args[0]
+      self.parsedout = True
+    if len(args) > 0:
+      raise Exception('Unused arguments: ' + unicode(args))
+    return self
 
