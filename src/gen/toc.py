@@ -44,14 +44,16 @@ class TOCWriter(object):
     if not hasattr(container, 'number'):
       return
     self.indent(container.type)
-    title = TranslationConfig.constants[container.type] + ' ' + container.number
-    title += ':' + self.gettitle(container) + '\n'
-    url = Options.toc + '#toc-' + container.type + '-' + container.number
-    link = Link().complete(title, url=url)
+    self.createlink(container.type, container.number, self.gettitle(container))
+
+  def createlink(self, type, number, title):
+    "Create the actual link for the TOC."
+    text = TranslationConfig.constants[type] + ' ' + number
+    text += ':' + title + '\n'
+    url = Options.toc + '#toc-' + type + '-' + number
+    link = Link().complete(text, url=url)
     toc = TaggedText().complete([link], 'div class="toc"', True)
     self.writer.write(toc.gethtml())
-    for float in container.searchall(Float):
-      self.writer.writeline(float.type + ' ' + float.number + '\n')
 
   def indent(self, type):
     "Indent the line according to the container type."

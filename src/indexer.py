@@ -64,14 +64,21 @@ class Indexer(eLyXerConverter):
     return tag, type
 
   def writecontents(self, tag, part):
-    "Read the contents of a tag"
+    "Write the whole contents for a part."
+    self.tocwriter.indent(part)
     self.writer.write(['<' + tag + ' class="' + part + '">' + '\n'])
     contents = []
     self.reader.nextline()
     while not self.reader.currentline().startswith('</' + tag):
-      contents.append(self.reader.currentline() + '\n')
+      line = self.reader.currentline()
+      if line.startswith('<a'):
+        self.rewritelink(line, part)
       self.reader.nextline()
     self.writer.write(contents)
+
+  def rewritelink(self, line, part):
+    "Rewrite the part anchor to a real link."
+    return
 
   def extracttag(self, wholetag):
     "Read the tag and all attributes from the whole tag,"
