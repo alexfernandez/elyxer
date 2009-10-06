@@ -27,37 +27,75 @@
 from io.convert import *
 from util.trace import Trace
 from util.options import *
+from gen.structure import *
 
 
 class Indexer(eLyXerConverter):
   "Creates a TOC from an already processed eLyXer HTML output."
 
+  layouts = NumberingConfig.layouts['ordered'] + NumberingConfig.layouts['unique']
+
   def index(self):
     "Create the index (TOC)."
+    self.tocwriter = TOCWriter(self.writer)
+    self.writer.write(LyxHeader().gethtml())
     while not self.reader.finished():
       line = self.reader.currentline()
       tag, part = self.readtag(line)
       if tag:
         Trace.message('Tag: ' + tag + ' for part ' + part)
-        self.writer.write(['<', tag, '>', '\n'])
-        self.writer.write(self.readcontents(tag))
+        self.writecontents(tag, part)
       self.reader.nextline()
+    self.writer.write(LyxFooter().gethtml())
     self.reader.close()
     self.writer.close()
 
   def readtag(self, line):
     "Read the tag and the part name, from something like:"
-    """<tag class="part">"""
+    """<tag class="part">."""
     if not line.startswith('<') or not line.endswith('>'):
       return None, None
-    words = line[1:-1].split()
-    if len(words) != 2 or not words[1].startswith('class="'):
+    tag, attrmap = self.extracttag(line)
+    if not tag or not 'class' in attrmap:
       return None, None
-    return words[0], words[1].split('"')[1]
+    type = attrmap['class']
+    if not type in Indexer.layouts or TagConfig.layouts[type] != tag:
+      return None, None
+    return tag, type
 
-  def readcontents(self, tag):
+  def writecontents(self, tag, part):
     "Read the contents of a tag"
-    return []
+    self.writer.write(['<' + tag + ' class="' + part + '">' + '\n'])
+    contents = []
+    self.reader.nextline()
+    while not self.reader.currentline().startswith('</' + tag):
+      contents.append(self.reader.currentline() + '\n')
+      self.reader.nextline()
+    self.writer.write(contents)
+
+  def extracttag(self, wholetag):
+    "Read the tag and all attributes from the whole tag,"
+    """something like <tag attr1="value1"...>."""
+    attrmap = dict()
+    if not wholetag.startswith('<') or not wholetag.endswith('>'):
+      Trace.error('Invalid tag ' + wholetag)
+      return None, None
+    middle = wholetag[1:-1]
+    if '>' in middle or '<' in middle or '/' in middle or '?' in middle:
+      return None, None
+    words = middle.split()
+    tag = words[0]
+    for word in words[1:]:
+      bits = word.split('=')
+      if len(bits) != 2:
+        Trace.error('Invalid attribute ' + word)
+        return tag, attrmap
+      name = bits[0]
+      if not bits[1].startswith('"') or not bits[1].endswith('"'):
+        Trace.error('Invalid value ' + bits[1] + ' for attribute ' + name)
+        return tag, attrmap
+      attrmap[name] = bits[1][1:-1]
+    return tag, attrmap
 
 def convertdoc(args):
   "Read a whole document and write it"
