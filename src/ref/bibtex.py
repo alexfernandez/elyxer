@@ -114,7 +114,7 @@ class BibFile(object):
         return
     # Skip the whole line, and show it as an error
     pos.checkskip('\n')
-    toline = pos.glob(lambda current: current != '\n')
+    toline = pos.globexcluding('\n')
     Trace.error('Unidentified entry: ' + toline)
     pos.checkskip('\n')
 
@@ -288,7 +288,7 @@ class PubEntry(Entry):
   def extracttag(self, string):
     "Extract the first tag in the form $tag"
     pos = Position(string)
-    pos.glob(lambda c: c != '$')
+    pos.globexcluding('$')
     pos.skip('$')
     return pos.globalpha()
 

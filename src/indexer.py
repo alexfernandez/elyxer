@@ -67,18 +67,35 @@ class Indexer(eLyXerConverter):
     "Write the whole contents for a part."
     self.tocwriter.indent(part)
     self.writer.write(['<' + tag + ' class="' + part + '">' + '\n'])
-    contents = []
+    contents = ''
     self.reader.nextline()
     while not self.reader.currentline().startswith('</' + tag):
-      line = self.reader.currentline()
-      if line.startswith('<a'):
-        self.rewritelink(line, part)
+      contents += self.reader.currentline() + '\n'
       self.reader.nextline()
-    self.writer.write(contents)
+    self.rewritelink(contents, part)
 
-  def rewritelink(self, line, part):
+  def rewritelink(self, contents, part):
     "Rewrite the part anchor to a real link."
-    return
+    Trace.message('Original contents: ' + contents)
+    pos = Position(contents)
+    pos.skipspace()
+    if not pos.checkfor('<'):
+      Trace.error('Should start with link: ' + pos.remaining())
+      return
+    openlink = pos.glob(lambda current: current != '>') + '>'
+    pos.skip('>')
+    tag, attrmap = self.extracttag(openlink)
+    if tag != 'a':
+      Trace.error('Instead of link, found ' + openlink)
+      return
+    if not 'class' in attrmap or attrmap['class'] != 'toc':
+      Trace.error('Classless link in ' + openlink)
+      return
+    number = pos.glob(lambda current: current != '<')
+    if not pos.checkfor('</a>'):
+      Trace.error('Unclosed link at ' + pos.remaining())
+      return
+    self.tocwriter.createlink(type, number, title)
 
   def extracttag(self, wholetag):
     "Read the tag and all attributes from the whole tag,"

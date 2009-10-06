@@ -91,6 +91,16 @@ class Position(object):
     "Skip all whitespace at current position"
     return self.glob(lambda current: current.isspace())
 
+  def globincluding(self, magicchar):
+    "Glob a bit of text up to (including) the magic char."
+    glob = self.glob(lambda current: current != magicchar) + magicchar
+    self.skip(magicchar)
+    return glob
+
+  def globexcluding(self, magicchar):
+    "Glob a bit of text up until (excluding) the magic char."
+    return self.glob(lambda current: current != magicchar)
+
   def pushending(self, ending, optional = False):
     "Push a new ending to the bottom"
     self.endinglist.add(ending, optional)
