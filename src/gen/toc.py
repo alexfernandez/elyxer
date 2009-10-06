@@ -78,7 +78,6 @@ class TOCWriter(object):
   def writeheaderfooter(self, container):
     "Write the header or the footer."
     if isinstance(container, LyxFooter):
-      
       self.closeindent(self.depth)
     self.writer.write(container.gethtml())
 
