@@ -55,7 +55,6 @@ def convertdoc(args):
 
 def main():
   "Main function, called if invoked from the command line"
-  biblio = dict()
   args = list(sys.argv)
   del args[0]
   Options().parseoptions(args)
