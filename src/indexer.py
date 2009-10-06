@@ -33,7 +33,8 @@ from gen.structure import *
 class Indexer(eLyXerConverter):
   "Creates a TOC from an already processed eLyXer HTML output."
 
-  layouts = NumberingConfig.layouts['ordered'] + NumberingConfig.layouts['unique']
+  ordered = NumberingConfig.layouts['ordered']
+  unique = NumberingConfig.layouts['unique']
 
   def index(self):
     "Create the index (TOC)."
@@ -43,9 +44,10 @@ class Indexer(eLyXerConverter):
       line = self.reader.currentline()
       tag, part = self.readtag(line)
       if tag:
-        Trace.message('Tag: ' + tag + ' for part ' + part)
+        Trace.debug('Tag: ' + tag + ' for part ' + part)
         self.writecontents(tag, part)
       self.reader.nextline()
+    self.tocwriter.closeindent(self.tocwriter.depth)
     self.writer.write(LyxFooter().gethtml())
     self.reader.close()
     self.writer.close()
@@ -59,14 +61,15 @@ class Indexer(eLyXerConverter):
     if not tag or not 'class' in attrmap:
       return None, None
     type = attrmap['class']
-    if not type in Indexer.layouts or TagConfig.layouts[type] != tag:
+    if not type in Indexer.ordered + Indexer.unique:
+      return None, None
+    if TagConfig.layouts[type] != tag:
       return None, None
     return tag, type
 
   def writecontents(self, tag, part):
     "Write the whole contents for a part."
     self.tocwriter.indent(part)
-    self.writer.write(['<' + tag + ' class="' + part + '">' + '\n'])
     contents = ''
     self.reader.nextline()
     while not self.reader.currentline().startswith('</' + tag):
@@ -76,14 +79,13 @@ class Indexer(eLyXerConverter):
 
   def rewritelink(self, contents, part):
     "Rewrite the part anchor to a real link."
-    Trace.message('Original contents: ' + contents)
+    Trace.debug('Original contents for ' + part + ': ' + contents)
     pos = Position(contents)
     pos.skipspace()
     if not pos.checkfor('<'):
       Trace.error('Should start with link: ' + pos.remaining())
       return
-    openlink = pos.glob(lambda current: current != '>') + '>'
-    pos.skip('>')
+    openlink = pos.globincluding('>')
     tag, attrmap = self.extracttag(openlink)
     if tag != 'a':
       Trace.error('Instead of link, found ' + openlink)
@@ -91,11 +93,15 @@ class Indexer(eLyXerConverter):
     if not 'class' in attrmap or attrmap['class'] != 'toc':
       Trace.error('Classless link in ' + openlink)
       return
-    number = pos.glob(lambda current: current != '<')
-    if not pos.checkfor('</a>'):
+    number = pos.globexcluding('<')
+    if part in Indexer.unique:
+      number = number.split()[1].replace('.', '')
+    Trace.debug('Number: ' + number)
+    if not pos.checkskip('</a>'):
       Trace.error('Unclosed link at ' + pos.remaining())
       return
-    self.tocwriter.createlink(type, number, title)
+    title = pos.globexcluding('\n')
+    self.tocwriter.createlink(part, number, title)
 
   def extracttag(self, wholetag):
     "Read the tag and all attributes from the whole tag,"
@@ -124,6 +130,10 @@ class Indexer(eLyXerConverter):
 def convertdoc(args):
   "Read a whole document and write it"
   ioparser = InOutParser().parse(args)
+  if ioparser.parsedin:
+    Options.toc = ioparser.filein
+  else:
+    Options.toc = ''
   indexer = Indexer(ioparser)
   indexer.index()
 
