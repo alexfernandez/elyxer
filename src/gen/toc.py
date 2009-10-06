@@ -43,7 +43,7 @@ class TOCWriter(object):
       return
     if not hasattr(container, 'number'):
       return
-    self.indent(container)
+    self.indent(container.type)
     title = TranslationConfig.constants[container.type] + ' ' + container.number
     title += ':' + self.gettitle(container) + '\n'
     url = Options.toc + '#toc-' + container.type + '-' + container.number
@@ -53,14 +53,14 @@ class TOCWriter(object):
     for float in container.searchall(Float):
       self.writer.writeline(float.type + ' ' + float.number + '\n')
 
-  def indent(self, container):
+  def indent(self, type):
     "Indent the line according to the container type."
-    if container.type in NumberingConfig.layouts['unique']:
+    if type in NumberingConfig.layouts['unique']:
       depth = 0
-    elif container.type in NumberingConfig.layouts['ordered']:
-      depth = NumberingConfig.layouts['ordered'].index(container.type) + 1
+    elif type in NumberingConfig.layouts['ordered']:
+      depth = NumberingConfig.layouts['ordered'].index(type) + 1
     else:
-      Trace.error('Unknown numbered container ' + container)
+      Trace.error('Unknown numbered container type ' + type)
       return
     if depth > self.depth:
       self.openindent(depth - self.depth)
