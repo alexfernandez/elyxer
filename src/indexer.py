@@ -47,16 +47,23 @@ class HtmlTag(object):
       return False
     return True
 
-  def isopenclose(self, text):
-    "Check if a text contains just open and close tags: <tag...>contents</tag>"
-    if not text.startswith('<') or not text.endswith('>'):
+  def hasopenclose(self, text):
+    "Check if a text has both open and close tags: <tag...>contents</tag>"
+    if text.count('<') != 2 or text.count('>') != 2:
+      Trace.debug('Not two <>')
       return False
-    middle = text[1:-1]
+    if text.find('<') > text.rfind('>'):
+      Trace.debug('>< not valid')
+      return False
+    middle = text[text.find('<') + 1 : text.rfind('>')]
     if middle.count('>') != 1 or middle.count('<') != 1 or middle.count('/') != 1:
+      Trace.debug('Missing ></ in ' + middle)
       return False
     if middle.find('>') > middle.find('<'):
+      Trace.debug('Invalid <>')
       return False
     if middle.find('<') > middle.find('/'):
+      Trace.debug('Invalid /<')
       return False
     return True
 
@@ -91,11 +98,11 @@ class HtmlTag(object):
     if not pos.checkskip('</'):
       Trace.error('Closing tag should start with "</": ' + pos.remaining())
       return
-    self.skipspace()
+    pos.skipspace()
     if not pos.checkskip(self.tag):
       Trace.error('Tag open ' + self.tag + ' not closed ' + pos.remaining())
       return
-    self.skipspace()
+    pos.skipspace()
     if not pos.checkskip('>'):
       Trace.error('Closed tag not closed by ">": ' + pos.remaining())
       return
@@ -133,7 +140,7 @@ class Indexer(eLyXerConverter):
     type = tag.attrs['class']
     if not type in Indexer.ordered + Indexer.unique:
       return None
-    if TagConfig.layouts[type] != tag:
+    if TagConfig.layouts[type] != tag.tag:
       return None
     return type
 
@@ -150,11 +157,11 @@ class Indexer(eLyXerConverter):
 
   def rewritelink(self, contents, type):
     "Rewrite the part anchor to a real link."
-    pos = Position(contents)
     tag = HtmlTag()
-    if not tag.isopenclose(pos):
+    if not tag.hasopenclose(contents):
       Trace.error('Anchor should open and close: ' + contents)
       return
+    pos = Position(contents)
     tag.parseopenclose(pos)
     if tag.tag != 'a':
       Trace.error('Anchor should be <a...>: ' + contents)
@@ -163,33 +170,10 @@ class Indexer(eLyXerConverter):
       Trace.error('Classless link in ' + contents)
       return
     number = tag.contents
-    if part in Indexer.unique:
+    if type in Indexer.unique:
       number = number.split()[1].replace('.', '')
     title = pos.globexcluding('\n')
     self.tocwriter.createlink(type, number, title)
-
-  def parseopenclose(self, pos):
-    pos.skipspace()
-    if not pos.checkfor('<'):
-      Trace.error('Should start with link: ' + pos.remaining())
-      return
-    openlink = pos.globincluding('>')
-    tag, attrmap = self.extracttag(openlink)
-    if tag != 'a':
-      Trace.error('Instead of link, found ' + openlink)
-      return
-    number = pos.globexcluding('<')
-    if not pos.checkskip('</a>'):
-      Trace.error('Unclosed link at ' + pos.remaining())
-      return
-
-  def extracttag(self, wholetag):
-    attrmap = dict()
-    if not wholetag.startswith('<') or not wholetag.endswith('>'):
-      Trace.error('Invalid tag ' + wholetag)
-      return None, None
-      return None, None
-    return tag, attrmap
 
 def convertdoc(args):
   "Read a whole document and write it"
