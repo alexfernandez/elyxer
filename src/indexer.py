@@ -50,20 +50,15 @@ class HtmlTag(object):
   def hasopenclose(self, text):
     "Check if a text has both open and close tags: <tag...>contents</tag>"
     if text.count('<') != 2 or text.count('>') != 2:
-      Trace.debug('Not two <>')
       return False
     if text.find('<') > text.rfind('>'):
-      Trace.debug('>< not valid')
       return False
     middle = text[text.find('<') + 1 : text.rfind('>')]
     if middle.count('>') != 1 or middle.count('<') != 1 or middle.count('/') != 1:
-      Trace.debug('Missing ></ in ' + middle)
       return False
     if middle.find('>') > middle.find('<'):
-      Trace.debug('Invalid <>')
       return False
     if middle.find('<') > middle.find('/'):
-      Trace.debug('Invalid /<')
       return False
     return True
 
@@ -116,17 +111,24 @@ class Indexer(eLyXerConverter):
   def index(self):
     "Create the index (TOC)."
     self.tocwriter = TOCWriter(self.writer)
-    self.writer.write(LyxHeader().gethtml())
     while not self.reader.finished():
-      line = self.reader.currentline()
-      type = self.readparttype(line)
-      if type:
-        self.writecontents(type)
+      self.processline(self.reader.currentline())
       self.reader.nextline()
     self.tocwriter.closeindent(self.tocwriter.depth)
     self.writer.write(LyxFooter().gethtml())
     self.reader.close()
     self.writer.close()
+
+  def processline(self, line):
+    "Process a line from inside the HTML document."
+    title = self.readtitle(line)
+    if title and not Options.title:
+      Options.title = title
+      self.writer.write(LyxHeader().gethtml())
+      return
+    type = self.readparttype(line)
+    if type:
+      self.writecontents(type)
 
   def readparttype(self, text):
     "Read the tag and the part name, from something like:"
@@ -143,6 +145,16 @@ class Indexer(eLyXerConverter):
     if TagConfig.layouts[type] != tag.tag:
       return None
     return type
+
+  def readtitle(self, text):
+    "Read the title from <title>contents</title>."
+    if not text.startswith('<'):
+      return None
+    tag = HtmlTag()
+    if not tag.hasopenclose(text):
+      return None
+    tag.parseopenclose(Position(text))
+    return tag.contents
 
   def writecontents(self, type):
     "Write the whole contents for a part type."
