@@ -30,6 +30,76 @@ from util.options import *
 from gen.structure import *
 
 
+class HtmlTag(object):
+  "Represents an HTML tag."
+
+  def __init__(self):
+    self.tag = None
+    self.attrs = dict()
+    self.contents = None
+
+  def isopen(self, text):
+    """Check if a text contains just an open tag: <tag attr="value"...>."""
+    if not text.startswith('<') or not text.endswith('>'):
+      return False
+    middle = text[1:-1]
+    if '>' in middle or '<' in middle or '/' in middle or '?' in middle:
+      return False
+    return True
+
+  def isopenclose(self, text):
+    "Check if a text contains just open and close tags: <tag...>contents</tag>"
+    if not text.startswith('<') or not text.endswith('>'):
+      return False
+    middle = text[1:-1]
+    if middle.count('>') != 1 or middle.count('<') != 1 or middle.count('/') != 1:
+      return False
+    if middle.find('>') > middle.find('<'):
+      return False
+    if middle.find('<') > middle.find('/'):
+      return False
+    return True
+
+  def parseopen(self, pos):
+    """Parse the tag and all attributes, like <tag attr1="value1"...>."""
+    pos.skipspace()
+    if not pos.checkskip('<'):
+      Trace.error('Invalid open tag at ' + pos.remaining())
+      return
+    pos.pushending('>')
+    pos.skipspace()
+    self.tag = pos.glob(lambda current: not current.isspace())
+    pos.skipspace()
+    while not pos.finished():
+      name = pos.globexcluding('=')
+      if not pos.checkskip('="'):
+        Trace.error('Missing =" in attribute value ' + pos.remaining())
+        return
+      value = pos.globexcluding('"')
+      if not pos.checkskip('"'):
+        Trace.error('Missing closing " in attribute value ' + pos.remaining())
+        return
+      self.attrs[name] = value
+    if not pos.checkskip('>'):
+      Trace.error('Missing closing > in tag ' + pos.remaining())
+
+  def parseopenclose(self, pos):
+    "Parse an open and close tags, with contents in between:"
+    """<tag attr1="value1"...>contents</tag>"""
+    self.parseopen(pos)
+    self.contents = pos.globexcluding('<')
+    if not pos.checkskip('</'):
+      Trace.error('Closing tag should start with "</": ' + pos.remaining())
+      return
+    self.skipspace()
+    if not pos.checkskip(self.tag):
+      Trace.error('Tag open ' + self.tag + ' not closed ' + pos.remaining())
+      return
+    self.skipspace()
+    if not pos.checkskip('>'):
+      Trace.error('Closed tag not closed by ">": ' + pos.remaining())
+      return
+
 class Indexer(eLyXerConverter):
   "Creates a TOC from an already processed eLyXer HTML output."
 
@@ -42,45 +112,63 @@ class Indexer(eLyXerConverter):
     self.writer.write(LyxHeader().gethtml())
     while not self.reader.finished():
       line = self.reader.currentline()
-      tag, part = self.readtag(line)
-      if tag:
-        Trace.debug('Tag: ' + tag + ' for part ' + part)
-        self.writecontents(tag, part)
+      type = self.readparttype(line)
+      if type:
+        self.writecontents(type)
       self.reader.nextline()
     self.tocwriter.closeindent(self.tocwriter.depth)
     self.writer.write(LyxFooter().gethtml())
     self.reader.close()
     self.writer.close()
 
-  def readtag(self, line):
+  def readparttype(self, text):
     "Read the tag and the part name, from something like:"
     """<tag class="part">."""
-    if not line.startswith('<') or not line.endswith('>'):
-      return None, None
-    tag, attrmap = self.extracttag(line)
-    if not tag or not 'class' in attrmap:
-      return None, None
-    type = attrmap['class']
+    tag = HtmlTag()
+    if not tag.isopen(text):
+      return None
+    tag.parseopen(Position(text))
+    if not 'class' in tag.attrs:
+      return None
+    type = tag.attrs['class']
     if not type in Indexer.ordered + Indexer.unique:
-      return None, None
+      return None
     if TagConfig.layouts[type] != tag:
-      return None, None
-    return tag, type
+      return None
+    return type
 
-  def writecontents(self, tag, part):
-    "Write the whole contents for a part."
-    self.tocwriter.indent(part)
+  def writecontents(self, type):
+    "Write the whole contents for a part type."
+    self.tocwriter.indent(type)
     contents = ''
     self.reader.nextline()
-    while not self.reader.currentline().startswith('</' + tag):
+    ending = '</' + TagConfig.layouts[type]
+    while not self.reader.currentline().startswith(ending):
       contents += self.reader.currentline() + '\n'
       self.reader.nextline()
-    self.rewritelink(contents, part)
+    self.rewritelink(contents, type)
 
-  def rewritelink(self, contents, part):
+  def rewritelink(self, contents, type):
     "Rewrite the part anchor to a real link."
-    Trace.debug('Original contents for ' + part + ': ' + contents)
     pos = Position(contents)
+    tag = HtmlTag()
+    if not tag.isopenclose(pos):
+      Trace.error('Anchor should open and close: ' + contents)
+      return
+    tag.parseopenclose(pos)
+    if tag.tag != 'a':
+      Trace.error('Anchor should be <a...>: ' + contents)
+      return
+    if not 'class' in tag.attrs or tag.attrs['class'] != 'toc':
+      Trace.error('Classless link in ' + contents)
+      return
+    number = tag.contents
+    if part in Indexer.unique:
+      number = number.split()[1].replace('.', '')
+    title = pos.globexcluding('\n')
+    self.tocwriter.createlink(type, number, title)
+
+  def parseopenclose(self, pos):
     pos.skipspace()
     if not pos.checkfor('<'):
       Trace.error('Should start with link: ' + pos.remaining())
@@ -90,41 +178,17 @@ class Indexer(eLyXerConverter):
     if tag != 'a':
       Trace.error('Instead of link, found ' + openlink)
       return
-    if not 'class' in attrmap or attrmap['class'] != 'toc':
-      Trace.error('Classless link in ' + openlink)
-      return
     number = pos.globexcluding('<')
-    if part in Indexer.unique:
-      number = number.split()[1].replace('.', '')
-    Trace.debug('Number: ' + number)
     if not pos.checkskip('</a>'):
       Trace.error('Unclosed link at ' + pos.remaining())
       return
-    title = pos.globexcluding('\n')
-    self.tocwriter.createlink(part, number, title)
 
   def extracttag(self, wholetag):
-    "Read the tag and all attributes from the whole tag,"
-    """something like <tag attr1="value1"...>."""
     attrmap = dict()
     if not wholetag.startswith('<') or not wholetag.endswith('>'):
       Trace.error('Invalid tag ' + wholetag)
       return None, None
-    middle = wholetag[1:-1]
-    if '>' in middle or '<' in middle or '/' in middle or '?' in middle:
       return None, None
-    words = middle.split()
-    tag = words[0]
-    for word in words[1:]:
-      bits = word.split('=')
-      if len(bits) != 2:
-        Trace.error('Invalid attribute ' + word)
-        return tag, attrmap
-      name = bits[0]
-      if not bits[1].startswith('"') or not bits[1].endswith('"'):
-        Trace.error('Invalid value ' + bits[1] + ' for attribute ' + name)
-        return tag, attrmap
-      attrmap[name] = bits[1][1:-1]
     return tag, attrmap
 
 def convertdoc(args):
