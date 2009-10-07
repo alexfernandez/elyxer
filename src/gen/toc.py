@@ -61,6 +61,9 @@ class TOCWriter(object):
       depth = 0
     elif type in NumberingConfig.layouts['ordered']:
       depth = NumberingConfig.layouts['ordered'].index(type) + 1
+    elif not type:
+      Trace.error('Empty type')
+      return
     else:
       Trace.error('Unknown numbered container type ' + type)
       return
