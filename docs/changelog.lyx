@@ -64,6 +64,24 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.33 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+New TOC generation process based on an already-generated HTML document.
+\end_layout
+
+\begin_layout Itemize
+New binary file 
+\family typewriter
+indelyxer.py
+\family default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.32 (2009-10-05):
 \end_layout
 
