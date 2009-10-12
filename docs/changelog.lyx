@@ -81,6 +81,22 @@ indelyxer.py
 \end_layout
 
 \begin_layout Itemize
+Adapted 
+\family typewriter
+--help
+\family default
+ option so that it shows the executable file as invoked (
+\family typewriter
+elyxer.py
+\family default
+, 
+\family typewriter
+elyxer
+\family default
+ or whatever).
+\end_layout
+
+\begin_layout Itemize
 Support for text commands 
 \family typewriter
 
@@ -154,22 +170,6 @@ begin{align*}
 
 \begin_layout Itemize
 Properly align equations for AMS aligned environment.
-\end_layout
-
-\begin_layout Itemize
-Adapted 
-\family typewriter
---help
-\family default
- option so that it shows the executable file as invoked (
-\family typewriter
-elyxer.py
-\family default
-, 
-\family typewriter
-elyxer
-\family default
- or whatever).
 \end_layout
 
 \end_deeper
