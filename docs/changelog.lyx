@@ -80,6 +80,63 @@ indelyxer.py
 .
 \end_layout
 
+\begin_layout Itemize
+Support for text commands 
+\family typewriter
+
+\backslash
+textsf
+\family default
+, 
+\family typewriter
+
+\backslash
+texttt
+\family default
+, 
+\family typewriter
+
+\backslash
+textit
+\family default
+, 
+\family typewriter
+
+\backslash
+textbf
+\family default
+, 
+\family typewriter
+
+\backslash
+textsl
+\family default
+, 
+\family typewriter
+
+\backslash
+textsc
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+Support for 
+\family typewriter
+
+\backslash
+cfrac
+\family default
+.
+ Now regular 
+\family typewriter
+
+\backslash
+frac
+\family default
+ shows embedded formulas smaller.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.32 (2009-10-05):

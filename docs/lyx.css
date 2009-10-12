@@ -196,6 +196,18 @@ span.bar {
 	position: relative;
 	vertical-align: middle;
 }
+.fraction .fraction {
+	font-size: 80%;
+	line-height: 100%;
+}
+.fullfraction {
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+}
+span.numerator {
+	display: block;
+}
 span.denominator {
 	display: block;
 	padding: 0;
