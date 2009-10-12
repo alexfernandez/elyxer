@@ -23,6 +23,7 @@
 # eLyXer runtime options
 
 import codecs
+import os.path
 from util.trace import *
 from util.clparse import *
 
@@ -54,13 +55,15 @@ class Options(object):
 
   def parseoptions(self, args):
     "Parse command line options"
+    invokedas = args[0]
+    del args[0]
     parser = CommandLineParser(Options)
     result = parser.parseoptions(args)
     if result:
       Trace.error(result)
-      self.usage()
+      self.usage(invokedas)
     if Options.help:
-      self.usage()
+      self.usage(invokedas)
     if Options.version:
       self.showversion()
     if Options.hardversion:
@@ -74,9 +77,10 @@ class Options(object):
       if hasattr(Trace, param + 'mode'):
         setattr(Trace, param + 'mode', getattr(self, param))
 
-  def usage(self):
+  def usage(self, invokedas):
     "Show correct usage"
-    Trace.error('Usage: elyxer.py [filein] [fileout].')
+    base = os.path.basename(invokedas)
+    Trace.error('Usage: ' + base + ' [filein] [fileout].')
     Trace.error('  Options:')
     Trace.error('    --nocopy: disables the copyright notice at the bottom')
     Trace.error('    --quiet: disables all runtime messages')

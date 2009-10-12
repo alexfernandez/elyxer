@@ -41,6 +41,7 @@ def readdir(filename, diroption):
 
 def convertdoc(args):
   "Read a whole document and write it"
+  Options().parseoptions(args)
   ioparser = InOutParser().parse(args)
   if ioparser.parsedin:
     readdir(ioparser.filein, 'directory')
@@ -55,10 +56,7 @@ def convertdoc(args):
 
 def main():
   "Main function, called if invoked from the command line"
-  args = list(sys.argv)
-  del args[0]
-  Options().parseoptions(args)
-  convertdoc(args)
+  convertdoc(list(sys.argv))
 
 if __name__ == '__main__':
   main()

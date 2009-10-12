@@ -137,6 +137,14 @@ frac
  shows embedded formulas smaller.
 \end_layout
 
+\begin_layout Itemize
+Adapted 
+\family typewriter
+--help
+\family default
+ option so that it shows the binary file as invoked.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.32 (2009-10-05):
