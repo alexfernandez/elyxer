@@ -37,10 +37,11 @@ class FormulaParser(Parser):
     self.begin = reader.linenumber + 1
     if reader.currentline().find(FormulaConfig.starts['simple']) > 0:
       return ['inline']
-    elif reader.currentline().find(FormulaConfig.starts['complex']) > 0:
+    if reader.currentline().find(FormulaConfig.starts['complex']) > 0:
       return ['block']
-    else:
-      return ['numbered']
+    if reader.currentline().find(FormulaConfig.starts['unnumbered']) > 0:
+      return ['block']
+    return ['numbered']
   
   def parse(self, reader):
     "Parse the formula until the end"
@@ -77,7 +78,7 @@ class FormulaParser(Parser):
         endbefore = FormulaConfig.endings['endbefore']
         endafter = FormulaConfig.endings['endafter']
         endpiece = endbefore + endsplit[0] + endafter
-        return self.parsemultiliner(reader, startpiece, endpiece)
+        return startpiece + self.parsemultiliner(reader, startpiece, endpiece) + endpiece
       Trace.error('Missing ' + beginafter + ' in ' + reader.currentline())
       return ''
     begincommand = FormulaConfig.starts['command']

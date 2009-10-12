@@ -463,7 +463,7 @@ class FormulaConfig(object):
   starts = {
       u'beginafter':u'}', u'beginbefore':u'\\begin{', u'bracket':u'{', 
       u'command':u'\\', u'complex':u'\\[', u'simple':u'$', 
-      u'squarebracket':u'[', 
+      u'squarebracket':u'[', u'unnumbered':u'*', 
       }
 
   symbolfunctions = {

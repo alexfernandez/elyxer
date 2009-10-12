@@ -30,6 +30,18 @@ from math.formula import *
 from math.command import *
 
 
+class FormulaEquation(CommandBit):
+  "A simple numbered equation."
+
+  piece = 'equation'
+
+  def parsebit(self, pos):
+    "Parse the array"
+    self.output = ContentsOutput()
+    inner = WholeFormula()
+    inner.parsebit(pos)
+    self.add(inner)
+
 class FormulaCell(FormulaCommand):
   "An array cell inside a row"
 
@@ -49,6 +61,8 @@ class FormulaCell(FormulaCommand):
 class FormulaRow(FormulaCommand):
   "An array row inside an array"
 
+  cellseparator = FormulaConfig.array['cellseparator']
+
   def __init__(self, alignments):
     FormulaCommand.__init__(self)
     self.alignments = alignments
@@ -56,13 +70,23 @@ class FormulaRow(FormulaCommand):
 
   def parsebit(self, pos):
     "Parse a whole row"
-    for cell in self.parsecells(pos):
+    index = 0
+    pos.pushending(FormulaRow.cellseparator, optional=True)
+    while not pos.finished():
+      alignment = self.alignments[index % len(self.alignments)]
+      cell = FormulaCell(alignment)
+      cell.parsebit(pos)
+      self.add(cell)
+      index += 1
+      if pos.checkfor(FormulaRow.cellseparator):
+        pos.skip(FormulaRow.cellseparator)
+    return
+    for cell in self.iteratecells(pos):
       cell.parsebit(pos)
       self.add(cell)
 
-  def parsecells(self, pos):
-    "Parse all cells, finish when count ends"
-    cellseparator = FormulaConfig.array['cellseparator']
+  def iteratecells(self, pos):
+    "Iterate over all cells, finish when count ends"
     for index, alignment in enumerate(self.alignments):
       if self.anybutlast(index):
         pos.pushending(cellseparator)
@@ -86,12 +110,16 @@ class FormulaArray(CommandBit):
     "Parse the array"
     self.output = TaggedOutput().settag('table class="formula"', True)
     self.parsealignments(pos)
-    for row in self.parserows(pos):
-      row.parsebit(pos)
-      self.add(row)
+    self.parserows(pos)
 
   def parserows(self, pos):
     "Parse all rows, finish when no more row ends"
+    for row in self.iteraterows(pos):
+      row.parsebit(pos)
+      self.add(row)
+
+  def iteraterows(self, pos):
+    "Iterate over all rows, end when no more row ends"
     rowseparator = FormulaConfig.array['rowseparator']
     while True:
       pos.pushending(rowseparator, True)
@@ -126,16 +154,25 @@ class FormulaCases(FormulaArray):
     "Parse the cases"
     self.output = TaggedOutput().settag('table class="cases"', True)
     self.alignments = ['l', 'l']
-    for row in self.parserows(pos):
-      row.parsebit(pos)
-      self.add(row)
+    self.parserows(pos)
+
+class FormulaAlign(FormulaArray):
+  "A number of aligned formulae"
+
+  piece = 'align'
+
+  def parsebit(self, pos):
+    "Parse the aligned bits"
+    self.output = TaggedOutput().settag('table class="align"', True)
+    self.alignments = ['r']
+    self.parserows(pos)
 
 class BeginCommand(CommandBit):
   "A \\begin command and what it entails (array or cases)"
 
   commandmap = {FormulaConfig.array['begin']:''}
 
-  innerbits = [FormulaArray(), FormulaCases()]
+  innerbits = [FormulaEquation(), FormulaArray(), FormulaCases(), FormulaAlign()]
 
   def parsebit(self, pos):
     "Parse the begin command"
@@ -153,7 +190,7 @@ class BeginCommand(CommandBit):
   def findbit(self, piece):
     "Find the command bit corresponding to the \\begin{piece}"
     for bit in BeginCommand.innerbits:
-      if bit.piece == piece:
+      if bit.piece == piece or bit.piece + '*' == piece:
         newbit = bit.clone()
         return newbit
     Trace.error('Unknown command \\begin{' + piece + '}')

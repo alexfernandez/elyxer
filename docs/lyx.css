@@ -373,6 +373,15 @@ table.cases tr td {
 	padding-left: 1ex;
 	padding-right: 1em;
 }
+table.align {
+	display: inline-block;
+	text-align: center;
+	margin: 0;
+	vertical-align: right;
+}
+table.align tr td {
+	padding: 0 1em;
+}
 span.greyedout {
 	color: #808080;
 }

@@ -138,11 +138,38 @@ frac
 \end_layout
 
 \begin_layout Itemize
+Do not number equations containing 
+\family typewriter
+*
+\family default
+, like in 
+\family typewriter
+
+\backslash
+begin{align*}
+\family default
+.
+ (Once more, thanks Uwe.)
+\end_layout
+
+\begin_layout Itemize
+Properly align equations for AMS aligned environment.
+\end_layout
+
+\begin_layout Itemize
 Adapted 
 \family typewriter
 --help
 \family default
- option so that it shows the binary file as invoked.
+ option so that it shows the executable file as invoked (
+\family typewriter
+elyxer.py
+\family default
+, 
+\family typewriter
+elyxer
+\family default
+ or whatever).
 \end_layout
 
 \end_deeper

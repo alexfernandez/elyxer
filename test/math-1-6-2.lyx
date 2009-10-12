@@ -224,6 +224,19 @@ x=2y\end{equation}
 \end_layout
 
 \begin_layout Standard
+Other equations that contain * should not numbered, but perhaps aligned:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{align*}
+left & & right\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Notice that eq.
  
 \begin_inset CommandInset ref
