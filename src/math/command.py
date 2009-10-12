@@ -141,26 +141,30 @@ class SymbolFunction(CommandBit):
     self.output = TaggedOutput().settag(self.translated)
     self.parseparameter(pos)
 
-class LiteralFunction(CommandBit):
-  "A function where parameters are read literally"
+class TextFunction(CommandBit):
+  "A function where parameters are read as text."
 
-  commandmap = FormulaConfig.literalfunctions
+  commandmap = FormulaConfig.textfunctions
 
   def parsebit(self, pos):
-    "Parse a literal parameter"
+    "Parse a text parameter"
     self.output = TaggedOutput().settag(self.translated)
-    bracket = Bracket().parseliteral(pos)
+    bracket = Bracket().parsetext(pos)
     self.add(bracket)
-    self.contents.append(FormulaConstant(bracket.literal))
 
   def process(self):
     "Set the type to font"
     self.type = 'font'
 
-class LabelFunction(LiteralFunction):
+class LabelFunction(CommandBit):
   "A function that acts as a label"
 
   commandmap = FormulaConfig.labelfunctions
+
+  def parsebit(self, pos):
+    "Parse a literal parameter"
+    bracket = Bracket().parseliteral(pos)
+    self.add(bracket)
 
   def process(self):
     "Do not process the inside"
@@ -256,7 +260,7 @@ class FractionFunction(CommandBit):
 FormulaFactory.bits += [FormulaCommand(), SymbolFunction()]
 FormulaCommand.commandbits = [
     EmptyCommand(), AlphaCommand(), OneParamFunction(), DecoratingFunction(),
-    FractionFunction(), FontFunction(), LabelFunction(), LiteralFunction(),
+    FractionFunction(), FontFunction(), LabelFunction(), TextFunction(),
     HybridFunction(),
     ]
 

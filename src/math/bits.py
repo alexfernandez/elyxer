@@ -103,6 +103,11 @@ class Bracket(FormulaBit):
     self.parsecomplete(pos, self.innerformula)
     return self
 
+  def parsetext(self, pos):
+    "Parse a text bracket"
+    self.parsecomplete(pos, self.innertext)
+    return self
+
   def parseliteral(self, pos):
     "Parse a literal bracket"
     self.parsecomplete(pos, self.innerliteral)
@@ -131,6 +136,17 @@ class Bracket(FormulaBit):
     if pos.current() != self.ending:
       Trace.error('No formula in bracket at ' + pos.remaining())
     return
+
+  def innertext(self, pos):
+    "Parse some text inside the bracket, following textual rules."
+    factory = FormulaFactory()
+    while not pos.finished():
+      if pos.current() == FormulaConfig.starts['command']:
+        bit = factory.parsebit(pos)
+      else:
+        bit = FormulaConstant(pos.current())
+        pos.skip(pos.current())
+      self.add(bit)
 
   def innerliteral(self, pos):
     "Parse a literal inside the bracket, which cannot generate html"

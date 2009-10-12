@@ -97,7 +97,7 @@ elyxer
 \end_layout
 
 \begin_layout Itemize
-Support for text commands 
+Support for new text commands 
 \family typewriter
 
 \backslash
@@ -132,6 +132,23 @@ textsl
 
 \backslash
 textsc
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+Properly parse all text commands 
+\family typewriter
+
+\backslash
+text\SpecialChar \ldots{}
+
+\family default
+, including 
+\family typewriter
+
+\backslash
+textipa
 \family default
 .
 \end_layout
