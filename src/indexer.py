@@ -102,11 +102,77 @@ class HtmlTag(object):
       Trace.error('Closed tag not closed by ">": ' + pos.remaining())
       return
 
-class Indexer(eLyXerConverter):
+class IndexedPart(object):
+  "A document part (ordered like Chapter or unordered like Book)."
+
+  ordered = NumberingConfig.layouts['ordered']
+  unique = NumberingConfig.layouts['unique']
+
+  def __init__(self):
+    self.ordered = False
+    self.level = 0
+    self.type = None
+    self.title = None
+    self.number = None
+
+  def detect(self, reader):
+    "Detect a possible part."
+    line = reader.currentline()
+    tag = HtmlTag()
+    if not tag.isopen(line):
+      return False
+    tag.parseopen(Position(line))
+    if not 'class' in tag.attrs:
+      return False
+    type = tag.attrs['class']
+    if not type in IndexedPart.ordered + IndexedPart.unique:
+      return False
+    if TagConfig.layouts[type] != tag.tag:
+      return False
+    if type in IndexedPart.ordered:
+      self.level = IndexedPart.ordered.index(type)
+    self.type = type
+    return True
+
+  def parse(self, reader):
+    "Parse the part type and title."
+    line = reader.currentline()
+    contents = ''
+    self.reader.nextline()
+    ending = '</' + TagConfig.layouts[type]
+    while not self.reader.currentline().startswith(ending):
+      contents += self.reader.currentline() + '\n'
+      self.reader.nextline()
+    tag = HtmlTag()
+    if not tag.hasopenclose(contents):
+      Trace.error('Anchor should open and close: ' + contents)
+      return
+    pos = Position(contents)
+    tag.parseopenclose(pos)
+    if tag.tag != 'a':
+      Trace.error('Anchor should be <a...>: ' + contents)
+      return
+    if not 'class' in tag.attrs or tag.attrs['class'] != 'toc':
+      Trace.error('Classless link in ' + contents)
+      return
+    self.number = tag.contents
+    if self.type in Indexer.unique:
+      self.number = self.number.split()[1].replace('.', '')
+    self.title = pos.globexcluding('\n')
+
+  def output(self, writer):
+    "Output the link."
+    self.tocwriter.indent(self.type)
+    self.tocwriter.createlink(self.type, self.number, self.title)
+
+class Indexer(object):
   "Creates a TOC from an already processed eLyXer HTML output."
 
   ordered = NumberingConfig.layouts['ordered']
   unique = NumberingConfig.layouts['unique']
+
+  def __init__(self, filein):
+    self.reader = LineReader(filein)
 
   def index(self):
     "Create the index (TOC)."
@@ -130,6 +196,16 @@ class Indexer(eLyXerConverter):
     if type:
       self.writecontents(type)
 
+  def readtitle(self, text):
+    "Read the title from <title>contents</title>."
+    if not text.startswith('<'):
+      return None
+    tag = HtmlTag()
+    if not tag.hasopenclose(text):
+      return None
+    tag.parseopenclose(Position(text))
+    return tag.contents
+
   def readparttype(self, text):
     "Read the tag and the part name, from something like:"
     """<tag class="part">."""
@@ -145,16 +221,6 @@ class Indexer(eLyXerConverter):
     if TagConfig.layouts[type] != tag.tag:
       return None
     return type
-
-  def readtitle(self, text):
-    "Read the title from <title>contents</title>."
-    if not text.startswith('<'):
-      return None
-    tag = HtmlTag()
-    if not tag.hasopenclose(text):
-      return None
-    tag.parseopenclose(Position(text))
-    return tag.contents
 
   def writecontents(self, type):
     "Write the whole contents for a part type."
@@ -187,15 +253,31 @@ class Indexer(eLyXerConverter):
     title = pos.globexcluding('\n')
     self.tocwriter.createlink(type, number, title)
 
+class Segmenter(object):
+  "Segment a page into multiple output pages, with varying names."
+
+  def __init__(self, filein):
+    self.reader = LineReader(filein)
+
+class IndexerOptions(Options):
+  "Options for the indexer."
+
+  cutpart = 1
+
+  def usage(self):
+    "Show usage for indexer."
+    Trace.error('Usage: ' + self.invokedas + ' [options] filein')
+    Trace.error('Process eLyXer output file "filein": add TOC and segment into multiple files.')
+    self.showoptions()
+
 def convertdoc(args):
   "Read a whole document and write it"
-  Options().parseoptions(args)
-  ioparser = InOutParser().parse(args)
-  if ioparser.parsedin:
-    Options.toc = ioparser.filein
-  else:
-    Options.toc = ''
-  indexer = Indexer(ioparser)
+  options = IndexerOptions()
+  options.parseoptions(args)
+  if len(args) != 1:
+    options.usage()
+  filein = args[0]
+  indexer = Indexer(filein)
   indexer.index()
 
 def main():
