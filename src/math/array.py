@@ -54,6 +54,7 @@ class FormulaCell(FormulaCommand):
     formula = WholeFormula()
     if not formula.detect(pos):
       Trace.error('Unexpected end of array cell at ' + pos.remaining())
+      pos.skip(pos.current())
       return
     formula.parsebit(pos)
     self.add(formula)
