@@ -187,7 +187,8 @@ begin{align*}
 \end_layout
 
 \begin_layout Itemize
-Properly align equations for AMS aligned environment.
+Properly align equations for AMS align environment.
+ Other environments are parsed but not necessarily honored.
 \end_layout
 
 \begin_layout Itemize

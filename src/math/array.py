@@ -102,15 +102,14 @@ class FormulaRow(FormulaCommand):
     "Return true for all cells but the last"
     return index < len(self.alignments) - 1
 
-class FormulaArray(CommandBit):
-  "An array within a formula"
-
-  piece = 'array'
+class Environment(CommandBit):
+  "A \\begin{}...\\end environment with rows and cells."
 
   def parsebit(self, pos):
-    "Parse the array"
-    self.output = TaggedOutput().settag('table class="formula"', True)
-    self.parsealignments(pos)
+    "Parse the whole environment."
+    self.output = TaggedOutput().settag('table class="' + self.piece +
+        '"', True)
+    self.alignments = ['l']
     self.parserows(pos)
 
   def parserows(self, pos):
@@ -130,6 +129,17 @@ class FormulaArray(CommandBit):
       else:
         return
 
+class FormulaArray(Environment):
+  "An array within a formula"
+
+  piece = 'array'
+
+  def parsebit(self, pos):
+    "Parse the array"
+    self.output = TaggedOutput().settag('table class="formula"', True)
+    self.parsealignments(pos)
+    self.parserows(pos)
+
   def parsealignments(self, pos):
     "Parse the different alignments"
     # vertical
@@ -146,7 +156,7 @@ class FormulaArray(CommandBit):
     for l in bracket.literal:
       self.alignments.append(l)
 
-class FormulaCases(FormulaArray):
+class FormulaCases(Environment):
   "A cases statement"
 
   piece = 'cases'
@@ -157,7 +167,7 @@ class FormulaCases(FormulaArray):
     self.alignments = ['l', 'l']
     self.parserows(pos)
 
-class FormulaAlign(FormulaArray):
+class FormulaAlign(Environment):
   "A number of aligned formulae"
 
   piece = 'align'
@@ -169,7 +179,7 @@ class FormulaAlign(FormulaArray):
     self.parserows(pos)
 
 class BeginCommand(CommandBit):
-  "A \\begin command and what it entails (array or cases)"
+  "A \\begin{}...\end command and what it entails (array, cases, aligned)"
 
   commandmap = {FormulaConfig.array['begin']:''}
 
@@ -180,8 +190,6 @@ class BeginCommand(CommandBit):
     bracket = Bracket().parseliteral(pos)
     self.original += bracket.literal
     bit = self.findbit(bracket.literal)
-    if not bit:
-      return
     ending = FormulaConfig.array['end'] + '{' + bracket.literal + '}'
     pos.pushending(ending)
     bit.parsebit(pos)
@@ -194,8 +202,9 @@ class BeginCommand(CommandBit):
       if bit.piece == piece or bit.piece + '*' == piece:
         newbit = bit.clone()
         return newbit
-    Trace.error('Unknown command \\begin{' + piece + '}')
-    return None
+    bit = Environment()
+    bit.piece = piece
+    return bit
 
 FormulaCommand.commandbits += [BeginCommand()]
 

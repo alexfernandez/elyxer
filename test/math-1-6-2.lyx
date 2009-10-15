@@ -211,6 +211,26 @@ x=3\label{eq:second}\end{equation}
 \end_layout
 
 \begin_layout Standard
+Notice that eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:second"
+
+\end_inset
+
+ comes after eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:first"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 Some equations can also be numbered, even if they don't have a label.
 \end_layout
 
@@ -229,7 +249,7 @@ Other equations that contain * should not numbered, but perhaps aligned:
 
 \begin_layout Standard
 \begin_inset Formula \begin{align*}
-left & & right\end{align*}
+left &  & right\end{align*}
 
 \end_inset
 
@@ -237,20 +257,9 @@ left & & right\end{align*}
 \end_layout
 
 \begin_layout Standard
-Notice that eq.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:second"
-
-\end_inset
-
- comes after eq.
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:first"
-
+Now a random environment:
+\begin_inset Formula $\begin{gathered}x\end{gathered}
+y$
 \end_inset
 
 .
