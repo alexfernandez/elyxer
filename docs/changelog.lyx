@@ -190,6 +190,30 @@ begin{align*}
 Properly align equations for AMS aligned environment.
 \end_layout
 
+\begin_layout Itemize
+Correctly distinguish 
+\family typewriter
+
+\backslash
+epsilon
+\family default
+ 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ from 
+\family typewriter
+
+\backslash
+varepsilon
+\family default
+ 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.32 (2009-10-05):
