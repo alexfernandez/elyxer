@@ -236,6 +236,20 @@ unitfrac
 .
 \end_layout
 
+\begin_layout Itemize
+Added 
+\family typewriter
+
+\backslash
+dots
+\family default
+: 
+\begin_inset Formula $\dots$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.32 (2009-10-05):
