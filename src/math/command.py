@@ -96,6 +96,15 @@ class CommandBit(FormulaCommand):
     self.add(parameter)
     return parameter
 
+  def parsesquare(self, pos):
+    "Parse a square bracket"
+    bracket = SquareBracket()
+    if not bracket.detect(pos):
+      return None
+    bracket.parsebit(pos)
+    self.add(bracket)
+    return bracket
+
 class EmptyCommand(CommandBit):
   "An empty command (without parameters)"
 
@@ -217,15 +226,6 @@ class HybridFunction(CommandBit):
       Trace.error('Unknown hybrid function ' + self.translated[0])
       return
 
-  def parsesquare(self, pos):
-    "Parse a square bracket"
-    bracket = SquareBracket()
-    if not bracket.detect(pos):
-      return
-    bracket.parsebit(pos)
-    self.add(bracket)
-    return bracket
-
   def sqrt(self, root, radical):
     "A square root -- process the root"
     if root:
@@ -247,10 +247,17 @@ class FractionFunction(CommandBit):
     "Parse a fraction function with two parameters"
     tags = self.translated
     self.output = TaggedOutput().settag(self.translated[0])
+    align = self.parsesquare(pos)
+    if align:
+      self.contents.pop()
     parameter1 = self.parseparameter(pos)
     if not parameter1:
+      Trace.error('Invalid fraction function ' + self.translated[0])
       return
-    parameter1.output = TaggedOutput().settag(self.translated[1])
+    numerator = self.translated[1]
+    if align:
+      numerator = numerator[:-1] + '-' + align.contents[0].original + '"'
+    parameter1.output = TaggedOutput().settag(numerator)
     self.contents.append(FormulaConstant(self.translated[2]))
     parameter2 = self.parseparameter(pos)
     if not parameter2:

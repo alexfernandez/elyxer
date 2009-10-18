@@ -195,6 +195,7 @@ span.bar {
 	display: inline-block;
 	position: relative;
 	vertical-align: middle;
+	text-align: center;
 }
 .fraction .fraction {
 	font-size: 80%;
@@ -204,9 +205,18 @@ span.bar {
 	display: inline-block;
 	position: relative;
 	vertical-align: middle;
+	text-align: center;
 }
 span.numerator {
 	display: block;
+}
+span.numerator-l {
+	display: block;
+	text-align: left;
+}
+span.numerator-r {
+	display: block;
+	text-align: right;
 }
 span.denominator {
 	display: block;
