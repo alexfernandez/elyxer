@@ -358,6 +358,13 @@ target "http://www.seanet.com/~bradbell/omhelp/stdfun.htm"
 
 \end_inset
 
+, 
+\begin_inset LatexCommand url
+name "Markus Kuhn"
+target "[http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt||Markus Kuhn]"
+
+\end_inset
+
  and LyX developers Georg Baum, Uwe Stöhr and Jürgen Spitzmüller for their
  wonderful lists of TeX commands and Unicode equivalents.
  More thanks go to Christian Ridderström for helping me out right at the

@@ -39,6 +39,7 @@ class Config(object):
   py = 'conf/config.py'
   addcfg = None
   importcfg = None
+  importcsv = None
   help = False
 
   def run(self, args):
@@ -74,6 +75,7 @@ class Config(object):
     Trace.error('    --addcfg add.cfg: load additional config file')
     Trace.error('    --py config.py: choose Python config file')
     Trace.error('    --importcfg unicodesymbols: import LyX unicode symbols file')
+    Trace.error('    --importcsv unicodecsv: import a file of "\command,unicode" pairs')
     exit()
 
   def read(self):
@@ -84,6 +86,9 @@ class Config(object):
       self.mix(reader, addreader)
     if Config.importcfg:
       addreader = ImportCommands(Config.importcfg).parse()
+      self.mix(reader, addreader)
+    if Config.importcsv:
+      addreader = ImportCsv(Config.importcsv).parse()
       self.mix(reader, addreader)
     reader.objects['GeneralConfig.version']['date'] = datetime.date.today().isoformat()
     return reader

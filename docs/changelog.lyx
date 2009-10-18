@@ -215,6 +215,17 @@ varepsilon
 .
 \end_layout
 
+\begin_layout Itemize
+Added TeX-to-Unicode mappings from 
+\begin_inset LatexCommand url
+name "Markus Kuhn"
+target "http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt"
+
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.32 (2009-10-05):
