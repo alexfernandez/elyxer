@@ -353,7 +353,7 @@ class FormulaConfig(object):
       u'\\dashrightarrow':u' ⇢ ', u'\\dashv':u'⊣', u'\\ddag':u'‡', 
       u'\\ddagger':u'‡', u'\\ddots':u'⋱', u'\\deg':u'deg', u'\\det':u'det', 
       u'\\diamond':u'◇', u'\\diamondsuit':u'♦', u'\\dim':u'dim', 
-      u'\\displaystyle':u'', u'\\div':u'÷', u'\\doteq':u'≐', 
+      u'\\displaystyle':u'', u'\\div':u'÷', u'\\doteq':u'≐', u'\\dots':u'…', 
       u'\\downarrow':u'↓', u'\\earth':u'♁', u'\\ell':u'ℓ', u'\\emptyset':u'∅', 
       u'\\equiv':u' ≡ ', u'\\exists':u'∃', u'\\exp':u'exp', u'\\female':u'♀', 
       u'\\flat':u'♭', u'\\forall':u'∀', u'\\frown':u'⌢', u'\\frownie':u'☹', 
