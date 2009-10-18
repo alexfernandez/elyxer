@@ -1,5 +1,5 @@
-#LyX 1.5.7 created this file. For more info see http://www.lyx.org/
-\lyxformat 276
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
 \begin_document
 \begin_header
 \textclass article
@@ -65,6 +65,7 @@
 % redefine the greyed out note
 \end_preamble
 \options intoc,bibtotoc,idxtotoc,BCOR7mm,tablecaptionabove
+\use_default_options false
 \language english
 \inputencoding auto
 \font_roman default
@@ -75,9 +76,11 @@
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
+
 \graphics default
 \paperfontsize 12
 \spacing single
+\use_hyperref false
 \papersize default
 \use_geometry false
 \use_amsmath 1
@@ -131,8 +134,13 @@ Introduction
 \begin_layout Standard
 This document is intended as a showcase of the mathematical abilities of
  eLyXer; for more information be sure to visit the main page 
-\begin_inset LatexCommand url
-target "index.html"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+index.html
+\end_layout
 
 \end_inset
 
@@ -141,14 +149,24 @@ target "index.html"
 
 \begin_layout Standard
 There is a non-Unicode version 
-\begin_inset LatexCommand url
-target "math.html"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+math.html
+\end_layout
 
 \end_inset
 
  of this page with midspaces and a Unicode version 
-\begin_inset LatexCommand url
-target "math-unicode.html"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+math-unicode.html
+\end_layout
 
 \end_inset
 
@@ -203,10 +221,10 @@ Math Symbols
 \end_layout
 
 \begin_layout Standard
-eLyXer supports the whole set of math symbols in John D.
- Cook's list.
- 
-\begin_inset LatexCommand url
+eLyXer supports the whole set of math symbols in 
+\begin_inset CommandInset href
+LatexCommand href
+name "John D. Cook's list"
 target "http://www.johndcook.com/math_symbols.html"
 
 \end_inset
@@ -218,6 +236,19 @@ target "http://www.johndcook.com/math_symbols.html"
 .
  It can also render a few more: 
 \begin_inset Formula $\propto\times$
+\end_inset
+
+.
+ You also get all symbols from 
+\begin_inset CommandInset href
+LatexCommand href
+name "Markus Kuhn's list"
+target "http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt"
+
+\end_inset
+
+: 
+\begin_inset Formula $\bigodot\amalg$
 \end_inset
 
 .
@@ -259,10 +290,15 @@ Equations look good when items are properly separated.
 \begin_inset Note Greyedout
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Note: if you are viewing the non-Unicode version 
-\begin_inset LatexCommand url
-target "math.html"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+math.html
+\end_layout
 
 \end_inset
 
@@ -281,8 +317,13 @@ target "math.html"
 
 .
  Try out the Unicode version 
-\begin_inset LatexCommand url
-target "math-unicode.html"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+math-unicode.html
+\end_layout
 
 \end_inset
 
@@ -375,6 +416,11 @@ Units can be shown with or without a magnitude.
 \end_inset
 
 .
+ With fractional units: 
+\begin_inset Formula $\unitfrac[200]{km}{h}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
@@ -383,7 +429,8 @@ Numeration
 
 \begin_layout Standard
 Equations can be numbered, like 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "eq:first"
 
 \end_inset
@@ -402,7 +449,8 @@ y=x\label{eq:first}\end{equation}
 
 \begin_layout Standard
 And also like 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "eq:second"
 
 \end_inset
@@ -435,14 +483,16 @@ x=2y\end{equation}
 \begin_layout Standard
 Notice that eq.
  
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "eq:second"
 
 \end_inset
 
  comes after eq.
  
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "eq:first"
 
 \end_inset
@@ -492,6 +542,13 @@ A nice fraction:
 \end_inset
 
 .
+ A non-diminishing fraction containing alignments:
+\begin_inset Formula \[
+\cfrac{1}{1+\left(\cfrac[l]{1}{1+x}\times\cfrac[r]{1}{1+x}\right)}.\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
