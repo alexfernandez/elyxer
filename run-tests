@@ -45,6 +45,6 @@ cd ..
 name="appendix-1-6-2"
 ../elyxer.py --quiet --toc "$name-test.html" --css ../docs/toc.css --target contents "$name.lyx" "$name-toc-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-toc-test.html" "$name-toc-good.html"
-../indelyxer.py --quiet --css ../docs/toc.css --target contents "$name-test.html" "$name-newtoc-test.html"
-diff -u --ignore-matching-lines="create-date" "$name-newtoc-test.html" "$name-toc-good.html"
+#../indelyxer.py --quiet --css ../docs/toc.css --target contents "$name-test.html" "$name-newtoc-test.html"
+#diff -u --ignore-matching-lines="create-date" "$name-newtoc-test.html" "$name-toc-good.html"
 
