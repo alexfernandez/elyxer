@@ -23,22 +23,22 @@
 echo "Testing eLyXer -- any text below this line signals an error"
 for file in test/*.lyx; do
   name=$(dirname "$file")/$(basename "$file" .lyx)
-  ./elyxer.py --quiet "$name.lyx" "$name-test.html"
+  ./elyxer.py --quiet --css ../docs/lyx.css "$name.lyx" "$name-test.html"
   diff -u --ignore-matching-lines="create-date" "$name-good.html" "$name-test.html"
 done
 # now a limited subset of tests from within the directory
 cd test
 name="with images"
-../elyxer.py --quiet "$name.lyx" "$name-test.html"
+../elyxer.py --quiet --css ../docs/lyx.css "$name.lyx" "$name-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-good.html" "$name-test.html"
-../elyxer.py --html --quiet "$name.lyx" "$name-html-test.html"
+../elyxer.py --html --quiet --css ../docs/lyx.css "$name.lyx" "$name-html-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-html-good.html" "$name-html-test.html"
-../elyxer.py --quiet --forceformat ".jpg" "$name.lyx" "$name-jpg-test.html"
+../elyxer.py --quiet --css ../docs/lyx.css --forceformat ".jpg" "$name.lyx" "$name-jpg-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-jpg-good.html" "$name-jpg-test.html"
 # a test for --directory
 cd subdir
 name="appendix-1-6-2"
-../../elyxer.py --directory .. --quiet "$name.lyx" "$name-test.html"
+../../elyxer.py --directory .. --quiet --css ../../docs/lyx.css "$name.lyx" "$name-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-good.html" "$name-test.html"
 # test TOC generation using two methods: from LyX and from HTML
 cd ..

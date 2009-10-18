@@ -338,6 +338,16 @@ A nice fraction:
 .
 \end_layout
 
+\begin_layout Standard
+A non-diminishing fraction containing alignments:
+\begin_inset Formula \[
+\cfrac{1}{1+\left(\cfrac[l]{1}{1+x}\times\cfrac[r]{1}{1+x}\right)}.\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 Roots
 \end_layout
@@ -461,6 +471,11 @@ Units can be shown with or without a magnitude.
 .
  With: 
 \begin_inset Formula $\unit[57]{km}$
+\end_inset
+
+.
+ With a fraction: 
+\begin_inset Formula $\unitfrac[20]{km}{h}$
 \end_inset
 
 .

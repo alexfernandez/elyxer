@@ -217,13 +217,13 @@ class HybridFunction(CommandBit):
     "Parse a function with [] and {} parameters"
     square = self.parsesquare(pos)
     bracket = self.parseparameter(pos)
-    bracket.output = TaggedOutput().settag(self.translated[1])
-    if self.translated[0] == 'sqrt':
+    bracket.output = TaggedOutput().settag(self.translated)
+    if self.command == '\sqrt':
       self.sqrt(square, bracket)
-    elif self.translated[0] == 'unit':
+    elif self.command == '\unit':
       self.unit(square, bracket)
     else:
-      Trace.error('Unknown hybrid function ' + self.translated[0])
+      Trace.error('Unknown hybrid function ' + self.command)
       return
 
   def sqrt(self, root, radical):
@@ -248,21 +248,26 @@ class FractionFunction(CommandBit):
     tags = self.translated
     self.output = TaggedOutput().settag(self.translated[0])
     align = self.parsesquare(pos)
-    if align:
-      self.contents.pop()
     parameter1 = self.parseparameter(pos)
     if not parameter1:
-      Trace.error('Invalid fraction function ' + self.translated[0])
+      Trace.error('Invalid fraction function ' + self.translated[0] + 
+          ': missing first {}')
       return
     numerator = self.translated[1]
-    if align:
+    if align and self.command == '\\cfrac':
+      self.contents.pop(0)
       numerator = numerator[:-1] + '-' + align.contents[0].original + '"'
     parameter1.output = TaggedOutput().settag(numerator)
     self.contents.append(FormulaConstant(self.translated[2]))
     parameter2 = self.parseparameter(pos)
     if not parameter2:
+      Trace.error('Invalid fraction function ' + self.translated[0] + 
+          ': missing second {}')
       return
     parameter2.output = TaggedOutput().settag(self.translated[3])
+    if align and self.command == '\\unitfrac':
+      parameter1.type = 'font'
+      parameter2.type = 'font'
 
 FormulaFactory.bits += [FormulaCommand(), SymbolFunction()]
 FormulaCommand.commandbits = [

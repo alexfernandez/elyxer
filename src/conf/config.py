@@ -442,11 +442,11 @@ class FormulaConfig(object):
       u'\\cfrac':[u'span class="fullfraction"',u'span class="numerator"',u'',u'span class="denominator"',], 
       u'\\frac':[u'span class="fraction"',u'span class="numerator"',u'',u'span class="denominator"',], 
       u'\\nicefrac':[u'span class="fraction"',u'sup class="numerator"',u'⁄',u'sub class="denominator"',], 
+      u'\\unitfrac':[u'span class="fraction"',u'sup class="unit"',u'⁄',u'sub class="unit"',], 
       }
 
   hybridfunctions = {
-      u'\\sqrt':[u'sqrt',u'span class="sqrt"',], 
-      u'\\unit':[u'unit',u'span class="unit"',], 
+      u'\\sqrt':u'span class="sqrt"', u'\\unit':u'span class="unit"', 
       }
 
   labelfunctions = {

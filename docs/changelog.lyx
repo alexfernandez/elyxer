@@ -226,6 +226,16 @@ target "http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt"
 .
 \end_layout
 
+\begin_layout Itemize
+Support for 
+\family typewriter
+
+\backslash
+unitfrac
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.32 (2009-10-05):
