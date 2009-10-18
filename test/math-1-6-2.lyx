@@ -411,7 +411,7 @@ Fonts can be switched on and off.
 \end_layout
 
 \begin_layout Standard
-Regular text is shown italicized.
+By default, text in formulae is shown italicized.
  Variable: 
 \begin_inset Formula $meters$
 \end_inset
@@ -457,6 +457,11 @@ Regular text.
 .
  Phonetic alphabet: 
 \begin_inset Formula $7\text{\textipa{abcde}}$
+\end_inset
+
+.
+ Regular text can be embedded into formulae: 
+\begin_inset Formula $\textrm{regular text \backslash command \backslash another command \backslash \backslash no spaces allowed}$
 \end_inset
 
 .
