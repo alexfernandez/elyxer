@@ -1612,6 +1612,19 @@ The table of contents (and lists of objects) are lost in translation.
  A second processing pass might be added in the future to address this issue.
 \end_layout
 
+\begin_layout Enumerate
+Many AMS environments (like 
+\family typewriter
+alignat
+\family default
+, 
+\family typewriter
+gather
+\family default
+\SpecialChar \ldots{}
+) are not working or look strange -- some non-AMS environments too.
+\end_layout
+
 \begin_layout Subsection
 Contact Information
 \end_layout
