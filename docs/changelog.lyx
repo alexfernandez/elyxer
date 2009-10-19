@@ -69,15 +69,8 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-New TOC generation process based on an already-generated HTML document.
-\end_layout
-
-\begin_layout Itemize
-New binary file 
-\family typewriter
-indelyxer.py
-\family default
-.
+New TOC generation process based on an already-generated HTML document,
+ not ready for prime time yet.
 \end_layout
 
 \begin_layout Itemize

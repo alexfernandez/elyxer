@@ -23,10 +23,9 @@
 cd src
 ./exportconfig.py py
 ./coalesce.py principal.py > ../elyxer.py
-./coalesce.py indexer.py > ../indelyxer.py
 cp setup.py ../setup.py
 cd ..
-chmod 755 elyxer.py indelyxer.py
+chmod 755 elyxer.py
 # remove artifacts
 rm -f docs/*.png
 rm -f docs/*.lyx~
