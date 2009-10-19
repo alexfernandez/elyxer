@@ -1761,6 +1761,25 @@ reference "sub:CSS"
 \end_layout
 
 \begin_layout Description
+Q: Why use an online CSS, instead of placing the CSS file in the same directory
+ as the converted file?
+\end_layout
+
+\begin_layout Description
+A: There were pros and cons.
+ An online CSS resource allowed me to update it for everyone at the same
+ time, but might make it more difficult for people without an internet connectio
+n; local CSS files are more flexible but can also be confusing to novice
+ users.
+ In the end the online solution was preferred, with the 
+\family typewriter
+--css
+\family default
+ option as a fallback.
+ 
+\end_layout
+
+\begin_layout Description
 Q: I found a bug, what should I do?
 \end_layout
 
