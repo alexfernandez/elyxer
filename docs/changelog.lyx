@@ -64,6 +64,16 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.34 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Support for child document inclusion.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.33 (2009-10-19):
 \end_layout
 

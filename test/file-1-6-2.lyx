@@ -1,4 +1,4 @@
-#LyX 1.6.2 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -93,6 +93,20 @@ status open
 \begin_layout Plain Layout
 Actually, two notes which should not appear.
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now we include a different document.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "helloworld.lyx"
 
 \end_inset
 
