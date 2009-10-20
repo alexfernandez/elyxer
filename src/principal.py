@@ -51,7 +51,7 @@ def convertdoc(args):
     readdir(ioparser.fileout, 'destdirectory')
   else:
     Options.destdirectory = '.'
-  converter = eLyXerConverter(ioparser)
+  converter = eLyXerConverter().setio(ioparser)
   converter.convert()
 
 def main():

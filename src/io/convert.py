@@ -38,10 +38,21 @@ from math.postformula import *
 class eLyXerConverter(object):
   "Converter for a document in a lyx file"
 
-  def __init__(self, ioparser):
-    "Create the converter"
+  latestwriter = None
+
+  def setio(self, ioparser):
+    "Set the InOutParser"
     self.reader = LineReader(ioparser.filein)
     self.writer = LineWriter(ioparser.fileout)
+    eLyXerConverter.latestwriter = self.writer
+    return self
+
+  def reusewriter(self, filein):
+    "Convert a new input file, reusing the latest output file."
+    "Useful for embedding one document inside another."
+    self.reader = LineReader(filein)
+    self.writer = eLyXerConverter.latestwriter
+    return self
 
   def convert(self):
     "Perform the conversion for the document"
