@@ -103,6 +103,7 @@ class OutputPath(Path):
     while self.path.startswith(backdir):
       Trace.debug('Backdir in: ' + self.path)
       self.path = self.path[len(backdir):]
-      if self.url.startswith('../'):
-        self.url = self.url[len('../'):]
+    while self.url.startswith('../'):
+      Trace.debug('Backdir in: ' + self.url)
+      self.url = self.url[len('../'):]
 
