@@ -27,18 +27,16 @@
 from io.fileline import *
 from util.options import *
 from gen.factory import *
-from gen.toc import *
-from gen.structure import *
 from post.postprocess import *
-from post.postlist import *
-from post.posttable import *
-from math.postformula import *
 
 
 class eLyXerConverter(object):
   "Converter for a document in a lyx file"
 
   latestwriter = None
+
+  def __init__(self):
+    self.filterheader = False
 
   def setio(self, ioparser):
     "Set the InOutParser"
@@ -47,11 +45,12 @@ class eLyXerConverter(object):
     eLyXerConverter.latestwriter = self.writer
     return self
 
-  def reusewriter(self, filein):
-    "Convert a new input file, reusing the latest output file."
-    "Useful for embedding one document inside another."
+  def embed(self, filein):
+    "Embed the results for a new input file into the latest output file."
+    "Header and footer are ignored. Useful for embedding one document inside another."
     self.reader = LineReader(filein)
     self.writer = eLyXerConverter.latestwriter
+    self.filterheader = True
     return self
 
   def convert(self):
@@ -71,12 +70,19 @@ class eLyXerConverter(object):
   def processcontents(self, write):
     "Parse the contents and write it by containers"
     factory = ContainerFactory()
-    postproc = Postprocessor()
+    self.postproc = Postprocessor()
     while not self.reader.finished():
       containers = factory.createsome(self.reader)
       for container in containers:
-        container = postproc.postprocess(container)
-        write(container)
+        self.writecontainer(container, write)
+
+  def writecontainer(self, container, write):
+    "Postprocess and write a container. It might be filtered out,"
+    "e.g. a header in an embedded container."
+    if self.filterheader and container.__class__ in [LyxHeader, LyxFooter]:
+      return
+    container = self.postproc.postprocess(container)
+    write(container)
 
 class InOutParser(object):
   "Parse in and out arguments"

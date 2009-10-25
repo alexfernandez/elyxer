@@ -174,6 +174,6 @@ class IncludeInset(Container):
     "Include the provided child document"
     self.filename = self.parser.parameters['filename']
     Trace.debug('Child document: ' + self.filename)
-    converter = io.convert.eLyXerConverter().reusewriter(self.filename)
+    converter = io.convert.eLyXerConverter().embed(self.filename)
     converter.convert()
 
