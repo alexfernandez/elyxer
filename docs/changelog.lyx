@@ -69,7 +69,10 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-Support for child document inclusion.
+Support for child document inclusion (Insert\SpecialChar \menuseparator
+File\SpecialChar \menuseparator
+Child Document\SpecialChar \ldots{}
+).
 \end_layout
 
 \end_deeper

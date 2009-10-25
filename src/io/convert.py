@@ -24,10 +24,16 @@
 # http://www.nongnu.org/elyxer/
 
 
+import os.path
 from io.fileline import *
 from util.options import *
 from gen.factory import *
+from gen.toc import *
+from gen.inset import *
 from post.postprocess import *
+from post.postlist import *
+from post.posttable import *
+from math.postformula import *
 
 
 class eLyXerConverter(object):
@@ -110,4 +116,14 @@ class InOutParser(object):
     if len(args) > 0:
       raise Exception('Unused arguments: ' + unicode(args))
     return self
+
+class ConverterFactory(object):
+  "Create a converter fit for converting a filename and embedding the result."
+
+  def create(self, filename):
+    "Create a converter for a given filename."
+    fullname = os.path.join(Options.directory, filename)
+    return eLyXerConverter().embed(fullname)
+
+IncludeInset.converterfactory = ConverterFactory()
 

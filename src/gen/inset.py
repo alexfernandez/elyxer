@@ -29,7 +29,7 @@ from io.output import *
 from gen.container import *
 from gen.structure import *
 from gen.layout import *
-import io.convert
+from gen.factory import *
 
 
 class InsetText(Container):
@@ -166,6 +166,9 @@ class BoxInset(Container):
 class IncludeInset(Container):
   "A child document included within another."
 
+  # the converter factory will be set in converter.py
+  converterfactory = None
+
   def __init__(self):
     self.parser = InsetParser()
     self.output = ContentsOutput()
@@ -174,6 +177,6 @@ class IncludeInset(Container):
     "Include the provided child document"
     self.filename = self.parser.parameters['filename']
     Trace.debug('Child document: ' + self.filename)
-    converter = io.convert.eLyXerConverter().embed(self.filename)
+    converter = IncludeInset.converterfactory.create(self.filename)
     converter.convert()
 
