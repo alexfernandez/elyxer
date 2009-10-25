@@ -44,13 +44,15 @@ class Image(Container):
     if not self.origin.exists():
       Trace.error('Image ' + unicode(self.origin) + ' not found')
       return
-    self.destination = self.checkext(OutputPath(self.origin))
+    self.destination = self.getdestination(self.origin)
     self.convert(self.getparams())
     imagefile = ImageFile(self.destination)
     self.width, self.height = imagefile.getdimensions()
 
-  def checkext(self, destination):
-    "Convert extension of destination to output image format"
+  def getdestination(self, origin):
+    "Convert origin path to destination path."
+    "Changes extension of destination to output image format."
+    destination = OutputPath(origin)
     forceformat = '.jpg'
     forcedest = '.png'
     if Options.forceformat:
@@ -58,6 +60,7 @@ class Image(Container):
       forcedest = Options.forceformat
     if not destination.hasext(forceformat):
       destination.changeext(forcedest)
+    destination.removebackdirs()
     return destination
 
   def convert(self, params):

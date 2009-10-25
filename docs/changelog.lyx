@@ -75,6 +75,15 @@ Child Document\SpecialChar \ldots{}
 ).
 \end_layout
 
+\begin_layout Itemize
+Avoid generating images on different directories (relative paths starting
+ with 
+\family typewriter
+../
+\family default
+).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.33 (2009-10-19):

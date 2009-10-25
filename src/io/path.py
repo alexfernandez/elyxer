@@ -96,3 +96,13 @@ class OutputPath(Path):
     if len(dir) > 0 and not os.path.exists(dir):
       os.makedirs(dir)
 
+  def removebackdirs(self):
+    "Remove any occurrences of ../ (or ..\ on Windows)"
+    self.path = os.path.normpath(self.path)
+    backdir = '..' + os.path.sep
+    while self.path.startswith(backdir):
+      Trace.debug('Backdir in: ' + self.path)
+      self.path = self.path[len(backdir):]
+      if self.url.startswith('../'):
+        self.url = self.url[len('../'):]
+
