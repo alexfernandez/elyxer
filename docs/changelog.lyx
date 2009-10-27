@@ -98,6 +98,18 @@ maltese
 .
 \end_layout
 
+\begin_layout Itemize
+Removed annoying message 
+\begin_inset Quotes eld
+\end_inset
+
+Unexpected end of bracket
+\begin_inset Quotes erd
+\end_inset
+
+ when parsing empty brackets.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.33 (2009-10-19):

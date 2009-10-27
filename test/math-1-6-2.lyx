@@ -403,7 +403,60 @@ x+1 & i<3\end{cases}$
 \end_layout
 
 \begin_layout Chapter
+Spacing
+\end_layout
+
+\begin_layout Standard
+The command 
+\family typewriter
+
+\backslash
+raisebox
+\family default
+ is useful to, surprisingly, raise a little box.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\raisebox{2mm}{raised}over\raisebox{-2mm}{lowered}\textrm{and back}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It can also be used just for spacing.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\raisebox{5mm}{}B^{V}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+There are other spacings commands.
+\end_layout
+
+\begin_layout Chapter
 Fonts
+\end_layout
+
+\begin_layout Standard
+Cases
+\end_layout
+
+\begin_layout Standard
+Used to switch several values.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $y=\begin{cases}
+x & i=0,\\
+x+1 & i<3\end{cases}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -461,7 +514,7 @@ Regular text.
 
 .
  Regular text can be embedded into formulae: 
-\begin_inset Formula $\textrm{regular text \backslash command \backslash another command \backslash \backslash no spaces allowed}$
+\begin_inset Formula $\textrm{regular text \backslash command \backslash another command \backslash\backslash no spaces allowed}$
 \end_inset
 
 .

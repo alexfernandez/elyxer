@@ -131,7 +131,6 @@ class Bracket(FormulaBit):
       self.add(self.inner)
       return
     if pos.finished():
-      Trace.error('Unexpected end of bracket')
       return
     if pos.current() != self.ending:
       Trace.error('No formula in bracket at ' + pos.remaining())
