@@ -110,6 +110,16 @@ Unexpected end of bracket
  when parsing empty brackets.
 \end_layout
 
+\begin_layout Itemize
+Support for 
+\family typewriter
+
+\backslash
+raisebox
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.33 (2009-10-19):

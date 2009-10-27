@@ -443,23 +443,6 @@ Fonts
 \end_layout
 
 \begin_layout Standard
-Cases
-\end_layout
-
-\begin_layout Standard
-Used to switch several values.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $y=\begin{cases}
-x & i=0,\\
-x+1 & i<3\end{cases}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Fonts can be switched on and off.
 \end_layout
 

@@ -244,8 +244,7 @@ class FractionFunction(CommandBit):
   commandmap = FormulaConfig.fractionfunctions
 
   def parsebit(self, pos):
-    "Parse a fraction function with two parameters"
-    tags = self.translated
+    "Parse a fraction function with two parameters (optional alignment)"
     self.output = TaggedOutput().settag(self.translated[0])
     align = self.parsesquare(pos)
     parameter1 = self.parseparameter(pos)
@@ -269,10 +268,28 @@ class FractionFunction(CommandBit):
       parameter1.type = 'font'
       parameter2.type = 'font'
 
+class SpacingFunction(CommandBit):
+  "A spacing function with two parameters"
+
+  commandmap = FormulaConfig.spacingfunctions
+
+  def parsebit(self, pos):
+    "Parse a spacing function with two parameters"
+    parameter1 = Bracket().parseliteral(pos)
+    if not parameter1:
+      Trace.error('Missing first {} in function ' + self.translated[0])
+      return
+    parameter2 = self.parseparameter(pos)
+    if not parameter2:
+      Trace.error('Missing second {} in function ' + self.translated[0])
+      return
+    self.output = TaggedOutput().settag(self.translated +
+        ' style="vertical-align:' + parameter1.literal + '"')
+
 FormulaFactory.bits += [FormulaCommand(), SymbolFunction()]
 FormulaCommand.commandbits = [
     EmptyCommand(), AlphaCommand(), OneParamFunction(), DecoratingFunction(),
     FractionFunction(), FontFunction(), LabelFunction(), TextFunction(),
-    HybridFunction(),
+    HybridFunction(), SpacingFunction(),
     ]
 
