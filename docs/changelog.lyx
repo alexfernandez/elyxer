@@ -84,6 +84,20 @@ Avoid generating images on different directories (relative paths starting
 ).
 \end_layout
 
+\begin_layout Itemize
+Added 
+\family typewriter
+
+\backslash
+maltese
+\family default
+ 
+\begin_inset Formula $\maltese$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.33 (2009-10-19):
