@@ -36,7 +36,13 @@ class TOCWriter(object):
     self.depth = 0
     Options.nocopy = True
 
-  def writetoc(self, container):
+  def clone(self, filterheader):
+    "Return a cloned copy."
+    clone = TOCWriter()
+    clone.writer = self.writer
+    return clone
+
+  def write(self, container):
     "Write the table of contents for a container."
     if container.__class__ in [LyxHeader, LyxFooter]:
       self.writeheaderfooter(container)

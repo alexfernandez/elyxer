@@ -120,6 +120,14 @@ raisebox
 .
 \end_layout
 
+\begin_layout Itemize
+Created new structure of 
+\family typewriter
+Writer
+\family default
+s, preparing for document segmentation and TOC generation.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.33 (2009-10-19):

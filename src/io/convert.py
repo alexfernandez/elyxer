@@ -41,13 +41,14 @@ class eLyXerConverter(object):
 
   latestwriter = None
 
-  def __init__(self):
-    self.filterheader = False
-
   def setio(self, ioparser):
     "Set the InOutParser"
     self.reader = LineReader(ioparser.filein)
-    self.writer = LineWriter(ioparser.fileout)
+    linewriter = LineWriter(ioparser.fileout)
+    if Options.toc:
+      self.writer = TOCWriter(linewriter)
+    else:
+      self.writer = ContainerWriter(linewriter)
     eLyXerConverter.latestwriter = self.writer
     return self
 
@@ -55,40 +56,45 @@ class eLyXerConverter(object):
     "Embed the results for a new input file into the latest output file."
     "Header and footer are ignored. Useful for embedding one document inside another."
     self.reader = LineReader(filein)
-    self.writer = eLyXerConverter.latestwriter
-    self.filterheader = True
+    self.writer = eLyXerConverter.latestwriter.clone(filterheader = True)
     return self
 
   def convert(self):
     "Perform the conversion for the document"
     try:
-      if Options.toc:
-        # generate TOC
-        writer = TOCWriter(self.writer)
-        self.processcontents(lambda container: writer.writetoc(container))
-      else:
-        # generate converted document
-        self.processcontents(lambda container: self.writer.write(container.gethtml()))
+      self.processcontents()
     except (Exception):
       Trace.error('Conversion failed at ' + self.reader.currentline())
       raise
 
-  def processcontents(self, write):
+  def processcontents(self):
     "Parse the contents and write it by containers"
     factory = ContainerFactory()
     self.postproc = Postprocessor()
     while not self.reader.finished():
       containers = factory.createsome(self.reader)
       for container in containers:
-        self.writecontainer(container, write)
+        container = self.postproc.postprocess(container)
+        self.writer.write(container)
 
-  def writecontainer(self, container, write):
-    "Postprocess and write a container. It might be filtered out,"
-    "e.g. a header in an embedded container."
+class ContainerWriter(object):
+  "A writer of containers. Just writes them out to a line writer."
+
+  def __init__(self, linewriter):
+    self.linewriter = linewriter
+    self.filterheader = False
+
+  def clone(self, filterheader):
+    "Clone the writer."
+    clone = ContainerWriter(self.linewriter)
+    clone.filterheader = filterheader
+    return clone
+
+  def write(self, container):
+    "Write a container to the line writer."
     if self.filterheader and container.__class__ in [LyxHeader, LyxFooter]:
       return
-    container = self.postproc.postprocess(container)
-    write(container)
+    self.linewriter.write(container.gethtml())
 
 class InOutParser(object):
   "Parse in and out arguments"
