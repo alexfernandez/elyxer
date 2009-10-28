@@ -326,8 +326,8 @@ class FormulaConfig(object):
       }
 
   commands = {
-      u'\\!':u'', u'\\%':u'%', u'\\,':u' ', u'\\:':u' ', u'\\Box':u'□', 
-      u'\\CIRCLE':u'●', u'\\CheckedBox':u'☑', u'\\Circle':u'○', 
+      u'\\!':u'', u'\\$':u'$', u'\\%':u'%', u'\\,':u' ', u'\\:':u' ', 
+      u'\\Box':u'□', u'\\CIRCLE':u'●', u'\\CheckedBox':u'☑', u'\\Circle':u'○', 
       u'\\Diamond':u'◇', u'\\Downarrow':u'⇓', u'\\Im':u'ℑ', u'\\Join':u'⨝', 
       u'\\LEFTCIRCLE':u'◖', u'\\LEFTcircle':u'◐', u'\\Leftarrow':u'⇐', 
       u'\\Leftrightarrow':u' ⇔ ', u'\\Longleftarrow':u'⟸', 
@@ -356,11 +356,11 @@ class FormulaConfig(object):
       u'\\diamond':u'◇', u'\\diamondsuit':u'♦', u'\\dim':u'dim', 
       u'\\displaystyle':u'', u'\\div':u'÷', u'\\doteq':u'≐', u'\\dots':u'…', 
       u'\\downarrow':u'↓', u'\\earth':u'♁', u'\\ell':u'ℓ', u'\\emptyset':u'∅', 
-      u'\\equiv':u' ≡ ', u'\\exists':u'∃', u'\\exp':u'exp', u'\\female':u'♀', 
-      u'\\flat':u'♭', u'\\forall':u'∀', u'\\frown':u'⌢', u'\\frownie':u'☹', 
-      u'\\gcd':u'gcd', u'\\ge':u' ≥ ', u'\\gemini':u'♊', u'\\geq':u' ≥ ', 
-      u'\\geq)':u'≥', u'\\gets':u'←', u'\\gg':u'≫', u'\\gimel':u'ℷ', 
-      u'\\hbar':u'ℏ', u'\\heartsuit':u'♥', u'\\hom':u'hom', 
+      u'\\equiv':u' ≡ ', u'\\euro':u'€', u'\\exists':u'∃', u'\\exp':u'exp', 
+      u'\\female':u'♀', u'\\flat':u'♭', u'\\forall':u'∀', u'\\frown':u'⌢', 
+      u'\\frownie':u'☹', u'\\gcd':u'gcd', u'\\ge':u' ≥ ', u'\\gemini':u'♊', 
+      u'\\geq':u' ≥ ', u'\\geq)':u'≥', u'\\gets':u'←', u'\\gg':u'≫', 
+      u'\\gimel':u'ℷ', u'\\hbar':u'ℏ', u'\\heartsuit':u'♥', u'\\hom':u'hom', 
       u'\\hookleftarrow':u'↩', u'\\hookrightarrow':u'↪', u'\\imath':u'ı', 
       u'\\implies':u'  ⇒  ', u'\\in':u' ∈ ', u'\\inf':u'inf', u'\\infty':u'∞', 
       u'\\int':u'<span class="bigsymbol">∫</span>', 
@@ -415,8 +415,8 @@ class FormulaConfig(object):
       u'\\varclubsuit':u'♧', u'\\vardiamondsuit':u'♦', u'\\varheartsuit':u'♥', 
       u'\\varspadesuit':u'♤', u'\\vdash':u'⊢', u'\\vdots':u'⋮', u'\\vee':u'∨', 
       u'\\vee)':u'∨', u'\\vert':u'∣', u'\\virgo':u'♍', u'\\wedge':u'∧', 
-      u'\\wedge)':u'∧', u'\\wp':u'℘', u'\\wr':u'≀', u'\\{':u'{', u'\\|':u'∥', 
-      u'\\}':u'}', 
+      u'\\wedge)':u'∧', u'\\wp':u'℘', u'\\wr':u'≀', u'\\yen':u'¥', u'\\{':u'{', 
+      u'\\|':u'∥', u'\\}':u'}', 
       }
 
   decoratingfunctions = {
