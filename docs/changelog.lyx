@@ -64,6 +64,34 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.35 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Added new characters: 
+\family typewriter
+
+\backslash
+checkmark
+\family default
+, 
+\family typewriter
+
+\backslash
+blacklozenge
+\family default
+, 
+\family typewriter
+
+\backslash
+nexists
+\family default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.34 (2009-10-28):
 \end_layout
 
