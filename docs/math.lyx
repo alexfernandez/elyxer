@@ -134,7 +134,6 @@ Introduction
 \begin_layout Standard
 This document is intended as a showcase of the mathematical abilities of
  eLyXer; for more information be sure to visit the 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "main page"
@@ -142,14 +141,11 @@ target "index.html"
 
 \end_inset
 
-
-\lang english
 .
 \end_layout
 
 \begin_layout Standard
 There is a 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "non-Unicode version"
@@ -157,10 +153,7 @@ target "math.html"
 
 \end_inset
 
-
-\lang english
  of this page with midspaces and a 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "Unicode version"
@@ -168,8 +161,6 @@ target "math-unicode.html"
 
 \end_inset
 
-
-\lang english
  with mathematical spaces (generated with 
 \family typewriter
 --unicode
@@ -422,6 +413,15 @@ Units can be shown with or without a magnitude.
 .
  With fractional units: 
 \begin_inset Formula $\unitfrac[200]{km}{h}$
+\end_inset
+
+.
+ With a fraction before the units: 
+\begin_inset Formula $\unit[\nicefrac{3}{2}]{km}$
+\end_inset
+
+, 
+\begin_inset Formula $\unit[\frac{7}{16}]{s}$
 \end_inset
 
 .

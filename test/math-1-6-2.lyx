@@ -515,8 +515,17 @@ Units can be shown with or without a magnitude.
 \end_inset
 
 .
- With a fraction: 
+ Fractional units: 
 \begin_inset Formula $\unitfrac[20]{km}{h}$
+\end_inset
+
+.
+ With a fraction before the units: 
+\begin_inset Formula $\unit[\nicefrac{3}{2}]{km}$
+\end_inset
+
+, 
+\begin_inset Formula $\unit[\frac{7}{16}]{s}$
 \end_inset
 
 .

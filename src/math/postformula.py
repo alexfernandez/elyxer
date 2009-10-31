@@ -115,7 +115,8 @@ class PostFormula(object):
       if bit.type == 'alpha':
         self.italicize(bit, contents)
       elif bit.type == 'font' and last and last.type == 'number':
-        last.contents.append(FormulaConstant(u' '))
+        bit.contents.insert(0, FormulaConstant(u' '))
+        # last.contents.append(FormulaConstant(u' '))
       last = bit
 
   def flatten(self, bit):
