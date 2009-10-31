@@ -65,6 +65,11 @@ div.float {
 	margin-bottom: 1ex;
 	text-align: center;
 }
+span.float {
+	margin-top: 1ex;
+	margin-bottom: 1ex;
+	text-align: center;
+}
 div.figure {
 	display: inline-block;
 	padding: 0.2ex;

@@ -48,6 +48,7 @@ class Float(Container):
     self.type = self.header[2]
     self.embed('div class="' + self.type + '"')
     for float in self.searchall(Float):
+      float.output.tag = float.output.tag.replace('div', 'span')
       float.parent = self
       self.children.append(float)
 
@@ -55,6 +56,10 @@ class Float(Container):
     "Embed the whole contents in a div"
     tagged = TaggedText().complete(self.contents, tag, True)
     self.contents = [tagged]
+
+  def __unicode__(self):
+    "Return a printable representation"
+    return 'Floating inset of type ' + self.type
 
 class Wrap(Float):
   "A wrapped (floating) float"

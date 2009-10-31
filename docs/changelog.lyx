@@ -103,7 +103,7 @@ Solved CSS validation error in
 \family typewriter
 table.align
 \family default
- (thanks, Olivier Ripoll).
+ (thanks, Olivier).
 \end_layout
 
 \begin_layout Itemize
@@ -127,7 +127,7 @@ Add a space after a fraction and before the units:
 \end_layout
 
 \begin_layout Itemize
-Float within a float.
+Corrected display of float within a float (thanks again, Olivier!).
 \end_layout
 
 \end_deeper
