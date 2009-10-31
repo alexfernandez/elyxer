@@ -385,9 +385,9 @@ table.cases tr td {
 }
 table.align {
 	display: inline-block;
-	text-align: center;
+	text-align: right;
 	margin: 0;
-	vertical-align: right;
+	vertical-align: middle;
 }
 table.align tr td {
 	padding: 0 1em;
