@@ -1,8 +1,9 @@
-#LyX 1.5.7 created this file. For more info see http://www.lyx.org/
-\lyxformat 276
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
 \begin_document
 \begin_header
 \textclass article
+\use_default_options false
 \language english
 \inputencoding auto
 \font_roman default
@@ -13,9 +14,11 @@
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
+
 \graphics default
 \paperfontsize default
 \spacing single
+\use_hyperref false
 \papersize default
 \use_geometry false
 \use_amsmath 1
@@ -54,7 +57,8 @@ eLyXer Changelog
 This document lists all public versions, the date they were released on
  and the changes they contain.
  For more information about eLyXer visit the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "main page"
 target "index.html"
 
@@ -91,6 +95,10 @@ nexists
 \end_layout
 
 \begin_layout Itemize
+Updated all documentation to LyX 1.6.
+\end_layout
+
+\begin_layout Itemize
 Solved CSS validation error in 
 \family typewriter
 table.align
@@ -107,7 +115,15 @@ s.
 \end_layout
 
 \begin_layout Itemize
-Add a space after a fraction and before the units.
+Add a space after a fraction and before the units: 
+\begin_inset Formula $\unit[\nicefrac{3}{2}]{km}$
+\end_inset
+
+, 
+\begin_inset Formula $\unit[\frac{7}{16}]{s}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Itemize
@@ -328,7 +344,8 @@ varepsilon
 
 \begin_layout Itemize
 Added TeX-to-Unicode mappings from 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "Markus Kuhn"
 target "http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt"
 
@@ -455,7 +472,8 @@ elyxerconv.py
 io/convert.py
 \family default
 ), see 
-\begin_inset LatexCommand htmlurl
+\begin_inset CommandInset href
+LatexCommand href
 name "lyx-devel thread"
 target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154647.html"
 
@@ -471,7 +489,8 @@ elyxer.py
 python -m
 \family default
 .; see also 
-\begin_inset LatexCommand htmlurl
+\begin_inset CommandInset href
+LatexCommand href
 name "lyx-devel thread"
 target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154749.html"
 
@@ -482,7 +501,8 @@ target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154749.html"
 
 \begin_layout Itemize
 eLyXer was added to the Python Package Index (
-\begin_inset LatexCommand htmlurl
+\begin_inset CommandInset href
+LatexCommand href
 name "PyPI"
 target "http://pypi.python.org/pypi"
 
@@ -494,7 +514,8 @@ target "http://pypi.python.org/pypi"
 
 \begin_layout Itemize
 Updated documentation (
-\begin_inset LatexCommand htmlurl
+\begin_inset CommandInset href
+LatexCommand href
 name "user guide"
 target "userguide.html"
 
@@ -557,7 +578,8 @@ elyxer.py
 
 \begin_layout Itemize
 Added 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "distutils"
 target "http://docs.python.org/distutils/index.html"
 
@@ -582,7 +604,10 @@ Added command line option
 \begin_layout Itemize
 Switched all options in command line help to quotes: 
 \family typewriter
---title\InsetSpace ~
+--title
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 <
@@ -594,7 +619,10 @@ title
 \series default
  is now 
 \family typewriter
---title\InsetSpace ~
+--title
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -911,14 +939,16 @@ Also show roots and arrays correctly in those browsers.
 
 \begin_layout Itemize
 Added 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "Math Showcase"
 target "math.html"
 
 \end_inset
 
  to test on 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "browsershots.org"
 target "http://browsershots.org/"
 
@@ -1739,9 +1769,10 @@ Range of supported quotes is greater.
 \end_layout
 
 \begin_layout Itemize
-Default CSS is always 
-\begin_inset LatexCommand url
-name "on nongnu.org"
+Default CSS is always on 
+\begin_inset CommandInset href
+LatexCommand href
+name "nongnu.org"
 target "http://www.nongnu.org/elyxer/lyx.css"
 
 \end_inset

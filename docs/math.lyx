@@ -133,49 +133,53 @@ Introduction
 
 \begin_layout Standard
 This document is intended as a showcase of the mathematical abilities of
- eLyXer; for more information be sure to visit the main page 
-\begin_inset Flex URL
-status collapsed
+ eLyXer; for more information be sure to visit the 
 
-\begin_layout Plain Layout
-
-index.html
-\end_layout
+\begin_inset CommandInset href
+LatexCommand href
+name "main page"
+target "index.html"
 
 \end_inset
 
+
+\lang english
 .
 \end_layout
 
 \begin_layout Standard
-There is a non-Unicode version 
-\begin_inset Flex URL
-status collapsed
+There is a 
 
-\begin_layout Plain Layout
-
-math.html
-\end_layout
+\begin_inset CommandInset href
+LatexCommand href
+name "non-Unicode version"
+target "math.html"
 
 \end_inset
 
- of this page with midspaces and a Unicode version 
-\begin_inset Flex URL
-status collapsed
 
-\begin_layout Plain Layout
+\lang english
+ of this page with midspaces and a 
 
-math-unicode.html
-\end_layout
+\begin_inset CommandInset href
+LatexCommand href
+name "Unicode version"
+target "math-unicode.html"
 
 \end_inset
 
+
+\lang english
  with mathematical spaces (generated with 
 \family typewriter
 --unicode
 \family default
-).
- Mind you, despite the name spaces are the only difference.
+), both generated from the same 
+\family typewriter
+.lyx
+\family default
+ source file.
+ Mind you, despite the name, spaces are the only difference.
  Check the one that best suits you.
 \end_layout
 

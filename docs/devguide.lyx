@@ -1,8 +1,9 @@
-#LyX 1.5.7 created this file. For more info see http://www.lyx.org/
-\lyxformat 276
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
 \begin_document
 \begin_header
 \textclass article
+\use_default_options false
 \language english
 \inputencoding auto
 \font_roman default
@@ -13,9 +14,11 @@
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
+
 \graphics default
 \paperfontsize default
 \spacing single
+\use_hyperref false
 \papersize default
 \use_geometry false
 \use_amsmath 1
@@ -62,12 +65,16 @@ The Basics
 This document should help you get started extending eLyXer.
  The package (including this guide and all accompanying materials) is licensed
  under the 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "GPL version 3"
 target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
 
 \end_inset
 
+
+\lang english
  or, at your option, any later version.
  See the 
 \family typewriter
@@ -75,12 +82,16 @@ LICENSE
 \family default
  file for details.
  Also visit the 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "main page"
 target "index.html"
 
 \end_inset
 
+
+\lang english
  to find out about the latest developments.
 \end_layout
 
@@ -114,7 +125,8 @@ git
 \family default
 , created by Linus Torvalds (of Linux fame).
  The code is hosted in Savannah 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "savannah-elyxer"
 
 \end_inset
@@ -265,7 +277,8 @@ Container
 
 \begin_layout Standard
 The following figure 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "fig:Container-structure"
 
 \end_inset
@@ -322,7 +335,7 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename container.svg
@@ -332,11 +345,12 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "fig:Container-structure"
 
 \end_inset
@@ -689,7 +703,8 @@ BibitemInset
 \family default
  here.
  We want to parse the LyX command in listing 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "alg:bibitem-command"
 
 \end_inset
@@ -740,11 +755,12 @@ key "mykey"
 end_inset
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "alg:bibitem-command"
 
 \end_inset
@@ -778,7 +794,8 @@ bibitem.py
 \family default
 .
  So this file starts as shown in listing 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "alg:bibitem-class"
 
 \end_inset
@@ -801,24 +818,39 @@ class BibitemInset(Container):
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 "An inset containing a bibitem command"
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 start = '
 \backslash
 
@@ -829,8 +861,13 @@ begin_inset CommandInset bibitem'
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 ending = '
 \backslash
 
@@ -838,11 +875,12 @@ ending = '
 end_inset'
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "alg:bibitem-class"
 
 \end_inset
@@ -894,7 +932,8 @@ False
 \family default
 .
  Listing 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "alg:bibitem-init"
 
 \end_inset
@@ -911,56 +950,106 @@ status open
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 def __init__(self):
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 self.parser = BoundedParser()
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 self.output = TagOutput()
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 self.tag = 'a'
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 self.breaklines = False
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "alg:bibitem-init"
 
 \end_inset
@@ -1013,7 +1102,8 @@ StringContainer
 \family default
 .
  The result is shown in listing 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "alg:bibitem-process"
 
 \end_inset
@@ -1030,106 +1120,211 @@ status open
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 def process(self):
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 #skip first line
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 del self.contents[0]
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 # parse second line: fixed string
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 string = self.contents[0]
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 # split around the "
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 key = string.contents[0].split('"')[1]
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 # make tag and contents
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 self.tag = 'a name="' + key + '"'
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 string.contents[0] = '[ref] '
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "alg:bibitem-process"
 
 \end_inset
@@ -1158,7 +1353,8 @@ ContainerFactory
 \family default
 ; this has to be done outside the class definition.
  The complete file is shown in listing 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "alg:bibitem-complete"
 
 \end_inset
@@ -1193,8 +1389,13 @@ from container import *
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 
 \end_layout
 
@@ -1207,24 +1408,39 @@ class BibitemInset(Container):
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 "An inset containing a bibitem command"
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 start = '
 \backslash
 
@@ -1235,8 +1451,13 @@ begin_inset CommandInset bibitem'
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 ending = '
 \backslash
 
@@ -1247,160 +1468,317 @@ end_inset'
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 def __init__(self):
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 self.parser = BoundedParser()
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 self.output = TagOutput()
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 self.breaklines = False
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 def process(self):
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 #skip first line
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 del self.contents[0]
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 # parse second line: fixed string
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 string = self.contents[0]
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 # split around the "
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 key = string.contents[0].split('"')[1]
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 # make tag and contents
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 self.tag = 'a name="' + key + '"'
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 string.contents[0] = '[ref] '
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 
 \end_layout
 
@@ -1410,11 +1788,12 @@ string.contents[0] = '[ref] '
 ContainerFactory.types.append(BibitemInset)
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "alg:bibitem-complete"
 
 \end_inset
@@ -1438,7 +1817,8 @@ BibitemInset
 
 \begin_layout Standard
 The end result of processing the command in listing 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "alg:bibitem-command"
 
 \end_inset
@@ -1459,7 +1839,8 @@ The final touch is to make sure that the class is run, importing it in the
 elyxer.py
 \family default
 , as shown in listing 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "alg:bibitem-include"
 
 \end_inset
@@ -1506,11 +1887,12 @@ from container import *
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "alg:bibitem-include"
 
 \end_inset
@@ -1571,7 +1953,8 @@ This section tackles other, more complex features.
 
 \begin_layout Subsection
 Parse Tree
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:Parse-Tree"
 
 \end_inset
@@ -1637,7 +2020,8 @@ Container
 
 \begin_layout Standard
 Figure 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "fig:parsetree"
 
 \end_inset
@@ -1707,7 +2091,7 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename parse tree.svg
@@ -1717,11 +2101,12 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "fig:parsetree"
 
 \end_inset
@@ -1835,7 +2220,8 @@ export a specific language called MathML
 
 \begin_layout Itemize
 or render using a variety of Unicode characters, HTML and CSS wizardry 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "white-math"
 
 \end_inset
@@ -1849,7 +2235,8 @@ eLyXer employs the third technique, with varied results.
  moment there may be some issues pending.
  Complex fractions with several levels do not come out right.
  (But see subsection 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:MathML"
 
 \end_inset
@@ -1889,7 +2276,10 @@ make
 \begin_layout Quotation
 
 \family typewriter
-$ ./make
+\color blue
+$
+\color inherit
+ ./make
 \end_layout
 
 \begin_layout Standard
@@ -1923,7 +2313,8 @@ License and Contributions
 
 \begin_layout Standard
 eLyXer is published under the GPL, version 3 or later 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "stallman-gplv3"
 
 \end_inset
@@ -1976,7 +2367,8 @@ idxer
 \begin_layout Standard
 The complete package should implement something like the flow in figure
  
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "fig:pipeline"
 
 \end_inset
@@ -1992,7 +2384,7 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename pipeline.svg
@@ -2002,11 +2394,12 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "fig:pipeline"
 
 \end_inset
@@ -2026,7 +2419,8 @@ Complete eLyXer pipeline.
 
 \begin_layout Subsection
 MathML
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:MathML"
 
 \end_inset
@@ -2036,7 +2430,8 @@ name "sub:MathML"
 
 \begin_layout Standard
 As suggested by Günther Milne and Abdelrazak Younes 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "milde-mathml,younes-elyxer"
 
 \end_inset
@@ -2112,7 +2507,8 @@ Abdelrazak Younes suggests using the
 lyx2lyx
 \family default
  framework, which after all already knows about LyX formats 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "younes-elyxer"
 
 \end_inset
@@ -2125,7 +2521,8 @@ key "younes-elyxer"
 filter
 \emph default
  
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "kernighan-filters"
 
 \end_inset
@@ -2191,9 +2588,20 @@ Q: I found a bug, what should I do?
 \end_layout
 
 \begin_layout Description
-A: Just report it to the Savannah interface: 
-\begin_inset LatexCommand url
-target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
+A: Just report it to the 
+\begin_inset CommandInset href
+LatexCommand href
+name "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
+target "Savannah interface"
+
+\end_inset
+
+, or directly to the 
+\begin_inset CommandInset href
+LatexCommand href
+name "main author"
+target "mailto:elyxer@gmail.com"
+type "mailto:"
 
 \end_inset
 
@@ -2201,15 +2609,21 @@ target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "savannah-elyxer"
 
 \end_inset
 
 Free Software Foundation, Inc.: eLyXer summary.
  
-\begin_inset LatexCommand url
-target "https://savannah.nongnu.org/projects/elyxer/"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+https://savannah.nongnu.org/projects/elyxer/
+\end_layout
 
 \end_inset
 
@@ -2217,7 +2631,8 @@ target "https://savannah.nongnu.org/projects/elyxer/"
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "white-math"
 
 \end_inset
@@ -2232,8 +2647,13 @@ Math in HTML with CSS
 
 , accessed March 2009.
  
-\begin_inset LatexCommand url
-target "http://www.zipcon.net/~swhite/docs/math/math.html"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.zipcon.net/~swhite/docs/math/math.html
+\end_layout
 
 \end_inset
 
@@ -2241,7 +2661,8 @@ target "http://www.zipcon.net/~swhite/docs/math/math.html"
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "stallman-gplv3"
 
 \end_inset
@@ -2260,8 +2681,13 @@ GNU GENERAL PUBLIC LICENSE
 
  version 3, 20070629.
  
-\begin_inset LatexCommand url
-target "http://www.gnu.org/copyleft/gpl.html"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.gnu.org/copyleft/gpl.html
+\end_layout
 
 \end_inset
 
@@ -2269,7 +2695,8 @@ target "http://www.gnu.org/copyleft/gpl.html"
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "milde-mathml"
 
 \end_inset
@@ -2288,8 +2715,13 @@ lyx-devel
 \emph default
 , 20090309.
  
-\begin_inset LatexCommand url
-target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg148627.html"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg148627.html
+\end_layout
 
 \end_inset
 
@@ -2297,7 +2729,8 @@ target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg148627.html"
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "younes-elyxer"
 
 \end_inset
@@ -2316,8 +2749,13 @@ lyx-devel
 \emph default
 , 20090309.
  
-\begin_inset LatexCommand url
-target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg148634.html"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg148634.html
+\end_layout
 
 \end_inset
 
@@ -2325,7 +2763,8 @@ target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg148634.html"
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "kernighan-filters"
 
 \end_inset

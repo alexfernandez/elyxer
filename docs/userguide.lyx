@@ -1,8 +1,9 @@
-#LyX 1.5.7 created this file. For more info see http://www.lyx.org/
-\lyxformat 276
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
 \begin_document
 \begin_header
 \textclass article
+\use_default_options false
 \language english
 \inputencoding auto
 \font_roman default
@@ -13,9 +14,11 @@
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
+
 \graphics default
 \paperfontsize default
 \spacing single
+\use_hyperref false
 \papersize default
 \use_geometry false
 \use_amsmath 1
@@ -62,7 +65,8 @@ The Basics
 
 \emph on
 elixir, n: a substance believed to cure all ills
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "wordreference-elixir"
 
 \end_inset
@@ -83,12 +87,16 @@ elixir
 \begin_layout Standard
 eLyXer (including this guide and all accompanying materials) is licensed
  under the 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "GPL version 3"
 target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
 
 \end_inset
 
+
+\lang english
  or, at your option, any later version.
  See the 
 \family typewriter
@@ -99,12 +107,16 @@ LICENSE
 
 \begin_layout Standard
 Please visit the 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "main page"
 target "index.html"
 
 \end_inset
 
+
+\lang english
  to find out about the latest developments.
 \end_layout
 
@@ -391,7 +403,8 @@ $
 This procedure will also ensure that any Python packages trying to access
  eLyXer will find it.
  See 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:LyX-Integration"
 
 \end_inset
@@ -447,7 +460,8 @@ $
 The typical output will contain just the changed lines, which in this case
  should be only the header with the file creation date.
  An example is shown on listing 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "alg:diff"
 
 \end_inset
@@ -485,11 +499,12 @@ status open
 > <meta name="create-date" content="2009-09-12"/>
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "alg:diff"
 
 \end_inset
@@ -680,7 +695,8 @@ Image location is fragile.
 \end_layout
 
 \begin_layout Subsection
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:LyX-Integration"
 
 \end_inset
@@ -741,13 +757,17 @@ elyxer.py
 
 \begin_layout Standard
 On Windows, the 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "alternate installer"
 target "http://wiki.lyx.org/Windows/LyXWinInstaller"
 
 \end_inset
 
- comes bundled with a version of eLyXer since 1.6.4.1.
+
+\lang english
+ will soon come bundled with a version of eLyXer.
 \end_layout
 
 \begin_layout Section
@@ -824,7 +844,10 @@ Parsing line 1000
 \begin_layout Description
 
 \family typewriter
---title\InsetSpace ~
+--title
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -842,7 +865,10 @@ title
 \family typewriter
 --
 \family default
-directory\InsetSpace ~
+directory
+\begin_inset space ~
+\end_inset
+
 
 \family typewriter
 \series bold
@@ -863,7 +889,10 @@ images_dir
 \family typewriter
 --
 \family default
-destdirectory\InsetSpace ~
+destdirectory
+\begin_inset space ~
+\end_inset
+
 
 \family typewriter
 \series bold
@@ -882,7 +911,10 @@ dest_dir
 \begin_layout Description
 
 \family typewriter
---css\InsetSpace ~
+--css
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -894,7 +926,8 @@ new.css
 \series default
 : change default CSS.
  See section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:CSS"
 
 \end_inset
@@ -932,7 +965,10 @@ reference "sub:CSS"
 \begin_layout Description
 
 \family typewriter
---forceformat\InsetSpace ~
+--forceformat
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -969,7 +1005,10 @@ lyx2lyx
 \begin_layout Description
 
 \family typewriter
---toc\InsetSpace ~
+--toc
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -981,7 +1020,8 @@ original.html
 \series default
 : Generate a table of contents with links to the original HTML file.
  See section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:TOC"
 
 \end_inset
@@ -992,7 +1032,10 @@ reference "sub:TOC"
 \begin_layout Description
 
 \family typewriter
---target\InsetSpace ~
+--target
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -1009,7 +1052,8 @@ target
  attribute to every link in the generated HTML, making all links point to
  the provided frame.
  Again, see section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:TOC"
 
 \end_inset
@@ -1020,7 +1064,10 @@ reference "sub:TOC"
 \begin_layout Standard
 When an option accepts an argument it can be added after a space as 
 \family typewriter
---target\InsetSpace ~
+--target
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -1048,7 +1095,8 @@ frame
 
 \begin_layout Subsection
 CSS
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:CSS"
 
 \end_inset
@@ -1065,7 +1113,8 @@ HTML output, as generated, can be a bit crude.
 eLyXer tags most elements with the type so you can later modify them using
  a CSS.
  The HTML header reads like listing 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "alg:CSS"
 
 \end_inset
@@ -1105,11 +1154,12 @@ status open
 </head>
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "alg:CSS"
 
 \end_inset
@@ -1231,7 +1281,8 @@ $
 
 \begin_layout Subsection
 Table Of Contents
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:TOC"
 
 \end_inset
@@ -1293,59 +1344,92 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family typewriter
 <html>
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 <frameset cols="30%,70%">
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 <frame name="toc" src="page-toc.html" />
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 <frame name="contents" src="page.html" />
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 </frameset>
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family typewriter
 </html>
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "alg:frameset"
 
 \end_inset
@@ -1392,13 +1476,17 @@ $
 \begin_layout Standard
 With a little bit of practice you will be able to generate useful (and nice
  looking) TOC files.
- You can see an 
-\begin_inset LatexCommand htmlurl
-name "example for the user guide"
+ You can see an example for the 
+
+\begin_inset CommandInset href
+LatexCommand href
+name "user guide"
 target "userguide-frameset.html"
 
 \end_inset
 
+
+\lang english
  (if you are not already looking at it).
 \end_layout
 
@@ -1418,7 +1506,8 @@ HTML Code
 
 \begin_layout Standard
 The HTML code generated is technically XHTML Transitional, version 1.0 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "xhtml"
 
 \end_inset
@@ -1441,14 +1530,16 @@ $
 
 \begin_layout Standard
 Again, technically the code generated is HTML 4.01 Transitional 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "html-401"
 
 \end_inset
 
  using UTF-8 encoding.
  Both versions should pass the W3C tests 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "w3c-validator"
 
 \end_inset
@@ -1464,12 +1555,16 @@ The CSS file for eLyXer uses some CSS2 features for math structures (fractions,
  This makes the output incompatible with older browsers; it requires Microsoft
  Internet Explorer 7, Firefox 3, Safari 3 or Chrome 1.
  Check the 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "Math Showcase"
 target "math.html"
 
 \end_inset
 
+
+\lang english
  to see if your browser can render eLyXer output correctly.
 \end_layout
 
@@ -1494,12 +1589,16 @@ $
 
 \begin_layout Standard
 See the 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "Math Showcase with Unicode"
 target "math-unicode.html"
 
 \end_inset
 
+
+\lang english
  to see the results.
  In the future other non-Unicode substitutions might be used.
 \end_layout
@@ -1559,7 +1658,7 @@ Phonetic alphabet symbols are not supported -- if generated with LyX they
 \begin_inset Note Note
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 This happens only in the HTML file converted with eLyXer, not from within
  LyX.
 \end_layout
@@ -1570,7 +1669,7 @@ This happens only in the HTML file converted with eLyXer, not from within
 \begin_inset Note Comment
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 By the way, the previous note (and this one) should not appear on the HTML.
 \end_layout
 
@@ -1632,12 +1731,17 @@ Contact Information
 \begin_layout Standard
 If your problem does not appear in the above list, please let the author
  know; you can find him at 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "elyxer@gmail.com"
 target "mailto:elyxer@gmail.com"
+type "mailto:"
 
 \end_inset
 
+
+\lang english
 .
  In the words of Rich Talley: 
 \begin_inset Quotes eld
@@ -1656,21 +1760,29 @@ the tool's author really likes getting challenging documents and making
 
 \begin_layout Standard
 You can also join the 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "mailing list"
 target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
 
 \end_inset
 
+
+\lang english
  to discuss any information related to eLyXer.
  The author monitors the official LyX lists for mentions of eLyXer.
- Bugs can also be reported at 
-\begin_inset LatexCommand url
-name "the Savannah page"
+ Bugs can also be reported at the 
+
+\begin_inset CommandInset href
+LatexCommand href
+name "Savannah page"
 target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 
 \end_inset
 
+
+\lang english
 .
 \end_layout
 
@@ -1691,12 +1803,16 @@ eLyXer does not at the moment support all LyX features; sometimes it will
 eLyXer is written in Python so that it does not need to be compiled; its
  code is interpreted on the fly.
  See the accompanying 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "developer guide"
 target "devguide.html"
 
 \end_inset
 
+
+\lang english
  to learn how to extend eLyXer for your own purposes.
  If you know how to program in Python it should not be difficult to support
  other LyX features.
@@ -1752,7 +1868,8 @@ Q: My document changed its appearance without my intervention.
 \begin_layout Description
 A: It probably uses the online CSS file, which is regularly updated.
  See section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:CSS"
 
 \end_inset
@@ -1785,24 +1902,35 @@ Q: I found a bug, what should I do?
 
 \begin_layout Description
 A: Just send it to the author at 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "elyxer@gmail.com"
 target "mailto:elyxer@gmail.com"
+type "mailto:"
 
 \end_inset
 
+
+\lang english
 .
- You can also report it to the Savannah interface: 
-\begin_inset LatexCommand url
+ You can also report it to the 
+
+\begin_inset CommandInset href
+LatexCommand href
+name "Savannah interface"
 target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 
 \end_inset
 
+
+\lang english
  (although at this point in time you would be the first to use it).
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "wordreference-elixir"
 
 \end_inset
@@ -1817,8 +1945,13 @@ definition of elixir
 
 , accessed March 2009.
  
-\begin_inset LatexCommand url
-target "http://www.wordreference.com/definition/elixir"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.wordreference.com/definition/elixir
+\end_layout
 
 \end_inset
 
@@ -1826,7 +1959,8 @@ target "http://www.wordreference.com/definition/elixir"
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "xhtml"
 
 \end_inset
@@ -1841,8 +1975,13 @@ XHTML™ 1.0 The Extensible HyperText Markup Language (Second Edition)
 
 , revised 1 August 2002.
  
-\begin_inset LatexCommand url
-target "http://www.w3.org/TR/xhtml1/"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.w3.org/TR/xhtml1/
+\end_layout
 
 \end_inset
 
@@ -1850,7 +1989,8 @@ target "http://www.w3.org/TR/xhtml1/"
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "html-401"
 
 \end_inset
@@ -1865,8 +2005,13 @@ HTML 4.01 Specification
 
 , 24 December 1999.
  
-\begin_inset LatexCommand url
-target "http://www.w3.org/TR/REC-html40/"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.w3.org/TR/REC-html40/
+\end_layout
 
 \end_inset
 
@@ -1874,7 +2019,8 @@ target "http://www.w3.org/TR/REC-html40/"
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "w3c-validator"
 
 \end_inset
@@ -1889,8 +2035,13 @@ Markup Validation Service
 
 , accessed March 2009.
  
-\begin_inset LatexCommand url
-target "http://validator.w3.org/"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://validator.w3.org/
+\end_layout
 
 \end_inset
 

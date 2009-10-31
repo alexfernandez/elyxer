@@ -1,8 +1,9 @@
-#LyX 1.5.7 created this file. For more info see http://www.lyx.org/
-\lyxformat 276
+#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
 \begin_document
 \begin_header
 \textclass article
+\use_default_options false
 \language english
 \inputencoding auto
 \font_roman default
@@ -13,9 +14,11 @@
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
+
 \graphics default
 \paperfontsize default
 \spacing single
+\use_hyperref false
 \papersize default
 \use_geometry false
 \use_amsmath 1
@@ -51,14 +54,15 @@ eLyXer
 \end_layout
 
 \begin_layout Quotation
-\begin_inset LatexCommand url
+
+\emph on
+\begin_inset CommandInset href
+LatexCommand href
 name "elixir"
 target "http://www.wordreference.com/definition/elixir"
 
 \end_inset
 
-
-\emph on
 , n: a substance believed to cure all ills.
 \end_layout
 
@@ -73,13 +77,17 @@ elixir
 \end_layout
 
 \begin_layout Standard
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "LyX"
 target "http://www.lyx.org/"
 
 \end_inset
 
- is a wonderful text editor which produces beautiful PDF files.
+
+\lang english
+is a wonderful text editor which produces beautiful PDF files.
  Internally it exports documents to LaTeX, and from there to PDF.
  Sadly there is not an equivalent 
 \begin_inset Quotes eld
@@ -98,12 +106,16 @@ export to HTML
 \begin_layout Standard
 eLyXer (including this page and all accompanying materials) is licensed
  under the 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "GPL version 3"
 target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
 
 \end_inset
 
+
+\lang english
  or, at your option, any later version.
  See the 
 \family typewriter
@@ -114,27 +126,39 @@ LICENSE
 
 \begin_layout Standard
 The 
-\begin_inset LatexCommand htmlurl
+
+\begin_inset CommandInset href
+LatexCommand href
 name "user guide"
 target "userguide.html"
 
 \end_inset
 
+
+\lang english
  and the 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "developer guide"
 target "devguide.html"
 
 \end_inset
 
+
+\lang english
  can also be accessed online.
  For the mathematically inclined: be sure to visit the 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "Math Showcase"
 target "math.html"
 
 \end_inset
 
+
+\lang english
 .
 \end_layout
 
@@ -229,12 +253,16 @@ $
 
 \begin_layout Standard
 or see the 
-\begin_inset LatexCommand htmlurl
+
+\begin_inset CommandInset href
+LatexCommand href
 name "user guide"
 target "userguide.html"
 
 \end_inset
 
+
+\lang english
  for details.
 \end_layout
 
@@ -244,7 +272,8 @@ Downloads
 
 \begin_layout Standard
 You can download the latest version from the project's 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "download area"
 target "https://savannah.nongnu.org/files/?group=elyxer"
 
@@ -252,26 +281,34 @@ target "https://savannah.nongnu.org/files/?group=elyxer"
 
 .
  See the 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "change log"
 target "changelog.html"
 
 \end_inset
 
+
+\lang english
  for information about past versions.
  
 \begin_inset Note Greyedout
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Note: if this latest version hasn't yet hit the mirrors and you are impatient
- to try it out, please visit 
-\begin_inset LatexCommand url
-name "the Savannah direct download page"
+ to try it out, please visit the 
+
+\begin_inset CommandInset href
+LatexCommand href
+name "Savannah direct download page"
 target "http://download.savannah.gnu.org/releases-noredirect/elyxer/"
 
 \end_inset
 
+
+\lang english
 .
 \end_layout
 
@@ -286,12 +323,17 @@ Contact
 
 \begin_layout Standard
 You can contact the main developer at 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "elyxer@gmail.com"
 target "mailto:elyxer@gmail.com"
+type "mailto:"
 
 \end_inset
 
+
+\lang english
 ; he really likes getting challenging documents and making eLyXer work with
  them.
  Any document sample you send will be treated with the utmost confidentiality.
@@ -301,21 +343,29 @@ target "mailto:elyxer@gmail.com"
 The author lingers around official LyX mailing lists and monitors for mentions
  of eLyXer.
  You can also join the 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "mailing list"
 target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
 
 \end_inset
 
+
+\lang english
 , although there is not much activity in it yet (mostly announcements of
  new versions).
- Bugs can be reported at 
-\begin_inset LatexCommand url
-name "the Savannah page"
+ Bugs can be reported at the 
+
+\begin_inset CommandInset href
+LatexCommand href
+name "Savannah page"
 target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 
 \end_inset
 
+
+\lang english
 .
 \end_layout
 
@@ -330,41 +380,61 @@ This little project is my little contribution back to the wonderful LyX
 
 \begin_layout Standard
 Thanks to 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "Stevan White"
 target "http://www.zipcon.net/~swhite/resume/"
 
 \end_inset
 
+
+\lang english
  for encouraging me to publish the tool.
  Thanks also to 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "John D. Cook"
 target "http://www.johndcook.com/"
 
 \end_inset
 
+
+\lang english
 , 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "rikal"
 target "http://community.jedit.org/?q=node/view/1746"
 
 \end_inset
 
+
+\lang english
 , 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "Bradley M. Bell"
 target "http://www.seanet.com/~bradbell/omhelp/stdfun.htm"
 
 \end_inset
 
+
+\lang english
 , 
-\begin_inset LatexCommand url
+
+\begin_inset CommandInset href
+LatexCommand href
 name "Markus Kuhn"
-target "[http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt||Markus Kuhn]"
+target "http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt"
 
 \end_inset
 
+
+\lang english
  and LyX developers Georg Baum, Uwe Stöhr and Jürgen Spitzmüller for their
  wonderful lists of TeX commands and Unicode equivalents.
  More thanks go to Christian Ridderström for helping me out right at the
