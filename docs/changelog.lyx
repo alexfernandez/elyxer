@@ -98,6 +98,22 @@ table.align
  (thanks, Olivier Ripoll).
 \end_layout
 
+\begin_layout Itemize
+Solved XHTML validation error in Note (greyed out): remove useless 
+\family typewriter
+div
+\family default
+s.
+\end_layout
+
+\begin_layout Itemize
+Add a space after a fraction and before the units.
+\end_layout
+
+\begin_layout Itemize
+Float within a float.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.34 (2009-10-28):
