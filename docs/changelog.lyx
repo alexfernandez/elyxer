@@ -107,7 +107,7 @@ table.align
 \end_layout
 
 \begin_layout Itemize
-Solved XHTML validation error in Note (greyed out): remove useless 
+Solved XHTML validation error in greyed out note, removing useless 
 \family typewriter
 div
 \family default
