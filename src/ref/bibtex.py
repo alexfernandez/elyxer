@@ -23,6 +23,7 @@
 # eLyXer BibTeX processing
 
 from util.trace import Trace
+from util.clone import *
 from io.output import *
 from io.path import *
 from io.bulk import *
@@ -104,7 +105,7 @@ class BibFile(object):
     "Parse a single entry"
     for entry in Entry.entries:
       if entry.detect(pos):
-        newentry = entry.clone()
+        newentry = Cloner.clone(entry)
         newentry.parse(pos)
         if newentry.isreferenced():
           self.entries.append(newentry)
@@ -227,13 +228,6 @@ class Entry(Container):
   def parsepiece(self, pos, undesired):
     "Parse a piece not structure"
     return pos.glob(lambda current: not current in undesired)
-
-  def clone(self):
-    "Return an exact copy of self"
-    type = self.__class__
-    clone = type.__new__(type)
-    clone.__init__()
-    return clone
 
 class SpecialEntry(Entry):
   "A special entry"

@@ -25,6 +25,7 @@
 import sys
 from gen.container import *
 from util.trace import Trace
+from util.clone import *
 from conf.config import *
 from math.formula import *
 from math.bits import *
@@ -44,7 +45,7 @@ class FormulaCommand(FormulaBit):
     command = self.extractcommand(pos)
     for bit in FormulaCommand.commandbits:
       if bit.recognize(command):
-        newbit = bit.clone()
+        newbit = Cloner.clone(bit)
         newbit.factory = self.factory
         newbit.setcommand(command)
         newbit.parsebit(pos)

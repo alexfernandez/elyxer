@@ -25,6 +25,7 @@
 import sys
 from gen.container import *
 from util.trace import Trace
+from util.clone import *
 from conf.config import *
 from parse.formulaparse import *
 
@@ -60,13 +61,6 @@ class FormulaBit(Container):
     self.original = ''
     self.contents = []
     self.output = ContentsOutput()
-
-  def clone(self):
-    "Return an exact copy of self"
-    type = self.__class__
-    clone = type.__new__(type)
-    clone.__init__()
-    return clone
 
   def add(self, bit):
     "Add any kind of formula bit already processed"
@@ -162,7 +156,7 @@ class FormulaFactory(object):
     for bit in FormulaFactory.bits:
       if bit.detect(pos):
         # get a fresh bit and parse it
-        newbit = bit.clone()
+        newbit = Cloner.clone(bit)
         newbit.factory = self
         returnedbit = newbit.parsebit(pos)
         if returnedbit:

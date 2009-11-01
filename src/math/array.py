@@ -25,6 +25,7 @@
 import sys
 from gen.container import *
 from util.trace import Trace
+from util.clone import *
 from conf.config import *
 from math.formula import *
 from math.command import *
@@ -200,7 +201,7 @@ class BeginCommand(CommandBit):
     "Find the command bit corresponding to the \\begin{piece}"
     for bit in BeginCommand.innerbits:
       if bit.piece == piece or bit.piece + '*' == piece:
-        newbit = bit.clone()
+        newbit = Cloner.clone(bit)
         return newbit
     bit = Environment()
     bit.piece = piece
