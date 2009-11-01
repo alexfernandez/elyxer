@@ -44,20 +44,44 @@ class TOCWriter(object):
 
   def write(self, container):
     "Write the table of contents for a container."
-    if container.__class__ in [LyxHeader, LyxFooter]:
-      self.writeheaderfooter(container)
+    entry = self.convert(container)
+    if not entry:
       return
-    if not hasattr(container, 'number'):
-      return
-    self.indenter.indent(container.type)
-    entry = TOCEntry().create(container)
+    self.indenter.indent(entry.depth)
     self.writer.write(entry.gethtml())
 
-  def writeheaderfooter(self, container):
-    "Write the header or the footer."
-    if isinstance(container, LyxFooter):
-      self.indenter.indentdepth(0)
-    self.writer.write(container.gethtml())
+  def convert(self, container):
+    "Convert a container to a TOC container."
+    if container.__class__ in [LyxHeader, LyxFooter]:
+      container.depth = 0
+      return container
+    if not hasattr(container, 'number'):
+      return None
+    return TOCEntry().create(container)
+
+class TOCEntry(Container):
+  "A container for a TOC entry."
+
+  def create(self, container):
+    "Create the TOC entry for a container, consisting of a single link."
+    text = TranslationConfig.constants[container.type] + ' ' + container.number
+    text += ':' + self.gettitle(container) + '\n'
+    url = Options.toctarget + '#toc-' + container.type + '-' + container.number
+    self.contents = [Link().complete(text, url=url)]
+    self.output = TaggedOutput().settag('div class="toc"', True)
+    self.depth = 0
+    if container.type in NumberingConfig.layouts['ordered']:
+      self.depth = NumberingConfig.layouts['ordered'].index(container.type) + 1
+    elif not container.type in NumberingConfig.layouts['unique']:
+      Trace.error('Unknown numbered container type ' + container.type)
+    return self
+
+  def gettitle(self, container):
+    "Get the title of the container."
+    if len(container.contents) < 2:
+      return '-'
+    withoutlabel = TaggedText().complete(container.contents[1:], 'x')
+    return withoutlabel.extracttext()
 
 class Indenter(object):
   "Manages and writes indentation for the TOC."
@@ -66,22 +90,8 @@ class Indenter(object):
     self.depth = 0
     self.writer = writer
 
-  def indent(self, type):
-    "Indent the line according to the container type."
-    if type in NumberingConfig.layouts['unique']:
-      depth = 0
-    elif type in NumberingConfig.layouts['ordered']:
-      depth = NumberingConfig.layouts['ordered'].index(type) + 1
-    elif not type:
-      Trace.error('Empty type')
-      return
-    else:
-      Trace.error('Unknown numbered container type ' + type)
-      return
-    self.indentdepth(depth)
-
-  def indentdepth(self, depth):
-    "Indent according to the given depth."
+  def indent(self, depth):
+    "Indent the line according to the given depth."
     if depth > self.depth:
       self.openindent(depth - self.depth)
     elif depth < self.depth:
@@ -97,28 +107,4 @@ class Indenter(object):
     "Close the indenting div a few times."
     for i in range(times):
       self.writer.writeline('</div>')
-
-class TOCEntry(Container):
-  "A container for a TOC entry."
-
-  def create(self, container):
-    "Create the TOC entry for a container"
-    self.createlink(container.type, container.number, self.gettitle(container))
-    return self
-
-  def createlink(self, type, number, title):
-    "Create the actual link for the TOC."
-    text = TranslationConfig.constants[type] + ' ' + number
-    text += ':' + title + '\n'
-    url = Options.toctarget + '#toc-' + type + '-' + number
-    link = Link().complete(text, url=url)
-    self.contents = [link]
-    self.output = TaggedOutput().settag('div class="toc"', True)
-
-  def gettitle(self, container):
-    "Get the title of the container."
-    if len(container.contents) < 2:
-      return '-'
-    withoutlabel = TaggedText().complete(container.contents[1:], 'x')
-    return withoutlabel.extracttext()
 
