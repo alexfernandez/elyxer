@@ -85,11 +85,15 @@ class Container(object):
     del contents[index]
 
   def searchprocess(self, type, process):
+    "Search for elements of a given type and process them"
+    self.locateprocess(lambda container: isinstance(container, type), process)
+
+  def locateprocess(self, locate, process):
     "Search for all embedded containers and process them"
     for index, element in enumerate(self.contents):
       if isinstance(element, Container):
-        element.searchprocess(type, process)
-      if isinstance(element, type):
+        element.locateprocess(locate, process)
+      if locate(element):
         process(self.contents, index)
 
   def extracttext(self):

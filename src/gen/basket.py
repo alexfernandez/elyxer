@@ -88,13 +88,8 @@ class TOCBasket(Basket):
 
   def convert(self, container):
     "Convert a container to a TOC container."
-    Trace.debug('Converting: ' + unicode(container))
     if container.__class__ in [LyxHeader, LyxFooter]:
       container.depth = 0
-      return container
-    if container.__class__ in [PrintNomenclature, PrintIndex]:
-      container.depth = 0
-      container.split = container.__class__.__name__.lower().replace('print', '')
       return container
     if not hasattr(container, 'number'):
       return None
@@ -123,6 +118,8 @@ class SplittingBasket(Basket):
 
   def mustsplit(self, container):
     "Find out if the oputput file has to be split at this entry."
+    if self.splitalone(container):
+      return True
     if not hasattr(container, 'number'):
       return False
     Trace.debug('Converting: ' + unicode(container))
@@ -133,14 +130,26 @@ class SplittingBasket(Basket):
       return True
     return entry.depth <= Options.splitpart
 
+  def splitalone(self, container):
+    "Find out if the container must be split in its own page."
+    found = []
+    container.locateprocess(lambda container: container.__class__ in [PrintNomenclature, PrintIndex],
+        lambda contents, index: found.append(contents[index].__class__.__name__))
+    if not found:
+      return False
+    container.depth = 0
+    container.split = found[0].lower().replace('print', '')
+    return True
+
   def getfilename(self, container):
     "Get the new file name for a given container."
-    entry = self.tocwriter.convert(container)
-    if hasattr(entry, 'split'):
-      partname = '-' + entry.split
-    elif entry.depth == Options.splitpart:
-      partname = '-' + container.number
+    if hasattr(container, 'split'):
+      partname = '-' + container.split
     else:
-      partname = '-' + container.type + '-' + container.number
+      entry = self.tocwriter.convert(container)
+      if entry.depth == Options.splitpart:
+        partname = '-' + container.number
+      else:
+        partname = '-' + container.type + '-' + container.number
     return self.base + partname + self.extension
 
