@@ -112,17 +112,25 @@ class SplittingBasket(Basket):
     "Write a container, possibly splitting the file."
     if self.mustsplit(container):
       self.writer.write(LyxFooter().gethtml())
-      filename = self.base + '-' + container.number + self.extension
-      Trace.debug('Splitting ' + filename)
-      self.writer = LineWriter(filename)
+      self.writer = LineWriter(self.getfilename(container))
       self.writer.write(LyxHeader().gethtml())
     self.writer.write(container.gethtml())
 
   def mustsplit(self, container):
-    "Find out if the container has to be split at this container."
+    "Find out if the oputput file has to be split at this entry."
+    if not hasattr(container, 'number'):
+      return False
     entry = self.tocwriter.convert(container)
     if not entry:
       return False
-    Trace.debug('Depth ' + unicode(entry.depth) + ', against ' + Options.splitpart)
-    return entry.depth == int(Options.splitpart)
+    return entry.depth <= int(Options.splitpart)
+
+  def getfilename(self, container):
+    "Get the new file name for a given container."
+    entry = self.tocwriter.convert(container)
+    if entry.depth == int(Options.splitpart):
+      partname = '-' + container.number
+    else:
+      partname = '-' + container.type + '-' + container.number
+    return self.base + partname + self.extension
 
