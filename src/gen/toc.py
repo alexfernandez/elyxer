@@ -28,39 +28,11 @@ from gen.factory import *
 from gen.structure import *
 
 
-class TOCWriter(object):
-  "A class to write the TOC of a document."
-
-  def __init__(self, writer):
-    self.writer = writer
-    Options.nocopy = True
-    self.indenter = Indenter(writer)
-
-  def clone(self, filterheader):
-    "Return a cloned copy."
-    clone = TOCWriter()
-    clone.writer = self.writer
-    return clone
-
-  def write(self, container):
-    "Write the table of contents for a container."
-    entry = self.convert(container)
-    if not entry:
-      return
-    self.indenter.indent(entry.depth)
-    self.writer.write(entry.gethtml())
-
-  def convert(self, container):
-    "Convert a container to a TOC container."
-    if container.__class__ in [LyxHeader, LyxFooter]:
-      container.depth = 0
-      return container
-    if not hasattr(container, 'number'):
-      return None
-    return TOCEntry().create(container)
-
 class TOCEntry(Container):
   "A container for a TOC entry."
+
+  ordered = NumberingConfig.layouts['ordered']
+  unique = NumberingConfig.layouts['unique']
 
   def create(self, container):
     "Create the TOC entry for a container, consisting of a single link."
@@ -70,9 +42,10 @@ class TOCEntry(Container):
     self.contents = [Link().complete(text, url=url)]
     self.output = TaggedOutput().settag('div class="toc"', True)
     self.depth = 0
-    if container.type in NumberingConfig.layouts['ordered']:
-      self.depth = NumberingConfig.layouts['ordered'].index(container.type) + 1
-    elif not container.type in NumberingConfig.layouts['unique']:
+    if container.type in TOCEntry.ordered:
+      self.depth = TOCEntry.ordered.index(container.type) + 1
+      Trace.debug('Depth: ' + unicode(self.depth))
+    elif not container.type in TOCEntry.unique:
       Trace.error('Unknown numbered container type ' + container.type)
     return self
 

@@ -49,10 +49,10 @@ class eLyXerConverter(object):
     if Options.toc:
       self.basket = TOCBasket()
     else:
-      if not Options.cutpart:
+      if not Options.splitpart:
         self.basket = WriterBasket()
       else:
-        self.basket = KeeperBasket()
+        self.basket = SplittingBasket()
     self.basket.setwriter(self.writer)
     eLyXerConverter.latestbasket = self.basket
     return self

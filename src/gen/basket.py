@@ -24,6 +24,7 @@
 # http://www.nongnu.org/elyxer/
 
 
+import os.path
 from util.options import *
 from util.clone import *
 from gen.toc import *
@@ -75,6 +76,7 @@ class TOCBasket(Basket):
     Basket.setwriter(self, writer)
     Options.nocopy = True
     self.indenter = Indenter(writer)
+    return self
 
   def write(self, container):
     "Write the table of contents for a container."
@@ -93,4 +95,34 @@ class TOCBasket(Basket):
       return None
     return TOCEntry().create(container)
 
+class SplittingBasket(Basket):
+  "A basket used to split the output in different files."
+
+  def setwriter(self, writer):
+    Basket.setwriter(self, writer)
+    if not hasattr(writer, 'filename') or not writer.filename:
+      Trace.error('Cannot use standard output for split output; ' +
+          'please supply an output filename.')
+      exit()
+    self.base, self.extension = os.path.splitext(writer.filename)
+    self.tocwriter = TOCBasket().setwriter(writer)
+    return self
+
+  def write(self, container):
+    "Write a container, possibly splitting the file."
+    if self.mustsplit(container):
+      self.writer.write(LyxFooter().gethtml())
+      filename = self.base + '-' + container.number + self.extension
+      Trace.debug('Splitting ' + filename)
+      self.writer = LineWriter(filename)
+      self.writer.write(LyxHeader().gethtml())
+    self.writer.write(container.gethtml())
+
+  def mustsplit(self, container):
+    "Find out if the container has to be split at this container."
+    entry = self.tocwriter.convert(container)
+    if not entry:
+      return False
+    Trace.debug('Depth ' + unicode(entry.depth) + ', against ' + Options.splitpart)
+    return entry.depth == int(Options.splitpart)
 

@@ -81,8 +81,10 @@ class LineWriter(object):
   def __init__(self, filename):
     if isinstance(filename, file):
       self.file = filename
+      self.filename = None
     else:
       self.file = codecs.open(filename, 'w', "utf-8")
+      self.filename = filename
 
   def write(self, strings):
     "Write a list of strings"
