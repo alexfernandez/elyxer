@@ -52,7 +52,7 @@ class Options(object):
   forceformat = None
   lyxformat = False
   target = None
-  cutpart = 1
+  cutpart = None
 
   branches = dict()
 

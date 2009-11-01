@@ -37,7 +37,7 @@ from math.postformula import *
 
 
 class eLyXerConverter(object):
-  "Converter for a document in a lyx file"
+  "Converter for a document in a lyx file. Places all output in a given writer."
 
   latestwriter = None
 
@@ -48,7 +48,10 @@ class eLyXerConverter(object):
     if Options.toc:
       self.writer = TOCWriter(linewriter)
     else:
-      self.writer = ContainerWriter(linewriter)
+      if not Options.cutpart:
+        self.writer = ContainerWriter(linewriter)
+      else:
+        self.writer = ContainerCutter(linewriter)
     eLyXerConverter.latestwriter = self.writer
     return self
 
@@ -95,6 +98,21 @@ class ContainerWriter(object):
     if self.filterheader and container.__class__ in [LyxHeader, LyxFooter]:
       return
     self.linewriter.write(container.gethtml())
+
+class ContainerKeeper(object):
+  "Keeps all containers stored."
+
+  def __init__(self, linewriter):
+    self.linewriter = linewriter
+    self.contents = []
+
+  def clone(self, filterheader):
+    "Clone the writer."
+    return ContainerKeeper(self.linewriter)
+
+  def write(self, container):
+    "Keep the container."
+    self.contents.append(container)
 
 class InOutParser(object):
   "Parse in and out arguments"
