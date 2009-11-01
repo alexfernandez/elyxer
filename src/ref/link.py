@@ -157,7 +157,7 @@ class NomenclatureEntry(Link):
     self.url = '#nom-' + self.key
     self.contents = [Constant(u'↓')]
 
-class NomenclaturePrint(Container):
+class PrintNomenclature(Container):
   "Print all nomenclature entries"
 
   def __init__(self):
