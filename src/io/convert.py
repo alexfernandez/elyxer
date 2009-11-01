@@ -101,9 +101,7 @@ class InOutParser(object):
 
   def __init__(self):
     self.filein = sys.stdin
-    self.parsedin = False
     self.fileout = sys.stdout
-    self.parsedout = False
 
   def parse(self, args):
     "Parse command line arguments"
@@ -114,14 +112,12 @@ class InOutParser(object):
     if len(args) > 0:
       self.filein = args[0]
       del args[0]
-      self.parsedin = True
       self.readdir(self.filein, 'directory')
     else:
       Options.directory = '.'
     if len(args) > 0:
       self.fileout = args[0]
       del args[0]
-      self.parsedout = True
       self.readdir(self.fileout, 'destdirectory')
     else:
       Options.destdirectory = '.'
