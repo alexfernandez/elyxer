@@ -30,6 +30,7 @@ from util.options import *
 from gen.factory import *
 from gen.toc import *
 from gen.inset import *
+from gen.basket import *
 from post.postprocess import *
 from post.postlist import *
 from post.posttable import *
@@ -37,29 +38,30 @@ from math.postformula import *
 
 
 class eLyXerConverter(object):
-  "Converter for a document in a lyx file. Places all output in a given writer."
+  "Converter for a document in a lyx file. Places all output in a given basket."
 
-  latestwriter = None
+  latestbasket = None
 
   def setio(self, ioparser):
     "Set the InOutParser"
     self.reader = LineReader(ioparser.filein)
-    linewriter = LineWriter(ioparser.fileout)
+    self.writer = LineWriter(ioparser.fileout)
     if Options.toc:
-      self.writer = TOCWriter(linewriter)
+      self.basket = TOCBasket()
     else:
       if not Options.cutpart:
-        self.writer = ContainerWriter(linewriter)
+        self.basket = WriterBasket()
       else:
-        self.writer = ContainerCutter(linewriter)
-    eLyXerConverter.latestwriter = self.writer
+        self.basket = KeeperBasket()
+    self.basket.setwriter(self.writer)
+    eLyXerConverter.latestbasket = self.basket
     return self
 
   def embed(self, filein):
     "Embed the results for a new input file into the latest output file."
     "Header and footer are ignored. Useful for embedding one document inside another."
     self.reader = LineReader(filein)
-    self.writer = eLyXerConverter.latestwriter.clone(filterheader = True)
+    self.basket = eLyXerConverter.latestbasket.getfiltered()
     return self
 
   def convert(self):
@@ -78,41 +80,7 @@ class eLyXerConverter(object):
       containers = factory.createsome(self.reader)
       for container in containers:
         container = self.postproc.postprocess(container)
-        self.writer.write(container)
-
-class ContainerWriter(object):
-  "A writer of containers. Just writes them out to a line writer."
-
-  def __init__(self, linewriter):
-    self.linewriter = linewriter
-    self.filterheader = False
-
-  def clone(self, filterheader):
-    "Clone the writer."
-    clone = ContainerWriter(self.linewriter)
-    clone.filterheader = filterheader
-    return clone
-
-  def write(self, container):
-    "Write a container to the line writer."
-    if self.filterheader and container.__class__ in [LyxHeader, LyxFooter]:
-      return
-    self.linewriter.write(container.gethtml())
-
-class ContainerKeeper(object):
-  "Keeps all containers stored."
-
-  def __init__(self, linewriter):
-    self.linewriter = linewriter
-    self.contents = []
-
-  def clone(self, filterheader):
-    "Clone the writer."
-    return ContainerKeeper(self.linewriter)
-
-  def write(self, container):
-    "Keep the container."
-    self.contents.append(container)
+        self.basket.write(container)
 
 class InOutParser(object):
   "Parse in and out arguments"
