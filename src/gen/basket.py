@@ -88,8 +88,13 @@ class TOCBasket(Basket):
 
   def convert(self, container):
     "Convert a container to a TOC container."
+    Trace.debug('Converting: ' + unicode(container))
     if container.__class__ in [LyxHeader, LyxFooter]:
       container.depth = 0
+      return container
+    if container.__class__ in [PrintNomenclature, PrintIndex]:
+      container.depth = 0
+      container.split = container.__class__.__name__.lower().replace('print', '')
       return container
     if not hasattr(container, 'number'):
       return None
@@ -120,15 +125,20 @@ class SplittingBasket(Basket):
     "Find out if the oputput file has to be split at this entry."
     if not hasattr(container, 'number'):
       return False
+    Trace.debug('Converting: ' + unicode(container))
     entry = self.tocwriter.convert(container)
     if not entry:
       return False
-    return entry.depth <= int(Options.splitpart)
+    if hasattr(entry, 'split'):
+      return True
+    return entry.depth <= Options.splitpart
 
   def getfilename(self, container):
     "Get the new file name for a given container."
     entry = self.tocwriter.convert(container)
-    if entry.depth == int(Options.splitpart):
+    if hasattr(entry, 'split'):
+      partname = '-' + entry.split
+    elif entry.depth == Options.splitpart:
       partname = '-' + container.number
     else:
       partname = '-' + container.type + '-' + container.number

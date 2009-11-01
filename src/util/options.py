@@ -78,6 +78,12 @@ class Options(object):
       self.showversiondate()
     if Options.lyxformat:
       self.showlyxformat()
+    if Options.splitpart:
+      try:
+        Options.splitpart = int(Options.splitpart)
+      except:
+        Trace.error('--splitpart needs a numeric argument, not ' + Options.splitpart)
+        self.usage()
     # set in Trace if necessary
     for param in dir(Options):
       if hasattr(Trace, param + 'mode'):
