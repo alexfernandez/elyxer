@@ -47,7 +47,8 @@ class Options(object):
   title = None
   directory = None
   destdirectory = None
-  toc = None
+  toc = False
+  toctarget = ''
   forceformat = None
   lyxformat = False
   target = None
@@ -105,7 +106,7 @@ class Options(object):
     Trace.error('    --forceformat ".extension": force image output format')
     Trace.error('    --lyxformat:                return the highest LyX version that can be')
     Trace.error('                                converted')
-    Trace.error('    --toc "original.html":      create a TOC with links to the original')
+    Trace.error('    --toc:                      create a table of contents')
     Trace.error('    --target "frame":           make all links point to the given frame')
     exit()
 

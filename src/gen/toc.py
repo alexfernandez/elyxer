@@ -33,8 +33,8 @@ class TOCWriter(object):
 
   def __init__(self, writer):
     self.writer = writer
-    self.depth = 0
     Options.nocopy = True
+    self.indenter = Indenter(writer)
 
   def clone(self, filterheader):
     "Return a cloned copy."
@@ -49,17 +49,22 @@ class TOCWriter(object):
       return
     if not hasattr(container, 'number'):
       return
-    self.indent(container.type)
-    self.createlink(container.type, container.number, self.gettitle(container))
+    self.indenter.indent(container.type)
+    entry = TOCEntry().create(container)
+    self.writer.write(entry.gethtml())
 
-  def createlink(self, type, number, title):
-    "Create the actual link for the TOC."
-    text = TranslationConfig.constants[type] + ' ' + number
-    text += ':' + title + '\n'
-    url = Options.toc + '#toc-' + type + '-' + number
-    link = Link().complete(text, url=url)
-    toc = TaggedText().complete([link], 'div class="toc"', True)
-    self.writer.write(toc.gethtml())
+  def writeheaderfooter(self, container):
+    "Write the header or the footer."
+    if isinstance(container, LyxFooter):
+      self.indenter.indentdepth(0)
+    self.writer.write(container.gethtml())
+
+class Indenter(object):
+  "Manages and writes indentation for the TOC."
+
+  def __init__(self, writer):
+    self.depth = 0
+    self.writer = writer
 
   def indent(self, type):
     "Indent the line according to the container type."
@@ -73,24 +78,15 @@ class TOCWriter(object):
     else:
       Trace.error('Unknown numbered container type ' + type)
       return
+    self.indentdepth(depth)
+
+  def indentdepth(self, depth):
+    "Indent according to the given depth."
     if depth > self.depth:
       self.openindent(depth - self.depth)
     elif depth < self.depth:
       self.closeindent(self.depth - depth)
     self.depth = depth
-
-  def gettitle(self, container):
-    "Get the title of the container."
-    if len(container.contents) < 2:
-      return '-'
-    withoutlabel = TaggedText().complete(container.contents[1:], 'x')
-    return withoutlabel.extracttext()
-
-  def writeheaderfooter(self, container):
-    "Write the header or the footer."
-    if isinstance(container, LyxFooter):
-      self.closeindent(self.depth)
-    self.writer.write(container.gethtml())
 
   def openindent(self, times):
     "Open the indenting div a few times."
@@ -101,4 +97,28 @@ class TOCWriter(object):
     "Close the indenting div a few times."
     for i in range(times):
       self.writer.writeline('</div>')
+
+class TOCEntry(Container):
+  "A container for a TOC entry."
+
+  def create(self, container):
+    "Create the TOC entry for a container"
+    self.createlink(container.type, container.number, self.gettitle(container))
+    return self
+
+  def createlink(self, type, number, title):
+    "Create the actual link for the TOC."
+    text = TranslationConfig.constants[type] + ' ' + number
+    text += ':' + title + '\n'
+    url = Options.toctarget + '#toc-' + type + '-' + number
+    link = Link().complete(text, url=url)
+    self.contents = [link]
+    self.output = TaggedOutput().settag('div class="toc"', True)
+
+  def gettitle(self, container):
+    "Get the title of the container."
+    if len(container.contents) < 2:
+      return '-'
+    withoutlabel = TaggedText().complete(container.contents[1:], 'x')
+    return withoutlabel.extracttext()
 

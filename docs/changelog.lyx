@@ -130,6 +130,18 @@ Add a space after a fraction and before the units:
 Corrected display of float within a float (thanks again, Olivier!).
 \end_layout
 
+\begin_layout Itemize
+Modified the meaning of 
+\family typewriter
+--toc
+\family default
+ to be an on/off switch; the old behavior is now under 
+\family typewriter
+--toctarget
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.34 (2009-10-28):

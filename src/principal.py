@@ -31,26 +31,10 @@ from util.trace import Trace
 from util.options import *
 
 
-def readdir(filename, diroption):
-  "Read the current directory if needed"
-  if getattr(Options, diroption) != None:
-    return
-  setattr(Options, diroption, os.path.dirname(filename))
-  if getattr(Options, diroption) == '':
-    setattr(Options, diroption, '.')
-
 def convertdoc(args):
   "Read a whole document and write it"
   Options().parseoptions(args)
   ioparser = InOutParser().parse(args)
-  if ioparser.parsedin:
-    readdir(ioparser.filein, 'directory')
-  else:
-    Options.directory = '.'
-  if ioparser.parsedout:
-    readdir(ioparser.fileout, 'destdirectory')
-  else:
-    Options.destdirectory = '.'
   converter = eLyXerConverter().setio(ioparser)
   converter.convert()
 

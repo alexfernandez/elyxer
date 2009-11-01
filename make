@@ -33,7 +33,7 @@ rm -f test/*.lyx~
 rm -f test/subdir/*.lyx~
 # prepare documentation
 ./elyxer.py --title "eLyXer User Guide" --css "lyx.css" docs/userguide.lyx docs/userguide.html
-./elyxer.py --toc "userguide.html" --target "contents" --css "toc.css" docs/userguide.lyx docs/userguide-toc.html
+./elyxer.py --toc --toctarget "userguide.html" --target "contents" --css "toc.css" docs/userguide.lyx docs/userguide-toc.html
 ./elyxer.py --title="eLyxer Developer Guide" --css "lyx.css" docs/devguide.lyx docs/devguide.html
 ./elyxer.py --title=eLyXer --css "lyx.css" docs/index.lyx docs/index.html
 ./elyxer.py --title="eLyXer changelog" --css "lyx.css" docs/changelog.lyx docs/changelog.html

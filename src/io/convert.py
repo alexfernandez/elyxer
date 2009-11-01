@@ -115,13 +115,27 @@ class InOutParser(object):
       self.filein = args[0]
       del args[0]
       self.parsedin = True
+      self.readdir(self.filein, 'directory')
+    else:
+      Options.directory = '.'
     if len(args) > 0:
       self.fileout = args[0]
       del args[0]
       self.parsedout = True
+      self.readdir(self.fileout, 'destdirectory')
+    else:
+      Options.destdirectory = '.'
     if len(args) > 0:
       raise Exception('Unused arguments: ' + unicode(args))
     return self
+
+  def readdir(self, filename, diroption):
+    "Read the current directory if needed"
+    if getattr(Options, diroption) != None:
+      return
+    setattr(Options, diroption, os.path.dirname(filename))
+    if getattr(Options, diroption) == '':
+      setattr(Options, diroption, '.')
 
 class ConverterFactory(object):
   "Create a converter fit for converting a filename and embedding the result."

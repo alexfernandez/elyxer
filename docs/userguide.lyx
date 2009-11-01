@@ -87,7 +87,6 @@ elixir
 \begin_layout Standard
 eLyXer (including this guide and all accompanying materials) is licensed
  under the 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "GPL version 3"
@@ -95,8 +94,6 @@ target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
 
 \end_inset
 
-
-\lang english
  or, at your option, any later version.
  See the 
 \family typewriter
@@ -107,7 +104,6 @@ LICENSE
 
 \begin_layout Standard
 Please visit the 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "main page"
@@ -115,8 +111,6 @@ target "index.html"
 
 \end_inset
 
-
-\lang english
  to find out about the latest developments.
 \end_layout
 
@@ -757,7 +751,6 @@ elyxer.py
 
 \begin_layout Standard
 On Windows, the 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "alternate installer"
@@ -765,8 +758,6 @@ target "http://wiki.lyx.org/Windows/LyXWinInstaller"
 
 \end_inset
 
-
-\lang english
  will soon come bundled with a version of eLyXer.
 \end_layout
 
@@ -1006,6 +997,22 @@ lyx2lyx
 
 \family typewriter
 --toc
+\family default
+: Activate table of contents generation.
+ See section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:TOC"
+
+\end_inset
+
+: TOC.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--toctarget
 \begin_inset space ~
 \end_inset
 
@@ -1326,7 +1333,7 @@ contents
 \color blue
 $
 \color inherit
- elyxer.py --toc page.html --target contents document.lyx page-toc.html
+ elyxer.py --toc --toctarget page.html --target contents document.lyx page-toc.html
 \end_layout
 
 \begin_layout Standard
@@ -1456,7 +1463,7 @@ TOC generation accepts the same options as normal document conversion.
 \family typewriter
 docs/toc.css
 \family default
-., so better results should be obtained with the 
+, so better results should be obtained with the 
 \family typewriter
 --css
 \family default
@@ -1469,15 +1476,14 @@ docs/toc.css
 \color blue
 $
 \color inherit
- elyxer.py --toc page.html --css docs/toc.css --target contents document.lyx
- page-toc.html
+ elyxer.py --toc --toctarget page.html --css docs/toc.css --target contents
+ document.lyx page-toc.html
 \end_layout
 
 \begin_layout Standard
 With a little bit of practice you will be able to generate useful (and nice
  looking) TOC files.
  You can see an example for the 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "user guide"
@@ -1485,8 +1491,6 @@ target "userguide-frameset.html"
 
 \end_inset
 
-
-\lang english
  (if you are not already looking at it).
 \end_layout
 
@@ -1555,7 +1559,6 @@ The CSS file for eLyXer uses some CSS2 features for math structures (fractions,
  This makes the output incompatible with older browsers; it requires Microsoft
  Internet Explorer 7, Firefox 3, Safari 3 or Chrome 1.
  Check the 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "Math Showcase"
@@ -1563,8 +1566,6 @@ target "math.html"
 
 \end_inset
 
-
-\lang english
  to see if your browser can render eLyXer output correctly.
 \end_layout
 
@@ -1589,7 +1590,6 @@ $
 
 \begin_layout Standard
 See the 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "Math Showcase with Unicode"
@@ -1597,8 +1597,6 @@ target "math-unicode.html"
 
 \end_inset
 
-
-\lang english
  to see the results.
  In the future other non-Unicode substitutions might be used.
 \end_layout
@@ -1731,7 +1729,6 @@ Contact Information
 \begin_layout Standard
 If your problem does not appear in the above list, please let the author
  know; you can find him at 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "elyxer@gmail.com"
@@ -1740,8 +1737,6 @@ type "mailto:"
 
 \end_inset
 
-
-\lang english
 .
  In the words of Rich Talley: 
 \begin_inset Quotes eld
@@ -1760,7 +1755,6 @@ the tool's author really likes getting challenging documents and making
 
 \begin_layout Standard
 You can also join the 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "mailing list"
@@ -1768,12 +1762,9 @@ target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
 
 \end_inset
 
-
-\lang english
  to discuss any information related to eLyXer.
  The author monitors the official LyX lists for mentions of eLyXer.
  Bugs can also be reported at the 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "Savannah page"
@@ -1781,8 +1772,6 @@ target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 
 \end_inset
 
-
-\lang english
 .
 \end_layout
 
@@ -1803,7 +1792,6 @@ eLyXer does not at the moment support all LyX features; sometimes it will
 eLyXer is written in Python so that it does not need to be compiled; its
  code is interpreted on the fly.
  See the accompanying 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "developer guide"
@@ -1811,8 +1799,6 @@ target "devguide.html"
 
 \end_inset
 
-
-\lang english
  to learn how to extend eLyXer for your own purposes.
  If you know how to program in Python it should not be difficult to support
  other LyX features.
@@ -1902,7 +1888,6 @@ Q: I found a bug, what should I do?
 
 \begin_layout Description
 A: Just send it to the author at 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "elyxer@gmail.com"
@@ -1911,11 +1896,8 @@ type "mailto:"
 
 \end_inset
 
-
-\lang english
 .
  You can also report it to the 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "Savannah interface"
@@ -1923,8 +1905,6 @@ target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 
 \end_inset
 
-
-\lang english
  (although at this point in time you would be the first to use it).
 \end_layout
 

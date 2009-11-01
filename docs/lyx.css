@@ -483,3 +483,10 @@ span.phantom {
 a.toc {
 	color: black;
 }
+div.tocindent {
+	padding: 0 0 0 2em;
+}
+div.toc {
+	margin: 0.5em 0;
+	font-size: 0.95em;
+}
