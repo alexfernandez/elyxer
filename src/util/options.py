@@ -81,6 +81,9 @@ class Options(object):
     if Options.splitpart:
       try:
         Options.splitpart = int(Options.splitpart)
+        if Options.splitpart <= 0:
+          Trace.error('--splitpart a number bigger than zero')
+          self.usage()
       except:
         Trace.error('--splitpart needs a numeric argument, not ' + Options.splitpart)
         self.usage()

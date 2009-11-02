@@ -61,7 +61,7 @@ class eLyXerConverter(object):
     "Embed the results for a new input file into the latest output file."
     "Header and footer are ignored. Useful for embedding one document inside another."
     self.reader = LineReader(filein)
-    self.basket = eLyXerConverter.latestbasket.getfiltered()
+    self.basket = eLyXerConverter.latestbasket.getfilterheader()
     return self
 
   def convert(self):
@@ -81,6 +81,7 @@ class eLyXerConverter(object):
       for container in containers:
         container = self.postproc.postprocess(container)
         self.basket.write(container)
+    self.basket.finish()
 
 class InOutParser(object):
   "Parse in and out arguments"

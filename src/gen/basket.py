@@ -42,19 +42,29 @@ class Basket(object):
     self.writer = writer
     return self
 
-  def getfiltered(self):
+  def getfilterheader(self):
     "Get a new basket just flipping the filterheader bit."
     clone = Cloner.clone(self)
     clone.setwriter(self.writer)
     clone.filterheader = True
     return clone
 
+  def isfiltered(self, container):
+    "Find out if a given container is filtered."
+    if self.filterheader and container.__class__ in [LyxHeader, LyxFooter]:
+      return True
+    return False
+
+  def finish(self):
+    "Mark as finished."
+    pass
+
 class WriterBasket(Basket):
   "A writer of containers. Just writes them out to a writer."
 
   def write(self, container):
     "Write a container to the line writer."
-    if self.filterheader and container.__class__ in [LyxHeader, LyxFooter]:
+    if self.isfiltered(container):
       return
     self.writer.write(container.gethtml())
 
@@ -68,6 +78,12 @@ class KeeperBasket(Basket):
   def write(self, container):
     "Keep the container."
     self.contents.append(container)
+
+  def flush(self):
+    "Flush the contents to the writer."
+    for container in self.contents:
+      if not self.isfiltered(container):
+        self.writer.write(container.gethtml())
 
 class TOCBasket(Basket):
   "A basket to place the TOC of a document."
@@ -98,23 +114,36 @@ class TOCBasket(Basket):
 class SplittingBasket(Basket):
   "A basket used to split the output in different files."
 
+  baskets = []
+
   def setwriter(self, writer):
-    Basket.setwriter(self, writer)
     if not hasattr(writer, 'filename') or not writer.filename:
       Trace.error('Cannot use standard output for split output; ' +
           'please supply an output filename.')
       exit()
+    self.addbasket(writer)
     self.base, self.extension = os.path.splitext(writer.filename)
-    self.tocwriter = TOCBasket().setwriter(writer)
+    self.tocwriter = TOCBasket()
     return self
+
+  def addbasket(self, writer):
+    "Add a new basket."
+    self.basket = KeeperBasket()
+    self.basket.setwriter(writer)
+    self.baskets.append(self.basket)
 
   def write(self, container):
     "Write a container, possibly splitting the file."
     if self.mustsplit(container):
-      self.writer.write(LyxFooter().gethtml())
-      self.writer = LineWriter(self.getfilename(container))
-      self.writer.write(LyxHeader().gethtml())
-    self.writer.write(container.gethtml())
+      self.basket.write(LyxFooter())
+      self.basket.flush()
+      self.addbasket(LineWriter(self.getfilename(container)))
+      self.basket.write(LyxHeader())
+    self.basket.write(container)
+
+  def finish(self):
+    "Mark as finished."
+    self.basket.flush()
 
   def mustsplit(self, container):
     "Find out if the oputput file has to be split at this entry."
@@ -133,7 +162,8 @@ class SplittingBasket(Basket):
   def splitalone(self, container):
     "Find out if the container must be split in its own page."
     found = []
-    container.locateprocess(lambda container: container.__class__ in [PrintNomenclature, PrintIndex],
+    container.locateprocess(
+        lambda container: container.__class__ in [PrintNomenclature, PrintIndex],
         lambda contents, index: found.append(contents[index].__class__.__name__))
     if not found:
       return False
