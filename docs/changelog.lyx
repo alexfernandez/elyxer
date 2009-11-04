@@ -158,6 +158,23 @@ Changed the unreleased option
 --splitpart
 \family default
 : new option to split the output file in parts.
+ Not yet working correctly (for instance, links are not redirected).
+\end_layout
+
+\begin_layout Itemize
+eLyXer now understands and processes new Graphics options: 
+\family typewriter
+width 50col%
+\family default
+, 
+\family typewriter
+height 50theight%
+\family default
+ and friends (thanks, Uwe).
+\end_layout
+
+\begin_layout Itemize
+PDF images are cropped before conversion to PNG (thanks, Uwe).
 \end_layout
 
 \end_deeper

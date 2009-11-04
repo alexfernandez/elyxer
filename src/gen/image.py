@@ -33,6 +33,7 @@ class Image(Container):
   "An embedded image"
 
   converter = True
+  ignoredtexts = ImageConfig.size['ignoredtexts']
 
   def __init__(self):
     self.parser = InsetParser()
@@ -46,8 +47,7 @@ class Image(Container):
       return
     self.destination = self.getdestination(self.origin)
     self.convert(self.getparams())
-    imagefile = ImageFile(self.destination)
-    self.width, self.height = imagefile.getdimensions()
+    self.setsize()
 
   def getdestination(self, origin):
     "Convert origin path to destination path."
@@ -101,7 +101,33 @@ class Image(Container):
       params['density'] = scale
     elif self.origin.hasext('.jpg') or self.origin.hasext('.png'):
       params['resize'] = unicode(scale) + '%'
+    elif self.origin.hasext('.pdf'):
+      params['define'] = 'pdf:use-cropbox=true'
     return params
+
+  def setsize(self):
+    "Set the size attributes width and height."
+    if self.setifparam('width'):
+      return
+    if self.setifparam('height'):
+      return
+    imagefile = ImageFile(self.destination)
+    width, height = imagefile.getdimensions()
+    if width:
+      self.width = unicode(width)
+    if height:
+      self.height = unicode(height)
+
+  def setifparam(self, name):
+    "Set the value in the container if it exists as a param."
+    if not name in self.parser.parameters:
+      return False
+    value = unicode(self.parser.parameters[name])
+    for ignored in Image.ignoredtexts:
+      if ignored in value:
+        value = value.replace(ignored, '')
+    setattr(self, name, value)
+    return True
 
 class ImageFile(object):
   "A file corresponding to an image (JPG or PNG)"
@@ -187,14 +213,19 @@ class ImageFile(object):
 class ImageOutput(object):
   "Returns an image in the output"
 
+  figure = TranslationConfig.constants['figure']
+
   def gethtml(self, container):
     "Get the HTML output of the image as a list"
     cssclass = 'embedded'
     html = ['<img class="' + cssclass + '"']
     if container.origin.exists():
       html.append(' src="' + container.destination.url +
-          '" alt="figure ' + container.destination.url + '" width="' +
-          unicode(container.width) + '" height="' + unicode(container.height) + '"')
+          '" alt="' + ImageOutput.figure + ' ' + container.destination.url + '"')
+      if hasattr(container, 'width'):
+        html.append(' width="' + container.width + '"')
+      if hasattr(container, 'height'):
+        html.append(' height="' + container.height + '"')
     else:
       html.append(' src="' + container.origin.url + '"')
     html.append('/>\n')
