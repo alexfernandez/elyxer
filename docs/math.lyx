@@ -268,6 +268,11 @@ There are other symbols like arrows:
 
 .
  eLyXer offers limited support for them.
+ You might also want to use financial symbols in formulae: 
+\begin_inset Formula $\yen\euro\$$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -329,6 +334,42 @@ math-unicode.html
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Spacing
+\end_layout
+
+\begin_layout Standard
+The command 
+\family typewriter
+
+\backslash
+raisebox
+\family default
+ is useful to, surprisingly, raise a little box.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\raisebox{2mm}{raised}over\raisebox{-2mm}{lowered}\textrm{and back}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It can also be used just for spacing.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\raisebox{5mm}{}B^{V}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+There are other spacing commands.
 \end_layout
 
 \begin_layout Subsection
