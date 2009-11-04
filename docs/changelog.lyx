@@ -91,6 +91,12 @@ blacklozenge
 \backslash
 nexists
 \family default
+, 
+\family typewriter
+
+\backslash
+mathcircumflex
+\family default
 .
 \end_layout
 
