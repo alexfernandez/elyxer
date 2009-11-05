@@ -68,7 +68,17 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
-0.35 (unreleased):
+0.36 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+0.35 (2009-11-05):
 \end_layout
 
 \begin_deeper
@@ -149,7 +159,7 @@ Modified the meaning of
 \end_layout
 
 \begin_layout Itemize
-Changed the unreleased option 
+Changed the 2009-11-05 option 
 \family typewriter
 --cutpart
 \family default
