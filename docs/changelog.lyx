@@ -177,6 +177,15 @@ height 50theight%
 PDF images are cropped before conversion to PNG (thanks, Uwe).
 \end_layout
 
+\begin_layout Itemize
+Included child documents can be inserted using firstline and lastline (as
+ seen in 
+\family typewriter
+EmbeddedObjects.lyx
+\family default
+).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.34 (2009-10-28):
