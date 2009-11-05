@@ -149,8 +149,8 @@ class NomenclatureEntry(Link):
 
   def process(self):
     "Put entry in index"
-    self.symbol = self.parser.parameters['symbol']
-    self.description = self.parser.parameters['description']
+    self.symbol = self.parameters['symbol']
+    self.description = self.parameters['description']
     self.key = self.symbol.replace(' ', '-').lower()
     NomenclatureEntry.entries[self.key] = self
     self.anchor = 'noment-' + self.key
@@ -192,13 +192,13 @@ class URL(Link):
 
   def process(self):
     "Read URL from parameters"
-    name = self.escape(self.parser.parameters['target'])
-    if 'type' in self.parser.parameters:
-      self.url = self.escape(self.parser.parameters['type']) + name
+    name = self.escape(self.parameters['target'])
+    if 'type' in self.parameters:
+      self.url = self.escape(self.parameters['type']) + name
     else:
       self.url = name
-    if 'name' in self.parser.parameters:
-      name = self.parser.parameters['name']
+    if 'name' in self.parameters:
+      name = self.parameters['name']
     self.contents = [Constant(name)]
 
 class FlexURL(URL):

@@ -145,8 +145,8 @@ class InfoInset(Container):
 
   def process(self):
     "Set the shortcut as text"
-    self.type = self.parser.parameters['type']
-    self.contents = [Constant(self.parser.parameters['arg'])]
+    self.type = self.parameters['type']
+    self.contents = [Constant(self.parameters['arg'])]
 
 class BoxInset(Container):
   "A box inset"
@@ -175,9 +175,9 @@ class IncludeInset(Container):
 
   def process(self):
     "Include the provided child document"
-    self.filename = self.parser.parameters['filename']
+    self.filename = self.parameters['filename']
     Trace.debug('Child document: ' + self.filename)
-    if 'lstparams' in self.parser.parameters:
+    if 'lstparams' in self.parameters:
       self.parselstparams()
     converter = IncludeInset.converterfactory.create(self)
     converter.convert()

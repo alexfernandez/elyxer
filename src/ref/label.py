@@ -41,7 +41,7 @@ class Label(Container):
     self.output = LinkOutput()
 
   def process(self):
-    self.anchor = self.parser.parameters['name']
+    self.anchor = self.parameters['name']
     Label.names[self.anchor] = self
     self.contents = [Constant(' ')]
 
@@ -54,7 +54,7 @@ class Reference(Link):
     self.direction = u'↓'
 
   def process(self):
-    key = self.parser.parameters['reference']
+    key = self.parameters['reference']
     self.url = '#' + key
     if key in Label.names:
       # already seen

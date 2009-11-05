@@ -41,7 +41,7 @@ class Image(Container):
 
   def process(self):
     "Place the url, convert the image if necessary."
-    self.origin = InputPath(self.parser.parameters['filename'])
+    self.origin = InputPath(self.parameters['filename'])
     if not self.origin.exists():
       Trace.error('Image ' + unicode(self.origin) + ' not found')
       return
@@ -95,8 +95,8 @@ class Image(Container):
     "Get the parameters for ImageMagick conversion"
     params = dict()
     scale = 100
-    if 'scale' in self.parser.parameters:
-      scale = int(self.parser.parameters['scale'])
+    if 'scale' in self.parameters:
+      scale = int(self.parameters['scale'])
     if self.origin.hasext('.svg'):
       params['density'] = scale
     elif self.origin.hasext('.jpg') or self.origin.hasext('.png'):
@@ -120,9 +120,9 @@ class Image(Container):
 
   def setifparam(self, name):
     "Set the value in the container if it exists as a param."
-    if not name in self.parser.parameters:
+    if not name in self.parameters:
       return False
-    value = unicode(self.parser.parameters[name])
+    value = unicode(self.parameters[name])
     for ignored in Image.ignoredtexts:
       if ignored in value:
         value = value.replace(ignored, '')

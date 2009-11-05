@@ -42,7 +42,7 @@ class BiblioCite(Container):
   def process(self):
     "Add a cite to every entry"
     self.contents = list()
-    keys = self.parser.parameters['key'].split(',')
+    keys = self.parameters['key'].split(',')
     for key in keys:
       BiblioCite.index += 1
       number = unicode(BiblioCite.index)
@@ -72,7 +72,7 @@ class BiblioEntry(Container):
 
   def process(self):
     "Process the cites for the entry's key"
-    self.processcites(self.parser.parameters['key'])
+    self.processcites(self.parameters['key'])
 
   def processcites(self, key):
     "Get all the cites of the entry"

@@ -46,7 +46,7 @@ class BibTeX(Container):
     bibliography = TranslationConfig.constants['bibliography']
     tag = TaggedText().constant(bibliography, 'h1 class="biblio"')
     self.contents.append(tag)
-    files = self.parser.parameters['bibfiles'].split(',')
+    files = self.parameters['bibfiles'].split(',')
     for file in files:
       bibfile = BibFile(file)
       bibfile.parse()
@@ -67,7 +67,7 @@ class BibTeX(Container):
 
   def readstyle(self):
     "Read the style from the bibliography options"
-    options = self.parser.parameters['options'].split(',')
+    options = self.parameters['options'].split(',')
     for option in options:
       if hasattr(BibStylesConfig, option):
         return getattr(BibStylesConfig, option)
