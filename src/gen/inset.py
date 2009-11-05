@@ -179,6 +179,6 @@ class IncludeInset(Container):
     Trace.debug('Child document: ' + self.filename)
     if 'lstparams' in self.parser.parameters:
       self.parselstparams()
-    converter = IncludeInset.converterfactory.create(self.filename)
+    converter = IncludeInset.converterfactory.create(self)
     converter.convert()
 

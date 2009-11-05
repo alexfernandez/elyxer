@@ -57,10 +57,10 @@ class eLyXerConverter(object):
     eLyXerConverter.latestbasket = self.basket
     return self
 
-  def embed(self, filein):
+  def embed(self, reader):
     "Embed the results for a new input file into the latest output file."
     "Header and footer are ignored. Useful for embedding one document inside another."
-    self.reader = LineReader(filein)
+    self.reader = reader
     self.basket = eLyXerConverter.latestbasket.getfilterheader()
     return self
 
@@ -123,10 +123,12 @@ class InOutParser(object):
 class ConverterFactory(object):
   "Create a converter fit for converting a filename and embedding the result."
 
-  def create(self, filename):
-    "Create a converter for a given filename."
-    fullname = os.path.join(Options.directory, filename)
-    return eLyXerConverter().embed(fullname)
+  def create(self, container):
+    "Create a converter for a given container, with filename"
+    " and possibly other parameters."
+    fullname = os.path.join(Options.directory, container.filename)
+    reader = LineReader(fullname)
+    return eLyXerConverter().embed(reader)
 
 IncludeInset.converterfactory = ConverterFactory()
 
