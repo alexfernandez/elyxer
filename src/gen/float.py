@@ -87,7 +87,7 @@ class Listing(Float):
 
   def process(self):
     "Remove all layouts"
-    self.processlstparams()
+    self.parselstparams()
     self.type = 'listing'
     captions = self.searchremove(Caption)
     newcontents = []

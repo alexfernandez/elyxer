@@ -35,10 +35,21 @@ class LineReader(object):
       self.file = filename
     else:
       self.file = codecs.open(filename, 'rU', "utf-8")
-    self.linenumber = 0
+    self.linenumber = 1
+    self.lastline = None
     self.current = None
     self.mustread = True
     self.depleted = False
+
+  def setstart(self, firstline):
+    "Set the first line to read."
+    for i in range(firstline):
+      self.file.readline()
+    self.linenumber = firstline
+
+  def setend(self, lastline):
+    "Set the last line to read."
+    self.lastline = lastline
 
   def currentline(self):
     "Get the current line"
@@ -68,6 +79,8 @@ class LineReader(object):
 
   def finished(self):
     "Find out if the file is finished"
+    if self.lastline and self.linenumber == self.lastline:
+      return True
     if self.mustread:
       self.readline()
     return self.depleted
