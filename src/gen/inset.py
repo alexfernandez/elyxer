@@ -177,6 +177,8 @@ class IncludeInset(Container):
     "Include the provided child document"
     self.filename = self.parser.parameters['filename']
     Trace.debug('Child document: ' + self.filename)
+    if 'lstparams' in self.parser.parameters:
+      self.parselstparams()
     converter = IncludeInset.converterfactory.create(self.filename)
     converter.convert()
 

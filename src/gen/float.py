@@ -87,7 +87,7 @@ class Listing(Float):
 
   def process(self):
     "Remove all layouts"
-    self.processparams()
+    self.processlstparams()
     self.type = 'listing'
     captions = self.searchremove(Caption)
     newcontents = []
@@ -98,18 +98,11 @@ class Listing(Float):
       'div class="listing"', True)]
 
   def processparams(self):
-    "Process listing parameteres"
-    if not 'lstparams' in self.parameters:
+    "Process listing parameteres."
+    self.parselstparams()
+    if not 'numbers' in self.parameters:
       return
-    paramlist = self.parameters['lstparams'].split(',')
-    for param in paramlist:
-      if not '=' in param:
-        Trace.error('Invalid listing parameter ' + param)
-      else:
-        key, value = param.split('=', 1)
-        self.parameters[key] = value
-        if key == 'numbers':
-          self.numbered = value
+    self.numbered = self.parameters['numbers']
 
   def extract(self, container):
     "Extract the container's contents and return them"

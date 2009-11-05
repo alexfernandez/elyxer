@@ -140,6 +140,18 @@ class Container(object):
       if isinstance(element, Container):
         element.debug(level + 1)
 
+  def parselstparams(self):
+    "Parse a multiple parameter lstparams."
+    if not 'lstparams' in self.parameters:
+      return
+    paramlist = self.parameters['lstparams'].split(',')
+    for param in paramlist:
+      if not '=' in param:
+        Trace.error('Invalid listing parameter ' + param)
+      else:
+        key, value = param.split('=', 1)
+        self.parameters[key] = value
+
   def __unicode__(self):
     "Get a description"
     if not hasattr(self, 'begin'):
