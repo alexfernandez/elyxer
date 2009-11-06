@@ -73,7 +73,8 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Change the postprocessing of equation labels so that only one anchor is
+ used.
 \end_layout
 
 \end_deeper

@@ -24,6 +24,7 @@
 
 import sys
 from gen.container import *
+from ref.label import *
 from util.trace import Trace
 from util.clone import *
 from conf.config import *
@@ -173,12 +174,15 @@ class LabelFunction(CommandBit):
 
   def parsebit(self, pos):
     "Parse a literal parameter"
-    bracket = Bracket().parseliteral(pos)
-    self.add(bracket)
+    self.label = Bracket().parseliteral(pos).literal
 
   def process(self):
-    "Do not process the inside"
+    "Add an anchor with the label contents."
     self.type = 'font'
+    self.anchor = Link().complete('', anchor = self.label, type = 'eqnumber')
+    self.contents = [self.anchor]
+    # store as a Label so we know it's been seen
+    Label.names[self.label] = self
 
 class FontFunction(OneParamFunction):
   "A function of one parameter that changes the font"

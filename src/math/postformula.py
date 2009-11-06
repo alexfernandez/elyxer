@@ -47,14 +47,22 @@ class PostFormula(object):
     if formula.header[0] != 'numbered':
       return
     number = '(' + PostFormula.generator.generate(1) + ') '
-    link = Link().complete(number, type="eqnumber")
-    formula.contents.insert(0, link)
+    labels = formula.searchremove(LabelFunction)
+    Trace.debug('All: ' + unicode(labels))
+    if len(labels) > 1:
+      Trace.error('More than one label in ' + unicode(formula))
+      return
+    if len(labels) == 0:
+      label = Link()
+    else:
+      label = labels[0].anchor
+    label.complete(number, type="eqnumber")
+    formula.contents.insert(0, label)
 
   def postcontents(self, contents):
     "Search for sum or integral"
     for index, bit in enumerate(contents):
       self.checklimited(contents, index)
-      self.checknumber(contents, index)
       if isinstance(bit, FormulaBit):
         self.postcontents(bit.contents)
 
@@ -91,21 +99,6 @@ class PostFormula(object):
       return False
     bit.output.tag += ' class="bigsymbol"'
     return True
-
-  def checknumber(self, contents, index):
-    "Check for equation numbering"
-    label = contents[index]
-    if not isinstance(label, LabelFunction):
-      return
-    if len(label.contents) < 1 or not isinstance(label.contents[0], Bracket):
-      Trace.error('Wrong contents for label ' + unicode(label))
-      return
-    bracket = label.contents[0]
-    label.anchor = bracket.literal
-    label.contents = []
-    label.output = LinkOutput()
-    # store as a Label so we know it's been seen
-    Label.names[label.anchor] = label
 
   def posttraverse(self, formula):
     "Traverse over the contents to alter variables and space units."

@@ -31,14 +31,10 @@ from util.numbering import *
 from ref.link import *
 
 
-class Label(Container):
+class Label(Link):
   "A label to be referenced"
 
   names = dict()
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = LinkOutput()
 
   def process(self):
     self.anchor = self.parameters['name']
@@ -48,12 +44,9 @@ class Label(Container):
 class Reference(Link):
   "A reference to a label"
 
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = LinkOutput()
-    self.direction = u'↓'
-
   def process(self):
+    "Read the reference and set the arrow."
+    self.direction = u'↓'
     key = self.parameters['reference']
     self.url = '#' + key
     if key in Label.names:

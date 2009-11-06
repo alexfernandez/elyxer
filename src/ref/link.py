@@ -34,10 +34,19 @@ class Link(Container):
   "A link to another part of the document"
 
   def __init__(self):
-    self.contents = list()
+    Container.__init__(self)
+    self.parser = InsetParser()
     self.output = LinkOutput()
+    self.anchor = None
+    self.url = None
+    self.type = None
+    self.page = None
+    self.target = None
+    if Options.target:
+      self.target = Options.target
 
   def complete(self, text, anchor = None, url = None, type = None):
+    "Complete the link."
     self.contents = [Constant(text)]
     if anchor:
       self.anchor = anchor
@@ -45,9 +54,16 @@ class Link(Container):
       self.url = url
     if type:
       self.type = type
-    if Options.target:
-      self.target = Options.target
     return self
+
+  def setdestination(self, destination):
+    "Set another link as the destination of this one."
+    if not destination.anchor:
+      Trace.error('Missing anchor in link destination ' + unicode(destination))
+      return
+    self.url = '#' + destination.anchor
+    if destination.page:
+      self.url = destination.page + self.url
 
 class ListOf(Container):
   "A list of entities (figures, tables, algorithms)"
@@ -79,10 +95,6 @@ class IndexEntry(Link):
 
   namescapes = {'!':'', '|':', ', '  ':' '}
   keyescapes = {' ':'-', '--':'-', ',':''}
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = LinkOutput()
 
   def process(self):
     "Put entry in index"
@@ -143,10 +155,6 @@ class NomenclatureEntry(Link):
 
   entries = {}
 
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = LinkOutput()
-
   def process(self):
     "Put entry in index"
     self.symbol = self.parameters['symbol']
@@ -186,10 +194,6 @@ class PrintNomenclature(Container):
 class URL(Link):
   "A clickable URL"
 
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = LinkOutput()
-
   def process(self):
     "Read URL from parameters"
     name = self.escape(self.parameters['target'])
@@ -215,14 +219,14 @@ class LinkOutput(object):
   def gethtml(self, container):
     "Get the HTML code for the link"
     type = container.__class__.__name__
-    if hasattr(container, 'type'):
+    if container.type:
       type = container.type
     tag = 'a class="' + type + '"'
-    if hasattr(container, 'anchor'):
+    if container.anchor:
       tag += ' name="' + container.anchor + '"'
-    if hasattr(container, 'url'):
+    if container.url:
       tag += ' href="' + container.url + '"'
-    if hasattr(container, 'target'):
+    if container.target:
       tag += ' target="' + container.target + '"'
     text = TaggedText().complete(container.contents, tag)
     return text.gethtml()
