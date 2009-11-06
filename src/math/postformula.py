@@ -48,7 +48,6 @@ class PostFormula(object):
       return
     number = '(' + PostFormula.generator.generate(1) + ') '
     labels = formula.searchremove(LabelFunction)
-    Trace.debug('All: ' + unicode(labels))
     if len(labels) > 1:
       Trace.error('More than one label in ' + unicode(formula))
       return
