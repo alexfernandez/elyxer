@@ -92,6 +92,7 @@ class IndexEntry(Link):
   "An entry in the alphabetical index"
 
   entries = dict()
+  arrows = dict()
 
   namescapes = {'!':'', '|':', ', '  ':' '}
   keyescapes = {' ':'-', '--':'-', ',':''}
@@ -103,15 +104,21 @@ class IndexEntry(Link):
     else:
       name = self.extracttext()
     self.name = self.escape(name, IndexEntry.namescapes)
-    self.key = self.escape(self.name, IndexEntry.keyescapes)
-    if not self.key in IndexEntry.entries:
-      # no entry; create
-      IndexEntry.entries[self.key] = list()
-    self.index = len(IndexEntry.entries[self.key])
-    IndexEntry.entries[self.key].append(self)
-    self.anchor = 'entry-' + self.key + '-' + unicode(self.index)
-    self.url = '#index-' + self.key
-    self.contents = [Constant(u'↓')]
+    key = self.escape(self.name, IndexEntry.keyescapes)
+    if not key in IndexEntry.entries:
+      # no entry yet; create
+      entry = Link().complete(name, 'index-' + key, None, 'printindex')
+      entry.name = name
+      IndexEntry.entries[key] = entry
+    if not key in IndexEntry.arrows:
+      # no arrows yet; create list
+      IndexEntry.arrows[key] = []
+    self.index = len(IndexEntry.arrows[key])
+    self.complete(u'↓', 'entry-' + key + '-' + unicode(self.index))
+    self.setdestination(IndexEntry.entries[key])
+    arrow = Link().complete(u'↑', 'index-' + key)
+    arrow.setdestination(self)
+    IndexEntry.arrows[key].append(arrow)
 
 class PrintIndex(Container):
   "Command to print an index"
@@ -126,11 +133,10 @@ class PrintIndex(Container):
     self.contents = [TaggedText().constant(index, 'h1 class="index"'),
         Constant('\n')]
     for key in self.sortentries():
-      name = IndexEntry.entries[key][0].name
-      entry = [Link().complete(name, 'index-' + key, None, 'printindex'),
-          Constant(': ')]
-      contents = [TaggedText().complete(entry, 'i')]
-      contents += self.createarrows(key, IndexEntry.entries[key])
+      entry = IndexEntry.entries[key]
+      entrytext = [IndexEntry.entries[key], Constant(': ')]
+      contents = [TaggedText().complete(entrytext, 'i')]
+      contents += self.extractarrows(key)
       self.contents.append(TaggedText().complete(contents, 'p class="printindex"',
           True))
 
@@ -141,13 +147,11 @@ class PrintIndex(Container):
     keys.sort()
     return keys
 
-  def createarrows(self, key, entries):
-    "Create an entry in the index"
+  def extractarrows(self, key):
+    "Extract all arrows (links to the original reference) for a key."
     arrows = []
-    for entry in entries:
-      link = Link().complete(u'↑', 'index-' + entry.key,
-          '#entry-' + entry.key + '-' + unicode(entry.index))
-      arrows += [link, Constant(u', \n')]
+    for arrow in IndexEntry.arrows[key]:
+      arrows += [arrow, Constant(u', \n')]
     return arrows[:-1]
 
 class NomenclatureEntry(Link):
