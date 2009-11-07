@@ -37,20 +37,33 @@ class Label(Link):
   names = dict()
 
   def process(self):
-    self.anchor = self.parameters['name']
-    Label.names[self.anchor] = self
-    self.contents = [Constant(' ')]
+    "Process a label container."
+    key = self.parameters['name']
+    self.create(key)
+    if key in Reference.references:
+      for reference in Reference.references[key]:
+        reference.setdestination(self)
+
+  def create(self, key):
+    "Create the label for a given key."
+    self.complete(' ', anchor = key)
+    Label.names[key] = self
 
 class Reference(Link):
   "A reference to a label"
 
+  references = dict()
+
   def process(self):
     "Read the reference and set the arrow."
-    self.direction = u'↓'
+    direction = u'↑'
     key = self.parameters['reference']
-    self.url = '#' + key
-    if key in Label.names:
-      # already seen
-      self.direction = u'↑'
-    self.contents = [Constant(self.direction)]
+    if not key in Label.names:
+      Label().create(key)
+      direction = u'↓'
+    self.setdestination(Label.names[key])
+    self.contents = [Constant(direction)]
+    if not key in Reference.references:
+      Reference.references[key] = []
+    Reference.references[key].append(self)
 

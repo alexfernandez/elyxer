@@ -182,7 +182,7 @@ class LabelFunction(CommandBit):
     self.anchor = Link().complete('', anchor = self.label, type = 'eqnumber')
     self.contents = [self.anchor]
     # store as a Label so we know it's been seen
-    Label.names[self.label] = self
+    Label.names[self.label] = self.anchor
 
 class FontFunction(OneParamFunction):
   "A function of one parameter that changes the font"
