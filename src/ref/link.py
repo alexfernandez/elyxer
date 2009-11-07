@@ -65,28 +65,44 @@ class Link(Container):
     if destination.page:
       self.url = destination.page + self.url
 
-class ListOf(Container):
-  "A list of entities (figures, tables, algorithms)"
+  def setmutualdestination(self, destination):
+    "Set another link as destination, and set its destination to this one."
+    self.setdestination(destination)
+    destination.setdestination(self)
+
+class ListInset(Container):
+  "An inset with a list, normally made of links."
 
   def __init__(self):
-    self.parser = BoundedParser()
-    self.output = TaggedOutput().settag('div class="list"', True)
+    self.parser = InsetParser()
+    self.output = ContentsOutput()
+
+  def sortdictionary(self, dictionary):
+    "Sort all entries in the dictionary"
+    keys = dictionary.keys()
+    # sort by name
+    keys.sort()
+    return keys
+
+class ListOf(ListInset):
+  "A list of entities (figures, tables, algorithms)"
 
   def process(self):
     "Parse the header and get the type"
     self.type = self.header[2]
-    self.contents = [Constant(TranslationConfig.lists[self.type])]
+    text = TranslationConfig.lists[self.type]
+    self.contents = [TaggedText.constant(text, 'div class="list"', True)]
 
-class TableOfContents(Container):
+class TableOfContents(ListInset):
   "Table of contents"
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = TaggedOutput().settag('div class="toc"', True)
 
   def process(self):
     "Parse the header and get the type"
-    self.contents = [Constant(TranslationConfig.constants['toc'])]
+    text = TranslationConfig.constants['toc']
+    self.contents = [TaggedText().constant(text, 'div class="toc"', True)]
 
 class IndexEntry(Link):
   "An entry in the alphabetical index"
@@ -120,32 +136,21 @@ class IndexEntry(Link):
     arrow.setdestination(self)
     IndexEntry.arrows[key].append(arrow)
 
-class PrintIndex(Container):
+class PrintIndex(ListInset):
   "Command to print an index"
-
-  def __init__(self):
-    self.parser = BoundedParser()
-    self.output = ContentsOutput()
 
   def process(self):
     "Create the alphabetic index"
     index = TranslationConfig.constants['index']
     self.contents = [TaggedText().constant(index, 'h1 class="index"'),
         Constant('\n')]
-    for key in self.sortentries():
+    for key in self.sortdictionary(IndexEntry.entries):
       entry = IndexEntry.entries[key]
       entrytext = [IndexEntry.entries[key], Constant(': ')]
       contents = [TaggedText().complete(entrytext, 'i')]
       contents += self.extractarrows(key)
       self.contents.append(TaggedText().complete(contents, 'p class="printindex"',
           True))
-
-  def sortentries(self):
-    "Sort all entries in the index"
-    keys = IndexEntry.entries.keys()
-    # sort by name
-    keys.sort()
-    return keys
 
   def extractarrows(self, key):
     "Extract all arrows (links to the original reference) for a key."
@@ -157,43 +162,34 @@ class PrintIndex(Container):
 class NomenclatureEntry(Link):
   "An entry of LyX nomenclature"
 
-  entries = {}
+  entries = dict()
 
   def process(self):
     "Put entry in index"
-    self.symbol = self.parameters['symbol']
-    self.description = self.parameters['description']
-    self.key = self.symbol.replace(' ', '-').lower()
-    NomenclatureEntry.entries[self.key] = self
-    self.anchor = 'noment-' + self.key
-    self.url = '#nom-' + self.key
-    self.contents = [Constant(u'↓')]
+    symbol = self.parameters['symbol']
+    description = self.parameters['description']
+    key = symbol.replace(' ', '-').lower()
+    if key in NomenclatureEntry.entries:
+      Trace.error('Duplicated nomenclature entry ' + key)
+    self.complete(u'↓', 'noment-' + key)
+    entry = Link().complete(u'↑', 'nom-' + key)
+    entry.symbol = symbol
+    entry.description = description
+    self.setmutualdestination(entry)
+    NomenclatureEntry.entries[key] = entry
 
-class PrintNomenclature(Container):
+class PrintNomenclature(ListInset):
   "Print all nomenclature entries"
 
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = ContentsOutput()
-
   def process(self):
-    self.keys = self.sortentries()
     nomenclature = TranslationConfig.constants['nomenclature']
-    self.contents = [TaggedText().constant(nomenclature, 'h1 class="nomenclature"')]
-    for key in self.keys:
+    self.contents = [TaggedText().constant(nomenclature,
+      'h1 class="nomenclature"')]
+    for key in self.sortdictionary(NomenclatureEntry.entries):
       entry = NomenclatureEntry.entries[key]
-      contents = [Link().complete(u'↑', 'nom-' + key, '#noment-' + key)]
-      contents.append(Constant(entry.symbol + u' '))
-      contents.append(Constant(entry.description))
+      contents = [entry, Constant(entry.symbol + u' ' + entry.description)]
       text = TaggedText().complete(contents, 'div class="Nomenclated"', True)
       self.contents.append(text)
-
-  def sortentries(self):
-    "Sort all entries in the index"
-    keys = NomenclatureEntry.entries.keys()
-    # sort by name
-    keys.sort()
-    return keys
 
 class URL(Link):
   "A clickable URL"
