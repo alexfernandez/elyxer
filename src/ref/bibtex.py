@@ -266,8 +266,7 @@ class PubEntry(Entry):
     "Process the entry"
     biblio = BiblioEntry()
     biblio.processcites(self.key)
-    self.contents = [biblio]
-    self.contents.append(Constant(' '))
+    self.contents = [biblio, Constant(' ')]
     self.contents.append(self.getcontents())
 
   def getcontents(self):
