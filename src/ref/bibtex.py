@@ -260,7 +260,7 @@ class PubEntry(Entry):
     "Check if the entry is referenced"
     if not self.key:
       return False
-    return self.key in BiblioCite.entries
+    return self.key in BiblioEntry.entries
 
   def process(self):
     "Process the entry"

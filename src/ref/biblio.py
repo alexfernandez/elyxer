@@ -33,28 +33,40 @@ class BiblioCite(Container):
   "Cite of a bibliography entry"
 
   index = 0
-  entries = dict()
+  cites = dict()
 
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('sup')
+    self.contents = []
+    self.entries = []
 
   def process(self):
     "Add a cite to every entry"
-    self.contents = list()
     keys = self.parameters['key'].split(',')
     for key in keys:
+      if not key in BiblioCite.cites:
+        BiblioCite.cites[key] = []
       BiblioCite.index += 1
       number = unicode(BiblioCite.index)
-      link = Link().complete(number, 'cite-' + number, '#' + number)
-      self.contents.append(link)
-      self.contents.append(Constant(','))
-      if not key in BiblioCite.entries:
-        BiblioCite.entries[key] = []
-      BiblioCite.entries[key].append(number)
+      entry = self.createentry(key, number)
+      cite = Link().complete(number, 'cite-' + number)
+      cite.setmutualdestination(entry)
+      self.contents += [cite, Constant(',')]
+      if not key in BiblioCite.cites:
+        BiblioCite.cites[key] = []
+      BiblioCite.cites[key].append(cite)
     if len(keys) > 0:
       # remove trailing ,
       self.contents.pop()
+
+  def createentry(self, key, number):
+    "Create the entry with the given key and number."
+    entry = Link().complete(number, number)
+    if not key in BiblioEntry.entries:
+      BiblioEntry.entries[key] = []
+    BiblioEntry.entries[key].append(entry)
+    return entry
 
 class Bibliography(Container):
   "A bibliography layout containing an entry"
@@ -66,6 +78,8 @@ class Bibliography(Container):
 class BiblioEntry(Container):
   "A bibliography entry"
 
+  entries = dict()
+
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('span class="entry"')
@@ -76,16 +90,15 @@ class BiblioEntry(Container):
 
   def processcites(self, key):
     "Get all the cites of the entry"
-    cites = list()
-    if key in BiblioCite.entries:
-      cites = BiblioCite.entries[key]
+    if not key in BiblioEntry.entries:
+      self.contents.append(Constant('[-] '))
+      return
+    entries = BiblioEntry.entries[key]
     self.contents = [Constant('[')]
-    for cite in cites:
-      link = Link().complete(cite, cite, '#cite-' + cite)
-      self.contents.append(link)
+    for entry in entries:
+      self.contents.append(entry)
       self.contents.append(Constant(','))
-    if len(cites) > 0:
-      self.contents.pop(-1)
+    self.contents.pop(-1)
     self.contents.append(Constant('] '))
 
 class PostBiblio(object):

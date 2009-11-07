@@ -223,6 +223,17 @@ index
 .
 \end_layout
 
+\begin_layout Standard
+Now we will add two cites in one, just because 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-1,key-2"
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Chapter
 Nomenclature
 \end_layout
@@ -509,6 +520,36 @@ http://www.wordreference.com/definition/elixir
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 key "key-1"
+
+\end_inset
+
+W3C: 
+\begin_inset Quotes eld
+\end_inset
+
+HTML 4.01 Specification
+\begin_inset Quotes erd
+\end_inset
+
+, 24 December 1999.
+ 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.w3.org/TR/REC-html40/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-2"
 
 \end_inset
 
