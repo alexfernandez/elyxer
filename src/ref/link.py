@@ -99,7 +99,7 @@ class TableOfContents(ListInset):
   def process(self):
     "Parse the header and get the type"
     text = TranslationConfig.constants['toc']
-    self.contents = [TaggedText().constant(text, 'div class="toc"', True)]
+    self.contents = [TaggedText().constant(text, 'div class="tocheader"', True)]
 
 class IndexEntry(Link):
   "An entry in the alphabetical index"

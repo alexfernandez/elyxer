@@ -480,6 +480,10 @@ span.unknown {
 span.phantom {
 	color: #ffffff;
 }
+div.tocheader {
+	margin: 1em 0;
+	font-size: large;
+}
 a.toc {
 	color: black;
 }
