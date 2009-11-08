@@ -57,6 +57,15 @@ eLyXer User Guide
 Alex Fernández (elyxer@gmail.com)
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 The Basics
 \end_layout

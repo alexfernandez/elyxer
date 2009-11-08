@@ -77,6 +77,14 @@ Change the postprocessing of equation labels so that only one anchor is
  used.
 \end_layout
 
+\begin_layout Itemize
+New option 
+\family typewriter
+--memory
+\family default
+ to do in-memory processing of a document before file output.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.35 (2009-11-05):

@@ -108,6 +108,15 @@ Index Test
 The Making
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 Explanations
 \end_layout

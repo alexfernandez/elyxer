@@ -55,10 +55,6 @@ class Basket(object):
       return True
     return False
 
-  def finish(self):
-    "Mark as finished."
-    pass
-
 class WriterBasket(Basket):
   "A writer of containers. Just writes them out to a writer."
 
@@ -67,6 +63,10 @@ class WriterBasket(Basket):
     if self.isfiltered(container):
       return
     self.writer.write(container.gethtml())
+
+  def finish(self):
+    "Mark as finished."
+    pass
 
 class KeeperBasket(Basket):
   "Keeps all containers stored."
@@ -78,6 +78,10 @@ class KeeperBasket(Basket):
   def write(self, container):
     "Keep the container."
     self.contents.append(container)
+
+  def finish(self):
+    "Finish the basket by flushing to disk."
+    self.flush()
 
   def flush(self):
     "Flush the contents to the writer."
@@ -111,6 +115,10 @@ class TOCBasket(Basket):
       return None
     return TOCEntry().create(container)
 
+  def finish(self):
+    "Mark as finished."
+    pass
+
 class SplittingBasket(Basket):
   "A basket used to split the output in different files."
 
@@ -136,14 +144,14 @@ class SplittingBasket(Basket):
     "Write a container, possibly splitting the file."
     if self.mustsplit(container):
       self.basket.write(LyxFooter())
-      self.basket.flush()
+      self.basket.finish()
       self.addbasket(LineWriter(self.getfilename(container)))
       self.basket.write(LyxHeader())
     self.basket.write(container)
 
   def finish(self):
     "Mark as finished."
-    self.basket.flush()
+    self.basket.finish()
 
   def mustsplit(self, container):
     "Find out if the oputput file has to be split at this entry."
@@ -182,4 +190,11 @@ class SplittingBasket(Basket):
       else:
         partname = '-' + container.type + '-' + container.number
     return self.base + partname + self.extension
+
+class MemoryBasket(KeeperBasket):
+  "A basket which stores everything in memory, processes it and writes it."
+
+  def finish(self):
+    "Process everything which cannot be done in one pass and write to disk."
+    self.flush()
 

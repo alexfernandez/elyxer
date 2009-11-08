@@ -53,6 +53,7 @@ class Options(object):
   lyxformat = False
   target = None
   splitpart = None
+  memory = False
 
   branches = dict()
 
@@ -117,6 +118,7 @@ class Options(object):
     Trace.error('                                converted')
     Trace.error('    --toc:                      create a table of contents')
     Trace.error('    --target "frame":           make all links point to the given frame')
+    Trace.error('    --memory:                   store a document in memory before writing')
     exit()
 
   def showversion(self):

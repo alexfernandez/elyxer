@@ -46,16 +46,20 @@ class eLyXerConverter(object):
     "Set the InOutParser"
     self.reader = LineReader(ioparser.filein)
     self.writer = LineWriter(ioparser.fileout)
-    if Options.toc:
-      self.basket = TOCBasket()
-    else:
-      if not Options.splitpart:
-        self.basket = WriterBasket()
-      else:
-        self.basket = SplittingBasket()
+    self.basket = self.getbasket()
     self.basket.setwriter(self.writer)
     eLyXerConverter.latestbasket = self.basket
     return self
+
+  def getbasket(self):
+    "Get the appropriate basket for the current options."
+    if Options.toc:
+      return TOCBasket()
+    if Options.splitpart:
+      return SplittingBasket()
+    if Options.memory:
+      return MemoryBasket()
+    return WriterBasket()
 
   def embed(self, reader):
     "Embed the results for a new input file into the latest output file."
