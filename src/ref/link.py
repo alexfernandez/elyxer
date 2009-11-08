@@ -96,9 +96,6 @@ class ListOf(ListInset):
 class TableOfContents(ListInset):
   "Table of contents"
 
-  def __init__(self):
-    self.parser = BoundedParser()
-
   def process(self):
     "Parse the header and get the type"
     text = TranslationConfig.constants['toc']
