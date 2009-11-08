@@ -92,10 +92,14 @@ class KeeperBasket(Basket):
 class TOCBasket(Basket):
   "A basket to place the TOC of a document."
 
+  def __init__(self):
+    Basket.__init__(self)
+    self.indenter = Indenter()
+
   def setwriter(self, writer):
     Basket.setwriter(self, writer)
     Options.nocopy = True
-    self.indenter = Indenter(writer)
+    self.indenter.setwriter(writer)
     return self
 
   def write(self, container):
@@ -103,8 +107,13 @@ class TOCBasket(Basket):
     entry = self.convert(container)
     if not entry:
       return
-    self.indenter.indent(entry.depth)
+    indent = self.getindent(entry)
+    self.writer.write(indent.gethtml())
     self.writer.write(entry.gethtml())
+
+  def getindent(self, entry):
+    "Get the indent for a given entry."
+    return self.indenter.getindent(entry.depth)
 
   def convert(self, container):
     "Convert a container to a TOC container."
@@ -216,5 +225,6 @@ class MemoryBasket(KeeperBasket):
     for container in self.contents:
       entry = basket.convert(container)
       if entry:
+        toc.contents.append(basket.getindent(entry))
         toc.contents.append(entry)
 

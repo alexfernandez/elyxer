@@ -58,25 +58,38 @@ class TOCEntry(Container):
 class Indenter(object):
   "Manages and writes indentation for the TOC."
 
-  def __init__(self, writer):
+  def __init__(self):
     self.depth = 0
+
+  def setwriter(self, writer):
     self.writer = writer
 
   def indent(self, depth):
     "Indent the line according to the given depth."
+    indents = self.getindent(depth)
+    for line in indents:
+      self.writer.write(line)
+
+  def getindent(self, depth):
+    indent = ''
     if depth > self.depth:
-      self.openindent(depth - self.depth)
+      indent = self.openindent(depth - self.depth)
     elif depth < self.depth:
-      self.closeindent(self.depth - depth)
+      indent = self.closeindent(self.depth - depth)
     self.depth = depth
+    return Constant(indent)
 
   def openindent(self, times):
     "Open the indenting div a few times."
+    indent = ''
     for i in range(times):
-      self.writer.writeline('<div class="tocindent">')
+      indent += '<div class="tocindent">\n'
+    return indent
 
   def closeindent(self, times):
     "Close the indenting div a few times."
+    indent = ''
     for i in range(times):
-      self.writer.writeline('</div>')
+      indent += '</div>\n'
+    return indent
 
