@@ -50,11 +50,20 @@
 
 \end_inset
 
-eLyXer Programming Guide
+eLyXer Developer Guide
 \end_layout
 
 \begin_layout Author
 Alex Fernández (elyxer@gmail.com)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -62,10 +71,10 @@ The Basics
 \end_layout
 
 \begin_layout Standard
-This document should help you get started extending eLyXer.
+This document should help you get started if you want to understand how
+ eLyXer works, and maybe extending its functionality.
  The package (including this guide and all accompanying materials) is licensed
  under the 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "GPL version 3"
@@ -73,8 +82,6 @@ target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
 
 \end_inset
 
-
-\lang english
  or, at your option, any later version.
  See the 
 \family typewriter
@@ -82,7 +89,6 @@ LICENSE
 \family default
  file for details.
  Also visit the 
-
 \begin_inset CommandInset href
 LatexCommand href
 name "main page"
@@ -90,13 +96,27 @@ target "index.html"
 
 \end_inset
 
-
-\lang english
  to find out about the latest developments.
 \end_layout
 
 \begin_layout Standard
-In this section we will outline how eLyXer performs the basic tasks.
+In this first section we will outline how eLyXer performs the basic tasks.
+ Next section will be devoted to more arcane matters.
+ The third section deals with future planned extensions, and the fourth
+ one includes things that will probably 
+\emph on
+not
+\emph default
+ be implemented.
+ Finally there is a FAQ that contains answers to questions asked privately
+ and on the lyx-devel list 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lyx-devel"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -104,8 +124,8 @@ Getting eLyXer
 \end_layout
 
 \begin_layout Standard
-If you are interested in eLyXer from a developer's perspective the first
- thing to do is fetch the code.
+If you are interested in eLyXer from a developer perspective the first thing
+ to do is fetch the code.
  It is included in the standard distribution, so just navigate to the 
 \family typewriter
 src/
@@ -118,12 +138,29 @@ src/
 \end_layout
 
 \begin_layout Standard
-For more serious use, or to get the latest copy of the code (after the last
- published version) you need to install the tool 
+For more serious use, or if your distribution did not carry the source code,
+ or perhaps to get the latest copy of the code: you need to install the
+ tool 
 \family typewriter
 git
 \family default
-, created by Linus Torvalds (of Linux fame).
+, created by Linus Torvalds (of Linux fame) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "git-download"
+
+\end_inset
+
+.
+ You will also need to have Python installed; versions at or above 2.4 should
+ be fine 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "python-download"
+
+\end_inset
+
+.
  The code is hosted in Savannah 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -270,9 +307,16 @@ The basic code artifact (or `class' in Python talk) is the
 \family typewriter
 Container
 \family default
-.
+, located in the 
+\family typewriter
+gen
+\family default
+ package.
  Its responsibility is to take a bit of LyX code and generate working HTML
  code.
+ This includes (with the aid of some helper classes): reading from file
+ a few lines, converting it to HTML, and writing the lines back to a second
+ file.
 \end_layout
 
 \begin_layout Standard
@@ -322,7 +366,7 @@ Container
 \family typewriter
 output
 \family default
- object then converts that 
+ object then converts those 
 \family typewriter
 contents
 \family default
@@ -431,7 +475,7 @@ Container
 \family typewriter
 contents
 \family default
- as needed.
+ as needed, once everything has been read and before it is output.
 \end_layout
 
 \begin_layout Standard
@@ -444,6 +488,15 @@ Now we will see each subordinate class in detail.
 Parser
 \family default
 s
+\end_layout
+
+\begin_layout Standard
+The package 
+\family typewriter
+parse
+\family default
+ contains almost all parsing code; it has been isolated on purpose so that
+ LyX format changes can be tackled just by changing the code in that directory.
 \end_layout
 
 \begin_layout Standard
@@ -528,7 +581,7 @@ Parser
 \end_layout
 
 \begin_layout Standard
-Most 
+Basic 
 \family typewriter
 Parser
 \family default
@@ -558,7 +611,7 @@ BoundedParser
 ending
 \family default
 .
- For each line found inside, the 
+ For each line found within, the 
 \family typewriter
 BoundedParser
 \family default
@@ -567,15 +620,7 @@ BoundedParser
 ContainerFactory
 \family default
  to recursively parse its contents.
- Then the parser returns everything found inside as a list.
-\end_layout
-
-\begin_layout Standard
-Parsers are confined to the 
-\family typewriter
-parser
-\family default
- package, so that any future format changes can be done easily.
+ The parser then returns everything found inside as a list.
 \end_layout
 
 \begin_layout Subsection
@@ -625,29 +670,12 @@ Container
 \family typewriter
 contents
 \family default
- list attribute.
-\end_layout
-
-\begin_layout Subsection
-Preprocessors
-\end_layout
-
-\begin_layout Standard
-The file 
-\family typewriter
-preprocessor.py
-\family default
- contains some preprocessing to be done on 
+ (as a list attribute).
+ An output can also use all attributes of a 
 \family typewriter
 Container
 \family default
-s before they are output.
- Preprocessing is deactivated at the time since it needs some context, not
- just the current 
-\family typewriter
-Container
-\family default
-.
+ to do their job.
 \end_layout
 
 \begin_layout Subsection
@@ -1947,8 +1975,8 @@ Advanced Features
 \end_layout
 
 \begin_layout Standard
-This section tackles other, more complex features.
- Not all of them are included in the current version.
+This section tackles other, more complex features; all of them are included
+ in current versions.
 \end_layout
 
 \begin_layout Subsection
@@ -2187,6 +2215,37 @@ Bibliography
 \end_layout
 
 \begin_layout Standard
+The package 
+\family typewriter
+post
+\family default
+ contains most postprocessing code, although some postprocessors are located
+ in the classes of their containers for easy access.
+\end_layout
+
+\begin_layout Subsection
+Postprocessors
+\end_layout
+
+\begin_layout Standard
+Some post-processing of the resulting HTML page can make the results look
+ much better.
+ The main stage in the postprocessing pipeline inserts a title 
+\begin_inset Quotes eld
+\end_inset
+
+Bibliography
+\begin_inset Quotes erd
+\end_inset
+
+ before the first bibliographical entry.
+ But more can be added to alter the result.
+ As eLyXer parses a LyX document it automatically numbers all chapters and
+ sections.
+ This is also done in the postprocessor.
+\end_layout
+
+\begin_layout Standard
 There is also a 
 \family typewriter
 LastStage
@@ -2201,7 +2260,7 @@ last
 \end_layout
 
 \begin_layout Subsection
-Mathematical Formulae
+Baskets
 \end_layout
 
 \begin_layout Standard
@@ -2255,13 +2314,13 @@ src/
 \family default
  folder there are several Python files, while in the main directory there
  is just a big one.
- The reason is that before distributing the source code is conflated and
+ The reason is that before distributing the source code is coalesced and
  placed on the main directory, so that users can run it without worrying
  about libraries, directories and the such.
  (They need of course to have Python 2.5 installed.) And the weapon is a little
  Python script called 
 \family typewriter
-conflate.py
+coalesce.py
 \family default
  that does the dirty job of parsing dependencies and inserting them into
  the main file.
@@ -2294,6 +2353,9 @@ binary
 
  (ok, not really a binary but a distributable Python file), but it works
  great.
+ It also runs all of the included tests to check that no functionality has
+ been lost from one release to the next -- although some issues in a feature
+ can slip undetected if there is no test for them.
 \end_layout
 
 \begin_layout Standard
@@ -2780,6 +2842,96 @@ Software Tools
 , ed.
  Addison-Wesley Professional 1976, p.
  35.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "lyx-devel"
+
+\end_inset
+
+Various authors: 
+\begin_inset Quotes eld
+\end_inset
+
+lyx-devel mailing list
+\begin_inset Quotes erd
+\end_inset
+
+, accessed November 2009.
+ 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.mail-archive.com/lyx-devel@lists.lyx.org/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "git-download"
+
+\end_inset
+
+S Chacon: 
+\begin_inset Quotes eld
+\end_inset
+
+Git -- Download
+\begin_inset Quotes erd
+\end_inset
+
+, accessed November 2009.
+ 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://git-scm.com/download
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "python-download"
+
+\end_inset
+
+Python community: 
+\begin_inset Quotes eld
+\end_inset
+
+Download Python
+\begin_inset Quotes erd
+\end_inset
+
+, accessed November 2009.
+ 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.python.org/download/
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

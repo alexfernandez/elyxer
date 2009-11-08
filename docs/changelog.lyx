@@ -85,6 +85,10 @@ New option
  to do in-memory processing of a document before file output.
 \end_layout
 
+\begin_layout Itemize
+Updated developer guide.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.35 (2009-11-05):
