@@ -337,11 +337,10 @@ div.Space {
 	display: none;
 }
 span.fraktur {
-	font-family: "Lucida Blackletter", blackletter;
+	font-family: "Lucida Blackletter", eufm10, blackletter;
 }
 span.blackboard {
 	font-family: Blackboard, msbm10, serif;
-	font-weight: bold;
 }
 span.script {
 	font-family: "Monotype Corsiva", "Apple Chancery", "URW Chancery L", cursive;
