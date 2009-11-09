@@ -104,10 +104,6 @@
 Index Test
 \end_layout
 
-\begin_layout Part
-The Making
-\end_layout
-
 \begin_layout Standard
 \begin_inset CommandInset toc
 LatexCommand tableofcontents
@@ -115,6 +111,10 @@ LatexCommand tableofcontents
 \end_inset
 
 
+\end_layout
+
+\begin_layout Part
+The Making
 \end_layout
 
 \begin_layout Chapter
