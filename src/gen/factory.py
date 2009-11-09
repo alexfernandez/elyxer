@@ -51,18 +51,18 @@ class ContainerFactory(object):
       types[start] = globals()[typename]
     self.tree = ParseTree(types)
 
-  def createsome(self, reader):
-    "Parse a list of containers"
+  def create(self, reader):
+    "Parse a single container."
     #Trace.debug('processing "' + reader.currentline().strip() + '"')
     if reader.currentline() == '':
       reader.nextline()
-      return []
+      return None
     type = self.tree.find(reader)
     container = type.__new__(type)
     container.__init__()
     container.start = reader.currentline().strip()
     self.parse(container, reader)
-    return self.getlist(container)
+    return container
 
   def parse(self, container, reader):
     "Parse a container"
@@ -91,13 +91,6 @@ class ContainerFactory(object):
       Trace.error('Pending ending in ' + container.__class__.__name__)
       return container.ending
     return None
-
-  def getlist(self, container):
-    "Get a list of containers from one."
-    "If appropriate, change the container for another(s)"
-    if not isinstance(container, PlainLayout):
-      return [container]
-    return container.contents
 
 class ParseTree(object):
   "A parsing tree"

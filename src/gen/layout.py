@@ -163,6 +163,7 @@ class PlainLayout(Layout):
   "A plain layout"
 
   def process(self):
-    "Do nothing"
+    "Output just as contents."
+    self.output = ContentsOutput()
     self.type = 'Plain'
 

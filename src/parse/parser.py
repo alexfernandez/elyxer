@@ -119,8 +119,9 @@ class TextParser(Parser):
         ContainerConfig.endings['Inset'], self.ending]
     contents = []
     while not self.isending(reader):
-      containers = self.factory.createsome(reader)
-      contents += containers
+      container = self.factory.create(reader)
+      if container:
+        contents.append(container)
     return contents
 
   def isending(self, reader):
@@ -142,12 +143,13 @@ class ExcludingParser(Parser):
   def parse(self, reader):
     "Parse everything up to (and excluding) the final line"
     contents = []
-    self.parseending(reader, lambda: self.parsecontainers(reader, contents))
+    self.parseending(reader, lambda: self.parsecontainer(reader, contents))
     return contents
 
-  def parsecontainers(self, reader, contents):
-    containers = self.factory.createsome(reader)
-    contents += containers
+  def parsecontainer(self, reader, contents):
+    container = self.factory.create(reader)
+    if container:
+      contents.append(container)
 
 class BoundedParser(ExcludingParser):
   "A parser bound by a final line"
