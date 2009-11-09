@@ -74,7 +74,7 @@ target "index.html"
 \begin_deeper
 \begin_layout Itemize
 Change the postprocessing of equation labels so that only one anchor is
- used.
+ used for the whole equation.
 \end_layout
 
 \begin_layout Itemize
@@ -83,6 +83,22 @@ New option
 --memory
 \family default
  to do in-memory processing of a document before file output.
+\end_layout
+
+\begin_layout Itemize
+Added TOC generation on 
+\family typewriter
+--memory
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+Added sequential numbering to bibliography entries on 
+\family typewriter
+--memory
+\family default
+.
 \end_layout
 
 \begin_layout Itemize
