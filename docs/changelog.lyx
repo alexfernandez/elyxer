@@ -126,24 +126,40 @@ Added new characters:
 \backslash
 checkmark
 \family default
+ 
+\begin_inset Formula $\checkmark$
+\end_inset
+
 , 
 \family typewriter
 
 \backslash
 blacklozenge
 \family default
+ 
+\begin_inset Formula $\blacklozenge$
+\end_inset
+
 , 
 \family typewriter
 
 \backslash
 nexists
 \family default
+ 
+\begin_inset Formula $\nexists$
+\end_inset
+
 , 
 \family typewriter
 
 \backslash
 mathcircumflex
 \family default
+ 
+\begin_inset Formula $\mathcircumflex$
+\end_inset
+
 .
 \end_layout
 
