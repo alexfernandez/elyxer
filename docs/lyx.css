@@ -487,6 +487,9 @@ div.tocheader {
 a.toc {
 	color: black;
 }
+a.biblioentry {
+	color: black;
+}
 div.tocindent {
 	padding: 0 0 0 2em;
 }

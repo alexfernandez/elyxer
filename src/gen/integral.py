@@ -74,7 +74,7 @@ class IntegralBiblioEntry(Integral):
   def processeach(self, entry):
     "Process each entry."
     number = NumberGenerator.instance.generateunique('integralbib')
-    link = Link().complete(number, anchor = number)
+    link = Link().complete(number, 'biblio-' + number, type='biblioentry')
     entry.contents = [Constant('['), link, Constant('] ')]
     if entry.key in BiblioCite.cites:
       for cite in BiblioCite.cites[entry.key]:

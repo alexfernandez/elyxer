@@ -47,7 +47,7 @@ class BiblioCite(Container):
     for key in keys:
       number = NumberGenerator.instance.generateunique('bibliocite')
       entry = self.createentry(key, number)
-      cite = Link().complete(number, 'cite-' + number)
+      cite = Link().complete(number, 'cite-' + number, type='bibliocite')
       cite.setmutualdestination(entry)
       self.contents += [cite, Constant(',')]
       if not key in BiblioCite.cites:
@@ -59,7 +59,7 @@ class BiblioCite(Container):
 
   def createentry(self, key, number):
     "Create the entry with the given key and number."
-    entry = Link().complete(number, number)
+    entry = Link().complete(number, 'biblio-' + number, type='biblioentry')
     if not key in BiblioEntry.entries:
       BiblioEntry.entries[key] = []
     BiblioEntry.entries[key].append(entry)
