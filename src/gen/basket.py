@@ -202,29 +202,3 @@ class SplittingBasket(Basket):
         partname = '-' + container.type + '-' + container.number
     return self.base + partname + self.extension
 
-class MemoryBasket(KeeperBasket):
-  "A basket which stores everything in memory, processes it and writes it."
-
-  def searchall(self, type):
-    "Search for containers of a given type in the whole basket."
-    for container in self.contents:
-      instances = container.searchall(type)
-      for instance in instances:
-        yield instance
-
-  def finish(self):
-    "Process everything which cannot be done in one pass and write to disk."
-    for toc in self.searchall(TableOfContents):
-      self.fillintoc(toc)
-    self.flush()
-
-  def fillintoc(self, toc):
-    "Fill in a Table of Contents."
-    basket = TOCBasket()
-    basket.filterheader = True
-    for container in self.contents:
-      entry = basket.convert(container)
-      if entry:
-        toc.contents.append(basket.getindent(entry))
-        toc.contents.append(entry)
-

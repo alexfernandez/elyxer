@@ -45,4 +45,8 @@ cd ..
 name="appendix-1-6-2"
 ../elyxer.py --quiet --toc --toctarget "$name-test.html" --css ../docs/toc.css --target contents "$name.lyx" "$name-toc-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-toc-test.html" "$name-toc-good.html"
+# test memory generation
+name="index-1-6-2"
+../elyxer.py --quiet --memory --css ../docs/lyx.css "$name.lyx" "$name-memory-test.html"
+diff -u --ignore-matching-lines="create-date" "$name-memory-test.html" "$name-memory-good.html"
 
