@@ -337,13 +337,14 @@ div.Space {
 	display: none;
 }
 span.fraktur {
-	font-family: blackletter;
+	font-family: "Lucida Blackletter", blackletter;
 }
 span.blackboard {
-	font-family: Blackboard, serif;
+	font-family: Blackboard, msbm10, serif;
+	font-weight: bold;
 }
 span.script {
-	font-family: cursive;
+	font-family: "Monotype Corsiva", "Apple Chancery", "URW Chancery L", cursive;
 }
 span.arraydef {
 	display: none;

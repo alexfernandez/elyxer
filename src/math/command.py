@@ -136,6 +136,12 @@ class OneParamFunction(CommandBit):
     self.output = TaggedOutput().settag(self.translated)
     self.parseparameter(pos)
 
+  def simplifyifpossible(self):
+    "Try to simplify to a single character."
+    if self.original in FormulaConfig.alphacommands:
+      self.output = FixedOutput()
+      self.html = [FormulaConfig.alphacommands[self.original]]
+
 class SymbolFunction(CommandBit):
   "Find a function which is represented by a symbol (like _ or ^)"
 
@@ -190,8 +196,10 @@ class FontFunction(OneParamFunction):
   commandmap = FormulaConfig.fontfunctions
 
   def process(self):
-    "Do not process the inside"
+    "Simplify if possible using a single character."
     self.type = 'font'
+    Trace.debug('Original: ' + self.original)
+    self.simplifyifpossible()
 
 class DecoratingFunction(OneParamFunction):
   "A function that decorates some bit of text"
@@ -207,10 +215,7 @@ class DecoratingFunction(OneParamFunction):
     self.contents.append(tagged)
     parameter = self.parseparameter(pos)
     parameter.output = TaggedOutput().settag('span class="undersymbol"')
-    # simplify if possible
-    if self.original in FormulaConfig.alphacommands:
-      self.output = FixedOutput()
-      self.html = [FormulaConfig.alphacommands[self.original]]
+    self.simplifyifpossible()
 
 class HybridFunction(CommandBit):
   "Read a function with two parameters: [] and {}"

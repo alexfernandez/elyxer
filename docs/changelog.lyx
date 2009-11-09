@@ -3,6 +3,9 @@
 \begin_document
 \begin_header
 \textclass article
+\begin_preamble
+\usepackage{mathrsfs}
+\end_preamble
 \use_default_options false
 \language english
 \inputencoding auto
@@ -108,6 +111,54 @@ LatexCommand href
 name "developer guide"
 target "devguide.html"
 
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Added 
+\family typewriter
+
+\backslash
+mathscr
+\family default
+ and a few script fonts: 
+\begin_inset Formula $\mathscr{hello}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Added several characters for math script (
+\family typewriter
+
+\backslash
+mathscr
+\family default
+), fraktur (
+\family typewriter
+
+\backslash
+mathfrak
+\family default
+) and blackboard (
+\family typewriter
+
+\backslash
+mathbb
+\family default
+) fonts, and implemented the translation to Unicode chars: 
+\begin_inset Formula $\mathscr{F}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathfrak{F}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathbb{F}$
 \end_inset
 
 .

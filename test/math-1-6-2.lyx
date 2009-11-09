@@ -45,6 +45,8 @@
 \newcommand{\IndexDef}[1]{\textit{#1}}
 
 % redefine the greyed out note
+
+\usepackage{mathrsfs}
 \end_preamble
 \options intoc,bibtotoc,idxtotoc,BCOR7mm,tablecaptionabove
 \use_default_options false
@@ -526,6 +528,26 @@ Units can be shown with or without a magnitude.
 
 , 
 \begin_inset Formula $\unit[\frac{7}{16}]{s}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Some special fonts are supported: 
+\begin_inset Formula $\mathscr{F}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathcal{F}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathfrak{F}$
 \end_inset
 
 .
