@@ -66,16 +66,22 @@ class IntegralTOC(Integral):
         toc.contents.append(basket.getindent(entry))
         toc.contents.append(entry)
 
-class IntegralBibliography(Integral):
-  "A processor for an integral bibliography."
+class IntegralBiblioEntry(Integral):
+  "A processor for an integral bibliography entry."
 
   processedtype = BiblioEntry
 
   def processeach(self, entry):
     "Process each entry."
-    Trace.debug('Integral entry: ' + unicode(entry))
+    number = NumberGenerator.instance.generateunique('integralbib')
+    link = Link().complete(number, anchor = number)
+    entry.contents = [Constant('['), link, Constant('] ')]
+    if entry.key in BiblioCite.cites:
+      for cite in BiblioCite.cites[entry.key]:
+        cite.complete(number, anchor = 'cite-' + number)
+        cite.setdestination(link)
 
-Integral.processors = [IntegralTOC(), IntegralBibliography()]
+Integral.processors = [IntegralTOC(), IntegralBiblioEntry()]
 
 class MemoryBasket(KeeperBasket):
   "A basket which stores everything in memory, processes it and writes it."

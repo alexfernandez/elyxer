@@ -32,8 +32,8 @@ from post.postprocess import *
 class BiblioCite(Container):
   "Cite of a bibliography entry"
 
-  index = 0
   cites = dict()
+  generator = NumberGenerator()
 
   def __init__(self):
     self.parser = InsetParser()
@@ -45,10 +45,7 @@ class BiblioCite(Container):
     "Add a cite to every entry"
     keys = self.parameters['key'].split(',')
     for key in keys:
-      if not key in BiblioCite.cites:
-        BiblioCite.cites[key] = []
-      BiblioCite.index += 1
-      number = unicode(BiblioCite.index)
+      number = NumberGenerator.instance.generateunique('bibliocite')
       entry = self.createentry(key, number)
       cite = Link().complete(number, 'cite-' + number)
       cite.setmutualdestination(entry)
@@ -90,6 +87,7 @@ class BiblioEntry(Container):
 
   def processcites(self, key):
     "Get all the cites of the entry"
+    self.key = key
     if not key in BiblioEntry.entries:
       self.contents.append(Constant('[-] '))
       return
