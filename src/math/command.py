@@ -198,7 +198,6 @@ class FontFunction(OneParamFunction):
   def process(self):
     "Simplify if possible using a single character."
     self.type = 'font'
-    Trace.debug('Original: ' + self.original)
     self.simplifyifpossible()
 
 class DecoratingFunction(OneParamFunction):
