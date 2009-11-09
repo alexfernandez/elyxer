@@ -303,7 +303,15 @@ s
 \end_layout
 
 \begin_layout Standard
-The basic code artifact (or `class' in Python talk) is the 
+The basic code artifact (or `
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "class"
+description "A self-contained piece of code that hosts attributes (values) and methods (functions)."
+
+\end_inset
+
+' in Python talk) is the 
 \family typewriter
 Container
 \family default
@@ -1862,9 +1870,9 @@ reference "alg:bibitem-command"
 
 \begin_layout Standard
 The final touch is to make sure that the class is run, importing it in the
- main file 
+ file 
 \family typewriter
-elyxer.py
+gen/factory.py
 \family default
 , as shown in listing 
 \begin_inset CommandInset ref
@@ -1873,6 +1881,15 @@ reference "alg:bibitem-include"
 
 \end_inset
 
+.
+ This ensures that the 
+\family typewriter
+ContainerFactory
+\family default
+ will know what to do when it finds an element that corresponds to the 
+\family typewriter
+BibitemInset
+\family default
 .
 \end_layout
 
@@ -1929,7 +1946,7 @@ Importing the
 \family typewriter
 BibitemInset
 \family default
- from the main file.
+ from the factory file.
 \end_layout
 
 \end_inset
@@ -2056,56 +2073,32 @@ reference "fig:parsetree"
 
  shows a piece of the actual parse tree.
  You can see how if the string to parse is 
-\begin_inset Quotes eld
-\end_inset
-
+\family typewriter
 
 \backslash
 begin_inset LatexCommand
-\begin_inset Quotes erd
-\end_inset
-
-, at the node for the second keyword 
-\begin_inset Quotes eld
-\end_inset
-
-LatexCommand
-\begin_inset Quotes erd
-\end_inset
-
- there is no 
-\family typewriter
-Container
 \family default
- leaf, just two more branches 
-\begin_inset Quotes eld
-\end_inset
-
+, at the node for the second keyword 
+\family typewriter
+LatexCommand
+\family default
+ there is no leaf, just two more branches 
+\family typewriter
 label
-\begin_inset Quotes erd
-\end_inset
-
+\family default
  and 
-\begin_inset Quotes eld
-\end_inset
-
+\family typewriter
 ref
-\begin_inset Quotes erd
-\end_inset
-
+\family default
 .
  In this case the 
 \family typewriter
 ParseTree
 \family default
  would backtrack to 
-\begin_inset Quotes eld
-\end_inset
-
+\family typewriter
 begin_inset
-\begin_inset Quotes erd
-\end_inset
-
+\family default
 , and choose the generic 
 \family typewriter
 Inset
@@ -2224,43 +2217,7 @@ post
 \end_layout
 
 \begin_layout Subsection
-Postprocessors
-\end_layout
-
-\begin_layout Standard
-Some post-processing of the resulting HTML page can make the results look
- much better.
- The main stage in the postprocessing pipeline inserts a title 
-\begin_inset Quotes eld
-\end_inset
-
-Bibliography
-\begin_inset Quotes erd
-\end_inset
-
- before the first bibliographical entry.
- But more can be added to alter the result.
- As eLyXer parses a LyX document it automatically numbers all chapters and
- sections.
- This is also done in the postprocessor.
-\end_layout
-
-\begin_layout Standard
-There is also a 
-\family typewriter
-LastStage
-\family default
-: a stage that processes the 
-\emph on
-last
-\emph default
- container based on the current one.
- It is used to join list items into one coherent list tag.
- The principle is the same as with other postprocessors.
-\end_layout
-
-\begin_layout Subsection
-Baskets
+Mathematical Formulae
 \end_layout
 
 \begin_layout Standard
@@ -2301,6 +2258,148 @@ reference "sub:MathML"
 \end_inset
 
 .)
+\end_layout
+
+\begin_layout Subsection
+Baskets
+\end_layout
+
+\begin_layout Standard
+eLyXer supports a few distinct modes of operation.
+ In each incarnation the tasks to do are quite different:
+\end_layout
+
+\begin_layout Itemize
+A pure 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "filter"
+description "A type of program that reads from a file and writes to another file, keeping in memory only what is needed short term."
+
+\end_inset
+
+: read from disk and write to disk each 
+\family typewriter
+Container
+\family default
+, keeping no context in memory.
+\end_layout
+
+\begin_layout Itemize
+In-memory processing: read a complete file, process it and write it all
+ to disk.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "TOC"
+description "Table of contents"
+
+\end_inset
+
+ generation: output just a table of contents for a LyX document.
+\end_layout
+
+\begin_layout Itemize
+Split document generation: separates each chapter, section or subsection
+ in a different file.
+\end_layout
+
+\begin_layout Standard
+How can it do so many different tasks without changing a lot of code? The
+ answer is in the file 
+\family typewriter
+gen/basket.py
+\family default
+.
+ A 
+\family typewriter
+Basket
+\family default
+ is an object that keeps 
+\family typewriter
+Container
+\family default
+s.
+ Once a batch is ready, the 
+\family typewriter
+Basket
+\family default
+ outputs them to disk or to some other 
+\family typewriter
+Basket
+\family default
+, but it may decide to just wait a little longer.
+\end_layout
+
+\begin_layout Standard
+The basic 
+\family typewriter
+Basket
+\family default
+ is the 
+\family typewriter
+WriterBasket
+\family default
+: it writes everything that it gets to disk immediately and then forgets
+ about it.
+ Some bits of state are kept around, like for example which biliography
+ entries have been found so far, but the bulk of the memory is released.
+\end_layout
+
+\begin_layout Standard
+Another more complex object is the 
+\family typewriter
+TOCBasket
+\family default
+: it checks if the 
+\family typewriter
+Container
+\family default
+ is worthy to appear in a TOC, and otherwise just discards it.
+ For chapters, sections and so on it converts them to TOC entries and outputs
+ them to disk.
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+MemoryBasket
+\family default
+ does most of its work in memory: it stores all 
+\family typewriter
+Container
+\family default
+s until they have all been read, then does some further processing on them
+ and outputs an improved version of the document, at the cost of using quite
+ more memory.
+ This allows us for example to generate a list of figures or to set consecutive
+ labels for bibliography entries (instead of just numbering them as they
+ appear in the text).
+\end_layout
+
+\begin_layout Standard
+The most complex kind of 
+\family typewriter
+Basket
+\family default
+ is the 
+\family typewriter
+SplittingBasket
+\family default
+: it writes each document part to a separate file, choosing what parts to
+ split depending on the configuration passed in the 
+\family typewriter
+--splitpart
+\family default
+ option.
+ It can be taught to create a TOC at the top of each page with an additional
+ 
+\family typewriter
+--toc
+\family default
+ option.
 \end_layout
 
 \begin_layout Subsection
@@ -2392,6 +2491,11 @@ All contributions will be published under this same license, so if you send
  them this way you implicitly give your consent.
  An explicit license grant would be even better and may be required for
  larger contributions.
+\end_layout
+
+\begin_layout Standard
+At the moment there have been no external contributions; be the first and
+ get an honourable mention in this section!
 \end_layout
 
 \begin_layout Section
@@ -2508,11 +2612,21 @@ Roadmap
 \end_layout
 
 \begin_layout Standard
-Basic tool support is ready by Q1 2009 (end of March), including support
- for most common LyX documents.
- In Q2 2009 (i.e.
- by the end of June) the pipeline should be complete and running.
- LyX integration (as an external tool) is planned for Q3 2009.
+Nearing the end of Q4 2009, LyX integration is almost ready for Linux (Debian)
+ and Windows.
+ The full pipeline (document segmentation and in-memory processing) is also
+ nearing completion.
+ By the end of 2009 both tasks should be finished, marking the release of
+ eLyXer 1.0.
+\end_layout
+
+\begin_layout Standard
+From that point on, full LyX document support is the goal for 2010.
+ By Q1 2010 equation numbering should be correct for all environments; arrays
+ and cases should improve in appearance.
+ Q2 2010 should see clean conversion of the Math guide.
+ By Q3 2010 all other guides should convert without glitches, and for Q4
+ 2010 all rough edges should be smoothed.
  All this within the usual constraints: day job, family, etc.
 \end_layout
 
@@ -2668,6 +2782,15 @@ type "mailto:"
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomencl_print
+LatexCommand printnomenclature
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Bibliography

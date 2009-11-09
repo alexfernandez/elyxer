@@ -86,7 +86,15 @@ New option
 \end_layout
 
 \begin_layout Itemize
-Updated developer guide.
+Updated the 
+\begin_inset CommandInset href
+LatexCommand href
+name "developer guide"
+target "devguide.html"
+
+\end_inset
+
+.
 \end_layout
 
 \end_deeper
