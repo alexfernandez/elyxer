@@ -497,3 +497,6 @@ div.toc {
 	margin: 0.5em 0;
 	font-size: 0.95em;
 }
+div.fulltoc {
+	padding: 1em;
+}
