@@ -39,7 +39,7 @@ class Float(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('div class="float"', True)
-    self.parent = None
+    self.parentfloat = None
     self.children = []
     self.number = None
 
@@ -49,7 +49,7 @@ class Float(Container):
     self.embed('div class="' + self.type + '"')
     for float in self.searchall(Float):
       float.output.tag = float.output.tag.replace('div', 'span')
-      float.parent = self
+      float.parentfloat = self
       self.children.append(float)
 
   def embed(self, tag):
@@ -182,10 +182,10 @@ class PostFloat(object):
     "Number a float if it isn't numbered"
     if float.number:
       return
-    if float.parent:
-      self.numberfloat(float.parent)
-      index = float.parent.children.index(float)
-      float.number = float.parent.number + NumberGenerator.letters[index + 1]
+    if float.parentfloat:
+      self.numberfloat(float.parentfloat)
+      index = float.parentfloat.children.index(float)
+      float.number = float.parentfloat.number + NumberGenerator.letters[index + 1]
     else:
       float.number = NumberGenerator.instance.generatechaptered(float.type)
 
