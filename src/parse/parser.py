@@ -119,7 +119,7 @@ class TextParser(Parser):
         ContainerConfig.endings['Inset'], self.ending]
     contents = []
     while not self.isending(reader):
-      container = self.factory.create(reader)
+      container = self.factory.createcontainer(reader)
       if container:
         contents.append(container)
     return contents
@@ -147,7 +147,7 @@ class ExcludingParser(Parser):
     return contents
 
   def parsecontainer(self, reader, contents):
-    container = self.factory.create(reader)
+    container = self.factory.createcontainer(reader)
     if container:
       contents.append(container)
 

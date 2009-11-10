@@ -51,7 +51,7 @@ class ContainerFactory(object):
       types[start] = globals()[typename]
     self.tree = ParseTree(types)
 
-  def create(self, reader):
+  def createcontainer(self, reader):
     "Parse a single container."
     #Trace.debug('processing "' + reader.currentline().strip() + '"')
     if reader.currentline() == '':

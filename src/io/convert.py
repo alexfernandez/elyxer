@@ -82,7 +82,7 @@ class eLyXerConverter(object):
     factory = ContainerFactory()
     self.postproc = Postprocessor()
     while not self.reader.finished():
-      container = factory.create(self.reader)
+      container = factory.createcontainer(self.reader)
       if container:
         container = self.postproc.postprocess(container)
         self.basket.write(container)
