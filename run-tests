@@ -49,4 +49,7 @@ diff -u --ignore-matching-lines="create-date" "$name-toc-test.html" "$name-toc-g
 name="index-1-6"
 ../elyxer.py --quiet --memory --css ../docs/lyx.css "$name.lyx" "$name-memory-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-memory-test.html" "$name-memory-good.html"
+name="footnotes-1-6"
+../elyxer.py --quiet --memory --css ../docs/lyx.css "$name.lyx" "$name-memory-test.html"
+diff -u --ignore-matching-lines="create-date" "$name-memory-test.html" "$name-memory-good.html"
 
