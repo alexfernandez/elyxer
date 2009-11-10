@@ -91,12 +91,6 @@ class Parser(object):
     while not reader.currentline().startswith(self.ending):
       process()
 
-  def parsecontainer(self, reader, contents):
-    "Parse a single container; if present add it to the contents."
-    container = self.factory.createcontainer(reader)
-    if container:
-      contents.append(container)
-
   def __unicode__(self):
     "Return a description"
     return self.__class__.__name__ + ' (' + unicode(self.begin) + ')'
@@ -125,7 +119,9 @@ class TextParser(Parser):
         ContainerConfig.endings['Inset'], self.ending]
     contents = []
     while not self.isending(reader):
-      self.parsecontainer(reader, contents)
+      container = self.factory.createcontainer(reader)
+      if container:
+        contents.append(container)
     return contents
 
   def isending(self, reader):
@@ -149,6 +145,11 @@ class ExcludingParser(Parser):
     contents = []
     self.parseending(reader, lambda: self.parsecontainer(reader, contents))
     return contents
+
+  def parsecontainer(self, reader, contents):
+    container = self.factory.createcontainer(reader)
+    if container:
+      contents.append(container)
 
 class BoundedParser(ExcludingParser):
   "A parser bound by a final line"
