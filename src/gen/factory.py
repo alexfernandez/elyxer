@@ -67,21 +67,15 @@ class ContainerFactory(object):
   def parse(self, container, reader):
     "Parse a container"
     parser = container.parser
+    parser.parent = container
     parser.ending = self.getending(container)
     parser.factory = self
     container.header = parser.parseheader(reader)
     container.begin = parser.begin
     container.contents = parser.parse(reader)
-    self.parentize(container)
     container.parameters = parser.parameters
     container.process()
     container.parser = None
-
-  def parentize(self, container):
-    "Set the parent in all subcontainers."
-    for subcontainer in container.contents:
-      if isinstance(subcontainer, Container):
-        subcontainer.parent = container
 
   def getending(self, container):
     "Get the ending for a container"
