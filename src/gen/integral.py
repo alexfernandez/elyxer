@@ -59,7 +59,6 @@ class IntegralTOC(Integral):
   def processeach(self, toc):
     "Fill in a Table of Contents."
     toc.output = TaggedOutput().settag('div class="fulltoc"', True)
-    Trace.debug('Output tag: ' + toc.output.tag)
     basket = TOCBasket()
     basket.filterheader = True
     for container in self.contents:
