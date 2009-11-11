@@ -33,13 +33,15 @@ class TOCEntry(Container):
 
   ordered = NumberingConfig.layouts['ordered']
   unique = NumberingConfig.layouts['unique']
+  allowed = [Constant, StringContainer]
 
   def create(self, container):
     "Create the TOC entry for a container, consisting of a single link."
-    text = TranslationConfig.constants[container.type] + ' ' + container.number
-    text += ':' + self.gettitle(container) + '\n'
+    text = TranslationConfig.constants[container.type] + ' ' + container.number + ':'
     url = Options.toctarget + '#toc-' + container.type + '-' + container.number
-    self.contents = [Link().complete(text, url=url)]
+    link = Link().complete(text, url=url)
+    self.contents = [link]
+    link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)
     self.depth = 0
     if container.type in TOCEntry.ordered:
@@ -48,12 +50,18 @@ class TOCEntry(Container):
       Trace.error('Unknown numbered container type ' + container.type)
     return self
 
-  def gettitle(self, container):
+  def gettitlecontents(self, container):
     "Get the title of the container."
     if len(container.contents) < 2:
       return '-'
-    withoutlabel = TaggedText().complete(container.contents[1:], 'x')
-    return withoutlabel.extracttext()
+    newcontents = []
+    for element in container.contents:
+      Trace.debug('Inside: ' + unicode(element))
+      if isinstance(element, StringContainer):
+        Trace.debug('String: ' + element.string + ', end: ' + unicode(element.string.endswith('\n')))
+      if element.__class__ in TOCEntry.allowed:
+        newcontents.append(element)
+    return newcontents
 
 class Indenter(object):
   "Manages and writes indentation for the TOC."
