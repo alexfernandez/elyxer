@@ -60,6 +60,9 @@ p.printindex {
 a.printindex {
 	color: black;
 }
+img.embedded {
+	max-width: 100%;
+}
 div.float {
 	margin-top: 1ex;
 	margin-bottom: 1ex;
@@ -98,9 +101,6 @@ div.caption {
 	margin-left: auto;
 	margin-right: auto;
 	padding: 0.5ex;
-}
-img.image {
-	max-width: 100%;
 }
 img.figure {
 	padding: 1ex;

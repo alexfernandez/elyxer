@@ -38,7 +38,7 @@ class Image(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = ImageOutput()
-    self.type = 'image'
+    self.type = 'embedded'
     self.width = None
     self.height = None
 

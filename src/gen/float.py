@@ -69,7 +69,7 @@ class Float(Container):
     if not '%' in image.width:
       return
     image.type = 'figure'
-    self.embeddedtag += ' style="width: ' + image.width + '"'
+    self.embeddedtag += ' style="width: ' + image.width + ';"'
     image.width = None
 
 
