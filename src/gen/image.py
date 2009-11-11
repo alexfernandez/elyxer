@@ -48,7 +48,6 @@ class Image(Container):
     self.destination = self.getdestination(self.origin)
     self.convert(self.getparams())
     self.setsize()
-    # self.figureprocess()
 
   def getdestination(self, origin):
     "Convert origin path to destination path."
@@ -129,10 +128,6 @@ class Image(Container):
         value = value.replace(ignored, '')
     setattr(self, name, value)
     return True
-
-  def figureprocess(self):
-    "Do the processing if the image is in a figure."
-    Trace.debug('Parent: ' + unicode(self.parent))
 
 class ImageFile(object):
   "A file corresponding to an image (JPG or PNG)"
