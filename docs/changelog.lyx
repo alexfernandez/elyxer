@@ -182,7 +182,14 @@ Process width and height in an image if both are present.
 
 \begin_layout Itemize
 Use % width of image within a float to scale the float.
- Set max scaling to 100%.
+\end_layout
+
+\begin_layout Itemize
+Set max scaling to 100% with 
+\family typewriter
+max-width
+\family default
+ CSS attribute.
 \end_layout
 
 \begin_layout Itemize
