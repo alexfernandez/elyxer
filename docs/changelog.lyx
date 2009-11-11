@@ -164,6 +164,22 @@ mathbb
 .
 \end_layout
 
+\begin_layout Itemize
+Added a 
+\family typewriter
+parent
+\family default
+ attribute to every 
+\family typewriter
+Container
+\family default
+, for easier processing.
+\end_layout
+
+\begin_layout Itemize
+Process width and height in an image if both are present.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.35 (2009-11-05):

@@ -38,6 +38,8 @@ class Image(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = ImageOutput()
+    self.width = None
+    self.height = None
 
   def process(self):
     "Place the url, convert the image if necessary."
@@ -107,9 +109,9 @@ class Image(Container):
 
   def setsize(self):
     "Set the size attributes width and height."
-    if self.setifparam('width'):
-      return
-    if self.setifparam('height'):
+    self.setifparam('width')
+    self.setifparam('height')
+    if self.width or self.height:
       return
     imagefile = ImageFile(self.destination)
     width, height = imagefile.getdimensions()
@@ -121,13 +123,12 @@ class Image(Container):
   def setifparam(self, name):
     "Set the value in the container if it exists as a param."
     if not name in self.parameters:
-      return False
+      return
     value = unicode(self.parameters[name])
     for ignored in Image.ignoredtexts:
       if ignored in value:
         value = value.replace(ignored, '')
     setattr(self, name, value)
-    return True
 
 class ImageFile(object):
   "A file corresponding to an image (JPG or PNG)"
@@ -222,9 +223,9 @@ class ImageOutput(object):
     if container.origin.exists():
       html.append(' src="' + container.destination.url +
           '" alt="' + ImageOutput.figure + ' ' + container.destination.url + '"')
-      if hasattr(container, 'width'):
+      if container.width:
         html.append(' width="' + container.width + '"')
-      if hasattr(container, 'height'):
+      if container.height:
         html.append(' height="' + container.height + '"')
     else:
       html.append(' src="' + container.origin.url + '"')
