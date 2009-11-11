@@ -56,9 +56,6 @@ class TOCEntry(Container):
       return '-'
     newcontents = []
     for element in container.contents:
-      Trace.debug('Inside: ' + unicode(element))
-      if isinstance(element, StringContainer):
-        Trace.debug('String: ' + element.string + ', end: ' + unicode(element.string.endswith('\n')))
       if element.__class__ in TOCEntry.allowed:
         newcontents.append(element)
     return newcontents
