@@ -38,6 +38,7 @@ class Image(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = ImageOutput()
+    self.type = 'image'
     self.width = None
     self.height = None
 
@@ -218,8 +219,7 @@ class ImageOutput(object):
 
   def gethtml(self, container):
     "Get the HTML output of the image as a list"
-    cssclass = 'embedded'
-    html = ['<img class="' + cssclass + '"']
+    html = ['<img class="' + container.type + '"']
     if container.origin.exists():
       html.append(' src="' + container.destination.url +
           '" alt="' + ImageOutput.figure + ' ' + container.destination.url + '"')

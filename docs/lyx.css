@@ -99,8 +99,12 @@ div.caption {
 	margin-right: auto;
 	padding: 0.5ex;
 }
+img.image {
+	max-width: 100%;
+}
 img.figure {
 	padding: 1ex;
+	max-width: 100%;
 }
 table {
 	text-align: center;

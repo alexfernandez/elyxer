@@ -180,6 +180,11 @@ Container
 Process width and height in an image if both are present.
 \end_layout
 
+\begin_layout Itemize
+Use % width of image within a float to scale the float.
+ Set max scaling to 100%.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.35 (2009-11-05):

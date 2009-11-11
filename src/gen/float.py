@@ -29,6 +29,7 @@ from io.output import *
 from gen.container import *
 from gen.structure import *
 from gen.layout import *
+from gen.image import *
 from ref.label import *
 from post.postprocess import *
 
@@ -44,13 +45,33 @@ class Float(Container):
     self.number = None
 
   def process(self):
-    "Get the float type"
+    "Get the float type."
     self.type = self.header[2]
-    self.embed('div class="' + self.type + '"')
-    for float in self.searchall(Float):
+    self.embeddedtag = 'div class="' + self.type + '"'
+    self.processinsides()
+    self.embed(self.embeddedtag)
+
+  def processinsides(self):
+    "Process all floats and images inside."
+    floats = self.searchall(Float)
+    for float in floats:
       float.output.tag = float.output.tag.replace('div', 'span')
       float.parentfloat = self
       self.children.append(float)
+    if len(floats) > 0:
+      return
+    images = self.searchall(Image)
+    if len(images) != 1:
+      return
+    image = images[0]
+    if not image.width:
+      return
+    if not '%' in image.width:
+      return
+    image.type = 'figure'
+    self.embeddedtag += ' style="width: ' + image.width + '"'
+    image.width = None
+
 
   def embed(self, tag):
     "Embed the whole contents in a div"
