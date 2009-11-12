@@ -206,7 +206,7 @@ class PostFloat(object):
     if float.parentfloat:
       self.numberfloat(float.parentfloat)
       index = float.parentfloat.children.index(float)
-      float.number = float.parentfloat.number + NumberGenerator.letters[index + 1]
+      float.number = NumberGenerator.letters[index + 1].lower()
     else:
       float.number = NumberGenerator.instance.generatechaptered(float.type)
 

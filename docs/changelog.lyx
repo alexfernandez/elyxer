@@ -197,6 +197,18 @@ For TOC generation not the whole entry text is used, just a few types of
  containers are allowed.
 \end_layout
 
+\begin_layout Itemize
+Subfloats are numbered a, b (instead of 
+\begin_inset Formula $x.y$
+\end_inset
+
+a, 
+\begin_inset Formula $x.y$
+\end_inset
+
+b).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.35 (2009-11-05):
