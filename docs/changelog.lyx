@@ -214,11 +214,12 @@ Use
 \family typewriter
 subprocess.call()
 \family default
- instead of 
+ to run ImageMagick, to handle non-ASCII characters in image names.
+ If not available use 
 \family typewriter
 os.system()
 \family default
- to run ImageMagick, to handle non-ASCII characters in image names.
+ instead, as before.
 \end_layout
 
 \end_deeper

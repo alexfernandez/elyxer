@@ -22,7 +22,6 @@
 # Alex 20090308
 # eLyXer image treatment
 
-import subprocess
 import struct
 from util.trace import Trace
 from gen.container import *
@@ -32,7 +31,6 @@ from io.path import *
 class Image(Container):
   "An embedded image"
 
-  converter = True
   ignoredtexts = ImageConfig.size['ignoredtexts']
 
   def __init__(self):
@@ -49,7 +47,7 @@ class Image(Container):
       Trace.error('Image ' + unicode(self.origin) + ' not found')
       return
     self.destination = self.getdestination(self.origin)
-    self.convert(self.getparams())
+    ImageConverter.instance.convert(self)
     self.setsize()
 
   def getdestination(self, origin):
@@ -65,49 +63,6 @@ class Image(Container):
       destination.changeext(forcedest)
     destination.removebackdirs()
     return destination
-
-  def convert(self, params):
-    "Convert an image to PNG"
-    if not Image.converter:
-      return
-    if self.origin == self.destination:
-      return
-    if self.destination.exists():
-      if self.origin.getmtime() <= self.destination.getmtime():
-        # file has not changed; do not convert
-        return
-    self.destination.createdirs()
-    command = 'convert '
-    for param in params:
-      command += '-' + param + ' ' + unicode(params[param]) + ' '
-    command += '"' + unicode(self.origin) + '" "'
-    command += unicode(self.destination) + '"'
-    try:
-      Trace.debug('ImageMagick Command: "' + command + '"')
-      result = subprocess.call(command, shell=True)
-      if result != 0:
-        Trace.error('ImageMagick not installed; images will not be processed')
-        Image.converter = False
-        return
-      Trace.message('Converted ' + unicode(self.origin) + ' to ' +
-          unicode(self.destination))
-    except OSError, exception:
-      Trace.error('Error while converting image ' + unicode(self.origin)
-          + ': ' + unicode(exception))
-
-  def getparams(self):
-    "Get the parameters for ImageMagick conversion"
-    params = dict()
-    scale = 100
-    if 'scale' in self.parameters:
-      scale = int(self.parameters['scale'])
-    if self.origin.hasext('.svg'):
-      params['density'] = scale
-    elif self.origin.hasext('.jpg') or self.origin.hasext('.png'):
-      params['resize'] = unicode(scale) + '%'
-    elif self.origin.hasext('.pdf'):
-      params['define'] = 'pdf:use-cropbox=true'
-    return params
 
   def setsize(self):
     "Set the size attributes width and height."
@@ -131,6 +86,67 @@ class Image(Container):
       if ignored in value:
         value = value.replace(ignored, '')
     setattr(self, name, value)
+
+class ImageConverter(object):
+  "A converter from one image file to another."
+
+  active = True
+  instance = None
+
+  def __init__(self):
+    "Initialize the subprocess."
+    try:
+      import subprocess
+      self.run = lambda command: subprocess.call(command, shell=True)
+    except ImportError:
+      import os
+      self.run = lambda command: os.system(command)
+
+  def convert(self, image):
+    "Convert an image to PNG"
+    if not ImageConverter.active:
+      return
+    if image.origin == image.destination:
+      return
+    if image.destination.exists():
+      if image.origin.getmtime() <= image.destination.getmtime():
+        # file has not changed; do not convert
+        return
+    image.destination.createdirs()
+    command = 'convert '
+    params = self.getparams(image)
+    for param in params:
+      command += '-' + param + ' ' + unicode(params[param]) + ' '
+    command += '"' + unicode(image.origin) + '" "'
+    command += unicode(image.destination) + '"'
+    try:
+      Trace.debug('ImageMagick Command: "' + command + '"')
+      result = self.run(command)
+      if result != 0:
+        Trace.error('ImageMagick not installed; images will not be processed')
+        ImageConverter.active = False
+        return
+      Trace.message('Converted ' + unicode(image.origin) + ' to ' +
+          unicode(image.destination))
+    except OSError, exception:
+      Trace.error('Error while converting image ' + unicode(image.origin)
+          + ': ' + unicode(exception))
+
+  def getparams(self, image):
+    "Get the parameters for ImageMagick conversion"
+    params = dict()
+    scale = 100
+    if 'scale' in image.parameters:
+      scale = int(image.parameters['scale'])
+    if image.origin.hasext('.svg'):
+      params['density'] = scale
+    elif image.origin.hasext('.jpg') or image.origin.hasext('.png'):
+      params['resize'] = unicode(scale) + '%'
+    elif image.origin.hasext('.pdf'):
+      params['define'] = 'pdf:use-cropbox=true'
+    return params
+
+ImageConverter.instance = ImageConverter()
 
 class ImageFile(object):
   "A file corresponding to an image (JPG or PNG)"
