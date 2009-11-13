@@ -185,7 +185,7 @@ Use % width of image within a float to scale the float.
 \end_layout
 
 \begin_layout Itemize
-Set max scaling to 100% with 
+Set max scaling of images to 100% with 
 \family typewriter
 max-width
 \family default
