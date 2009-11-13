@@ -97,6 +97,10 @@ Added TOC generation on
 \end_layout
 
 \begin_layout Itemize
+TOC entries admit typefaces, colors, weights.
+\end_layout
+
+\begin_layout Itemize
 Added sequential numbering to bibliography entries on 
 \family typewriter
 --memory

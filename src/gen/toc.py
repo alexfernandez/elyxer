@@ -33,7 +33,10 @@ class TOCEntry(Container):
 
   ordered = NumberingConfig.layouts['ordered']
   unique = NumberingConfig.layouts['unique']
-  allowed = [Constant, StringContainer]
+  allowed = [
+      Constant, StringContainer, TextFamily, EmphaticText, VersalitasText,
+      SizeText, ColorText, LangLine
+      ]
 
   def create(self, container):
     "Create the TOC entry for a container, consisting of a single link."
@@ -58,6 +61,8 @@ class TOCEntry(Container):
     for element in container.contents:
       if element.__class__ in TOCEntry.allowed:
         newcontents.append(element)
+      else:
+        Trace.debug('Container ' + element.__class__.__name__ + ' not allowed in TOC.')
     return newcontents
 
 class Indenter(object):

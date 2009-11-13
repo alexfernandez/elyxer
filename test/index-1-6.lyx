@@ -243,6 +243,51 @@ key "key-1,key-2"
 .
 \end_layout
 
+\begin_layout Section
+
+\family typewriter
+Magical 
+\family roman
+type
+\family default
+ 
+\emph on
+face
+\emph default
+ 
+\series medium
+changes 
+\series default
+\noun on
+in
+\noun default
+ 
+\size normal
+the
+\size default
+ 
+\bar under
+world
+\end_layout
+
+\begin_layout Standard
+Little more can be added, at least at this point.
+\end_layout
+
+\begin_layout Section
+
+\color red
+Color
+\color inherit
+ and 
+\lang british
+colour
+\end_layout
+
+\begin_layout Standard
+At this other point, however, more could be added, but won't.
+\end_layout
+
 \begin_layout Chapter
 Nomenclature
 \end_layout
