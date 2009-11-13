@@ -209,6 +209,18 @@ a,
 b).
 \end_layout
 
+\begin_layout Itemize
+Use 
+\family typewriter
+subprocess.call()
+\family default
+ instead of 
+\family typewriter
+os.system()
+\family default
+ to run ImageMagick, to handle non-ASCII characters in image names.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.35 (2009-11-05):

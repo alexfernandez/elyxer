@@ -22,7 +22,7 @@
 # Alex 20090308
 # eLyXer image treatment
 
-import os
+import subprocess
 import struct
 from util.trace import Trace
 from gen.container import *
@@ -83,16 +83,17 @@ class Image(Container):
     command += '"' + unicode(self.origin) + '" "'
     command += unicode(self.destination) + '"'
     try:
-      result = os.system(command)
       Trace.debug('ImageMagick Command: "' + command + '"')
+      result = subprocess.call(command, shell=True)
       if result != 0:
         Trace.error('ImageMagick not installed; images will not be processed')
         Image.converter = False
         return
       Trace.message('Converted ' + unicode(self.origin) + ' to ' +
           unicode(self.destination))
-    except OSError:
-      Trace.error('Error while converting image ' + self.origin)
+    except OSError, exception:
+      Trace.error('Error while converting image ' + unicode(self.origin)
+          + ': ' + unicode(exception))
 
   def getparams(self):
     "Get the parameters for ImageMagick conversion"
