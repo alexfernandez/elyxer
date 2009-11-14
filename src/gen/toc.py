@@ -33,9 +33,10 @@ class TOCEntry(Container):
 
   ordered = NumberingConfig.layouts['ordered']
   unique = NumberingConfig.layouts['unique']
+  copied = [StringContainer, Constant, Space]
   allowed = [
-      Constant, StringContainer, TextFamily, EmphaticText, VersalitasText,
-      SizeText, ColorText, LangLine, Formula, Space
+      TextFamily, EmphaticText, VersalitasText, BarredText,
+      SizeText, ColorText, LangLine, Formula
       ]
 
   def create(self, container):
@@ -56,18 +57,26 @@ class TOCEntry(Container):
 
   def gettitlecontents(self, container):
     "Get the title of the container."
-    newcontents = []
     shorttitles = container.searchall(ShortTitle)
     if len(shorttitles) > 0:
       for shorttitle in shorttitles:
         shorttitle.output = ContentsOutput()
       return shorttitles
+    return self.safeclone(container).contents
+
+  def safeclone(self, container):
+    "Return a new container with contents only in a safe list, recursively."
+    clone = Cloner.clone(container)
+    clone.output = container.output
+    clone.contents = []
     for element in container.contents:
-      if element.__class__ in TOCEntry.allowed:
-        newcontents.append(element)
+      if element.__class__ in TOCEntry.copied:
+        clone.contents.append(element)
+      elif element.__class__ in TOCEntry.allowed:
+        clone.contents.append(self.safeclone(element))
       else:
         Trace.debug('Container ' + element.__class__.__name__ + ' not allowed in TOC.')
-    return newcontents
+    return clone
 
 class Indenter(object):
   "Manages and writes indentation for the TOC."

@@ -279,7 +279,11 @@ Little more can be added, at least at this point.
 \color red
 Color
 \color inherit
- and 
+
+\begin_inset space ~
+\end_inset
+
+and 
 \lang british
 colour
 \end_layout
