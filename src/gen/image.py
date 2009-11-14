@@ -24,6 +24,7 @@
 
 import struct
 import sys
+import os
 from util.trace import Trace
 from gen.container import *
 from io.path import *
@@ -94,15 +95,6 @@ class ImageConverter(object):
   active = True
   instance = None
 
-  def __init__(self):
-    "Initialize the subprocess."
-    try:
-      import subprocess
-      self.run = lambda command: subprocess.call(command, shell=True)
-    except ImportError:
-      import os
-      self.run = lambda command: os.system(command)
-
   def convert(self, image):
     "Convert an image to PNG"
     if not ImageConverter.active:
@@ -122,7 +114,7 @@ class ImageConverter(object):
     command += unicode(image.destination) + '"'
     try:
       Trace.debug('ImageMagick Command: "' + command + '"')
-      result = self.run(command.encode(sys.getfilesystemencoding()))
+      result = os.system(command.encode(sys.getfilesystemencoding()))
       if result != 0:
         Trace.error('ImageMagick not installed; images will not be processed')
         ImageConverter.active = False
