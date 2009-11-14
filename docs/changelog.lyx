@@ -202,7 +202,7 @@ For TOC generation not the whole entry text is used, just a few types of
 \end_layout
 
 \begin_layout Itemize
-Subfloats are numbered a, b (instead of 
+Subfloats are numbered (a), (b) (instead of 
 \begin_inset Formula $x.y$
 \end_inset
 

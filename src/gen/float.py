@@ -196,8 +196,7 @@ class PostFloat(object):
   def postnumber(self, caption, float):
     "Number the caption"
     self.numberfloat(float)
-    prefix = TranslationConfig.floats[float.type]
-    caption.contents.insert(0, Constant(prefix + float.number + u' '))
+    caption.contents.insert(0, Constant(float.number + u' '))
 
   def numberfloat(self, float):
     "Number a float if it isn't numbered"
@@ -206,9 +205,10 @@ class PostFloat(object):
     if float.parentfloat:
       self.numberfloat(float.parentfloat)
       index = float.parentfloat.children.index(float)
-      float.number = NumberGenerator.letters[index + 1].lower()
+      float.number = '(' + NumberGenerator.letters[index + 1].lower() + ')'
     else:
-      float.number = NumberGenerator.instance.generatechaptered(float.type)
+      prefix = TranslationConfig.floats[float.type]
+      float.number = prefix + NumberGenerator.instance.generatechaptered(float.type)
 
 class PostWrap(PostFloat):
   "For a wrap: exactly like a float"
