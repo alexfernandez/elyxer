@@ -214,16 +214,11 @@ b).
 \end_layout
 
 \begin_layout Itemize
-Use 
+Convert all pathnames for image conversion using 
 \family typewriter
-subprocess.call()
+sys.getfilesystemencoding()
 \family default
- to run ImageMagick, to handle non-ASCII characters in image names.
- If not available use 
-\family typewriter
-os.system()
-\family default
- instead, as before.
+.
 \end_layout
 
 \end_deeper
