@@ -35,7 +35,7 @@ class TOCEntry(Container):
   unique = NumberingConfig.layouts['unique']
   allowed = [
       Constant, StringContainer, TextFamily, EmphaticText, VersalitasText,
-      SizeText, ColorText, LangLine
+      SizeText, ColorText, LangLine, Formula, Space
       ]
 
   def create(self, container):
@@ -44,6 +44,7 @@ class TOCEntry(Container):
     url = Options.toctarget + '#toc-' + container.type + '-' + container.number
     link = Link().complete(text, url=url)
     self.contents = [link]
+    Trace.debug('Contents for ' + container.number)
     link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)
     self.depth = 0
@@ -55,9 +56,12 @@ class TOCEntry(Container):
 
   def gettitlecontents(self, container):
     "Get the title of the container."
-    if len(container.contents) < 2:
-      return '-'
     newcontents = []
+    shorttitles = container.searchall(ShortTitle)
+    if len(shorttitles) > 0:
+      for shorttitle in shorttitles:
+        shorttitle.output = ContentsOutput()
+      return shorttitles
     for element in container.contents:
       if element.__class__ in TOCEntry.allowed:
         newcontents.append(element)
