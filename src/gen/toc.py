@@ -59,9 +59,10 @@ class TOCEntry(Container):
     "Get the title of the container."
     shorttitles = container.searchall(ShortTitle)
     if len(shorttitles) > 0:
+      contents = [Constant(u' ')]
       for shorttitle in shorttitles:
-        shorttitle.output = ContentsOutput()
-      return shorttitles
+        contents += shorttitle.contents
+      return contents
     return self.safeclone(container).contents
 
   def safeclone(self, container):
