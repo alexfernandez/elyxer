@@ -1731,6 +1731,10 @@ gather
 ) are not working or look strange -- some non-AMS environments too.
 \end_layout
 
+\begin_layout Enumerate
+For subtables the caption should be below the label, not besides the label.
+\end_layout
+
 \begin_layout Subsection
 Contact Information
 \end_layout
