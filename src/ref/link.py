@@ -91,7 +91,7 @@ class ListOf(ListInset):
     "Parse the header and get the type"
     self.type = self.header[2]
     text = TranslationConfig.lists[self.type]
-    self.contents = [TaggedText.constant(text, 'div class="list"', True)]
+    self.contents = [TaggedText().constant(text, 'div class="tocheader"', True)]
 
 class TableOfContents(ListInset):
   "Table of contents"
