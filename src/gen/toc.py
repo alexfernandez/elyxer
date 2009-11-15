@@ -45,7 +45,6 @@ class TOCEntry(Container):
     url = Options.toctarget + '#toc-' + container.type + '-' + container.number
     link = Link().complete(text, url=url)
     self.contents = [link]
-    Trace.debug('Contents for ' + container.number)
     link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)
     self.depth = 0
@@ -75,8 +74,6 @@ class TOCEntry(Container):
         clone.contents.append(element)
       elif element.__class__ in TOCEntry.allowed:
         clone.contents.append(self.safeclone(element))
-      else:
-        Trace.debug('Container ' + element.__class__.__name__ + ' not allowed in TOC.')
     return clone
 
 class Indenter(object):
