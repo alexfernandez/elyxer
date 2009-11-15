@@ -115,8 +115,15 @@ class IntegralListOf(IntegralProcessor):
     if float.parentfloat:
       return None
     captions = float.searchcaptions(float.contents)
-    Trace.debug(float.type + ', ' + float.number + ', captions: ' + unicode(len(captions)))
-    return Constant('a')
+    if len(captions) == 0:
+      return None
+    elif len(captions) > 1:
+      Trace.error('More than one caption in ' + float.number)
+    caption = captions[0]
+    Trace.debug(float.type + ', ' + float.number + ', caption: ' + unicode(len(caption.contents)))
+    for element in caption.contents:
+      Trace.debug('Element: ' + unicode(element))
+    return TaggedText().complete(caption.contents, 'div class="toc"')
 
 IntegralProcessor.processors = [IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(), IntegralListOf()]
 
