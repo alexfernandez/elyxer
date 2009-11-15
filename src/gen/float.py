@@ -72,11 +72,27 @@ class Float(Container):
     self.embeddedtag += ' style="width: ' + image.width + ';"'
     image.width = None
 
-
   def embed(self, tag):
     "Embed the whole contents in a div"
     tagged = TaggedText().complete(self.contents, tag, True)
     self.contents = [tagged]
+
+  def searchcaptions(self, contents):
+    "Search for captions in the contents"
+    list = []
+    for element in contents:
+      list += self.searchcaptionelement(element)
+    return list
+
+  def searchcaptionelement(self, element):
+    "Search for captions outside floats"
+    if isinstance(element, Float):
+      return []
+    if isinstance(element, Caption):
+      return [element]
+    if not isinstance(element, Container):
+      return []
+    return self.searchcaptions(element.contents)
 
   def __unicode__(self):
     "Return a printable representation"
@@ -163,28 +179,11 @@ class PostFloat(object):
 
   def postprocess(self, float, last):
     "Move the label to the top and number the caption"
-    captions = self.searchcaptions(float.contents)
+    captions = float.searchcaptions(float.contents)
     for caption in captions:
       self.postlabels(float, caption)
       self.postnumber(caption, float)
     return float
-
-  def searchcaptions(self, contents):
-    "Search for captions in the contents"
-    list = []
-    for element in contents:
-      list += self.searchcaptionelement(element)
-    return list
-
-  def searchcaptionelement(self, element):
-    "Search for captions outside floats"
-    if isinstance(element, Float):
-      return []
-    if isinstance(element, Caption):
-      return [element]
-    if not isinstance(element, Container):
-      return []
-    return self.searchcaptions(element.contents)
 
   def postlabels(self, float, caption):
     "Search for labels and move them to the top"

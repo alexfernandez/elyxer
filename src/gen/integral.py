@@ -114,7 +114,7 @@ class IntegralListOf(IntegralProcessor):
     "Get an entry for the list of floats."
     if float.parentfloat:
       return None
-    captions = float.searchall(Caption)
+    captions = float.searchcaptions(float.contents)
     Trace.debug(float.type + ', ' + float.number + ', captions: ' + unicode(len(captions)))
     return Constant('a')
 
