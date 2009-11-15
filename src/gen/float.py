@@ -77,22 +77,22 @@ class Float(Container):
     tagged = TaggedText().complete(self.contents, tag, True)
     self.contents = [tagged]
 
-  def searchcaptions(self, contents):
+  def searchinside(self, contents, type):
     "Search for captions in the contents"
     list = []
     for element in contents:
-      list += self.searchcaptionelement(element)
+      list += self.searchinelement(element, type)
     return list
 
-  def searchcaptionelement(self, element):
-    "Search for captions outside floats"
+  def searchinelement(self, element, type):
+    "Search for a given type outside floats"
     if isinstance(element, Float):
       return []
-    if isinstance(element, Caption):
+    if isinstance(element, type):
       return [element]
     if not isinstance(element, Container):
       return []
-    return self.searchcaptions(element.contents)
+    return self.searchinside(element.contents, type)
 
   def __unicode__(self):
     "Return a printable representation"
@@ -179,7 +179,7 @@ class PostFloat(object):
 
   def postprocess(self, float, last):
     "Move the label to the top and number the caption"
-    captions = float.searchcaptions(float.contents)
+    captions = float.searchinside(float.contents, Caption)
     for caption in captions:
       self.postlabels(float, caption)
       self.postnumber(caption, float)
