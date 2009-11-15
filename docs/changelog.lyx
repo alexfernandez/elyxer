@@ -109,6 +109,22 @@ Added sequential numbering to bibliography entries on
 \end_layout
 
 \begin_layout Itemize
+Added lists of floats (figures, tables, algorithms) on 
+\family typewriter
+--memory
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+Use the last title as HTML title on 
+\family typewriter
+--memory
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
 Updated the 
 \begin_inset CommandInset href
 LatexCommand href
