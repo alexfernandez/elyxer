@@ -41,15 +41,17 @@ from math.postformula import *
 class eLyXerConverter(object):
   "Converter for a document in a lyx file. Places all output in a given basket."
 
-  latestbasket = None
+  currentbasket = None
+
+  def __init__(self):
+    self.filtering = False
 
   def setio(self, ioparser):
     "Set the InOutParser"
-    self.reader = LineReader(ioparser.filein)
-    self.writer = LineWriter(ioparser.fileout)
+    self.reader = ioparser.getreader()
     self.basket = self.getbasket()
-    self.basket.setwriter(self.writer)
-    eLyXerConverter.latestbasket = self.basket
+    eLyXerConverter.currentbasket = self.basket
+    self.basket.setwriter(ioparser.getwriter())
     return self
 
   def getbasket(self):
@@ -65,8 +67,9 @@ class eLyXerConverter(object):
   def embed(self, reader):
     "Embed the results for a new input file into the latest output file."
     "Header and footer are ignored. Useful for embedding one document inside another."
+    converter = eLyXerConverter()
     self.reader = reader
-    self.basket = eLyXerConverter.latestbasket.getfilterheader()
+    self.basket = eLyXerConverter.currentbasket
     return self
 
   def convert(self):
@@ -83,10 +86,16 @@ class eLyXerConverter(object):
     self.postproc = Postprocessor()
     while not self.reader.finished():
       container = factory.createcontainer(self.reader)
-      if container:
+      if container and not self.filtered(container):
         container = self.postproc.postprocess(container)
         self.basket.write(container)
     self.basket.finish()
+
+  def filtered(self, container):
+    "Find out if the container is a header or footer and must be filtered."
+    if not self.filtering:
+      return False
+    return container.__class__ in [LyxHeader, LyxFooter]
 
 class InOutParser(object):
   "Parse in and out arguments"
@@ -116,6 +125,14 @@ class InOutParser(object):
     if len(args) > 0:
       raise Exception('Unused arguments: ' + unicode(args))
     return self
+
+  def getreader(self):
+    "Get the resulting reader."
+    return LineReader(self.filein)
+
+  def getwriter(self):
+    "Get the resulting writer."
+    return LineWriter(self.fileout)
 
   def readdir(self, filename, diroption):
     "Read the current directory if needed"

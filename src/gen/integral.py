@@ -60,7 +60,6 @@ class IntegralTOC(Integral):
     "Fill in a Table of Contents."
     toc.output = TaggedOutput().settag('div class="fulltoc"', True)
     basket = TOCBasket()
-    basket.filterheader = True
     for container in self.contents:
       entry = basket.convert(container)
       if entry:

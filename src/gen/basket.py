@@ -33,35 +33,15 @@ from gen.toc import *
 class Basket(object):
   "A basket to place a set of containers. Can write them, store them..."
 
-  def __init__(self):
-    "Initialize the basket."
-    self.filterheader = False
-    self.writer = None
-
   def setwriter(self, writer):
     self.writer = writer
     return self
-
-  def getfilterheader(self):
-    "Get a new basket just flipping the filterheader bit."
-    clone = Cloner.clone(self)
-    clone.setwriter(self.writer)
-    clone.filterheader = True
-    return clone
-
-  def isfiltered(self, container):
-    "Find out if a given container is filtered."
-    if self.filterheader and container.__class__ in [LyxHeader, LyxFooter]:
-      return True
-    return False
 
 class WriterBasket(Basket):
   "A writer of containers. Just writes them out to a writer."
 
   def write(self, container):
     "Write a container to the line writer."
-    if self.isfiltered(container):
-      return
     self.writer.write(container.gethtml())
 
   def finish(self):
@@ -72,7 +52,6 @@ class KeeperBasket(Basket):
   "Keeps all containers stored."
 
   def __init__(self):
-    Basket.__init__(self)
     self.contents = []
 
   def write(self, container):
@@ -86,14 +65,12 @@ class KeeperBasket(Basket):
   def flush(self):
     "Flush the contents to the writer."
     for container in self.contents:
-      if not self.isfiltered(container):
-        self.writer.write(container.gethtml())
+      self.writer.write(container.gethtml())
 
 class TOCBasket(Basket):
   "A basket to place the TOC of a document."
 
   def __init__(self):
-    Basket.__init__(self)
     self.indenter = Indenter()
 
   def setwriter(self, writer):
@@ -117,8 +94,6 @@ class TOCBasket(Basket):
 
   def convert(self, container):
     "Convert a container to a TOC container."
-    if self.isfiltered(container):
-      return None
     if container.__class__ in [LyxHeader, LyxFooter]:
       container.depth = 0
       return container
