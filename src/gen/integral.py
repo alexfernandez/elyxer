@@ -80,7 +80,43 @@ class IntegralBiblioEntry(IntegralProcessor):
         cite.complete(number, anchor = 'cite-' + number)
         cite.setdestination(link)
 
-IntegralProcessor.processors = [IntegralTOC(), IntegralBiblioEntry()]
+class IntegralFloat(IntegralProcessor):
+  "Store all floats in the document by type."
+
+  processedtype = Float
+  bytype = dict()
+
+  def processeach(self, float):
+    "Store each float by type."
+    if not float.type in IntegralFloat.bytype:
+      IntegralFloat.bytype[float.type] = []
+    IntegralFloat.bytype[float.type].append(float)
+
+class IntegralListOf(IntegralProcessor):
+  "A processor for an integral list of floats."
+
+  processedtype = ListOf
+  basket = TOCBasket()
+
+  def processeach(self, listof):
+    "Fill in a list of floats."
+    Trace.debug('List of ' + listof.type)
+    listof.output = TaggedOutput().settag('div class="fulltoc"', True)
+    if not listof.type in IntegralFloat.bytype:
+      Trace.message('No floats of type ' + listof.type)
+      return
+    for float in IntegralFloat.bytype[listof.type]:
+      entries = self.processfloat(float)
+      for entry in entries:
+        listof.contents.append(entry)
+
+  def processfloat(self, float):
+    "Get an entry for the list of floats."
+    if float.parentfloat:
+      return []
+    return IntegralListOf.basket.translate(float)
+
+IntegralProcessor.processors = [IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(), IntegralListOf()]
 
 class MemoryBasket(KeeperBasket):
   "A basket which stores everything in memory, processes it and writes it."
