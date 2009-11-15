@@ -53,7 +53,8 @@ class Options(object):
   lyxformat = False
   target = None
   splitpart = None
-  memory = False
+  memory = True
+  filter = False
 
   branches = dict()
 
@@ -83,11 +84,13 @@ class Options(object):
       try:
         Options.splitpart = int(Options.splitpart)
         if Options.splitpart <= 0:
-          Trace.error('--splitpart a number bigger than zero')
+          Trace.error('--splitpart requires a number bigger than zero')
           self.usage()
       except:
         Trace.error('--splitpart needs a numeric argument, not ' + Options.splitpart)
         self.usage()
+    if Options.filter or Options.toc:
+      Options.memory = False
     # set in Trace if necessary
     for param in dir(Options):
       if hasattr(Trace, param + 'mode'):
@@ -103,22 +106,22 @@ class Options(object):
   def showoptions(self):
     "Show all possible options"
     Trace.error('  Valid options:')
-    Trace.error('    --nocopy:                   disables the copyright notice at the bottom')
-    Trace.error('    --quiet:                    disables all runtime messages')
-    Trace.error('    --debug:                    enable debugging messages (for developers)')
-    Trace.error('    --title "title":            set the generated page title')
-    Trace.error('    --directory "images_dir":   look for images in the specified directory')
-    Trace.error('    --destdirectory "dest_dir": put converted images into this directory')
-    Trace.error('    --css "file.css":           use a custom CSS file')
-    Trace.error('    --version:                  show version number and release date')
-    Trace.error('    --html:                     output HTML 4.0 instead of the default XHTML')
-    Trace.error('    --unicode:                  full Unicode output')
-    Trace.error('    --forceformat ".extension": force image output format')
-    Trace.error('    --lyxformat:                return the highest LyX version that can be')
-    Trace.error('                                converted')
-    Trace.error('    --toc:                      create a table of contents')
-    Trace.error('    --target "frame":           make all links point to the given frame')
-    Trace.error('    --memory:                   store a document in memory before writing')
+    Trace.error('    --nocopy:               disables the copyright notice at the bottom')
+    Trace.error('    --quiet:                disables all runtime messages')
+    Trace.error('    --debug:                enable debugging messages (for developers)')
+    Trace.error('    --title "title":        set the generated page title')
+    Trace.error('    --directory "img_dir":  look for images in the specified directory')
+    Trace.error('    --destdirectory "dest": put converted images into this directory')
+    Trace.error('    --css "file.css":       use a custom CSS file')
+    Trace.error('    --version:              show version number and release date')
+    Trace.error('    --html:                 output HTML 4.0 instead of the default XHTML')
+    Trace.error('    --unicode:              full Unicode output')
+    Trace.error('    --forceformat ".ext":   force image output format')
+    Trace.error('    --lyxformat:            return the highest LyX version that can be')
+    Trace.error('                            converted')
+    Trace.error('    --toc:                  create a table of contents')
+    Trace.error('    --target "frame":       make all links point to the given frame')
+    Trace.error('    --filter:               do the conversion on the fly (conserve memory)')
     exit()
 
   def showversion(self):

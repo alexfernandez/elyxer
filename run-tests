@@ -45,11 +45,12 @@ cd ..
 name="appendix-1-6"
 ../elyxer.py --quiet --toc --toctarget "$name-test.html" --css ../docs/toc.css --target contents "$name.lyx" "$name-toc-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-toc-good.html" "$name-toc-test.html"
-# test memory generation
+# test filter generation
 name="index-1-6"
-../elyxer.py --quiet --memory --css ../docs/lyx.css "$name.lyx" "$name-memory-test.html"
-diff -u --ignore-matching-lines="create-date" "$name-memory-good.html" "$name-memory-test.html"
+../elyxer.py --quiet --filter --css ../docs/lyx.css "$name.lyx" "$name-filter-test.html"
+diff -u --ignore-matching-lines="create-date" "$name-filter-good.html" "$name-filter-test.html"
+# test stdin + stdout generation
 name="footnotes-1-6"
-../elyxer.py --quiet --memory --css ../docs/lyx.css "$name.lyx" "$name-memory-test.html"
-diff -u --ignore-matching-lines="create-date" "$name-memory-good.html" "$name-memory-test.html"
+cat "$name.lyx" | ../elyxer.py --css ../docs/lyx.css > "$name-stdio-test.html"
+diff -u --ignore-matching-lines="create-date" "$name-good.html" "$name-stdio-test.html"
 
