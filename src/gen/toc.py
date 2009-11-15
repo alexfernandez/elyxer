@@ -43,6 +43,7 @@ class TOCEntry(Container):
     "Create a TOC entry for header and footer (0 depth)."
     self.depth = 0
     self.output = EmptyOutput()
+    return self
 
   def create(self, container):
     "Create the TOC entry for a container, consisting of a single link."

@@ -77,6 +77,7 @@ class TOCBasket(Basket):
     Basket.setwriter(self, writer)
     Options.nocopy = True
     self.indenter.setwriter(writer)
+    self.writer.write(LyxHeader().gethtml())
     return self
 
   def write(self, container):
@@ -103,7 +104,7 @@ class TOCBasket(Basket):
 
   def finish(self):
     "Mark as finished."
-    pass
+    self.writer.write(LyxFooter().gethtml())
 
 class SplittingBasket(Basket):
   "A basket used to split the output in different files."
