@@ -120,10 +120,19 @@ class IntegralListOf(IntegralProcessor):
     elif len(captions) > 1:
       Trace.error('More than one caption in ' + float.number)
     caption = captions[0]
-    Trace.debug(float.type + ', ' + float.number + ', caption: ' + unicode(len(caption.contents))) # + ', label: ' + unicode(label))
+    labels = float.searchinside(float.contents, Label)
+    if len(labels) == 0:
+      return None
+    elif len(labels) > 1:
+      Trace.error('More than one label in ' + float.number)
+    label = labels[0]
+    Trace.debug(float.type + ', ' + float.number + ', caption: ' + unicode(len(caption.contents)) + ', label: ' + unicode(label))
     for element in caption.contents:
       Trace.debug('Element: ' + unicode(element))
-    return TaggedText().complete(caption.contents, 'div class="toc"', True)
+    link = Link()
+    link.contents = caption.contents
+    link.setdestination(label)
+    return TaggedText().complete([link], 'div class="toc"', True)
 
 IntegralProcessor.processors = [IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(), IntegralListOf()]
 

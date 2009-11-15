@@ -49,6 +49,10 @@ class Label(Link):
     self.complete(' ', anchor = key)
     Label.names[key] = self
 
+  def __unicode__(self):
+    "Return a printable representation."
+    return 'Label ' + self.parameters['name']
+
 class Reference(Link):
   "A reference to a label"
 
