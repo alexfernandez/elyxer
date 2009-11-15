@@ -133,6 +133,7 @@ class TitleOutput(object):
   "Return the HTML title tag"
 
   pdftitle = None
+  title = None
 
   def gethtml(self, container):
     "Return the title tag"
@@ -142,6 +143,8 @@ class TitleOutput(object):
     "Return the correct title from the option or the PDF title"
     if Options.title:
       return Options.title
+    if TitleOutput.title:
+      return TitleOutput.title
     if TitleOutput.pdftitle:
       return TitleOutput.pdftitle
     return 'Converted document'

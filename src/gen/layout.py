@@ -63,6 +63,7 @@ class Title(Layout):
     self.type = 'title'
     self.output.tag = 'h1 class="title"'
     self.title = self.extracttext()
+    TitleOutput.title = self.title
     Trace.message('Title: ' + self.title)
 
 class Author(Layout):
