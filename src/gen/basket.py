@@ -46,7 +46,7 @@ class WriterBasket(Basket):
 
   def finish(self):
     "Mark as finished."
-    pass
+    self.writer.close()
 
 class KeeperBasket(Basket):
   "Keeps all containers stored."

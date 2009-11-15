@@ -89,13 +89,22 @@ class eLyXerConverter(object):
       if container and not self.filtered(container):
         container = self.postproc.postprocess(container)
         self.basket.write(container)
-    self.basket.finish()
+    if not self.filtering:
+      self.basket.finish()
 
   def filtered(self, container):
     "Find out if the container is a header or footer and must be filtered."
     if not self.filtering:
       return False
-    return container.__class__ in [LyxHeader, LyxFooter]
+    if container.__class__ in [LyxHeader, LyxFooter]:
+      return True
+    return False
+
+  def __unicode__(self):
+    "Printable representation."
+    string = 'Converter with filtering ' + unicode(self.filtering)
+    string += ' and basket ' + unicode(self.basket)
+    return string
 
 class InOutParser(object):
   "Parse in and out arguments"
