@@ -68,6 +68,7 @@ class eLyXerConverter(object):
     "Embed the results for a new input file into the latest output file."
     "Header and footer are ignored. Useful for embedding one document inside another."
     converter = eLyXerConverter()
+    self.filtering = True
     self.reader = reader
     self.basket = eLyXerConverter.currentbasket
     return self

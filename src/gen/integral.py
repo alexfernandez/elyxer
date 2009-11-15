@@ -63,7 +63,7 @@ class IntegralTOC(Integral):
     for container in self.contents:
       entry = basket.convert(container)
       if entry:
-        toc.contents.append(basket.getindent(entry))
+        toc.contents.append(basket.indenter.getindent(entry.depth))
         toc.contents.append(entry)
 
 class IntegralBiblioEntry(Integral):

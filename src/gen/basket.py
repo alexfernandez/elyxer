@@ -81,22 +81,28 @@ class TOCBasket(Basket):
 
   def write(self, container):
     "Write the table of contents for a container."
+    depth = self.getdepth(container)
+    if depth:
+      indent = self.indenter.getindent(depth)
+      self.writer.write(indent.gethtml())
     entry = self.convert(container)
     if not entry:
       return
-    indent = self.getindent(entry)
-    self.writer.write(indent.gethtml())
     self.writer.write(entry.gethtml())
 
-  def getindent(self, entry):
-    "Get the indent for a given entry."
-    return self.indenter.getindent(entry.depth)
+  def getdepth(self, container):
+    "Get the depth for a given entry."
+    if container.__class__ in [LyxHeader, LyxFooter]:
+      return 0
+    if not hasattr(container, 'number'):
+      return None
+    Trace.debug('Depth for ' + unicode(container))
+    return container.depth
 
   def convert(self, container):
     "Convert a container to a TOC container."
     if container.__class__ in [LyxHeader, LyxFooter]:
-      container.depth = 0
-      return container
+      return None
     if not hasattr(container, 'number'):
       return None
     return TOCEntry().create(container)
