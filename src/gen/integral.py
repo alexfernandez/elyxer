@@ -106,15 +106,17 @@ class IntegralListOf(IntegralProcessor):
       Trace.message('No floats of type ' + listof.type)
       return
     for float in IntegralFloat.bytype[listof.type]:
-      entries = self.processfloat(float)
-      for entry in entries:
+      entry = self.processfloat(float)
+      if entry:
         listof.contents.append(entry)
 
   def processfloat(self, float):
     "Get an entry for the list of floats."
     if float.parentfloat:
-      return []
-    return IntegralListOf.basket.translate(float)
+      return None
+    captions = float.searchall(Caption)
+    Trace.debug(float.type + ', ' + float.number + ', captions: ' + unicode(len(captions)))
+    return Constant('a')
 
 IntegralProcessor.processors = [IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(), IntegralListOf()]
 
