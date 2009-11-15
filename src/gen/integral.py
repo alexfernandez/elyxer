@@ -114,25 +114,21 @@ class IntegralListOf(IntegralProcessor):
     "Get an entry for the list of floats."
     if float.parentfloat:
       return None
-    captions = float.searchinside(float.contents, Caption)
-    if len(captions) == 0:
-      return None
-    elif len(captions) > 1:
-      Trace.error('More than one caption in ' + float.number)
-    caption = captions[0]
-    labels = float.searchinside(float.contents, Label)
-    if len(labels) == 0:
-      return None
-    elif len(labels) > 1:
-      Trace.error('More than one label in ' + float.number)
-    label = labels[0]
-    Trace.debug(float.type + ', ' + float.number + ', caption: ' + unicode(len(caption.contents)) + ', label: ' + unicode(label))
-    for element in caption.contents:
-      Trace.debug('Element: ' + unicode(element))
-    link = Link()
-    link.contents = caption.contents
-    link.setdestination(label)
+    link = self.createlink(float)
     return TaggedText().complete([link], 'div class="toc"', True)
+
+  def createlink(self, float):
+    "Create the link to the float label."
+    captions = float.searchinside(float.contents, Caption)
+    labels = float.searchinside(float.contents, Label)
+    if len(labels) > 1:
+      Trace.error('More than one label in ' + float.number)
+    link = Link().complete(float.number + u': ')
+    for caption in captions:
+      link.contents += caption.contents[1:]
+    if len(labels) > 0:
+      link.setdestination(labels[0])
+    return link
 
 IntegralProcessor.processors = [IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(), IntegralListOf()]
 
