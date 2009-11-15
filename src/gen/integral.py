@@ -29,7 +29,7 @@ from gen.structure import *
 from gen.basket import *
 
 
-class Integral(object):
+class IntegralProcessor(object):
   "A processor for an integral document."
 
   processors = []
@@ -51,7 +51,7 @@ class Integral(object):
     for container in self.storage:
       self.processeach(container)
 
-class IntegralTOC(Integral):
+class IntegralTOC(IntegralProcessor):
   "A processor for an integral TOC."
 
   processedtype = TableOfContents
@@ -65,7 +65,7 @@ class IntegralTOC(Integral):
       for entry in entries:
         toc.contents.append(entry)
 
-class IntegralBiblioEntry(Integral):
+class IntegralBiblioEntry(IntegralProcessor):
   "A processor for an integral bibliography entry."
 
   processedtype = BiblioEntry
@@ -80,17 +80,17 @@ class IntegralBiblioEntry(Integral):
         cite.complete(number, anchor = 'cite-' + number)
         cite.setdestination(link)
 
-Integral.processors = [IntegralTOC(), IntegralBiblioEntry()]
+IntegralProcessor.processors = [IntegralTOC(), IntegralBiblioEntry()]
 
 class MemoryBasket(KeeperBasket):
   "A basket which stores everything in memory, processes it and writes it."
 
   def finish(self):
     "Process everything which cannot be done in one pass and write to disk."
-    for processor in Integral.processors:
+    for processor in IntegralProcessor.processors:
       processor.contents = self.contents
     self.searchintegral()
-    for processor in Integral.processors:
+    for processor in IntegralProcessor.processors:
       processor.process()
     self.flush()
 
@@ -104,7 +104,7 @@ class MemoryBasket(KeeperBasket):
 
   def integrallocate(self, container):
     "Locate all integrals."
-    for processor in Integral.processors:
+    for processor in IntegralProcessor.processors:
       if processor.locate(container):
         return True
     return False
@@ -112,7 +112,7 @@ class MemoryBasket(KeeperBasket):
   def integralstore(self, contents, index):
     "Store a container."
     container = contents[index]
-    for processor in Integral.processors:
+    for processor in IntegralProcessor.processors:
       if processor.locate(container):
         processor.store(container)
         return
