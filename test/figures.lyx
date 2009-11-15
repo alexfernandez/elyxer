@@ -43,7 +43,15 @@
 \begin_body
 
 \begin_layout Title
-Figure Test
+Figures Test
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList figure
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
