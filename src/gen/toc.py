@@ -39,6 +39,11 @@ class TOCEntry(Container):
       SizeText, ColorText, LangLine, Formula
       ]
 
+  def header(self, container):
+    "Create a TOC entry for header and footer (0 depth)."
+    self.depth = 0
+    self.output = EmptyOutput()
+
   def create(self, container):
     "Create the TOC entry for a container, consisting of a single link."
     text = TranslationConfig.constants[container.type] + ' ' + container.number + ':'

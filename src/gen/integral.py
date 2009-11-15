@@ -61,9 +61,8 @@ class IntegralTOC(Integral):
     toc.output = TaggedOutput().settag('div class="fulltoc"', True)
     basket = TOCBasket()
     for container in self.contents:
-      entry = basket.convert(container)
-      if entry:
-        toc.contents.append(basket.indenter.getindent(entry.depth))
+      entries = basket.translate(container)
+      for entry in entries:
         toc.contents.append(entry)
 
 class IntegralBiblioEntry(Integral):
