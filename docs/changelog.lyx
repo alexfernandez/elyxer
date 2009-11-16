@@ -221,8 +221,12 @@ Implemented thick space
 \backslash
 ;
 \family default
+ and quotes 
+\family typewriter
+"
+\family default
 : 
-\begin_inset Formula $\;$
+\begin_inset Formula $"\;"$
 \end_inset
 
 .
