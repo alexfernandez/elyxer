@@ -185,6 +185,36 @@ mathbb
 \end_layout
 
 \begin_layout Itemize
+New command 
+\family typewriter
+
+\backslash
+dfrac
+\family default
+, implemented as 
+\family typewriter
+
+\backslash
+cfrac
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+New math command 
+\family typewriter
+
+\backslash
+c
+\family default
+ for cedilla, already implemented as characters and now as decoration: 
+\begin_inset Formula $\c{G}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
 Added a 
 \family typewriter
 parent

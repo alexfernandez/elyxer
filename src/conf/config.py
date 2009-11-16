@@ -216,14 +216,7 @@ class FormulaConfig(object):
       u'\\breve{E}':u'Ĕ', u'\\breve{G}':u'Ğ', u'\\breve{I}':u'Ĭ', 
       u'\\breve{O}':u'Ŏ', u'\\breve{U}':u'Ŭ', u'\\breve{a}':u'ă', 
       u'\\breve{e}':u'ĕ', u'\\breve{g}':u'ğ', u'\\breve{o}':u'ŏ', 
-      u'\\breve{u}':u'ŭ', u'\\cedilla{C}':u'Ç', u'\\cedilla{D}':u'Ḑ', 
-      u'\\cedilla{E}':u'Ȩ', u'\\cedilla{G}':u'Ģ', u'\\cedilla{H}':u'Ḩ', 
-      u'\\cedilla{K}':u'Ķ', u'\\cedilla{L}':u'Ļ', u'\\cedilla{N}':u'Ņ', 
-      u'\\cedilla{R}':u'Ŗ', u'\\cedilla{S}':u'Ş', u'\\cedilla{T}':u'Ţ', 
-      u'\\cedilla{c}':u'ç', u'\\cedilla{d}':u'ḑ', u'\\cedilla{e}':u'ȩ', 
-      u'\\cedilla{h}':u'ḩ', u'\\cedilla{k}':u'ķ', u'\\cedilla{l}':u'ļ', 
-      u'\\cedilla{n}':u'ņ', u'\\cedilla{r}':u'ŗ', u'\\cedilla{s}':u'ş', 
-      u'\\cedilla{t}':u'ţ', u'\\check{A}':u'Ǎ', u'\\check{C}':u'Č', 
+      u'\\breve{u}':u'ŭ', u'\\check{A}':u'Ǎ', u'\\check{C}':u'Č', 
       u'\\check{D}':u'Ď', u'\\check{E}':u'Ě', u'\\check{G}':u'Ǧ', 
       u'\\check{H}':u'Ȟ', u'\\check{I}':u'Ǐ', u'\\check{K}':u'Ǩ', 
       u'\\check{N}':u'Ň', u'\\check{O}':u'Ǒ', u'\\check{R}':u'Ř', 
@@ -232,7 +225,12 @@ class FormulaConfig(object):
       u'\\check{d}':u'ď', u'\\check{e}':u'ě', u'\\check{g}':u'ǧ', 
       u'\\check{h}':u'ȟ', u'\\check{k}':u'ǩ', u'\\check{n}':u'ň', 
       u'\\check{o}':u'ǒ', u'\\check{r}':u'ř', u'\\check{s}':u'š', 
-      u'\\check{u}':u'ǔ', u'\\check{z}':u'ž', u'\\dacute{O}':u'Ő', 
+      u'\\check{u}':u'ǔ', u'\\check{z}':u'ž', u'\\c{C}':u'Ç', u'\\c{D}':u'Ḑ', 
+      u'\\c{E}':u'Ȩ', u'\\c{G}':u'Ģ', u'\\c{H}':u'Ḩ', u'\\c{K}':u'Ķ', 
+      u'\\c{L}':u'Ļ', u'\\c{N}':u'Ņ', u'\\c{R}':u'Ŗ', u'\\c{S}':u'Ş', 
+      u'\\c{T}':u'Ţ', u'\\c{c}':u'ç', u'\\c{d}':u'ḑ', u'\\c{e}':u'ȩ', 
+      u'\\c{h}':u'ḩ', u'\\c{k}':u'ķ', u'\\c{l}':u'ļ', u'\\c{n}':u'ņ', 
+      u'\\c{r}':u'ŗ', u'\\c{s}':u'ş', u'\\c{t}':u'ţ', u'\\dacute{O}':u'Ő', 
       u'\\dacute{U}':u'Ű', u'\\dacute{o}':u'ő', u'\\dacute{u}':u'ű', 
       u'\\ddot{A}':u'Ä', u'\\ddot{E}':u'Ë', u'\\ddot{H}':u'Ḧ', 
       u'\\ddot{I}':u'Ï', u'\\ddot{O}':u'Ö', u'\\ddot{U}':u'Ü', 
@@ -422,9 +420,10 @@ class FormulaConfig(object):
       }
 
   decoratingfunctions = {
-      u'\\acute':u'´', u'\\breve':u'˘', u'\\check':u'ˇ', u'\\ddot':u'¨', 
-      u'\\dot':u'˙', u'\\grave':u'`', u'\\hat':u'^', u'\\overleftarrow':u'⟵', 
-      u'\\overrightarrow':u'⟶', u'\\tilde':u'˜', u'\\vec':u'→', 
+      u'\\acute':u'´', u'\\breve':u'˘', u'\\c':u'¸', u'\\check':u'ˇ', 
+      u'\\ddot':u'¨', u'\\dot':u'˙', u'\\grave':u'`', u'\\hat':u'^', 
+      u'\\overleftarrow':u'⟵', u'\\overrightarrow':u'⟶', u'\\tilde':u'˜', 
+      u'\\vec':u'→', 
       }
 
   endings = {
