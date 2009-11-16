@@ -33,7 +33,6 @@ class PostFormula(object):
   "Postprocess a formula"
 
   processedclass = Formula
-  generator = NumberGenerator()
 
   def postprocess(self, formula, last):
     "Postprocess any formulae"
@@ -46,7 +45,7 @@ class PostFormula(object):
     "Check if it's a numbered equation, insert number."
     if formula.header[0] != 'numbered':
       return
-    number = '(' + PostFormula.generator.generatechaptered('formula') + ') '
+    number = '(' + NumberGenerator.instance.generatechaptered('formula') + ') '
     labels = formula.searchremove(LabelFunction)
     if len(labels) > 1:
       Trace.error('More than one label in ' + unicode(formula))

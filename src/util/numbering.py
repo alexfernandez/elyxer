@@ -63,7 +63,11 @@ class NumberGenerator(object):
     return self.dotseparated(self.number)
 
   def generatechaptered(self, type):
-    "Generate a number which goes with first-level numbers"
+    "Generate a number which goes with first-level numbers (chapters). "
+    "For the article classes a unique number is generated."
+    if NumberGenerator.startinglevel > 0:
+      Trace.debug('Unique for ' + type)
+      return self.generateunique(type)
     if len(self.number) == 0:
       chapter = 0
     else:
@@ -78,9 +82,7 @@ class NumberGenerator(object):
   def getlevel(self, type):
     "Get the level that corresponds to a type."
     level = NumberGenerator.ordered.index(type)
-    level -= NumberGenerator.startinglevel
-    Trace.debug('Level: ' + unicode(level))
-    return level
+    return level - NumberGenerator.startinglevel
 
   def isunique(self, container):
     "Find out if a container requires unique numbering."
