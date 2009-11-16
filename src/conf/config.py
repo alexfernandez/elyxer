@@ -324,10 +324,10 @@ class FormulaConfig(object):
 
   commands = {
       u'\\!':u'', u'\\$':u'$', u'\\%':u'%', u'\\,':u' ', u'\\:':u' ', 
-      u'\\Box':u'□', u'\\CIRCLE':u'●', u'\\CheckedBox':u'☑', u'\\Circle':u'○', 
-      u'\\Diamond':u'◇', u'\\Downarrow':u'⇓', u'\\Im':u'ℑ', u'\\Join':u'⨝', 
-      u'\\LEFTCIRCLE':u'◖', u'\\LEFTcircle':u'◐', u'\\Leftarrow':u'⇐', 
-      u'\\Leftrightarrow':u' ⇔ ', u'\\Longleftarrow':u'⟸', 
+      u'\\;':u' ', u'\\Box':u'□', u'\\CIRCLE':u'●', u'\\CheckedBox':u'☑', 
+      u'\\Circle':u'○', u'\\Diamond':u'◇', u'\\Downarrow':u'⇓', u'\\Im':u'ℑ', 
+      u'\\Join':u'⨝', u'\\LEFTCIRCLE':u'◖', u'\\LEFTcircle':u'◐', 
+      u'\\Leftarrow':u'⇐', u'\\Leftrightarrow':u' ⇔ ', u'\\Longleftarrow':u'⟸', 
       u'\\Longleftrightarrow':u'⟺', u'\\Longrightarrow':u'⟹', u'\\P':u'¶', 
       u'\\Pr':u'Pr', u'\\RIGHTCIRCLE':u'◗', u'\\RIGHTcircle':u'◑', 
       u'\\Re':u'ℜ', u'\\Rightarrow':u' ⇒ ', u'\\S':u'§', u'\\Square':u'☐', 

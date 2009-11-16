@@ -215,6 +215,20 @@ c
 \end_layout
 
 \begin_layout Itemize
+Implemented thick space 
+\family typewriter
+
+\backslash
+;
+\family default
+: 
+\begin_inset Formula $\;$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
 Added a 
 \family typewriter
 parent
