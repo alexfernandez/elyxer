@@ -46,7 +46,7 @@ class PostFormula(object):
     "Check if it's a numbered equation, insert number."
     if formula.header[0] != 'numbered':
       return
-    number = '(' + PostFormula.generator.generate(1) + ') '
+    number = '(' + PostFormula.generator.generatechaptered('formula') + ') '
     labels = formula.searchremove(LabelFunction)
     if len(labels) > 1:
       Trace.error('More than one label in ' + unicode(formula))

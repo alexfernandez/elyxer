@@ -23,6 +23,7 @@
 # eLyXer number generator
 
 from util.trace import Trace
+from conf.config import *
 
 
 class NumberGenerator(object):
@@ -33,23 +34,26 @@ class NumberGenerator(object):
   instance = None
   startinglevel = 0
 
+  unique = NumberingConfig.layouts['unique']
+  ordered = NumberingConfig.layouts['ordered']
+
   def __init__(self):
     self.number = []
     self.uniques = dict()
     self.chaptered = dict()
 
   def generateunique(self, type):
-    "Generate a number to place in the title but not to append to others"
+    "Generate unique numbering: a number to place in the title but not to "
+    "append to others. Examples: Part 1, Book 3."
     if not type in self.uniques:
       self.uniques[type] = 0
     self.uniques[type] = self.increase(self.uniques[type])
     return unicode(self.uniques[type])
 
-  def generate(self, level):
-    "Generate a number in the given level"
-    Trace.debug('Number: ' + unicode(self.number) + ', level ' + unicode(level) + ', starting ' + unicode(NumberGenerator.startinglevel))
-    # level -= NumberGenerator.startinglevel
-    Trace.debug('Level: ' + unicode(level))
+  def generateordered(self, type):
+    "Generate ordered numbering: a number to use and possibly concatenate "
+    "with others. Example: Chapter 1, Section 1.5."
+    level = self.getlevel(type)
     if len(self.number) > level:
       self.number = self.number[:level + 1]
     else:
@@ -70,6 +74,21 @@ class NumberGenerator(object):
     chaptered[1] = self.increase(chaptered[1])
     self.chaptered[type] = chaptered
     return self.dotseparated(chaptered)
+
+  def getlevel(self, type):
+    "Get the level that corresponds to a type."
+    level = NumberGenerator.ordered.index(type)
+    level -= NumberGenerator.startinglevel
+    Trace.debug('Level: ' + unicode(level))
+    return level
+
+  def isunique(self, container):
+    "Find out if a container requires unique numbering."
+    return container.type in NumberGenerator.unique
+  
+  def isordered(self, container):
+    "Find out if a container requires ordered numbering."
+    return container.type in NumberGenerator.ordered
 
   def increase(self, number):
     "Increase the number (or letter)"
