@@ -41,6 +41,11 @@ class LyxHeader(Container):
     key = ContainerConfig.header['pdftitle']
     if key in self.parameters:
       TitleOutput.pdftitle = self.parameters[key]
+    key = ContainerConfig.header['documentclass']
+    if key in self.parameters:
+      documentclass = self.parameters[key]
+      if documentclass in NumberingConfig.styles:
+        NumberGenerator.startinglevel = 1
 
 class LyxFooter(Container):
   "Reads the footer, outputs the HTML footer"

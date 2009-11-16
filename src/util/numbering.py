@@ -31,12 +31,13 @@ class NumberGenerator(object):
   letters = '-ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
   instance = None
+  startinglevel = 0
 
   def __init__(self):
-    self.startinglevel = 0
     self.number = []
     self.uniques = dict()
     self.chaptered = dict()
+    self.startinglevel = 0
 
   def generateunique(self, type):
     "Generate a number to place in the title but not to append to others"
@@ -47,9 +48,11 @@ class NumberGenerator(object):
 
   def generate(self, level):
     "Generate a number in the given level"
+    Trace.debug('Number: ' + unicode(self.number) + ', level ' + unicode(level) + ', starting ' + unicode(NumberGenerator.startinglevel))
     if self.number == [] and level == 1:
       self.startinglevel = 1
     level -= self.startinglevel
+    Trace.debug('Level: ' + unicode(level))
     if len(self.number) > level:
       self.number = self.number[:level + 1]
     else:
