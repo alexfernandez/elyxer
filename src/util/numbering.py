@@ -66,7 +66,6 @@ class NumberGenerator(object):
     "Generate a number which goes with first-level numbers (chapters). "
     "For the article classes a unique number is generated."
     if NumberGenerator.startinglevel > 0:
-      Trace.debug('Unique for ' + type)
       return self.generateunique(type)
     if len(self.number) == 0:
       chapter = 0

@@ -48,6 +48,7 @@ class Label(Link):
     "Create the label for a given key."
     self.complete(' ', anchor = key)
     Label.names[key] = self
+    return self
 
   def __unicode__(self):
     "Return a printable representation."

@@ -100,7 +100,6 @@ class IntegralListOf(IntegralProcessor):
 
   def processeach(self, listof):
     "Fill in a list of floats."
-    Trace.debug('List of ' + listof.type)
     listof.output = TaggedOutput().settag('div class="fulltoc"', True)
     if not listof.type in IntegralFloat.bytype:
       Trace.message('No floats of type ' + listof.type)
@@ -121,13 +120,18 @@ class IntegralListOf(IntegralProcessor):
     "Create the link to the float label."
     captions = float.searchinside(float.contents, Caption)
     labels = float.searchinside(float.contents, Label)
+    if len(labels) > 0:
+      label = labels[0]
+    else:
+      label = Label().create(float.number.replace(' ', '-'))
+      float.contents.insert(0, label)
+      labels.append(label)
     if len(labels) > 1:
       Trace.error('More than one label in ' + float.number)
     link = Link().complete(float.number + u': ')
     for caption in captions:
       link.contents += caption.contents[1:]
-    if len(labels) > 0:
-      link.setdestination(labels[0])
+    link.setdestination(label)
     return link
 
 IntegralProcessor.processors = [IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(), IntegralListOf()]
