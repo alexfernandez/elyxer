@@ -207,7 +207,7 @@ class HeaderParser(Parser):
   def parseline(self, reader):
     "Parse a single line as a parameter or as a start"
     line = reader.currentline()
-    if line.startswith(ContainerConfig.header['branch']):
+    if line.startswith(HeaderConfig.parameters['branch']):
       self.parsebranch(reader)
       return
     # no match
@@ -216,7 +216,7 @@ class HeaderParser(Parser):
   def parsebranch(self, reader):
     branch = reader.currentline().split()[1]
     reader.nextline()
-    subparser = HeaderParser().complete(ContainerConfig.header['endbranch'])
+    subparser = HeaderParser().complete(HeaderConfig.parameters['endbranch'])
     subparser.parse(reader)
     options = BranchOptions(branch)
     for key in subparser.parameters:

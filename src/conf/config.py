@@ -58,11 +58,6 @@ class ContainerConfig(object):
       u'VersalitasText':u'\\noun', 
       }
 
-  header = {
-      u'branch':u'\\branch', u'documentclass':u'\\textclass', 
-      u'endbranch':u'\\end_branch', u'pdftitle':u'\\pdf_title', 
-      }
-
   startendings = {
       u'\\begin_deeper':u'\\end_deeper', u'\\begin_inset':u'\\end_inset', 
       u'\\begin_layout':u'\\end_layout', 
@@ -513,6 +508,19 @@ class GeneralConfig(object):
       u'date':u'2009-11-16', u'lyxformat':u'345', u'number':u'0.36', 
       }
 
+class HeaderConfig(object):
+  "Configuration class from config file"
+
+  parameters = {
+      u'branch':u'\\branch', u'documentclass':u'\\textclass', 
+      u'endbranch':u'\\end_branch', u'pdftitle':u'\\pdf_title', 
+      }
+
+  styles = {
+      
+      u'article':[u'article',u'aastex',u'aapaper',u'acmsiggraph',u'sigplanconf',u'achemso',u'amsart',u'apa',u'arab-article',u'armenian-article',u'article-beamer',u'chess',u'dtk',u'elsarticle',u'heb-article',u'IEEEtran',u'iopart',u'kluwer',u'scrarticle-beamer',u'scrartcl',u'extarticle',u'paper',u'mwart',u'revtex4',u'spie',u'svglobal3',u'ltugboat',u'agu-dtd',u'jgrga',u'agums',u'entcs',u'egs',u'ijmpc',u'ijmpd',u'singlecol-new',u'doublecol-new',u'isprs',u'tarticle',u'jsarticle',u'jarticle',u'jss',u'literate-article',u'siamltex',u'cl2emult',u'llncs',u'svglobal',u'svjog',u'svprobth',], 
+      }
+
 class ImageConfig(object):
   "Configuration class from config file"
 
@@ -527,11 +535,6 @@ class NumberingConfig(object):
       
       u'ordered':[u'Chapter',u'Section',u'Subsection',u'Subsubsection',u'Paragraph',], 
       u'unique':[u'Part',u'Book',], 
-      }
-
-  styles = {
-      
-      u'article':[u'article',u'aastex',u'aapaper',u'acmsiggraph',u'sigplanconf',u'achemso',u'amsart',u'apa',u'arab-article',u'armenian-article',u'article-beamer',u'chess',u'dtk',u'elsarticle',u'heb-article',u'IEEEtran',u'iopart',u'kluwer',u'scrarticle-beamer',u'scrartcl',u'extarticle',u'paper',u'mwart',u'revtex4',u'spie',u'svglobal3',u'ltugboat',u'agu-dtd',u'jgrga',u'agums',u'entcs',u'egs',u'ijmpc',u'ijmpd',u'singlecol-new',u'doublecol-new',u'isprs',u'tarticle',u'jsarticle',u'jarticle',u'jss',u'literate-article',u'siamltex',u'cl2emult',u'llncs',u'svglobal',u'svjog',u'svprobth',], 
       }
 
 class StyleConfig(object):

@@ -38,13 +38,13 @@ class LyxHeader(Container):
 
   def process(self):
     "Find pdf title"
-    key = ContainerConfig.header['pdftitle']
+    key = HeaderConfig.parameters['pdftitle']
     if key in self.parameters:
       TitleOutput.pdftitle = self.parameters[key]
-    key = ContainerConfig.header['documentclass']
+    key = HeaderConfig.parameters['documentclass']
     if key in self.parameters:
       documentclass = self.parameters[key]
-      if documentclass in NumberingConfig.styles:
+      if documentclass in HeaderConfig.styles:
         NumberGenerator.startinglevel = 1
 
 class LyxFooter(Container):

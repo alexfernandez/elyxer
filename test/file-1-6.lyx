@@ -4,7 +4,7 @@
 \begin_header
 \textclass article
 \use_default_options true
-\language spanish
+\language english
 \inputencoding auto
 \font_roman default
 \font_sans default
@@ -17,6 +17,7 @@
 
 \graphics default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -51,6 +52,10 @@ Created by Alex Fernández
 
 \begin_layout Standard
 This document was created with LyX 1.6.2rc2, a great text editor.
+\end_layout
+
+\begin_layout Part
+The only part
 \end_layout
 
 \begin_layout Section
