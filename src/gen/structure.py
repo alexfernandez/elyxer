@@ -44,7 +44,7 @@ class LyxHeader(Container):
     key = HeaderConfig.parameters['documentclass']
     if key in self.parameters:
       documentclass = self.parameters[key]
-      if documentclass in HeaderConfig.styles:
+      if documentclass in HeaderConfig.styles['article']:
         NumberGenerator.startinglevel = 1
 
 class LyxFooter(Container):
