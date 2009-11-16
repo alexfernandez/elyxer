@@ -56,6 +56,7 @@ class TOCEntry(Container):
     self.depth = 0
     if container.type in TOCEntry.ordered:
       self.depth = TOCEntry.ordered.index(container.type) + 1
+      self.depth -= NumberGenerator.startinglevel
     elif not container.type in TOCEntry.unique:
       Trace.error('Unknown numbered container type ' + container.type)
     return self

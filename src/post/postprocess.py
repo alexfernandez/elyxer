@@ -52,20 +52,20 @@ class PostLayout(object):
   unique = NumberingConfig.layouts['unique']
   ordered = NumberingConfig.layouts['ordered']
 
-  def __init__(self):
-    self.generator = NumberGenerator.instance
-
   def postprocess(self, layout, last):
     "Generate a number and place it before the text"
     if self.containsappendix(layout):
       self.activateappendix()
     if layout.type in PostLayout.unique:
-      number = self.generator.generateunique(layout.type)
+      number = NumberGenerator.instance.generateunique(layout.type)
       text = TranslationConfig.constants[layout.type] + ' ' + number + u'.'
     elif layout.type in PostLayout.ordered:
       level = PostLayout.ordered.index(layout.type)
-      number = self.generator.generate(level)
+      level -= NumberGenerator.startinglevel
+      Trace.debug('Level: ' + unicode(level))
+      number = NumberGenerator.instance.generate(level)
       text = number
+      layout.output.tag = layout.output.tag.replace('?', unicode(level + 1))
     else:
       return layout
     layout.number = number
@@ -84,7 +84,7 @@ class PostLayout(object):
 
   def activateappendix(self):
     "Change first number to letter, and chapter to appendix"
-    self.generator.number = ['-']
+    NumberGenerator.instance.number = ['-']
 
 class PostStandard(object):
   "Convert any standard spans in root to divs"
