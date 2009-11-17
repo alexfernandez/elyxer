@@ -54,12 +54,12 @@ class NumberGenerator(object):
     "Generate ordered numbering: a number to use and possibly concatenate "
     "with others. Example: Chapter 1, Section 1.5."
     level = self.getlevel(type)
-    if len(self.number) > level:
-      self.number = self.number[:level + 1]
+    if len(self.number) >= level:
+      self.number = self.number[:level]
     else:
-      while len(self.number) <= level:
+      while len(self.number) < level:
         self.number.append(0)
-    self.number[level] = self.increase(self.number[level])
+    self.number[level - 1] = self.increase(self.number[level - 1])
     return self.dotseparated(self.number)
 
   def generatechaptered(self, type):
@@ -80,7 +80,7 @@ class NumberGenerator(object):
 
   def getlevel(self, type):
     "Get the level that corresponds to a type."
-    level = NumberGenerator.ordered.index(type)
+    level = NumberGenerator.ordered.index(type) + 1
     return level - NumberGenerator.startinglevel
 
   def isunique(self, container):

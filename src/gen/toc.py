@@ -31,8 +31,6 @@ from gen.structure import *
 class TOCEntry(Container):
   "A container for a TOC entry."
 
-  ordered = NumberingConfig.layouts['ordered']
-  unique = NumberingConfig.layouts['unique']
   copied = [StringContainer, Constant, Space]
   allowed = [
       TextFamily, EmphaticText, VersalitasText, BarredText,
@@ -53,12 +51,10 @@ class TOCEntry(Container):
     self.contents = [link]
     link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)
-    self.depth = 0
-    if container.type in TOCEntry.ordered:
-      self.depth = TOCEntry.ordered.index(container.type) + 1
-      self.depth -= NumberGenerator.startinglevel
-    elif not container.type in TOCEntry.unique:
-      Trace.error('Unknown numbered container type ' + container.type)
+    if hasattr(container, 'level'):
+      self.depth = container.level
+    else:
+      self.depth = 0
     return self
 
   def gettitlecontents(self, container):

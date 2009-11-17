@@ -55,17 +55,18 @@ class PostLayout(object):
     if self.containsappendix(layout):
       self.activateappendix()
     if NumberGenerator.instance.isunique(layout):
-      number = NumberGenerator.instance.generateunique(layout.type)
-      text = TranslationConfig.constants[layout.type] + ' ' + number + u'.'
+      layout.number = NumberGenerator.instance.generateunique(layout.type)
+      layout.entry = TranslationConfig.constants[layout.type] + ' ' + layout.number
+      text = layout.entry + '.'
     elif NumberGenerator.instance.isordered(layout):
-      number = NumberGenerator.instance.generateordered(layout.type)
-      text = number
+      layout.number = NumberGenerator.instance.generateordered(layout.type)
+      text = layout.number
+      layout.entry = TranslationConfig.constants[layout.type] + ' ' + layout.number
       layout.level = NumberGenerator.instance.getlevel(layout.type)
-      layout.output.tag = layout.output.tag.replace('?', unicode(layout.level + 1))
+      layout.output.tag = layout.output.tag.replace('?', unicode(layout.level))
     else:
       return layout
-    layout.number = number
-    anchor = 'toc-' + layout.type + '-' + number
+    anchor = 'toc-' + layout.type + '-' + layout.number
     link = Link().complete(text, anchor=anchor, type='toc')
     layout.contents.insert(0, link)
     layout.contents.insert(1, Constant(u' '))
