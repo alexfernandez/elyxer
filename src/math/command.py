@@ -284,16 +284,20 @@ class SpacingFunction(CommandBit):
 
   def parsebit(self, pos):
     "Parse a spacing function with two parameters"
+    numparams = int(self.translated[1])
     parameter1 = Bracket().parseliteral(pos)
     if not parameter1:
-      Trace.error('Missing first {} in function ' + self.translated[0])
-      return
-    parameter2 = self.parseparameter(pos)
-    if not parameter2:
-      Trace.error('Missing second {} in function ' + self.translated[0])
-      return
-    self.output = TaggedOutput().settag(self.translated +
-        ' style="vertical-align:' + parameter1.literal + '"')
+      Trace.error('Missing first {} in function ' + self.command)
+    parameter2 = None
+    if numparams == 2:
+      parameter2 = self.parseparameter(pos)
+      if not parameter2:
+        Trace.error('Missing second {} in spacing function ' + self.command)
+        return
+    else:
+      self.add(FormulaConstant(' '))
+    tag = self.translated[0].replace('$param', parameter1.literal)
+    self.output = TaggedOutput().settag(tag)
 
 FormulaFactory.bits += [FormulaCommand(), SymbolFunction()]
 FormulaCommand.commandbits = [

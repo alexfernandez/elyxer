@@ -478,7 +478,8 @@ class FormulaConfig(object):
       }
 
   spacingfunctions = {
-      u'\\raisebox':u'span class="raisebox"', 
+      u'\\hspace':[u'span class="hspace" style="width: $param;"',u'1',], 
+      u'\\raisebox':[u'span class="raisebox" style="vertical-align: $param;"',u'2',], 
       }
 
   starts = {

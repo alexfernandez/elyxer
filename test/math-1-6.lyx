@@ -437,7 +437,17 @@ It can also be used just for spacing.
 \end_layout
 
 \begin_layout Standard
-There are other spacing commands.
+There are other spacing commands, like 
+\family typewriter
+
+\backslash
+hspace
+\family default
+: 
+\begin_inset Formula $"\hspace{4mm}"$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Chapter

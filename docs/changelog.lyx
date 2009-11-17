@@ -230,6 +230,13 @@ Implemented thick space
 \end_inset
 
 .
+ Also implemented 
+\family typewriter
+
+\backslash
+hspace
+\family default
+.
 \end_layout
 
 \begin_layout Itemize

@@ -278,7 +278,7 @@ There are other symbols like arrows:
 \end_layout
 
 \begin_layout Subsection
-Spaces
+Spacing
 \end_layout
 
 \begin_layout Standard
@@ -338,10 +338,6 @@ math-unicode.html
 
 \end_layout
 
-\begin_layout Subsection
-Spacing
-\end_layout
-
 \begin_layout Standard
 The command 
 \family typewriter
@@ -371,7 +367,17 @@ It can also be used just for spacing.
 \end_layout
 
 \begin_layout Standard
-There are other spacing commands.
+There are other spacing commands, like 
+\family typewriter
+
+\backslash
+hspace
+\family default
+: 
+\begin_inset Formula $"\hspace{4mm}"$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection

@@ -509,3 +509,6 @@ div.toc {
 div.fulltoc {
 	padding: 1em;
 }
+span.hspace {
+	display: inline-block;
+}
