@@ -243,6 +243,17 @@ key "key-1,key-2"
 .
 \end_layout
 
+\begin_layout Standard
+As we will see in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "cha:Bulk"
+
+\end_inset
+
+, not everything is clear.
+\end_layout
+
 \begin_layout Section
 
 \family typewriter
@@ -405,6 +416,13 @@ status open
 \begin_layout Plain Layout
 Bulk, or what used to be bulk text
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "cha:Bulk"
 
 \end_inset
 

@@ -58,6 +58,7 @@ class Link(Container):
 
   def setdestination(self, destination):
     "Set another link as the destination of this one."
+    self.destination = destination
     if not destination.anchor:
       Trace.error('Missing anchor in link destination ' + unicode(destination))
       return

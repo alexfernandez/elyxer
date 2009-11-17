@@ -134,7 +134,30 @@ class IntegralListOf(IntegralProcessor):
     link.setdestination(label)
     return link
 
-IntegralProcessor.processors = [IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(), IntegralListOf()]
+class IntegralReference(IntegralProcessor):
+  "A processor for a reference to a label."
+
+  processedtype = Reference
+
+  def processeach(self, reference):
+    "Extract the text of the original label."
+    text = self.extracttext(reference.destination)
+    reference.contents.insert(0, Constant(text))
+
+  def extracttext(self, container):
+    "Extract the final text for the label."
+    while hasattr(container, 'parent'):
+      container = container.parent
+    if not hasattr(container, 'number'):
+      Trace.error('Missing number in label destination ' + unicode(container))
+      return ''
+    Trace.debug('Label destination: ' + unicode(container))
+    return container.number
+
+IntegralProcessor.processors = [
+    IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(), IntegralListOf(),
+    IntegralReference()
+    ]
 
 class MemoryBasket(KeeperBasket):
   "A basket which stores everything in memory, processes it and writes it."
