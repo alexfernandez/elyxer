@@ -233,6 +233,40 @@ Implemented thick space
 \end_layout
 
 \begin_layout Itemize
+Added a few size commands: 
+\family typewriter
+
+\backslash
+big
+\family default
+, 
+\family typewriter
+
+\backslash
+Big
+\family default
+, 
+\family typewriter
+
+\backslash
+bigg
+\family default
+, 
+\family typewriter
+
+\backslash
+Bigg
+\family default
+, 
+\family typewriter
+
+\backslash
+middle
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
 Added a 
 \family typewriter
 parent

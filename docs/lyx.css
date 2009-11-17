@@ -253,6 +253,12 @@ span.symbol {
 span.bigsymbol {
 	font-size: 150%;
 }
+span.largesymbol {
+	font-size: 175%;
+}
+span.hugesymbol {
+	font-size: 200%;
+}
 span.limits {
 	display: inline-table;
 	vertical-align: middle;

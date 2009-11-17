@@ -466,9 +466,12 @@ class FormulaConfig(object):
       }
 
   onefunctions = {
+      u'\\Big':u'span class="bigsymbol"', u'\\Bigg':u'span class="hugesymbol"', 
       u'\\bar':u'span class="bar"', u'\\begin{array}':u'span class="arraydef"', 
+      u'\\big':u'span class="symbol"', u'\\bigg':u'span class="largesymbol"', 
       u'\\bigl':u'span class="bigsymbol"', u'\\bigr':u'span class="bigsymbol"', 
       u'\\hphantom':u'span class="phantom"', u'\\left':u'span class="symbol"', 
+      u'\\middle':u'span class="symbol"', 
       u'\\overline':u'span class="overline"', 
       u'\\phantom':u'span class="phantom"', u'\\right':u'span class="symbol"', 
       u'\\underline':u'u', u'\\vphantom':u'span class="phantom"', 
