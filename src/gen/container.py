@@ -152,6 +152,13 @@ class Container(object):
         key, value = param.split('=', 1)
         self.parameters[key] = value
 
+  def tree(self, level = 0):
+    "Show in a tree"
+    Trace.debug("  " * level + unicode(self))
+    for container in self.contents:
+      if isinstance(self, Container):
+        container.tree(level + 1)
+
   def __unicode__(self):
     "Get a description"
     if not hasattr(self, 'begin'):

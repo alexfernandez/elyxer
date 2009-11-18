@@ -142,6 +142,7 @@ class IntegralReference(IntegralProcessor):
   def processeach(self, reference):
     "Extract the text of the original label."
     text = self.extracttext(reference.destination)
+    Trace.debug('Reference: ' + text)
     if text:
       reference.contents.insert(0, Constant(text))
 
@@ -174,6 +175,7 @@ class MemoryBasket(KeeperBasket):
   def searchintegral(self):
     "Search for all containers for all integral processors."
     for container in self.contents:
+      container.tree()
       if self.integrallocate(container):
         self.integralstore(container)
       else:
