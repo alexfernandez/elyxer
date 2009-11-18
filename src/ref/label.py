@@ -62,12 +62,14 @@ class Reference(Link):
 
   def process(self):
     "Read the reference and set the arrow."
-    direction = u'↑'
     key = self.parameters['reference']
-    if not key in Label.names:
-      direction = u'↓'
+    if key in Label.names:
+      direction = u'↑'
+      label = Label.names[key]
     else:
-      self.setdestination(Label.names[key])
+      direction = u'↓'
+      label = Label().complete(' ', key, 'preref')
+    self.setdestination(label)
     self.contents = [Constant(direction)]
     if not key in Reference.references:
       Reference.references[key] = []
