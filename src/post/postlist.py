@@ -131,7 +131,7 @@ class PostDeeperList(object):
     if not hasattr(self.postprocessor, 'list'):
       self.postprocessor.list = PendingList()
     self.postprocessor.list.adddeeper(deeper)
-    return deeper
+    return BlackBox()
 
 class PostListHook(PostHook):
   "After a list is completed"
