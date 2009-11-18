@@ -784,8 +784,7 @@ Command Line Options
 \end_layout
 
 \begin_layout Standard
-eLyXer supports a few command line optios.
- They are the following:
+eLyXer supports a few command line options:
 \end_layout
 
 \begin_layout Description
@@ -1075,6 +1074,17 @@ reference "sub:TOC"
 \end_inset
 
 : TOC.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--lowmem
+\family default
+: Activate a low memory mode which does not keep the whole document in memory:
+ conversion is done on the fly.
+ Keep in mind that some features as the TOC will be missing from the generated
+ document.
 \end_layout
 
 \begin_layout Standard
@@ -1628,19 +1638,6 @@ The following issues (including bugs and missing features) are acknowledged.
 \end_layout
 
 \begin_layout Enumerate
-Document structure is not preserved for certain document categories: for
- example in articles sections start with a 
-\family typewriter
-<h2>
-\family default
- element (when they should translate to 
-\family typewriter
-<h1>
-\family default
-).
-\end_layout
-
-\begin_layout Enumerate
 On Mac OS X the output of a message with Unicode characters may cause an
  error.
  Workaround: run 
@@ -1707,18 +1704,6 @@ ERT (bare TeX code) is ignored.
 \end_layout
 
 \begin_layout Enumerate
-Images are lost during conversion from within LyX.
- We are working with LyX developers to solve the issue.
-\end_layout
-
-\begin_layout Enumerate
-The table of contents (and lists of objects) are lost in translation.
- Since eLyXer is currently a single-pass converter, it cannot know beforehand
- what the document will contain.
- A second processing pass might be added in the future to address this issue.
-\end_layout
-
-\begin_layout Enumerate
 Many AMS environments (like 
 \family typewriter
 alignat
@@ -1729,10 +1714,6 @@ gather
 \family default
 \SpecialChar \ldots{}
 ) are not working or look strange -- some non-AMS environments too.
-\end_layout
-
-\begin_layout Enumerate
-For subtables the caption should be below the label, not besides the label.
 \end_layout
 
 \begin_layout Subsection

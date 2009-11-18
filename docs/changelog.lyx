@@ -81,47 +81,20 @@ Change the postprocessing of equation labels so that only one anchor is
 \end_layout
 
 \begin_layout Itemize
+New process to do in-memory processing of a document before file output,
+ activated by default.
+ It includes: TOC generation (TOC entries admit typefaces, colors, weights,
+ spaces, short titles), sequential numbering to bibliography entries, lists
+ of floats (figures, tables, algorithms) and use of the embedded title as
+ HTML title.
+\end_layout
+
+\begin_layout Itemize
 New option 
 \family typewriter
---memory
+--lowmem
 \family default
- to do in-memory processing of a document before file output.
-\end_layout
-
-\begin_layout Itemize
-Added TOC generation on 
-\family typewriter
---memory
-\family default
-.
-\end_layout
-
-\begin_layout Itemize
-TOC entries admit typefaces, colors, weights, spaces, short titles.
-\end_layout
-
-\begin_layout Itemize
-Added sequential numbering to bibliography entries on 
-\family typewriter
---memory
-\family default
-.
-\end_layout
-
-\begin_layout Itemize
-Added lists of floats (figures, tables, algorithms) on 
-\family typewriter
---memory
-\family default
-.
-\end_layout
-
-\begin_layout Itemize
-Use the last title as HTML title on 
-\family typewriter
---memory
-\family default
-.
+ to do one-pass filtering only, to preserve memory (keeping the old behavior).
 \end_layout
 
 \begin_layout Itemize

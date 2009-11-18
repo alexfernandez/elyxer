@@ -54,7 +54,7 @@ class Options(object):
   target = None
   splitpart = None
   memory = True
-  filter = False
+  lowmem = False
 
   branches = dict()
 
@@ -89,7 +89,7 @@ class Options(object):
       except:
         Trace.error('--splitpart needs a numeric argument, not ' + Options.splitpart)
         self.usage()
-    if Options.filter or Options.toc:
+    if Options.lowmem or Options.toc:
       Options.memory = False
     # set in Trace if necessary
     for param in dir(Options):
@@ -121,7 +121,7 @@ class Options(object):
     Trace.error('                            converted')
     Trace.error('    --toc:                  create a table of contents')
     Trace.error('    --target "frame":       make all links point to the given frame')
-    Trace.error('    --filter:               do the conversion on the fly (conserve memory)')
+    Trace.error('    --lowmem:               do the conversion on the fly (conserve memory)')
     exit()
 
   def showversion(self):
