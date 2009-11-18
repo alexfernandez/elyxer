@@ -45,9 +45,15 @@ class TOCEntry(Container):
 
   def create(self, container):
     "Create the TOC entry for a container, consisting of a single link."
-    text = TranslationConfig.constants[container.type] + ' ' + container.number + ':'
-    url = Options.toctarget + '#toc-' + container.type + '-' + container.number
-    link = Link().complete(text, url=url)
+    labels = container.searchall(Label)
+    if len(labels) == 0:
+      url = Options.toctarget + '#toc-' + container.type + '-' + container.number
+      link = Link().complete(text, url=url)
+    else:
+      label = labels[0]
+      text = container.entry + ':'
+      link = Link().complete(text)
+      link.setdestination(label)
     self.contents = [link]
     link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)

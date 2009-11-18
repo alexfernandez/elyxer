@@ -66,9 +66,9 @@ class PostLayout(object):
       layout.output.tag = layout.output.tag.replace('?', unicode(layout.level))
     else:
       return layout
-    anchor = 'toc-' + layout.type + '-' + layout.number
-    link = Link().complete(text, anchor=anchor, type='toc')
-    layout.contents.insert(0, link)
+    key = 'toc-' + layout.type + '-' + layout.number
+    label = Label().create(text, key, type='toc')
+    layout.contents.insert(0, label)
     layout.contents.insert(1, Constant(u' '))
     return layout
 
