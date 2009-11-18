@@ -39,20 +39,21 @@ class Label(Link):
   def process(self):
     "Process a label container."
     key = self.parameters['name']
-    self.create(key)
+    self.create(' ', key)
+
+  def create(self, text, key, type = 'label'):
+    "Create the label for a given key."
+    self.key = key
+    self.complete(text, anchor = key, type = type)
+    Label.names[key] = self
     if key in Reference.references:
       for reference in Reference.references[key]:
         reference.setdestination(self)
-
-  def create(self, key):
-    "Create the label for a given key."
-    self.complete(' ', anchor = key)
-    Label.names[key] = self
     return self
 
   def __unicode__(self):
     "Return a printable representation."
-    return 'Label ' + self.parameters['name']
+    return 'Label ' + self.key
 
 class Reference(Link):
   "A reference to a label"
@@ -64,7 +65,7 @@ class Reference(Link):
     direction = u'↑'
     key = self.parameters['reference']
     if not key in Label.names:
-      Label().create(key)
+      Label().create(' ', key)
       direction = u'↓'
     self.setdestination(Label.names[key])
     self.contents = [Constant(direction)]

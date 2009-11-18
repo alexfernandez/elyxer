@@ -45,16 +45,19 @@ class PostFormula(object):
     "Check if it's a numbered equation, insert number."
     if formula.header[0] != 'numbered':
       return
-    number = '(' + NumberGenerator.instance.generatechaptered('formula') + ') '
-    labels = formula.searchremove(LabelFunction)
-    if len(labels) > 1:
+    formula.number = NumberGenerator.instance.generatechaptered('formula')
+    formula.entry = '(' + formula.number + ')'
+    functions = formula.searchremove(LabelFunction)
+    if len(functions) > 1:
       Trace.error('More than one label in ' + unicode(formula))
       return
-    if len(labels) == 0:
-      label = Link()
+    if len(functions) == 0:
+      label = Label()
+      label.create(formula.entry + ' ', 'eq-' + formula.number, type="eqnumber")
     else:
-      label = labels[0].anchor
-    label.complete(number, type="eqnumber")
+      label = functions[0].label
+      label.complete(formula.entry + ' ')
+    label.parent = formula
     formula.contents.insert(0, label)
 
   def postcontents(self, contents):

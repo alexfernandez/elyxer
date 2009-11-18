@@ -49,6 +49,7 @@ class Formula(Container):
     whole.parsebit(pos)
     whole.process()
     self.contents = [whole]
+    whole.parent = self
     if self.header[0] != 'inline':
       self.output.settag('div class="formula"', True)
 
@@ -66,6 +67,7 @@ class FormulaBit(Container):
     "Add any kind of formula bit already processed"
     self.contents.append(bit)
     self.original += bit.original
+    bit.parent = self
 
   def skiporiginal(self, string, pos):
     "Skip a string and add it to the original formula"

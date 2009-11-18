@@ -568,16 +568,14 @@ x=2y\end{equation}
 \end_layout
 
 \begin_layout Standard
-Notice that eq.
- 
+Notice that 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:second"
 
 \end_inset
 
- comes after eq.
- 
+ comes after 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:first"

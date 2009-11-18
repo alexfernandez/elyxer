@@ -180,15 +180,15 @@ class LabelFunction(CommandBit):
 
   def parsebit(self, pos):
     "Parse a literal parameter"
-    self.label = Bracket().parseliteral(pos).literal
+    self.key = Bracket().parseliteral(pos).literal
 
   def process(self):
     "Add an anchor with the label contents."
     self.type = 'font'
-    self.anchor = Link().complete('', anchor = self.label, type = 'eqnumber')
-    self.contents = [self.anchor]
+    self.label = Label().create(' ', self.key, type = 'eqnumber')
+    self.contents = [self.label]
     # store as a Label so we know it's been seen
-    Label.names[self.label] = self.anchor
+    Label.names[self.key] = self.label
 
 class FontFunction(OneParamFunction):
   "A function of one parameter that changes the font"

@@ -123,7 +123,7 @@ class IntegralListOf(IntegralProcessor):
     if len(labels) > 0:
       label = labels[0]
     else:
-      label = Label().create(float.number.replace(' ', '-'))
+      label = Label().create(' ', float.number.replace(' ', '-'))
       float.contents.insert(0, label)
       labels.append(label)
     if len(labels) > 1:
@@ -142,16 +142,18 @@ class IntegralReference(IntegralProcessor):
   def processeach(self, reference):
     "Extract the text of the original label."
     text = self.extracttext(reference.destination)
-    reference.contents.insert(0, Constant(text))
+    if text:
+      reference.contents.insert(0, Constant(text))
 
   def extracttext(self, container):
     "Extract the final text for the label."
-    while hasattr(container, 'parent'):
+    while not hasattr(container, 'entry'):
+      Trace.debug('Searching for entry in ' + unicode(container))
+      if not hasattr(container, 'parent'):
+        Trace.error('Missing entry in label destination ' + unicode(container))
+        return None
       container = container.parent
-    if not hasattr(container, 'entry'):
-      Trace.error('Missing entry in label destination ' + unicode(container))
-      return ''
-    Trace.debug('Label destination: ' + unicode(container))
+    Trace.debug('Label destination: ' + container.entry)
     return container.entry
 
 IntegralProcessor.processors = [
