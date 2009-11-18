@@ -78,7 +78,7 @@ class Float(Container):
     self.contents = [tagged]
 
   def searchinside(self, contents, type):
-    "Search for captions in the contents"
+    "Search for a given type in the contents"
     list = []
     for element in contents:
       list += self.searchinelement(element, type)
@@ -195,7 +195,7 @@ class PostFloat(object):
   def postnumber(self, caption, float):
     "Number the caption"
     self.numberfloat(float)
-    caption.contents.insert(0, Constant(float.number + u' '))
+    caption.contents.insert(0, Constant(float.entry + u' '))
 
   def numberfloat(self, float):
     "Number a float if it isn't numbered"

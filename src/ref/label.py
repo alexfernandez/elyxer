@@ -41,7 +41,7 @@ class Label(Link):
     key = self.parameters['name']
     self.create(' ', key)
 
-  def create(self, text, key, type = 'label'):
+  def create(self, text, key, type = 'Label'):
     "Create the label for a given key."
     self.key = key
     self.complete(text, anchor = key, type = type)
