@@ -65,9 +65,9 @@ class Reference(Link):
     direction = u'↑'
     key = self.parameters['reference']
     if not key in Label.names:
-      Label().create(' ', key)
       direction = u'↓'
-    self.setdestination(Label.names[key])
+    else:
+      self.setdestination(Label.names[key])
     self.contents = [Constant(direction)]
     if not key in Reference.references:
       Reference.references[key] = []
