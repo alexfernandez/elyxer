@@ -211,7 +211,7 @@ class StringContainer(Container):
   
   def __unicode__(self):
     result = 'StringContainer@' + unicode(self.begin)
-    return result + '(' + unicode(len(self.string)) + ')'
+    return result + ' (' + self.string.strip()[:15] + '...)'
 
 class Constant(StringContainer):
   "A constant string"
