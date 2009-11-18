@@ -204,10 +204,11 @@ class PostFloat(object):
     if float.parentfloat:
       self.numberfloat(float.parentfloat)
       index = float.parentfloat.children.index(float)
-      float.number = '(' + NumberGenerator.letters[index + 1].lower() + ')'
+      float.number = NumberGenerator.letters[index + 1].lower()
+      float.entry = '(' + float.number + ')'
     else:
-      prefix = TranslationConfig.floats[float.type]
-      float.number = prefix + NumberGenerator.instance.generatechaptered(float.type)
+      float.number = NumberGenerator.instance.generatechaptered(float.type)
+      float.entry = TranslationConfig.floats[float.type] + float.number
 
 class PostWrap(PostFloat):
   "For a wrap: exactly like a float"
