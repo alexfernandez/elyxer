@@ -45,13 +45,13 @@ class TOCEntry(Container):
 
   def create(self, container):
     "Create the TOC entry for a container, consisting of a single link."
+    text = container.entry + ':'
     labels = container.searchall(Label)
-    if len(labels) == 0:
+    if len(labels) == 0 or Options.toc:
       url = Options.toctarget + '#toc-' + container.type + '-' + container.number
       link = Link().complete(text, url=url)
     else:
       label = labels[0]
-      text = container.entry + ':'
       link = Link().complete(text)
       link.setdestination(label)
     self.contents = [link]

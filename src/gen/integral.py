@@ -123,12 +123,12 @@ class IntegralListOf(IntegralProcessor):
     if len(labels) > 0:
       label = labels[0]
     else:
-      label = Label().create(' ', float.number.replace(' ', '-'))
+      label = Label().create(' ', float.entry.replace(' ', '-'))
       float.contents.insert(0, label)
       labels.append(label)
     if len(labels) > 1:
-      Trace.error('More than one label in ' + float.number)
-    link = Link().complete(float.number + u': ')
+      Trace.error('More than one label in ' + float.entry)
+    link = Link().complete(float.entry + u': ')
     for caption in captions:
       link.contents += caption.contents[1:]
     link.setdestination(label)
