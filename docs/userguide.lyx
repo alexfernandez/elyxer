@@ -149,14 +149,18 @@ eLyXer requires Python 2.3.4, and should work with versions up to 2.6.
 Resource usage should be quite frugal; eLyXer runs quite happily on my 1st-gen
  Asus Eee, with its puny Celeron@570MHz and 512 MB of RAM.
  It should also be fast -- the Eee can convert ~200 pages of LyX text in
- just over 6 seconds.
+ just over 50 seconds.
  Performance is fairly linear: 200 pages take 
 \begin_inset Formula $10\times$
 \end_inset
 
- as long as 20, so there are no artificial bottlenecks.
- Memory usage stays low even when processing large documents, since conversion
- is done on the fly.
+ as long as 20, so there are no scalability problems.
+ Memory usage stays low even when processing large documents, and conversion
+ can be done on the fly (with 
+\family typewriter
+--lowmem
+\family default
+) for even lower memory requirements.
 \end_layout
 
 \begin_layout Subsection
@@ -1281,15 +1285,31 @@ Converted Document
 
 .
  If a PDF title is found then it is used instead.
- eLyXer does not try to use the proper LyX title, since it may be found
- in the middle of the document or not be present at all; scanning for it
- would mean doing two passes, one to look for the title in all the document
- and another to output the web page.
+ The proper LyX title (a paragraph of type 
+\begin_inset Quotes eld
+\end_inset
+
+Title
+\begin_inset Quotes erd
+\end_inset
+
+ embedded in the text) will also be used if found.
+ But when 
+\family typewriter
+--lowmem
+\family default
+ is in use eLyXer does not try to get the proper title, since it may be
+ found in the middle of the document or not be present at all; scanning
+ for it would mean doing two passes, one to look for the title in all the
+ document and another to output the web page, and 
+\family typewriter
+--lowmem
+\family default
+ implies on-the-fly conversion to save memory.
 \end_layout
 
 \begin_layout Standard
-You can change the title of the web page (which is not the title of the
- document) with the 
+You can change the title of the generated web page with the 
 \family typewriter
 --title
 \family default

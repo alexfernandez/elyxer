@@ -2400,6 +2400,7 @@ SplittingBasket
 --toc
 \family default
  option.
+ (Warning: not yet working in version 0.36.)
 \end_layout
 
 \begin_layout Subsection
@@ -2522,12 +2523,26 @@ Page Segmentors
 \begin_layout Standard
 A page segmentor should build a set of pages and cross-reference them, but
  generally avoids the complexities of the internal structure.
- The tool is called 
+ Ideally it uses templates to construct the header and footer.
+ A 
 \family typewriter
-idxer
+--splitpart
 \family default
-.
- It uses templates to construct the header and footer.
+ option to eLyXer achieves this result.
+ As a parameter it accepts the depth at which to split pages:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --splitpart 1
+\end_layout
+
+\begin_layout Standard
+yields one chapter per page (or one section per page for article classes).
 \end_layout
 
 \begin_layout Standard
@@ -2540,8 +2555,7 @@ reference "fig:pipeline"
 \end_inset
 
 .
- This is the high-level design that has to be filled in with the missing
- tool.
+ This is the high-level design, but some details have to be filled in.
 \end_layout
 
 \begin_layout Standard
@@ -2570,7 +2584,7 @@ name "fig:pipeline"
 
 \end_inset
 
-Complete eLyXer pipeline.
+eLyXer pipeline for multiple pages.
 \end_layout
 
 \end_inset

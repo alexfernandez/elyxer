@@ -76,17 +76,12 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-Change the postprocessing of equation labels so that only one anchor is
- used for the whole equation.
-\end_layout
-
-\begin_layout Itemize
 New process to do in-memory processing of a document before file output,
  activated by default.
  It includes: TOC generation (TOC entries admit typefaces, colors, weights,
- spaces, short titles), sequential numbering to bibliography entries, lists
- of floats (figures, tables, algorithms) and use of the embedded title as
- HTML title.
+ spaces, short titles but restrict most other content), sequential numbering
+ to bibliography entries, lists of floats (figures, tables, algorithms),
+ correct labeling of references and use of the embedded title as HTML title.
 \end_layout
 
 \begin_layout Itemize
@@ -110,6 +105,11 @@ target "devguide.html"
 \end_layout
 
 \begin_layout Itemize
+Change the postprocessing of equation labels so that only one anchor is
+ used for the whole equation.
+\end_layout
+
+\begin_layout Itemize
 Added 
 \family typewriter
 
@@ -121,10 +121,7 @@ mathscr
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Itemize
-Added several characters for math script (
+ Added several characters for math script (
 \family typewriter
 
 \backslash
@@ -158,7 +155,7 @@ mathbb
 \end_layout
 
 \begin_layout Itemize
-New command 
+New math commands: 
 \family typewriter
 
 \backslash
@@ -170,11 +167,7 @@ dfrac
 \backslash
 cfrac
 \family default
-.
-\end_layout
-
-\begin_layout Itemize
-New math command 
+; 
 \family typewriter
 
 \backslash
@@ -184,11 +177,7 @@ c
 \begin_inset Formula $\c{G}$
 \end_inset
 
-.
-\end_layout
-
-\begin_layout Itemize
-Implemented thick space 
+; thick space 
 \family typewriter
 
 \backslash
@@ -202,18 +191,13 @@ Implemented thick space
 \begin_inset Formula $"\;"$
 \end_inset
 
-.
- Also implemented 
+; 
 \family typewriter
 
 \backslash
 hspace
 \family default
-.
-\end_layout
-
-\begin_layout Itemize
-Added a few size commands: 
+ for horizontal space; and a few size commands: 
 \family typewriter
 
 \backslash
@@ -259,24 +243,14 @@ Container
 \end_layout
 
 \begin_layout Itemize
-Process width and height in an image if both are present.
-\end_layout
-
-\begin_layout Itemize
-Use % width of image within a float to scale the float.
-\end_layout
-
-\begin_layout Itemize
-Set max scaling of images to 100% with 
+Image conversion and display: process width and height in an image if both
+ are present; use % width of image within a float to scale the float; set
+ max scaling of images to 100% with 
 \family typewriter
 max-width
 \family default
  CSS attribute.
-\end_layout
-
-\begin_layout Itemize
-For TOC generation not the whole entry text is used, just a few types of
- containers are allowed.
+ (Thanks, Olivier and Uwe.)
 \end_layout
 
 \begin_layout Itemize
