@@ -76,8 +76,8 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-New process to do in-memory processing of a document before file output,
- activated by default.
+New in-memory processing of a document before file output, activated by
+ default.
  It includes: TOC generation (TOC entries admit typefaces, colors, weights,
  spaces, short titles but restrict most other content), sequential numbering
  to bibliography entries, lists of floats (figures, tables, algorithms),
