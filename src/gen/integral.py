@@ -147,12 +147,12 @@ class IntegralReference(IntegralProcessor):
 
   def extracttext(self, container):
     "Extract the final text for the label."
-    while not hasattr(container, 'entry'):
+    while not hasattr(container, 'number'):
       if not hasattr(container, 'parent'):
-        Trace.error('Missing entry in label destination ' + unicode(container))
+        # no number; label must be in some unnumbered element
         return None
       container = container.parent
-    return container.entry
+    return container.number
 
 IntegralProcessor.processors = [
     IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(), IntegralListOf(),
