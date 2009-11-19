@@ -367,7 +367,7 @@ It can also be used just for spacing.
 \end_layout
 
 \begin_layout Standard
-There are other spacing commands, like 
+There are other spacing commands: 
 \family typewriter
 
 \backslash
@@ -375,6 +375,16 @@ hspace
 \family default
 : 
 \begin_inset Formula $"\hspace{4mm}"$
+\end_inset
+
+, and 
+\family typewriter
+
+\backslash
+vspace
+\family default
+: 
+\begin_inset Formula $"\vspace{1cm}"$
 \end_inset
 
 .

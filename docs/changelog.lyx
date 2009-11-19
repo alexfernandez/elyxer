@@ -197,7 +197,13 @@ c
 \backslash
 hspace
 \family default
- for horizontal space; and a few size commands: 
+ for horizontal space and 
+\family typewriter
+
+\backslash
+vspace
+\family default
+ for vertical space; and a few size commands: 
 \family typewriter
 
 \backslash

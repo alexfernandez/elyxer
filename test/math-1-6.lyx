@@ -447,6 +447,16 @@ hspace
 \begin_inset Formula $"\hspace{4mm}"$
 \end_inset
 
+, and 
+\family typewriter
+
+\backslash
+vspace
+\family default
+: 
+\begin_inset Formula $"\vspace{1cm}"$
+\end_inset
+
 .
 \end_layout
 

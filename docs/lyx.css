@@ -512,3 +512,6 @@ div.fulltoc {
 span.hspace {
 	display: inline-block;
 }
+span.vspace {
+	display: inline-block;
+}
