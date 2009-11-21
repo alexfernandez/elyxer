@@ -55,6 +55,17 @@ Figures Test
 \end_layout
 
 \begin_layout Standard
+First, figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:A-random-image"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -75,6 +86,12 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:A-random-image"
+
+\end_inset
+
 A random image
 \end_layout
 
@@ -90,6 +107,119 @@ A random image
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Next, figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Two-random-images."
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename lyx credits.png
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Random image A
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename lyx credits.png
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Random image B
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Two-random-images."
+
+\end_inset
+
+Two random images
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And last, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Three-random-images"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -198,7 +328,13 @@ Random image C
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Three random images.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Three-random-images"
+
+\end_inset
+
+Three random images
 \end_layout
 
 \end_inset
@@ -209,6 +345,10 @@ Three random images.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+That's all, folks.
 \end_layout
 
 \end_body

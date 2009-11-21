@@ -71,6 +71,17 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+0.37 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Further improvements in float manipulation: figures enclosing other figures
+ have their own tweaked CSS class (thanks, Olivier).
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.36 (2009-11-19):
 \end_layout
 

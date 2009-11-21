@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="generator" content="http://www.nongnu.org/elyxer/"/>
-<meta name="create-date" content="2009-11-16"/>
+<meta name="create-date" content="2009-11-21"/>
 <link rel="stylesheet" href="../docs/lyx.css" type="text/css" media="screen"/>
 <title>Figures Test</title>
 </head>
@@ -19,18 +19,24 @@ Figures Test
 List of Figures
 </div>
 <div class="toc">
-<a class="Link" href="#Figure-1">Figure 1: A random image</a>
+<a class="Link" href="#fig:A-random-image">Figure 1: A random image</a>
 </div>
 <div class="toc">
-<a class="Link" href="#Figure-2">Figure 2: Three random images.</a>
+<a class="Link" href="#fig:Two-random-images.">Figure 2: Two random images</a>
+</div>
+<div class="toc">
+<a class="Link" href="#fig:Three-random-images">Figure 3: Three random images</a>
 </div>
 
 </div>
 
 </div>
 <div class="Standard">
+First, figure <a class="Reference" href="#fig:A-random-image">1↓</a>.
+</div>
+<div class="Standard">
 <div class="float">
-<a class="Label" name="Figure-1"> </a><div class="figure" style="width: 50%;">
+<a class="Label" name="fig:A-random-image"> </a><div class="figure" style="max-width: 50%;">
 <div class="center">
 <img class="figure" src="random.png" alt="figure random.png"/>
 
@@ -45,10 +51,54 @@ Figure 1 A random image
 
 </div>
 <div class="Standard">
+Next, figure <a class="Reference" href="#fig:Two-random-images.">2↓</a>.
+</div>
+<div class="Standard">
 <div class="float">
-<a class="Label" name="Figure-2"> </a><div class="figure">
+<a class="Label" name="fig:Two-random-images."> </a><div class="multifigure">
 <span class="float">
-<div class="figure" style="width: 30%;">
+<div class="figure" style="max-width: 50%;">
+<div class="center">
+<img class="figure" src="lyx credits.png" alt="figure lyx credits.png"/>
+
+</div>
+<div class="caption">
+(a) Random image A
+</div>
+
+</div>
+
+</span>
+<span class="float">
+<div class="figure" style="max-width: 50%;">
+<div class="center">
+<img class="figure" src="lyx credits.png" alt="figure lyx credits.png"/>
+
+</div>
+<div class="caption">
+(b) Random image B
+</div>
+
+</div>
+
+</span>
+<div class="caption">
+Figure 2 Two random images
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Standard">
+And last, <a class="Reference" href="#fig:Three-random-images">3↓</a>.
+</div>
+<div class="Standard">
+<div class="float">
+<a class="Label" name="fig:Three-random-images"> </a><div class="multifigure">
+<span class="float">
+<div class="figure" style="max-width: 30%;">
 <div class="center">
 <img class="figure" src="random.png" alt="figure random.png"/>
 
@@ -61,7 +111,7 @@ Figure 1 A random image
 
 </span>
 <span class="float">
-<div class="figure" style="width: 30%;">
+<div class="figure" style="max-width: 30%;">
 <div class="center">
 <img class="figure" src="random.png" alt="figure random.png"/>
 
@@ -74,7 +124,7 @@ Figure 1 A random image
 
 </span>
 <span class="float">
-<div class="figure" style="width: 30%;">
+<div class="figure" style="max-width: 30%;">
 <div class="center">
 <img class="figure" src="random.png" alt="figure random.png"/>
 
@@ -87,13 +137,16 @@ Figure 1 A random image
 
 </span>
 <div class="caption">
-Figure 2 Three random images.
+Figure 3 Three random images
 </div>
 
 </div>
 
 </div>
 
+</div>
+<div class="Standard">
+That’s all, folks.
 </div>
 </div>
 </body>

@@ -59,6 +59,7 @@ class Float(Container):
       float.parentfloat = self
       self.children.append(float)
     if len(floats) > 0:
+      self.embeddedtag = 'div class="multi' + self.type + '"'
       return
     images = self.searchall(Image)
     if len(images) != 1:
@@ -69,7 +70,7 @@ class Float(Container):
     if not '%' in image.width:
       return
     image.type = 'figure'
-    self.embeddedtag += ' style="width: ' + image.width + ';"'
+    self.embeddedtag += ' style="max-width: ' + image.width + ';"'
     image.width = None
 
   def embed(self, tag):
