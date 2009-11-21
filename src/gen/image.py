@@ -133,8 +133,8 @@ class ImageConverter(object):
       scale = int(image.parameters['scale'])
     if image.origin.hasext('.svg'):
       params['density'] = scale
-    elif image.origin.hasext('.jpg') or image.origin.hasext('.png'):
-      params['resize'] = unicode(scale) + '%'
+    #elif image.origin.hasext('.jpg') or image.origin.hasext('.png'):
+    #  params['resize'] = unicode(scale) + '%'
     elif image.origin.hasext('.pdf'):
       params['define'] = 'pdf:use-cropbox=true'
     return params
