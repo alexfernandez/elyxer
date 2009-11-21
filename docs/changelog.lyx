@@ -89,6 +89,14 @@ TOC generation for unordered entries (like Section*).
  Also solved bug in tagging of unordered parts.
 \end_layout
 
+\begin_layout Itemize
+New option 
+\family typewriter
+--splitpart
+\family default
+ to split the output in multiple pages, one page per part.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.36 (2009-11-19):
