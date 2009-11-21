@@ -152,22 +152,16 @@ class IntegralReference(IntegralProcessor):
       container = container.parent
     return container.number
 
-class IntegralFactory(object):
-  "A factory for integral processors."
-
-  def __init__(self):
-    "Create all processors in one go."
-    self.processors = [
-        IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(),
-        IntegralListOf(), IntegralReference()
-        ]
-
 class MemoryBasket(KeeperBasket):
   "A basket which stores everything in memory, processes it and writes it."
 
   def __init__(self):
+    "Create all processors in one go."
     KeeperBasket.__init__(self)
-    self.processors = IntegralFactory().processors
+    self.processors = [
+        IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(),
+        IntegralListOf(), IntegralReference()
+        ]
 
   def finish(self):
     "Process everything which cannot be done in one pass and write to disk."
@@ -195,13 +189,11 @@ class MemoryBasket(KeeperBasket):
     return False
 
   def integralstore(self, contents, index):
-    "Store a container."
+    "Store a container in one or more processors."
     container = contents[index]
     for processor in self.processors:
       if processor.locate(container):
         processor.store(container)
-        return
-    Trace.error('No processor wanted to store ' + unicode(container))
 
 class SplittingBasket(Basket):
   "A basket used to split the output in different files."
