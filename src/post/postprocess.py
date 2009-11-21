@@ -54,6 +54,7 @@ class PostLayout(object):
     "Generate a number and place it before the text"
     if self.containsappendix(layout):
       self.activateappendix()
+    layout.unordered = False
     if NumberGenerator.instance.isunique(layout):
       layout.number = NumberGenerator.instance.generateunique(layout.type)
       layout.entry = TranslationConfig.constants[layout.type] + ' ' + layout.number
@@ -62,15 +63,27 @@ class PostLayout(object):
       layout.number = NumberGenerator.instance.generateordered(layout.type)
       text = layout.number
       layout.entry = TranslationConfig.constants[layout.type] + ' ' + layout.number
-      layout.level = NumberGenerator.instance.getlevel(layout.type)
-      layout.output.tag = layout.output.tag.replace('?', unicode(layout.level))
+      self.modifylayout(layout, layout.type)
+    elif NumberGenerator.instance.isunordered(layout):
+      layout.unordered = True
+      layout.number = NumberGenerator.instance.generateunique('unordered')
+      text = ''
+      type = NumberGenerator.instance.deasterisk(layout.type)
+      layout.entry = TranslationConfig.constants[type]
+      self.modifylayout(layout, type)
     else:
       return layout
     key = 'toc-' + layout.type + '-' + layout.number
     label = Label().create(text, key, type='toc')
     layout.contents.insert(0, label)
-    layout.contents.insert(1, Constant(u' '))
+    if not layout.unordered:
+      layout.contents.insert(1, Constant(u' '))
     return layout
+
+  def modifylayout(self, layout, type):
+    "Modify a layout according to the given type."
+    layout.level = NumberGenerator.instance.getlevel(type)
+    layout.output.tag = layout.output.tag.replace('?', unicode(layout.level))
 
   def containsappendix(self, layout):
     "Find out if there is an appendix somewhere in the layout"

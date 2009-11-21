@@ -80,7 +80,7 @@ class NumberGenerator(object):
 
   def getlevel(self, type):
     "Get the level that corresponds to a type."
-    level = NumberGenerator.ordered.index(type) + 1
+    level = NumberGenerator.ordered.index(self.deasterisk(type)) + 1
     return level - NumberGenerator.startinglevel
 
   def isunique(self, container):
@@ -90,6 +90,12 @@ class NumberGenerator(object):
   def isordered(self, container):
     "Find out if a container requires ordered numbering."
     return container.type in NumberGenerator.ordered
+
+  def isunordered(self, container):
+    "Find out if a container does not have a number."
+    if not '*' in container.type:
+      return False
+    return self.deasterisk(container.type) in NumberGenerator.ordered
 
   def increase(self, number):
     "Increase the number (or letter)"
@@ -110,6 +116,10 @@ class NumberGenerator(object):
     for piece in number:
       dotsep += '.' + unicode(piece)
     return dotsep[1:]
+
+  def deasterisk(self, type):
+    "Get the type without the asterisk for unordered types."
+    return type.replace('*', '')
 
 NumberGenerator.instance = NumberGenerator()
 

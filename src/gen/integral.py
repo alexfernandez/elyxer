@@ -203,3 +203,75 @@ class MemoryBasket(KeeperBasket):
         return
     Trace.error('No processor wanted to store ' + unicode(container))
 
+class SplittingBasket(Basket):
+  "A basket used to split the output in different files."
+
+  baskets = []
+
+  def setwriter(self, writer):
+    if not hasattr(writer, 'filename') or not writer.filename:
+      Trace.error('Cannot use standard output for split output; ' +
+          'please supply an output filename.')
+      exit()
+    self.addbasket(writer)
+    self.base, self.extension = os.path.splitext(writer.filename)
+    self.tocwriter = TOCBasket()
+    return self
+
+  def addbasket(self, writer):
+    "Add a new basket."
+    self.basket = KeeperBasket()
+    self.basket.setwriter(writer)
+    self.baskets.append(self.basket)
+
+  def write(self, container):
+    "Write a container, possibly splitting the file."
+    if self.mustsplit(container):
+      self.basket.write(LyxFooter())
+      self.basket.finish()
+      self.addbasket(LineWriter(self.getfilename(container)))
+      self.basket.write(LyxHeader())
+    self.basket.write(container)
+
+  def finish(self):
+    "Mark as finished."
+    self.basket.finish()
+
+  def mustsplit(self, container):
+    "Find out if the oputput file has to be split at this entry."
+    if self.splitalone(container):
+      return True
+    if not hasattr(container, 'number'):
+      return False
+    Trace.debug('Converting: ' + unicode(container))
+    entry = self.tocwriter.convert(container)
+    if not entry:
+      return False
+    if hasattr(entry, 'split'):
+      return True
+    return entry.depth <= Options.splitpart
+
+  def splitalone(self, container):
+    "Find out if the container must be split in its own page."
+    found = []
+    container.locateprocess(
+        lambda container: container.__class__ in [PrintNomenclature, PrintIndex],
+        lambda contents, index: found.append(contents[index].__class__.__name__))
+    if not found:
+      return False
+    container.depth = 0
+    container.split = found[0].lower().replace('print', '')
+    return True
+
+  def getfilename(self, container):
+    "Get the new file name for a given container."
+    if hasattr(container, 'split'):
+      partname = '-' + container.split
+    else:
+      entry = self.tocwriter.convert(container)
+      if entry.depth == Options.splitpart:
+        partname = '-' + container.number
+      else:
+        partname = '-' + container.type + '-' + container.number
+    return self.base + partname + self.extension
+

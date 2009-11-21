@@ -55,6 +55,8 @@ class TOCEntry(Container):
       link = Link().complete(text)
       link.setdestination(label)
     self.contents = [link]
+    if container.unordered:
+      link.contents.append(Constant(u' '))
     link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)
     if hasattr(container, 'level'):
