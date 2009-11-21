@@ -165,12 +165,16 @@ class MemoryBasket(KeeperBasket):
 
   def finish(self):
     "Process everything which cannot be done in one pass and write to disk."
+    self.process()
+    self.flush()
+
+  def process(self):
+    "Process everything with the integral processors."
     for processor in self.processors:
       processor.contents = self.contents
     self.searchintegral()
     for processor in self.processors:
       processor.process()
-    self.flush()
 
   def searchintegral(self):
     "Search for all containers for all integral processors."
@@ -194,6 +198,15 @@ class MemoryBasket(KeeperBasket):
     for processor in self.processors:
       if processor.locate(container):
         processor.store(container)
+
+class IntegralLink(IntegralProcessor):
+  "Integral link processing for multi-page output."
+
+  processedtype = Link
+
+  def processeach(self, link):
+    "Process each link and add the current page."
+    link.page = self.page
 
 class SplittingBasket(Basket):
   "A basket used to split the output in different files."
