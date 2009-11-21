@@ -33,6 +33,7 @@ class LyxHeader(Container):
   "Reads the header, outputs the HTML header"
 
   def __init__(self):
+    self.contents = []
     self.parser = HeaderParser()
     self.output = HeaderOutput()
 
@@ -51,6 +52,7 @@ class LyxFooter(Container):
   "Reads the footer, outputs the HTML footer"
 
   def __init__(self):
+    self.contents = []
     self.parser = BoundedDummy()
     self.output = FooterOutput()
 

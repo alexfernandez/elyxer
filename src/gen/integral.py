@@ -225,22 +225,29 @@ class SplittingBasket(Basket):
 
   def addbasket(self, writer):
     "Add a new basket."
-    self.basket = KeeperBasket()
+    self.basket = MemoryBasket()
     self.basket.setwriter(writer)
     self.baskets.append(self.basket)
+    # set the page name everywhere
+    self.basket.page = writer.filename
+    integrallink = IntegralLink()
+    integrallink.page = self.basket.page
+    self.basket.processors.append(integrallink)
 
   def write(self, container):
     "Write a container, possibly splitting the file."
     if self.mustsplit(container):
       self.basket.write(LyxFooter())
-      self.basket.finish()
+      self.basket.process()
       self.addbasket(LineWriter(self.getfilename(container)))
       self.basket.write(LyxHeader())
     self.basket.write(container)
 
   def finish(self):
-    "Mark as finished."
-    self.basket.finish()
+    "Process the last basket, flush all of them."
+    self.basket.process()
+    for basket in self.baskets:
+      basket.flush()
 
   def mustsplit(self, container):
     "Find out if the oputput file has to be split at this entry."
