@@ -32,8 +32,6 @@ from gen.basket import *
 class IntegralProcessor(object):
   "A processor for an integral document."
 
-  processors = []
-
   def __init__(self):
     "Create the processor for the integral contents."
     self.storage = []
@@ -154,20 +152,29 @@ class IntegralReference(IntegralProcessor):
       container = container.parent
     return container.number
 
-IntegralProcessor.processors = [
-    IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(), IntegralListOf(),
-    IntegralReference()
-    ]
+class IntegralFactory(object):
+  "A factory for integral processors."
+
+  def __init__(self):
+    "Create all processors in one go."
+    self.processors = [
+        IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(),
+        IntegralListOf(), IntegralReference()
+        ]
 
 class MemoryBasket(KeeperBasket):
   "A basket which stores everything in memory, processes it and writes it."
 
+  def __init__(self):
+    KeeperBasket.__init__(self)
+    self.processors = IntegralFactory().processors
+
   def finish(self):
     "Process everything which cannot be done in one pass and write to disk."
-    for processor in IntegralProcessor.processors:
+    for processor in self.processors:
       processor.contents = self.contents
     self.searchintegral()
-    for processor in IntegralProcessor.processors:
+    for processor in self.processors:
       processor.process()
     self.flush()
 
@@ -182,7 +189,7 @@ class MemoryBasket(KeeperBasket):
 
   def integrallocate(self, container):
     "Locate all integrals."
-    for processor in IntegralProcessor.processors:
+    for processor in self.processors:
       if processor.locate(container):
         return True
     return False
@@ -190,7 +197,7 @@ class MemoryBasket(KeeperBasket):
   def integralstore(self, contents, index):
     "Store a container."
     container = contents[index]
-    for processor in IntegralProcessor.processors:
+    for processor in self.processors:
       if processor.locate(container):
         processor.store(container)
         return
