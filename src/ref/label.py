@@ -48,7 +48,7 @@ class Label(Link):
     Label.names[key] = self
     if key in Reference.references:
       for reference in Reference.references[key]:
-        reference.setdestination(self)
+        reference.destination = self
     return self
 
   def __unicode__(self):
@@ -69,7 +69,7 @@ class Reference(Link):
     else:
       direction = u'↓'
       label = Label().complete(' ', self.key, 'preref')
-    self.setdestination(label)
+    self.destination = label
     self.contents = [Constant(direction)]
     if not self.key in Reference.references:
       Reference.references[self.key] = []

@@ -76,7 +76,7 @@ class IntegralBiblioEntry(IntegralProcessor):
     if entry.key in BiblioCite.cites:
       for cite in BiblioCite.cites[entry.key]:
         cite.complete(number, anchor = 'cite-' + number)
-        cite.setdestination(link)
+        cite.destination = link
 
 class IntegralFloat(IntegralProcessor):
   "Store all floats in the document by type."
@@ -129,7 +129,7 @@ class IntegralListOf(IntegralProcessor):
     link = Link().complete(float.entry + u': ')
     for caption in captions:
       link.contents += caption.contents[1:]
-    link.setdestination(label)
+    link.destination = label
     return link
 
 class IntegralReference(IntegralProcessor):

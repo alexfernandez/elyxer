@@ -42,6 +42,7 @@ class Link(Container):
     self.type = None
     self.page = None
     self.target = None
+    self.destination = None
     if Options.target:
       self.target = Options.target
 
@@ -56,20 +57,21 @@ class Link(Container):
       self.type = type
     return self
 
-  def setdestination(self, destination):
-    "Set another link as the destination of this one."
-    self.destination = destination
-    if not destination.anchor:
-      Trace.error('Missing anchor in link destination ' + unicode(destination))
+  def computedestination(self):
+    "Use the destination link to fill in the destination URL."
+    if not self.destination:
       return
-    self.url = '#' + destination.anchor
-    if destination.page:
-      self.url = destination.page + self.url
+    if not self.destination.anchor:
+      Trace.error('Missing anchor in link destination ' + unicode(self.destination))
+      return
+    self.url = '#' + self.destination.anchor
+    if self.destination.page:
+      self.url = self.destination.page + self.url
 
   def setmutualdestination(self, destination):
     "Set another link as destination, and set its destination to this one."
-    self.setdestination(destination)
-    destination.setdestination(self)
+    self.destination = destination
+    destination.destination = self
 
 class ListInset(Container):
   "An inset with a list, normally made of links."
@@ -129,9 +131,9 @@ class IndexEntry(Link):
       IndexEntry.arrows[key] = []
     self.index = len(IndexEntry.arrows[key])
     self.complete(u'↓', 'entry-' + key + '-' + unicode(self.index))
-    self.setdestination(IndexEntry.entries[key])
+    self.destination = IndexEntry.entries[key]
     arrow = Link().complete(u'↑', 'index-' + key)
-    arrow.setdestination(self)
+    arrow.destination = self
     IndexEntry.arrows[key].append(arrow)
 
 class PrintIndex(ListInset):
@@ -214,18 +216,20 @@ class LinkOutput(object):
   "A link pointing to some destination"
   "Or an anchor (destination)"
 
-  def gethtml(self, container):
+  def gethtml(self, link):
     "Get the HTML code for the link"
-    type = container.__class__.__name__
-    if container.type:
-      type = container.type
+    type = link.__class__.__name__
+    if link.type:
+      type = link.type
     tag = 'a class="' + type + '"'
-    if container.anchor:
-      tag += ' name="' + container.anchor + '"'
-    if container.url:
-      tag += ' href="' + container.url + '"'
-    if container.target:
-      tag += ' target="' + container.target + '"'
-    text = TaggedText().complete(container.contents, tag)
+    if link.anchor:
+      tag += ' name="' + link.anchor + '"'
+    if link.destination:
+      link.computedestination()
+    if link.url:
+      tag += ' href="' + link.url + '"'
+    if link.target:
+      tag += ' target="' + link.target + '"'
+    text = TaggedText().complete(link.contents, tag)
     return text.gethtml()
 

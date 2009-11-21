@@ -53,7 +53,7 @@ class TOCEntry(Container):
     else:
       label = labels[0]
       link = Link().complete(text)
-      link.setdestination(label)
+      link.destination = label
     self.contents = [link]
     if container.unordered:
       link.contents.append(Constant(u' '))
