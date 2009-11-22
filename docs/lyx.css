@@ -131,12 +131,11 @@ div.multialgorithm {
 	border: thin solid #c0c0c0;
 }
 table {
+	display: inline-table;
 	text-align: center;
 	border-collapse: collapse;
 	margin-top: 1em;
 	margin-bottom: 1em;
-	margin-left: auto;
-	margin-right: auto;
 }
 tr.header {
 	border-bottom: thin solid #c0c0c0;
@@ -539,4 +538,11 @@ span.hspace {
 }
 span.vspace {
 	display: inline-block;
+}
+span.hfill {
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 20mm;
+	background: #fff0f0;
 }

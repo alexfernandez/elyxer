@@ -93,12 +93,20 @@ PNG and JPEG images are not rescaled anymore.
 \end_layout
 
 \begin_layout Itemize
-TOC generation for unordered entries (like Section*).
+TOC generation for unordered entries (like 
+\family typewriter
+Section*
+\family default
+).
  Also solved bug in tagging of unordered parts.
 \end_layout
 
 \begin_layout Itemize
 Implemented indented paragraphs when specified in the document.
+\end_layout
+
+\begin_layout Itemize
+Horizontal fill is now shown as a fixed-width space.
 \end_layout
 
 \end_deeper

@@ -556,10 +556,10 @@ class StyleConfig(object):
       }
 
   spaces = {
-      u'\\enskip{}':u' ', u'\\hfill{}':u' ', u'\\hspace*{\\fill}':u' ', 
-      u'\\hspace*{}':u'', u'\\hspace{}':u' ', u'\\negthinspace{}':u'', 
-      u'\\qquad{}':u'  ', u'\\quad{}':u' ', u'\\space{}':u'&nbsp;', 
-      u'\\thinspace{}':u' ', u'~':u'&nbsp;', 
+      u'\\enskip{}':u' ', u'\\hfill{}':u'<span class="hfill"> </span>', 
+      u'\\hspace*{\\fill}':u' ', u'\\hspace*{}':u'', u'\\hspace{}':u' ', 
+      u'\\negthinspace{}':u'', u'\\qquad{}':u'  ', u'\\quad{}':u' ', 
+      u'\\space{}':u'&nbsp;', u'\\thinspace{}':u' ', u'~':u'&nbsp;', 
       }
 
 class TagConfig(object):

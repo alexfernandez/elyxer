@@ -113,7 +113,8 @@ class Hfill(TaggedText):
   "Horizontall fill"
 
   def process(self):
-    self.output.tag = 'span class="right"'
+    Trace.debug('hfill')
+    self.output.tag = 'span class="hfill"'
 
 class BarredText(TaggedText):
   "Text with a bar somewhere"
