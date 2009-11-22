@@ -231,15 +231,17 @@ class SplittingBasket(Basket):
     # set the page name everywhere
     self.basket.page = writer.filename
     integrallink = IntegralLink()
-    integrallink.page = self.basket.page
+    integrallink.page = os.path.basename(self.basket.page)
     self.basket.processors.append(integrallink)
 
   def write(self, container):
     "Write a container, possibly splitting the file."
     if self.mustsplit(container):
+      filename = self.getfilename(container)
+      Trace.debug('New page ' + filename)
       self.basket.write(LyxFooter())
       self.basket.process()
-      self.addbasket(LineWriter(self.getfilename(container)))
+      self.addbasket(LineWriter(filename))
       self.basket.write(LyxHeader())
     self.basket.write(container)
 
@@ -255,7 +257,6 @@ class SplittingBasket(Basket):
       return True
     if not hasattr(container, 'number'):
       return False
-    Trace.debug('Converting: ' + unicode(container))
     entry = self.tocwriter.convert(container)
     if not entry:
       return False
