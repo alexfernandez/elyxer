@@ -51,9 +51,10 @@ cd ..
 DATE=$(date "+%Y-%m-%d")
 tar --exclude "elyxer/dist" --exclude "elyxer/.git" \
   --exclude "elyxer/samples" --exclude "src/*.pyc" \
-  --exclude "docs/cvs" -czf elyxer-$DATE.tar.gz elyxer
+  --exclude "docs/cvs" --exclude "build" \
+  -czf elyxer-$DATE.tar.gz elyxer
 mv elyxer-$DATE.tar.gz elyxer/dist
-zip -q elyxer-$DATE.zip elyxer/* -x *dist*
+zip -q elyxer-$DATE.zip elyxer/* -x *dist* -x *build*
 zip -qr elyxer-$DATE.zip elyxer/src/*.py
 zip -q elyxer-$DATE.zip elyxer/docs/*
 zip -qr elyxer-$DATE.zip elyxer/test
