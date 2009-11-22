@@ -134,15 +134,16 @@ class Postprocessor(object):
     "Postprocess the container contents recursively"
     if not hasattr(container, 'contents'):
       return
-    contents = container.contents
-    if len(contents) == 0:
+    if len(container.contents) == 0:
       return
     postprocessor = Postprocessor()
-    for index, element in enumerate(contents):
-      contents[index] = postprocessor.postprocess(element)
+    contents = []
+    for element in container.contents:
+      contents.append(postprocessor.postprocess(element))
     postlast = postprocessor.postprocess(None)
     if postlast:
       contents.append(postlast)
+    container.contents = contents
 
   def postcurrent(self, element):
     "Postprocess the current element taking into account the last one"
