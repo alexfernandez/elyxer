@@ -97,7 +97,7 @@ TOC generation for unordered entries (like
 \family typewriter
 Section*
 \family default
-).
+) and entries inserted in other layouts.
  Also solved bug in tagging of unordered parts.
 \end_layout
 

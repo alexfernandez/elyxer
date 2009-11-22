@@ -98,7 +98,7 @@ class TOCBasket(Basket):
     "Convert a container to a TOC container."
     if container.__class__ in [LyxHeader, LyxFooter]:
       return TOCEntry().header(container)
-    if not hasattr(container, 'number'):
+    if not hasattr(container, 'entry'):
       return None
     return TOCEntry().create(container)
 

@@ -49,6 +49,18 @@ class IntegralProcessor(object):
     for container in self.storage:
       self.processeach(container)
 
+class IntegralLayout(IntegralProcessor):
+  "A processor for layouts that will appear in the TOC."
+
+  processedtype = Layout
+  tocentries = []
+
+  def processeach(self, layout):
+    "Keep only layouts that have an entry."
+    if not hasattr(layout, 'entry'):
+      return
+    IntegralLayout.tocentries.append(layout)
+
 class IntegralTOC(IntegralProcessor):
   "A processor for an integral TOC."
 
@@ -58,10 +70,15 @@ class IntegralTOC(IntegralProcessor):
     "Fill in a Table of Contents."
     toc.output = TaggedOutput().settag('div class="fulltoc"', True)
     basket = TOCBasket()
-    for container in self.contents:
-      entries = basket.translate(container)
-      for entry in entries:
-        toc.contents.append(entry)
+    for container in IntegralLayout.tocentries:
+      self.writetotoc(basket.translate(container), toc)
+    # finish off with the footer to align indents
+    self.writetotoc(basket.translate(LyxFooter()), toc)
+
+  def writetotoc(self, entries, toc):
+    "Write some entries to the TOC."
+    for entry in entries:
+      toc.contents.append(entry)
 
 class IntegralBiblioEntry(IntegralProcessor):
   "A processor for an integral bibliography entry."
@@ -159,8 +176,8 @@ class MemoryBasket(KeeperBasket):
     "Create all processors in one go."
     KeeperBasket.__init__(self)
     self.processors = [
-        IntegralTOC(), IntegralBiblioEntry(), IntegralFloat(),
-        IntegralListOf(), IntegralReference()
+        IntegralLayout(), IntegralTOC(), IntegralBiblioEntry(),
+        IntegralFloat(), IntegralListOf(), IntegralReference()
         ]
 
   def finish(self):
@@ -170,20 +187,17 @@ class MemoryBasket(KeeperBasket):
 
   def process(self):
     "Process everything with the integral processors."
-    for processor in self.processors:
-      processor.contents = self.contents
     self.searchintegral()
     for processor in self.processors:
       processor.process()
 
   def searchintegral(self):
     "Search for all containers for all integral processors."
-    for container in self.contents:
+    for index, container in enumerate(self.contents):
       # container.tree()
       if self.integrallocate(container):
-        self.integralstore(container)
-      else:
-        container.locateprocess(self.integrallocate, self.integralstore)
+        self.integralstore(self.contents, index)
+      container.locateprocess(self.integrallocate, self.integralstore)
 
   def integrallocate(self, container):
     "Locate all integrals."
