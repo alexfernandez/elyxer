@@ -108,6 +108,31 @@ Appendix Test
 by The Great Deceiver
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList table
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Part
 Of How Our Hero Came and Went
 \end_layout
@@ -1124,24 +1149,6 @@ Fargo
 
  by the Coen Brothers if you don't believe me.
  And remember: a hero under the belt is a feather on the hat.
-\end_layout
-
-\begin_layout Chapter
-Brought to You By
-\end_layout
-
-\begin_layout Standard
-eLyXer, no less.
- (Cheap excuse to insert a JPEG image.)
-\end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename mini-elyxer.jpg
-
-\end_inset
-
-
 \end_layout
 
 \end_body
