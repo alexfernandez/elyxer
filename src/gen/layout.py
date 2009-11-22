@@ -52,6 +52,8 @@ class Layout(Container):
 class StandardLayout(Layout):
   "A standard layout -- can be a true div or nothing at all"
 
+  indentation = False
+
   def process(self):
     self.type = 'standard'
     self.output = ContentsOutput()

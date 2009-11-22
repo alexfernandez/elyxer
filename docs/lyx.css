@@ -51,6 +51,13 @@ sub {
 div.Standard {
 	margin: 1em 0;
 }
+div.Unindented {
+	margin: 0;
+}
+div.Indented {
+	text-indent: 30pt;
+	margin: 0;
+}
 p.dir {
 	float: right;
 }

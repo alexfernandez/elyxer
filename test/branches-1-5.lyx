@@ -33,7 +33,7 @@
 \end_branch
 \secnumdepth 3
 \tocdepth 3
-\paragraph_separation indent
+\paragraph_separation skip
 \defskip medskip
 \quotes_language english
 \papercolumns 1
@@ -57,7 +57,7 @@ First some stupid text.
 
 \begin_layout Standard
 \begin_inset Branch First
-status open
+status collapsed
 
 \begin_layout Standard
 In this first branch, without color, we carn write whatever we want: it

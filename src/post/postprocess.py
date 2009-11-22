@@ -103,7 +103,13 @@ class PostStandard(object):
 
   def postprocess(self, standard, last):
     "Switch to div"
-    standard.output = TaggedOutput().settag('div class="Standard"', True)
+    type = 'Standard'
+    if LyxHeader.indentstandard:
+      if isinstance(last, StandardLayout):
+        type = 'Indented'
+      else:
+        type = 'Unindented'
+    standard.output = TaggedOutput().settag('div class="' + type + '"', True)
     return standard
 
 class Postprocessor(object):

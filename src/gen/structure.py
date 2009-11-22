@@ -32,6 +32,8 @@ from gen.container import *
 class LyxHeader(Container):
   "Reads the header, outputs the HTML header"
 
+  indentstandard = False
+
   def __init__(self):
     self.contents = []
     self.parser = HeaderParser()
@@ -47,6 +49,10 @@ class LyxHeader(Container):
       documentclass = self.parameters[key]
       if documentclass in HeaderConfig.styles['article']:
         NumberGenerator.startinglevel = 1
+    key = HeaderConfig.parameters['paragraphseparation']
+    if key in self.parameters:
+      if self.parameters[key] == 'indent':
+        LyxHeader.indentstandard = True
 
 class LyxFooter(Container):
   "Reads the footer, outputs the HTML footer"

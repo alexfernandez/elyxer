@@ -76,6 +76,14 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
+New option 
+\family typewriter
+--splitpart
+\family default
+ to split the output in multiple pages, one page per part.
+\end_layout
+
+\begin_layout Itemize
 Further improvements in float manipulation: figures enclosing other figures
  have their own tweaked CSS class (thanks, Olivier).
 \end_layout
@@ -90,11 +98,7 @@ TOC generation for unordered entries (like Section*).
 \end_layout
 
 \begin_layout Itemize
-New option 
-\family typewriter
---splitpart
-\family default
- to split the output in multiple pages, one page per part.
+Implemented indented paragraphs when specified in the document.
 \end_layout
 
 \end_deeper
