@@ -56,6 +56,7 @@ tar --exclude "elyxer/dist" --exclude "elyxer/.git" \
 mv elyxer-$DATE.tar.gz elyxer/dist
 zip -q elyxer-$DATE.zip elyxer/* -x *dist* -x *build*
 zip -qr elyxer-$DATE.zip elyxer/src/*.py
+zip -qr elyxer-$DATE.zip elyxer/src/**/*.py
 zip -q elyxer-$DATE.zip elyxer/docs/*
 zip -qr elyxer-$DATE.zip elyxer/test
 mv elyxer-$DATE.zip elyxer/dist
