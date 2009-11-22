@@ -33,6 +33,7 @@ class LyxHeader(Container):
   "Reads the header, outputs the HTML header"
 
   indentstandard = False
+  tocdepth = 10
 
   def __init__(self):
     self.contents = []
@@ -41,18 +42,18 @@ class LyxHeader(Container):
 
   def process(self):
     "Find pdf title"
-    key = HeaderConfig.parameters['pdftitle']
-    if key in self.parameters:
-      TitleOutput.pdftitle = self.parameters[key]
-    key = HeaderConfig.parameters['documentclass']
-    if key in self.parameters:
-      documentclass = self.parameters[key]
-      if documentclass in HeaderConfig.styles['article']:
-        NumberGenerator.startinglevel = 1
-    key = HeaderConfig.parameters['paragraphseparation']
-    if key in self.parameters:
-      if self.parameters[key] == 'indent':
-        LyxHeader.indentstandard = True
+    TitleOutput.pdftitle = self.getparameter('pdftitle')
+    if self.getparameter('documentclass') in HeaderConfig.styles['article']:
+      NumberGenerator.startinglevel = 1
+    if self.getparameter('paragraphseparation') == 'indent':
+      LyxHeader.indentstandard = True
+
+  def getparameter(self, configparam):
+    "Get a parameter configured in HeaderConfig."
+    key = HeaderConfig.parameters[configparam]
+    if not key in self.parameters:
+      return None
+    return self.parameters[key]
 
 class LyxFooter(Container):
   "Reads the footer, outputs the HTML footer"
