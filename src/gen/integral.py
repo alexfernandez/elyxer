@@ -196,7 +196,7 @@ class MemoryBasket(KeeperBasket):
     for index, container in enumerate(self.contents):
       # container.tree()
       if self.integrallocate(container):
-        self.integralstore(self.contents, index)
+        self.integralstore(container)
       container.locateprocess(self.integrallocate, self.integralstore)
 
   def integrallocate(self, container):
@@ -206,9 +206,8 @@ class MemoryBasket(KeeperBasket):
         return True
     return False
 
-  def integralstore(self, contents, index):
+  def integralstore(self, container):
     "Store a container in one or more processors."
-    container = contents[index]
     for processor in self.processors:
       if processor.locate(container):
         processor.store(container)
@@ -283,7 +282,7 @@ class SplittingBasket(Basket):
     found = []
     container.locateprocess(
         lambda container: container.__class__ in [PrintNomenclature, PrintIndex],
-        lambda contents, index: found.append(contents[index].__class__.__name__))
+        lambda container: found.append(container.__class__.__name__))
     if not found:
       return False
     container.depth = 0

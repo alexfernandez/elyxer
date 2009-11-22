@@ -139,8 +139,7 @@ class Postprocessor(object):
       return
     postprocessor = Postprocessor()
     for index, element in enumerate(contents):
-      if isinstance(element, Container):
-        contents[index] = postprocessor.postprocess(element)
+      contents[index] = postprocessor.postprocess(element)
     postlast = postprocessor.postprocess(None)
     if postlast:
       contents.append(postlast)

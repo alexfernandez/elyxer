@@ -68,21 +68,19 @@ class Container(object):
   def searchall(self, type):
     "Search for all embedded containers of a given type"
     list = []
-    self.searchprocess(type,
-        lambda contents, index: list.append(contents[index]))
+    self.searchprocess(type, lambda container: list.append(container))
     return list
 
   def searchremove(self, type):
     "Search for all containers of a type and remove them"
     list = []
-    self.searchprocess(type,
-        lambda contents, index: self.appendremove(list, contents, index))
+    self.searchprocess(type, lambda container: self.appendremove(list, container))
     return list
 
-  def appendremove(self, list, contents, index):
-    "Append to a list and remove from contents"
-    list.append(contents[index])
-    del contents[index]
+  def appendremove(self, list, container):
+    "Append to a list and remove from own contents"
+    list.append(container)
+    container.parent.contents.remove(container)
 
   def searchprocess(self, type, process):
     "Search for elements of a given type and process them"
@@ -90,11 +88,10 @@ class Container(object):
 
   def locateprocess(self, locate, process):
     "Search for all embedded containers and process them"
-    for index, element in enumerate(self.contents):
-      if isinstance(element, Container):
-        element.locateprocess(locate, process)
-      if locate(element):
-        process(self.contents, index)
+    for container in self.contents:
+      container.locateprocess(locate, process)
+      if locate(container):
+        process(container)
 
   def extracttext(self):
     "Search for all the strings and extract the text they contain"
@@ -103,14 +100,6 @@ class Container(object):
     for string in strings:
       text += string.string
     return text
-
-  def restyle(self, type, restyler):
-    "Restyle contents with a restyler function"
-    for index, element in enumerate(self.contents):
-      if isinstance(element, type):
-        restyler(self, index)
-      if isinstance(element, Container):
-        element.restyle(type, restyler)
 
   def group(self, index, group, isingroup):
     "Group some adjoining elements into a group"
@@ -137,8 +126,7 @@ class Container(object):
       return
     Trace.debug('  ' * level + unicode(self))
     for element in self.contents:
-      if isinstance(element, Container):
-        element.debug(level + 1)
+      element.debug(level + 1)
 
   def parselstparams(self):
     "Parse a multiple parameter lstparams."
@@ -156,8 +144,7 @@ class Container(object):
     "Show in a tree"
     Trace.debug("  " * level + unicode(self))
     for container in self.contents:
-      if isinstance(self, Container):
-        container.tree(level + 1)
+      container.tree(level + 1)
 
   def __unicode__(self):
     "Get a description"

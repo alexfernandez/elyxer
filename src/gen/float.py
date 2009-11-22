@@ -91,8 +91,6 @@ class Float(Container):
       return []
     if isinstance(element, type):
       return [element]
-    if not isinstance(element, Container):
-      return []
     return self.searchinside(element.contents, type)
 
   def __unicode__(self):
