@@ -60,6 +60,7 @@ class TOCEntry(Container):
     link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)
     self.depth = container.level
+    self.key = container.key
     return self
 
   def gettitlecontents(self, container):

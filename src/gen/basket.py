@@ -72,6 +72,9 @@ class TOCBasket(Basket):
 
   def __init__(self):
     self.indenter = Indenter()
+    self.maketree = False
+    self.tree = []
+    self.leaves = dict()
 
   def setwriter(self, writer):
     Basket.setwriter(self, writer)
@@ -91,6 +94,8 @@ class TOCBasket(Basket):
     entry = self.convert(container)
     if not entry:
       return []
+    if self.maketree:
+      self.placeintree(entry)
     indent = self.indenter.getindent(entry.depth)
     return [indent, entry]
 
@@ -103,6 +108,25 @@ class TOCBasket(Basket):
     if container.level > LyXHeader.tocdepth:
       return None
     return TOCEntry().create(container)
+
+  def placeintree(self, entry):
+    "Place the entry in a tree of entries."
+    while len(self.tree) < entry.depth:
+      self.tree.append(None)
+    if len(self.tree) > entry.depth:
+      self.tree = self.tree[:entry.depth - 1]
+    stem = self.findstem()
+    self.tree.append(entry)
+    self.leaves[entry.key] = entry
+    if stem:
+      stem.child = entry
+
+  def findstem(self):
+    "Find the stem where our next element will be inserted."
+    for element in self.tree.reverse():
+      if element:
+        return element
+    return None
 
   def finish(self):
     "Mark as finished."

@@ -254,7 +254,8 @@ class SplittingBasket(Basket):
         basket.write(LyXHeader())
       basket.write(container)
     for basket in self.baskets:
-      Trace.debug('Writer: ' + unicode(basket.writer))
+      basket.process()
+    for basket in self.baskets:
       basket.flush()
 
   def addbasket(self, writer):
@@ -266,7 +267,7 @@ class SplittingBasket(Basket):
     basket.page = writer.filename
     integrallink = IntegralLink()
     integrallink.page = os.path.basename(basket.page)
-    basket.processors.append(integrallink)
+    basket.processors = [integrallink]
     return basket
 
   def mustsplit(self, container):
