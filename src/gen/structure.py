@@ -48,7 +48,7 @@ class LyxHeader(Container):
     if self.getparameter('paragraphseparation') == 'indent':
       LyxHeader.indentstandard = True
     LyxHeader.tocdepth = int(self.getparameter('tocdepth'))
-    NumberGenerator.maxdepth = int(self.getparameter('secnumdepth'))
+    NumberGenerator.maxdepth = int(self.getparameter('secnumdepth')) + 1
 
   def getparameter(self, configparam):
     "Get a parameter configured in HeaderConfig."

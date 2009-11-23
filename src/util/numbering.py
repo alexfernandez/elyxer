@@ -55,6 +55,8 @@ class NumberGenerator(object):
     "Generate ordered numbering: a number to use and possibly concatenate "
     "with others. Example: Chapter 1, Section 1.5."
     level = self.getlevel(type)
+    if level > NumberGenerator.maxdepth:
+      return ''
     if len(self.number) >= level:
       self.number = self.number[:level]
     else:
@@ -87,6 +89,10 @@ class NumberGenerator(object):
   def isunique(self, container):
     "Find out if a container requires unique numbering."
     return container.type in NumberGenerator.unique
+
+  def isinordered(self, container):
+    "Find out if a container is ordered or unordered."
+    return self.deasterisk(container.type) in NumberGenerator.ordered
   
   def isordered(self, container):
     "Find out if a container requires ordered numbering."
@@ -96,7 +102,7 @@ class NumberGenerator(object):
     "Find out if a container does not have a number."
     if not '*' in container.type:
       return False
-    return self.deasterisk(container.type) in NumberGenerator.ordered
+    return self.isinordered(container)
 
   def increase(self, number):
     "Increase the number (or letter)"
@@ -123,4 +129,52 @@ class NumberGenerator(object):
     return type.replace('*', '')
 
 NumberGenerator.instance = NumberGenerator()
+
+class LayoutNumberer(object):
+  "Number a layout with the relevant attributes."
+
+  instance = None
+
+  def __init__(self):
+    self.generator = NumberGenerator.instance
+
+  def isnumbered(self, container):
+    "Find out if a container requires numbering at all."
+    return self.generator.deasterisk(container.type) \
+        in NumberGenerator.unique + NumberGenerator.ordered
+
+  def number(self, layout):
+    "Set all attributes: number, entry, level..."
+    if self.generator.isunique(layout):
+      layout.number = self.generator.generateunique(layout.type)
+      layout.entry = TranslationConfig.constants[layout.type] + ' ' + layout.number
+      layout.key = 'toc-' + layout.type + '-' + layout.number
+      layout.anchortext = layout.entry + '.'
+      layout.level = 0
+      return
+    if not self.generator.isinordered(layout):
+      Trace.error('Trying to number wrong ' + unicode(layout))
+      return
+    # ordered or unordered
+    if self.generator.isordered(layout):
+      layout.number = self.generator.generateordered(layout.type)
+    elif self.generator.isunordered(layout):
+      layout.number = ''
+    number = layout.number
+    if number == '':
+      # ordered but bigger than maxdepth numbered or unordered
+      number = self.generator.generateunique(layout.type)
+    layout.key = 'toc-' + layout.type + '-' + number
+    type = self.generator.deasterisk(layout.type)
+    layout.anchortext = layout.number
+    layout.entry = TranslationConfig.constants[type]
+    if layout.number != '':
+      layout.entry += ' ' + layout.number
+    layout.level = self.generator.getlevel(type)
+    layout.output.tag = layout.output.tag.replace('?', unicode(layout.level))
+
+  def modifylayout(self, layout, type):
+    "Modify a layout according to the given type."
+
+LayoutNumberer.instance = LayoutNumberer()
 

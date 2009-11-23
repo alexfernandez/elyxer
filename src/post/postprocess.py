@@ -52,32 +52,14 @@ class PostLayout(object):
 
   def postprocess(self, layout, last):
     "Generate a number and place it before the text"
+    if not LayoutNumberer.instance.isnumbered(layout):
+      return layout
     if self.containsappendix(layout):
       self.activateappendix()
-    layout.unordered = False
-    if NumberGenerator.instance.isunique(layout):
-      layout.number = NumberGenerator.instance.generateunique(layout.type)
-      layout.entry = TranslationConfig.constants[layout.type] + ' ' + layout.number
-      text = layout.entry + '.'
-      layout.level = 0
-    elif NumberGenerator.instance.isordered(layout):
-      layout.number = NumberGenerator.instance.generateordered(layout.type)
-      text = layout.number
-      layout.entry = TranslationConfig.constants[layout.type] + ' ' + layout.number
-      self.modifylayout(layout, layout.type)
-    elif NumberGenerator.instance.isunordered(layout):
-      layout.unordered = True
-      layout.number = NumberGenerator.instance.generateunique('unordered')
-      text = ''
-      type = NumberGenerator.instance.deasterisk(layout.type)
-      layout.entry = TranslationConfig.constants[type]
-      self.modifylayout(layout, type)
-    else:
-      return layout
-    key = 'toc-' + layout.type + '-' + layout.number
-    label = Label().create(text, key, type='toc')
+    LayoutNumberer.instance.number(layout)
+    label = Label().create(layout.anchortext, layout.key, type='toc')
     layout.contents.insert(0, label)
-    if not layout.unordered:
+    if layout.number != '':
       layout.contents.insert(1, Constant(u' '))
     return layout
 
