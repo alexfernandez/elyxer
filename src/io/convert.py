@@ -96,7 +96,7 @@ class eLyXerConverter(object):
     "Find out if the container is a header or footer and must be filtered."
     if not self.filtering:
       return False
-    if container.__class__ in [LyxHeader, LyxFooter]:
+    if container.__class__ in [LyXHeader, LyXFooter]:
       return True
     return False
 

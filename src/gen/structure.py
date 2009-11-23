@@ -29,7 +29,7 @@ from io.output import *
 from gen.container import *
 
 
-class LyxHeader(Container):
+class LyXHeader(Container):
   "Reads the header, outputs the HTML header"
 
   indentstandard = False
@@ -46,8 +46,8 @@ class LyxHeader(Container):
     if self.getparameter('documentclass') in HeaderConfig.styles['article']:
       NumberGenerator.startinglevel = 1
     if self.getparameter('paragraphseparation') == 'indent':
-      LyxHeader.indentstandard = True
-    LyxHeader.tocdepth = int(self.getparameter('tocdepth'))
+      LyXHeader.indentstandard = True
+    LyXHeader.tocdepth = int(self.getparameter('tocdepth'))
     NumberGenerator.maxdepth = int(self.getparameter('secnumdepth')) + 1
 
   def getparameter(self, configparam):
@@ -57,7 +57,7 @@ class LyxHeader(Container):
       return None
     return self.parameters[key]
 
-class LyxFooter(Container):
+class LyXFooter(Container):
   "Reads the footer, outputs the HTML footer"
 
   def __init__(self):

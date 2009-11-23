@@ -73,7 +73,7 @@ class IntegralTOC(IntegralProcessor):
     for container in IntegralLayout.tocentries:
       self.writetotoc(basket.translate(container), toc)
     # finish off with the footer to align indents
-    self.writetotoc(basket.translate(LyxFooter()), toc)
+    self.writetotoc(basket.translate(LyXFooter()), toc)
 
   def writetotoc(self, entries, toc):
     "Write some entries to the TOC."
@@ -252,10 +252,10 @@ class SplittingBasket(Basket):
     if self.mustsplit(container):
       filename = self.getfilename(container)
       Trace.debug('New page ' + filename)
-      self.basket.write(LyxFooter())
+      self.basket.write(LyXFooter())
       self.basket.process()
       self.addbasket(LineWriter(filename))
-      self.basket.write(LyxHeader())
+      self.basket.write(LyXHeader())
     self.basket.write(container)
 
   def finish(self):

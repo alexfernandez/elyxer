@@ -44,7 +44,7 @@ class QuoteContainer(Container):
       return
     self.html = [StyleConfig.quotes[self.type]]
 
-class LyxLine(Container):
+class LyXLine(Container):
   "A Lyx line"
 
   def __init__(self):

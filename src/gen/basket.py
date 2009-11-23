@@ -77,7 +77,7 @@ class TOCBasket(Basket):
     Basket.setwriter(self, writer)
     Options.nocopy = True
     self.indenter.setwriter(writer)
-    self.writer.write(LyxHeader().gethtml())
+    self.writer.write(LyXHeader().gethtml())
     return self
 
   def write(self, container):
@@ -96,7 +96,7 @@ class TOCBasket(Basket):
 
   def convert(self, container):
     "Convert a container to a TOC container."
-    if container.__class__ in [LyxHeader, LyxFooter]:
+    if container.__class__ in [LyXHeader, LyXFooter]:
       return TOCEntry().header(container)
     if not hasattr(container, 'entry'):
       return None
@@ -104,5 +104,5 @@ class TOCBasket(Basket):
 
   def finish(self):
     "Mark as finished."
-    self.writer.write(LyxFooter().gethtml())
+    self.writer.write(LyXFooter().gethtml())
 
