@@ -59,6 +59,7 @@ class PostLayout(object):
       layout.number = NumberGenerator.instance.generateunique(layout.type)
       layout.entry = TranslationConfig.constants[layout.type] + ' ' + layout.number
       text = layout.entry + '.'
+      layout.level = 0
     elif NumberGenerator.instance.isordered(layout):
       layout.number = NumberGenerator.instance.generateordered(layout.type)
       text = layout.number
