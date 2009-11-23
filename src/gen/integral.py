@@ -193,7 +193,7 @@ class MemoryBasket(KeeperBasket):
 
   def searchintegral(self):
     "Search for all containers for all integral processors."
-    for index, container in enumerate(self.contents):
+    for container in self.contents:
       # container.tree()
       if self.integrallocate(container):
         self.integralstore(container)
@@ -231,38 +231,43 @@ class SplittingBasket(Basket):
       Trace.error('Cannot use standard output for split output; ' +
           'please supply an output filename.')
       exit()
-    self.addbasket(writer)
+    self.writer = writer
     self.base, self.extension = os.path.splitext(writer.filename)
     self.tocwriter = TOCBasket()
-    return self
-
-  def addbasket(self, writer):
-    "Add a new basket."
     self.basket = MemoryBasket()
-    self.basket.setwriter(writer)
-    self.baskets.append(self.basket)
-    # set the page name everywhere
-    self.basket.page = writer.filename
-    integrallink = IntegralLink()
-    integrallink.page = os.path.basename(self.basket.page)
-    self.basket.processors.append(integrallink)
+    return self
 
   def write(self, container):
     "Write a container, possibly splitting the file."
-    if self.mustsplit(container):
-      filename = self.getfilename(container)
-      Trace.debug('New page ' + filename)
-      self.basket.write(LyXFooter())
-      self.basket.process()
-      self.addbasket(LineWriter(filename))
-      self.basket.write(LyXHeader())
     self.basket.write(container)
 
   def finish(self):
     "Process the last basket, flush all of them."
     self.basket.process()
+    basket = self.addbasket(self.writer)
+    for container in self.basket.contents:
+      if self.mustsplit(container):
+        filename = self.getfilename(container)
+        Trace.debug('New page ' + filename)
+        basket.write(LyXFooter())
+        basket = self.addbasket(LineWriter(filename))
+        basket.write(LyXHeader())
+      basket.write(container)
     for basket in self.baskets:
+      Trace.debug('Writer: ' + unicode(basket.writer))
       basket.flush()
+
+  def addbasket(self, writer):
+    "Add a new basket."
+    basket = MemoryBasket()
+    basket.setwriter(writer)
+    self.baskets.append(basket)
+    # set the page name everywhere
+    basket.page = writer.filename
+    integrallink = IntegralLink()
+    integrallink.page = os.path.basename(basket.page)
+    basket.processors.append(integrallink)
+    return basket
 
   def mustsplit(self, container):
     "Find out if the oputput file has to be split at this entry."
