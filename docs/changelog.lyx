@@ -98,6 +98,7 @@ TOC generation for unordered entries (like
 Section*
 \family default
 ) and entries inserted in other layouts.
+ Max TOC depth and max numbering depth are honored.
  Also solved bug in tagging of unordered parts.
 \end_layout
 

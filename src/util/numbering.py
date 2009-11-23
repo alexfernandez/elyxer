@@ -33,6 +33,7 @@ class NumberGenerator(object):
 
   instance = None
   startinglevel = 0
+  maxdepth = 10
 
   unique = NumberingConfig.layouts['unique']
   ordered = NumberingConfig.layouts['ordered']

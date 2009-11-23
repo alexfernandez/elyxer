@@ -520,7 +520,8 @@ class HeaderConfig(object):
       u'branch':u'\\branch', u'documentclass':u'\\textclass', 
       u'endbranch':u'\\end_branch', 
       u'paragraphseparation':u'\\paragraph_separation', 
-      u'pdftitle':u'\\pdf_title', 
+      u'pdftitle':u'\\pdf_title', u'secnumdepth':u'\\secnumdepth', 
+      u'tocdepth':u'\\tocdepth', 
       }
 
   styles = {
