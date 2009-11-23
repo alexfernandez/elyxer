@@ -47,7 +47,7 @@ class LyXHeader(Container):
       NumberGenerator.startinglevel = 1
     if self.getparameter('paragraphseparation') == 'indent':
       LyXHeader.indentstandard = True
-    LyXHeader.tocdepth = int(self.getparameter('tocdepth'))
+    LyXHeader.tocdepth = int(self.getparameter('tocdepth')) + 1
     NumberGenerator.maxdepth = int(self.getparameter('secnumdepth')) + 1
 
   def getparameter(self, configparam):

@@ -100,6 +100,8 @@ class TOCBasket(Basket):
       return TOCEntry().header(container)
     if not hasattr(container, 'entry'):
       return None
+    if container.level > LyXHeader.tocdepth:
+      return None
     return TOCEntry().create(container)
 
   def finish(self):
