@@ -60,7 +60,7 @@ class TOCEntry(Container):
     link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)
     self.depth = container.level
-    self.key = container.key
+    self.partkey = container.partkey
     return self
 
   def gettitlecontents(self, container):
@@ -91,15 +91,6 @@ class Indenter(object):
   def __init__(self):
     self.depth = 0
 
-  def setwriter(self, writer):
-    self.writer = writer
-
-  def indent(self, depth):
-    "Indent the line according to the given depth."
-    indents = self.getindent(depth)
-    for line in indents:
-      self.writer.write(line)
-
   def getindent(self, depth):
     indent = ''
     if depth > self.depth:
@@ -122,4 +113,58 @@ class Indenter(object):
     for i in range(times):
       indent += '</div>\n'
     return indent
+
+class TOCConverter(object):
+  "A converter from containers to TOC entries."
+
+  cache = dict()
+
+  def __init__(self):
+    self.indenter = Indenter()
+
+  def translate(self, container):
+    "Translate a container to TOC entry + indentation."
+    entry = self.convert(container)
+    if not entry:
+      return []
+    indent = self.indenter.getindent(entry.depth)
+    return [indent, entry]
+
+  def convert(self, container):
+    "Convert a container to a TOC entry."
+    if container.__class__ in [LyXHeader, LyXFooter]:
+      return TOCEntry().header(container)
+    if not hasattr(container, 'partkey'):
+      return None
+    if container.partkey in self.cache:
+      return TOCConverter.cache[container.partkey]
+    if container.level > LyXHeader.tocdepth:
+      return None
+    entry = TOCEntry().create(container)
+    TOCConverter.cache[container.partkey] = entry
+    return entry
+
+class TOCTree(object):
+  "A tree that contains the full TOC."
+
+  tree = []
+
+  def store(self, entry):
+    "Place the entry in a tree of entries."
+    while len(self.tree) < entry.depth:
+      self.tree.append(None)
+    if len(self.tree) > entry.depth:
+      self.tree = self.tree[:entry.depth - 1]
+    stem = self.findstem()
+    self.tree.append(entry)
+    self.leaves[entry.key] = entry
+    if stem:
+      stem.child = entry
+
+  def findstem(self):
+    "Find the stem where our next element will be inserted."
+    for element in self.tree.reverse():
+      if element:
+        return element
+    return None
 

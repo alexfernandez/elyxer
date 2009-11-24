@@ -71,62 +71,19 @@ class TOCBasket(Basket):
   "A basket to place the TOC of a document."
 
   def __init__(self):
-    self.indenter = Indenter()
-    self.maketree = False
-    self.tree = []
-    self.leaves = dict()
+    self.converter = TOCConverter()
 
   def setwriter(self, writer):
     Basket.setwriter(self, writer)
     Options.nocopy = True
-    self.indenter.setwriter(writer)
     self.writer.write(LyXHeader().gethtml())
     return self
 
   def write(self, container):
     "Write the table of contents for a container."
-    entries = self.translate(container)
+    entries = self.converter.translate(container)
     for entry in entries:
       self.writer.write(entry.gethtml())
-
-  def translate(self, container):
-    "Return one or more containers for the TOC."
-    entry = self.convert(container)
-    if not entry:
-      return []
-    if self.maketree:
-      self.placeintree(entry)
-    indent = self.indenter.getindent(entry.depth)
-    return [indent, entry]
-
-  def convert(self, container):
-    "Convert a container to a TOC container."
-    if container.__class__ in [LyXHeader, LyXFooter]:
-      return TOCEntry().header(container)
-    if not hasattr(container, 'entry'):
-      return None
-    if container.level > LyXHeader.tocdepth:
-      return None
-    return TOCEntry().create(container)
-
-  def placeintree(self, entry):
-    "Place the entry in a tree of entries."
-    while len(self.tree) < entry.depth:
-      self.tree.append(None)
-    if len(self.tree) > entry.depth:
-      self.tree = self.tree[:entry.depth - 1]
-    stem = self.findstem()
-    self.tree.append(entry)
-    self.leaves[entry.key] = entry
-    if stem:
-      stem.child = entry
-
-  def findstem(self):
-    "Find the stem where our next element will be inserted."
-    for element in self.tree.reverse():
-      if element:
-        return element
-    return None
 
   def finish(self):
     "Mark as finished."

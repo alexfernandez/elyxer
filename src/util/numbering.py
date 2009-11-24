@@ -148,7 +148,7 @@ class LayoutNumberer(object):
     if self.generator.isunique(layout):
       layout.number = self.generator.generateunique(layout.type)
       layout.entry = TranslationConfig.constants[layout.type] + ' ' + layout.number
-      layout.key = 'toc-' + layout.type + '-' + layout.number
+      layout.partkey = 'toc-' + layout.type + '-' + layout.number
       layout.anchortext = layout.entry + '.'
       layout.level = 0
       return
@@ -164,7 +164,7 @@ class LayoutNumberer(object):
     if number == '':
       # ordered but bigger than maxdepth numbered or unordered
       number = self.generator.generateunique(layout.type)
-    layout.key = 'toc-' + layout.type + '-' + number
+    layout.partkey = 'toc-' + layout.type + '-' + number
     type = self.generator.deasterisk(layout.type)
     layout.anchortext = layout.number
     layout.entry = TranslationConfig.constants[type]

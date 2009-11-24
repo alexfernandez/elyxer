@@ -57,7 +57,7 @@ class PostLayout(object):
     if self.containsappendix(layout):
       self.activateappendix()
     LayoutNumberer.instance.number(layout)
-    label = Label().create(layout.anchortext, layout.key, type='toc')
+    label = Label().create(layout.anchortext, layout.partkey, type='toc')
     layout.contents.insert(0, label)
     if layout.number != '':
       layout.contents.insert(1, Constant(u' '))

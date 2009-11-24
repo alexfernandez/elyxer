@@ -69,11 +69,11 @@ class IntegralTOC(IntegralProcessor):
   def processeach(self, toc):
     "Fill in a Table of Contents."
     toc.output = TaggedOutput().settag('div class="fulltoc"', True)
-    basket = TOCBasket()
+    converter = TOCConverter()
     for container in IntegralLayout.tocentries:
-      self.writetotoc(basket.translate(container), toc)
+      toc.contents += converter.translate(container)
     # finish off with the footer to align indents
-    self.writetotoc(basket.translate(LyXFooter()), toc)
+    toc.contents += converter.translate(LyXFooter())
 
   def writetotoc(self, entries, toc):
     "Write some entries to the TOC."
@@ -111,7 +111,6 @@ class IntegralListOf(IntegralProcessor):
   "A processor for an integral list of floats."
 
   processedtype = ListOf
-  basket = TOCBasket()
 
   def processeach(self, listof):
     "Fill in a list of floats."
@@ -233,7 +232,7 @@ class SplittingBasket(Basket):
       exit()
     self.writer = writer
     self.base, self.extension = os.path.splitext(writer.filename)
-    self.tocwriter = TOCBasket()
+    self.converter = TOCConverter()
     self.basket = MemoryBasket()
     return self
 
@@ -276,7 +275,7 @@ class SplittingBasket(Basket):
       return True
     if not hasattr(container, 'number'):
       return False
-    entry = self.tocwriter.convert(container)
+    entry = self.converter.convert(container)
     if not entry:
       return False
     if hasattr(entry, 'split'):
@@ -300,7 +299,7 @@ class SplittingBasket(Basket):
     if hasattr(container, 'split'):
       partname = '-' + container.split
     else:
-      entry = self.tocwriter.convert(container)
+      entry = self.converter.convert(container)
       if entry.depth == Options.splitpart:
         partname = '-' + container.number
       else:
