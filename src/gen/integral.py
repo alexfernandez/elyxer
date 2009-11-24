@@ -241,7 +241,7 @@ class SplittingBasket(Basket):
     self.basket.write(container)
 
   def finish(self):
-    "Process the last basket, flush all of them."
+    "Process the whole basket, create page baskets and flush all of them."
     self.basket.process()
     basket = self.addbasket(self.writer)
     for container in self.basket.contents:

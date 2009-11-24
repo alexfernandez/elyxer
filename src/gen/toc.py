@@ -46,6 +46,7 @@ class TOCEntry(Container):
   def create(self, container):
     "Create the TOC entry for a container, consisting of a single link."
     self.entry = container.entry
+    self.branches = []
     text = container.entry + ':'
     labels = container.searchall(Label)
     if len(labels) == 0 or Options.toc:
@@ -124,6 +125,7 @@ class TOCTree(object):
 
   def __init__(self):
     self.tree = []
+    self.branches = []
 
   def store(self, entry):
     "Place the entry in a tree of entries."
@@ -132,10 +134,13 @@ class TOCTree(object):
     if len(self.tree) > entry.depth:
       self.tree = self.tree[:entry.depth]
     stem = self.findstem()
+    if len(self.tree) == 0:
+      self.branches.append(entry)
     self.tree.append(entry)
     if stem:
       Trace.debug('Entry ' + unicode(entry) + ' from ' + unicode(stem))
-      stem.child = entry
+      entry.stem = stem
+      stem.branches.append(entry)
 
   def findstem(self):
     "Find the stem where our next element will be inserted."
