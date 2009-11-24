@@ -308,7 +308,15 @@ Unnumbered Section
 \end_layout
 
 \begin_layout Standard
-They have a right to live too
+They have a right to live too.
+\end_layout
+
+\begin_layout Itemize
+A list would be nice here.
+\end_layout
+
+\begin_layout Itemize
+Because it corrupts the next chapter's beginning.
 \end_layout
 
 \begin_layout Chapter

@@ -273,7 +273,7 @@ class SplittingBasket(Basket):
     "Find out if the oputput file has to be split at this entry."
     if self.splitalone(container):
       return True
-    if not hasattr(container, 'number'):
+    if not hasattr(container, 'entry'):
       return False
     entry = self.converter.convert(container)
     if not entry:
