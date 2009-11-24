@@ -45,6 +45,7 @@ class TOCEntry(Container):
 
   def create(self, container):
     "Create the TOC entry for a container, consisting of a single link."
+    self.entry = container.entry
     text = container.entry + ':'
     labels = container.searchall(Label)
     if len(labels) == 0 or Options.toc:
@@ -85,6 +86,10 @@ class TOCEntry(Container):
         clone.contents.append(self.safeclone(element))
     return clone
 
+  def __unicode__(self):
+    "Return a printable representation."
+    return 'TOC entry: ' + self.entry
+
 class Indenter(object):
   "Manages and writes indentation for the TOC."
 
@@ -114,10 +119,36 @@ class Indenter(object):
       indent += '</div>\n'
     return indent
 
+class TOCTree(object):
+  "A tree that contains the full TOC."
+
+  def __init__(self):
+    self.tree = []
+
+  def store(self, entry):
+    "Place the entry in a tree of entries."
+    while len(self.tree) < entry.depth:
+      self.tree.append(None)
+    if len(self.tree) > entry.depth:
+      self.tree = self.tree[:entry.depth]
+    stem = self.findstem()
+    self.tree.append(entry)
+    if stem:
+      Trace.debug('Entry ' + unicode(entry) + ' from ' + unicode(stem))
+      stem.child = entry
+
+  def findstem(self):
+    "Find the stem where our next element will be inserted."
+    for element in reversed(self.tree):
+      if element:
+        return element
+    return None
+
 class TOCConverter(object):
   "A converter from containers to TOC entries."
 
   cache = dict()
+  tree = TOCTree()
 
   def __init__(self):
     self.indenter = Indenter()
@@ -142,29 +173,6 @@ class TOCConverter(object):
       return None
     entry = TOCEntry().create(container)
     TOCConverter.cache[container.partkey] = entry
+    TOCConverter.tree.store(entry)
     return entry
-
-class TOCTree(object):
-  "A tree that contains the full TOC."
-
-  tree = []
-
-  def store(self, entry):
-    "Place the entry in a tree of entries."
-    while len(self.tree) < entry.depth:
-      self.tree.append(None)
-    if len(self.tree) > entry.depth:
-      self.tree = self.tree[:entry.depth - 1]
-    stem = self.findstem()
-    self.tree.append(entry)
-    self.leaves[entry.key] = entry
-    if stem:
-      stem.child = entry
-
-  def findstem(self):
-    "Find the stem where our next element will be inserted."
-    for element in self.tree.reverse():
-      if element:
-        return element
-    return None
 
