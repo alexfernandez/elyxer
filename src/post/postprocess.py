@@ -32,25 +32,12 @@ from util.numbering import *
 from ref.link import *
 
 
-class Group(Container):
-  "A silly group of containers"
-
-  def __init__(self):
-    self.output = ContentsOutput()
-
-  def contents(self, contents):
-    self.contents = contents
-    return self
-
-  def __unicode__(self):
-    return 'Group: ' + unicode(self.contents)
-
 class PostLayout(object):
   "Numerate an indexed layout"
 
   processedclass = Layout
 
-  def postprocess(self, layout, last):
+  def postprocess(self, last, layout, next):
     "Generate a number and place it before the text"
     if not LayoutNumberer.instance.isnumbered(layout):
       return layout
@@ -84,7 +71,7 @@ class PostStandard(object):
 
   processedclass = StandardLayout
 
-  def postprocess(self, standard, last):
+  def postprocess(self, last, standard, next):
     "Switch to div"
     type = 'Standard'
     if LyXHeader.indentstandard:
@@ -102,15 +89,17 @@ class Postprocessor(object):
 
   def __init__(self):
     self.stages = StageDict(Postprocessor.stages, self)
-    self.hooks = []
+    self.current = None
     self.last = None
 
-  def postprocess(self, container):
+  def postprocess(self, next):
     "Postprocess the root container and its contents"
-    self.postrecursive(container)
-    result = self.postcurrent(container)
-    result = self.posthooks(container, result)
-    self.last = container
+    self.postrecursive(self.current)
+    result = self.postcurrent(next)
+    if not result:
+      Trace.error('Empty result from ' + unicode(self.current) + ', next ' + unicode(next))
+    self.last = self.current
+    self.current = next
     return result
 
   def postrecursive(self, container):
@@ -126,31 +115,17 @@ class Postprocessor(object):
     postlast = postprocessor.postprocess(None)
     if postlast:
       contents.append(postlast)
+    postafterlast = postprocessor.postprocess(None)
+    if postafterlast:
+      contents.append(postlast)
     container.contents = contents
 
-  def postcurrent(self, element):
-    "Postprocess the current element taking into account the last one"
-    stage = self.stages.getstage(element)
+  def postcurrent(self, next):
+    "Postprocess the current element taking into account next and last."
+    stage = self.stages.getstage(self.current)
     if not stage:
-      return element
-    return stage.postprocess(element, self.last)
-
-  def addhook(self, hook):
-    "Add a postprocessing hook; only one of each type allowed."
-    for element in self.hooks:
-      if isinstance(element, hook.__class__):
-        return
-    self.hooks.append(hook)
-    hook.postprocessor = self
-
-  def posthooks(self, element, result):
-    "Postprocess the current element using the hooks."
-    "The element is used to see if the hook applies, but the previous"
-    "result is actually used in postprocessing."
-    for hook in self.hooks:
-      if hook.applies(element, self.last):
-        result = hook.postprocess(result, self.last)
-    return result
+      return self.current
+    return stage.postprocess(self.last, self.current, next)
 
 class StageDict(object):
   "A dictionary of stages corresponding to classes"
@@ -173,17 +148,4 @@ class StageDict(object):
     if not element.__class__ in self.stagedict:
       return None
     return self.stagedict[element.__class__]
-
-class PostHook(object):
-  "A postprocessing hook inserted by another postprocessing stage."
-  "It can only add an element, not modify an existing one."
-  "Only a hook of a given class is allowed."
-
-  def applies(self, element, last):
-    "Decide if the hook applies or not"
-    Trace.error("applies() in PostHook")
-
-  def postprocess(self, element, last):
-    "Get the result of postprocessing"
-    Trace.error("getresult() in PostHook")
 

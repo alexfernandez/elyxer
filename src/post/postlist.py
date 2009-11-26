@@ -68,17 +68,13 @@ class PendingList(object):
       return True
     return False
 
-  def isdue(self, element):
-    "Decide whether the pending list has to be generated with the given item"
-    if isinstance(element, ListItem):
-      if not self.type:
-        return False
-      if self.type != element.type:
-        return True
-      return False
-    if isinstance(element, DeeperList):
-      return False
-    return True
+  def isduewithnext(self, next):
+    "Applies only if the list is finished with next item."
+    if not next:
+      return True
+    if not isinstance(next, ListItem) and not isinstance(next, DeeperList):
+      return True
+    return False
 
   def empty(self):
     return len(self.contents) == 0
@@ -102,16 +98,16 @@ class PostListItem(object):
 
   processedclass = ListItem
 
-  def postprocess(self, item, last):
+  def postprocess(self, last, item, next):
     "Add the item to pending and return an empty item"
-    self.postprocessor.addhook(PostListHook())
-    result = BlackBox()
     if not hasattr(self.postprocessor, 'list'):
       self.postprocessor.list = PendingList()
-    if self.postprocessor.list.isduewithitem(item):
-      result = Group().contents([item, self.postprocessor.list.generate()])
     self.postprocessor.list.additem(item)
-    return result
+    if self.postprocessor.list.isduewithnext(next):
+      return self.postprocessor.list.generate()
+    if self.postprocessor.list.isduewithitem(next):
+      return self.postprocessor.list.generate()
+    return BlackBox()
 
   def generatepending(self, element):
     "Return a pending list"
@@ -125,32 +121,14 @@ class PostDeeperList(object):
 
   processedclass = DeeperList
 
-  def postprocess(self, deeper, last):
+  def postprocess(self, last, deeper, next):
     "Append to the list in the postprocessor"
-    self.postprocessor.addhook(PostListHook())
     if not hasattr(self.postprocessor, 'list'):
       self.postprocessor.list = PendingList()
     self.postprocessor.list.adddeeper(deeper)
+    if self.postprocessor.list.isduewithnext(next):
+      return self.postprocessor.list.generate()
     return BlackBox()
-
-class PostListHook(PostHook):
-  "After a list is completed"
-
-  def applies(self, element, last):
-    "Applies only if the list is finished"
-    if not isinstance(last, ListItem) and not isinstance(last, DeeperList):
-      return False
-    if isinstance(element, ListItem) or isinstance(element, DeeperList):
-      return False
-    return True
-
-  def postprocess(self, element, last):
-    "Return the list and current element, remove hook and return"
-    list = self.postprocessor.list.generate()
-    self.postprocessor.hooks.remove(self)
-    if not element:
-      return list
-    return Group().contents([list, element])
 
 Postprocessor.stages += [PostListItem, PostDeeperList]
 

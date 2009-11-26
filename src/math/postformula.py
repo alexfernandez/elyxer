@@ -34,7 +34,7 @@ class PostFormula(object):
 
   processedclass = Formula
 
-  def postprocess(self, formula, last):
+  def postprocess(self, last, formula, next):
     "Postprocess any formulae"
     self.postnumbering(formula)
     self.postcontents(formula.contents)

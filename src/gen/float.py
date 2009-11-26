@@ -176,7 +176,7 @@ class PostFloat(object):
 
   processedclass = Float
 
-  def postprocess(self, float, last):
+  def postprocess(self, last, float, next):
     "Move the label to the top and number the caption"
     captions = float.searchinside(float.contents, Caption)
     for caption in captions:

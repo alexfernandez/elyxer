@@ -32,7 +32,7 @@ class PostTable(object):
 
   processedclass = Table
 
-  def postprocess(self, table, last):
+  def postprocess(self, last, table, next):
     "Postprocess a table: long table, multicolumn rows"
     self.longtable(table)
     for row in table.contents:
