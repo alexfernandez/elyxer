@@ -54,8 +54,9 @@ class PendingList(object):
   def generate(self):
     "Get the resulting list"
     if not self.type:
-      return Group().contents(self.contents)
-    tag = TagConfig.listitems[self.type]
+      tag = 'ul'
+    else:
+      tag = TagConfig.listitems[self.type]
     text = TaggedText().complete(self.contents, tag, True)
     self.__init__()
     return text
@@ -105,16 +106,9 @@ class PostListItem(object):
     self.postprocessor.list.additem(item)
     if self.postprocessor.list.isduewithnext(next):
       return self.postprocessor.list.generate()
-    if self.postprocessor.list.isduewithitem(next):
+    if isinstance(next, ListItem) and self.postprocessor.list.isduewithitem(next):
       return self.postprocessor.list.generate()
     return BlackBox()
-
-  def generatepending(self, element):
-    "Return a pending list"
-    list = self.postprocessor.list.generate()
-    if not element:
-      return list
-    return Group().contents([list, element])
 
 class PostDeeperList(object):
   "Postprocess a deeper list"

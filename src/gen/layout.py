@@ -58,6 +58,12 @@ class StandardLayout(Layout):
     self.type = 'standard'
     self.output = ContentsOutput()
 
+  def complete(self, contents):
+    "Set the contents and return it."
+    self.process()
+    self.contents = contents
+    return self
+
 class Title(Layout):
   "The title of the whole document"
 

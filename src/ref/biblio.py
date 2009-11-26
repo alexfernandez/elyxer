@@ -70,7 +70,7 @@ class Bibliography(Container):
 
   def __init__(self):
     self.parser = BoundedParser()
-    self.output = ContentsOutput()
+    self.output = TaggedOutput().settag('p class="biblio"', True)
 
 class BiblioEntry(Container):
   "A bibliography entry"
@@ -79,7 +79,7 @@ class BiblioEntry(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TaggedOutput().settag('p class="biblio"', True)
+    self.output = TaggedOutput().settag('span class="entry"')
 
   def process(self):
     "Process the cites for the entry's key"
@@ -110,8 +110,8 @@ class PostBiblio(object):
       return element
     bibliography = TranslationConfig.constants['bibliography']
     header = TaggedText().constant(bibliography, 'h1 class="biblio"')
-    element.contents.insert(0, header)
-    return element
+    layout = StandardLayout().complete([header, element])
+    return layout
 
 Postprocessor.stages.append(PostBiblio)
 
