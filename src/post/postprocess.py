@@ -96,8 +96,6 @@ class Postprocessor(object):
     "Postprocess the root container and its contents"
     self.postrecursive(self.current)
     result = self.postcurrent(next)
-    if not result:
-      Trace.error('Empty result from ' + unicode(self.current) + ', next ' + unicode(next))
     self.last = self.current
     self.current = next
     return result
@@ -111,13 +109,14 @@ class Postprocessor(object):
     postprocessor = Postprocessor()
     contents = []
     for element in container.contents:
-      contents.append(postprocessor.postprocess(element))
-    postlast = postprocessor.postprocess(None)
-    if postlast:
-      contents.append(postlast)
-    postafterlast = postprocessor.postprocess(None)
-    if postafterlast:
-      contents.append(postlast)
+      post = postprocessor.postprocess(element)
+      if post:
+        contents.append(post)
+    # two rounds to empty the pipeline
+    for i in range(2):
+      post = postprocessor.postprocess(None)
+      if post:
+        contents.append(post)
     container.contents = contents
 
   def postcurrent(self, next):

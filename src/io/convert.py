@@ -88,14 +88,12 @@ class eLyXerConverter(object):
       container = factory.createcontainer(self.reader)
       if container and not self.filtered(container):
         result = self.postproc.postprocess(container)
-        if not result:
-          Trace.error('Empty result from ' + unicode(container))
-        else:
+        if result:
           self.basket.write(result)
-      # last round: clear the pipeline
-      result = self.postproc.postprocess(None)
-      if result:
-        self.basket.write(result)
+    # last round: clear the pipeline
+    result = self.postproc.postprocess(None)
+    if result:
+      self.basket.write(result)
     if not self.filtering:
       self.basket.finish()
 
