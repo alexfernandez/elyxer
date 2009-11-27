@@ -181,4 +181,5 @@ class IncludeInset(Container):
       self.parselstparams()
     converter = IncludeInset.converterfactory.create(self)
     converter.convert()
+    self.contents = converter.getcontents()
 

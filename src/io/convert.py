@@ -41,8 +41,6 @@ from math.postformula import *
 class eLyXerConverter(object):
   "Converter for a document in a lyx file. Places all output in a given basket."
 
-  currentbasket = None
-
   def __init__(self):
     self.filtering = False
 
@@ -50,7 +48,6 @@ class eLyXerConverter(object):
     "Set the InOutParser"
     self.reader = ioparser.getreader()
     self.basket = self.getbasket()
-    eLyXerConverter.currentbasket = self.basket
     self.basket.setwriter(ioparser.getwriter())
     return self
 
@@ -65,11 +62,12 @@ class eLyXerConverter(object):
     return WriterBasket()
 
   def embed(self, reader):
-    "Embed the results for a new input file into the latest output file."
+    "Embed the results from a reader into a memory basket."
     "Header and footer are ignored. Useful for embedding one document inside another."
     self.filtering = True
     self.reader = reader
-    self.basket = eLyXerConverter.currentbasket
+    self.basket = MemoryBasket()
+    self.writer = NullWriter()
     return self
 
   def convert(self):
@@ -104,6 +102,10 @@ class eLyXerConverter(object):
     if container.__class__ in [LyXHeader, LyXFooter]:
       return True
     return False
+
+  def getcontents(self):
+    "Return the contents of the basket."
+    return self.basket.contents
 
   def __unicode__(self):
     "Printable representation."
@@ -155,6 +157,13 @@ class InOutParser(object):
     setattr(Options, diroption, os.path.dirname(filename))
     if getattr(Options, diroption) == '':
       setattr(Options, diroption, '.')
+
+class NullWriter(object):
+  "A writer that goes nowhere."
+
+  def write(self, list):
+    "Do nothing."
+    pass
 
 class ConverterFactory(object):
   "Create a converter fit for converting a filename and embedding the result."
