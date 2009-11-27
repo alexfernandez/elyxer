@@ -110,6 +110,11 @@ Implemented indented paragraphs when specified in the document.
 Horizontal fill is now shown as a fixed-width space.
 \end_layout
 
+\begin_layout Itemize
+Simplified postprocessing code.
+ Document include is now done inside a Standard layout.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.36 (2009-11-19):
