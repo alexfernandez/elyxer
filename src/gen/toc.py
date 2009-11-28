@@ -138,7 +138,6 @@ class TOCTree(object):
       self.branches.append(entry)
     self.tree.append(entry)
     if stem:
-      Trace.debug('Entry ' + unicode(entry) + ' from ' + unicode(stem))
       entry.stem = stem
       stem.branches.append(entry)
 
