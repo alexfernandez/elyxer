@@ -115,6 +115,20 @@ Simplified postprocessing code.
  Document include is now done inside a Standard layout.
 \end_layout
 
+\begin_layout Itemize
+Support for command 
+\family typewriter
+
+\backslash
+varkappa
+\family default
+: 
+\begin_inset Formula $\varkappa$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.36 (2009-11-19):
