@@ -116,7 +116,7 @@ Simplified postprocessing code.
 \end_layout
 
 \begin_layout Itemize
-Support for command 
+Support for commands 
 \family typewriter
 
 \backslash
@@ -124,6 +124,76 @@ varkappa
 \family default
 : 
 \begin_inset Formula $\varkappa$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+varnothing
+\family default
+: 
+\begin_inset Formula $\varnothing$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+mathring
+\family default
+: 
+\begin_inset Formula $\mathring{A}$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+backprime
+\family default
+: 
+\begin_inset Formula $\backprime$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+notin
+\family default
+: 
+\begin_inset Formula $\notin$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+hfill
+\family default
+: 
+\begin_inset Formula $\hfill$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+circledR
+\family default
+: 
+\begin_inset Formula $\circledR$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+hslash
+\family default
+: 
+\begin_inset Formula $\hslash$
 \end_inset
 
 .
