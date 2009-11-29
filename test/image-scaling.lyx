@@ -56,7 +56,7 @@ Scale
 
 \end_inset
 
-Unscaled.
+PNG unscaled.
 \end_layout
 
 \begin_layout Standard
@@ -67,7 +67,26 @@ Unscaled.
 
 \end_inset
 
-Scaled 50%.
+PNG scaled 50%.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename elyxer-eps.eps
+
+\end_inset
+
+Unscaled EPS.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename elyxer-eps.eps
+	scale 50
+
+\end_inset
+
+EPS scaled 50%.
 \end_layout
 
 \begin_layout Section

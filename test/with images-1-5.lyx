@@ -45,7 +45,7 @@ Images Tests
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename elyxer.svg
+	filename elyxer-svg.svg
 	lyxscale 50
 	scale 50
 
@@ -56,7 +56,7 @@ First image: regular path.
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename elyxer.svg
+	filename elyxer-svg.svg
 	lyxscale 50
 	scale 50
 

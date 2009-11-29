@@ -44,6 +44,13 @@ class Path(object):
     "Return last modification time"
     return os.path.getmtime(self.path)
 
+  def hasexts(self, exts):
+    "Check if the file has one of the given extensions."
+    for ext in exts:
+      if self.hasext(ext):
+        return True
+    return False
+
   def hasext(self, ext):
     "Check if the file has the given extension"
     base, oldext = os.path.splitext(self.path)

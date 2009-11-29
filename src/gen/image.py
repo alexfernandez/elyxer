@@ -34,7 +34,9 @@ class Image(Container):
   "An embedded image"
 
   ignoredtexts = ImageConfig.size['ignoredtexts']
-  vectorformats = ImageConfig.size['ignoredtexts']
+  vectorformats = ImageConfig.formats['vector']
+  rasterformats = ImageConfig.formats['raster']
+  defaultformat = ImageConfig.formats['default']
 
   def __init__(self):
     self.parser = InsetParser()
@@ -62,7 +64,7 @@ class Image(Container):
     "Changes extension of destination to output image format."
     destination = OutputPath(origin)
     forceformat = '.jpg'
-    forcedest = '.png'
+    forcedest = Image.defaultformat
     if Options.forceformat:
       forceformat = Options.forceformat
       forcedest = Options.forceformat
@@ -83,12 +85,10 @@ class Image(Container):
       self.maxwidth = unicode(width) + 'px'
       if self.scale:
         self.width = self.scalevalue(width)
-        Trace.debug('Scaled width ' + unicode(self.width))
     if height:
       self.maxheight = unicode(height) + 'px'
       if self.scale:
         self.height = self.scalevalue(height)
-        Trace.debug('Scaled height ' + unicode(self.height))
     self.setifparam('width')
     self.setifparam('height')
 
@@ -146,12 +146,12 @@ class ImageConverter(object):
   def getparams(self, image):
     "Get the parameters for ImageMagick conversion"
     params = dict()
-    if image.origin.hasext('.svg'):
+    if image.origin.hasexts(Image.vectorformats):
       scale = 100
-      if self.scale:
-        scale = self.scale
+      if image.scale:
+        scale = image.scale
         # descale
-        self.scale = None
+        image.scale = None
       params['density'] = scale
     elif image.origin.hasext('.pdf'):
       params['define'] = 'pdf:use-cropbox=true'
@@ -255,11 +255,11 @@ class ImageOutput(object):
       if container.width:
         html.append('width: ' + container.width + '; ')
       if container.maxwidth:
-        html.append(' max-width: ' + container.maxwidth + '; ')
+        html.append('max-width: ' + container.maxwidth + '; ')
       if container.height:
-        html.append(' height: ' + container.height + '; ')
+        html.append('height: ' + container.height + '; ')
       if container.maxheight:
-        html.append(' max-height: ' + container.maxheight + '; ')
+        html.append('max-height: ' + container.maxheight + '; ')
       html.append('"')
     else:
       html.append(' src="' + container.origin.url + '"')

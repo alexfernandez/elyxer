@@ -533,6 +533,11 @@ class HeaderConfig(object):
 class ImageConfig(object):
   "Configuration class from config file"
 
+  formats = {
+      u'default':u'.png', u'raster':[u'.png',u'.jpg',], 
+      u'vector':[u'.svg',u'.eps',], 
+      }
+
   size = {
       u'ignoredtexts':[u'col',u'text',u'line',u'page',u'theight',u'pheight',], 
       }
