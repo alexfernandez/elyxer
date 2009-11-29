@@ -34,6 +34,7 @@ class Image(Container):
   "An embedded image"
 
   ignoredtexts = ImageConfig.size['ignoredtexts']
+  vectorformats = ImageConfig.size['ignoredtexts']
 
   def __init__(self):
     self.parser = InsetParser()
@@ -43,6 +44,7 @@ class Image(Container):
     self.height = None
     self.maxwidth = None
     self.maxheight = None
+    self.scale = None
 
   def process(self):
     "Place the url, convert the image if necessary."
@@ -51,6 +53,7 @@ class Image(Container):
       Trace.error('Image ' + unicode(self.origin) + ' not found')
       return
     self.destination = self.getdestination(self.origin)
+    self.setscale()
     ImageConverter.instance.convert(self)
     self.setsize()
 
@@ -68,14 +71,24 @@ class Image(Container):
     destination.removebackdirs()
     return destination
 
+  def setscale(self):
+    "Set the scale attribute if present."
+    self.setifparam('scale')
+
   def setsize(self):
     "Set the size attributes width and height."
     imagefile = ImageFile(self.destination)
     width, height = imagefile.getdimensions()
     if width:
       self.maxwidth = unicode(width) + 'px'
+      if self.scale:
+        self.width = self.scalevalue(width)
+        Trace.debug('Scaled width ' + unicode(self.width))
     if height:
       self.maxheight = unicode(height) + 'px'
+      if self.scale:
+        self.height = self.scalevalue(height)
+        Trace.debug('Scaled height ' + unicode(self.height))
     self.setifparam('width')
     self.setifparam('height')
 
@@ -89,6 +102,11 @@ class Image(Container):
         value = value.replace(ignored, '')
     setattr(self, name, value)
 
+  def scalevalue(self, value):
+    "Scale the value according to the image scale and return it as unicode."
+    scaled = value * int(self.scale) / 100
+    return unicode(int(scaled)) + 'px'
+
 class ImageConverter(object):
   "A converter from one image file to another."
 
@@ -100,7 +118,6 @@ class ImageConverter(object):
     if not ImageConverter.active:
       return
     if image.origin.url == image.destination.url:
-      Trace.error('Must keep PNG scaling.')
       return
     if image.destination.exists():
       if image.origin.getmtime() <= image.destination.getmtime():
@@ -129,13 +146,13 @@ class ImageConverter(object):
   def getparams(self, image):
     "Get the parameters for ImageMagick conversion"
     params = dict()
-    scale = 100
-    if 'scale' in image.parameters:
-      scale = int(image.parameters['scale'])
     if image.origin.hasext('.svg'):
+      scale = 100
+      if self.scale:
+        scale = self.scale
+        # descale
+        self.scale = None
       params['density'] = scale
-    #elif image.origin.hasext('.jpg') or image.origin.hasext('.png'):
-    #  params['resize'] = unicode(scale) + '%'
     elif image.origin.hasext('.pdf'):
       params['define'] = 'pdf:use-cropbox=true'
     return params
