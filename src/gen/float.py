@@ -66,12 +66,9 @@ class Float(Container):
       return
     image = images[0]
     if not image.width:
-      Trace.debug('No image width')
       return
     if not '%' in image.width:
-      Trace.debug('No % width')
       return
-    Trace.debug('Switch width to figure.')
     image.type = 'figure'
     self.embeddedtag += ' style="max-width: ' + image.width + ';"'
     image.width = None
