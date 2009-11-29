@@ -87,7 +87,7 @@ class TaggedOutput(ContentsOutput):
       return ''
     open = '<' + self.tag + '>'
     if self.breaklines:
-      return open + '\n'
+      return '\n' + open + '\n'
     return open
 
   def getclose(self, container):
@@ -96,7 +96,7 @@ class TaggedOutput(ContentsOutput):
       return ''
     close = '</' + self.tag.split()[0] + '>'
     if self.breaklines:
-      return '\n' + close + '\n'
+      return '\n' + close
     return close
 
 class StringOutput(object):
@@ -157,6 +157,7 @@ class FooterOutput(object):
   def gethtml(self, container):
     "Footer HTML"
     html = []
+    html.append('\n\n')
     if FooterOutput.author and not Options.nocopy:
       html.append('<hr/>\n')
       year = datetime.date.today().year
