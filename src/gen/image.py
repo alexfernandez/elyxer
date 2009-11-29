@@ -41,6 +41,8 @@ class Image(Container):
     self.type = 'embedded'
     self.width = None
     self.height = None
+    self.maxwidth = None
+    self.maxheight = None
 
   def process(self):
     "Place the url, convert the image if necessary."
@@ -68,16 +70,14 @@ class Image(Container):
 
   def setsize(self):
     "Set the size attributes width and height."
-    self.setifparam('width')
-    self.setifparam('height')
-    if self.width or self.height:
-      return
     imagefile = ImageFile(self.destination)
     width, height = imagefile.getdimensions()
     if width:
-      self.width = unicode(width)
+      self.maxwidth = unicode(width) + 'px'
     if height:
-      self.height = unicode(height)
+      self.maxheight = unicode(height) + 'px'
+    self.setifparam('width')
+    self.setifparam('height')
 
   def setifparam(self, name):
     "Set the value in the container if it exists as a param."
@@ -99,7 +99,8 @@ class ImageConverter(object):
     "Convert an image to PNG"
     if not ImageConverter.active:
       return
-    if image.origin == image.destination:
+    if image.origin.url == image.destination.url:
+      Trace.error('Must keep PNG scaling.')
       return
     if image.destination.exists():
       if image.origin.getmtime() <= image.destination.getmtime():
@@ -233,10 +234,16 @@ class ImageOutput(object):
     if container.origin.exists():
       html.append(' src="' + container.destination.url +
           '" alt="' + ImageOutput.figure + ' ' + container.destination.url + '"')
+      html.append(' style="')
       if container.width:
-        html.append(' width="' + container.width + '"')
+        html.append('width: ' + container.width + '; ')
+      if container.maxwidth:
+        html.append(' max-width: ' + container.maxwidth + '; ')
       if container.height:
-        html.append(' height="' + container.height + '"')
+        html.append(' height: ' + container.height + '; ')
+      if container.maxheight:
+        html.append(' max-height: ' + container.maxheight + '; ')
+      html.append('"')
     else:
       html.append(' src="' + container.origin.url + '"')
     html.append('/>\n')
