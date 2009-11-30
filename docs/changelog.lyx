@@ -78,6 +78,11 @@ target "index.html"
 Resized all logos in the documentation.
 \end_layout
 
+\begin_layout Itemize
+Solved bug in paragraph indentation that indented all formula spans and
+ elements.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.37 (2009-11-30):

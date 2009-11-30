@@ -58,6 +58,9 @@ div.Indented {
 	text-indent: 30pt;
 	margin: 0;
 }
+div.Indented * {
+	text-indent: 0pt;
+}
 p.dir {
 	float: right;
 }

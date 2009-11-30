@@ -2,7 +2,7 @@
 \lyxformat 345
 \begin_document
 \begin_header
-\textclass scrbook
+\textclass scrartcl
 \begin_preamble
 % DO NOT ALTER THIS PREAMBLE!!!
 %
@@ -88,7 +88,7 @@
 \paperorientation portrait
 \secnumdepth 3
 \tocdepth 3
-\paragraph_separation skip
+\paragraph_separation indent
 \defskip medskip
 \quotes_language english
 \papercolumns 1
@@ -106,7 +106,7 @@
 Math Test
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
 Limit
 \end_layout
 
@@ -168,7 +168,7 @@ where the sum's limits should appear below (
 
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
 Numeration
 \end_layout
 
@@ -267,7 +267,7 @@ y$
 .
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
 Parentheses
 \end_layout
 
@@ -318,7 +318,7 @@ There are also big brackets:
 .
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
 Fraction
 \end_layout
 
@@ -350,7 +350,7 @@ A non-diminishing fraction containing alignments:
 
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
 Roots
 \end_layout
 
@@ -387,7 +387,7 @@ Higher order roots:
 
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
 Cases
 \end_layout
 
@@ -404,7 +404,7 @@ x+1 & i<3\end{cases}$
 
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
 Spacing
 \end_layout
 
@@ -460,7 +460,7 @@ vspace
 .
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
 Fonts
 \end_layout
 
@@ -573,7 +573,7 @@ Some special fonts are supported:
 .
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
 Bye-bye
 \end_layout
 
