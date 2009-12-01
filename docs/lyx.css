@@ -71,6 +71,7 @@ a.printindex {
 	color: black;
 }
 img.embedded {
+	width: 100%;
 }
 div.float {
 	margin-top: 1ex;
