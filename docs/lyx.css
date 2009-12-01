@@ -112,6 +112,7 @@ div.caption {
 	padding: 0.5ex;
 }
 img.figure {
+	width: 100%;
 }
 div.multifigure {
 	padding: 1ex;
