@@ -1735,6 +1735,13 @@ gather
 ) are not working or look strange -- some non-AMS environments too.
 \end_layout
 
+\begin_layout Enumerate
+Images are never scaled above their nominal resolution.
+ This is seldom needed if at all, so there are no plans to change it; if
+ people really need the feature just let the author know so it can be added
+ as an option.
+\end_layout
+
 \begin_layout Subsection
 Contact Information
 \end_layout
