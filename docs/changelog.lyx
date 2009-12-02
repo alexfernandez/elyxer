@@ -83,6 +83,10 @@ Solved bug in paragraph indentation that indented all formula spans and
  elements.
 \end_layout
 
+\begin_layout Itemize
+Solved a couple of bugs in image scaling: wraps with images, images in figures.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.37 (2009-11-30):
