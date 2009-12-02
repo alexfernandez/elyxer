@@ -2,7 +2,7 @@
 * Styles for lyx document.
 */
 body {
-	font: small sans-serif;
+	font: 85% sans-serif;
 	background: #f9f9f9;
 	color: black;
 	margin: 0;
@@ -10,7 +10,6 @@ body {
 }
 
 #globalWrapper {
-	font-size: 115%;
 	margin: 10px 80px 10px 80px;
 	padding: 20px;
 	background: #ffffff;

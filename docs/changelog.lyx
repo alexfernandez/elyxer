@@ -96,6 +96,13 @@ Solved bug in TOC generation: article-class documents had their TOC depth
 Solved bug with listings inserted in documents using LyX 1.6.
 \end_layout
 
+\begin_layout Itemize
+Slight font size reduction on Firefox, and huge reduction on some other
+ proprietary browsers.
+ Now global font size specification is done using percents.
+ 
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.37 (2009-11-30):
