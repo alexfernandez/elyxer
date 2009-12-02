@@ -47,31 +47,44 @@ class Float(Container):
   def process(self):
     "Get the float type."
     self.type = self.header[2]
-    self.embeddedtag = 'div class="' + self.type + '"'
-    self.processinsides()
-    self.embed(self.embeddedtag)
+    self.processfloats()
+    self.processtags()
 
-  def processinsides(self):
-    "Process all floats and images inside."
+  def processtags(self):
+    "Process the HTML tags."
+    embeddedtag = self.getembeddedtag()
+    wideningtag = self.getwideningtag()
+    self.embed(embeddedtag + wideningtag)
+
+  def processfloats(self):
+    "Process all floats contained inside."
     floats = self.searchall(Float)
     for float in floats:
       float.output.tag = float.output.tag.replace('div', 'span')
       float.parentfloat = self
       self.children.append(float)
+
+  def getembeddedtag(self):
+    "Get the tag for the embedded object."
+    floats = self.searchall(Float)
     if len(floats) > 0:
-      self.embeddedtag = 'div class="multi' + self.type + '"'
-      return
+      return 'div class="multi' + self.type + '"'
+    return 'div class="' + self.type + '"'
+
+  def getwideningtag(self):
+    "Get the tag to set float width, if present."
     images = self.searchall(Image)
     if len(images) != 1:
-      return
+      return ''
     image = images[0]
     if not image.width:
-      return
+      return ''
     if not '%' in image.width:
-      return
+      return ''
     image.type = 'figure'
-    self.embeddedtag += ' style="max-width: ' + image.width + ';"'
+    width = image.width
     image.width = None
+    return ' style="max-width: ' + width + ';"'
 
   def embed(self, tag):
     "Embed the whole contents in a div"
@@ -100,11 +113,13 @@ class Float(Container):
 class Wrap(Float):
   "A wrapped (floating) float"
 
-  def process(self):
-    "Get the wrap type"
-    Float.process(self)
+  def processtags(self):
+    "Add the widening tag to the parent tag."
+    embeddedtag = self.getembeddedtag()
+    self.embed(embeddedtag)
     placement = self.parameters['placement']
-    self.output.tag = 'div class="wrap-' + placement + '"'
+    wideningtag = self.getwideningtag()
+    self.output.tag = 'div class="wrap-' + placement + '"' + wideningtag
 
 class Caption(Container):
   "A caption for a figure or a table"

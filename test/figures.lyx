@@ -54,6 +54,10 @@ Figures Test
 
 \end_layout
 
+\begin_layout Section
+Floats
+\end_layout
+
 \begin_layout Standard
 First, figure 
 \begin_inset CommandInset ref
@@ -349,6 +353,66 @@ Three random images
 
 \begin_layout Standard
 That's all, folks.
+\end_layout
+
+\begin_layout Section
+Wraps
+\end_layout
+
+\begin_layout Standard
+Now with wraps.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement l
+overhang 0in
+width "50col%"
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename random.png
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+A wrapped image.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This image should wrap around the text.
+ The text should be fairly complete and cover several paragraphs, but we
+ might not get so much text.
+ After all typing just because tends to bore the readers, who bear the grunt
+ of the gruntwork of reading the resulting text.
 \end_layout
 
 \end_body
