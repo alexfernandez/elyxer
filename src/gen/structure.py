@@ -48,9 +48,7 @@ class LyXHeader(Container):
     if self.getparameter('paragraphseparation') == 'indent':
       LyXHeader.indentstandard = True
     LyXHeader.tocdepth = self.getlevel('tocdepth')
-    Trace.debug('TOC depth: ' + unicode(LyXHeader.tocdepth))
     NumberGenerator.maxdepth = self.getlevel('secnumdepth')
-    Trace.debug('Max depth: ' + unicode(NumberGenerator.maxdepth))
 
   def getparameter(self, configparam):
     "Get a parameter configured in HeaderConfig."
