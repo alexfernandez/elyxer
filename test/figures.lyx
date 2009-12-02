@@ -415,5 +415,33 @@ This image should wrap around the text.
  of the gruntwork of reading the resulting text.
 \end_layout
 
+\begin_layout Standard
+We can also add a listing.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+This listing appears here courtesy of the fine Ministry of Silly Walks.
+\end_layout
+
+\begin_layout Plain Layout
+
+And appear here it does alright.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And many other things.
+\end_layout
+
 \end_body
 \end_document
