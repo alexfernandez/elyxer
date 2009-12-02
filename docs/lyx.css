@@ -479,6 +479,7 @@ div.listing {
 	text-align: left;
 	margin-left: auto;
 	margin-right: auto;
+	padding: 1ex;
 	border: thin solid #c0c0c0;
 }
 code.listing {

@@ -440,6 +440,57 @@ And appear here it does alright.
 \end_layout
 
 \begin_layout Standard
+And also a listing inside a float.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+This listing appears here courtesy of the fine Ministry of Silly Walks.
+\end_layout
+
+\begin_layout Plain Layout
+
+And appear here it does alright.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+An algorithm.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 And many other things.
 \end_layout
 

@@ -144,7 +144,7 @@ class Listing(Float):
     newcontents = []
     for container in self.contents:
       newcontents += self.extract(container)
-    tagged = TaggedText().complete(newcontents, 'code class="listing"', True)
+    tagged = TaggedText().complete(newcontents, 'code class="listing"', False)
     self.contents = [TaggedText().complete(captions + [tagged],
       'div class="listing"', True)]
 
@@ -161,8 +161,11 @@ class Listing(Float):
       return self.modifystring(container)
     if isinstance(container, StandardLayout):
       return self.modifylayout(container)
+    if isinstance(container, PlainLayout):
+      return self.modifylayout(container)
     Trace.error('Unexpected container ' + container.__class__.__name__ +
         ' in listing')
+    container.tree()
     return []
 
   def modifystring(self, string):

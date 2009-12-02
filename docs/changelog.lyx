@@ -93,7 +93,8 @@ Solved bug in TOC generation: article-class documents had their TOC depth
 \end_layout
 
 \begin_layout Itemize
-Solved bug with listings inserted in documents using LyX 1.6.
+Solved bug with listings inserted in documents using LyX 1.6, and improved
+ their looks.
 \end_layout
 
 \begin_layout Itemize
