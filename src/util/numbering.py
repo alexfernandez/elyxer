@@ -55,6 +55,9 @@ class NumberGenerator(object):
     "Generate ordered numbering: a number to use and possibly concatenate "
     "with others. Example: Chapter 1, Section 1.5."
     level = self.getlevel(type)
+    if level == 0:
+      Trace.error('Impossible level 0 for ' + type)
+      return '.'
     if level > NumberGenerator.maxdepth:
       return ''
     if len(self.number) >= level:

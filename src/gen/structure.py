@@ -47,8 +47,10 @@ class LyXHeader(Container):
       NumberGenerator.startinglevel = 1
     if self.getparameter('paragraphseparation') == 'indent':
       LyXHeader.indentstandard = True
-    LyXHeader.tocdepth = int(self.getparameter('tocdepth')) + 1
-    NumberGenerator.maxdepth = int(self.getparameter('secnumdepth')) + 1
+    LyXHeader.tocdepth = self.getlevel('tocdepth')
+    Trace.debug('TOC depth: ' + unicode(LyXHeader.tocdepth))
+    NumberGenerator.maxdepth = self.getlevel('secnumdepth')
+    Trace.debug('Max depth: ' + unicode(NumberGenerator.maxdepth))
 
   def getparameter(self, configparam):
     "Get a parameter configured in HeaderConfig."
@@ -56,6 +58,13 @@ class LyXHeader(Container):
     if not key in self.parameters:
       return None
     return self.parameters[key]
+
+  def getlevel(self, configparam):
+    "Get a level read as a parameter from HeaderConfig."
+    value = int(self.getparameter(configparam))
+    if NumberGenerator.startinglevel == 1:
+      return value
+    return value + 1
 
 class LyXFooter(Container):
   "Reads the footer, outputs the HTML footer"

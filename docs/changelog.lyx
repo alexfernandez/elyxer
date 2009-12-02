@@ -87,6 +87,11 @@ Solved bug in paragraph indentation that indented all formula spans and
 Solved a couple of bugs in image scaling: wraps with images, images in figures.
 \end_layout
 
+\begin_layout Itemize
+Solved bug in TOC generation: article-class documents had their TOC depth
+ off-by-one.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.37 (2009-11-30):

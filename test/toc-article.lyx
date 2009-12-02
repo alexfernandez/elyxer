@@ -2,7 +2,7 @@
 \lyxformat 345
 \begin_document
 \begin_header
-\textclass book
+\textclass article
 \use_default_options false
 \language english
 \inputencoding auto
@@ -26,8 +26,8 @@
 \cite_engine basic
 \use_bibtopic false
 \paperorientation portrait
-\secnumdepth 2
-\tocdepth 3
+\secnumdepth 1
+\tocdepth 2
 \paragraph_separation skip
 \defskip medskip
 \quotes_language english
@@ -43,7 +43,7 @@
 \begin_body
 
 \begin_layout Title
-TOC Test
+Article TOC Test
 \end_layout
 
 \begin_layout Standard
@@ -59,7 +59,7 @@ LatexCommand tableofcontents
 Our Definition
 \end_layout
 
-\begin_layout Chapter
+\begin_layout Section
 The definition
 \end_layout
 
