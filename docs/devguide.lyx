@@ -302,7 +302,7 @@ s
 \end_layout
 
 \begin_layout Standard
-The basic code artifact (or `
+The basic code artifact (or `class
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "class"
@@ -2269,7 +2269,7 @@ eLyXer supports a few distinct modes of operation.
 \end_layout
 
 \begin_layout Itemize
-A pure 
+A pure filter
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "filter"
@@ -2290,6 +2290,7 @@ In-memory processing: read a complete file, process it and write it all
 \end_layout
 
 \begin_layout Itemize
+TOC
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "TOC"
