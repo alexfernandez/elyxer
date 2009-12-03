@@ -83,7 +83,7 @@ target "http://www.lyx.org/"
 
 \end_inset
 
-is a wonderful text editor which produces beautiful PDF files.
+ is a wonderful text editor which produces beautiful PDF files.
  Internally it exports documents to LaTeX, and from there to PDF.
  Sadly there is not an equivalent 
 \begin_inset Quotes eld
