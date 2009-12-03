@@ -167,7 +167,17 @@ Installation
 \end_layout
 
 \begin_layout Standard
-There are two ways to install eLyXer: the easy way and the elegant way.
+First you will need to fetch the official distribution file from the 
+\begin_inset CommandInset href
+LatexCommand href
+name "download area"
+target "https://savannah.nongnu.org/files/?group=elyxer"
+
+\end_inset
+
+.
+ Now, there are two ways to install eLyXer: the easy way and the elegant
+ way.
  Both start by uncompressing the distributed file to a suitable directory.
  Just write at the command prompt:
 \end_layout
