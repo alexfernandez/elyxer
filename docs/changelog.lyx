@@ -101,7 +101,90 @@ Solved bug with listings inserted in documents using LyX 1.6, and improved
 Slight font size reduction on Firefox, and huge reduction on some other
  proprietary browsers.
  Now global font size specification is done using percents.
- 
+\end_layout
+
+\begin_layout Itemize
+New commands: 
+\family typewriter
+
+\backslash
+gtrless
+\family default
+: 
+\begin_inset Formula $\gtrless$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+complement
+\family default
+: 
+\begin_inset Formula $\complement$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+measuredangle
+\family default
+: 
+\begin_inset Formula $\measuredangle$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+sphericalangle
+\family default
+: 
+\begin_inset Formula $\sphericalangle$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+nmid
+\family default
+: 
+\begin_inset Formula $\nmid$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+circeq
+\family default
+: 
+\begin_inset Formula $\circeq$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+lessgtr
+\family default
+: 
+\begin_inset Formula $\lessgtr$
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+nparallel
+\family default
+: 
+\begin_inset Formula $\nparallel$
+\end_inset
+
+.
 \end_layout
 
 \end_deeper
