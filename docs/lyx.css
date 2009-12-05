@@ -71,6 +71,7 @@ a.printindex {
 }
 img.embedded {
 	width: 100%;
+	_width: auto;
 }
 div.float {
 	margin-top: 1ex;
@@ -113,6 +114,7 @@ div.caption {
 }
 img.figure {
 	width: 100%;
+	_width: auto;
 }
 div.multifigure {
 	padding: 1ex;
