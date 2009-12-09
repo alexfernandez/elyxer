@@ -620,11 +620,11 @@ class TranslationConfig(object):
 
   floats = {
       u'algorithm':u'Listing ', u'figure':u'Figure ', u'listing':u'Listing ', 
-      u'table':u'Table ', 
+      u'table':u'Table ', u'tableau':u'Tableau ', 
       }
 
   lists = {
       u'algorithm':u'List of Listings', u'figure':u'List of Figures', 
-      u'table':u'List of Tables', 
+      u'table':u'List of Tables', u'tableau':u'List of Tableaux', 
       }
 
