@@ -50,7 +50,6 @@ class FormulaParser(Parser):
       stripped = reader.currentline().strip()
       if len(stripped) > 0:
         Trace.error('Unparsed formula line ' + stripped)
-        Trace.debug('Missing ' + self.ending + ' for ' + formula)
       reader.nextline()
     reader.nextline()
     return [formula]
