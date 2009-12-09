@@ -128,11 +128,15 @@ class IntegralListOf(IntegralProcessor):
     if float.parentfloat:
       return None
     link = self.createlink(float)
+    if not link:
+      return None
     return TaggedText().complete([link], 'div class="toc"', True)
 
   def createlink(self, float):
     "Create the link to the float label."
     captions = float.searchinside(float.contents, Caption)
+    if len(captions) == 0:
+      return None
     labels = float.searchinside(float.contents, Label)
     if len(labels) > 0:
       label = labels[0]

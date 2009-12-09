@@ -75,7 +75,11 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Avoid oversized images on IE6.
+\end_layout
+
+\begin_layout Itemize
+Solved several crashes with the LyX documentation (thanks, Uwe!).
 \end_layout
 
 \end_deeper
