@@ -288,7 +288,6 @@ class FractionFunction(CommandBit):
     pos = Position(template)
     while not pos.finished():
       self.contents.append(self.getpiece(pos, values))
-      Trace.debug('Last item: ' + unicode(self.contents[-1]))
       
   def getpiece(self, pos, values):
     "Get the next piece of the template."
@@ -301,7 +300,6 @@ class FractionFunction(CommandBit):
       return FormulaConstant('$')
     index = int(pos.current()) - 1
     pos.skip(pos.current())
-    Trace.debug('Returning index ' + str(index) + ' for ' + str(values))
     return values[index]
 
 class SpacingFunction(CommandBit):
