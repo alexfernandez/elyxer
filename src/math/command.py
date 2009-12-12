@@ -255,27 +255,54 @@ class FractionFunction(CommandBit):
   def parsebit(self, pos):
     "Parse a fraction function with two parameters (optional alignment)"
     self.output = TaggedOutput().settag(self.translated[0])
+    firsttag = self.translated[1]
+    secondtag = self.translated[2]
+    template = self.translated[3]
     align = self.parsesquare(pos)
+    if align and self.command == '\\cfrac':
+      self.contents.pop()
+      firsttag = firsttag[:-1] + '-' + align.contents[0].original + '"'
     parameter1 = self.parseparameter(pos)
     if not parameter1:
       Trace.error('Invalid fraction function ' + self.translated[0] + 
           ': missing first {}')
       return
-    numerator = self.translated[1]
-    if align and self.command == '\\cfrac':
-      self.contents.pop(0)
-      numerator = numerator[:-1] + '-' + align.contents[0].original + '"'
-    parameter1.output = TaggedOutput().settag(numerator)
-    self.contents.append(FormulaConstant(self.translated[2]))
+    parameter1.output = TaggedOutput().settag(firsttag)
     parameter2 = self.parseparameter(pos)
     if not parameter2:
       Trace.error('Invalid fraction function ' + self.translated[0] + 
           ': missing second {}')
       return
-    parameter2.output = TaggedOutput().settag(self.translated[3])
+    parameter2.output = TaggedOutput().settag(secondtag)
     if align and self.command == '\\unitfrac':
       parameter1.type = 'font'
       parameter2.type = 'font'
+    parameters = [parameter1, parameter2]
+    self.contents.pop()
+    self.contents.pop()
+    self.fillin(template, parameters)
+
+  def fillin(self, template, values):
+    "Fill in the contents according to a template and some values."
+    "If the template is $1-$2 the contents will have: [first value, '-', second value]."
+    pos = Position(template)
+    while not pos.finished():
+      self.contents.append(self.getpiece(pos, values))
+      Trace.debug('Last item: ' + unicode(self.contents[-1]))
+      
+  def getpiece(self, pos, values):
+    "Get the next piece of the template."
+    if not pos.checkskip('$'):
+      return FormulaConstant(pos.globexcluding('$'))
+    if pos.checkskip('$'):
+      return FormulaConstant('$')
+    if not pos.current().isdigit():
+      Trace.error('Invalid template piece $' + pos.current())
+      return FormulaConstant('$')
+    index = int(pos.current()) - 1
+    pos.skip(pos.current())
+    Trace.debug('Returning index ' + str(index) + ' for ' + str(values))
+    return values[index]
 
 class SpacingFunction(CommandBit):
   "A spacing function with two parameters"

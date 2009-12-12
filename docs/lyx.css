@@ -551,3 +551,23 @@ span.hfill {
 	min-width: 20mm;
 	background: #fff0f0;
 }
+span.binom {
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 80%;
+}
+span.fullbinom {
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	text-align: center;
+}
+span.upbinom {
+	display: block;
+}
+span.downbinom {
+	display: block;
+	padding: 0;
+}

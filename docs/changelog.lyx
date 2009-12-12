@@ -90,6 +90,34 @@ src/loremipsumize.py
 .
 \end_layout
 
+\begin_layout Itemize
+Improved error reporting for BibTeX parsing (thanks, Ken!).
+\end_layout
+
+\begin_layout Itemize
+Ignore commands 
+\family typewriter
+
+\backslash
+leftroot
+\family default
+, 
+\family typewriter
+
+\backslash
+uproot
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+Support for binomial coefficients: 
+\begin_inset Formula $\binom{A}{B}$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.38 (2009-12-03):

@@ -350,6 +350,20 @@ A non-diminishing fraction containing alignments:
 
 \end_layout
 
+\begin_layout Standard
+A similar concept is a binomial coefficient: 
+\begin_inset Formula \[
+\binom{A}{B}.\]
+
+\end_inset
+
+It can be prettily presented: 
+\begin_inset Formula $\dbinom{A}{B}$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Section
 Roots
 \end_layout
