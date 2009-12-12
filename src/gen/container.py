@@ -178,16 +178,19 @@ class StringContainer(Container):
     self.string = ''
 
   def process(self):
-    "Replace special chars"
-    line = self.contents[0]
+    "Replace special chars from the contents."
+    self.string = self.replacespecial(self.contents[0])
     self.contents = []
+
+  def replacespecial(self, line):
+    "Replace all special chars from a line"
     replaced = self.escape(line, EscapeConfig.entities)
     replaced = self.changeline(replaced)
-    self.string = replaced
     if ContainerConfig.string['startcommand'] in replaced and len(replaced) > 1:
       # unprocessed commands
-      Trace.error('Unknown command at ' + unicode(self.parser.begin) + ': '
-          + replaced.strip())
+      message = 'Unknown command at ' + unicode(self.parser.begin) + ': '
+      Trace.error(message + replaced.strip())
+    return replaced
 
   def changeline(self, line):
     line = self.escape(line, EscapeConfig.chars)
