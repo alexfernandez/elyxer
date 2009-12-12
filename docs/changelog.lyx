@@ -82,6 +82,14 @@ Avoid oversized images on IE6.
 Solved several crashes with the LyX documentation (thanks, Uwe!).
 \end_layout
 
+\begin_layout Itemize
+Created script to lorem-ipsumize texts, found in 
+\family typewriter
+src/loremipsumize.py
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.38 (2009-12-03):
