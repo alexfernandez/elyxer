@@ -115,9 +115,7 @@ class BibFile(object):
         return
     # Skip the whole line, and show it as an error
     pos.checkskip('\n')
-    toline = pos.globexcluding('\n')
-    Trace.error('Unidentified entry: ' + toline)
-    pos.checkskip('\n')
+    Entry.entries[0].lineerror('Unidentified entry', pos)
 
   def __unicode__(self):
     "String representation"
@@ -142,7 +140,7 @@ class Entry(Container):
     self.type = self.parsepiece(pos, Entry.structure)
     pos.skipspace()
     if not pos.checkskip('{'):
-      self.lineerror(pos, 'Entry should start with {: ')
+      self.lineerror('Entry should start with {', pos)
       return
     pos.pushending('}')
     self.parsetags(pos)
@@ -154,7 +152,7 @@ class Entry(Container):
     pos.skipspace()
     while not pos.finished():
       if pos.checkskip('{'):
-        Trace.error('Unmatched {')
+        self.lineerror('Unmatched {', pos)
         return
       self.parsetag(pos)
   
@@ -170,14 +168,14 @@ class Entry(Container):
       self.tags[piece] = value
       pos.skipspace()
       if not pos.finished() and not pos.checkskip(','):
-        Trace.error('Missing , in BibTeX tag at ' + pos.current())
+        self.lineerror('Missing , in BibTeX tag', pos)
       return
 
   def parsevalue(self, pos):
     "Parse the value for a tag"
     pos.skipspace()
     if pos.checkfor(','):
-      Trace.error('Unexpected ,')
+      self.lineerror('Unexpected ,', pos)
       return ''
     if pos.checkfor('{'):
       return self.parsebracket(pos)
@@ -189,7 +187,7 @@ class Entry(Container):
   def parsebracket(self, pos):
     "Parse a {} bracket"
     if not pos.checkskip('{'):
-      Trace.error('Missing opening { in bracket')
+      self.lineerror('Missing opening { in bracket', pos)
       return ''
     pos.pushending('}')
     bracket = self.parserecursive(pos)
@@ -199,9 +197,9 @@ class Entry(Container):
   def parsequoted(self, pos):
     "Parse a piece of quoted text"
     if not pos.checkskip('"'):
-      Trace.error('Missing opening " in quote')
+      self.lineerror('Missing opening " in quote', pos)
       return
-    pos.pushending('"')
+    pos.pushending('"', True)
     quoted = self.parserecursive(pos)
     pos.popending('"')
     pos.skipspace()
@@ -221,13 +219,19 @@ class Entry(Container):
         elif pos.checkfor('"'):
           piece += self.parsequoted(pos)
         else:
-          Trace.error('Missing opening { or ": ' + pos.current())
+          self.lineerror('Missing opening { or "', pos)
           return piece
     return piece
 
   def parsepiece(self, pos, undesired):
     "Parse a piece not structure"
     return pos.glob(lambda current: not current in undesired)
+
+  def lineerror(self, message, pos):
+    "Show an error message for a line."
+    toline = pos.globexcluding('\n')
+    pos.checkskip('\n')
+    Trace.error(message + ': ' + toline)
 
 class SpecialEntry(Entry):
   "A special entry"
