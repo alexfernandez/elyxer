@@ -352,13 +352,13 @@ A non-diminishing fraction containing alignments:
 
 \begin_layout Standard
 A similar concept is a binomial coefficient: 
-\begin_inset Formula \[
-\binom{A}{B}.\]
-
+\begin_inset Formula $\binom{A+1}{B}.$
 \end_inset
 
-It can be prettily presented: 
-\begin_inset Formula $\dbinom{A}{B}$
+ It can be prettily presented: 
+\begin_inset Formula \[
+\dbinom{A}{B+1}\]
+
 \end_inset
 
 .

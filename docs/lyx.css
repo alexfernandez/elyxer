@@ -229,7 +229,6 @@ span.bar {
 }
 .fraction {
 	display: inline-block;
-	position: relative;
 	vertical-align: middle;
 	text-align: center;
 }
@@ -239,7 +238,6 @@ span.bar {
 }
 .fullfraction {
 	display: inline-block;
-	position: relative;
 	vertical-align: middle;
 	text-align: center;
 }
@@ -553,14 +551,13 @@ span.hfill {
 }
 span.binom {
 	display: inline-block;
-	position: relative;
 	vertical-align: middle;
 	text-align: center;
 	font-size: 80%;
+	border: black thin solid;
 }
 span.fullbinom {
 	display: inline-block;
-	position: relative;
 	vertical-align: middle;
 	text-align: center;
 }
