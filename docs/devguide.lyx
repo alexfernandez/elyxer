@@ -239,7 +239,22 @@ $
 \begin_layout Standard
 The build system for eLyXer will compile it for you, and even run some basic
  tests.
- Now you can try it out:
+ (We will see later on section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Distribution"
+
+\end_inset
+
+ how this 
+\begin_inset Quotes eld
+\end_inset
+
+compilation
+\begin_inset Quotes erd
+\end_inset
+
+ is done.) Now you can try it out:
 \end_layout
 
 \begin_layout LyX-Code
@@ -275,6 +290,32 @@ $
 \end_layout
 
 \begin_layout Standard
+If you want to debug eLyXer then it is better to run it from the source
+ code folder, instead of the compiled version.
+ For this you need to make just a small change, instead of 
+\family typewriter
+elyxer.py
+\family default
+ run 
+\family typewriter
+src/principal.py
+\family default
+:
+\end_layout
+
+\begin_layout LyX-Code
+
+\color blue
+$
+\color inherit
+ ../src/principal.py --debug devguide.lyx devguide2.html
+\end_layout
+
+\begin_layout Standard
+and you will see the internal debug messages.
+\end_layout
+
+\begin_layout Standard
 Note for Windows developers: on Windows eLyXer needs to be invoked using
  the Python executable, and of course changing the slashes to backward-slashes:
 \end_layout
@@ -285,6 +326,22 @@ Note for Windows developers: on Windows eLyXer needs to be invoked using
 >
 \color inherit
  Python ..
+\backslash
+elyxer.py devguide.lyx devguide2.html
+\end_layout
+
+\begin_layout Standard
+or for the source code version:
+\end_layout
+
+\begin_layout LyX-Code
+
+\color blue
+>
+\color inherit
+ Python ..
+\backslash
+src
 \backslash
 elyxer.py devguide.lyx devguide2.html
 \end_layout
@@ -2405,6 +2462,13 @@ SplittingBasket
 
 \begin_layout Subsection
 Distribution
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Distribution"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
