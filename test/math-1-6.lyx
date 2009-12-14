@@ -273,7 +273,7 @@ Parentheses
 
 \begin_layout Standard
 Some delimiters also taken from the Spanish Lyx User's Guide.
- Array: 
+ An array: 
 \begin_inset Formula \[
 \left[\begin{array}{lc}
 12 & 2\\
@@ -281,7 +281,7 @@ Some delimiters also taken from the Spanish Lyx User's Guide.
 
 \end_inset
 
-And inline array 
+And an inline array 
 \begin_inset Formula $\left[\begin{array}[t]{cc}
 a & b\\
 c & dio\end{array}\right]$
