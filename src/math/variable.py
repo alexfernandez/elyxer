@@ -35,19 +35,71 @@ class HybridFunction(CommandBit):
   "The [] parameter is optional"
 
   commandmap = FormulaConfig.hybridfunctions
+  parambrackets = [('[', ']'), ('{', '}')]
 
   def parsebit(self, pos):
     "Parse a function with [] and {} parameters"
-    square = self.parsesquare(pos)
-    bracket = self.parseparameter(pos)
-    bracket.output = TaggedOutput().settag(self.translated)
-    if self.command == '\sqrt':
-      self.sqrt(square, bracket)
-    elif self.command == '\unit':
-      self.unit(square, bracket)
-    else:
-      Trace.error('Unknown hybrid function ' + self.command)
-      return
+    readtemplate = self.translated[0]
+    writetemplate = self.translated[1]
+    Trace.debug('From ' + readtemplate + ' to ' + writetemplate)
+    params = self.readparams(readtemplate, pos)
+    self.contents = self.writeparams(params, writetemplate)
+
+  def readparams(self, readtemplate, pos):
+    "Read the params according to the template."
+    params = dict()
+    for paramdef in self.paramdefs(readtemplate):
+      if paramdef.startswith('['):
+        value = self.parsesquare(pos)
+      elif paramdef.startswith('{'):
+        value = self.parseparameter(pos)
+      else:
+        Trace.error('Invalid parameter definition ' + paramdef)
+        value = None
+      params[paramdef[1:-1]] = value
+    return params
+
+  def paramdefs(self, readtemplate):
+    "Read each param definition in the template"
+    pos = Position(readtemplate)
+    while not pos.finished():
+      paramdef = self.readparamdef(pos)
+      if paramdef:
+        if len(paramdef) != 4:
+          Trace.error('Parameter definition ' + paramdef + ' has wrong length')
+        else:
+          yield paramdef
+
+  def readparamdef(self, pos):
+    "Read a single parameter definition: [$0], {$x}..."
+    Trace.debug('Reading parameter in ' + pos.remaining())
+    for (opening, closing) in HybridFunction.parambrackets:
+      if pos.checkskip(opening):
+        if not pos.checkfor('$'):
+          Trace.error('Wrong parameter name ' + pos.current())
+          return None
+        return opening + pos.globincluding(closing)
+    Trace.error('Wrong character in parameter template' + pos.currentskip())
+    return None
+
+  def writeparams(self, params, writetemplate):
+    "Write all params according to the template"
+    Trace.debug('Template: ' + writetemplate)
+    result = []
+    pos = Position(writetemplate)
+    while not pos.finished():
+      if pos.checkskip('$'):
+        name = '$' + pos.currentskip()
+        if not name in params:
+          Trace.error('Unknown parameter ' + name)
+        elif params[name]:
+          Trace.debug('Appending ' + unicode(params[name]))
+          result.append(params[name])
+      elif pos.checkskip('f'):
+        pass
+      else:
+        result.append(FormulaConstant(pos.currentskip()))
+    return result
 
   def sqrt(self, root, radical):
     "A square root -- process the root"

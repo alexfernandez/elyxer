@@ -80,8 +80,7 @@ class FormulaRow(FormulaCommand):
       cell.parsebit(pos)
       self.add(cell)
       index += 1
-      if pos.checkfor(FormulaRow.cellseparator):
-        pos.skip(FormulaRow.cellseparator)
+      pos.checkskip(FormulaRow.cellseparator)
     return
     for cell in self.iteratecells(pos):
       cell.parsebit(pos)

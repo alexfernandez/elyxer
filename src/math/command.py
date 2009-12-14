@@ -59,17 +59,14 @@ class FormulaCommand(FormulaBit):
   def extractcommand(self, pos):
     "Extract the command from the current position"
     start = FormulaConfig.starts['command']
-    if not pos.checkfor(start):
+    if not pos.checkskip(start):
       Trace.error('Missing command start ' + start)
       return
-    pos.skip(start)
     if pos.current().isalpha():
       # alpha command
       return start + pos.globalpha()
     # symbol command
-    command = start + pos.current()
-    pos.skip(pos.current())
-    return command
+    return start + pos.currentskip()
 
   def process(self):
     "Process the internals"

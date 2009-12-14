@@ -72,9 +72,8 @@ class FormulaBit(Container):
   def skiporiginal(self, string, pos):
     "Skip a string and add it to the original formula"
     self.original += string
-    if not pos.checkfor(string):
+    if not pos.checkskip(string):
       Trace.error('String ' + string + ' not at ' + pos.remaining())
-    pos.skip(string)
 
   def __unicode__(self):
     "Get a string representation"
@@ -165,7 +164,5 @@ class FormulaFactory(object):
           return returnedbit
         return newbit
     Trace.error('Unrecognized formula at ' + pos.remaining())
-    constant = FormulaConstant(pos.current())
-    pos.skip(pos.current())
-    return constant
+    return FormulaConstant(pos.currentskip())
 

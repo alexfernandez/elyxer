@@ -62,6 +62,12 @@ class Position(object):
       return ''
     return self.text[self.pos]
 
+  def currentskip(self):
+    "Return the current character and skip it."
+    current = self.current()
+    self.skip(current)
+    return current
+
   def checkfor(self, string):
     "Check for a string at the given position"
     if self.pos + len(string) > len(self.text):

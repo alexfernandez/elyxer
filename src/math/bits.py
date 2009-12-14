@@ -142,11 +142,9 @@ class Bracket(FormulaBit):
     while not pos.finished():
       if pos.current() == FormulaConfig.starts['command']:
         bit = factory.parsebit(pos)
-        if pos.current() == ' ':
-          pos.skip(pos.current())
+        pos.checkskip(' ')
       else:
-        bit = FormulaConstant(pos.current())
-        pos.skip(pos.current())
+        bit = FormulaConstant(pos.currentskip())
       self.add(bit)
 
   def innerliteral(self, pos):
