@@ -116,6 +116,7 @@ Support for binomial coefficients:
 \end_inset
 
 .
+ Generic support for variable commands in math mode.
 \end_layout
 
 \end_deeper

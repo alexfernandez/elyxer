@@ -56,6 +56,8 @@ class HybridFunction(CommandBit):
       else:
         Trace.error('Invalid parameter definition ' + paramdef)
         value = None
+      if value:
+        Trace.debug('Value for ' + paramdef[1:-1] + ': ' + unicode(value) + ', type ' + unicode(value.type))
       params[paramdef[1:-1]] = value
     return params
 
@@ -114,6 +116,7 @@ class HybridFunction(CommandBit):
     Trace.debug('Appending ' + unicode(params[name]))
     if pos.checkskip('.'):
       params[name].type = pos.globalpha()
+      Trace.debug('Type of ' + unicode(params[name]) + ': ' + params[name].type)
     return params[name]
 
   def writefunction(self, params, pos):
@@ -134,7 +137,7 @@ class HybridFunction(CommandBit):
     pos.popending()
     if len(contents) == 0:
       return None
-    function = TaggedText().complete(contents, tag, False)
+    function = TaggedBit().complete(contents, tag)
     function.type = None
     Trace.debug('Function ' + unicode(function))
     return function

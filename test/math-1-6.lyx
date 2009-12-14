@@ -357,11 +357,11 @@ A similar concept is a binomial coefficient:
 
  It can be prettily presented: 
 \begin_inset Formula \[
-\dbinom{A}{B+1}\]
+\dbinom{A}{B+1}.\]
 
 \end_inset
 
-.
+
 \end_layout
 
 \begin_layout Section
@@ -541,7 +541,7 @@ Regular text.
 
 \begin_layout Standard
 Units can be shown with or without a magnitude.
- Withouth: 
+ Without: 
 \begin_inset Formula $\unit{km}$
 \end_inset
 
