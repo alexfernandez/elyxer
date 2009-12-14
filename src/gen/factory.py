@@ -32,7 +32,7 @@ from ref.label import *
 from ref.biblio import *
 from math.formula import *
 from math.command import *
-from math.hybrid import *
+from math.variable import *
 from gen.table import *
 from gen.image import *
 from gen.structure import *

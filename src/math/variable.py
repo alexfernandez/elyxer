@@ -20,7 +20,7 @@
 
 # --end--
 # Alex 20091214
-# eLyXer hybrid functions: variable number of parameters.
+# eLyXer functions with a variable number of parameters.
 
 import sys
 from gen.container import *
