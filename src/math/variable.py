@@ -41,7 +41,7 @@ class HybridFunction(CommandBit):
     "Parse a function with [] and {} parameters"
     readtemplate = self.translated[0]
     writetemplate = self.translated[1]
-    Trace.debug('From ' + readtemplate + ' to ' + writetemplate)
+    Trace.debug('Command ' + self.command + ': from ' + readtemplate + ' to ' + writetemplate)
     params = self.readparams(readtemplate, pos)
     self.contents = self.writeparams(params, writetemplate)
 
@@ -85,21 +85,59 @@ class HybridFunction(CommandBit):
   def writeparams(self, params, writetemplate):
     "Write all params according to the template"
     Trace.debug('Template: ' + writetemplate)
+    return self.writepos(params, Position(writetemplate))
+
+  def writepos(self, params, pos):
+    "Write all params as read in the parse position."
     result = []
-    pos = Position(writetemplate)
     while not pos.finished():
       if pos.checkskip('$'):
-        name = '$' + pos.currentskip()
-        if not name in params:
-          Trace.error('Unknown parameter ' + name)
-        elif params[name]:
-          Trace.debug('Appending ' + unicode(params[name]))
-          result.append(params[name])
+        param = self.writeparam(params, pos)
+        if param:
+          result.append(param)
       elif pos.checkskip('f'):
-        pass
+        function = self.writefunction(params, pos)
+        if function:
+          result.append(function)
       else:
         result.append(FormulaConstant(pos.currentskip()))
     return result
+
+  def writeparam(self, params, pos):
+    "Write a single param of the form $0, $x..."
+    name = '$' + pos.currentskip()
+    if not name in params:
+      Trace.error('Unknown parameter ' + name)
+      return None
+    if not params[name]:
+      return None
+    Trace.debug('Appending ' + unicode(params[name]))
+    if pos.checkskip('.'):
+      params[name].type = pos.globalpha()
+    return params[name]
+
+  def writefunction(self, params, pos):
+    "Write a single function f0,...,fn."
+    if not pos.current().isdigit():
+      Trace.error('Function should be f0,...,f9: f' + pos.current())
+      return None
+    index = int(pos.currentskip())
+    if 2 + index > len(self.translated):
+      Trace.error('Function f' + unicode(index) + ' is not defined')
+      return None
+    tag = self.translated[2 + index]
+    if not pos.checkskip('{'):
+      Trace.error('Function should be defined in {}')
+      return None
+    pos.pushending('}')
+    contents = self.writepos(params, pos)
+    pos.popending()
+    if len(contents) == 0:
+      return None
+    function = TaggedText().complete(contents, tag, False)
+    function.type = None
+    Trace.debug('Function ' + unicode(function))
+    return function
 
   def sqrt(self, root, radical):
     "A square root -- process the root"
