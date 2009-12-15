@@ -152,29 +152,7 @@ class HybridFunction(CommandBit):
         tag = tag.replace(name, value)
     return tag
 
-class SpacingFunction(CommandBit):
-  "A spacing function with two parameters"
-
-  commandmap = FormulaConfig.spacingfunctions
-
-  def parsebit(self, pos):
-    "Parse a spacing function with two parameters"
-    numparams = int(self.translated[1])
-    parameter1 = Bracket().parseliteral(pos)
-    if not parameter1:
-      Trace.error('Missing first {} in function ' + self.command)
-    parameter2 = None
-    if numparams == 2:
-      parameter2 = self.parseparameter(pos)
-      if not parameter2:
-        Trace.error('Missing second {} in spacing function ' + self.command)
-        return
-    else:
-      self.add(FormulaConstant(' '))
-    tag = self.translated[0].replace('$param', parameter1.literal)
-    self.output = TaggedOutput().settag(tag)
-
 FormulaCommand.commandbits += [
-    HybridFunction(), SpacingFunction(),
+    HybridFunction(),
     ]
 
