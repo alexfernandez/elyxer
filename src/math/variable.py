@@ -41,7 +41,6 @@ class HybridFunction(CommandBit):
     "Parse a function with [] and {} parameters"
     readtemplate = self.translated[0]
     writetemplate = self.translated[1]
-    Trace.debug('Command ' + self.command + ': from ' + readtemplate + ' to ' + writetemplate)
     params = self.readparams(readtemplate, pos)
     self.contents = self.writeparams(params, writetemplate)
 
@@ -56,8 +55,6 @@ class HybridFunction(CommandBit):
       else:
         Trace.error('Invalid parameter definition ' + paramdef)
         value = None
-      if value:
-        Trace.debug('Value for ' + paramdef[1:-1] + ': ' + unicode(value) + ', type ' + unicode(value.type))
       params[paramdef[1:-1]] = value
     return params
 
@@ -74,7 +71,6 @@ class HybridFunction(CommandBit):
 
   def readparamdef(self, pos):
     "Read a single parameter definition: [$0], {$x}..."
-    Trace.debug('Reading parameter in ' + pos.remaining())
     for (opening, closing) in HybridFunction.parambrackets:
       if pos.checkskip(opening):
         if not pos.checkfor('$'):
@@ -86,7 +82,6 @@ class HybridFunction(CommandBit):
 
   def writeparams(self, params, writetemplate):
     "Write all params according to the template"
-    Trace.debug('Template: ' + writetemplate)
     return self.writepos(params, Position(writetemplate))
 
   def writepos(self, params, pos):
@@ -113,22 +108,15 @@ class HybridFunction(CommandBit):
       return None
     if not params[name]:
       return None
-    Trace.debug('Appending ' + unicode(params[name]))
     if pos.checkskip('.'):
       params[name].type = pos.globalpha()
-      Trace.debug('Type of ' + unicode(params[name]) + ': ' + params[name].type)
     return params[name]
 
   def writefunction(self, params, pos):
     "Write a single function f0,...,fn."
-    if not pos.current().isdigit():
-      Trace.error('Function should be f0,...,f9: f' + pos.current())
+    tag = self.readtag(params, pos)
+    if not tag:
       return None
-    index = int(pos.currentskip())
-    if 2 + index > len(self.translated):
-      Trace.error('Function f' + unicode(index) + ' is not defined')
-      return None
-    tag = self.translated[2 + index]
     if not pos.checkskip('{'):
       Trace.error('Function should be defined in {}')
       return None
@@ -139,8 +127,30 @@ class HybridFunction(CommandBit):
       return None
     function = TaggedBit().complete(contents, tag)
     function.type = None
-    Trace.debug('Function ' + unicode(function))
     return function
+
+  def readtag(self, params, pos):
+    "Get the tag corresponding to the given index. Does parameter substitution."
+    if not pos.current().isdigit():
+      Trace.error('Function should be f0,...,f9: f' + pos.current())
+      return None
+    index = int(pos.currentskip())
+    if 2 + index > len(self.translated):
+      Trace.error('Function f' + unicode(index) + ' is not defined')
+      return None
+    tag = self.translated[2 + index]
+    if not '$' in tag:
+      return tag
+    Trace.debug('$ in ' + tag)
+    for name in params:
+      if name in tag:
+        if params[name]:
+          value = params[name].original[1:-1]
+        else:
+          value = ''
+        Trace.debug('Replacing ' + name + ' with ' + value)
+        tag = tag.replace(name, value)
+    return tag
 
   def sqrt(self, root, radical):
     "A square root -- process the root"

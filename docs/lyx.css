@@ -252,6 +252,14 @@ span.numerator-r {
 	display: block;
 	text-align: right;
 }
+span.numeratorl {
+	display: block;
+	text-align: left;
+}
+span.numeratorr {
+	display: block;
+	text-align: right;
+}
 span.denominator {
 	display: block;
 	padding: 0;
