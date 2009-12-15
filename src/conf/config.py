@@ -443,10 +443,6 @@ class FormulaConfig(object):
       u'\\mathsf':u'span class="mathsf"', u'\\mathtt':u'tt', 
       }
 
-  fractionfunctions = {
-      
-      }
-
   hybridfunctions = {
       
       u'\\binom':[u'{$1}{$2}',u'f3{(}f0{f1{$1}f2{$2}}f3{)}',u'span class="binom"',u'span class="upbinom"',u'span class="downbinom"',u'span class="bigsymbol"',], 
