@@ -318,6 +318,19 @@ There are also big brackets:
 .
 \end_layout
 
+\begin_layout Standard
+Aligned brackets can be present: 
+\begin_inset Formula $\left(toText\right)$
+\end_inset
+
+.
+ One of them may be omitted: 
+\begin_inset Formula $\left.toText\right)$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Section
 Fraction
 \end_layout

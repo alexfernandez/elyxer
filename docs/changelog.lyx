@@ -119,6 +119,14 @@ Support for binomial coefficients:
  Generic support for variable commands in math mode.
 \end_layout
 
+\begin_layout Itemize
+Support for omitted aligned brackets: 
+\begin_inset Formula $\left.right\right)$
+\end_inset
+
+ (thanks, Jens!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.38 (2009-12-03):
