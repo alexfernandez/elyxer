@@ -132,12 +132,13 @@ class OneParamFunction(CommandBit):
     "Parse a function with one parameter"
     self.output = TaggedOutput().settag(self.translated)
     self.parseparameter(pos)
+    self.simplifyifpossible()
 
   def simplifyifpossible(self):
     "Try to simplify to a single character."
-    if self.original in FormulaConfig.alphacommands:
+    if self.original in self.commandmap:
       self.output = FixedOutput()
-      self.html = [FormulaConfig.alphacommands[self.original]]
+      self.html = [self.commandmap[self.original]]
 
 class SymbolFunction(CommandBit):
   "Find a function which is represented by a symbol (like _ or ^)"
