@@ -1845,8 +1845,38 @@ Q: What versions of LyX are supported?
 
 \begin_layout Description
 A: The tool is slowly improving; it now should work with LyX versions 1.5.5
- to 1.6.2.
+ to 1.6.5.
  It has been tested on Linux, Mac OS X and Windows.
+\end_layout
+
+\begin_layout Description
+Q: There are indeed 
+\emph on
+a ton
+\emph default
+ of similar projects over the web.
+ Why add another one?
+\end_layout
+
+\begin_layout Description
+A: The four tools supported by LyX (tex4ht, hevea, tth and latex2html) gave
+ inferior results a couple of years ago, and were quite inflexible.
+ The author found the need for a good converter, while at the same time
+ acknowledging the difficulty of the problem.
+\end_layout
+
+\begin_layout Description
+Q: Speaking of that: why build a LyX to HTML converter, instead of a more
+ generic LaTeX to HTML converter?
+\end_layout
+
+\begin_layout Description
+A: The problem space is quite simplified, and therefore progress is much
+ faster.
+ To make it even easier eLyXer has historically centered on the subset of
+ LyX functionality that is useful to most LyX users, leaving the rest for
+ a later stage.
+ Nowadays eLyXer aims to support the full LyX feature set.
 \end_layout
 
 \begin_layout Description
@@ -1854,11 +1884,10 @@ Q: What can we expect from the tool in the future?
 \end_layout
 
 \begin_layout Description
-A: eLyXer should support a widening set of LyX features, and a couple of
- tricks of its own (such as page segmenting).
- Eventually it should be recognized LyX so that it can be accessed from
- within the editor.
- Joint distribution is also a possibility.
+A: eLyXer should fulfill the needs of 99% of LyX users in the long term.
+ It should also learn a couple of tricks of its own such as page segmenting.
+ Eventually it could be distributed along with LyX as part of the standard
+ installer.
 \end_layout
 
 \begin_layout Description
@@ -1870,9 +1899,10 @@ Q: Why did you leave out my favorite feature
 \end_layout
 
 \begin_layout Description
-A: In short, because I wasn't using it.
- Usually it is better to first aim for your own needs and then worry about
- others, or you will never get anything done.
+A: In short, because nobody asked for it.
+ Usually it is better to first aim for your own needs and what others request,
+ and then worry about supporting everything, or you will never get anything
+ done.
  But if you let me know I will be glad to help.
 \end_layout
 
@@ -1935,7 +1965,7 @@ target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 
 \end_inset
 
- (although at this point in time you would be the first to use it).
+.
 \end_layout
 
 \begin_layout Bibliography
