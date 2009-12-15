@@ -141,14 +141,12 @@ class HybridFunction(CommandBit):
     tag = self.translated[2 + index]
     if not '$' in tag:
       return tag
-    Trace.debug('$ in ' + tag)
     for name in params:
       if name in tag:
         if params[name]:
           value = params[name].original[1:-1]
         else:
           value = ''
-        Trace.debug('Replacing ' + name + ' with ' + value)
         tag = tag.replace(name, value)
     return tag
 
