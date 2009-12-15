@@ -554,7 +554,6 @@ span.binom {
 	vertical-align: middle;
 	text-align: center;
 	font-size: 80%;
-	border: black thin solid;
 }
 span.fullbinom {
 	display: inline-block;
