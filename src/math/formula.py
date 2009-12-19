@@ -42,8 +42,8 @@ class Formula(Container):
     pos = Position().withtext(self.contents[0])
     whole = WholeFormula()
     if not whole.detect(pos):
-      Trace.error('Unknown formula at: ' + pos.remaining())
-      constant = TaggedBit().constant(pos.remaining(), 'span class="unknown"')
+      Trace.error('Unknown formula at: ' + pos.identifier())
+      constant = TaggedBit().constant(pos.identifier(), 'span class="unknown"')
       self.contents = [constant]
       return
     whole.parsebit(pos)
@@ -73,7 +73,7 @@ class FormulaBit(Container):
     "Skip a string and add it to the original formula"
     self.original += string
     if not pos.checkskip(string):
-      Trace.error('String ' + string + ' not at ' + pos.remaining())
+      Trace.error('String ' + string + ' not at ' + pos.identifier())
 
   def __unicode__(self):
     "Get a string representation"
@@ -163,6 +163,6 @@ class FormulaFactory(object):
         if returnedbit:
           return returnedbit
         return newbit
-    Trace.error('Unrecognized formula at ' + pos.remaining())
+    Trace.error('Unrecognized formula at ' + pos.identifier())
     return FormulaConstant(pos.currentskip())
 

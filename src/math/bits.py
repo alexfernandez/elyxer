@@ -116,7 +116,7 @@ class Bracket(FormulaBit):
   def parsecomplete(self, pos, innerparser):
     "Parse the start and end marks"
     if not pos.checkfor(self.start):
-      Trace.error('Bracket should start with ' + self.start + ' at ' + pos.remaining())
+      Trace.error('Bracket should start with ' + self.start + ' at ' + pos.identifier())
       return
     self.skiporiginal(self.start, pos)
     pos.pushending(self.ending)
@@ -133,7 +133,7 @@ class Bracket(FormulaBit):
     if pos.finished():
       return
     if pos.current() != self.ending:
-      Trace.error('No formula in bracket at ' + pos.remaining())
+      Trace.error('No formula in bracket at ' + pos.identifier())
     return
 
   def innertext(self, pos):

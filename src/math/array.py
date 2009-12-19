@@ -54,7 +54,7 @@ class FormulaCell(FormulaCommand):
   def parsebit(self, pos):
     formula = WholeFormula()
     if not formula.detect(pos):
-      Trace.error('Unexpected end of array cell at ' + pos.remaining())
+      Trace.error('Unexpected end of array cell at ' + pos.identifier())
       pos.skip(pos.current())
       return
     formula.parsebit(pos)

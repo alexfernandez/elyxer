@@ -43,9 +43,9 @@ class Position(object):
     "Skip a string"
     self.engine.skip(len(string))
 
-  def remaining(self):
-    "Return the text remaining for parsing"
-    return self.engine.remaining()
+  def identifier(self):
+    "Return an identifier for the current position."
+    return self.engine.identifier()
 
   def finished(self):
     "Find out if the current formula has finished"
@@ -132,9 +132,9 @@ class TextEngine(object):
     "Skip a length of characters."
     self.pos += length
 
-  def remaining(self):
+  def identifier(self):
     "Return the remaining text."
-    return self.text[self.pos:]
+    return '*' + self.text[self.pos:]
 
   def isout(self):
     "Find out if we are out of the text yet."
@@ -149,6 +149,48 @@ class TextEngine(object):
     if self.pos + len(string) > len(self.text):
       return False
     return self.text[self.pos : self.pos + len(string)] == string
+
+class FileEngine(object):
+  "An engine for a parse position based on an underlying file."
+
+  def __init__(self, filename):
+    "Create the engine from a file."
+    self.reader = LineReader(filename)
+    self.number = 1
+    self.pos = 0
+
+  def skip(self, length):
+    "Skip a length of characters."
+    while self.pos + length > len(self.reader.currentline()):
+      length -= len(self.reader.currentline()) - self.pos + 1
+      self.nextline()
+    self.pos += length
+
+  def nextline(self):
+    "Go to the next line."
+    self.reader.nextline()
+    self.number += 1
+    self.pos = 0
+
+  def identifier(self):
+    "Return the current line and line number in the file."
+    before = self.reader.currentline()[:self.pos - 1]
+    after = self.reader.currentline()[self.pos:]
+    return 'line ' + unicode(self.number) + ': ' + before + '*' + after
+
+  def isout(self):
+    "Find out if we are out of the text yet."
+    return self.reader.finished()
+
+  def current(self):
+    "Return the current character, assuming we are not out."
+    return self.reader.currentline()[self.pos]
+
+  def checkfor(self, string):
+    "Check for a string at the given position."
+    if self.pos + len(string) > len(self.reader.currentline()):
+      return False
+    return self.reader.currentline()[self.pos : self.pos + len(string)] == string
 
 class EndingList(object):
   "A list of position endings"
