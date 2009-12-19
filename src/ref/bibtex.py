@@ -87,16 +87,19 @@ class BibFile(object):
     "Parse the BibTeX file"
     bibpath = InputPath(self.filename)
     bibfile = BulkFile(bibpath.path)
+    # reader = LineReader(self.filename)
     parsed = list()
     for line in bibfile.readall():
       line = line.strip()
       if not line.startswith('%') and not line == '':
         parsed.append(line)
+        if '{/' in line:
+          Trace.debug('Line ' + line)
     self.parseentries('\n'.join(parsed))
 
   def parseentries(self, text):
     "Extract all the entries in a piece of text"
-    pos = Position(text)
+    pos = Position().withtext(text)
     pos.skipspace()
     while not pos.finished():
       self.parseentry(pos)
@@ -162,7 +165,6 @@ class Entry(Container):
       self.key = piece
       return
     if pos.checkskip('='):
-      rem = pos.remaining()
       piece = piece.lower().strip()
       pos.skipspace()
       value = self.parsevalue(pos)
@@ -170,6 +172,7 @@ class Entry(Container):
       pos.skipspace()
       if not pos.finished() and not pos.checkskip(','):
         self.lineerror('Missing , in BibTeX tag', pos)
+        Trace.error(' before ' + pos.globincluding('\n') + ' and ' + pos.globincluding('\n'))
       return
 
   def parsevalue(self, pos):
@@ -287,7 +290,7 @@ class PubEntry(Entry):
 
   def extracttag(self, string):
     "Extract the first tag in the form $tag"
-    pos = Position(string)
+    pos = Position().withtext(string)
     pos.globexcluding('$')
     pos.skip('$')
     return pos.globalpha()

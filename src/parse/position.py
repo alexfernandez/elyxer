@@ -31,18 +31,21 @@ from conf.config import *
 class Position(object):
   "A position in a text to parse"
 
-  def __init__(self, text):
-    self.text = text
-    self.pos = 0
+  def __init__(self):
     self.endinglist = EndingList()
+
+  def withtext(self, text):
+    "Use the position from within a text."
+    self.engine = TextEngine(text)
+    return self
 
   def skip(self, string):
     "Skip a string"
-    self.pos += len(string)
+    self.engine.skip(len(string))
 
   def remaining(self):
     "Return the text remaining for parsing"
-    return self.text[self.pos:]
+    return self.engine.remaining()
 
   def finished(self):
     "Find out if the current formula has finished"
@@ -52,15 +55,15 @@ class Position(object):
     return self.endinglist.checkin(self)
 
   def isout(self):
-    "Find out if we are out of the formula yet"
-    return self.pos >= len(self.text)
+    "Find out if we are out of the position yet."
+    return self.engine.isout()
 
   def current(self):
     "Return the current character"
     if self.isout():
       Trace.error('Out of the formula')
       return ''
-    return self.text[self.pos]
+    return self.engine.current()
 
   def currentskip(self):
     "Return the current character and skip it."
@@ -69,10 +72,8 @@ class Position(object):
     return current
 
   def checkfor(self, string):
-    "Check for a string at the given position"
-    if self.pos + len(string) > len(self.text):
-      return False
-    return self.text[self.pos : self.pos + len(string)] == string
+    "Check for a string at the given position."
+    return self.engine.checkfor(string)
 
   def checkskip(self, string):
     "Check for a string at the given position; if there, skip it"
@@ -118,6 +119,36 @@ class Position(object):
       Trace.error('Expected ending ' + expected + ', got ' + ending)
     self.skip(ending)
     return ending
+
+class TextEngine(object):
+  "An engine for a parse position based on a raw text."
+
+  def __init__(self, text):
+    "Create the engine with some text."
+    self.pos = 0
+    self.text = text
+
+  def skip(self, length):
+    "Skip a length of characters."
+    self.pos += length
+
+  def remaining(self):
+    "Return the remaining text."
+    return self.text[self.pos:]
+
+  def isout(self):
+    "Find out if we are out of the text yet."
+    return self.pos >= len(self.text)
+
+  def current(self):
+    "Return the current character, assuming we are not out."
+    return self.text[self.pos]
+
+  def checkfor(self, string):
+    "Check for a string at the given position."
+    if self.pos + len(string) > len(self.text):
+      return False
+    return self.text[self.pos : self.pos + len(string)] == string
 
 class EndingList(object):
   "A list of position endings"

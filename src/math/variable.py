@@ -60,7 +60,7 @@ class HybridFunction(CommandBit):
 
   def paramdefs(self, readtemplate):
     "Read each param definition in the template"
-    pos = Position(readtemplate)
+    pos = Position().withtext(readtemplate)
     while not pos.finished():
       paramdef = self.readparamdef(pos)
       if paramdef:
@@ -82,7 +82,7 @@ class HybridFunction(CommandBit):
 
   def writeparams(self, params, writetemplate):
     "Write all params according to the template"
-    return self.writepos(params, Position(writetemplate))
+    return self.writepos(params, Position().withtext(writetemplate))
 
   def writepos(self, params, pos):
     "Write all params as read in the parse position."
