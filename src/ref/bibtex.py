@@ -85,7 +85,12 @@ class BibFile(object):
 
   def parse(self):
     "Parse the BibTeX file and extract all entries."
-    pos = Position().fromfile(self.filename)
+    if Options.lowmem:
+      pos = Position().fromfile(self.filename)
+    else:
+      bulkfile = BulkFile(self.filename)
+      text = ''.join(bulkfile.readall())
+      pos = Position().withtext(text)
     while not pos.finished():
       pos.skipspace()
       self.parseentry(pos)

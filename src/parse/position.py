@@ -139,8 +139,11 @@ class TextEngine(object):
     self.pos += length
 
   def identifier(self):
-    "Return the remaining text."
-    return '*' + self.text[self.pos:]
+    "Return a sample of the remaining text."
+    length = 30
+    if self.pos + length > len(self.text):
+      length = len(self.text) - self.pos - 1
+    return '*' + self.text[self.pos:self.pos + length]
 
   def isout(self):
     "Find out if we are out of the text yet."
