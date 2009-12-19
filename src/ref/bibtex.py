@@ -84,24 +84,10 @@ class BibFile(object):
     self.entries = []
 
   def parse(self):
-    "Parse the BibTeX file"
-    bibpath = InputPath(self.filename)
-    bibfile = BulkFile(bibpath.path)
-    # reader = LineReader(self.filename)
-    parsed = list()
-    for line in bibfile.readall():
-      line = line.strip()
-      if not line.startswith('%') and not line == '':
-        parsed.append(line)
-        if '{/' in line:
-          Trace.debug('Line ' + line)
-    self.parseentries('\n'.join(parsed))
-
-  def parseentries(self, text):
-    "Extract all the entries in a piece of text"
-    pos = Position().withtext(text)
-    pos.skipspace()
+    "Parse the BibTeX file and extract all entries."
+    pos = Position().fromfile(self.filename)
     while not pos.finished():
+      pos.skipspace()
       self.parseentry(pos)
 
   def parseentry(self, pos):
@@ -130,6 +116,35 @@ class Entry(Container):
   "An entry in a BibTeX file"
 
   entries = []
+
+  def lineerror(self, message, pos):
+    "Show an error message for a line."
+    Trace.error(message + ': ' + pos.identifier())
+    pos.globincluding('\n')
+
+class CommentEntry(Entry):
+  "A simple comment."
+
+  def detect(self, pos):
+    "Detect the special entry"
+    return pos.checkfor('%')
+
+  def parse(self, pos):
+    "Parse all consecutive comment lines."
+    while pos.checkfor('%'):
+      pos.globincluding('\n')
+
+  def isreferenced(self):
+    "A comment entry is never referenced"
+    return False
+
+  def __unicode__(self):
+    "Return a string representation"
+    return 'Comment'
+
+class ContentEntry(Entry):
+  "An entry holding some content."
+
   structure = ['{', ',', '=', '"']
   quotes = ['{', '"', '#', '\\']
 
@@ -140,7 +155,7 @@ class Entry(Container):
 
   def parse(self, pos):
     "Parse the entry between {}"
-    self.type = self.parsepiece(pos, Entry.structure)
+    self.type = self.parsepiece(pos, self.structure)
     pos.skipspace()
     if not pos.checkskip('{'):
       self.lineerror('Entry should start with {', pos)
@@ -160,7 +175,7 @@ class Entry(Container):
       self.parsetag(pos)
   
   def parsetag(self, pos):
-    piece = self.parsepiece(pos, Entry.structure)
+    piece = self.parsepiece(pos, self.structure)
     if pos.checkskip(','):
       self.key = piece
       return
@@ -186,7 +201,7 @@ class Entry(Container):
     elif pos.checkfor('"'):
       return self.parsequoted(pos)
     else:
-      return self.parsepiece(pos, Entry.structure)
+      return self.parsepiece(pos, self.structure)
 
   def parsebracket(self, pos):
     "Parse a {} bracket"
@@ -202,7 +217,7 @@ class Entry(Container):
     "Parse a piece of quoted text"
     if not pos.checkskip('"'):
       self.lineerror('Missing opening " in quote', pos)
-      return
+      return ''
     pos.pushending('"')
     quoted = self.parserecursive(pos)
     pos.popending('"')
@@ -216,7 +231,7 @@ class Entry(Container):
     "Parse brackets or quotes recursively"
     piece = ''
     while not pos.finished():
-      piece += self.parsepiece(pos, Entry.quotes)
+      piece += self.parsepiece(pos, self.quotes)
       if not pos.finished():
         if pos.checkfor('{'):
           piece += self.parsebracket(pos)
@@ -233,13 +248,7 @@ class Entry(Container):
     "Parse a piece not structure"
     return pos.glob(lambda current: not current in undesired)
 
-  def lineerror(self, message, pos):
-    "Show an error message for a line."
-    toline = pos.globexcluding('\n')
-    pos.checkskip('\n')
-    Trace.error(message + ': ' + toline)
-
-class SpecialEntry(Entry):
+class SpecialEntry(ContentEntry):
   "A special entry"
 
   types = ['@STRING', '@PREAMBLE', '@COMMENT']
@@ -259,7 +268,7 @@ class SpecialEntry(Entry):
     "Return a string representation"
     return self.type
 
-class PubEntry(Entry):
+class PubEntry(ContentEntry):
   "A publication entry"
 
   def detect(self, pos):
@@ -312,5 +321,5 @@ class PubEntry(Entry):
       return ''
     return self.tags[key]
 
-Entry.entries += [SpecialEntry(), PubEntry()]
+Entry.entries += [CommentEntry(), SpecialEntry(), PubEntry()]
 

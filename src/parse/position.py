@@ -24,6 +24,7 @@
 
 import sys
 from gen.container import *
+from io.fileline import *
 from util.trace import Trace
 from conf.config import *
 
@@ -37,6 +38,11 @@ class Position(object):
   def withtext(self, text):
     "Use the position from within a text."
     self.engine = TextEngine(text)
+    return self
+
+  def fromfile(self, filename):
+    "Use the position from a file."
+    self.engine = FileEngine(filename)
     return self
 
   def skip(self, string):
@@ -180,10 +186,19 @@ class FileEngine(object):
 
   def isout(self):
     "Find out if we are out of the text yet."
+    if self.pos > len(self.reader.currentline()):
+      if self.pos > len(self.reader.currentline()) + 1:
+        Trace.error('Out of the line ' + self.reader.currentline() + ': ' + unicode(self.pos))
+      self.nextline()
     return self.reader.finished()
 
   def current(self):
     "Return the current character, assuming we are not out."
+    if self.pos == len(self.reader.currentline()):
+      return '\n'
+    if self.pos > len(self.reader.currentline()):
+      Trace.error('Out of the line ' + self.reader.currentline() + ': ' + unicode(self.pos))
+      return '*'
     return self.reader.currentline()[self.pos]
 
   def checkfor(self, string):
