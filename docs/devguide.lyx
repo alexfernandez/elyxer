@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -2702,7 +2702,11 @@ Nearing the end of Q4 2009, LyX integration is almost ready for Linux (Debian)
 From that point on, full LyX document support is the goal for 2010.
  By Q1 2010 equation numbering should be correct for all environments; arrays
  and cases should improve in appearance.
- Q2 2010 should see clean conversion of the Math guide.
+ Q2 2010 should see clean conversion of the Math guide and the 
+\family typewriter
+--mathml
+\family default
+ option.
  By Q3 2010 all other guides should convert without glitches, and for Q4
  2010 all rough edges should be smoothed.
  All this within the usual constraints: day job, family, etc.
