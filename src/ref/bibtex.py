@@ -128,7 +128,7 @@ class Entry(Container):
 
   entries = []
   structure = ['{', ',', '=', '"']
-  quotes = ['{', '"', '#']
+  quotes = ['{', '"', '#', '\\']
 
   def __init__(self):
     self.key = None
@@ -162,6 +162,7 @@ class Entry(Container):
       self.key = piece
       return
     if pos.checkskip('='):
+      rem = pos.remaining()
       piece = piece.lower().strip()
       pos.skipspace()
       value = self.parsevalue(pos)
@@ -199,7 +200,7 @@ class Entry(Container):
     if not pos.checkskip('"'):
       self.lineerror('Missing opening " in quote', pos)
       return
-    pos.pushending('"', True)
+    pos.pushending('"')
     quoted = self.parserecursive(pos)
     pos.popending('"')
     pos.skipspace()
@@ -218,6 +219,8 @@ class Entry(Container):
           piece += self.parsebracket(pos)
         elif pos.checkfor('"'):
           piece += self.parsequoted(pos)
+        elif pos.checkskip('\\'):
+          piece += pos.currentskip()
         else:
           self.lineerror('Missing opening { or "', pos)
           return piece
