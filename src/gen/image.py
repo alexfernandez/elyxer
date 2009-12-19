@@ -117,7 +117,7 @@ class ImageConverter(object):
     "Convert an image to PNG"
     if not ImageConverter.active:
       return
-    if image.origin.url == image.destination.url:
+    if image.origin.path == image.destination.path:
       return
     if image.destination.exists():
       if image.origin.getmtime() <= image.destination.getmtime():
