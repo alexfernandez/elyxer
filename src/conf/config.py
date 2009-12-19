@@ -484,10 +484,11 @@ class FormulaConfig(object):
       u'\\big':u'span class="symbol"', u'\\bigg':u'span class="largesymbol"', 
       u'\\bigl':u'span class="bigsymbol"', u'\\bigr':u'span class="bigsymbol"', 
       u'\\hphantom':u'span class="phantom"', u'\\left':u'span class="symbol"', 
-      u'\\left.':u'', u'\\middle':u'span class="symbol"', 
+      u'\\left.':u'<span class="leftdot"></span>', 
+      u'\\middle':u'span class="symbol"', 
       u'\\overline':u'span class="overline"', 
       u'\\phantom':u'span class="phantom"', u'\\right':u'span class="symbol"', 
-      u'\\right.':u'', u'\\underline':u'u', 
+      u'\\right.':u'<span class="rightdot"></span>', u'\\underline':u'u', 
       u'\\vphantom':u'span class="phantom"', 
       }
 
