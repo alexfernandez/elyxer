@@ -85,10 +85,11 @@ class BibFile(object):
 
   def parse(self):
     "Parse the BibTeX file and extract all entries."
+    bibpath = InputPath(self.filename)
     if Options.lowmem:
-      pos = Position().fromfile(self.filename)
+      pos = Position().fromfile(bibpath.path)
     else:
-      bulkfile = BulkFile(self.filename)
+      bulkfile = BulkFile(bibpath.path)
       text = ''.join(bulkfile.readall())
       pos = Position().withtext(text)
     while not pos.finished():
@@ -161,7 +162,6 @@ class ContentEntry(Entry):
   def parse(self, pos):
     "Parse the entry between {}"
     self.type = self.parsepiece(pos, self.nameseparators)
-    Trace.debug('Entry ' + self.type)
     pos.skipspace()
     if not pos.checkskip('{'):
       self.lineerror('Entry should start with {', pos)
@@ -218,14 +218,26 @@ class ContentEntry(Entry):
         contents += self.parsebracket(pos)
       elif pos.checkfor('"'):
         contents += self.parsequoted(pos)
-      elif pos.checkskip('\\'):
-        contents += pos.currentskip()
+      elif pos.checkfor('\\'):
+        contents += self.parseescaped(pos)
       elif pos.checkskip('#'):
         pos.skipspace()
       else:
         self.lineerror('Unexpected character ' + pos.current(), pos)
         pos.currentskip()
     return contents
+
+  def parseescaped(self, pos):
+    "Parse an escaped character \\*."
+    if not pos.checkskip('\\'):
+      self.lineerror('Not an escaped character', pos)
+      return ''
+    if not pos.checkskip('{'):
+      return pos.currentskip()
+    current = pos.currentskip()
+    if not pos.checkskip('}'):
+      self.lineerror('Weird escaped but unclosed brackets \\{*', pos)
+    return current
 
   def parsebracket(self, pos):
     "Parse a {} bracket"
