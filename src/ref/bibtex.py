@@ -150,8 +150,8 @@ class CommentEntry(Entry):
 class ContentEntry(Entry):
   "An entry holding some content."
 
-  structure = ['{', ',', '=', '"']
-  quotes = ['{', '"', '#', '\\']
+  nameseparators = ['{', '=', '"', '#']
+  valueseparators = ['{', '"', '#', '\\', '}']
 
   def __init__(self):
     self.key = None
@@ -160,7 +160,8 @@ class ContentEntry(Entry):
 
   def parse(self, pos):
     "Parse the entry between {}"
-    self.type = self.parsepiece(pos, self.structure)
+    self.type = self.parsepiece(pos, self.nameseparators)
+    Trace.debug('Entry ' + self.type)
     pos.skipspace()
     if not pos.checkskip('{'):
       self.lineerror('Entry should start with {', pos)
@@ -177,23 +178,26 @@ class ContentEntry(Entry):
       if pos.checkskip('{'):
         self.lineerror('Unmatched {', pos)
         return
+      pos.pushending(',', True)
       self.parsetag(pos)
+      if pos.checkfor(','):
+        pos.popending(',')
   
   def parsetag(self, pos):
-    piece = self.parsepiece(pos, self.structure)
-    if pos.checkskip(','):
+    piece = self.parsepiece(pos, self.nameseparators)
+    if pos.finished():
       self.key = piece
       return
-    if pos.checkskip('='):
-      piece = piece.lower().strip()
-      pos.skipspace()
-      value = self.parsevalue(pos)
-      self.tags[piece] = value
-      pos.skipspace()
-      if not pos.finished() and not pos.checkskip(','):
-        self.lineerror('Missing , in BibTeX tag', pos)
-        Trace.error(' before ' + pos.globincluding('\n') + ' and ' + pos.globincluding('\n'))
+    if not pos.checkskip('='):
+      self.lineerror('Undesired character in tag name ' + piece, pos)
       return
+    name = piece.lower().strip()
+    pos.skipspace()
+    value = self.parsevalue(pos)
+    self.tags[name] = value
+    if not pos.finished():
+      remainder = pos.globexcluding(',')
+      self.lineerror('Ignored ' + remainder + ' before comma', pos)
 
   def parsevalue(self, pos):
     "Parse the value for a tag"
@@ -201,12 +205,27 @@ class ContentEntry(Entry):
     if pos.checkfor(','):
       self.lineerror('Unexpected ,', pos)
       return ''
-    if pos.checkfor('{'):
-      return self.parsebracket(pos)
-    elif pos.checkfor('"'):
-      return self.parsequoted(pos)
-    else:
-      return self.parsepiece(pos, self.structure)
+    return self.parserecursive(pos)
+
+  def parserecursive(self, pos):
+    "Parse brackets or quotes recursively."
+    contents = ''
+    while not pos.finished():
+      contents += self.parsepiece(pos, self.valueseparators)
+      if pos.finished():
+        return contents
+      if pos.checkfor('{'):
+        contents += self.parsebracket(pos)
+      elif pos.checkfor('"'):
+        contents += self.parsequoted(pos)
+      elif pos.checkskip('\\'):
+        contents += pos.currentskip()
+      elif pos.checkskip('#'):
+        pos.skipspace()
+      else:
+        self.lineerror('Unexpected character ' + pos.current(), pos)
+        pos.currentskip()
+    return contents
 
   def parsebracket(self, pos):
     "Parse a {} bracket"
@@ -223,34 +242,14 @@ class ContentEntry(Entry):
     if not pos.checkskip('"'):
       self.lineerror('Missing opening " in quote', pos)
       return ''
-    pos.pushending('"')
+    pos.pushending('"', True)
     quoted = self.parserecursive(pos)
     pos.popending('"')
     pos.skipspace()
-    if pos.checkskip('#'):
-      pos.skipspace()
-      quoted += self.parsequoted(pos)
     return quoted
 
-  def parserecursive(self, pos):
-    "Parse brackets or quotes recursively"
-    piece = ''
-    while not pos.finished():
-      piece += self.parsepiece(pos, self.quotes)
-      if not pos.finished():
-        if pos.checkfor('{'):
-          piece += self.parsebracket(pos)
-        elif pos.checkfor('"'):
-          piece += self.parsequoted(pos)
-        elif pos.checkskip('\\'):
-          piece += pos.currentskip()
-        else:
-          self.lineerror('Missing opening { or "', pos)
-          return piece
-    return piece
-
   def parsepiece(self, pos, undesired):
-    "Parse a piece not structure"
+    "Parse a piece not structure."
     return pos.glob(lambda current: not current in undesired)
 
 class SpecialEntry(ContentEntry):
