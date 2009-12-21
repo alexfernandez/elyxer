@@ -75,7 +75,7 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Faster (about 25%) BibTeX file parsing.
 \end_layout
 
 \end_deeper
