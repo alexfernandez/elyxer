@@ -39,7 +39,7 @@ class Formula(Container):
 
   def process(self):
     "Convert the formula to tags"
-    pos = Position().withtext(self.contents[0])
+    pos = TextPosition(self.contents[0])
     whole = WholeFormula()
     if not whole.detect(pos):
       Trace.error('Unknown formula at: ' + pos.identifier())

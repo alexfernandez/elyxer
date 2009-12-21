@@ -35,23 +35,29 @@ class Position(object):
   def __init__(self):
     self.endinglist = EndingList()
 
-  def withtext(self, text):
-    "Use the position from within a text."
-    self.engine = TextEngine(text)
-    return self
-
-  def fromfile(self, filename):
-    "Use the position from a file."
-    self.engine = FileEngine(filename)
-    return self
-
   def skip(self, string):
     "Skip a string"
-    self.engine.skip(len(string))
+    Trace.error('Unimplemented skip()')
 
   def identifier(self):
     "Return an identifier for the current position."
-    return self.engine.identifier()
+    Trace.error('Unimplemented identifier()')
+    return 'Error'
+
+  def isout(self):
+    "Find out if we are out of the position yet."
+    Trace.error('Unimplemented isout()')
+    return True
+
+  def current(self):
+    "Return the current character"
+    Trace.error('Unimplemented current()')
+    return ''
+
+  def checkfor(self, string):
+    "Check for a string at the given position."
+    Trace.error('Unimplemented checkfor()')
+    return False
 
   def finished(self):
     "Find out if the current formula has finished"
@@ -60,26 +66,11 @@ class Position(object):
       return True
     return self.endinglist.checkin(self)
 
-  def isout(self):
-    "Find out if we are out of the position yet."
-    return self.engine.isout()
-
-  def current(self):
-    "Return the current character"
-    if self.isout():
-      Trace.error('Out of the formula')
-      return ''
-    return self.engine.current()
-
   def currentskip(self):
     "Return the current character and skip it."
     current = self.current()
     self.skip(current)
     return current
-
-  def checkfor(self, string):
-    "Check for a string at the given position."
-    return self.engine.checkfor(string)
 
   def checkskip(self, string):
     "Check for a string at the given position; if there, skip it"
@@ -126,17 +117,18 @@ class Position(object):
     self.skip(ending)
     return ending
 
-class TextEngine(object):
-  "An engine for a parse position based on a raw text."
+class TextPosition(Position):
+  "A parse position based on a raw text."
 
   def __init__(self, text):
-    "Create the engine with some text."
+    "Create the position from some text."
+    Position.__init__(self)
     self.pos = 0
     self.text = text
 
-  def skip(self, length):
-    "Skip a length of characters."
-    self.pos += length
+  def skip(self, string):
+    "Skip a string of characters."
+    self.pos += len(string)
 
   def identifier(self):
     "Return a sample of the remaining text."
@@ -159,17 +151,19 @@ class TextEngine(object):
       return False
     return self.text[self.pos : self.pos + len(string)] == string
 
-class FileEngine(object):
-  "An engine for a parse position based on an underlying file."
+class FilePosition(Position):
+  "A parse position based on an underlying file."
 
   def __init__(self, filename):
-    "Create the engine from a file."
+    "Create the position from a file."
+    Position.__init__(self)
     self.reader = LineReader(filename)
     self.number = 1
     self.pos = 0
 
-  def skip(self, length):
-    "Skip a length of characters."
+  def skip(self, string):
+    "Skip a string of characters."
+    length = len(string)
     while self.pos + length > len(self.reader.currentline()):
       length -= len(self.reader.currentline()) - self.pos + 1
       self.nextline()

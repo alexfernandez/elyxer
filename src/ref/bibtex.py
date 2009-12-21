@@ -87,11 +87,11 @@ class BibFile(object):
     "Parse the BibTeX file and extract all entries."
     bibpath = InputPath(self.filename)
     if Options.lowmem:
-      pos = Position().fromfile(bibpath.path)
+      pos = FilePosition(bibpath.path)
     else:
       bulkfile = BulkFile(bibpath.path)
       text = ''.join(bulkfile.readall())
-      pos = Position().withtext(text)
+      pos = TextPosition(text)
     while not pos.finished():
       pos.skipspace()
       self.parseentry(pos)
@@ -315,7 +315,7 @@ class PubEntry(ContentEntry):
 
   def extracttag(self, string):
     "Extract the first tag in the form $tag"
-    pos = Position().withtext(string)
+    pos = TextPosition(string)
     pos.globexcluding('$')
     pos.skip('$')
     return pos.globalpha()

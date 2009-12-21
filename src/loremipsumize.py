@@ -80,7 +80,7 @@ class LoremIpsumizer(object):
       return ''
     if line[0] in LoremIpsumizer.starts:
       return line
-    pos = Position().withtext(line)
+    pos = TextPosition(line)
     result = ''
     while not pos.finished():
       result += self.parsepos(pos)
