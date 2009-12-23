@@ -33,6 +33,7 @@ class Options(object):
 
   instance = None
 
+  location = None
   nocopy = False
   debug = False
   quiet = False
@@ -58,12 +59,9 @@ class Options(object):
 
   branches = dict()
 
-  def __init__(self):
-    self.invokedas = None
-
   def parseoptions(self, args):
     "Parse command line options"
-    self.invokedas = os.path.basename(args[0])
+    Options.location = args[0]
     del args[0]
     parser = CommandLineParser(Options)
     result = parser.parseoptions(args)
@@ -98,7 +96,7 @@ class Options(object):
 
   def usage(self):
     "Show correct usage"
-    Trace.error('Usage: ' + self.invokedas + ' [options] [filein] [fileout]')
+    Trace.error('Usage: ' + os.path.basename(Options.location) + ' [options] [filein] [fileout]')
     Trace.error('Convert LyX input file "filein" to HTML file "fileout".')
     Trace.error('If filein (or fileout) is not given use standard input (or output).')
     self.showoptions()

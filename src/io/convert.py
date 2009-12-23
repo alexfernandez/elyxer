@@ -75,6 +75,10 @@ class eLyXerConverter(object):
     try:
       self.processcontents()
     except (Exception):
+      version = '[eLyXer version ' + GeneralConfig.version['number']
+      version += ' (' + GeneralConfig.version['date'] + ') in '
+      version += Options.location + '] '
+      Trace.error(version)
       Trace.error('Conversion failed at ' + self.reader.currentline())
       raise
 
