@@ -78,6 +78,10 @@ target "index.html"
 Faster (about 25%) BibTeX file parsing.
 \end_layout
 
+\begin_layout Itemize
+Show version number after a crash.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.39 (2009-12-20):
