@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -1682,7 +1682,7 @@ elyxer.py
 
 \begin_layout Enumerate
 Phonetic alphabet symbols are not supported -- if generated with LyX they
- appear with a weird command syntax: 
+ only appear in a different color: 
 \begin_inset Formula $\text{\textipa{[sample]}}$
 \end_inset
 
@@ -1750,6 +1750,214 @@ Images are never scaled above their nominal resolution.
  This is seldom needed if at all, so there are no plans to change it; if
  people really need the feature just let the author know so it can be added
  as an option.
+\end_layout
+
+\begin_layout Enumerate
+Internationalization: fixed texts (such as 
+\begin_inset Quotes eld
+\end_inset
+
+Table of Contents
+\begin_inset Quotes erd
+\end_inset
+
+) appear always in English.
+ This is a planned extension.
+ For the moment users may translate the constants that appear in the main
+ 
+\family typewriter
+elyxer.py
+\family default
+ script under 
+\family typewriter
+TranslationConfig
+\family default
+, like in listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:translation"
+
+\end_inset
+
+.
+ Note that only the values (i.e.
+ the constants after the colon) are translated: 
+\family typewriter
+u'algorithm':u'
+\series bold
+Listing
+\series default
+ '
+\family default
+ becomes 
+\family typewriter
+u'algorithm':u'
+\series bold
+Listado
+\series default
+ '
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\family typewriter
+class TranslationConfig(object):
+\end_layout
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+"Configuration class from config file"
+\end_layout
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+\SpecialChar \ldots{}
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+floats = {
+\end_layout
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+u'algorithm':u'Listado ', u'figure':u'Figura ', u'listing':u'Listado ',
+\end_layout
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+u'table':u'Tabla ', u'tableau':u'Tabla ',
+\end_layout
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:translation"
+
+\end_inset
+
+Translated section in 
+\family typewriter
+TranslationConfig
+\family default
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
