@@ -52,18 +52,31 @@ def usage():
 
 class JavaPorter(object):
 
+  javasymbols = '&|=!(){}.+-",/*<>\'[]%'
+  javatokens = [
+      'if', 'do', 'while', '&&', '||', '=', '==', '!=', 'import'
+      ]
+
   def topy(self, inputfile, outputfile):
     "Port the Java input file to Python."
     pos = FilePosition(inputfile)
     writer = LineWriter(outputfile)
     while not pos.finished():
-      line = self.processcommand(pos)
+      line = self.processsentence(pos)
       if len(line.strip()) > 0:
         writer.writeline(line)
     writer.close()
 
-  def processcommand(self, pos):
-    "Process a single command and return the result."
+  def processsentence(self, pos):
+    "Process a single sentence and return the result."
+    pos.skipspace()
+    sentence = ''
+    while not pos.checkskip(';'):
+      sentence += self.processpart(pos)
+    return sentence
+
+  def processpart(self, pos):
+    "Process a part of a sentence."
     pos.skipspace()
     if pos.checkskip('//'):
       comment = pos.globexcluding('\n')
@@ -74,7 +87,48 @@ class JavaPorter(object):
         comment = pos.globincluding('*')
         Trace.debug('Comment: ' + comment)
       return ''
-    return pos.globexcluding('\n')
+    token = self.gettoken(pos)
+    if token in self.javatokens:
+      return self.translatetoken(token, pos)
+    if token in self.javasymbols:
+      return self.translatesymbol(token, pos)
+    return token
+
+  def gettoken(self, pos):
+    "Get the next single token."
+    if self.isalphanumeric(pos.current()):
+      return pos.glob(self.isalphanumeric)
+    if pos.current() in self.javasymbols:
+      return pos.currentskip()
+    Trace.error('Unrecognized character: ' + pos.globexcluding('\n'))
+    exit()
+
+  def translatetoken(self, token, pos):
+    "Translate a java token."
+    if token == 'import':
+      pos.globincluding('\n')
+      return ''
+    return token
+  
+  def translatesymbol(self, token, pos):
+    "Translate a java symbol."
+    if token == '"':
+      result = token + pos.globincluding('"')
+      while result.endswith('\\"') and not result.endswith('\\\\"'):
+        result = token + pos.globincluding('"')
+      Trace.debug('quoted sequence: ' + result)
+      return result
+    return token
+
+  def isalphanumeric(self, char):
+    "Detect if a character is alphanumeric or underscore."
+    if char.isalpha():
+      return True
+    if char.isdigit():
+      return True
+    if char == '_':
+      return True
+    return False
 
 inputfile, outputfile = readargs(sys.argv)
 Trace.debugmode = False
