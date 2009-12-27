@@ -71,13 +71,13 @@ class JavaPorter(object):
     "Process a single sentence and return the result."
     pos.skipspace()
     sentence = ''
-    while not pos.checkskip(';'):
+    while not pos.checkskip(';') and not pos.finished():
       sentence += self.processpart(pos)
+      pos.skipspace()
     return sentence
 
   def processpart(self, pos):
     "Process a part of a sentence."
-    pos.skipspace()
     if pos.checkskip('//'):
       comment = pos.globexcluding('\n')
       Trace.debug('Comment: ' + comment)
@@ -100,8 +100,9 @@ class JavaPorter(object):
       return pos.glob(self.isalphanumeric)
     if pos.current() in self.javasymbols:
       return pos.currentskip()
-    Trace.error('Unrecognized character: ' + pos.globexcluding('\n'))
-    exit()
+    current = pos.currentskip()
+    Trace.error('Unrecognized character: ' + current)
+    return current
 
   def translatetoken(self, token, pos):
     "Translate a java token."
@@ -118,6 +119,11 @@ class JavaPorter(object):
         result = token + pos.globincluding('"')
       Trace.debug('quoted sequence: ' + result)
       return result
+    if token == '\'':
+      result = token
+      while not pos.checkskip('\''):
+        result += pos.currentskip()
+      return result + token
     return token
 
   def isalphanumeric(self, char):
