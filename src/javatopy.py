@@ -194,6 +194,15 @@ class JavaPorter(object):
       return result + '\''
     if tok.current() == '}':
       self.closebracket()
+      return ''
+    if tok.current() == '(':
+      tok.pos.pushending(')')
+      Trace.debug('Open (')
+      return '('
+    if tok.current() == ')':
+      tok.popending()
+      Trace.debug('Close )')
+      return ')'
     return tok.current()
 
   def parseifparens(self, tok):
@@ -211,7 +220,10 @@ class JavaPorter(object):
   def openbracket(self, tok):
     "Open a {."
     while tok.next() != '{':
-      Trace.error('Ignored token ' + tok.current())
+      Trace.error('Ignored token before {: ' + tok.current())
+      if tok.pos.finished():
+        Trace.error('Finished while waiting for {')
+        return
     self.depth += 1
     tok.pos.pushending('}')
 
