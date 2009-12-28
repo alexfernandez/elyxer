@@ -57,6 +57,9 @@ class JavaPorter(object):
       'if', 'do', 'while', '&&', '||', '=', '==', '!=', 'import'
       ]
 
+  def __init__(self):
+    self.depth = 0
+
   def topy(self, inputfile, outputfile):
     "Port the Java input file to Python."
     pos = FilePosition(inputfile)
@@ -69,33 +72,48 @@ class JavaPorter(object):
 
   def processsentence(self, pos):
     "Process a single sentence and return the result."
-    pos.skipspace()
-    sentence = ''
+    indent = self.depth * '  '
+    token = self.nexttoken(pos)
+    if token in self.javatokens:
+      return indent + self.translatetoken(token, pos)
+    sentence = indent + self.processtoken(token, pos)
     while not pos.checkskip(';') and not pos.finished():
       sentence += self.processpart(pos)
-      pos.skipspace()
-    return sentence
+    return sentence.rstrip()
 
   def processpart(self, pos):
     "Process a part of a sentence."
-    if pos.checkskip('//'):
-      comment = pos.globexcluding('\n')
-      Trace.debug('Comment: ' + comment)
-      return ''
-    if pos.checkskip('/*'):
-      while not pos.checkskip('/'):
-        comment = pos.globincluding('*')
-        Trace.debug('Comment: ' + comment)
-      return ''
-    token = self.gettoken(pos)
-    if token in self.javatokens:
-      return self.translatetoken(token, pos)
+    token = self.nexttoken(pos)
+    return self.processtoken(token, pos) + ' '
+
+  def processtoken(self, token, pos):
+    "Process a single token."
     if token in self.javasymbols:
       return self.translatesymbol(token, pos)
     return token
 
-  def gettoken(self, pos):
+  def nexttoken(self, pos):
     "Get the next single token."
+    while not pos.finished():
+      token = self.extracttoken(pos)
+      if token:
+        return token
+    return ''
+
+  def extracttoken(self, pos):
+    "Extract a single token."
+    pos.skipspace()
+    if pos.finished():
+      return None
+    if pos.checkskip('//'):
+      comment = pos.globexcluding('\n')
+      Trace.debug('Comment: ' + comment)
+      return None
+    if pos.checkskip('/*'):
+      while not pos.checkskip('/'):
+        comment = pos.globincluding('*')
+        Trace.debug('Comment: ' + comment)
+      return None
     if self.isalphanumeric(pos.current()):
       return pos.glob(self.isalphanumeric)
     if pos.current() in self.javasymbols:
@@ -140,5 +158,7 @@ inputfile, outputfile = readargs(sys.argv)
 Trace.debugmode = False
 if inputfile:
   JavaPorter().topy(inputfile, outputfile)
+  Trace.message('Conversion done, running ' + outputfile)
+  os.system('python ' + outputfile)
 
 
