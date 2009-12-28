@@ -105,6 +105,9 @@ class JavaPorter(object):
         return self.translateinternal(tok)
       else:
         return self.translateclass(tok)
+    if tok.current() == 'if':
+      self.parseifparens(tok)
+      self.openbracket(tok)
     Trace.error('Untranslated token ' + tok.current())
     return tok.current()
 
@@ -120,10 +123,8 @@ class JavaPorter(object):
       Trace.error('Unrecognized token: ' + token)
       return ''
     name = tok.next()
-    while tok.next() != '{':
-      Trace.error('Ignored token ' + tok.current())
     self.inclass = name
-    self.depth += 1
+    self.openbracket(tok)
     # pos.pushending('}')
     return 'class ' + name + ':'
 
@@ -147,6 +148,7 @@ class JavaPorter(object):
     self.inmethod = name
     self.depth += 1
     pars = self.parseparameters(tok)
+    self.openbracket(tok)
     # pos.pushending('}')
     result = 'def ' + name + '(self' + '):'
     return result
@@ -190,7 +192,33 @@ class JavaPorter(object):
       while not tok.pos.checkskip('\''):
         result += tok.pos.currentskip()
       return result + '\''
+    if tok.current() == '}':
+      self.closebracket()
     return tok.current()
+
+  def parseifparens(self, tok):
+    "Parse a () from an if clause."
+    if tok.next() != '(':
+      Trace.error('No opening ( for an if clause.')
+      return
+    tok.pos.pushending(')')
+    result = 'if'
+    while not tok.pos.finished():
+      result += self.processpart(tok)
+    tok.pos.popending()
+    return result
+
+  def openbracket(self, tok):
+    "Open a {."
+    while tok.next() != '{':
+      Trace.error('Ignored token ' + tok.current())
+    self.depth += 1
+    tok.pos.pushending('}')
+
+  def closebracket(self, tok):
+    "Close a }."
+    self.depth -= 1
+    tok.pos.popending()
 
 class Tokenizer(object):
   "Tokenizes a parse position."
