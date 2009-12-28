@@ -54,37 +54,40 @@ class JavaPorter(object):
 
   javasymbols = '&|=!(){}.+-",/*<>\'[]%'
   javatokens = [
-      'if', 'do', 'while', '&&', '||', '=', '==', '!=', 'import'
+      'if', 'do', 'while', '&&', '||', '=', '==', '!=', 'import', 'public',
+      'class', 'private', 'protected'
       ]
 
   def __init__(self):
     self.depth = 0
+    self.inclass = False
+    self.inmethod = False
 
   def topy(self, inputfile, outputfile):
     "Port the Java input file to Python."
     pos = FilePosition(inputfile)
     writer = LineWriter(outputfile)
     while not pos.finished():
-      line = self.processsentence(pos)
+      line = self.processstatement(pos)
       if len(line.strip()) > 0:
         writer.writeline(line)
     writer.close()
 
-  def processsentence(self, pos):
-    "Process a single sentence and return the result."
+  def processstatement(self, pos):
+    "Process a single statement and return the result."
     indent = self.depth * '  '
     token = self.nexttoken(pos)
     if token in self.javatokens:
       return indent + self.translatetoken(token, pos)
-    sentence = indent + self.processtoken(token, pos)
+    statement = indent + self.processtoken(token, pos)
     while not pos.checkskip(';') and not pos.finished():
-      sentence += self.processpart(pos)
-    return sentence.rstrip()
+      statement += self.processpart(pos)
+    return statement
 
   def processpart(self, pos):
-    "Process a part of a sentence."
+    "Process a part of a statement."
     token = self.nexttoken(pos)
-    return self.processtoken(token, pos) + ' '
+    return ' ' + self.processtoken(token, pos)
 
   def processtoken(self, token, pos):
     "Process a single token."
@@ -125,9 +128,37 @@ class JavaPorter(object):
   def translatetoken(self, token, pos):
     "Translate a java token."
     if token == 'import':
-      pos.globincluding('\n')
-      return ''
+      return self.translateimport(pos)
+    if token in ['public', 'private', 'protected']:
+      if self.inclass:
+        return self.translateattr(pos)
+      else:
+        return self.translateclass(pos)
+    Trace.error('Untranslated token ' + token)
     return token
+
+  def translateimport(self, pos):
+    "Translate an import statement."
+    pos.globincluding(';')
+    return ''
+
+  def translateclass(self, pos):
+    "Translate a class definition."
+    token = self.nexttoken(pos)
+    if token != 'class':
+      Trace.error('Unrecognized token: ' + token)
+      return ''
+    name = self.nexttoken(pos)
+    token = self.nexttoken(pos)
+    while token != '{':
+      Trace.error('Ignored token ' + token)
+      token = self.nexttoken(pos)
+    self.depth += 1
+    return 'class ' + name + ':'
+
+  def translateattr(self, pos):
+    "Translate an attribute (method or variable)."
+    return self.translateimport(pos)
   
   def translatesymbol(self, token, pos):
     "Translate a java symbol."
