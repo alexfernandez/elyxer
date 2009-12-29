@@ -201,8 +201,10 @@ class JavaPorter(object):
       Trace.debug('Open (')
       return result
     if tok.current() == ')':
-      Trace.error('Closing )')
+      Trace.error('Erroneously closing )')
       return ')'
+    if tok.current() in tok.modified:
+      return tok.modified[tok.current()]
     return tok.current()
 
   def parseifparens(self, tok):
@@ -240,7 +242,15 @@ class JavaPorter(object):
 class Tokenizer(object):
   "Tokenizes a parse position."
 
-  javasymbols = '&|=!(){}.+-",/*<>\'[]%'
+  unmodified = [
+      '&', '|', '=', '!', '(', ')', '{', '}', '.', '+', '-', '"', ',', '/',
+      '*', '<', '>', '\'', '[', ']', '%',
+      '!=','++','--','<=','>=', '=='
+      ]
+  modified = {
+      '&&':'and', '||':'or'
+      }
+  javasymbols = unmodified + modified.keys()
 
   def __init__(self, pos):
     self.pos = pos
@@ -274,7 +284,10 @@ class Tokenizer(object):
     if self.isalphanumeric(self.pos.current()):
       return self.pos.glob(self.isalphanumeric)
     if self.pos.current() in self.javasymbols:
-      return self.pos.currentskip()
+      result = self.pos.currentskip()
+      while result + self.pos.current() in self.javasymbols:
+        result += self.pos.currentskip()
+      return result
     current = self.pos.currentskip()
     Trace.error('Unrecognized character: ' + current)
     return current
