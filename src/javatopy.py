@@ -88,6 +88,7 @@ class JavaPorter(object):
   def processpart(self, tok):
     "Process a part of a statement."
     token = tok.next()
+    Trace.debug('Part token: ' + token)
     return ' ' + self.processtoken(tok)
 
   def processtoken(self, tok):
@@ -197,8 +198,9 @@ class JavaPorter(object):
       self.closebracket()
       return ''
     if tok.current() == '(':
-      result = self.parseparens(tok)
       Trace.debug('Open (')
+      result = self.parseparens(tok)
+      Trace.debug('Close (: ' + result)
       return result
     if tok.current() == ')':
       Trace.error('Erroneously closing )')
@@ -219,8 +221,11 @@ class JavaPorter(object):
     tok.pos.pushending(')')
     result = '('
     while not tok.pos.finished():
-      result += self.processpart(tok)
-      Trace.debug('Result if() is: ' + result)
+      part = self.processpart(tok)
+      result += part
+      Trace.debug('Result inside () after: ' + part + ' is: ' + result)
+      tok.pos.skipspace()
+      Trace.debug('Finished: ' + unicode(tok.pos.finished()))
     tok.pos.popending()
     return result + ')'
 
