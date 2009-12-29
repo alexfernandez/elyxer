@@ -76,9 +76,17 @@ class JavaPorter(object):
 
   def processstatement(self, tok):
     "Process a single statement and return the result."
+    tok.next()
+    statement = self.parsestatement(tok)
+    tok.pos.skipspace()
+    if tok.pos.finished():
+      self.closebracket(tok)
+    return statement
+
+  def parsestatement(self, tok):
+    "Parse a single statement."
     indent = self.depth * '  '
-    token = tok.next()
-    if token in self.javatokens:
+    if tok.current() in self.javatokens:
       return indent + self.translatetoken(tok)
     statement = indent + self.processtoken(tok)
     while not tok.pos.checkskip(';') and not tok.pos.finished():
@@ -143,7 +151,7 @@ class JavaPorter(object):
       return self.translateemptyattribute(name)
     if tok.next() != '(':
       return self.translateattribute(name)
-    return self.translatemethod(name)
+    return self.translatemethod(name, tok)
 
   def translatemethod(self, name, tok):
     "Translate a class method."
@@ -195,12 +203,11 @@ class JavaPorter(object):
         result += tok.pos.currentskip()
       return result + '\''
     if tok.current() == '}':
-      self.closebracket()
+      Trace.error('Erroneously closing }')
+      self.closebracket(tok)
       return ''
     if tok.current() == '(':
-      Trace.debug('Open (')
       result = self.parseparens(tok)
-      Trace.debug('Close (: ' + result)
       return result
     if tok.current() == ')':
       Trace.error('Erroneously closing )')
@@ -219,15 +226,14 @@ class JavaPorter(object):
   def parseparens(self, tok):
     "Parse the contents inside ()."
     tok.pos.pushending(')')
-    result = '('
+    result = ''
     while not tok.pos.finished():
-      part = self.processpart(tok)
-      result += part
-      Trace.debug('Result inside () after: ' + part + ' is: ' + result)
+      result += self.processpart(tok)
       tok.pos.skipspace()
-      Trace.debug('Finished: ' + unicode(tok.pos.finished()))
     tok.pos.popending()
-    return result + ')'
+    if len(result) > 0:
+      result = result[1:]
+    return '(' + result + ')'
 
   def openbracket(self, tok):
     "Open a {."
