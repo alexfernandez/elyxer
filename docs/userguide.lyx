@@ -777,8 +777,17 @@ LyX Integration
 \end_layout
 
 \begin_layout Standard
-Integration of eLyXer within LyX requires a few steps that depend on your
- operating system.
+If you followed the elegant installation procedure (installing eLyXer as
+ a module) LyX will automatically detect it after reconfiguration.
+ Just make sure that you are running LyX 1.6.5 or later, and click on Tools\SpecialChar \menuseparator
+Reconfi
+gure.
+\end_layout
+
+\begin_layout Standard
+If you followed the easy way (installing eLyXer as an executable file) integrati
+on of eLyXer within LyX requires a few steps depending on your operating
+ system.
 \end_layout
 
 \begin_layout List
@@ -827,6 +836,28 @@ elyxer.py
 .
 \end_layout
 
+\begin_layout List
+\labelwidthstring 00.00.0000
+Mac
+\begin_inset space ~
+\end_inset
+
+OS
+\begin_inset space ~
+\end_inset
+
+X: Just like on every other Unix, place 
+\family typewriter
+elyxer.py
+\family default
+ inside a directory in the execution path (like 
+\family typewriter
+/opt/local/bin
+\family default
+) and click on Tools\SpecialChar \menuseparator
+Reconfigure.
+\end_layout
+
 \begin_layout Standard
 On Windows, the 
 \begin_inset CommandInset href
@@ -836,7 +867,9 @@ target "http://wiki.lyx.org/Windows/LyXWinInstaller"
 
 \end_inset
 
- comes bundled with a version of eLyXer.
+ comes bundled with a version of eLyXer, and it is enabled by default in
+ View\SpecialChar \menuseparator
+HTML.
 \end_layout
 
 \begin_layout Section
