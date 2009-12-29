@@ -55,7 +55,7 @@ class JavaPorter(object):
 
   javatokens = [
       'if', 'do', 'while', '&&', '||', '=', '==', '!=', 'import', 'public',
-      'class', 'private', 'protected'
+      'class', 'private', 'protected', 'else', 'try'
       ]
 
   def __init__(self):
@@ -76,11 +76,13 @@ class JavaPorter(object):
 
   def processstatement(self, tok):
     "Process a single statement and return the result."
-    tok.next()
+    Trace.debug('Statement: ' + tok.next())
     statement = self.parsestatement(tok)
     tok.pos.skipspace()
-    if tok.pos.finished():
+    while tok.pos.finished():
+      Trace.debug('Closing bracket }, endings: ' + unicode(tok.pos.endinglist))
       self.closebracket(tok)
+      tok.pos.skipspace()
     return statement
 
   def parsestatement(self, tok):
@@ -96,7 +98,6 @@ class JavaPorter(object):
   def processpart(self, tok):
     "Process a part of a statement."
     token = tok.next()
-    Trace.debug('Part token: ' + token)
     return ' ' + self.processtoken(tok)
 
   def processtoken(self, tok):
@@ -107,19 +108,23 @@ class JavaPorter(object):
 
   def translatetoken(self, tok):
     "Translate a java token."
-    if tok.current() == 'import':
+    token = tok.current()
+    if token == 'import':
       return self.translateimport(tok)
-    if tok.current() in ['public', 'private', 'protected']:
+    if token in ['public', 'private', 'protected']:
       if self.inclass:
         return self.translateinternal(tok)
       else:
         return self.translateclass(tok)
-    if tok.current() == 'if':
+    if token == 'if':
       result = self.parseifparens(tok)
       self.openbracket(tok)
       return result
-    Trace.error('Untranslated token ' + tok.current())
-    return tok.current()
+    if token in ['else', 'try']:
+      self.openbracket(tok)
+      return token + ':'
+    Trace.error('Untranslated token ' + token)
+    return token
 
   def translateimport(self, tok):
     "Translate an import statement."
@@ -156,7 +161,6 @@ class JavaPorter(object):
   def translatemethod(self, name, tok):
     "Translate a class method."
     self.inmethod = name
-    self.depth += 1
     pars = self.parseparameters(tok)
     self.openbracket(tok)
     # pos.pushending('}')
@@ -230,7 +234,7 @@ class JavaPorter(object):
     while not tok.pos.finished():
       result += self.processpart(tok)
       tok.pos.skipspace()
-    tok.pos.popending()
+    tok.pos.popending(')')
     if len(result) > 0:
       result = result[1:]
     return '(' + result + ')'
@@ -248,7 +252,8 @@ class JavaPorter(object):
   def closebracket(self, tok):
     "Close a }."
     self.depth -= 1
-    tok.pos.popending()
+    if tok.pos.popending('}') != '}':
+      exit()
 
 class Tokenizer(object):
   "Tokenizes a parse position."
