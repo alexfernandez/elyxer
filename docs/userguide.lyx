@@ -355,7 +355,8 @@ The Elegant Way
 
 \begin_layout Standard
 The elegant (and not much more complicated) way of installing eLyXer is
- using Python distutils.
+ using Python distutils: it will install eLyXer as a Python module, available
+ to any Python programs and as a standalone utility module.
  Go to the 
 \family typewriter
 elyxer
@@ -416,7 +417,21 @@ $
 \end_layout
 
 \begin_layout Standard
-This procedure will also ensure that any Python packages trying to access
+The main advantage is that you can run eLyXer without knowing the location
+ of the file 
+\family typewriter
+elyxer.py
+\family default
+, or having to play with any system variables such as 
+\family typewriter
+$PATH
+\family default
+ or 
+\family typewriter
+%PATH%
+\family default
+.
+ This procedure will also ensure that any Python packages trying to access
  eLyXer will find it.
  See 
 \begin_inset CommandInset ref
@@ -438,7 +453,7 @@ elyxer.py
 python -m elyxer
 \family default
  if you have opted for this elegant procedure.
- 
+ We will see some examples in the next sections.
 \end_layout
 
 \begin_layout Subsection
@@ -457,6 +472,20 @@ $
 \color inherit
  elyxer.py --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx docs/usergu
 ide2.html
+\end_layout
+
+\begin_layout Standard
+or, for the elegant procedure:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ python -m elyxer --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx
+ docs/userguide2.html
 \end_layout
 
 \begin_layout Standard
@@ -594,6 +623,19 @@ $
 \end_layout
 
 \begin_layout Standard
+or, again for the elegant procedure:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ python -m elyxer [options] [source file] [destination file]
+\end_layout
+
+\begin_layout Standard
 If the source file is omitted then 
 \family typewriter
 STDIN
@@ -628,6 +670,20 @@ file.html
 \family default
 .
  Debug messages are shown.
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ python -m elyxer file.lyx file.html
+\end_layout
+
+\begin_layout Standard
+Just as before, but running eLyXer as a module (installed using the elegant
+ procedure).
 \end_layout
 
 \begin_layout LyX-Code
