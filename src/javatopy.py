@@ -106,8 +106,9 @@ class JavaPorter(object):
       else:
         return self.translateclass(tok)
     if tok.current() == 'if':
-      self.parseifparens(tok)
+      result = self.parseifparens(tok)
       self.openbracket(tok)
+      return result
     Trace.error('Untranslated token ' + tok.current())
     return tok.current()
 
@@ -196,12 +197,11 @@ class JavaPorter(object):
       self.closebracket()
       return ''
     if tok.current() == '(':
-      tok.pos.pushending(')')
+      result = self.parseparens(tok)
       Trace.debug('Open (')
-      return '('
+      return result
     if tok.current() == ')':
-      tok.popending()
-      Trace.debug('Close )')
+      Trace.error('Closing )')
       return ')'
     return tok.current()
 
@@ -210,12 +210,17 @@ class JavaPorter(object):
     if tok.next() != '(':
       Trace.error('No opening ( for an if clause.')
       return
+    return 'if ' + self.parseparens(tok) + ':'
+
+  def parseparens(self, tok):
+    "Parse the contents inside ()."
     tok.pos.pushending(')')
-    result = 'if'
+    result = '('
     while not tok.pos.finished():
       result += self.processpart(tok)
+      Trace.debug('Result if() is: ' + result)
     tok.pos.popending()
-    return result
+    return result + ')'
 
   def openbracket(self, tok):
     "Open a {."
