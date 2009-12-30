@@ -79,6 +79,7 @@ class JavaPorter(object):
     statement = self.parsestatement(tok)
     Trace.debug('Statement: ' + statement)
     tok.pos.skipspace()
+    Trace.debug('Current: ' + tok.pos.current() + ', endings ' + unicode(tok.pos.endinglist))
     while tok.pos.finished():
       Trace.debug('Closing bracket }, endings: ' + unicode(tok.pos.endinglist))
       self.closebracket(tok)
@@ -88,24 +89,34 @@ class JavaPorter(object):
   def parsestatement(self, tok):
     "Parse a single statement."
     indent = self.depth * '  '
+    Trace.error('We are at ' + tok.pos.current() + ' ' + unicode(tok.pos.endinglist))
     token = tok.next()
+    if tok.pos.finished():
+      Trace.error('Nothing to see! ' + tok.pos.current() + ' ' + unicode(tok.pos.endinglist))
     Trace.debug('Token: ' + token)
     if token in self.javatokens:
       return indent + self.translatetoken(tok)
-    statement = indent + self.processtoken(tok)
-    statement += ' ' + self.parseupto(';', tok)
-    return statement
-
-  def processpart(self, tok):
-    "Process a part of a statement."
-    tok.next()
-    return ' ' + self.processtoken(tok)
-
-  def processtoken(self, tok):
-    "Process a single token."
-    if tok.current() in tok.javasymbols:
+    if token in tok.comments:
+      Trace.debug('Comment token: ' + tok.current())
+      return tok.skipcomment()
+    if token in tok.javasymbols:
+      Trace.debug('Symbol: ' + token)
       return self.translatesymbol(tok)
-    return tok.current()
+    return indent + self.translateunknown(tok)
+
+  def translateunknown(self, tok):
+    "Translate an unknown token."
+    Trace.debug('Translating unknown ' + tok.current())
+    return tok.current() + ' ' + self.parseupto(';', tok)
+
+  def translatesymbol(self, tok):
+    "Translate a java symbol."
+    Trace.debug('Translating symbol ' + tok.current())
+    if tok.current() in ['//', '/*']:
+      Trace.debug('Translating comment')
+      return self.translatecomment(tok)
+    Trace.debug('Starts with symbol ' + tok.current())
+    return tok.current() + ' ' + self.parseupto(';', tok)
 
   def translatetoken(self, tok):
     "Translate a java token."
@@ -178,12 +189,7 @@ class JavaPorter(object):
 
   def translateattribute(self, name, tok):
     "Translate a class attribute."
-    tok.pos.pushending(';')
-    result = name
-    while not tok.pos.finished():
-      result += ' ' + tok.next()
-    tok.pos.popending()
-    return result
+    return name + ' ' + self.parseupto(';')
 
   def parseparameters(self, tok):
     "Parse the parameters of a method definition."
@@ -197,9 +203,20 @@ class JavaPorter(object):
         Trace.error('Missing comma, found ' + tok.current())
     tok.pos.popending()
     return pars
+
+  def processpart(self, tok):
+    "Process a part of a statement."
+    tok.next()
+    return ' ' + self.processtoken(tok)
+
+  def processtoken(self, tok):
+    "Process a single token."
+    if tok.current() in tok.javasymbols:
+      return self.processsymbol(tok)
+    return tok.current()
   
-  def translatesymbol(self, tok):
-    "Translate a java symbol."
+  def processsymbol(self, tok):
+    "Process a single java symbol."
     if tok.current() == '"':
       result = tok.current() + tok.pos.globincluding('"')
       while result.endswith('\\"') and not result.endswith('\\\\"'):
@@ -276,36 +293,23 @@ class Tokenizer(object):
   modified = {
       '&&':'and', '||':'or'
       }
-  javasymbols = unmodified + modified.keys()
+  comments = ['//', '/*']
+  javasymbols = comments + unmodified + modified.keys()
 
   def __init__(self, pos):
     self.pos = pos
     self.currenttoken = None
 
   def next(self):
-    "Get the next single token."
-    while not self.pos.finished():
-      token = self.extracttoken()
-      if token:
-        self.currenttoken = token
-        return token
-    return ''
-
-  def current(self):
-    "Get the current token."
+    "Get the next single token, and store it for current()."
+    self.currenttoken = self.extracttoken()
     return self.currenttoken
 
   def extracttoken(self):
-    "Extract a single token."
+    "Extract the next token."
     self.pos.skipspace()
     if self.pos.finished():
-      return None
-    if self.pos.checkskip('//'):
-      comment = self.pos.globexcluding('\n')
-      return None
-    if self.pos.checkskip('/*'):
-      while not self.pos.checkskip('/'):
-        comment = self.pos.globincluding('*')
+      Trace.error('Finished looking for next token.')
       return None
     if self.isalphanumeric(self.pos.current()):
       return self.pos.glob(self.isalphanumeric)
@@ -318,6 +322,10 @@ class Tokenizer(object):
     Trace.error('Unrecognized character: ' + current)
     return current
 
+  def current(self):
+    "Get the current token."
+    return self.currenttoken
+
   def isalphanumeric(self, char):
     "Detect if a character is alphanumeric or underscore."
     if char.isalpha():
@@ -327,6 +335,19 @@ class Tokenizer(object):
     if char == '_':
       return True
     return False
+
+  def skipcomment(self):
+    "Skip over a comment."
+    Trace.error('Unknown comment type ' + self.current())
+    if self.current() == '//':
+      comment = self.pos.globexcluding('\n')
+      return ''
+    if self.current() == '/*':
+      while not self.pos.checkskip('/'):
+        comment = self.pos.globincluding('*')
+      return ''
+    Trace.error('Unknown comment type ' + self.current())
+    return ''
 
   def finished(self):
     "Find out if the parse position has finished."
