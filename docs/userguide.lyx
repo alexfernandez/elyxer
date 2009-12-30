@@ -1108,7 +1108,7 @@ lyx2lyx
 \family typewriter
 --toc
 \family default
-: Activate table of contents generation.
+: Activate table of contents generation; this option is on by default.
  See section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1219,6 +1219,79 @@ frame
 .
  The quotes are optional and can be useful if your arguments include e.g.
  spaces.
+\end_layout
+
+\begin_layout Subsubsection*
+Adding Options In LyX
+\end_layout
+
+\begin_layout Standard
+To add one of these options so that it is used from within LyX, you have
+ to modify the converter line.
+ To this effect open View\SpecialChar \menuseparator
+HTML, find the converter for 
+\begin_inset Quotes eld
+\end_inset
+
+LyX -> HTML
+\begin_inset Quotes erd
+\end_inset
+
+ and edit the converter line.
+ It should read something like this, if you followed the easy installation
+ procedure:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+elyxer.py --directory $$r $$i $$o
+\end_layout
+
+\begin_layout Standard
+If you want to generate pure HTML instead of XHTML, change the line to:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+elyxer.py 
+\family default
+\series bold
+--html
+\family typewriter
+\series default
+ --directory $$r $$i $$o
+\end_layout
+
+\begin_layout Standard
+If you followed the elegant procedure it will rather be:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+python -m elyxer --directory $$r $$i $$o
+\end_layout
+
+\begin_layout Standard
+so change it to
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+python -m elyxer 
+\family default
+\series bold
+--html
+\family typewriter
+\series default
+ --directory $$r $$i $$o
+\end_layout
+
+\begin_layout Standard
+And so on.
 \end_layout
 
 \begin_layout Subsection
