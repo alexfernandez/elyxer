@@ -55,7 +55,7 @@ class JavaPorter(object):
 
   javatokens = [
       'if', 'do', 'while', '&&', '||', '=', '==', '!=', 'import', 'public',
-      'class', 'private', 'protected', 'else', 'try', 'return'
+      'class', 'private', 'protected', 'else', 'try', 'return', 'catch'
       ]
 
   def __init__(self):
@@ -79,9 +79,7 @@ class JavaPorter(object):
     statement = self.parsestatement(tok)
     Trace.debug('Statement: ' + statement)
     tok.pos.skipspace()
-    Trace.debug('Current: ' + tok.pos.current() + ', endings ' + unicode(tok.pos.endinglist))
     while tok.pos.finished():
-      Trace.debug('Closing bracket }, endings: ' + unicode(tok.pos.endinglist))
       self.closebracket(tok)
       tok.pos.skipspace()
     return statement
@@ -89,33 +87,24 @@ class JavaPorter(object):
   def parsestatement(self, tok):
     "Parse a single statement."
     indent = self.depth * '  '
-    Trace.error('We are at ' + tok.pos.current() + ' ' + unicode(tok.pos.endinglist))
     token = tok.next()
     if tok.pos.finished():
       Trace.error('Nothing to see! ' + tok.pos.current() + ' ' + unicode(tok.pos.endinglist))
-    Trace.debug('Token: ' + token)
+      return ''
     if token in self.javatokens:
       return indent + self.translatetoken(tok)
-    if token in tok.comments:
-      Trace.debug('Comment token: ' + tok.current())
-      return tok.skipcomment()
     if token in tok.javasymbols:
-      Trace.debug('Symbol: ' + token)
-      return self.translatesymbol(tok)
+      return indent + self.translatesymbol(tok)
     return indent + self.translateunknown(tok)
 
   def translateunknown(self, tok):
     "Translate an unknown token."
-    Trace.debug('Translating unknown ' + tok.current())
     return tok.current() + ' ' + self.parseupto(';', tok)
 
   def translatesymbol(self, tok):
     "Translate a java symbol."
-    Trace.debug('Translating symbol ' + tok.current())
-    if tok.current() in ['//', '/*']:
-      Trace.debug('Translating comment')
-      return self.translatecomment(tok)
-    Trace.debug('Starts with symbol ' + tok.current())
+    if tok.current() in tok.comments:
+      return tok.skipcomment()
     return tok.current() + ' ' + self.parseupto(';', tok)
 
   def translatetoken(self, tok):
@@ -128,8 +117,8 @@ class JavaPorter(object):
         return self.translateinternal(tok)
       else:
         return self.translateclass(tok)
-    if token == 'if':
-      result = self.parseifparens(tok)
+    if token in ['if', 'catch']:
+      result = token + ' ' + self.parseparens(tok)
       self.openbracket(tok)
       return result
     if token in ['else', 'try']:
@@ -137,7 +126,6 @@ class JavaPorter(object):
       return token + ':'
     if token == 'return':
       result = self.parseupto(';', tok)
-      Trace.debug('Return found: ' + result)
       return token + ' ' + result
     Trace.error('Untranslated token ' + token)
     return token
@@ -233,7 +221,7 @@ class JavaPorter(object):
       self.closebracket(tok)
       return ''
     if tok.current() == '(':
-      result = self.parseparens(tok)
+      result = self.parseinparens(tok)
       return result
     if tok.current() == ')':
       Trace.error('Erroneously closing )')
@@ -242,16 +230,17 @@ class JavaPorter(object):
       return tok.modified[tok.current()]
     return tok.current()
 
-  def parseifparens(self, tok):
-    "Parse a () from an if clause."
-    if tok.next() != '(':
-      Trace.error('No opening ( for an if clause.')
-      return
-    return 'if ' + self.parseparens(tok) + ':'
-
   def parseparens(self, tok):
+    "Parse a couple of () and the contents inside."
+    if tok.next() != '(':
+      Trace.error('No opening ( for a parens, found ' + tok.current())
+      return
+    return self.parseinparens(tok)
+
+  def parseinparens(self, tok):
     "Parse the contents inside ()."
     result = self.parseupto(')', tok)
+    Trace.debug('In parens: ' + result)
     return '(' + result + ')'
 
   def parseupto(self, ending, tok):
@@ -260,6 +249,7 @@ class JavaPorter(object):
     result = ''
     while not tok.pos.finished():
       result += self.processpart(tok)
+      Trace.debug('New part: ' + result)
       tok.pos.skipspace()
     tok.pos.popending(ending)
     if len(result) > 0:
@@ -286,7 +276,7 @@ class Tokenizer(object):
   "Tokenizes a parse position."
 
   unmodified = [
-      '&', '|', '=', '!', '(', ')', '{', '}', '.', '+', '-', '"', ',', '/',
+      '&', '|', '=', '!', '(', ')', '{', '.', '+', '-', '"', ',', '/',
       '*', '<', '>', '\'', '[', ']', '%',
       '!=','++','--','<=','>=', '=='
       ]
@@ -320,6 +310,7 @@ class Tokenizer(object):
       return result
     current = self.pos.currentskip()
     Trace.error('Unrecognized character: ' + current)
+    raise Exception('Ay payo')
     return current
 
   def current(self):
@@ -338,7 +329,6 @@ class Tokenizer(object):
 
   def skipcomment(self):
     "Skip over a comment."
-    Trace.error('Unknown comment type ' + self.current())
     if self.current() == '//':
       comment = self.pos.globexcluding('\n')
       return ''
