@@ -55,7 +55,7 @@ class JavaPorter(object):
 
   javatokens = [
       'if', 'do', 'while', '&&', '||', '=', '==', '!=', 'import', 'public',
-      'class', 'private', 'protected', 'else', 'try'
+      'class', 'private', 'protected', 'else', 'try', 'return'
       ]
 
   def __init__(self):
@@ -76,8 +76,8 @@ class JavaPorter(object):
 
   def processstatement(self, tok):
     "Process a single statement and return the result."
-    Trace.debug('Statement: ' + tok.next())
     statement = self.parsestatement(tok)
+    Trace.debug('Statement: ' + statement)
     tok.pos.skipspace()
     while tok.pos.finished():
       Trace.debug('Closing bracket }, endings: ' + unicode(tok.pos.endinglist))
@@ -88,16 +88,17 @@ class JavaPorter(object):
   def parsestatement(self, tok):
     "Parse a single statement."
     indent = self.depth * '  '
-    if tok.current() in self.javatokens:
+    token = tok.next()
+    Trace.debug('Token: ' + token)
+    if token in self.javatokens:
       return indent + self.translatetoken(tok)
     statement = indent + self.processtoken(tok)
-    while not tok.pos.checkskip(';') and not tok.pos.finished():
-      statement += self.processpart(tok)
+    statement += ' ' + self.parseupto(';', tok)
     return statement
 
   def processpart(self, tok):
     "Process a part of a statement."
-    token = tok.next()
+    tok.next()
     return ' ' + self.processtoken(tok)
 
   def processtoken(self, tok):
@@ -123,6 +124,10 @@ class JavaPorter(object):
     if token in ['else', 'try']:
       self.openbracket(tok)
       return token + ':'
+    if token == 'return':
+      result = self.parseupto(';', tok)
+      Trace.debug('Return found: ' + result)
+      return token + ' ' + result
     Trace.error('Untranslated token ' + token)
     return token
 
@@ -229,15 +234,20 @@ class JavaPorter(object):
 
   def parseparens(self, tok):
     "Parse the contents inside ()."
-    tok.pos.pushending(')')
+    result = self.parseupto(')', tok)
+    return '(' + result + ')'
+
+  def parseupto(self, ending, tok):
+    "Parse the tokenizer up to the supplied ending."
+    tok.pos.pushending(ending)
     result = ''
     while not tok.pos.finished():
       result += self.processpart(tok)
       tok.pos.skipspace()
-    tok.pos.popending(')')
+    tok.pos.popending(ending)
     if len(result) > 0:
       result = result[1:]
-    return '(' + result + ')'
+    return result
 
   def openbracket(self, tok):
     "Open a {."
