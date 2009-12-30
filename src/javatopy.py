@@ -150,12 +150,10 @@ class JavaPorter(object):
   def translateinternal(self, tok):
     "Translate an internal element (attribute or method)."
     token = tok.next()
-    if token == self.inclass:
-      # constructor
-      if tok.next() != '(':
-        Trace.error('Constructor missing (, found ' + tok.current())
-      return self.translatemethod(token, tok)
     name = tok.next()
+    if token == self.inclass and name == '(':
+      # constructor
+      return self.translatemethod(token, tok)
     if tok.pos.current() == ';':
       return self.translateemptyattribute(name)
     if tok.next() != '(':
@@ -240,7 +238,6 @@ class JavaPorter(object):
   def parseinparens(self, tok):
     "Parse the contents inside ()."
     result = self.parseupto(')', tok)
-    Trace.debug('In parens: ' + result)
     return '(' + result + ')'
 
   def parseupto(self, ending, tok):
@@ -249,7 +246,6 @@ class JavaPorter(object):
     result = ''
     while not tok.pos.finished():
       result += self.processpart(tok)
-      Trace.debug('New part: ' + result)
       tok.pos.skipspace()
     tok.pos.popending(ending)
     if len(result) > 0:
