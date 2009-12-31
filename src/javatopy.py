@@ -53,26 +53,71 @@ def usage():
 class JavaPorter(object):
   "Ports a Java file."
 
-  javatokens = [
-      'if', 'do', 'while', '&&', '||', '=', '==', '!=', 'import', 'public',
-      'class', 'private', 'protected', 'else', 'try', 'return', 'catch'
-      ]
+  javatokens = {
+      'if':'parensblock', 'catch':'parensblock', 'import':'ignorestatement',
+      'public':'classormember', 'protected':'classormember', 'private':'classormember',
+      'class':'parseclass', 'else':'block', 'try':'block', 'return':'tokenstatement',
+      '{':'openblock', '}':'closeblock'
+      }
 
   def __init__(self):
     self.depth = 0
     self.inclass = None
     self.inmethod = None
+    self.waitingforblock = False
 
   def topy(self, inputfile, outputfile):
     "Port the Java input file to Python."
-    pos = FilePosition(inputfile)
-    tok = Tokenizer(pos)
+    tok = Tokenizer(FilePosition(inputfile))
     writer = LineWriter(outputfile)
-    while not tok.pos.finished():
-      line = self.processstatement(tok)
-      if len(line.strip()) > 0:
-        writer.writeline(line)
+    for statement in self.statements(tok):
+      if statement:
+        Trace.debug('Statement: ' + statement)
+        writer.writeline(statement)
     writer.close()
+
+  def statements(self, tok):
+    "Parse all statements, yield them one by one."
+    while not tok.pos.finished():
+      indent = '  ' * self.depth
+      token = tok.next()
+      Trace.debug('Token: ' + token)
+      if token in self.javatokens:
+        function = getattr(self, self.javatokens[token])
+        yield indent + function(token, tok)
+      yield indent + self.tokenstatement(token, tok)
+
+  def classormember(self, token, tok):
+    "Parse a class or member (attribute or method)."
+    if self.inclass:
+      return self.translateinternal(tok)
+    else:
+      return self.translateclass(tok)
+
+  def parensblock(self, token, tok):
+    "Parse a parens () and then a block {}."
+    parens = self.parseparens(tok)
+    self.waitingforblock = True
+    return token + ' ' + parens + ':'
+
+  def openblock(self, token, tok):
+    "Open a block of code."
+    self.waitingforblock = False
+    self.depth += 1
+
+  def closeblock(self, token, tok):
+    "Close a block of code."
+    self.depth -= 1
+
+  def tokenstatement(self, token, tok):
+    "A token that starts a statement."
+    statement = token
+    while tok.next() != ';':
+      statement += ' ' + tok.current()
+    if self.waitingforblock:
+      self.waitingforblock = False
+      self.depth -= 1
+    return statement
 
   def processstatement(self, tok):
     "Process a single statement and return the result."
@@ -84,7 +129,7 @@ class JavaPorter(object):
       tok.pos.skipspace()
     return statement
 
-  def parsestatement(self, tok):
+  def parsestatementold(self, tok):
     "Parse a single statement."
     indent = self.depth * '  '
     token = tok.next()
@@ -134,16 +179,16 @@ class JavaPorter(object):
 
   def translateif(self, token, tok):
     "Translate an if or catch clause: token() and optional {"
-      result = token + ' ' + self.parseparens(tok)
-      if tok.next() == '{':
-        self.addclosebracket(tok)
-        return result
-      # parse next statement directly
+    result = token + ' ' + self.parseparens(tok)
+    if tok.next() == '{':
+      self.addclosebracket(tok)
+      return result
+    # parse next statement directly
 
-  def translateimport(self, tok):
-    "Translate an import statement."
+  def ignorestatement(self, token, tok):
+    "Ignore a whole statement."
     tok.pos.globincluding(';')
-    return ''
+    return None
 
   def translateclass(self, tok):
     "Translate a class definition."
@@ -267,10 +312,6 @@ class JavaPorter(object):
       if tok.pos.finished():
         Trace.error('Finished while waiting for {')
         return
-    self.addclosebracket(self, tok)
-
-  def addclosebracket(self, tok):
-    "After the opening {: add a closing }."
     self.depth += 1
     tok.pos.pushending('}')
 
@@ -284,8 +325,8 @@ class Tokenizer(object):
   "Tokenizes a parse position."
 
   unmodified = [
-      '&', '|', '=', '!', '(', ')', '{', '.', '+', '-', '"', ',', '/',
-      '*', '<', '>', '\'', '[', ']', '%',
+      '&', '|', '=', '!', '(', ')', '{', '}', '.', '+', '-', '"', ',', '/',
+      '*', '<', '>', '\'', '[', ']', '%', ';',
       '!=','++','--','<=','>=', '=='
       ]
   modified = {
@@ -301,6 +342,9 @@ class Tokenizer(object):
   def next(self):
     "Get the next single token, and store it for current()."
     self.currenttoken = self.extracttoken()
+    while self.currenttoken in self.comments:
+      self.skipcomment()
+      self.currenttoken = self.extracttoken()
     return self.currenttoken
 
   def extracttoken(self):
@@ -317,9 +361,7 @@ class Tokenizer(object):
         result += self.pos.currentskip()
       return result
     current = self.pos.currentskip()
-    Trace.error('Unrecognized character: ' + current)
-    raise Exception('Ay payo')
-    return current
+    raise Exception('Unrecognized character: ' + current)
 
   def current(self):
     "Get the current token."
@@ -339,13 +381,12 @@ class Tokenizer(object):
     "Skip over a comment."
     if self.current() == '//':
       comment = self.pos.globexcluding('\n')
-      return ''
+      return
     if self.current() == '/*':
       while not self.pos.checkskip('/'):
         comment = self.pos.globincluding('*')
-      return ''
+      return
     Trace.error('Unknown comment type ' + self.current())
-    return ''
 
   def finished(self):
     "Find out if the parse position has finished."
