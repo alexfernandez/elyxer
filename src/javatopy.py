@@ -78,12 +78,12 @@ class JavaPorter(object):
 
   def nextstatement(self, tok):
     "Return the next statement."
-    if tok.pos.finished():
-      raise Exception('Read after the end.')
     statement = None
-    while not statement:
+    while not statement and not tok.pos.finished():
       indent = '  ' * self.depth
       statement = self.parsestatement(tok)
+    if not statement:
+      return ''
     return indent + statement
 
   def parsestatement(self, tok):
@@ -133,72 +133,6 @@ class JavaPorter(object):
       self.waitingforblock = False
       self.depth -= 1
     return statement
-
-  def processstatement(self, tok):
-    "Process a single statement and return the result."
-    statement = self.parsestatement(tok)
-    Trace.debug('Statement: ' + statement)
-    tok.pos.skipspace()
-    while tok.pos.finished():
-      self.closebracket(tok)
-      tok.pos.skipspace()
-    return statement
-
-  def parsestatementold(self, tok):
-    "Parse a single statement."
-    indent = self.depth * '  '
-    token = tok.next()
-    if tok.pos.finished():
-      Trace.error('Nothing to see! ' + tok.pos.current() + ' ' + unicode(tok.pos.endinglist))
-      return ''
-    return indent + self.translatestatement(tok)
-
-  def translatestatement(self, tok):
-    "Translate a Java statement to Python."
-    if token in self.javatokens:
-      return self.translatetoken(tok)
-    if token in tok.javasymbols:
-      return self.translatesymbol(tok)
-    return self.translateunknown(tok)
-
-  def translateunknown(self, tok):
-    "Translate an unknown token."
-    return tok.current() + ' ' + self.parseupto(';', tok)
-
-  def translatesymbol(self, tok):
-    "Translate a java symbol."
-    if tok.current() in tok.comments:
-      return tok.skipcomment()
-    return tok.current() + ' ' + self.parseupto(';', tok)
-
-  def translatetoken(self, tok):
-    "Translate a java token."
-    token = tok.current()
-    if token == 'import':
-      return self.translateimport(tok)
-    if token in ['public', 'private', 'protected']:
-      if self.inclass:
-        return self.translateinternal(tok)
-      else:
-        return self.translateclass(tok)
-    if token in ['if', 'catch']:
-      return self.translateifcatch(token, tok)
-    if token in ['else', 'try']:
-      self.openbracket(tok)
-      return token + ':'
-    if token == 'return':
-      result = self.parseupto(';', tok)
-      return token + ' ' + result
-    Trace.error('Untranslated token ' + token)
-    return token
-
-  def translateif(self, token, tok):
-    "Translate an if or catch clause: token() and optional {"
-    result = token + ' ' + self.parseparens(tok)
-    if tok.next() == '{':
-      self.addclosebracket(tok)
-      return result
-    # parse next statement directly
 
   def ignorestatement(self, token, tok):
     "Ignore a whole statement."
@@ -312,23 +246,6 @@ class JavaPorter(object):
       result = result[1:]
     return result
 
-  def openbracket(self, tok):
-    "Open a {."
-    while tok.next() != '{':
-      Trace.error('Ignored token before {: ' + tok.current())
-      if tok.pos.finished():
-        Trace.error('Finished while waiting for {')
-        return
-    self.depth += 1
-    Trace.error('Opening {')
-    tok.pos.pushending('}')
-
-  def closebracket(self, tok):
-    "Close a }."
-    self.depth -= 1
-    if tok.pos.popending('}') != '}':
-      exit()
-
 class Tokenizer(object):
   "Tokenizes a parse position."
 
@@ -353,6 +270,7 @@ class Tokenizer(object):
     while self.currenttoken in self.comments:
       self.skipcomment()
       self.currenttoken = self.extracttoken()
+    self.pos.skipspace()
     return self.currenttoken
 
   def extracttoken(self):
