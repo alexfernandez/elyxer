@@ -53,11 +53,15 @@ def usage():
 class JavaPorter(object):
   "Ports a Java file."
 
-  javatokens = {
+  starttokens = {
       'if':'parensblock', 'catch':'parensblock', 'import':'ignorestatement',
       'public':'classormember', 'protected':'classormember', 'private':'classormember',
       'class':'parseclass', 'else':'tokenblock', 'try':'tokenblock',
-      'return':'tokenstatement', '{':'openblock', '}':'closeblock'
+      'return':'valuestatement', '{':'openblock', '}':'closeblock',
+      'for':'forblock'
+      }
+  javatokens = {
+      'new':''
       }
 
   def __init__(self):
@@ -65,6 +69,7 @@ class JavaPorter(object):
     self.inclass = None
     self.inmethod = None
     self.waitingforblock = False
+    self.variables = []
 
   def topy(self, inputfile, outputfile):
     "Port the Java input file to Python."
@@ -84,16 +89,19 @@ class JavaPorter(object):
       statement = self.parsestatement(tok)
     if not statement:
       return ''
+    if statement.startswith('\n'):
+      # displace newline
+      return '\n' + indent + statement[1:]
     return indent + statement
 
   def parsestatement(self, tok):
     "Parse a single statement."
     token = tok.next()
     Trace.debug('Token: ' + token)
-    if token in self.javatokens:
-      function = getattr(self, self.javatokens[token])
+    if token in self.starttokens:
+      function = getattr(self, self.starttokens[token])
       return function(token, tok)
-    return self.tokenstatement(token, tok)
+    return self.assigninvoke(token, tok)
 
   def classormember(self, token, tok):
     "Parse a class or member (attribute or method)."
@@ -103,20 +111,28 @@ class JavaPorter(object):
       return self.translateclass(tok)
 
   def parensblock(self, token, tok):
-    "Parse a parens () and then a block {}."
+    "Parse a parens () and then a block {} (if and catch)."
     parens = self.parseparens(tok)
-    self.waitingforblock = True
+    self.expectblock()
+    if token == 'catch':
+      return 'except:'
     return token + ' ' + parens + ':'
+
+  def forblock(self, token, tok):
+    "Parse a for parens (;;) and a block {}."
+    return self.parensblock(token, tok)
 
   def tokenblock(self, token, tok):
     "Parse a block (after a try or an else)."
-    self.waitingforblock = True
+    self.expectblock()
     return token + ':'
 
   def openblock(self, token, tok):
     "Open a block of code."
-    self.waitingforblock = False
-    self.depth += 1
+    if self.waitingforblock:
+      self.waitingforblock = False
+    else:
+      self.depth += 1
     return None
 
   def closeblock(self, token, tok):
@@ -124,8 +140,13 @@ class JavaPorter(object):
     self.depth -= 1
     return None
 
-  def tokenstatement(self, token, tok):
-    "A token that starts a statement."
+  def expectblock(self):
+    "Mark that a block is to be expected."
+    self.depth += 1
+    self.waitingforblock = True
+
+  def valuestatement(self, token, tok):
+    "A statement that contains a value."
     statement = token
     while tok.next() != ';':
       statement += ' ' + self.processtoken(tok)
@@ -133,6 +154,34 @@ class JavaPorter(object):
       self.waitingforblock = False
       self.depth -= 1
     return statement
+
+  def assigninvoke(self, token, tok):
+    "An assignment or a method invocation."
+    token2 = tok.next()
+    if token2 == '=':
+      # assignment
+      if not token in self.variables:
+        Trace.error('Undeclared variable ' + token)
+      return self.valuestatement(token + ' =', tok)
+    if token2 == '.':
+      # member
+      if not token in self.variables:
+        Trace.error('Undeclared variable ' + token)
+      member = tok.next()
+      return self.assigninvoke(token + '.' + member, tok)
+    if token2 == '(':
+      parens = self.parseinparens(tok)
+      return self.assigninvoke(token + '(' + parens + ')', tok)
+    if token2 in tok.javasymbols:
+      Trace.error('Unknown symbol ' + token2)
+      return token + ' ' + token2
+    token3 = tok.next()
+    if token3 == '=':
+      # a declaration
+      self.variables.append(token2)
+      return self.valuestatement(token2 + ' =', tok)
+    Trace.error('Unknown combination ' + token + '+' + token2 + '+' + token3)
+    return token + ' ' + token2 + ' ' + token
 
   def ignorestatement(self, token, tok):
     "Ignore a whole statement."
@@ -152,7 +201,7 @@ class JavaPorter(object):
       inheritance += ' ' + tok.current()
     Trace.error('Unused inheritance ' + inheritance)
     self.openblock(tok.current(), tok)
-    return 'class ' + name + ':'
+    return 'class ' + name + '(object):'
 
   def translateinternal(self, tok):
     "Translate an internal element (attribute or method)."
@@ -171,8 +220,8 @@ class JavaPorter(object):
     "Translate a class method."
     self.inmethod = name
     pars = self.parseparameters(tok)
-    self.waitingforblock = True
-    return 'def ' + name + '(self' + '):'
+    self.expectblock()
+    return '\ndef ' + name + '(self' + '):'
 
   def translateemptyattribute(self, name):
     "Translate an empty attribute definition."
@@ -196,6 +245,8 @@ class JavaPorter(object):
     "Process a single token."
     if tok.current() in tok.javasymbols:
       return self.processsymbol(tok)
+    if tok.current() in self.javatokens:
+      return self.javatokens[tok.current()]
     return tok.current()
   
   def processsymbol(self, tok):
