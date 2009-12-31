@@ -56,8 +56,8 @@ class JavaPorter(object):
   javatokens = {
       'if':'parensblock', 'catch':'parensblock', 'import':'ignorestatement',
       'public':'classormember', 'protected':'classormember', 'private':'classormember',
-      'class':'parseclass', 'else':'block', 'try':'block', 'return':'tokenstatement',
-      '{':'openblock', '}':'closeblock'
+      'class':'parseclass', 'else':'tokenblock', 'try':'tokenblock',
+      'return':'tokenstatement', '{':'openblock', '}':'closeblock'
       }
 
   def __init__(self):
@@ -70,22 +70,30 @@ class JavaPorter(object):
     "Port the Java input file to Python."
     tok = Tokenizer(FilePosition(inputfile))
     writer = LineWriter(outputfile)
-    for statement in self.statements(tok):
-      if statement:
-        Trace.debug('Statement: ' + statement)
-        writer.writeline(statement)
+    while not tok.pos.finished():
+      statement = self.nextstatement(tok)
+      Trace.debug('Statement: ' + statement)
+      writer.writeline(statement)
     writer.close()
 
-  def statements(self, tok):
-    "Parse all statements, yield them one by one."
-    while not tok.pos.finished():
+  def nextstatement(self, tok):
+    "Return the next statement."
+    if tok.pos.finished():
+      raise Exception('Read after the end.')
+    statement = None
+    while not statement:
       indent = '  ' * self.depth
-      token = tok.next()
-      Trace.debug('Token: ' + token)
-      if token in self.javatokens:
-        function = getattr(self, self.javatokens[token])
-        yield indent + function(token, tok)
-      yield indent + self.tokenstatement(token, tok)
+      statement = self.parsestatement(tok)
+    return indent + statement
+
+  def parsestatement(self, tok):
+    "Parse a single statement."
+    token = tok.next()
+    Trace.debug('Token: ' + token)
+    if token in self.javatokens:
+      function = getattr(self, self.javatokens[token])
+      return function(token, tok)
+    return self.tokenstatement(token, tok)
 
   def classormember(self, token, tok):
     "Parse a class or member (attribute or method)."
@@ -100,20 +108,27 @@ class JavaPorter(object):
     self.waitingforblock = True
     return token + ' ' + parens + ':'
 
+  def tokenblock(self, token, tok):
+    "Parse a block (after a try or an else)."
+    self.waitingforblock = True
+    return token + ':'
+
   def openblock(self, token, tok):
     "Open a block of code."
     self.waitingforblock = False
     self.depth += 1
+    return None
 
   def closeblock(self, token, tok):
     "Close a block of code."
     self.depth -= 1
+    return None
 
   def tokenstatement(self, token, tok):
     "A token that starts a statement."
     statement = token
     while tok.next() != ';':
-      statement += ' ' + tok.current()
+      statement += ' ' + self.processtoken(tok)
     if self.waitingforblock:
       self.waitingforblock = False
       self.depth -= 1
@@ -198,7 +213,11 @@ class JavaPorter(object):
       return ''
     name = tok.next()
     self.inclass = name
-    self.openbracket(tok)
+    inheritance = ''
+    while tok.next() != '{':
+      inheritance += ' ' + tok.current()
+    Trace.error('Unused inheritance ' + inheritance)
+    self.openblock(tok.current(), tok)
     return 'class ' + name + ':'
 
   def translateinternal(self, tok):
@@ -218,9 +237,8 @@ class JavaPorter(object):
     "Translate a class method."
     self.inmethod = name
     pars = self.parseparameters(tok)
-    self.openbracket(tok)
-    result = 'def ' + name + '(self' + '):'
-    return result
+    self.waitingforblock = True
+    return 'def ' + name + '(self' + '):'
 
   def translateemptyattribute(self, name):
     "Translate an empty attribute definition."
@@ -232,16 +250,8 @@ class JavaPorter(object):
 
   def parseparameters(self, tok):
     "Parse the parameters of a method definition."
-    pars = []
-    tok.pos.pushending(')')
-    while not tok.pos.finished():
-      type = tok.next()
-      name = tok.next()
-      pars.append(name)
-      if not tok.pos.finished() and tok.next() != ',':
-        Trace.error('Missing comma, found ' + tok.current())
-    tok.pos.popending()
-    return pars
+    parens = self.parseinparens(tok)
+    return parens.split(',')
 
   def processpart(self, tok):
     "Process a part of a statement."
@@ -295,12 +305,9 @@ class JavaPorter(object):
 
   def parseupto(self, ending, tok):
     "Parse the tokenizer up to the supplied ending."
-    tok.pos.pushending(ending)
     result = ''
-    while not tok.pos.finished():
-      result += self.processpart(tok)
-      tok.pos.skipspace()
-    tok.pos.popending(ending)
+    while not tok.next() == ending:
+      result += ' ' + self.processtoken(tok)
     if len(result) > 0:
       result = result[1:]
     return result
@@ -313,6 +320,7 @@ class JavaPorter(object):
         Trace.error('Finished while waiting for {')
         return
     self.depth += 1
+    Trace.error('Opening {')
     tok.pos.pushending('}')
 
   def closebracket(self, tok):
@@ -351,8 +359,7 @@ class Tokenizer(object):
     "Extract the next token."
     self.pos.skipspace()
     if self.pos.finished():
-      Trace.error('Finished looking for next token.')
-      return None
+      raise Exception('Finished looking for next token.')
     if self.isalphanumeric(self.pos.current()):
       return self.pos.glob(self.isalphanumeric)
     if self.pos.current() in self.javasymbols:
@@ -387,10 +394,6 @@ class Tokenizer(object):
         comment = self.pos.globincluding('*')
       return
     Trace.error('Unknown comment type ' + self.current())
-
-  def finished(self):
-    "Find out if the parse position has finished."
-    return self.pos.finished()
 
 inputfile, outputfile = readargs(sys.argv)
 Trace.debugmode = True
