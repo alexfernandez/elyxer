@@ -61,7 +61,7 @@ class JavaPorter(object):
       'for':'forblock'
       }
   javatokens = {
-      'new':''
+      'new':'', 'this':'self'
       }
 
   def __init__(self):
@@ -69,7 +69,7 @@ class JavaPorter(object):
     self.inclass = None
     self.inmethod = None
     self.waitingforblock = False
-    self.variables = []
+    self.variables = ['this']
 
   def topy(self, inputfile, outputfile):
     "Port the Java input file to Python."
@@ -210,11 +210,14 @@ class JavaPorter(object):
     if token == self.inclass and name == '(':
       # constructor
       return self.translatemethod(token, tok)
-    if tok.pos.current() == ';':
+    after = tok.next()
+    if after == ';':
       return self.translateemptyattribute(name)
-    if tok.next() != '(':
-      return self.translateattribute(name)
-    return self.translatemethod(name, tok)
+    if after == '(':
+      return self.translatemethod(name, tok)
+    if after != '=':
+      Trace.error('Weird character after member: ' + token + ' ' + name + ' ' + after)
+    return self.translateattribute(name)
 
   def translatemethod(self, name, tok):
     "Translate a class method."
@@ -264,7 +267,7 @@ class JavaPorter(object):
       return result + '\''
     if tok.current() == '}':
       Trace.error('Erroneously closing }')
-      self.closebracket(tok)
+      self.depth -= 1
       return ''
     if tok.current() == '(':
       result = self.parseinparens(tok)
