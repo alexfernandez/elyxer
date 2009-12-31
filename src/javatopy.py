@@ -91,11 +91,15 @@ class JavaPorter(object):
     if tok.pos.finished():
       Trace.error('Nothing to see! ' + tok.pos.current() + ' ' + unicode(tok.pos.endinglist))
       return ''
+    return indent + self.translatestatement(tok)
+
+  def translatestatement(self, tok):
+    "Translate a Java statement to Python."
     if token in self.javatokens:
-      return indent + self.translatetoken(tok)
+      return self.translatetoken(tok)
     if token in tok.javasymbols:
-      return indent + self.translatesymbol(tok)
-    return indent + self.translateunknown(tok)
+      return self.translatesymbol(tok)
+    return self.translateunknown(tok)
 
   def translateunknown(self, tok):
     "Translate an unknown token."
@@ -118,9 +122,7 @@ class JavaPorter(object):
       else:
         return self.translateclass(tok)
     if token in ['if', 'catch']:
-      result = token + ' ' + self.parseparens(tok)
-      self.openbracket(tok)
-      return result
+      return self.translateifcatch(token, tok)
     if token in ['else', 'try']:
       self.openbracket(tok)
       return token + ':'
@@ -129,6 +131,14 @@ class JavaPorter(object):
       return token + ' ' + result
     Trace.error('Untranslated token ' + token)
     return token
+
+  def translateif(self, token, tok):
+    "Translate an if or catch clause: token() and optional {"
+      result = token + ' ' + self.parseparens(tok)
+      if tok.next() == '{':
+        self.addclosebracket(tok)
+        return result
+      # parse next statement directly
 
   def translateimport(self, tok):
     "Translate an import statement."
@@ -144,7 +154,6 @@ class JavaPorter(object):
     name = tok.next()
     self.inclass = name
     self.openbracket(tok)
-    # pos.pushending('}')
     return 'class ' + name + ':'
 
   def translateinternal(self, tok):
@@ -165,7 +174,6 @@ class JavaPorter(object):
     self.inmethod = name
     pars = self.parseparameters(tok)
     self.openbracket(tok)
-    # pos.pushending('}')
     result = 'def ' + name + '(self' + '):'
     return result
 
@@ -259,6 +267,10 @@ class JavaPorter(object):
       if tok.pos.finished():
         Trace.error('Finished while waiting for {')
         return
+    self.addclosebracket(self, tok)
+
+  def addclosebracket(self, tok):
+    "After the opening {: add a closing }."
     self.depth += 1
     tok.pos.pushending('}')
 
