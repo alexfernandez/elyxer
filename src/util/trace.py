@@ -49,6 +49,7 @@ class Trace(object):
 
   def error(cls, message):
     "Show an error message"
+    message = '* ' + message
     if Trace.prefix and Trace.showlinesmode:
       message = Trace.prefix + message
     Trace.show(message, sys.stderr)
