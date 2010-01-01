@@ -77,7 +77,6 @@ class JavaPorter(object):
     writer = LineWriter(outputfile)
     while not tok.pos.finished():
       statement = self.nextstatement(tok)
-      Trace.debug('Statement: ' + statement)
       writer.writeline(statement)
     writer.close()
 
@@ -89,6 +88,7 @@ class JavaPorter(object):
       statement = self.parsestatement(tok)
     if not statement:
       return ''
+    Trace.debug('Statement: ' + statement.strip())
     if statement.startswith('\n'):
       # displace newline
       return '\n' + indent + statement[1:]
@@ -97,7 +97,6 @@ class JavaPorter(object):
   def parsestatement(self, tok):
     "Parse a single statement."
     token = tok.next()
-    Trace.debug('Token: ' + token)
     if token in self.starttokens:
       function = getattr(self, self.starttokens[token])
       return function(token, tok)
@@ -172,6 +171,9 @@ class JavaPorter(object):
     if token2 == '(':
       parens = self.parseinparens(tok)
       return self.assigninvoke(token + '(' + parens + ')', tok)
+    if token2 == '[':
+      index = self.parseinsquare(tok)
+      return self.assigninvoke(token + '[' + index + ']', tok)
     if token2 in tok.javasymbols:
       Trace.error('Unknown symbol ' + token2)
       return token + ' ' + token2
@@ -254,17 +256,8 @@ class JavaPorter(object):
   
   def processsymbol(self, tok):
     "Process a single java symbol."
-    if tok.current() == '"':
-      result = tok.current() + tok.pos.globincluding('"')
-      while result.endswith('\\"') and not result.endswith('\\\\"'):
-        result += tok.pos.globincluding('"')
-      Trace.debug('quoted sequence: ' + result)
-      return result
-    if tok.current() == '\'':
-      result = tok.current()
-      while not tok.pos.checkskip('\''):
-        result += tok.pos.currentskip()
-      return result + '\''
+    if tok.current() == '"' or tok.current() == '\'':
+      return self.parsequoted(tok.current(), tok)
     if tok.current() == '}':
       Trace.error('Erroneously closing }')
       self.depth -= 1
@@ -272,12 +265,23 @@ class JavaPorter(object):
     if tok.current() == '(':
       result = self.parseinparens(tok)
       return result
+    if tok.current() == '[':
+      result = self.parseinsquare(tok)
+      return result
     if tok.current() == ')':
       Trace.error('Erroneously closing )')
       return ')'
     if tok.current() in tok.modified:
       return tok.modified[tok.current()]
     return tok.current()
+
+  def parsequoted(self, quote, tok):
+    "Parse a quoted sentence, with variable quotes."
+    result = tok.current() + tok.pos.globincluding(quote)
+    while result.endswith('\\' + quote) and not result.endswith('\\\\' + quote):
+      result += tok.pos.globincluding(quote)
+    Trace.debug('Quoted sequence: ' + result)
+    return result
 
   def parseparens(self, tok):
     "Parse a couple of () and the contents inside."
@@ -288,8 +292,16 @@ class JavaPorter(object):
 
   def parseinparens(self, tok):
     "Parse the contents inside ()."
-    result = self.parseupto(')', tok)
-    return '(' + result + ')'
+    return self.parseinbrackets('(', ')', tok)
+
+  def parseinsquare(self, tok):
+    "Parse the contents inside []."
+    return self.parseinbrackets('[', ']', tok)
+
+  def parseinbrackets(self, opening, closing, tok):
+    "Parse the contents in any kind of brackets."
+    result = self.parseupto(closing, tok)
+    return opening + result + closing
 
   def parseupto(self, ending, tok):
     "Parse the tokenizer up to the supplied ending."
