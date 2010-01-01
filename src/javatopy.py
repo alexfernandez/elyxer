@@ -217,7 +217,7 @@ class JavaPorter(object):
       return self.translatemethod(name, tok)
     if after != '=':
       Trace.error('Weird character after member: ' + token + ' ' + name + ' ' + after)
-    return self.translateattribute(name)
+    return self.translateattribute(name, tok)
 
   def translatemethod(self, name, tok):
     "Translate a class method."
@@ -232,7 +232,7 @@ class JavaPorter(object):
 
   def translateattribute(self, name, tok):
     "Translate a class attribute."
-    return name + ' ' + self.parseupto(';')
+    return name + ' ' + self.parseupto(';', tok)
 
   def parseparameters(self, tok):
     "Parse the parameters of a method definition."
