@@ -58,7 +58,7 @@ class JavaPorter(object):
       'public':'classormember', 'protected':'classormember', 'private':'classormember',
       'class':'parseclass', 'else':'tokenblock', 'try':'tokenblock',
       'return':'valuestatement', '{':'openblock', '}':'closeblock',
-      'for':'forblock'
+      'for':'forparens0'
       }
   javatokens = {
       'new':'', 'this':'self'
@@ -70,6 +70,7 @@ class JavaPorter(object):
     self.inmethod = None
     self.waitingforblock = False
     self.variables = ['this']
+    self.infor = 0
 
   def topy(self, inputfile, outputfile):
     "Port the Java input file to Python."
@@ -99,8 +100,11 @@ class JavaPorter(object):
     token = tok.next()
     if token in self.starttokens:
       function = getattr(self, self.starttokens[token])
-      return function(token, tok)
-    return self.assigninvoke(token, tok)
+    elif self.infor > 0:
+      function = getattr(self, 'forparens' + unicode(self.infor))
+    else:
+      function = self.assigninvoke
+    return function(token, tok)
 
   def classormember(self, token, tok):
     "Parse a class or member (attribute or method)."
@@ -117,9 +121,30 @@ class JavaPorter(object):
       return 'except:'
     return token + ' ' + parens + ':'
 
-  def forblock(self, token, tok):
-    "Parse a for parens (;;) and a block {}."
-    return self.parensblock(token, tok)
+  def forparens0(self, token, tok):
+    "Parse the first statement of a for loop."
+    "The remaining parts of the for(;;){}."
+    if tok.next() != '(':
+      Trace.error('for loop does not open (, but ' + tok.current())
+      return None
+    first = self.assigninvoke(tok.next(), tok)
+    self.infor = 1
+    return first
+
+  def forparens1(self, token, tok):
+    "Read the condition in a for loop."
+    condition = token + ' ' + self.parseupto(';', tok)
+    self.depth += 1
+    self.infor = 2
+    return 'while ' + condition + ':'
+  
+  def forparens2(self, token, tok):
+    "Read the repeating statement in a for loop."
+    statement = token + ' ' + self.parseupto(')', tok)
+    self.depth -= 1
+    self.infor = 0
+    self.expectblock()
+    return statement
 
   def tokenblock(self, token, tok):
     "Parse a block (after a try or an else)."
@@ -318,10 +343,10 @@ class Tokenizer(object):
   unmodified = [
       '&', '|', '=', '!', '(', ')', '{', '}', '.', '+', '-', '"', ',', '/',
       '*', '<', '>', '\'', '[', ']', '%', ';',
-      '!=','++','--','<=','>=', '=='
+      '!=','<=','>=', '=='
       ]
   modified = {
-      '&&':'and', '||':'or'
+      '&&':'and', '||':'or', '++':' += 1', '--':' -= 1'
       }
   comments = ['//', '/*']
   javasymbols = comments + unmodified + modified.keys()
