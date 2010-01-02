@@ -341,7 +341,10 @@ class JavaPorter(object):
     "Parse the tokenizer up to the supplied ending."
     result = ''
     while not tok.next() == ending:
-      result += ' ' + self.processtoken(tok)
+      processed = self.processtoken(tok)
+      if processed != '.' and not result.endswith('.'):
+        processed = ' ' + processed
+      result += processed
     if len(result) > 0:
       result = result[1:]
     return result
