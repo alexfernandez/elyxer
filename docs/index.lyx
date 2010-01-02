@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -386,8 +386,8 @@ target "http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt"
 
 \end_inset
 
- and LyX developers Georg Baum, Uwe Stöhr and Jürgen Spitzmüller for their
- wonderful lists of TeX commands and Unicode equivalents; to 
+, Jens Nöckel and LyX developers Georg Baum, Uwe Stöhr and Jürgen Spitzmüller
+ for their wonderful lists of TeX commands and Unicode equivalents; to 
 \begin_inset CommandInset href
 LatexCommand href
 name "FileFormat.info"
