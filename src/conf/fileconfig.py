@@ -80,6 +80,8 @@ class ConfigReader(object):
     key = self.serializer.unescape(pieces[0])
     value = self.serializer.deserialize(pieces[1])
     object = self.objects[self.section]
+    if key in object:
+      Trace.error('Repeated key ' + key + ' for ' + value)
     object[key] = value
 
 class ConfigWriter(object):
