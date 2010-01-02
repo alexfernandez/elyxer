@@ -186,13 +186,10 @@ class JavaPorter(object):
     token2 = tok.next()
     if token2 == '=':
       # assignment
-      if not token in self.variables:
-        Trace.error('Undeclared variable ' + token)
+      self.checkvariable(token)
       return token + ' = ' + self.parsevalue(tok)
     if token2 == '.':
-      # member
-      if not token in self.variables:
-        Trace.error('Undeclared variable ' + token)
+      self.checkvariable(token)
       member = tok.next()
       return self.assigninvoke(tok, token + '.' + member)
     if token2 == '(':
@@ -214,6 +211,12 @@ class JavaPorter(object):
       return token2 + ' = ' + self.parsevalue(tok)
     Trace.error('Unknown combination ' + token + '+' + token2 + '+' + token3)
     return token + ' ' + token2 + ' ' + token
+
+  def checkvariable(self, token):
+    "Check if the variable was known."
+    return
+    if not token in self.variables:
+      Trace.error('Undeclared variable ' + token)
 
   def onelineblock(self):
     "Check if a block was expected."
@@ -267,7 +270,7 @@ class JavaPorter(object):
 
   def translateattribute(self, name, tok):
     "Translate a class attribute."
-    return name + ' ' + self.parseupto(';', tok)
+    return name + ' = ' + self.parseupto(';', tok)
 
   def listparameters(self, tok):
     "Parse the parameters of a method definition, return them as a list."
@@ -308,7 +311,6 @@ class JavaPorter(object):
     result = tok.current() + tok.pos.globincluding(quote)
     while result.endswith('\\' + quote) and not result.endswith('\\\\' + quote):
       result += tok.pos.globincluding(quote)
-    Trace.debug('Quoted sequence: ' + result)
     return result
 
   def parseparens(self, tok):
