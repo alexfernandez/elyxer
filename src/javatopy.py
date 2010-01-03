@@ -205,7 +205,7 @@ class JavaPorter(object):
       return self.assigninvoke(tok, token + square)
     if token2 == '{':
       # ignore anonymous class
-      self.parseupto('}')
+      self.parseupto('}', tok)
       return token
     if token2 == ';':
       # finished invocation
@@ -252,12 +252,15 @@ class JavaPorter(object):
 
   def translateinternal(self, tok):
     "Translate an internal element (attribute or method)."
-    token = tok.next()
-    name = tok.next()
+    token = self.membertoken(tok)
+    name = self.membertoken(tok)
     if token == self.inclass and name == '(':
       # constructor
       return self.translatemethod(token, tok)
     after = tok.next()
+    while after == '[':
+      tok.checknext(']')
+      after = tok.next()
     if after == ';':
       return self.translateemptyattribute(name)
     if after == '(':
@@ -265,6 +268,16 @@ class JavaPorter(object):
     if after != '=':
       Trace.error('Weird character after member: ' + token + ' ' + name + ' ' + after)
     return self.translateattribute(name, tok)
+
+  def membertoken(self, tok):
+    "Get the next member token, excluding static, []..."
+    token = tok.next()
+    if token in ['static', 'synchronized']:
+      return self.membertoken(tok)
+    if token == '[':
+      tok.checknext(']')
+      return self.membertoken(tok)
+    return token
 
   def translatemethod(self, name, tok):
     "Translate a class method."
