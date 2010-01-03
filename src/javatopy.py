@@ -58,7 +58,7 @@ class JavaPorter(object):
       'public':'classormember', 'protected':'classormember', 'private':'classormember',
       'class':'parseclass', 'else':'tokenblock', 'try':'tokenblock',
       'return':'returnstatement', '{':'openblock', '}':'closeblock',
-      'for':'forparens0'
+      'for':'forparens0', 'new':'createstatement'
       }
   javatokens = {
       'new':'', 'this':'self'
@@ -178,6 +178,11 @@ class JavaPorter(object):
     self.onelineblock()
     return 'return ' + self.parsevalue(tok)
 
+  def createstatement(self, tok):
+    "A statement to create an object and use it: new Class().do()."
+    name = tok.next()
+    return self.assigninvoke(tok, name)
+
   def assigninvoke(self, tok, token = None):
     "An assignment or a method invocation."
     self.onelineblock()
@@ -194,10 +199,14 @@ class JavaPorter(object):
       return self.assigninvoke(tok, token + '.' + member)
     if token2 == '(':
       parens = self.parseinparens(tok)
-      return self.assigninvoke(tok, token + '(' + parens + ')')
+      return self.assigninvoke(tok, token + parens)
     if token2 == '[':
-      index = self.parseinsquare(tok)
-      return self.assigninvoke(tok, token + '[' + index + ']')
+      square = self.parseinsquare(tok)
+      return self.assigninvoke(tok, token + square)
+    if token2 == '{':
+      # ignore anonymous class
+      self.parseupto('}')
+      return token
     if token2 == ';':
       # finished invocation
       return token
@@ -289,6 +298,8 @@ class JavaPorter(object):
     "Process a single java symbol."
     if tok.current() == '"' or tok.current() == '\'':
       return self.parsequoted(tok.current(), tok)
+    if tok.current() == '{':
+      return '{' + self.parseupto('}', tok) + '}'
     if tok.current() == '}':
       Trace.error('Erroneously closing }')
       self.depth -= 1
@@ -320,7 +331,11 @@ class JavaPorter(object):
 
   def parseinparens(self, tok):
     "Parse the contents inside ()."
-    return self.parseinbrackets('(', ')', tok)
+    result = self.parseinbrackets('(', ')', tok)
+    if '{' in result:
+      # anonymous function, ignore
+      return '()'
+    return result
 
   def parseinsquare(self, tok):
     "Parse the contents inside []."
@@ -383,6 +398,8 @@ class Tokenizer(object):
     self.next()
     if self.currenttoken != token:
       Trace.error('Expected token ' + token + ', found ' + self.currenttoken)
+      return False
+    return True
 
   def extracttoken(self):
     "Extract the next token."
