@@ -34,12 +34,19 @@ class LineReader(object):
     if isinstance(filename, file):
       self.file = filename
     else:
-      self.file = codecs.open(filename, 'rU', "utf-8")
+      self.file = codecs.open(filename, 'rU', 'utf-8')
     self.linenumber = 1
     self.lastline = None
     self.current = None
     self.mustread = True
     self.depleted = False
+    try:
+      self.readline()
+    except UnicodeDecodeError:
+      # try compressed file
+      import gzip
+      self.file = gzip.open(filename, 'rb')
+      self.readline()
 
   def setstart(self, firstline):
     "Set the first line to read."
@@ -66,7 +73,7 @@ class LineReader(object):
   def readline(self):
     "Read a line from file"
     self.current = self.file.readline()
-    if self.file == sys.stdin:
+    if not isinstance(self.file, codecs.StreamReaderWriter):
       self.current = self.current.decode('utf-8')
     if len(self.current) == 0:
       self.depleted = True
