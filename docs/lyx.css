@@ -431,13 +431,13 @@ table.cases tr td {
 	padding-left: 1ex;
 	padding-right: 1em;
 }
-table.align {
+table.environment {
 	display: inline-block;
 	text-align: right;
 	margin: 0;
 	vertical-align: middle;
 }
-table.align tr td {
+table.environment tr td {
 	padding: 0 1em;
 }
 span.greyedout {

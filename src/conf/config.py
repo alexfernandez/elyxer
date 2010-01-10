@@ -476,6 +476,11 @@ class FormulaConfig(object):
       u'endbefore':u'\\end{', u'squarebracket':u']', 
       }
 
+  environments = {
+      u'align*':[u'r',u'l',], u'eqnarray*':[u'r',u'c',u'l',], 
+      u'gathered':[u'l',u'l',], 
+      }
+
   fontfunctions = {
       u'\\boldsymbol':u'b', u'\\mathbb':u'span class="blackboard"', 
       u'\\mathbb{A}':u'𝔸', u'\\mathbb{B}':u'𝔹', u'\\mathbb{C}':u'ℂ', 

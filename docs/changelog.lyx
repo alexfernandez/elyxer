@@ -99,6 +99,11 @@ Added support for compressed documents (Document\SpecialChar \menuseparator
 Compressed).
 \end_layout
 
+\begin_layout Itemize
+Added configurable alignment support for equation environments (thanks,
+ Jens!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.39 (2009-12-20):

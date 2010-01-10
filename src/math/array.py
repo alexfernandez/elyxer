@@ -102,15 +102,8 @@ class FormulaRow(FormulaCommand):
     "Return true for all cells but the last"
     return index < len(self.alignments) - 1
 
-class Environment(CommandBit):
-  "A \\begin{}...\\end environment with rows and cells."
-
-  def parsebit(self, pos):
-    "Parse the whole environment."
-    self.output = TaggedOutput().settag('table class="' + self.piece +
-        '"', True)
-    self.alignments = ['l']
-    self.parserows(pos)
+class MultiRowFormula(CommandBit):
+  "A formula with multiple rows."
 
   def parserows(self, pos):
     "Parse all rows, finish when no more row ends"
@@ -129,7 +122,7 @@ class Environment(CommandBit):
       else:
         return
 
-class FormulaArray(Environment):
+class FormulaArray(MultiRowFormula):
   "An array within a formula"
 
   piece = 'array'
@@ -156,7 +149,7 @@ class FormulaArray(Environment):
     for l in bracket.literal:
       self.alignments.append(l)
 
-class FormulaCases(Environment):
+class FormulaCases(MultiRowFormula):
   "A cases statement"
 
   piece = 'cases'
@@ -167,15 +160,17 @@ class FormulaCases(Environment):
     self.alignments = ['l', 'l']
     self.parserows(pos)
 
-class FormulaAlign(Environment):
-  "A number of aligned formulae"
-
-  piece = 'align'
+class EquationEnvironment(MultiRowFormula):
+  "A \\begin{}...\\end equation environment with rows and cells."
 
   def parsebit(self, pos):
-    "Parse the aligned bits"
-    self.output = TaggedOutput().settag('table class="align"', True)
-    self.alignments = ['r']
+    "Parse the whole environment."
+    self.output = TaggedOutput().settag('table class="environment"', True)
+    if self.piece in FormulaConfig.environments:
+      self.alignments = FormulaConfig.environments[self.piece]
+    else:
+      Trace.error('Unknown equation environment ' + self.piece)
+      self.alignments = ['l']
     self.parserows(pos)
 
 class BeginCommand(CommandBit):
@@ -183,7 +178,7 @@ class BeginCommand(CommandBit):
 
   commandmap = {FormulaConfig.array['begin']:''}
 
-  innerbits = [FormulaEquation(), FormulaArray(), FormulaCases(), FormulaAlign()]
+  innerbits = [FormulaEquation(), FormulaArray(), FormulaCases()]
 
   def parsebit(self, pos):
     "Parse the begin command"
@@ -199,10 +194,10 @@ class BeginCommand(CommandBit):
   def findbit(self, piece):
     "Find the command bit corresponding to the \\begin{piece}"
     for bit in BeginCommand.innerbits:
-      if bit.piece == piece or bit.piece + '*' == piece:
+      if bit.piece == piece:
         newbit = Cloner.clone(bit)
         return newbit
-    bit = Environment()
+    bit = EquationEnvironment()
     bit.piece = piece
     return bit
 
