@@ -44,7 +44,7 @@ class BibTeX(Container):
     "Read all bibtex files and process them"
     self.entries = []
     bibliography = TranslationConfig.constants['bibliography']
-    tag = TaggedText().constant(bibliography, 'h1 class="biblio"')
+    tag = TaggedText().constant(bibliography, 'h1 class="biblio"', True)
     self.contents.append(tag)
     files = self.parameters['bibfiles'].split(',')
     for file in files:
@@ -153,11 +153,12 @@ class ContentEntry(Entry):
 
   nameseparators = ['{', '=', '"', '#']
   valueseparators = ['{', '"', '#', '\\', '}']
+  escaped = BibTeXConfig.escaped
 
   def __init__(self):
     self.key = None
     self.tags = dict()
-    self.output = TaggedOutput().settag('p class="biblio"')
+    self.output = TaggedOutput().settag('p class="biblio"', True)
 
   def parse(self, pos):
     "Parse the entry between {}"
@@ -205,7 +206,13 @@ class ContentEntry(Entry):
     if pos.checkfor(','):
       self.lineerror('Unexpected ,', pos)
       return ''
-    return self.parserecursive(pos)
+    value = self.parserecursive(pos)
+    if not '\\' in value:
+      return value
+    for escape in self.escaped:
+      if escape in value:
+        value = value.replace(escape, self.escaped[escape])
+    return value
 
   def parserecursive(self, pos):
     "Parse brackets or quotes recursively."
@@ -233,11 +240,11 @@ class ContentEntry(Entry):
       self.lineerror('Not an escaped character', pos)
       return ''
     if not pos.checkskip('{'):
-      return pos.currentskip()
+      return '\\' + pos.currentskip()
     current = pos.currentskip()
     if not pos.checkskip('}'):
       self.lineerror('Weird escaped but unclosed brackets \\{*', pos)
-    return current
+    return '\\' + current
 
   def parsebracket(self, pos):
     "Parse a {} bracket"

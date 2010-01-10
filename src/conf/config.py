@@ -45,6 +45,13 @@ class BibStylesConfig(object):
       u'default':u'$author. <i>$title</i>. $publisher, $year.', 
       }
 
+class BibTeXConfig(object):
+  "Configuration class from config file"
+
+  escaped = {
+      u'\\"a':u'ä', u'\\"e':u'ë', u'\\"i':u'ï', u'\\"o':u'ö', u'\\"u':u'ü', 
+      }
+
 class ContainerConfig(object):
   "Configuration class from config file"
 
@@ -85,6 +92,8 @@ class ContainerConfig(object):
       u'\\begin_inset CommandInset toc':u'TableOfContents', 
       u'\\begin_inset ERT':u'ERT', 
       u'\\begin_inset Flex CharStyle:Code':u'FlexCode', 
+      u'\\begin_inset Flex Marginnote':u'Footnote', 
+      u'\\begin_inset Flex Sidenote':u'Footnote', 
       u'\\begin_inset Flex URL':u'FlexURL', u'\\begin_inset Float':u'Float', 
       u'\\begin_inset FloatList':u'ListOf', u'\\begin_inset Foot':u'Footnote', 
       u'\\begin_inset Formula':u'Formula', u'\\begin_inset Graphics':u'Image', 
