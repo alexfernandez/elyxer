@@ -93,7 +93,7 @@ class ListOf(ListInset):
   def process(self):
     "Parse the header and get the type"
     self.type = self.header[2]
-    text = TranslationConfig.lists[self.type]
+    text = TranslationConfig.constants['list-' + self.type]
     self.contents = [TaggedText().constant(text, 'div class="tocheader"', True)]
 
 class TableOfContents(ListInset):
