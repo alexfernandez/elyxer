@@ -105,7 +105,8 @@ Added configurable alignment support for equation environments (thanks,
 \end_layout
 
 \begin_layout Itemize
-Added a couple of note insets for Tufte document classes (thanks, Jonathan!).
+Added a couple of note insets for Tufte document classes, appearing as side
+ notes without a reference (thanks, Joachim!).
 \end_layout
 
 \begin_layout Itemize

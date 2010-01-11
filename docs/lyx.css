@@ -338,11 +338,14 @@ span.Foot {
 }
 span.Marginal {
 	float: right;
+	clear: right;
+	margin: 0.2ex;
 	border: thin solid #c0c0c0;
 	background: #ffffff;
-	width: 25%;
+	width: 30%;
 	padding: 0.5ex;
 	font: small normal;
+	text-align: left;
 }
 span.Note {
 	display: none;

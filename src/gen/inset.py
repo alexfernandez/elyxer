@@ -90,6 +90,17 @@ class ShortTitle(Container):
     self.parser = InsetParser()
     self.output = EmptyOutput()
 
+class SideNote(Container):
+  "A side note that appears at the right."
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = TaggedOutput()
+
+  def process(self):
+    "Enclose everything in a marginal span."
+    self.output.settag('span class="Marginal"', True)
+
 class Footnote(Container):
   "A footnote to the main text"
 
