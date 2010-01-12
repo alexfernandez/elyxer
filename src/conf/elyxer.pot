@@ -1,0 +1,88 @@
+
+#: Subsubsection
+msgid  "Subsubsection"
+msgstr "Subsubsection"
+
+#: figure
+msgid  "figure"
+msgstr "figure"
+
+#: abstract
+msgid  "Abstract"
+msgstr "Abstract"
+
+#: Book
+msgid  "Book"
+msgstr "Book"
+
+#: Subsection
+msgid  "Subsection"
+msgstr "Subsection"
+
+#: list-algorithm
+msgid  "List of Listings"
+msgstr "List of Listings"
+
+#: index
+msgid  "Index"
+msgstr "Index"
+
+#: bibliography
+msgid  "Bibliography"
+msgstr "Bibliography"
+
+#: float-algorithm
+msgid  "Listing "
+msgstr "Listing "
+
+#: list-table
+msgid  "List of Tables"
+msgstr "List of Tables"
+
+#: Part
+msgid  "Part"
+msgstr "Part"
+
+#: toc
+msgid  "Table of Contents"
+msgstr "Table of Contents"
+
+#: Section
+msgid  "Section"
+msgstr "Section"
+
+#: Chapter
+msgid  "Chapter"
+msgstr "Chapter"
+
+#: list-tableau
+msgid  "List of Tableaux"
+msgstr "List of Tableaux"
+
+#: float-tableau
+msgid  "Tableau "
+msgstr "Tableau "
+
+#: Paragraph
+msgid  "Paragraph"
+msgstr "Paragraph"
+
+#: list-figure
+msgid  "List of Figures"
+msgstr "List of Figures"
+
+#: float-listing
+msgid  "Listing "
+msgstr "Listing "
+
+#: nomenclature
+msgid  "Nomenclature"
+msgstr "Nomenclature"
+
+#: float-table
+msgid  "Table "
+msgstr "Table "
+
+#: float-figure
+msgid  "Figure "
+msgstr "Figure "

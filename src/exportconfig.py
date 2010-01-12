@@ -38,7 +38,7 @@ class Config(object):
 
   cfg = 'conf/base.cfg'
   py = 'conf/config.py'
-  po = 'conf/elyxer.po'
+  po = 'conf/elyxer.pot'
   addcfg = None
   importcfg = None
   importcsv = None

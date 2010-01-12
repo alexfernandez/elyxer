@@ -69,7 +69,7 @@ class TranslationExport(object):
     for key, message in constants.iteritems():
       self.writer.writeline('')
       self.writer.writeline('#: ' + key)
-      self.writer.writeline('msgid:  "' + message + '"')
-      self.writer.writeline('msgstr: "' + message + '"')
+      self.writer.writeline('msgid  "' + message + '"')
+      self.writer.writeline('msgstr "' + message + '"')
     self.writer.close()
 
