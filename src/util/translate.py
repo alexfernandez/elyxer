@@ -58,3 +58,18 @@ class Translator(object):
 
 Translator.instance = Translator()
 
+class TranslationExport(object):
+  "Export the translation to a file."
+
+  def __init__(self, writer):
+    self.writer = writer
+
+  def export(self, constants):
+    "Export the translation constants as a .po file."
+    for key, message in constants.iteritems():
+      self.writer.writeline('')
+      self.writer.writeline('#: ' + key)
+      self.writer.writeline('msgid:  "' + message + '"')
+      self.writer.writeline('msgstr: "' + message + '"')
+    self.writer.close()
+

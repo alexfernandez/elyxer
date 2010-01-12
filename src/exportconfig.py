@@ -27,6 +27,7 @@ import datetime
 import conf.config
 from util.trace import Trace
 from util.options import *
+from util.translate import *
 from conf.config import *
 from conf.fileconfig import *
 from conf.importconfig import *
@@ -37,6 +38,7 @@ class Config(object):
 
   cfg = 'conf/base.cfg'
   py = 'conf/config.py'
+  po = 'conf/elyxer.po'
   addcfg = None
   importcfg = None
   importcsv = None
@@ -53,7 +55,7 @@ class Config(object):
       self.usage()
     option = self.parseoption(args)
     if not option:
-      Trace.error('Choose cfg or py')
+      Trace.error('Choose cfg, py or po')
       self.usage()
     if option == 'cfg':
       self.exportcfg()
@@ -61,6 +63,8 @@ class Config(object):
     elif option == 'py':
       self.exportpy()
       return
+    elif option == 'po':
+      self.exportpo()
     else:
       Trace.error('Unknown option ' + option)
       self.usage()
@@ -104,8 +108,15 @@ class Config(object):
     "Export configuration as a Python file"
     reader = self.read()
     linewriter = LineWriter(Config.py)
-    translator = ConfigTranslator(linewriter)
+    translator = ConfigToPython(linewriter)
     translator.write(reader.objects)
+
+  def exportpo(self):
+    "Export configuration as a gettext .po file."
+    reader = self.read()
+    writer = LineWriter(Config.po)
+    export = TranslationExport(writer)
+    export.export(reader.objects['TranslationConfig.constants'])
 
   def parseoption(self, args):
     "Parse the next option"

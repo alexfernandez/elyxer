@@ -124,14 +124,14 @@ class ConfigWriter(object):
     header = '[' + object.__class__.__name__ + '.' + attr + ']'
     self.writer.writeline(header)
 
-class ConfigTranslator(ConfigWriter):
-  "Translates a number of dictionaries from a config file to a Python class"
+class ConfigToPython(ConfigWriter):
+  "Exports a number of dictionaries from a config file to a Python class"
 
   escapes = [ ('\\', '\\\\'), ('\n', '\\n'), ('\'', '\\\'') ]
 
   def __init__(self, writer):
     self.writer = writer
-    self.serializer = ConfigSerializer(ConfigTranslator.escapes)
+    self.serializer = ConfigSerializer(ConfigToPython.escapes)
 
   def write(self, objects):
     "Write the whole set of objects"
