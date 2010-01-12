@@ -22,6 +22,7 @@
 # create executable
 cd src
 ./exportconfig.py py
+./exportconfig.py po
 ./coalesce.py principal.py > ../elyxer.py
 ./coalesce.py loremipsumize.py > ../loremipsumize.py
 cp setup.py ../setup.py
