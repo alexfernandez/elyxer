@@ -66,6 +66,12 @@ class TranslationExport(object):
 
   def export(self, constants):
     "Export the translation constants as a .po file."
+    self.writer.writeline('msgid ""')
+    self.writer.writeline('msgstr ""')
+    self.writer.writeline('"eLyXer version ' + GeneralConfig.version['number'] + '\\n"')
+    self.writer.writeline('"Released on: ' + GeneralConfig.version['date'] + '\\n"')
+    self.writer.writeline(u'"Contact: Alex Fernández <elyxer@gmail.com>\\n"')
+    self.writer.writeline('')
     for key, message in constants.iteritems():
       self.writer.writeline('')
       self.writer.writeline('#: ' + key)

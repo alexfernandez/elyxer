@@ -686,7 +686,7 @@ class TranslationConfig(object):
       u'Part':u'Part', u'Section':u'Section', u'Subsection':u'Subsection', 
       u'Subsubsection':u'Subsubsection', u'abstract':u'Abstract', 
       u'bibliography':u'Bibliography', u'figure':u'figure', 
-      u'float-algorithm':u'Listing ', u'float-figure':u'Figure ', 
+      u'float-algorithm':u'Code listing ', u'float-figure':u'Figure ', 
       u'float-listing':u'Listing ', u'float-table':u'Table ', 
       u'float-tableau':u'Tableau ', u'index':u'Index', 
       u'list-algorithm':u'List of Listings', u'list-figure':u'List of Figures', 

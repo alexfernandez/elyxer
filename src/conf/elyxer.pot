@@ -1,3 +1,9 @@
+msgid ""
+msgstr ""
+"eLyXer version 0.39\n"
+"Released on: 2010-01-12\n"
+"Contact: Alex Fernández <elyxer@gmail.com>\n"
+
 
 #: Subsubsection
 msgid  "Subsubsection"
@@ -32,8 +38,8 @@ msgid  "Bibliography"
 msgstr "Bibliography"
 
 #: float-algorithm
-msgid  "Listing "
-msgstr "Listing "
+msgid  "Code listing "
+msgstr "Code listing "
 
 #: list-table
 msgid  "List of Tables"
