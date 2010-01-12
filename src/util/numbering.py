@@ -150,7 +150,7 @@ class LayoutNumberer(object):
     "Set all attributes: number, entry, level..."
     if self.generator.isunique(layout):
       layout.number = self.generator.generateunique(layout.type)
-      layout.entry = TranslationConfig.constants[layout.type] + ' ' + layout.number
+      layout.entry = Translator.translate(layout.type) + ' ' + layout.number
       layout.partkey = 'toc-' + layout.type + '-' + layout.number
       layout.anchortext = layout.entry + '.'
       layout.level = 0
@@ -170,7 +170,7 @@ class LayoutNumberer(object):
     layout.partkey = 'toc-' + layout.type + '-' + number
     type = self.generator.deasterisk(layout.type)
     layout.anchortext = layout.number
-    layout.entry = TranslationConfig.constants[type]
+    layout.entry = Translator.translate(type)
     if layout.number != '':
       layout.entry += ' ' + layout.number
     layout.level = self.generator.getlevel(type)

@@ -114,6 +114,10 @@ Support for escaped characters in BibTeX files, added German umlauts for
  starters.
 \end_layout
 
+\begin_layout Itemize
+Support for internationalization using GNU gettext files.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.39 (2009-12-20):

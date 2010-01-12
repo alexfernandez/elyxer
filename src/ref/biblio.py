@@ -108,7 +108,7 @@ class PostBiblio(object):
     "If we have the first bibliography insert a tag"
     if isinstance(last, Bibliography):
       return element
-    bibliography = TranslationConfig.constants['bibliography']
+    bibliography = Translator.translate('bibliography')
     header = TaggedText().constant(bibliography, 'h1 class="biblio"')
     layout = StandardLayout().complete([header, element])
     return layout

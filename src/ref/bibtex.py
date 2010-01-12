@@ -43,7 +43,7 @@ class BibTeX(Container):
   def process(self):
     "Read all bibtex files and process them"
     self.entries = []
-    bibliography = TranslationConfig.constants['bibliography']
+    bibliography = Translator.translate('bibliography')
     tag = TaggedText().constant(bibliography, 'h1 class="biblio"', True)
     self.contents.append(tag)
     files = self.parameters['bibfiles'].split(',')

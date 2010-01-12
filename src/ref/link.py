@@ -93,7 +93,7 @@ class ListOf(ListInset):
   def process(self):
     "Parse the header and get the type"
     self.type = self.header[2]
-    text = TranslationConfig.constants['list-' + self.type]
+    text = Translator.translate('list-' + self.type)
     self.contents = [TaggedText().constant(text, 'div class="tocheader"', True)]
 
 class TableOfContents(ListInset):
@@ -101,7 +101,7 @@ class TableOfContents(ListInset):
 
   def process(self):
     "Parse the header and get the type"
-    text = TranslationConfig.constants['toc']
+    text = Translator.translate('toc')
     self.contents = [TaggedText().constant(text, 'div class="tocheader"', True)]
 
 class IndexEntry(Link):
@@ -141,7 +141,7 @@ class PrintIndex(ListInset):
 
   def process(self):
     "Create the alphabetic index"
-    index = TranslationConfig.constants['index']
+    index = Translator.translate('index')
     self.contents = [TaggedText().constant(index, 'h1 class="index"'),
         Constant('\n')]
     for key in self.sortdictionary(IndexEntry.entries):
@@ -182,7 +182,7 @@ class PrintNomenclature(ListInset):
   "Print all nomenclature entries"
 
   def process(self):
-    nomenclature = TranslationConfig.constants['nomenclature']
+    nomenclature = Translator.translate('nomenclature')
     self.contents = [TaggedText().constant(nomenclature,
       'h1 class="nomenclature"')]
     for key in self.sortdictionary(NomenclatureEntry.entries):

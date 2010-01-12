@@ -26,6 +26,7 @@ import struct
 import sys
 import os
 from util.trace import Trace
+from util.translate import *
 from gen.container import *
 from io.path import *
 
@@ -243,7 +244,7 @@ class ImageFile(object):
 class ImageOutput(object):
   "Returns an image in the output"
 
-  figure = TranslationConfig.constants['figure']
+  figure = Translator.translate('figure')
 
   def gethtml(self, container):
     "Get the HTML output of the image as a list"

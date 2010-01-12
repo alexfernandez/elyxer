@@ -91,7 +91,7 @@ class Abstract(Layout):
   def process(self):
     self.type = 'abstract'
     self.output.tag = 'div class="abstract"'
-    message = TranslationConfig.constants['abstract']
+    message = Translator.translate('abstract')
     tagged = TaggedText().constant(message, 'p class="abstract-message"', True)
     self.contents.insert(0, tagged)
 

@@ -225,7 +225,7 @@ class PostFloat(object):
       float.entry = '(' + float.number + ')'
     else:
       float.number = NumberGenerator.instance.generatechaptered(float.type)
-      float.entry = TranslationConfig.constants['float-' + float.type] + float.number
+      float.entry = Translator.translate('float-' + float.type) + float.number
 
 class PostWrap(PostFloat):
   "For a wrap: exactly like a float"
