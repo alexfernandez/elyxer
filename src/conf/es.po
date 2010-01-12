@@ -1,0 +1,102 @@
+msgid ""
+msgstr ""
+"eLyXer version 0.40\n"
+"Released on: 2010-01-12\n"
+"Contact: Alex Fernández <elyxer@gmail.com>\n"
+"Project-Id-Version: eLyXer 0.40\n"
+"PO-Revision-Date: 2010-01-12 01:54+0100\n"
+"Last-Translator: Alex Fernández <elyxer@gmail.com>\n"
+"Language-Team: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: Subsubsection
+msgid "Subsubsection"
+msgstr "Subsubsección"
+
+#: figure
+msgid "figure"
+msgstr "figura"
+
+#: abstract
+msgid "Abstract"
+msgstr "Resumen"
+
+#: Book
+msgid "Book"
+msgstr "Libro"
+
+#: Subsection
+msgid "Subsection"
+msgstr "Subsección"
+
+#: list-algorithm
+msgid "List of Listings"
+msgstr "Índice de listados"
+
+#: index
+msgid "Index"
+msgstr "Glosario"
+
+#: bibliography
+msgid "Bibliography"
+msgstr "Bibliografía"
+
+#: float-algorithm
+msgid "Code listing "
+msgstr "Listado "
+
+#: list-table
+msgid "List of Tables"
+msgstr "Índice de tablas"
+
+#: Part
+msgid "Part"
+msgstr "Parte"
+
+#: toc
+msgid "Table of Contents"
+msgstr "Índice general"
+
+#: Section
+msgid "Section"
+msgstr "Sección"
+
+#: Chapter
+msgid "Chapter"
+msgstr "Capítulo"
+
+#: list-tableau
+msgid "List of Tableaux"
+msgstr "Lista de tablas"
+
+#: float-tableau
+msgid "Tableau "
+msgstr "Tabla "
+
+#: Paragraph
+msgid "Paragraph"
+msgstr "Párrafo"
+
+#: list-figure
+msgid "List of Figures"
+msgstr "Índice de figuras"
+
+#: float-listing
+msgid "Listing "
+msgstr "Listado "
+
+#: nomenclature
+msgid "Nomenclature"
+msgstr "Nomenclatura"
+
+#: float-table
+msgid "Table "
+msgstr "Tabla "
+
+#: float-figure
+msgid "Figure "
+msgstr "Figura "
+
