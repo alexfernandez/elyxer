@@ -116,6 +116,7 @@ Support for escaped characters in BibTeX files, added German umlauts for
 
 \begin_layout Itemize
 Support for internationalization using GNU gettext files.
+ Added Spanish translation.
 \end_layout
 
 \end_deeper
