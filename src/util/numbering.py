@@ -23,6 +23,7 @@
 # eLyXer number generator
 
 from util.trace import Trace
+from util.translate import *
 from conf.config import *
 
 
