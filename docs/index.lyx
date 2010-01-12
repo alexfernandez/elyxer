@@ -413,6 +413,7 @@ type "mailto:"
 \end_inset
 
  for their testing and bug reporting.
+ Thanks to Uwe Stöhr for his German translation.
  Packagers Sven Hoexter (for Debian), Uwe Stöhr (on Windows) and Bennet
  Helm (for Mac OS X) have helped with their work to make it easy to try
  it out.
