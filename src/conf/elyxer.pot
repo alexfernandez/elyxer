@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"eLyXer version 0.39\n"
+"eLyXer version 0.40\n"
 "Released on: 2010-01-12\n"
 "Contact: Alex Fernández <elyxer@gmail.com>\n"
 
