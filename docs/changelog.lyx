@@ -119,6 +119,10 @@ Support for internationalization using GNU gettext files.
  Added Spanish and German translations.
 \end_layout
 
+\begin_layout Itemize
+Support for verbatim includes.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.39 (2009-12-20):

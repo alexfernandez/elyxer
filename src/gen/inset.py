@@ -26,6 +26,7 @@ from util.trace import Trace
 from util.numbering import *
 from parse.parser import *
 from io.output import *
+from io.bulk import *
 from gen.container import *
 from gen.structure import *
 from gen.layout import *
@@ -186,11 +187,23 @@ class IncludeInset(Container):
 
   def process(self):
     "Include the provided child document"
-    self.filename = self.parameters['filename']
+    self.filename = os.path.join(Options.directory, self.parameters['filename'])
     Trace.debug('Child document: ' + self.filename)
     if 'lstparams' in self.parameters:
       self.parselstparams()
+    if 'LatexCommand' in self.parameters:
+      if self.parameters['LatexCommand'] == 'verbatiminput':
+        self.readverbatim()
+        return
     converter = IncludeInset.converterfactory.create(self)
     converter.convert()
     self.contents = converter.getcontents()
+
+  def readverbatim(self):
+    "Read a verbatim document."
+    verbatim = list()
+    lines = BulkFile(self.filename).readall()
+    for line in lines:
+      verbatim.append(Constant(line))
+    self.contents = [TaggedText().complete(verbatim, 'pre', True)]
 

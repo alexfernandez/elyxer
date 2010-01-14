@@ -176,7 +176,7 @@ class ConverterFactory(object):
     "Create a converter for a given container, with filename"
     " and possibly other parameters."
     fullname = os.path.join(Options.directory, container.filename)
-    reader = LineReader(fullname)
+    reader = LineReader(container.filename)
     if 'firstline' in container.parameters:
       reader.setstart(int(container.parameters['firstline']))
     if 'lastline' in container.parameters:
