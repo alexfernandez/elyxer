@@ -24,6 +24,7 @@
 
 from util.trace import Trace
 from math.command import *
+from math.array import *
 from post.postprocess import *
 from ref.link import *
 from ref.label import *
@@ -45,20 +46,42 @@ class PostFormula(object):
     "Check if it's a numbered equation, insert number."
     if formula.header[0] != 'numbered':
       return
-    formula.number = NumberGenerator.instance.generatechaptered('formula')
-    formula.entry = '(' + formula.number + ')'
     functions = formula.searchremove(LabelFunction)
-    if len(functions) > 1:
-      Trace.error('More than one label in ' + unicode(formula))
-      return
     if len(functions) == 0:
+      label = self.createlabel(formula)
+    elif len(functions) == 1:
+      label = self.createlabel(formula, functions[0])
+    if len(functions) <= 1:
+      label.parent = formula
+      formula.contents.insert(0, label)
+      return
+    for function in functions:
+      label = self.createlabel(formula, function)
+      row = self.searchrow(function)
+      label.parent = row
+      row.contents.insert(0, label)
+
+  def createlabel(self, formula, function = None):
+    "Create a new label for a formula."
+    "Add a label to a formula."
+    number = NumberGenerator.instance.generatechaptered('formula')
+    entry = '(' + number + ')'
+    if not hasattr(formula, number) or not formula.number:
+      formula.number = number
+      formula.entry = entry
+    if not function:
       label = Label()
-      label.create(formula.entry + ' ', 'eq-' + formula.number, type="eqnumber")
+      label.create(entry + ' ', 'eq-' + number, type="eqnumber")
     else:
-      label = functions[0].label
-      label.complete(formula.entry + ' ')
-    label.parent = formula
-    formula.contents.insert(0, label)
+      label = function.label
+      label.complete(entry + ' ')
+    return label
+
+  def searchrow(self, function):
+    "Search for the row that contains the label function."
+    if isinstance(function.parent, Formula) or isinstance(function.parent, FormulaRow):
+      return function.parent
+    return self.searchrow(function.parent)
 
   def postcontents(self, contents):
     "Search for sum or integral"

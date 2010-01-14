@@ -166,8 +166,9 @@ class EquationEnvironment(MultiRowFormula):
   def parsebit(self, pos):
     "Parse the whole environment."
     self.output = TaggedOutput().settag('table class="environment"', True)
-    if self.piece in FormulaConfig.environments:
-      self.alignments = FormulaConfig.environments[self.piece]
+    environment = self.piece.replace('*', '')
+    if environment in FormulaConfig.environments:
+      self.alignments = FormulaConfig.environments[environment]
     else:
       Trace.error('Unknown equation environment ' + self.piece)
       self.alignments = ['l']

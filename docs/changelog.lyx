@@ -102,6 +102,7 @@ Compressed).
 \begin_layout Itemize
 Added configurable alignment support for equation environments (thanks,
  Jens!).
+ Multiple labels per formula are correctly processed.
 \end_layout
 
 \begin_layout Itemize

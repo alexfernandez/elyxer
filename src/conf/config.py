@@ -486,7 +486,7 @@ class FormulaConfig(object):
       }
 
   environments = {
-      u'align*':[u'r',u'l',], u'eqnarray*':[u'r',u'c',u'l',], 
+      u'align':[u'r',u'l',], u'eqnarray':[u'r',u'c',u'l',], 
       u'gathered':[u'l',u'l',], 
       }
 

@@ -518,6 +518,7 @@ span.number-right {
 a.eqnumber {
 	display: inline-block;
 	float: right;
+	clear: right;
 	font-weight: bold;
 	color: #000040;
 }
