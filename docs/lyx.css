@@ -574,8 +574,9 @@ span.fullbinom {
 }
 span.upbinom {
 	display: block;
+	padding: 0em;
 }
 span.downbinom {
 	display: block;
-	padding: 0;
+	padding: 0em;
 }
