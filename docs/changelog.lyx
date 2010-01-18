@@ -70,7 +70,17 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
-0.40 (unreleased):
+0.41 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+0.40 (2010-01-19):
 \end_layout
 
 \begin_deeper
@@ -117,7 +127,11 @@ Support for escaped characters in BibTeX files, added German umlauts for
 
 \begin_layout Itemize
 Support for internationalization using GNU gettext files.
- Added Spanish and German translations.
+ Added Spanish and German translations in the 
+\family typewriter
+po/
+\family default
+ folder.
 \end_layout
 
 \begin_layout Itemize
