@@ -244,14 +244,13 @@ class ImageFile(object):
 class ImageOutput(object):
   "Returns an image in the output"
 
-  figure = Translator.translate('figure')
-
   def gethtml(self, container):
     "Get the HTML output of the image as a list"
     html = ['<img class="' + container.type + '"']
     if container.origin.exists():
+      figure = Translator.translate('figure')
       html.append(' src="' + container.destination.url +
-          '" alt="' + ImageOutput.figure + ' ' + container.destination.url + '"')
+          '" alt="' + figure + ' ' + container.destination.url + '"')
       html.append(' style="')
       if container.width:
         html.append('width: ' + container.width + '; ')

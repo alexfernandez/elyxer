@@ -594,7 +594,7 @@ class HeaderConfig(object):
 
   parameters = {
       u'branch':u'\\branch', u'documentclass':u'\\textclass', 
-      u'endbranch':u'\\end_branch', 
+      u'endbranch':u'\\end_branch', u'language':u'\\language', 
       u'paragraphseparation':u'\\paragraph_separation', 
       u'pdftitle':u'\\pdf_title', u'secnumdepth':u'\\secnumdepth', 
       u'tocdepth':u'\\tocdepth', 
@@ -693,5 +693,9 @@ class TranslationConfig(object):
       u'list-figure':u'List of Figures', u'list-table':u'List of Tables', 
       u'list-tableau':u'List of Tableaux', u'nomenclature':u'Nomenclature', 
       u'toc':u'Table of Contents', 
+      }
+
+  languages = {
+      u'deutsch':u'de', u'english':u'en', u'spanish':u'es', 
       }
 

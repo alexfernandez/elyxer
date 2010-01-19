@@ -49,6 +49,8 @@ class LyXHeader(Container):
       LyXHeader.indentstandard = True
     LyXHeader.tocdepth = self.getlevel('tocdepth')
     NumberGenerator.maxdepth = self.getlevel('secnumdepth')
+    Trace.debug('Params: ' + unicode(HeaderConfig.parameters))
+    Translator.language = self.getparameter('language')
 
   def getparameter(self, configparam):
     "Get a parameter configured in HeaderConfig."
