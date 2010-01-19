@@ -75,7 +75,7 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-Selects the translation based on document language.
+Select the translation based on document language.
 \end_layout
 
 \end_deeper

@@ -63,7 +63,6 @@ class Translator(object):
 
   def getmessage(self, key):
     "Get the translated message for the given key."
-    Trace.error('Message: ' + key)
     if self.first:
       self.findtranslation()
       self.first = False
