@@ -59,7 +59,7 @@ class JavaPorter(object):
       'class':'parseclass', 'else':'tokenblock', 'try':'tokenblock',
       'return':'returnstatement', '{':'openblock', '}':'closeblock',
       'for':'forparens0', 'new':'createstatement', 'throw':'throwstatement',
-      'throws':'throwsdeclaration'
+      'throws':'throwsdeclaration', ';':'ignorestatement'
       }
   javatokens = {
       'new':'', 'this':'self'
@@ -259,7 +259,8 @@ class JavaPorter(object):
 
   def ignorestatement(self, tok):
     "Ignore a whole statement."
-    tok.pos.globincluding(';')
+    while tok.current() != ';':
+      tok.next()
     return None
 
   def translateclass(self, tok):
