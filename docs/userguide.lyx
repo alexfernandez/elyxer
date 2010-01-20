@@ -1811,6 +1811,252 @@ target "math-unicode.html"
  In the future other non-Unicode substitutions might be used.
 \end_layout
 
+\begin_layout Subsection
+Internationalization
+\end_layout
+
+\begin_layout Standard
+eLyXer is distributed along with a few translation files.
+ They are automatically regenerated every time 
+\family typewriter
+make
+\family default
+ is run, and reside in the folder 
+\family typewriter
+po/
+\family default
+.
+ Internationalization is done using GNU 
+\family typewriter
+gettext
+\family default
+, so every locale is identified by a two-letter code (such as 
+\begin_inset Quotes eld
+\end_inset
+
+en
+\begin_inset Quotes erd
+\end_inset
+
+ for English and 
+\begin_inset Quotes eld
+\end_inset
+
+es
+\begin_inset Quotes erd
+\end_inset
+
+ for Spanish).
+ There are two kinds of files: the text 
+\family typewriter
+.po
+\family default
+ file (which can be found in 
+\family typewriter
+po/my.po
+\family default
+ for locale 
+\begin_inset Quotes eld
+\end_inset
+
+my
+\begin_inset Quotes erd
+\end_inset
+
+), and the binary 
+\family typewriter
+.mo
+\family default
+ file (found in 
+\family typewriter
+po/my/elyxer.po
+\family default
+).
+\end_layout
+
+\begin_layout Standard
+For internationalization to work properly, Linux distributors should take
+ all binary 
+\family typewriter
+.mo
+\family default
+ files and place them in the directory corresponding to locale files, which
+ we will call 
+\family typewriter
+$localedir
+\family default
+.
+ As 
+\begin_inset CommandInset href
+LatexCommand href
+name "the Python gettext page"
+target "http://docs.python.org/library/gettext.html"
+
+\end_inset
+
+ explains, this is distribution-dependent: for example on Debian 
+\family typewriter
+$localedir
+\family default
+ is 
+\family typewriter
+/usr/share/locale
+\family default
+, so for locale 
+\begin_inset Quotes eld
+\end_inset
+
+es
+\begin_inset Quotes erd
+\end_inset
+
+ the correct route would be
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+/usr/share/locale/es/LC_MESSAGES/elyxer.mo
+\end_layout
+
+\begin_layout Standard
+Windows distributors on the other hand should place files in 
+\family typewriter
+%PYTHONHOME%
+\backslash
+share
+\backslash
+locale
+\family default
+, for example for locale 
+\begin_inset Quotes eld
+\end_inset
+
+es
+\begin_inset Quotes erd
+\end_inset
+
+ on a machine where Python is in 
+\family typewriter
+C:
+\backslash
+python
+\family default
+:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+C:
+\backslash
+python
+\backslash
+share
+\backslash
+locale
+\backslash
+es
+\backslash
+LC_MESSAGES
+\backslash
+elyxer.mo
+\end_layout
+
+\begin_layout Standard
+To generate a new translation file (we will use 
+\begin_inset Quotes eld
+\end_inset
+
+my
+\begin_inset Quotes erd
+\end_inset
+
+ as an example locale here, corresponding to Burmese): you need to have
+ the GNU 
+\family typewriter
+gettext
+\family default
+ package installed.
+ Then go to the directory where elyxer.pot resides:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ cd src/conf
+\end_layout
+
+\begin_layout Standard
+and generate a 
+\family typewriter
+.po
+\family default
+ file for your locale:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ msginit --output-file=my.po --locale=my
+\end_layout
+
+\begin_layout Standard
+Then move the file to the 
+\family typewriter
+po/
+\family default
+ directory:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ mv my.po ../../po/
+\end_layout
+
+\begin_layout Standard
+and start translating it to Burmese! Once you are done run make from the
+ root directory:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ ./make
+\end_layout
+
+\begin_layout Standard
+and it will generate the file 
+\family typewriter
+po/my/elyxer.mo
+\family default
+.
+ Finally, place this file in
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+$localedir/my/LC_MESSAGES/elyxer.mo
+\end_layout
+
+\begin_layout Standard
+and you are done.
+\end_layout
+
 \begin_layout Section
 Work in Progress
 \end_layout
