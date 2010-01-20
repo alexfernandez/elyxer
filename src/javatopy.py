@@ -187,13 +187,13 @@ class JavaPorter(object):
   def throwstatement(self, tok):
     "A statement to throw (raise) an exception."
     exception = tok.next()
+    if exception == 'new':
+      return 'raise ' + self.createstatement(tok)
     token = tok.next()
     if token == ';':
       return 'raise ' + exception
-    if token != 'new':
-      Trace.error('Invalid throw statement: "throw ' + exception + ' ' + token + '"')
-      return 'raise ' + exception
-    return 'raise ' + self.createstatement(tok)
+    Trace.error('Invalid throw statement: "throw ' + exception + ' ' + token + '"')
+    return 'raise ' + exception
 
   def throwsdeclaration(self, tok):
     "A throws clause, should be ignored."
