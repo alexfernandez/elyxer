@@ -295,7 +295,7 @@ class JavaPorter(object):
     if after == '(':
       return self.translatemethod(name, tok)
     if after != '=':
-      Trace.error('Weird character after member: ' + token + ' ' + name + ' ' + after)
+      Trace.error('Weird token after member: ' + token + ' ' + name + ' ' + after)
     return self.translateattribute(name, tok)
 
   def membertoken(self, tok):
