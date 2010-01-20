@@ -58,7 +58,8 @@ class JavaPorter(object):
       'public':'classormember', 'protected':'classormember', 'private':'classormember',
       'class':'parseclass', 'else':'tokenblock', 'try':'tokenblock',
       'return':'returnstatement', '{':'openblock', '}':'closeblock',
-      'for':'forparens0', 'new':'createstatement'
+      'for':'forparens0', 'new':'createstatement', 'throw':'throwstatement',
+      'throws':'throwsdeclaration'
       }
   javatokens = {
       'new':'', 'this':'self'
@@ -183,6 +184,22 @@ class JavaPorter(object):
     name = tok.next()
     return self.assigninvoke(tok, name)
 
+  def throwstatement(self, tok):
+    "A statement to throw (raise) an exception."
+    exception = tok.next()
+    token = tok.next()
+    if token == ';':
+      return 'raise ' + exception
+    if token != 'new':
+      Trace.error('Invalid throw statement: "throw ' + exception + ' ' + token + '"')
+      return 'raise ' + exception
+    return 'raise ' + self.createstatement(tok)
+
+  def throwsdeclaration(self, tok):
+    "A throws clause, should be ignored."
+    name = tok.next()
+    return ''
+
   def assigninvoke(self, tok, token = None):
     "An assignment or a method invocation."
     self.onelineblock()
@@ -210,12 +227,19 @@ class JavaPorter(object):
     if token2 == ';':
       # finished invocation
       return token
+    if token2 == '++':
+      return self.assigninvoke(tok, token + ' += 1')
+    if token2 == '--':
+      return self.assigninvoke(tok, token + ' -= 1')
     if token2 in tok.javasymbols:
       Trace.error('Unknown symbol ' + token2 + ' for ' + token)
       return token + ' ' + token2
     token3 = tok.next()
+    if token3 == ';':
+      # a declaration; ignore
+      return ''
     if token3 == '=':
-      # a declaration
+      # declaration + assignment
       self.variables.append(token2)
       return token2 + ' = ' + self.parsevalue(tok)
     Trace.error('Unknown combination ' + token + '+' + token2 + '+' + token3)
@@ -455,7 +479,7 @@ class Tokenizer(object):
     Trace.error('Unknown comment type ' + self.current())
 
 inputfile, outputfile = readargs(sys.argv)
-Trace.debugmode = True
+Trace.debugmode = False
 if inputfile:
   JavaPorter().topy(inputfile, outputfile)
   Trace.message('Conversion done, running ' + outputfile)
