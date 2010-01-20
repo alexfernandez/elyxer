@@ -242,6 +242,10 @@ class JavaPorter(object):
       # declaration + assignment
       self.variables.append(token2)
       return token2 + ' = ' + self.parsevalue(tok)
+    if token3 == '[':
+      # array declaration
+      self.parseupto(']', tok)
+      return self.assigninvoke(tok, token2)
     Trace.error('Unknown combination ' + token + '+' + token2 + '+' + token3)
     return '*error ' + token + ' ' + token2 + ' ' + token + ' error*'
 
@@ -297,7 +301,7 @@ class JavaPorter(object):
   def membertoken(self, tok):
     "Get the next member token, excluding static, []..."
     token = tok.next()
-    if token in ['static', 'synchronized']:
+    if token in ['static', 'synchronized', 'final']:
       return self.membertoken(tok)
     if token == '[':
       tok.checknext(']')
