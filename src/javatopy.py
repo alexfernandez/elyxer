@@ -233,7 +233,7 @@ class JavaPorter(object):
       return self.assigninvoke(tok, token + ' -= 1')
     if token2 in tok.javasymbols:
       Trace.error('Unknown symbol ' + token2 + ' for ' + token)
-      return token + ' ' + token2
+      return '*error ' + token + ' ' + token2 + ' error*'
     token3 = tok.next()
     if token3 == ';':
       # a declaration; ignore
@@ -243,7 +243,7 @@ class JavaPorter(object):
       self.variables.append(token2)
       return token2 + ' = ' + self.parsevalue(tok)
     Trace.error('Unknown combination ' + token + '+' + token2 + '+' + token3)
-    return token + ' ' + token2 + ' ' + token
+    return '*error ' + token + ' ' + token2 + ' ' + token + ' error*'
 
   def checkvariable(self, token):
     "Check if the variable was known."
@@ -480,6 +480,7 @@ class Tokenizer(object):
 
 inputfile, outputfile = readargs(sys.argv)
 Trace.debugmode = False
+Trace.showlinesmode = True
 if inputfile:
   JavaPorter().topy(inputfile, outputfile)
   Trace.message('Conversion done, running ' + outputfile)
