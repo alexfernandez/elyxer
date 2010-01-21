@@ -56,6 +56,7 @@ class Options(object):
   splitpart = None
   memory = True
   lowmem = False
+  nobib = False
 
   branches = dict()
 

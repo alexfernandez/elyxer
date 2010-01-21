@@ -106,7 +106,7 @@ class PostBiblio(object):
 
   def postprocess(self, last, element, next):
     "If we have the first bibliography insert a tag"
-    if isinstance(last, Bibliography):
+    if isinstance(last, Bibliography) or Options.nobib:
       return element
     bibliography = Translator.translate('bibliography')
     header = TaggedText().constant(bibliography, 'h1 class="biblio"')
