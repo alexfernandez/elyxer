@@ -56,7 +56,7 @@ class JavaPorter(object):
   starttokens = {
       'if':'conditionblock', 'catch':'parametersblock', 'import':'ignorestatement',
       'public':'classormember', 'protected':'classormember', 'private':'classormember',
-      'class':'parseclass', 'else':'tokenblock', 'try':'tokenblock',
+      'class':'parseclass', 'else':'elseblock', 'try':'tryblock',
       'return':'returnstatement', '{':'openblock', '}':'closeblock',
       'for':'forparens0', 'new':'createstatement', 'throw':'throwstatement',
       'throws':'throwsdeclaration', ';':'ignorestatement'
@@ -87,6 +87,8 @@ class JavaPorter(object):
     statement = None
     while not statement and not tok.finished():
       indent = '  ' * self.depth
+      if not tok.next():
+        return ''
       statement = self.parsestatement(tok)
     if not statement:
       return ''
@@ -98,7 +100,7 @@ class JavaPorter(object):
 
   def parsestatement(self, tok):
     "Parse a single statement."
-    token = tok.next()
+    token = tok.current()
     if not token:
       return None
     if token in self.starttokens:
@@ -153,10 +155,18 @@ class JavaPorter(object):
     self.expectblock()
     return statement
 
-  def tokenblock(self, tok):
-    "Parse a block (after a try or an else)."
+  def tryblock(self, tok):
+    "Parse a block after a try."
     self.expectblock()
     return tok.current() + ':'
+
+  def elseblock(self, tok):
+    "Parse a block after an else."
+    self.expectblock()
+    if tok.peek() == 'if':
+      tok.next()
+      return 'elif ' + self.conditionblock(tok)
+    return 'else:'
 
   def openblock(self, tok):
     "Open a block of code."
@@ -427,14 +437,15 @@ class Tokenizer(object):
   def __init__(self, pos):
     self.pos = pos
     self.currenttoken = None
+    self.peeked = None
 
   def next(self):
     "Get the next single token, and store it for current()."
-    self.currenttoken = self.extracttoken()
-    while self.currenttoken in self.comments:
-      self.skipcomment()
-      self.currenttoken = self.extracttoken()
-    self.pos.skipspace()
+    if self.peeked:
+      self.currenttoken = self.peeked
+      self.peeked = None
+    else:
+      self.currenttoken = self.extractwithoutcomments()
     return self.currenttoken
 
   def checknext(self, token):
@@ -444,6 +455,15 @@ class Tokenizer(object):
       Trace.error('Expected token ' + token + ', found ' + self.currenttoken)
       return False
     return True
+
+  def extractwithoutcomments(self):
+    "Get the next single token without comments."
+    token = self.extracttoken()
+    while token in self.comments:
+      self.skipcomment(token)
+      token = self.extracttoken()
+    self.pos.skipspace()
+    return token
 
   def extracttoken(self):
     "Extract the next token."
@@ -478,16 +498,22 @@ class Tokenizer(object):
       return True
     return False
 
-  def skipcomment(self):
+  def skipcomment(self, token):
     "Skip over a comment."
-    if self.current() == '//':
+    if token == '//':
       comment = self.pos.globexcluding('\n')
       return
-    if self.current() == '/*':
+    if token == '/*':
       while not self.pos.checkskip('/'):
         comment = self.pos.globincluding('*')
       return
-    Trace.error('Unknown comment type ' + self.current())
+    Trace.error('Unknown comment type ' + token)
+  
+  def peek(self):
+    "Look ahead at the next token, without advancing the parse position."
+    token = self.extractwithoutcomments()
+    self.peeked = token
+    return token
 
 inputfile, outputfile = readargs(sys.argv)
 Trace.debugmode = False
