@@ -77,7 +77,7 @@ class JavaPorter(object):
     "Port the Java input file to Python."
     tok = Tokenizer(FilePosition(inputfile))
     writer = LineWriter(outputfile)
-    while not tok.pos.finished():
+    while not tok.finished():
       statement = self.nextstatement(tok)
       writer.writeline(statement)
     writer.close()
@@ -85,7 +85,7 @@ class JavaPorter(object):
   def nextstatement(self, tok):
     "Return the next statement."
     statement = None
-    while not statement and not tok.pos.finished():
+    while not statement and not tok.finished():
       indent = '  ' * self.depth
       statement = self.parsestatement(tok)
     if not statement:
@@ -445,8 +445,7 @@ class Tokenizer(object):
 
   def extracttoken(self):
     "Extract the next token."
-    self.pos.skipspace()
-    if self.pos.finished():
+    if self.finished():
       raise Exception('Finished looking for next token.')
     if self.isalphanumeric(self.pos.current()):
       return self.pos.glob(self.isalphanumeric)
@@ -461,6 +460,11 @@ class Tokenizer(object):
   def current(self):
     "Get the current token."
     return self.currenttoken
+
+  def finished(self):
+    "Find out if the tokenizer has finished tokenizing."
+    self.pos.skipspace()
+    return self.pos.finished()
 
   def isalphanumeric(self, char):
     "Detect if a character is alphanumeric or underscore."
