@@ -59,7 +59,7 @@ class JavaPorter(object):
       'class':'parseclass', 'else':'elseblock', 'try':'tryblock',
       'return':'returnstatement', '{':'openblock', '}':'closeblock',
       'for':'forparens0', 'new':'createstatement', 'throw':'throwstatement',
-      'throws':'throwsdeclaration', ';':'ignorestatement'
+      'throws':'throwsdeclaration', ';':'ignorestatement', 'while':'conditionblock'
       }
   javatokens = {
       'new':'', 'this':'self'
@@ -119,11 +119,12 @@ class JavaPorter(object):
       return self.translateclass(tok)
 
   def conditionblock(self, tok):
-    "Parse a condition in () and then a block {} (if statement)."
+    "Parse a condition in () and then a block {} (if or while statements)."
+    token = tok.current()
     tok.checknext('(')
     parens = self.parsecondition(tok, ')')
     self.expectblock()
-    return 'if ' + parens + ':'
+    return token + ' ' + parens + ':'
 
   def parametersblock(self, tok):
     "Parse a parameters () and then a block {} (catch statement)."

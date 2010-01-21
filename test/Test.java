@@ -72,6 +72,10 @@ public class Test implements AnInterface
 		}
 		String mossage = (String)message;
 		int value = (5 * 8) / 40;
+		while (value != -1)
+		{
+			value--;
+		}
 	}
 	public void runThread()
 	{
