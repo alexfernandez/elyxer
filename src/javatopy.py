@@ -409,9 +409,12 @@ class JavaPorter(object):
 
   def parsevalue(self, tok, ending = ';'):
     "Parse a value (to be assigned or returned)."
+    parens = None
     if tok.peek() == '(':
       # type cast; ignore
-      self.parseparens(tok)
+      parens = self.parseparens(tok)
+      if not parens[1:-1].isalpha():
+        return parens + ' ' + self.parseupto(ending, tok)
     return self.parseupto(ending, tok)
 
   def parseupto(self, ending, tok):
