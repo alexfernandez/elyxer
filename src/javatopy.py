@@ -99,6 +99,8 @@ class JavaPorter(object):
   def parsestatement(self, tok):
     "Parse a single statement."
     token = tok.next()
+    if not token:
+      return None
     if token in self.starttokens:
       function = getattr(self, self.starttokens[token])
     elif self.infor > 0:
@@ -446,7 +448,7 @@ class Tokenizer(object):
   def extracttoken(self):
     "Extract the next token."
     if self.finished():
-      raise Exception('Finished looking for next token.')
+      return None
     if self.isalphanumeric(self.pos.current()):
       return self.pos.glob(self.isalphanumeric)
     if self.pos.current() in self.javasymbols:
