@@ -165,7 +165,8 @@ class JavaPorter(object):
     self.expectblock()
     if tok.peek() == 'if':
       tok.next()
-      return 'elif ' + self.conditionblock(tok)
+      self.closeblock(tok)
+      return 'el' + self.conditionblock(tok)
     return 'else:'
 
   def openblock(self, tok):

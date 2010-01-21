@@ -57,6 +57,10 @@ public class Test implements AnInterface
 			{
 				System.out.println("Quote in message");
 			}
+			else if (message.charAt(i) == 'P')
+			{
+				System.out.println("P in message");
+			}
 		}
 	}
 	public void runThread()
