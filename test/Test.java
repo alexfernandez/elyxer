@@ -70,6 +70,7 @@ public class Test implements AnInterface
 				// nothing to do here
 			}
 		}
+		String mossage = (String)message;
 	}
 	public void runThread()
 	{

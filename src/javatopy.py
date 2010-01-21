@@ -92,7 +92,7 @@ class JavaPorter(object):
       statement = self.parsestatement(tok)
     if not statement:
       return ''
-    Trace.debug('Statement: ' + statement.strip())
+    # Trace.debug('Statement: ' + statement.strip())
     if statement.startswith('\n'):
       # displace newline
       return '\n' + indent + statement[1:]
@@ -390,7 +390,7 @@ class JavaPorter(object):
     "Parse the contents inside ()."
     result = self.parseinbrackets('(', ')', tok)
     if '{' in result:
-      # anonymous function, ignore
+      # anonymous function; ignore
       return '()'
     return result
 
@@ -409,6 +409,9 @@ class JavaPorter(object):
 
   def parsevalue(self, tok, ending = ';'):
     "Parse a value (to be assigned or returned)."
+    if tok.peek() == '(':
+      # type cast; ignore
+      self.parseparens(tok)
     return self.parseupto(ending, tok)
 
   def parseupto(self, ending, tok):
@@ -519,7 +522,7 @@ class Tokenizer(object):
     return token
 
 inputfile, outputfile = readargs(sys.argv)
-Trace.debugmode = False
+Trace.debugmode = True
 Trace.showlinesmode = True
 if inputfile:
   JavaPorter().topy(inputfile, outputfile)
