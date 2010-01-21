@@ -61,6 +61,14 @@ public class Test implements AnInterface
 			{
 				System.out.println("P in message");
 			}
+			try
+			{
+				System.out.println("Hullo");
+			}
+			catch (Exception e)
+			{
+				// nothing to do here
+			}
 		}
 	}
 	public void runThread()

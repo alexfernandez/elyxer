@@ -175,6 +175,8 @@ class JavaPorter(object):
       self.waitingforblock = False
     else:
       self.depth += 1
+    if tok.peek() == '}':
+      return 'pass'
     return None
 
   def closeblock(self, tok):
