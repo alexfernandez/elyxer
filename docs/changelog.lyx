@@ -82,6 +82,10 @@ Select the translation based on document language.
 Added em-dash --- such as in this sentence (thanks, Sam!).
 \end_layout
 
+\begin_layout Itemize
+Added option --inkscape to use Inkscape as SVG converter.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.40 (2010-01-19):
