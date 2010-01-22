@@ -1189,6 +1189,16 @@ reference "sub:TOC"
  document.
 \end_layout
 
+\begin_layout Description
+
+\family typewriter
+--inkscape
+\family default
+: Use Inkscape as the SVG to PNG converter, instead of ImageMagick.
+ Inkscape uses some non-standard extensions so it might be needed to convert
+ SVG images.
+\end_layout
+
 \begin_layout Standard
 When an option accepts an argument it can be added after a space as 
 \family typewriter

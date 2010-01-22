@@ -125,17 +125,12 @@ class ImageConverter(object):
         # file has not changed; do not convert
         return
     image.destination.createdirs()
-    command = 'convert '
-    params = self.getparams(image)
-    for param in params:
-      command += '-' + param + ' ' + unicode(params[param]) + ' '
-    command += '"' + unicode(image.origin) + '" "'
-    command += unicode(image.destination) + '"'
+    converter, command = self.buildcommand(image)
     try:
-      Trace.debug('ImageMagick Command: "' + command + '"')
+      Trace.debug(converter + ' command: "' + command + '"')
       result = os.system(command.encode(sys.getfilesystemencoding()))
       if result != 0:
-        Trace.error('ImageMagick not installed; images will not be processed')
+        Trace.error(converter + ' not installed; images will not be processed')
         ImageConverter.active = False
         return
       Trace.message('Converted ' + unicode(image.origin) + ' to ' +
@@ -143,6 +138,20 @@ class ImageConverter(object):
     except OSError, exception:
       Trace.error('Error while converting image ' + unicode(image.origin)
           + ': ' + unicode(exception))
+
+  def buildcommand(self, image):
+    "Build the command to convert the image."
+    if Options.inkscape and image.origin.hasext('.svg') and image.destination.hasext('.png'):
+      command = 'inkscape "' + unicode(image.origin) + '" --export-png="'
+      command += unicode(image.destination) + '"'
+      return 'Inkscape', command
+    command = 'convert '
+    params = self.getparams(image)
+    for param in params:
+      command += '-' + param + ' ' + unicode(params[param]) + ' '
+    command += '"' + unicode(image.origin) + '" "'
+    command += unicode(image.destination) + '"'
+    return 'ImageMagick', command
 
   def getparams(self, image):
     "Get the parameters for ImageMagick conversion"
