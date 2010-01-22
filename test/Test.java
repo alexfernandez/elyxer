@@ -52,6 +52,11 @@ public class Test implements AnInterface
 		this.attr2--;
 	}
 
+	public void plusize()
+	{
+		return new Test(this.attr1++, this.attr2++);
+	}
+
 	public String toString()
 	{	return ("attr1 = " + attr1 + ", " + "attr2 = " + attr2);
 	}

@@ -242,8 +242,9 @@ class JavaPorter(object):
       member = tok.next()
       return self.assigninvoke(tok, token + '.' + member)
     if token2 == '(':
-      parens = self.parseinparens(tok)
-      return self.assigninvoke(tok, token + parens)
+      parameters = self.parseparameters(tok)
+      Trace.debug('Parameters: ' + parameters)
+      return self.assigninvoke(tok, token + parameters)
     if token2 == '[':
       square = self.parseinsquare(tok)
       return self.assigninvoke(tok, token + square)
@@ -255,9 +256,11 @@ class JavaPorter(object):
       # finished invocation
       return token
     if token2 == '++':
+      Trace.debug('Increasing invoked ' + token)
       self.autoincreases.append(token)
       return self.assigninvoke(tok, token + ' + 1')
     if token2 == '--':
+      Trace.debug('Decreasing invoked ' + token)
       self.autodecreases.append(token)
       return self.assigninvoke(tok, token + ' - 1')
     if token2 in tok.javasymbols:
@@ -381,11 +384,15 @@ class JavaPorter(object):
 
   def processtoken(self, tok):
     "Process a single token."
-    if tok.current() in tok.javasymbols:
+    token = tok.current()
+    if token in tok.javasymbols:
       return self.processsymbol(tok)
-    if tok.current() in self.javatokens:
-      return self.javatokens[tok.current()]
-    return tok.current()
+    if token in self.starttokens:
+      function = getattr(self, self.starttokens[token])
+      return function(tok)
+    if token in self.javatokens:
+      return self.javatokens[token]
+    return token
   
   def processsymbol(self, tok):
     "Process a single java symbol."
@@ -416,6 +423,16 @@ class JavaPorter(object):
     while result.endswith('\\' + quote) and not result.endswith('\\\\' + quote):
       result += tok.pos.globincluding(quote)
     return result
+
+  def parseparameters(self, tok):
+    "Parse the parameters to a method invocation."
+    result = '('
+    while tok.current() != ')':
+      param = self.parsevalue(tok, [',',')'])
+      result += param + ', '
+    if len(result) == 1:
+      return '()'
+    return result[:-2] + ')'
 
   def parseparens(self, tok):
     "Parse a couple of () and the contents inside."
@@ -449,16 +466,9 @@ class JavaPorter(object):
     "Parse a condition given the ending token."
     return self.parseupto(ending, tok)
 
-  def parsevalue(self, tok, ending = ';'):
+  def parsevalue(self, tok, endings = [';']):
     "Parse a value (to be assigned or returned)."
-    parens = None
-    return self.parseupto(ending, tok)
-    if tok.peek() == '(':
-      # type cast; ignore
-      parens = self.parseparens(tok)
-      if not parens[1:-1].isalpha():
-        return parens + ' ' + self.parseupto(ending, tok)
-    return self.parseupto(ending, tok)
+    return self.parsetoendings(tok, endings)
 
   def parseupto(self, ending, tok):
     "Parse the tokenizer up to the supplied ending."
@@ -469,6 +479,14 @@ class JavaPorter(object):
     result = ''
     while not tok.next() in endings:
       processed = self.processtoken(tok)
+      if processed == '++':
+        processed = '+ 1'
+        Trace.debug('Increasing ' + result + ' for endings: ' + unicode(endings))
+        self.autoincreases.append(result)
+      if processed == '--':
+        Trace.debug('Decreasing ' + result)
+        processed = '- 1'
+        self.autodecreases.append(result)
       if processed != '.' and not result.endswith('.'):
         processed = ' ' + processed
       result += processed
@@ -482,10 +500,10 @@ class Tokenizer(object):
   unmodified = [
       '&', '|', '=', '(', ')', '{', '}', '.', '+', '-', '"', ',', '/',
       '*', '<', '>', '\'', '[', ']', '%', ';',
-      '!=','<=','>=', '=='
+      '!=','<=','>=', '==', '++', '--'
       ]
   modified = {
-      '&&':'and', '||':'or', '++':' += 1', '--':' -= 1', '!':'not'
+      '&&':'and', '||':'or', '!':'not'
       }
   comments = ['//', '/*']
   javasymbols = comments + unmodified + modified.keys()
