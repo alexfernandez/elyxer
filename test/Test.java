@@ -46,6 +46,12 @@ public class Test implements AnInterface
 		}
 	}
 
+	public void indecrease()
+	{
+		this.attr1++;
+		this.attr2--;
+	}
+
 	public String toString()
 	{	return ("attr1 = " + attr1 + ", " + "attr2 = " + attr2);
 	}

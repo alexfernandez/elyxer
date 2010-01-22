@@ -37,7 +37,7 @@ def readargs(args):
     return
   inputfile = args[0]
   del args[0]
-  outputfile = os.path.splitext(inputfile)[0] + '.py'
+  outputfile = os.path.splitext(inputfile)[0].lower() + '.py'
   if len(args) > 0:
     outputfile = args[0]
     del args[0]
@@ -72,6 +72,8 @@ class JavaPorter(object):
     self.waitingforblock = False
     self.variables = ['this']
     self.infor = 0
+    self.autoincreases = []
+    self.autodecreases = []
 
   def topy(self, inputfile, outputfile):
     "Port the Java input file to Python."
@@ -87,8 +89,6 @@ class JavaPorter(object):
     statement = None
     while not statement and not tok.finished():
       indent = '  ' * self.depth
-      if not tok.next():
-        return ''
       statement = self.parsestatement(tok)
     if not statement:
       return ''
@@ -100,16 +100,29 @@ class JavaPorter(object):
 
   def parsestatement(self, tok):
     "Parse a single statement."
-    token = tok.current()
+    pending = self.pendingstatement(tok)
+    if pending:
+      return pending
+    token = tok.next()
     if not token:
       return None
     if token in self.starttokens:
       function = getattr(self, self.starttokens[token])
-    elif self.infor > 0:
-      function = getattr(self, 'forparens' + unicode(self.infor))
     else:
       function = self.assigninvoke
     return function(tok)
+
+  def pendingstatement(self, tok):
+    "Return any pending statement from before."
+    if self.infor != 0:
+      tok.next()
+      function = getattr(self, 'forparens' + unicode(self.infor))
+      return function(tok)
+    if len(self.autoincreases) != 0:
+      return self.autoincrease(tok)
+    if len(self.autodecreases) != 0:
+      return self.autodecrease(tok)
+    return None
 
   def classormember(self, tok):
     "Parse a class or member (attribute or method)."
@@ -242,9 +255,11 @@ class JavaPorter(object):
       # finished invocation
       return token
     if token2 == '++':
-      return self.assigninvoke(tok, token + ' += 1')
+      self.autoincreases.append(token)
+      return self.assigninvoke(tok, token + ' + 1')
     if token2 == '--':
-      return self.assigninvoke(tok, token + ' -= 1')
+      self.autodecreases.append(token)
+      return self.assigninvoke(tok, token + ' - 1')
     if token2 in tok.javasymbols:
       Trace.error('Unknown symbol ' + token2 + ' for ' + token)
       return '*error ' + token + ' ' + token2 + ' error*'
@@ -281,6 +296,16 @@ class JavaPorter(object):
     while tok.current() != ';':
       tok.next()
     return None
+
+  def autoincrease(self, tok):
+    "Process a Java autoincrease (++)."
+    variable = self.autoincreases.pop()
+    return variable + ' += 1'
+
+  def autodecrease(self, tok):
+    "Process a Java autodecrease (--)."
+    variable = self.autodecreases.pop()
+    return variable + ' -= 1'
 
   def translateclass(self, tok):
     "Translate a class definition."
