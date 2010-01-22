@@ -329,7 +329,16 @@ class JavaPorter(object):
     self.inmethod = name
     pars = self.listparameters(tok)
     self.expectblock()
-    return '\ndef ' + name + '(self' + '):'
+    parlist = ', '
+    for par in pars:
+      if not ' ' in par:
+        Trace.error('Invalid parameter declaration: ' + par)
+      else:
+        newpar = par.strip().split(' ', 1)[1]
+        Trace.debug('Original ' + par + ', python par: ' + newpar)
+        parlist += newpar + ', '
+    parlist = parlist[:-2]
+    return '\ndef ' + name + '(self' + parlist + '):'
 
   def translateemptyattribute(self, name):
     "Translate an empty attribute definition."
@@ -341,8 +350,11 @@ class JavaPorter(object):
 
   def listparameters(self, tok):
     "Parse the parameters of a method definition, return them as a list."
-    parens = self.parseinparens(tok)
-    return parens.split(',')
+    params = self.parseinparens(tok)[1:-1]
+    pars = params.split(',')
+    if pars[0] == '':
+      return []
+    return pars
 
   def processtoken(self, tok):
     "Process a single token."
@@ -420,8 +432,12 @@ class JavaPorter(object):
 
   def parseupto(self, ending, tok):
     "Parse the tokenizer up to the supplied ending."
+    return self.parsetoendings(tok, [ending])
+
+  def parsetoendings(self, tok, endings):
+    "Parse the tokenizer up to a number of endings."
     result = ''
-    while not tok.next() == ending:
+    while not tok.next() in endings:
       processed = self.processtoken(tok)
       if processed != '.' and not result.endswith('.'):
         processed = ' ' + processed
