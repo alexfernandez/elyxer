@@ -49,7 +49,7 @@ public class Test implements AnInterface
 	public String toString()
 	{	return ("attr1 = " + attr1 + ", " + "attr2 = " + attr2);
 	}
-	public void message(String message)
+	public void message(String message, Test original)
 	{
 		for (int i = 0; i < message.length(); i++)
 		{
@@ -79,6 +79,8 @@ public class Test implements AnInterface
 	}
 	public void runThread()
 	{
+		Test test = null;
+		this.message("hello", (Test)test);
 		new Thread(new Runnable()
 		{
 			public void run()

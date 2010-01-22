@@ -224,10 +224,8 @@ class JavaPorter(object):
     token2 = tok.next()
     if token2 == '=':
       # assignment
-      self.checkvariable(token)
       return token + ' = ' + self.parsevalue(tok)
     if token2 == '.':
-      self.checkvariable(token)
       member = tok.next()
       return self.assigninvoke(tok, token + '.' + member)
     if token2 == '(':
@@ -266,10 +264,11 @@ class JavaPorter(object):
     return '*error ' + token + ' ' + token2 + ' ' + token + ' error*'
 
   def checkvariable(self, token):
-    "Check if the variable was known."
-    return
-    if not token in self.variables:
-      Trace.error('Undeclared variable ' + token)
+    "Check if the token is a valid variable name."
+    for char in token:
+      if not Tokenizer.isalphanumeric(char):
+        return False
+    return True
 
   def onelineblock(self):
     "Check if a block was expected."
@@ -335,7 +334,6 @@ class JavaPorter(object):
         Trace.error('Invalid parameter declaration: ' + par)
       else:
         newpar = par.strip().split(' ', 1)[1]
-        Trace.debug('Original ' + par + ', python par: ' + newpar)
         parlist += newpar + ', '
     parlist = parlist[:-2]
     return '\ndef ' + name + '(self' + parlist + '):'
@@ -401,11 +399,17 @@ class JavaPorter(object):
 
   def parseinparens(self, tok):
     "Parse the contents inside ()."
-    result = self.parseinbrackets('(', ')', tok)
-    if '{' in result:
+    contents = self.parseupto(')', tok)
+    if '{' in contents:
       # anonymous function; ignore
       return '()'
+    if Tokenizer.isalphanumeric(contents):
+      if Tokenizer.isalphanumeric(tok.peek()):
+        # type cast; ignore
+        return ''
+    result = '(' + contents + ')'
     return result
+    result = self.parseinbrackets('(', ')', tok)
 
   def parseinsquare(self, tok):
     "Parse the contents inside []."
@@ -423,6 +427,7 @@ class JavaPorter(object):
   def parsevalue(self, tok, ending = ';'):
     "Parse a value (to be assigned or returned)."
     parens = None
+    return self.parseupto(ending, tok)
     if tok.peek() == '(':
       # type cast; ignore
       parens = self.parseparens(tok)
@@ -514,7 +519,7 @@ class Tokenizer(object):
     self.pos.skipspace()
     return self.pos.finished()
 
-  def isalphanumeric(self, char):
+  def isalphanumeric(cls, char):
     "Detect if a character is alphanumeric or underscore."
     if char.isalpha():
       return True
@@ -540,6 +545,8 @@ class Tokenizer(object):
     token = self.extractwithoutcomments()
     self.peeked = token
     return token
+
+  isalphanumeric = classmethod(isalphanumeric)
 
 inputfile, outputfile = readargs(sys.argv)
 Trace.debugmode = True
