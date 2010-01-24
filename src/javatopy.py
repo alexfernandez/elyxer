@@ -58,11 +58,11 @@ class JavaPorter(object):
       'public':'classormember', 'protected':'classormember', 'private':'classormember',
       'class':'parseclass', 'else':'elseblock', 'try':'tryblock',
       'return':'returnstatement', '{':'openblock', '}':'closeblock',
-      'for':'forparens0', 'new':'createstatement', 'throw':'throwstatement',
-      'throws':'throwsdeclaration', ';':'ignorestatement', 'while':'conditionblock'
+      'for':'forparens0', 'throw':'throwstatement', 'throws':'throwsdeclaration',
+      ';':'ignorestatement', 'while':'conditionblock'
       }
   javatokens = {
-      'new':'', 'this':'self'
+      'new':'createstatement', 'this':'thisstatement'
       }
 
   def __init__(self):
@@ -92,7 +92,7 @@ class JavaPorter(object):
       statement = self.parsestatement(tok)
     if not statement:
       return ''
-    # Trace.debug('Statement: ' + statement.strip())
+    Trace.debug('Statement: ' + statement.strip())
     if statement.startswith('\n'):
       # displace newline
       return '\n' + indent + statement[1:]
@@ -108,6 +108,8 @@ class JavaPorter(object):
       return None
     if token in self.starttokens:
       function = getattr(self, self.starttokens[token])
+    elif token in self.javatokens:
+      function = getattr(self, self.javatokens[token])
     else:
       function = self.assigninvoke
     return function(tok)
@@ -210,8 +212,12 @@ class JavaPorter(object):
 
   def createstatement(self, tok):
     "A statement to create an object and use it: new Class().do()."
-    name = tok.next()
-    return self.assigninvoke(tok, name)
+    tok.next()
+    return self.parseinvocation(tok)
+
+  def thisstatement(self, tok):
+    "A statement starting with this, which translates to self."
+    return self.assigninvoke(tok, 'self')
 
   def throwstatement(self, tok):
     "A statement to throw (raise) an exception."
@@ -385,11 +391,11 @@ class JavaPorter(object):
   def processtoken(self, tok):
     "Process a single token."
     token = tok.current()
+    if token in self.javatokens:
+      function = getattr(self, self.javatokens[token])
+      return function(tok)
     if token in tok.javasymbols:
       return self.processsymbol(tok)
-    if token in self.starttokens:
-      function = getattr(self, self.starttokens[token])
-      return function(tok)
     if token in self.javatokens:
       return self.javatokens[token]
     return token
@@ -470,6 +476,18 @@ class JavaPorter(object):
     "Parse a value (to be assigned or returned)."
     return self.parsetoendings(tok, endings)
 
+  def parseinvocation(self, tok, previous = None):
+    "Parse a class or method invocation."
+    result = previous or ''
+    name = tok.current()
+    tok.checknext('(')
+    params = self.parseparameters(tok)
+    result += name + params
+    if tok.peek() != '.':
+      return result
+    tok.checknext('.')
+    return self.parseinvocation(tok, result + '.')
+
   def parseupto(self, ending, tok):
     "Parse the tokenizer up to the supplied ending."
     return self.parsetoendings(tok, [ending])
@@ -478,6 +496,7 @@ class JavaPorter(object):
     "Parse the tokenizer up to a number of endings."
     result = ''
     while not tok.next() in endings:
+      Trace.debug('Current ' + tok.current() + ' for endings: ' + unicode(endings))
       processed = self.processtoken(tok)
       if processed == '++':
         processed = '+ 1'
@@ -492,6 +511,7 @@ class JavaPorter(object):
       result += processed
     if len(result) > 0:
       result = result[1:]
+    Trace.debug('Left after ' + tok.current() + ', endings ' + unicode(endings) + ', result: ' + result)
     return result
 
 class Tokenizer(object):
