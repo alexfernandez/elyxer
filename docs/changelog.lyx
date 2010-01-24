@@ -79,7 +79,11 @@ Select the translation based on document language.
 \end_layout
 
 \begin_layout Itemize
-Added em-dash --- such as in this sentence (thanks, Sam!).
+Added em-dash --- such as in this sentence (thanks, Sam!), 
+\begin_inset Formula $\blacksquare$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Itemize
