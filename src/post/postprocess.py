@@ -46,7 +46,7 @@ class PostLayout(object):
     LayoutNumberer.instance.number(layout)
     label = Label().create(layout.anchortext, layout.partkey, type='toc')
     layout.contents.insert(0, label)
-    if layout.number != '':
+    if layout.anchortext != '':
       layout.contents.insert(1, Constant(u' '))
     return layout
 

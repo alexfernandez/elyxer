@@ -59,8 +59,6 @@ class NumberGenerator(object):
     if level == 0:
       Trace.error('Impossible level 0 for ' + type)
       return '.'
-    if level > NumberGenerator.maxdepth:
-      return ''
     if len(self.number) >= level:
       self.number = self.number[:level]
     else:
@@ -87,26 +85,27 @@ class NumberGenerator(object):
 
   def getlevel(self, type):
     "Get the level that corresponds to a type."
-    level = NumberGenerator.ordered.index(self.deasterisk(type)) + 1
+    type = self.deasterisk(type)
+    if type in NumberGenerator.unique:
+      return 0
+    level = NumberGenerator.ordered.index(type) + 1
     return level - NumberGenerator.startinglevel
 
   def isunique(self, container):
     "Find out if a container requires unique numbering."
-    return container.type in NumberGenerator.unique
+    return self.deasterisk(container.type) in NumberGenerator.unique
 
   def isinordered(self, container):
     "Find out if a container is ordered or unordered."
     return self.deasterisk(container.type) in NumberGenerator.ordered
-  
-  def isordered(self, container):
-    "Find out if a container requires ordered numbering."
-    return container.type in NumberGenerator.ordered
 
-  def isunordered(self, container):
-    "Find out if a container does not have a number."
-    if not '*' in container.type:
+  def isnumbered(self, container):
+    "Find out if a container is numbered."
+    if '*' in container.type:
       return False
-    return self.isinordered(container)
+    if self.getlevel(container.type) > NumberGenerator.maxdepth:
+      return False
+    return True
 
   def increase(self, number):
     "Increase the number (or letter)"
@@ -145,40 +144,42 @@ class LayoutNumberer(object):
   def isnumbered(self, container):
     "Find out if a container requires numbering at all."
     return self.generator.isinordered(container) or self.generator.isunique(container)
-    if '*' in container.type:
-      return False
-    return self.generator.deasterisk(container.type) \
-        in NumberGenerator.unique + NumberGenerator.ordered
 
   def number(self, layout):
     "Set all attributes: number, entry, level..."
     if self.generator.isunique(layout):
-      layout.number = self.generator.generateunique(layout.type)
-      layout.entry = Translator.translate(layout.type) + ' ' + layout.number
-      layout.partkey = 'toc-' + layout.type + '-' + layout.number
-      layout.anchortext = layout.entry + '.'
-      layout.level = 0
+      number = self.generator.generateunique(layout.type)
+      self.setcommonattrs(layout, number)
+      layout.anchortext = ''
+      if layout.number != '':
+        layout.anchortext = layout.entry + '.'
       return
     if not self.generator.isinordered(layout):
       Trace.error('Trying to number wrong ' + unicode(layout))
       return
     # ordered or unordered
-    if self.generator.isordered(layout):
-      layout.number = self.generator.generateordered(layout.type)
-    elif self.generator.isunordered(layout):
-      layout.number = ''
-    number = layout.number
-    if number == '':
-      # ordered but bigger than maxdepth numbered or unordered
+    if self.generator.isnumbered(layout):
+      number = self.generator.generateordered(layout.type)
+      Trace.debug('Number: ' + number + ' for ordered ' + unicode(layout))
+    else:
       number = self.generator.generateunique(layout.type)
-    layout.partkey = 'toc-' + layout.type + '-' + number
-    type = self.generator.deasterisk(layout.type)
+      Trace.debug('Number: ' + number + ' for unordered ' + unicode(layout))
+    Trace.debug('Number: ' + number + ' for ' + unicode(layout))
+    self.setcommonattrs(layout, number)
     layout.anchortext = layout.number
+    layout.output.tag = layout.output.tag.replace('?', unicode(layout.level))
+
+  def setcommonattrs(self, layout, number):
+    "Set the common attributes for a layout."
+    layout.level = self.generator.getlevel(layout.type)
+    type = self.generator.deasterisk(layout.type)
+    layout.number = ''
+    if self.generator.isnumbered(layout):
+      layout.number = number
+    layout.partkey = 'toc-' + layout.type + '-' + number
     layout.entry = Translator.translate(type)
     if layout.number != '':
       layout.entry += ' ' + layout.number
-    layout.level = self.generator.getlevel(type)
-    layout.output.tag = layout.output.tag.replace('?', unicode(layout.level))
 
   def modifylayout(self, layout, type):
     "Modify a layout according to the given type."

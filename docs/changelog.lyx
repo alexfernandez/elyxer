@@ -90,6 +90,11 @@ Added em-dash --- such as in this sentence (thanks, Sam!),
 Added option --inkscape to use Inkscape as SVG converter.
 \end_layout
 
+\begin_layout Itemize
+Solved bug when numbering unordered unique parts such as Part* (thanks,
+ Geremy!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.40 (2010-01-19):
