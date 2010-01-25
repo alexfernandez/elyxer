@@ -195,9 +195,13 @@ class IncludeInset(Container):
       if self.parameters['LatexCommand'] == 'verbatiminput':
         self.readverbatim()
         return
-    converter = IncludeInset.converterfactory.create(self)
-    converter.convert()
-    self.contents = converter.getcontents()
+    try:
+      converter = IncludeInset.converterfactory.create(self)
+      converter.convert()
+      self.contents = converter.getcontents()
+    except:
+      Trace.error('Could not read ' + self.filename + ', please check that the file exists and has read permissions.')
+      self.contents = []
 
   def readverbatim(self):
     "Read a verbatim document."
