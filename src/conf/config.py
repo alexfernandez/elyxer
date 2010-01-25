@@ -653,7 +653,8 @@ class TagConfig(object):
       }
 
   boxes = {
-      u'Framed':u'div class="framed"', u'Frameless':u'div class="frameless"', 
+      u'Doublebox':u'div class="double"', u'Framed':u'div class="framed"', 
+      u'Frameless':u'div class="frameless"', 
       }
 
   family = {

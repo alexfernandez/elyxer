@@ -99,6 +99,19 @@ Solved bug when numbering unordered unique parts such as Part* (thanks,
 Show error instead of crashing when included document does not exist.
 \end_layout
 
+\begin_layout Itemize
+Support for double box.
+ In CSS: switched to 
+\family typewriter
+outline-style
+\family default
+ instead of 
+\family typewriter
+border
+\family default
+ for boxes.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.40 (2010-01-19):

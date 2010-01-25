@@ -500,9 +500,12 @@ code.listing {
 	white-space: pre;
 }
 div.framed {
-	border: thin solid black;
+	outline-style: solid;
 }
 div.frameless {
+}
+div.double {
+	outline-style: double;
 }
 span.number-left {
 	float: left;
