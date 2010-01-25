@@ -160,11 +160,8 @@ class LayoutNumberer(object):
     # ordered or unordered
     if self.generator.isnumbered(layout):
       number = self.generator.generateordered(layout.type)
-      Trace.debug('Number: ' + number + ' for ordered ' + unicode(layout))
     else:
       number = self.generator.generateunique(layout.type)
-      Trace.debug('Number: ' + number + ' for unordered ' + unicode(layout))
-    Trace.debug('Number: ' + number + ' for ' + unicode(layout))
     self.setcommonattrs(layout, number)
     layout.anchortext = layout.number
     layout.output.tag = layout.output.tag.replace('?', unicode(layout.level))
