@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -568,6 +568,19 @@ text
 
 \begin_layout Standard
 Thanks for reading us.
+\end_layout
+
+\begin_layout Part*
+Unnumbered Part
+\end_layout
+
+\begin_layout Chapter*
+Unnumbered Chapter
+\end_layout
+
+\begin_layout Standard
+This extra chapter contains nothing of interest except for a couple of unnumbere
+d parts (one actual part and one chapter).
 \end_layout
 
 \begin_layout Standard

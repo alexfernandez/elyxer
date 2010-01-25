@@ -37,6 +37,9 @@ h1 {
 h1.Part {
 	text-align: center;
 }
+h1.Part- {
+	text-align: center;
+}
 sup {
 	font-size: 0.75em;
 	line-height: 0.5em;

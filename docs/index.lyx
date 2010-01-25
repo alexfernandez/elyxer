@@ -417,6 +417,7 @@ type "mailto:"
  Packagers Sven Hoexter (for Debian), Uwe Stöhr (on Windows) and Bennet
  Helm (for Mac OS X) have helped with their work to make it easy to try
  it out.
+ Olivier Ripoll and Geremy Condra have provided the first patches.
 \end_layout
 
 \begin_layout Standard

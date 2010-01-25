@@ -144,6 +144,9 @@ class LayoutNumberer(object):
 
   def isnumbered(self, container):
     "Find out if a container requires numbering at all."
+    return self.generator.isinordered(container) or self.generator.isunique(container)
+    if '*' in container.type:
+      return False
     return self.generator.deasterisk(container.type) \
         in NumberGenerator.unique + NumberGenerator.ordered
 
