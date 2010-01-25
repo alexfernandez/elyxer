@@ -100,7 +100,7 @@ class StatementChooser(object):
     "Return any pending statement from before."
     if tok.infor != 0:
       tok.next()
-      function = getattr(self, 'forparens' + unicode(self.infor))
+      function = getattr(self, 'forparens' + unicode(tok.infor))
       return function(tok)
     if len(tok.autoincreases) != 0:
       return self.autoincrease(tok)
@@ -130,14 +130,14 @@ class StatementChooser(object):
     token = tok.current()
     tok.checknext('(')
     parens = self.parser.parsecondition(tok, ')')
-    self.expectblock(tok)
+    self.parser.expectblock(tok)
     return token + ' ' + parens + ':'
 
   def parametersblock(self, tok):
     "Parse a parameters () and then a block {} (catch statement)."
     tok.checknext('(')
     parens = self.parser.listparameters(tok)
-    self.expectblock(tok)
+    self.parser.expectblock(tok)
     return 'except:'
 
   def forparens0(self, tok):
@@ -145,32 +145,32 @@ class StatementChooser(object):
     "The remaining parts of the for(;;){} are parsed later."
     tok.checknext('(')
     first = self.assigninvoke(tok, tok.next())
-    self.infor = 1
+    tok.infor = 1
     return first
 
   def forparens1(self, tok):
     "Read the condition in a for loop."
     condition = tok.current() + ' ' + self.parser.parseupto(';', tok)
-    self.depth += 1
-    self.infor = 2
+    tok.depth += 1
+    tok.infor = 2
     return 'while ' + condition + ':'
   
   def forparens2(self, tok):
     "Read the repeating statement in a for loop."
     statement = tok.current() + ' ' + self.parser.parseupto(')', tok)
-    self.depth -= 1
-    self.infor = 0
-    self.expectblock(tok)
+    tok.depth -= 1
+    tok.infor = 0
+    self.parser.expectblock(tok)
     return statement
 
   def tryblock(self, tok):
     "Parse a block after a try."
-    self.expectblock(tok)
+    self.parser.expectblock(tok)
     return tok.current() + ':'
 
   def elseblock(self, tok):
     "Parse a block after an else."
-    self.expectblock(tok)
+    self.parser.expectblock(tok)
     if tok.peek() == 'if':
       tok.next()
       self.closeblock(tok)
@@ -191,11 +191,6 @@ class StatementChooser(object):
     "Close a block of code."
     tok.depth -= 1
     return None
-
-  def expectblock(self, tok):
-    "Mark that a block is to be expected."
-    tok.depth += 1
-    tok.waitingforblock = True
 
   def returnstatement(self, tok):
     "A statement that contains a value (a return statement)."
@@ -241,9 +236,6 @@ class StatementChooser(object):
       # ignore anonymous class
       self.parser.parseupto('}', tok)
       return token
-    if token2 == ';':
-      # finished invocation
-      return token
     if token2 == '++':
       Trace.debug('Increasing invoked ' + token)
       tok.autoincreases.append(token)
@@ -252,6 +244,9 @@ class StatementChooser(object):
       Trace.debug('Decreasing invoked ' + token)
       tok.autodecreases.append(token)
       return self.assigninvoke(tok, token + ' - 1')
+    if token2 in [';', ',', ')']:
+      # finished invocation
+      return token
     if token2 in tok.javasymbols:
       Trace.error('Unknown symbol ' + token2 + ' for ' + token)
       return '*error ' + token + ' ' + token2 + ' error*'
@@ -261,7 +256,7 @@ class StatementChooser(object):
       return ''
     if token3 == '=':
       # declaration + assignment
-      self.variables.append(token2)
+      tok.variables.append(token2)
       return token2 + ' = ' + self.parser.parsevalue(tok)
     if token3 == '[':
       # array declaration

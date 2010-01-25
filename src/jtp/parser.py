@@ -40,19 +40,19 @@ class StatementParser(object):
 
   def autoincrease(self, tok):
     "Process a Java autoincrease (++)."
-    variable = self.autoincreases.pop()
+    variable = tok.autoincreases.pop()
     return variable + ' += 1'
 
   def autodecrease(self, tok):
     "Process a Java autodecrease (--)."
-    variable = self.autodecreases.pop()
+    variable = tok.autodecreases.pop()
     return variable + ' -= 1'
 
   def translateclass(self, tok):
     "Translate a class definition."
     tok.checknext('class')
     name = tok.next()
-    self.inclass = name
+    tok.inclass = name
     inheritance = ''
     while tok.peek() != '{':
       inheritance += ' ' + tok.next()
@@ -63,7 +63,7 @@ class StatementParser(object):
     "Translate an internal element (attribute or method)."
     token = self.membertoken(tok)
     name = self.membertoken(tok)
-    if token == self.inclass and name == '(':
+    if token == tok.inclass and name == '(':
       # constructor
       return self.translatemethod(token, tok)
     after = tok.next()
@@ -90,9 +90,9 @@ class StatementParser(object):
 
   def translatemethod(self, name, tok):
     "Translate a class method."
-    self.inmethod = name
+    tok.inmethod = name
     pars = self.listparameters(tok)
-    self.expectblock()
+    self.expectblock(tok)
     parlist = ', '
     for par in pars:
       if not ' ' in par:
@@ -241,6 +241,11 @@ class StatementParser(object):
       result = result[1:]
     Trace.debug('Left after ' + tok.current() + ', endings ' + unicode(endings) + ', result: ' + result)
     return result
+
+  def expectblock(self, tok):
+    "Mark that a block is to be expected."
+    tok.depth += 1
+    tok.waitingforblock = True
 
 class Tokenizer(object):
   "Tokenizes a parse position."
