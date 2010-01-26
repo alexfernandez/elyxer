@@ -586,3 +586,23 @@ span.downbinom {
 	display: block;
 	padding: 0em;
 }
+div.defskip {
+	display: block;
+	height: 1em;
+}
+div.smallskip {
+	display: block;
+	height: 0.5em;
+}
+div.medskip {
+	display: block;
+	height: 1em;
+}
+div.bigskip {
+	display: block;
+	height: 2em;
+}
+div.vfill {
+	display: block;
+	height: 30em;
+}
