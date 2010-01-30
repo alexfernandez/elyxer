@@ -26,7 +26,6 @@ from util.trace import Trace
 from parse.parser import *
 from io.output import *
 from ref.link import *
-from post.postprocess import *
 
 
 class BiblioCite(Container):
@@ -98,20 +97,4 @@ class BiblioEntry(Container):
       self.contents.append(Constant(','))
     self.contents.pop(-1)
     self.contents.append(Constant('] '))
-
-class PostBiblio(object):
-  "Insert a Bibliography legend before the first item"
-
-  processedclass = Bibliography
-
-  def postprocess(self, last, element, next):
-    "If we have the first bibliography insert a tag"
-    if isinstance(last, Bibliography) or Options.nobib:
-      return element
-    bibliography = Translator.translate('bibliography')
-    header = TaggedText().constant(bibliography, 'h1 class="biblio"')
-    layout = StandardLayout().complete([header, element])
-    return layout
-
-Postprocessor.stages.append(PostBiblio)
 

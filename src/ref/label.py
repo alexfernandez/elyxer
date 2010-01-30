@@ -56,24 +56,43 @@ class Label(Link):
     return 'Label ' + self.key
 
 class Reference(Link):
-  "A reference to a label"
+  "A reference to a label."
 
   references = dict()
+  formats = {
+      'ref':u'@↕', 'eqref':u'(@↕)', 'pageref':u'#↕',
+      'vref':u'@on-page↕'
+      }
 
   def process(self):
     "Read the reference and set the arrow."
     self.key = self.parameters['reference']
     if self.key in Label.names:
-      direction = u'↑'
+      self.direction = u'↑'
       label = Label.names[self.key]
     else:
-      direction = u'↓'
+      self.direction = u'↓'
       label = Label().complete(' ', self.key, 'preref')
     self.destination = label
-    self.contents = [Constant(direction)]
+    self.labelnumber = ''
+    self.format()
     if not self.key in Reference.references:
       Reference.references[self.key] = []
     Reference.references[self.key].append(self)
+
+  def format(self):
+    "Format the reference contents."
+    formatstring = u'↕'
+    formatkey = self.parameters['LatexCommand']
+    if not formatkey in self.formats:
+      Trace.error('Unknown reference format ' + formatkey)
+    else:
+      formatstring = self.formats[formatkey]
+    formatstring = formatstring.replace(u'↕', self.direction)
+    formatstring = formatstring.replace('@', self.labelnumber)
+    formatstring = formatstring.replace('#', '')
+    formatstring = formatstring.replace('on-page', Translator.translate('on-page'))
+    self.contents = [Constant(formatstring)]
 
   def __unicode__(self):
     "Return a printable representation."

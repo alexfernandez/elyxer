@@ -39,6 +39,13 @@ class PostLayout(object):
 
   def postprocess(self, last, layout, next):
     "Generate a number and place it before the text"
+    if not hasattr(layout, 'number'):
+      return layout
+    label = Label().create(layout.anchortext, layout.partkey, type='toc')
+    layout.contents.insert(0, label)
+    if layout.anchortext != '':
+      layout.contents.insert(1, Constant(u' '))
+    return layout
     if not LayoutNumberer.instance.isnumbered(layout):
       return layout
     if self.containsappendix(layout):

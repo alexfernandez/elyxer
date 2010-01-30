@@ -116,6 +116,11 @@ border
 Support for vertical space insets (thanks, Bill!).
 \end_layout
 
+\begin_layout Itemize
+Support for references inside paragraphs and formatted references (thanks
+ again, Bill!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.40 (2010-01-19):

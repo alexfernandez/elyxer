@@ -223,8 +223,8 @@ class StatementParser(object):
   def parsetoendings(self, tok, endings):
     "Parse the tokenizer up to a number of endings."
     result = ''
-    while not tok.next() in endings:
-      Trace.debug('Current ' + tok.current() + ' for endings: ' + unicode(endings))
+    tok.next()
+    while not tok.current() in endings:
       processed = self.processtoken(tok)
       if processed == '++':
         processed = '+ 1'
@@ -237,6 +237,8 @@ class StatementParser(object):
       if processed != '.' and not result.endswith('.'):
         processed = ' ' + processed
       result += processed
+      if not tok.current in endings:
+        tok.next()
     if len(result) > 0:
       result = result[1:]
     Trace.debug('Left after ' + tok.current() + ', endings ' + unicode(endings) + ', result: ' + result)

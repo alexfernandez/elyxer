@@ -49,6 +49,20 @@ class Float(Container):
     self.type = self.header[2]
     self.processfloats()
     self.processtags()
+    self.processnumber()
+
+  def processnumber(self):
+    "Number a float if it isn't numbered"
+    if self.number:
+      return
+    if self.parentfloat:
+      self.parentfloat.processnumber()
+      index = self.parentfloat.children.index(float)
+      self.number = NumberGenerator.letters[index + 1].lower()
+      self.entry = '(' + self.number + ')'
+    else:
+      self.number = NumberGenerator.instance.generatechaptered(self.type)
+      self.entry = Translator.translate('float-' + self.type) + self.number
 
   def processtags(self):
     "Process the HTML tags."
@@ -147,6 +161,7 @@ class Listing(Float):
     tagged = TaggedText().complete(newcontents, 'code class="listing"', False)
     self.contents = [TaggedText().complete(captions + [tagged],
       'div class="listing"', True)]
+    self.processnumber()
 
   def processparams(self):
     "Process listing parameteres."
@@ -211,21 +226,7 @@ class PostFloat(object):
 
   def postnumber(self, caption, float):
     "Number the caption"
-    self.numberfloat(float)
     caption.contents.insert(0, Constant(float.entry + u' '))
-
-  def numberfloat(self, float):
-    "Number a float if it isn't numbered"
-    if float.number:
-      return
-    if float.parentfloat:
-      self.numberfloat(float.parentfloat)
-      index = float.parentfloat.children.index(float)
-      float.number = NumberGenerator.letters[index + 1].lower()
-      float.entry = '(' + float.number + ')'
-    else:
-      float.number = NumberGenerator.instance.generatechaptered(float.type)
-      float.entry = Translator.translate('float-' + float.type) + float.number
 
 class PostWrap(PostFloat):
   "For a wrap: exactly like a float"

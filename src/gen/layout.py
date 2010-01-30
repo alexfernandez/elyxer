@@ -45,6 +45,26 @@ class Layout(Container):
       self.output.tag = TagConfig.layouts[self.type.replace('*', '')] + ' class="' +  self.type.replace('*', '-') + '"'
     else:
       self.output.tag = 'div class="' + self.type + '"'
+    self.numerate()
+
+  def numerate(self):
+    "Numerate if necessary."
+    if not LayoutNumberer.instance.isnumbered(self):
+      return
+    if self.containsappendix():
+      self.activateappendix()
+    LayoutNumberer.instance.number(self)
+
+  def containsappendix(self):
+    "Find out if there is an appendix somewhere in the layout"
+    for element in self.contents:
+      if isinstance(element, Appendix):
+        return True
+    return False
+    
+  def activateappendix(self):
+    "Change first number to letter, and chapter to appendix"
+    NumberGenerator.instance.number = ['-']
 
   def __unicode__(self):
     return 'Layout of type ' + self.type

@@ -140,6 +140,7 @@ class LayoutNumberer(object):
 
   def __init__(self):
     self.generator = NumberGenerator.instance
+    self.labelnumber = None
 
   def isnumbered(self, container):
     "Find out if a container requires numbering at all."
@@ -177,9 +178,7 @@ class LayoutNumberer(object):
     layout.entry = Translator.translate(type)
     if layout.number != '':
       layout.entry += ' ' + layout.number
-
-  def modifylayout(self, layout, type):
-    "Modify a layout according to the given type."
+    self.labelnumber = layout.number
 
 LayoutNumberer.instance = LayoutNumberer()
 
