@@ -80,7 +80,7 @@ class Reference(Link):
   references = dict()
   formats = {
       'ref':u'@↕', 'eqref':u'(@↕)', 'pageref':u'#↕',
-      'vref':u'@on-page↕'
+      'vref':u'@on-page#↕'
       }
 
   def process(self):

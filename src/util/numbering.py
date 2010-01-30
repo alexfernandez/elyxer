@@ -169,7 +169,6 @@ class LayoutNumberer(object):
 
   def setcommonattrs(self, layout, number):
     "Set the common attributes for a layout."
-    self.lastnumbered = layout
     layout.level = self.generator.getlevel(layout.type)
     type = self.generator.deasterisk(layout.type)
     layout.number = ''
@@ -178,6 +177,7 @@ class LayoutNumberer(object):
     layout.partkey = 'toc-' + layout.type + '-' + number
     layout.entry = Translator.translate(type)
     if layout.number != '':
+      self.lastnumbered = layout
       layout.entry += ' ' + layout.number
 
 LayoutNumberer.instance = LayoutNumberer()
