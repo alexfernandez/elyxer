@@ -79,7 +79,7 @@ Select the translation based on document language.
 \end_layout
 
 \begin_layout Itemize
-Added em-dash --- such as in this sentence (thanks, Sam!), 
+Added em-dash --- such as in this sentence, 
 \begin_inset Formula $\blacksquare$
 \end_inset
 
@@ -113,12 +113,11 @@ border
 \end_layout
 
 \begin_layout Itemize
-Support for vertical space insets (thanks, Bill!).
+Support for vertical space insets.
 \end_layout
 
 \begin_layout Itemize
-Support for references inside paragraphs and formatted references (thanks
- again, Bill!).
+Support for references inside paragraphs and formatted references.
 \end_layout
 
 \begin_layout Itemize
@@ -131,11 +130,19 @@ Listings are now converted using
 <code>
 \family default
 .
- They are also justified left (thanks, Sam!).
+ They are also justified left.
 \end_layout
 
 \begin_layout Itemize
-Solved bug with numbered listings.
+Solved bug with numbered listings (thanks, Sam!).
+\end_layout
+
+\begin_layout Itemize
+Added option 
+\family typewriter
+--titlerefs
+\family default
+ to show reference keys in the link title.
 \end_layout
 
 \end_deeper

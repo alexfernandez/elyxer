@@ -58,6 +58,7 @@ class Options(object):
   lowmem = False
   nobib = False
   inkscape = False
+  titlerefs = False
 
   branches = dict()
 
@@ -105,7 +106,7 @@ class Options(object):
 
   def showoptions(self):
     "Show all possible options"
-    Trace.error('  Valid options:')
+    Trace.error('  Common options:')
     Trace.error('    --nocopy:               disables the copyright notice at the bottom')
     Trace.error('    --quiet:                disables all runtime messages')
     Trace.error('    --debug:                enable debugging messages (for developers)')
@@ -113,9 +114,11 @@ class Options(object):
     Trace.error('    --directory "img_dir":  look for images in the specified directory')
     Trace.error('    --destdirectory "dest": put converted images into this directory')
     Trace.error('    --css "file.css":       use a custom CSS file')
-    Trace.error('    --version:              show version number and release date')
     Trace.error('    --html:                 output HTML 4.0 instead of the default XHTML')
     Trace.error('    --unicode:              full Unicode output')
+    Trace.error('')
+    Trace.error('  Esoteric options:')
+    Trace.error('    --version:              show version number and release date')
     Trace.error('    --forceformat ".ext":   force image output format')
     Trace.error('    --lyxformat:            return the highest LyX version that can be')
     Trace.error('                            converted')
@@ -123,6 +126,7 @@ class Options(object):
     Trace.error('    --target "frame":       make all links point to the given frame')
     Trace.error('    --lowmem:               do the conversion on the fly (conserve memory)')
     Trace.error('    --inkscape:             use Inkscape to convert SVG images')
+    Trace.error('    --titlerefs:             show reference names as link titles')
     exit()
 
   def showversion(self):

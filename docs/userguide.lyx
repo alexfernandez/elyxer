@@ -1199,6 +1199,23 @@ reference "sub:TOC"
  SVG images.
 \end_layout
 
+\begin_layout Description
+
+\family typewriter
+--titlerefs
+\family default
+: Show the reference keys in the title of the reference link (normally rendered
+ by browsers as 
+\begin_inset Quotes eld
+\end_inset
+
+tooltip
+\begin_inset Quotes erd
+\end_inset
+
+: the little yellowish box floating over the link).
+\end_layout
+
 \begin_layout Standard
 When an option accepts an argument it can be added after a space as 
 \family typewriter

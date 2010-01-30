@@ -43,10 +43,11 @@ class Link(Container):
     self.page = None
     self.target = None
     self.destination = None
+    self.title = None
     if Options.target:
       self.target = Options.target
 
-  def complete(self, text, anchor = None, url = None, type = None):
+  def complete(self, text, anchor = None, url = None, type = None, title = None):
     "Complete the link."
     self.contents = [Constant(text)]
     if anchor:
@@ -55,6 +56,8 @@ class Link(Container):
       self.url = url
     if type:
       self.type = type
+    if title:
+      self.title = title
     return self
 
   def computedestination(self):
@@ -230,6 +233,8 @@ class LinkOutput(object):
       tag += ' href="' + link.url + '"'
     if link.target:
       tag += ' target="' + link.target + '"'
+    if link.title:
+      tag += ' title="' + link.title + '"'
     text = TaggedText().complete(link.contents, tag)
     return text.gethtml()
 

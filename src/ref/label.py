@@ -97,6 +97,8 @@ class Reference(Link):
     if not self.key in Reference.references:
       Reference.references[self.key] = []
     Reference.references[self.key].append(self)
+    if Options.titlerefs:
+      self.title = self.key
 
   def format(self):
     "Format the reference contents."
