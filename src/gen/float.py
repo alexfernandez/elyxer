@@ -63,7 +63,6 @@ class Float(Container):
       float.output.tag = float.output.tag.replace('div', 'span')
       float.parentfloat = self
       self.children.append(float)
-      Trace.debug('Float ' + unicode(float) + ' in ' + unicode(self))
 
   def getembeddedtag(self):
     "Get the tag for the embedded object."
@@ -129,25 +128,24 @@ class Caption(Container):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('div class="caption"', True)
 
-class Listing(Float):
+class Listing(Container):
   "A code listing"
 
   def __init__(self):
-    Float.__init__(self)
+    self.parser = InsetParser()
+    self.output = TaggedOutput().settag('div class="listing"', True)
     self.numbered = None
     self.counter = 0
 
   def process(self):
     "Remove all layouts"
-    self.parselstparams()
+    self.processparams()
     self.type = 'listing'
-    captions = self.searchremove(Caption)
     newcontents = []
     for container in self.contents:
       newcontents += self.extract(container)
     tagged = TaggedText().complete(newcontents, 'pre class="listing"', False)
-    self.contents = [TaggedText().complete(captions + [tagged],
-      'div class="listing"', True)]
+    self.contents = [tagged]
 
   def processparams(self):
     "Process listing parameteres."
@@ -233,10 +231,5 @@ class PostWrap(PostFloat):
 
   processedclass = Wrap
 
-class PostListing(PostFloat):
-  "For a listing: exactly like a float"
-
-  processedclass = Listing
-
-Postprocessor.stages += [PostFloat, PostWrap, PostListing]
+Postprocessor.stages += [PostFloat, PostWrap]
 

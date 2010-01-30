@@ -130,7 +130,12 @@ Listings are now converted using
 \family typewriter
 <code>
 \family default
- (thanks, Sam!).
+.
+ They are also justified left (thanks, Sam!).
+\end_layout
+
+\begin_layout Itemize
+Solved bug with numbered listings.
 \end_layout
 
 \end_deeper

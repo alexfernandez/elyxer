@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -483,6 +483,31 @@ An algorithm.
 
 \begin_layout Plain Layout
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now a numbered listing.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "numbers=left,stepnumber=1"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+This listing has been numbered.
+\end_layout
+
+\begin_layout Plain Layout
+
+Each line has its own number.
 \end_layout
 
 \end_inset
