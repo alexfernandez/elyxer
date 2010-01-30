@@ -93,6 +93,10 @@ msgstr "Índice de figuras"
 msgid "Listing "
 msgstr "Listado "
 
+#: on-page
+msgid  " on page "
+msgstr " en la página "
+
 #: nomenclature
 msgid "Nomenclature"
 msgstr "Nomenclatura"

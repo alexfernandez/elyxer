@@ -100,6 +100,10 @@ msgstr "Listing"
 msgid "Nomenclature"
 msgstr "Nomenklatur"
 
+#: on-page
+msgid  " on page "
+msgstr " auf Seite "
+
 #: float-table
 msgid "Table "
 msgstr "Tabelle"
