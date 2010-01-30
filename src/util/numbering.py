@@ -140,7 +140,7 @@ class LayoutNumberer(object):
 
   def __init__(self):
     self.generator = NumberGenerator.instance
-    self.labelnumber = None
+    self.lastnumbered = None
 
   def isnumbered(self, container):
     "Find out if a container requires numbering at all."
@@ -169,6 +169,7 @@ class LayoutNumberer(object):
 
   def setcommonattrs(self, layout, number):
     "Set the common attributes for a layout."
+    self.lastnumbered = layout
     layout.level = self.generator.getlevel(layout.type)
     type = self.generator.deasterisk(layout.type)
     layout.number = ''
@@ -178,7 +179,6 @@ class LayoutNumberer(object):
     layout.entry = Translator.translate(type)
     if layout.number != '':
       layout.entry += ' ' + layout.number
-    self.labelnumber = layout.number
 
 LayoutNumberer.instance = LayoutNumberer()
 

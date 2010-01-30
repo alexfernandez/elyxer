@@ -49,20 +49,6 @@ class Float(Container):
     self.type = self.header[2]
     self.processfloats()
     self.processtags()
-    self.processnumber()
-
-  def processnumber(self):
-    "Number a float if it isn't numbered"
-    if self.number:
-      return
-    if self.parentfloat:
-      self.parentfloat.processnumber()
-      index = self.parentfloat.children.index(float)
-      self.number = NumberGenerator.letters[index + 1].lower()
-      self.entry = '(' + self.number + ')'
-    else:
-      self.number = NumberGenerator.instance.generatechaptered(self.type)
-      self.entry = Translator.translate('float-' + self.type) + self.number
 
   def processtags(self):
     "Process the HTML tags."
@@ -77,6 +63,7 @@ class Float(Container):
       float.output.tag = float.output.tag.replace('div', 'span')
       float.parentfloat = self
       self.children.append(float)
+      Trace.debug('Float ' + unicode(float) + ' in ' + unicode(self))
 
   def getembeddedtag(self):
     "Get the tag for the embedded object."
@@ -161,7 +148,6 @@ class Listing(Float):
     tagged = TaggedText().complete(newcontents, 'code class="listing"', False)
     self.contents = [TaggedText().complete(captions + [tagged],
       'div class="listing"', True)]
-    self.processnumber()
 
   def processparams(self):
     "Process listing parameteres."
@@ -211,10 +197,11 @@ class PostFloat(object):
 
   def postprocess(self, last, float, next):
     "Move the label to the top and number the caption"
+    self.postnumber(float)
     captions = float.searchinside(float.contents, Caption)
     for caption in captions:
       self.postlabels(float, caption)
-      self.postnumber(caption, float)
+      self.numbercaption(caption, float)
     return float
 
   def postlabels(self, float, caption):
@@ -224,9 +211,23 @@ class PostFloat(object):
       return
     float.contents = labels + float.contents
 
-  def postnumber(self, caption, float):
+  def numbercaption(self, caption, float):
     "Number the caption"
     caption.contents.insert(0, Constant(float.entry + u' '))
+
+  def postnumber(self, float):
+    "Number a float if it isn't numbered."
+    if float.number:
+      return
+    if float.parentfloat:
+      self.postnumber(float.parentfloat)
+      index = float.parentfloat.children.index(float)
+      float.number = NumberGenerator.letters[index + 1].lower()
+      float.entry = '(' + float.number + ')'
+    else:
+      float.number = NumberGenerator.instance.generatechaptered(float.type)
+      float.entry = Translator.translate('float-' + float.type) + float.number
+    Trace.debug('Number float: ' + float.number)
 
 class PostWrap(PostFloat):
   "For a wrap: exactly like a float"

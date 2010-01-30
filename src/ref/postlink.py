@@ -48,20 +48,9 @@ class PostLabel(object):
   processedclass = Label
 
   def postprocess(self, last, label, next):
-    "Assign the part number it is in. If not found, assign the latest part number seen."
-    label.labelnumber = self.lookfornumber(label)
-
-  def lookfornumber(self, container):
-    "Look for the part number where embedded, or the last one seen."
-    while not hasattr(container, 'number'):
-      if not hasattr(container, 'parent'):
-        # no number; label must be in some unnumbered element
-        Trace.debug('Nothing in: ' + unicode(container))
-        return LayoutNumberer.instance.labelnumber
-      container = container.parent
-    Trace.debug('Extracted: ' + container.number)
-    return container.number
-
+    "Remember the last numbered container seen."
+    label.lastnumbered = LayoutNumberer.instance.lastnumbered
+    return label
 
 Postprocessor.stages += [PostBiblio, PostLabel]
 

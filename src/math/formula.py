@@ -53,6 +53,12 @@ class Formula(Container):
     if self.header[0] != 'inline':
       self.output.settag('div class="formula"', True)
 
+  def __unicode__(self):
+    "Return a printable representation."
+    if hasattr(self, 'number'):
+      return 'Formula (' + self.number + ')'
+    return 'Unnumbered formula'
+
 class FormulaBit(Container):
   "A bit of a formula"
 

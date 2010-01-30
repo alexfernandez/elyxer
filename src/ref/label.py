@@ -51,8 +51,27 @@ class Label(Link):
         reference.destination = self
     return self
 
+  def labelnumber(self):
+    "Get the number for the latest numbered container seen."
+    numbered = self.numbered(self)
+    if numbered and numbered.number:
+      return numbered.number
+    return ''
+
+  def numbered(self, container):
+    "Get the numbered container for the label."
+    if hasattr(container, 'number'):
+      return container
+    if not hasattr(container, 'parent'):
+      if hasattr(self, 'lastnumbered'):
+        return self.lastnumbered
+      return None
+    return self.numbered(container.parent)
+
   def __unicode__(self):
     "Return a printable representation."
+    if not hasattr(self, 'key'):
+      return 'Unnamed label'
     return 'Label ' + self.key
 
 class Reference(Link):
@@ -74,7 +93,6 @@ class Reference(Link):
       self.direction = u'↓'
       label = Label().complete(' ', self.key, 'preref')
     self.destination = label
-    self.labelnumber = ''
     self.format()
     if not self.key in Reference.references:
       Reference.references[self.key] = []
@@ -82,15 +100,15 @@ class Reference(Link):
 
   def format(self):
     "Format the reference contents."
-    formatstring = u'↕'
     formatkey = self.parameters['LatexCommand']
     if not formatkey in self.formats:
       Trace.error('Unknown reference format ' + formatkey)
+      formatstring = u'↕'
     else:
       formatstring = self.formats[formatkey]
     formatstring = formatstring.replace(u'↕', self.direction)
-    formatstring = formatstring.replace('@', self.labelnumber)
-    formatstring = formatstring.replace('#', '')
+    formatstring = formatstring.replace('@', self.destination.labelnumber())
+    formatstring = formatstring.replace('#', '1')
     formatstring = formatstring.replace('on-page', Translator.translate('on-page'))
     self.contents = [Constant(formatstring)]
 
