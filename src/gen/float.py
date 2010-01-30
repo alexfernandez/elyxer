@@ -145,7 +145,7 @@ class Listing(Float):
     newcontents = []
     for container in self.contents:
       newcontents += self.extract(container)
-    tagged = TaggedText().complete(newcontents, 'code class="listing"', False)
+    tagged = TaggedText().complete(newcontents, 'pre class="listing"', False)
     self.contents = [TaggedText().complete(captions + [tagged],
       'div class="listing"', True)]
 
@@ -227,7 +227,6 @@ class PostFloat(object):
     else:
       float.number = NumberGenerator.instance.generatechaptered(float.type)
       float.entry = Translator.translate('float-' + float.type) + float.number
-    Trace.debug('Number float: ' + float.number)
 
 class PostWrap(PostFloat):
   "For a wrap: exactly like a float"

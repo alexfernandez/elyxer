@@ -121,6 +121,18 @@ Support for references inside paragraphs and formatted references (thanks
  again, Bill!).
 \end_layout
 
+\begin_layout Itemize
+Listings are now converted using 
+\family typewriter
+<pre>
+\family default
+ tags, instead of 
+\family typewriter
+<code>
+\family default
+ (thanks, Sam!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.40 (2010-01-19):

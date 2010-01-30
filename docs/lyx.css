@@ -460,11 +460,8 @@ span.Info {
 	border: thin solid #c0c0c0;
 }
 pre {
-	padding: 0.2em 2em;
-	margin-left: 1em;
-	margin-right: auto;
-	margin-top: 0em;
-	margin-bottom: 0em;
+	padding: 0em;
+	margin: 0em;
 	width: auto;
 	font-family: monospace;
 	line-height: 1.5em;
@@ -495,9 +492,6 @@ div.listing {
 	margin-right: auto;
 	padding: 1ex;
 	border: thin solid #c0c0c0;
-}
-code.listing {
-	white-space: pre;
 }
 div.framed {
 	outline-style: solid;
