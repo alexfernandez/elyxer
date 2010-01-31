@@ -72,6 +72,11 @@ class Position(object):
     self.skip(current)
     return current
 
+  def next(self):
+    "Advance the position and return the next character."
+    self.currentskip()
+    return self.current()
+
   def checkskip(self, string):
     "Check for a string at the given position; if there, skip it"
     if not self.checkfor(string):

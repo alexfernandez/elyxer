@@ -26,6 +26,7 @@ from util.trace import Trace
 from parse.parser import *
 from io.output import *
 from conf.config import *
+from parse.position import *
 
 
 class Container(object):
@@ -44,20 +45,21 @@ class Container(object):
     if isinstance(html, basestring):
       Trace.error('Raw string ' + html)
       html = [html]
-    if Options.html:
-      self.escapeall(html, EscapeConfig.html)
-    if Options.iso885915:
-      self.escapeall(html, EscapeConfig.iso885915, True)
-    elif not Options.unicode:
-      self.escapeall(html, EscapeConfig.nonunicode)
-    return html
+    return self.escapeall(html)
 
-  def escapeall(self, lines, replacements, entities=False):
-    "Escape all lines in an array with the replacements"
-    for index, line in enumerate(lines):
-      lines[index] = self.escape(line, replacements)
-      if entities:
-        lines[index] = self.escapeentities(lines[index])
+  def escapeall(self, lines):
+    "Escape all lines in an array according to the output options."
+    result = []
+    for line in lines:
+      if Options.html:
+        line = self.escape(line, EscapeConfig.html)
+      if Options.iso885915:
+        line = self.escape(line, EscapeConfig.iso885915)
+        line = self.escapeentities(line)
+      elif not Options.unicode:
+        line = self.escape(line, EscapeConfig.nonunicode)
+      result.append(line)
+    return result
 
   def escape(self, line, replacements = EscapeConfig.entities):
     "Escape a line with replacements from a map"
@@ -72,11 +74,16 @@ class Container(object):
   def escapeentities(self, line):
     "Escape all Unicode characters to HTML entities."
     result = ''
-    for char in line:
-      if ord(char) > 128:
-        result += '&#' + hex(ord(char))[1:] + ';'
+    pos = TextPosition(line)
+    while not pos.finished():
+      if ord(pos.current()) > 128:
+        codepoint = hex(ord(pos.current()))
+        if codepoint == '0xd835':
+          codepoint = hex(ord(pos.next()) + 0xf800)
+        result += '&#' + codepoint[1:] + ';'
       else:
-        result += char
+        result += pos.current()
+      pos.currentskip()
     return result
 
   def searchall(self, type):
