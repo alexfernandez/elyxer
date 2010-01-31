@@ -46,14 +46,18 @@ class Container(object):
       html = [html]
     if Options.html:
       self.escapeall(html, EscapeConfig.html)
-    if not Options.unicode:
+    if Options.iso885915:
+      self.escapeall(html, EscapeConfig.iso885915, True)
+    elif not Options.unicode:
       self.escapeall(html, EscapeConfig.nonunicode)
     return html
 
-  def escapeall(self, lines, replacements):
+  def escapeall(self, lines, replacements, entities=False):
     "Escape all lines in an array with the replacements"
     for index, line in enumerate(lines):
       lines[index] = self.escape(line, replacements)
+      if entities:
+        lines[index] = self.escapeentities(lines[index])
 
   def escape(self, line, replacements = EscapeConfig.entities):
     "Escape a line with replacements from a map"
@@ -64,6 +68,16 @@ class Container(object):
       if piece in line:
         line = line.replace(piece, replacements[piece])
     return line
+
+  def escapeentities(self, line):
+    "Escape all Unicode characters to HTML entities."
+    result = ''
+    for char in line:
+      if ord(char) > 128:
+        result += '&#' + hex(ord(char))[1:] + ';'
+      else:
+        result += char
+    return result
 
   def searchall(self, type):
     "Search for all embedded containers of a given type"

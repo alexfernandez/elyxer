@@ -52,6 +52,7 @@ rm -f test/subdir/*.lyx~
 ./elyxer.py --title="eLyXer changelog" --css "lyx.css" docs/changelog.lyx docs/changelog.html
 ./elyxer.py --title="eLyxer Math Showcase (non-Unicode edition)" --css "lyx.css" docs/math.lyx docs/math.html
 ./elyxer.py --title="eLyxer Math Showcase (Unicode edition)" --unicode --css "lyx.css" docs/math.lyx docs/math-unicode.html
+./elyxer.py --title="eLyxer Math Showcase (ISO-8859-15 edition)" --iso885915 --css "lyx.css" docs/math.lyx docs/math-iso-8859-15.html
 
 # insert current version
 VERSION=$(./elyxer.py --hardversion)

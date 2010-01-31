@@ -154,6 +154,14 @@ Flex CharStyle:MenuItem
 .
 \end_layout
 
+\begin_layout Itemize
+New option 
+\family typewriter
+--iso885915
+\family default
+ to generate an ISO-8859-15 document.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.40 (2010-01-19):

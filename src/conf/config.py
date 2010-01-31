@@ -132,20 +132,20 @@ class ContainerConfig(object):
       u'\\begin_layout Title':u'Title', u'\\color':u'ColorText', 
       u'\\color inherit':u'BlackBox', u'\\color none':u'BlackBox', 
       u'\\emph default':u'BlackBox', u'\\emph off':u'BlackBox', 
-      u'\\emph on':u'EmphaticText', u'\\end_body':u'LyXFooter', 
-      u'\\family':u'TextFamily', u'\\family default':u'BlackBox', 
-      u'\\family roman':u'BlackBox', u'\\hfill':u'Hfill', 
-      u'\\labelwidthstring':u'BlackBox', u'\\lang':u'LangLine', 
-      u'\\length':u'BlackBox', u'\\lyxformat':u'LyXFormat', 
-      u'\\lyxline':u'LyXLine', u'\\newline':u'Newline', 
-      u'\\newpage':u'NewPage', u'\\noindent':u'BlackBox', 
-      u'\\noun default':u'BlackBox', u'\\noun off':u'BlackBox', 
-      u'\\noun on':u'VersalitasText', u'\\paragraph_spacing':u'BlackBox', 
-      u'\\series bold':u'BoldText', u'\\series default':u'BlackBox', 
-      u'\\series medium':u'BlackBox', u'\\shape':u'ShapedText', 
-      u'\\shape default':u'BlackBox', u'\\shape up':u'BlackBox', 
-      u'\\size':u'SizeText', u'\\size normal':u'BlackBox', 
-      u'\\start_of_appendix':u'Appendix', 
+      u'\\emph on':u'EmphaticText', u'\\emph toggle':u'EmphaticText', 
+      u'\\end_body':u'LyXFooter', u'\\family':u'TextFamily', 
+      u'\\family default':u'BlackBox', u'\\family roman':u'BlackBox', 
+      u'\\hfill':u'Hfill', u'\\labelwidthstring':u'BlackBox', 
+      u'\\lang':u'LangLine', u'\\length':u'BlackBox', 
+      u'\\lyxformat':u'LyXFormat', u'\\lyxline':u'LyXLine', 
+      u'\\newline':u'Newline', u'\\newpage':u'NewPage', 
+      u'\\noindent':u'BlackBox', u'\\noun default':u'BlackBox', 
+      u'\\noun off':u'BlackBox', u'\\noun on':u'VersalitasText', 
+      u'\\paragraph_spacing':u'BlackBox', u'\\series bold':u'BoldText', 
+      u'\\series default':u'BlackBox', u'\\series medium':u'BlackBox', 
+      u'\\shape':u'ShapedText', u'\\shape default':u'BlackBox', 
+      u'\\shape up':u'BlackBox', u'\\size':u'SizeText', 
+      u'\\size normal':u'BlackBox', u'\\start_of_appendix':u'Appendix', 
       }
 
   string = {
@@ -164,10 +164,10 @@ class EscapeConfig(object):
       }
 
   commands = {
-      u'\\InsetSpace \\space{}':u'&nbsp;', u'\\InsetSpace \\thinspace{}':u' ', 
-      u'\\InsetSpace ~':u'&nbsp;', u'\\SpecialChar \\-':u'', 
+      u'\\InsetSpace \\space{}':u' ', u'\\InsetSpace \\thinspace{}':u' ', 
+      u'\\InsetSpace ~':u' ', u'\\SpecialChar \\-':u'', 
       u'\\SpecialChar \\@.':u'.', u'\\SpecialChar \\ldots{}':u'…', 
-      u'\\SpecialChar \\menuseparator':u'&nbsp;▷&nbsp;', 
+      u'\\SpecialChar \\menuseparator':u' ▷ ', 
       u'\\SpecialChar \\nobreakdash-':u'-', u'\\SpecialChar \\slash{}':u'/', 
       u'\\SpecialChar \\textcompwordmark{}':u'', u'\\backslash':u'\\', 
       }
@@ -178,6 +178,10 @@ class EscapeConfig(object):
 
   html = {
       u'/>':u'>', 
+      }
+
+  iso885915 = {
+      u' ':u'&nbsp;', u' ':u'&emsp;', u' ':u'&#8197;', 
       }
 
   nonunicode = {
@@ -641,7 +645,7 @@ class StyleConfig(object):
       u'\\enskip{}':u' ', u'\\hfill{}':u'<span class="hfill"> </span>', 
       u'\\hspace*{\\fill}':u' ', u'\\hspace*{}':u'', u'\\hspace{}':u' ', 
       u'\\negthinspace{}':u'', u'\\qquad{}':u'  ', u'\\quad{}':u' ', 
-      u'\\space{}':u'&nbsp;', u'\\thinspace{}':u' ', u'~':u'&nbsp;', 
+      u'\\space{}':u' ', u'\\thinspace{}':u' ', u'~':u' ', 
       }
 
 class TagConfig(object):
