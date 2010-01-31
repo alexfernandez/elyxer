@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -166,13 +166,25 @@ target "math-unicode.html"
 \family typewriter
 --unicode
 \family default
-), both generated from the same 
+), and also an 
+\begin_inset CommandInset href
+LatexCommand href
+name "ISO-8859-15 version"
+target "math-iso885915.html"
+
+\end_inset
+
+ (generated with 
+\family typewriter
+--iso885915
+\family default
+).
+ All of them are generated from the same 
 \family typewriter
 .lyx
 \family default
  source file.
- Mind you, despite the name, spaces are the only difference.
- Check the one that best suits you.
+ You can use the one that best suits you.
 \end_layout
 
 \begin_layout Section

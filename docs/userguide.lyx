@@ -1066,6 +1066,14 @@ reference "sub:CSS"
 \begin_layout Description
 
 \family typewriter
+--
+\family default
+iso885915: generate a document using ISO-8859-1 encoding.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
 --forceformat
 \begin_inset space ~
 \end_inset
@@ -1319,6 +1327,18 @@ python -m elyxer
 
 \begin_layout Standard
 And so on.
+\end_layout
+
+\begin_layout Standard
+LyX 1.6.5 supports a new 
+\begin_inset Quotes eld
+\end_inset
+
+extra options
+\begin_inset Quotes erd
+\end_inset
+
+ line; however, at this moment it does not work with eLyXer.
 \end_layout
 
 \begin_layout Subsection
@@ -1806,6 +1826,10 @@ target "math.html"
  to see if your browser can render eLyXer output correctly.
 \end_layout
 
+\begin_layout Subsubsection*
+Character Encodings
+\end_layout
+
 \begin_layout Standard
 For better browser compatibility, medium mathematical spaces are substituted
  in the output with midspaces -- improving the output for some popular browsers.
@@ -1826,7 +1850,7 @@ $
 \end_layout
 
 \begin_layout Standard
-See the 
+Check out the 
 \begin_inset CommandInset href
 LatexCommand href
 name "Math Showcase with Unicode"
@@ -1836,6 +1860,56 @@ target "math-unicode.html"
 
  to see the results.
  In the future other non-Unicode substitutions might be used.
+\end_layout
+
+\begin_layout Standard
+In case you want to use the ISO-8859-15 encoding in your generated document,
+ you can add the 
+\family typewriter
+--iso885915
+\family default
+ option:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --iso885915 document.lyx page.html
+\end_layout
+
+\begin_layout Standard
+This will make eLyXer output a document with all non-ASCII characters encoded
+ as 
+\family typewriter
+&nbsp;
+\family default
+, 
+\family typewriter
+&#x2005;
+\family default
+ and so on.
+ This encoding is similar to ISO-8859-1, also called Latin-1, but including
+ the Euro sign.
+ The 
+\begin_inset CommandInset href
+LatexCommand href
+name "Math Showcase (ISO-8859-15 edition)"
+target "math-iso885915.html"
+
+\end_inset
+
+ has been generated using this option.
+\end_layout
+
+\begin_layout Standard
+Both encoding options can be combined with 
+\family typewriter
+--html
+\family default
+ at will.
 \end_layout
 
 \begin_layout Subsection
