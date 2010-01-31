@@ -139,14 +139,6 @@ Solved bug that prevented numbered listings to appear numbered (thanks,
 \end_layout
 
 \begin_layout Itemize
-Added option 
-\family typewriter
---titlerefs
-\family default
- to show reference keys in the link title.
-\end_layout
-
-\begin_layout Itemize
 Support for generic Flex insets, incuding 
 \family typewriter
 Flex CharStyle:MenuItem
@@ -167,7 +159,7 @@ New option
 \family typewriter
 --iso885915
 \family default
- to generate an ISO-8859-15 document.
+ to generate a document with ISO-8859-15 encoding.
 \end_layout
 
 \end_deeper

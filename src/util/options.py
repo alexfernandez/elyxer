@@ -59,7 +59,6 @@ class Options(object):
   lowmem = False
   nobib = False
   inkscape = False
-  titlerefs = False
 
   branches = dict()
 
@@ -128,7 +127,6 @@ class Options(object):
     Trace.error('    --target "frame":       make all links point to the given frame')
     Trace.error('    --lowmem:               do the conversion on the fly (conserve memory)')
     Trace.error('    --inkscape:             use Inkscape to convert SVG images')
-    Trace.error('    --titlerefs:             show reference names as link titles')
     exit()
 
   def showversion(self):
