@@ -600,3 +600,6 @@ div.vfill {
 	display: block;
 	height: 30em;
 }
+span.menuitem {
+	font-size: 105%;
+}

@@ -146,6 +146,14 @@ Added option
  to show reference keys in the link title.
 \end_layout
 
+\begin_layout Itemize
+Support for generic Flex insets, incuding 
+\family typewriter
+Flex CharStyle:MenuItem
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.40 (2010-01-19):

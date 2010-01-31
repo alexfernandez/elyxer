@@ -141,12 +141,20 @@ class Note(Container):
       return
     self.output = TaggedOutput().settag(TagConfig.notes[self.type], True)
 
-class FlexCode(Container):
-  "A bit of inset code"
+class FlexInset(Container):
+  "A flexible inset, generic version."
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TaggedOutput().settag('span class="code"', True)
+    self.output = TaggedOutput().settag('span', False)
+
+  def process(self):
+    "Set the correct flex tag."
+    self.type = self.header[2]
+    if not self.type in TagConfig.flex:
+      Trace.error('Unknown Flex inset ' + self.type)
+      return
+    self.output.settag(TagConfig.flex[self.type], False)
 
 class InfoInset(Container):
   "A LyX Info inset"
