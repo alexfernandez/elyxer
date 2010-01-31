@@ -498,8 +498,26 @@ div.framed {
 }
 div.frameless {
 }
-div.double {
+div.Framed {
 	outline-style: double;
+}
+div.Frameless {
+	outline-style: outset;
+}
+div.Doublebox {
+	outline-style: double;
+}
+div.Shadowbox {
+	outline-style: outset;
+}
+div.Shaded {
+	outline-style: inset;
+}
+div.ovalbox {
+	outline-style: grooved;
+}
+div.Ovalbox {
+	outline-style: ridged;
 }
 span.number-left {
 	float: left;

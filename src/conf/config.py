@@ -655,11 +655,6 @@ class TagConfig(object):
       u'under':u'u', 
       }
 
-  boxes = {
-      u'Doublebox':u'div class="double"', u'Framed':u'div class="framed"', 
-      u'Frameless':u'div class="frameless"', 
-      }
-
   family = {
       u'sans':u'span class="sans"', u'typewriter':u'tt', 
       }

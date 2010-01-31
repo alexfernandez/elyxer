@@ -100,7 +100,7 @@ Show error instead of crashing when included document does not exist.
 \end_layout
 
 \begin_layout Itemize
-Support for double box.
+Support for all box styles.
  In CSS: switched to 
 \family typewriter
 outline-style

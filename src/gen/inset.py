@@ -178,10 +178,7 @@ class BoxInset(Container):
   def process(self):
     "Set the correct tag"
     self.type = self.header[2]
-    if not self.type in TagConfig.boxes:
-      Trace.error('Uknown box type ' + self.type)
-      return
-    self.output.settag(TagConfig.boxes[self.type], True)
+    self.output.settag('div class="' + self.type + '"', True)
 
 class VerticalSpace(Container):
   "An inset that contains a vertical space."
