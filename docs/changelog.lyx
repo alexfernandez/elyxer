@@ -134,7 +134,8 @@ Listings are now converted using
 \end_layout
 
 \begin_layout Itemize
-Solved bug with numbered listings (thanks, Sam!).
+Solved bug that prevented numbered listings to appear numbered (thanks,
+ Sam!).
 \end_layout
 
 \begin_layout Itemize
