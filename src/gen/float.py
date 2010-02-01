@@ -149,10 +149,10 @@ class Listing(Container):
 
   def processparams(self):
     "Process listing parameteres."
-    self.parselstparams()
-    if not 'numbers' in self.parameters:
+    LstParser().parsecontainer(self)
+    if not 'numbers' in self.lstparams:
       return
-    self.numbered = self.parameters['numbers']
+    self.numbered = self.lstparams['numbers']
 
   def extract(self, container):
     "Extract the container's contents and return them"

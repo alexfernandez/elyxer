@@ -204,8 +204,7 @@ class IncludeInset(Container):
     "Include the provided child document"
     self.filename = os.path.join(Options.directory, self.parameters['filename'])
     Trace.debug('Child document: ' + self.filename)
-    if 'lstparams' in self.parameters:
-      self.parselstparams()
+    LstParser().parsecontainer(self)
     if 'LatexCommand' in self.parameters:
       if self.parameters['LatexCommand'] == 'verbatiminput':
         self.readverbatim()

@@ -210,6 +210,9 @@ class HeaderParser(Parser):
     if line.startswith(HeaderConfig.parameters['branch']):
       self.parsebranch(reader)
       return
+    elif line.startswith(HeaderConfig.parameters['lstset']):
+      LstParser().parselstset(reader)
+      return
     # no match
     self.parseparameter(reader)
 
@@ -226,4 +229,42 @@ class HeaderParser(Parser):
   def complete(self, ending):
     self.ending = ending
     return self
+
+class LstParser(object):
+  "Parse global and local lstparams."
+
+  globalparams = dict()
+
+  def parselstset(self, reader):
+    "Parse a declaration of lstparams in lstset."
+    paramtext = ''
+    while not reader.currentline().endswith('}'):
+      paramtext += reader.currentline()
+      reader.nextline()
+    if not '{' in paramtext:
+      Trace.error('Missing opening bracket in lstset: ' + paramtext)
+      return
+    paramtext = paramtext.split('{')[1].replace('}', '')
+    LstParser.globalparams = self.parselstparams(paramtext)
+
+  def parsecontainer(self, container):
+    "Parse some lstparams from a container."
+    if not 'lstparams' in container.parameters:
+      container.lstparams = dict()
+      return
+    paramtext = container.parameters['lstparams']
+    container.lstparams = self.parselstparams(paramtext)
+
+  def parselstparams(self, text):
+    "Parse a number of lstparams from a text."
+    paramdict = dict()
+    paramlist = text.split(',')
+    for param in paramlist:
+      if not '=' in param:
+        Trace.error('Invalid listing parameter ' + param)
+      else:
+        key, value = param.split('=', 1)
+        paramdict[key] = value
+    return paramdict
+
 

@@ -178,10 +178,10 @@ class ConverterFactory(object):
     " and possibly other parameters."
     fullname = os.path.join(Options.directory, container.filename)
     reader = LineReader(container.filename)
-    if 'firstline' in container.parameters:
-      reader.setstart(int(container.parameters['firstline']))
-    if 'lastline' in container.parameters:
-      reader.setend(int(container.parameters['lastline']))
+    if 'firstline' in container.lstparams:
+      reader.setstart(int(container.lstparams['firstline']))
+    if 'lastline' in container.lstparams:
+      reader.setend(int(container.lstparams['lastline']))
     return eLyXerConverter().embed(reader)
 
 IncludeInset.converterfactory = ConverterFactory()
