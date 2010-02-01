@@ -490,7 +490,7 @@ div.listing {
 	text-align: left;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 1ex;
+	padding: 0.5ex;
 	border: thin solid #c0c0c0;
 }
 div.framed {
@@ -620,4 +620,18 @@ div.vfill {
 }
 span.menuitem {
 	font-size: 105%;
+}
+div.chunk {
+}
+span.chunkback {
+	font-style: normal;
+	float: left;
+}
+span.chunkforward {
+	font-style: normal;
+	float: right;
+}
+span.chunkdecl {
+	font-style: italic;
+	padding: 0em 2em;
 }

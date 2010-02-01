@@ -147,7 +147,7 @@ class LayoutNumberer(object):
 
   def __init__(self):
     self.generator = NumberGenerator.instance
-    self.lastnumbered = None
+    self.lastnumbered = '0'
 
   def isnumbered(self, container):
     "Find out if a container requires numbering at all."

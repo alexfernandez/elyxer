@@ -162,6 +162,18 @@ New option
  to generate a document with ISO-8859-15 encoding.
 \end_layout
 
+\begin_layout Itemize
+Support for Sam Liddicott's 
+\begin_inset CommandInset href
+LatexCommand href
+name "Newfangle module"
+target "http://repo.or.cz/w/newfangle.git/blob_plain/master:/www/docs/newfangle.html"
+
+\end_inset
+
+ for literate programming.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.40 (2010-01-19):
