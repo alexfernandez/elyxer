@@ -622,14 +622,13 @@ span.menuitem {
 	font-size: 105%;
 }
 div.chunk {
+	width: auto;
 }
-span.chunkback {
+span.chunkleft {
 	font-style: normal;
-	float: left;
 }
-span.chunkforward {
+span.chunkright {
 	font-style: normal;
-	float: right;
 }
 span.chunkdecl {
 	font-style: italic;
