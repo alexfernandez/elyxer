@@ -106,7 +106,6 @@ class Footnote(Container):
   "A footnote to the main text"
 
   order = 0
-  list = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
   def __init__(self):
     self.parser = InsetParser()
@@ -114,7 +113,7 @@ class Footnote(Container):
 
   def process(self):
     "Add a letter for the order, rotating"
-    letter = Footnote.list[Footnote.order % len(Footnote.list)]
+    letter = NumberGenerator.instance.letter(Footnote.order)
     span = 'span class="FootMarker"'
     pre = FootnoteConfig.constants['prefrom']
     post = FootnoteConfig.constants['postfrom']

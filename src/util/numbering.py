@@ -30,7 +30,7 @@ from conf.config import *
 class NumberGenerator(object):
   "A number generator for unique sequences and hierarchical structures"
 
-  letters = '-ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
   instance = None
   startinglevel = 0
@@ -111,10 +111,17 @@ class NumberGenerator(object):
     "Increase the number (or letter)"
     if not isinstance(number, str):
       return number + 1
-    if not number in NumberGenerator.letters:
+    if number == '-':
+      index = 0
+    elif not number in NumberGenerator.letters:
       Trace.error('Unknown letter numeration ' + number)
       return 0
-    index = NumberGenerator.letters.index(number) + 1
+    else:
+      index = NumberGenerator.letters.index(number) + 1
+    return self.letter(index)
+
+  def letter(self, index):
+    "Get the letter that corresponds to the given index."
     return NumberGenerator.letters[index % len(NumberGenerator.letters)]
 
   def dotseparated(self, number):
