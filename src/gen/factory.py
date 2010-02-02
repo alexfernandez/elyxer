@@ -40,7 +40,7 @@ from gen.inset import *
 from gen.float import *
 from math.array import *
 from ref.bibtex import *
-from gen.newfangled import *
+from xtra.newfangled import *
 
 
 class ContainerFactory(object):

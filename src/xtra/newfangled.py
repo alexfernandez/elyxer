@@ -26,6 +26,7 @@ from util.trace import Trace
 from util.numbering import *
 from gen.container import *
 from gen.layout import *
+from gen.float import *
 from ref.label import *
 
 
@@ -38,56 +39,81 @@ class NewfangledChunk(Layout):
   def process(self):
     "Process the literate chunk."
     self.output.tag = 'div class="chunk"'
+    self.type = 'chunk'
     text = self.extracttext()
     parts = text.split(',')
     if len(parts) < 1:
       Trace.error('Not enough parameters in ' + text)
       return
-    name = parts[0]
+    self.name = parts[0]
     self.number = self.order()
-    self.createlinks(name)
-    self.contents = [self.left, self.declaration(name), self.right]
+    self.createlinks()
+    self.contents = [self.left, self.declaration(), self.right]
+    ChunkNumberer.lastchunk = self
 
   def order(self):
     "Create the order number for the chunk."
     return NumberGenerator.instance.generateunique('chunk')
 
-  def createlinks(self, name):
+  def createlinks(self):
     "Create back and forward links."
     self.leftlink = Link().complete(self.number, 'chunk:' + self.number, type='chunk')
     self.left = TaggedText().complete([self.leftlink], 'span class="chunkleft"', False)
     self.right = TaggedText().constant('', 'span class="chunkright"', False)
-    if not name in NewfangledChunk.names:
-      NewfangledChunk.names[name] = []
+    if not self.name in NewfangledChunk.names:
+      NewfangledChunk.names[self.name] = []
       start = self
     else:
       forwardlink = Link().complete(self.number + u'→', 'chunkforward:' + self.number, type='chunk')
       backlink = Link().complete(u'←' + self.number + u' ', 'chunkback:' + self.number, type='chunk')
       forwardlink.setmutualdestination(backlink)
-      last = NewfangledChunk.names[name][-1]
+      last = NewfangledChunk.names[self.name][-1]
       last.right.contents.append(forwardlink)
       self.right.contents.append(backlink)
-      start = NewfangledChunk.names[name][0]
+      start = NewfangledChunk.names[self.name][0]
     self.origin = Link().complete(start.number, type='chunk')
     self.origin.destination = start.leftlink
     self.origin.computedestination()
-    NewfangledChunk.names[name].append(self)
+    NewfangledChunk.names[self.name].append(self)
 
-  def declaration(self, name):
+  def declaration(self):
     "Get the chunk declaration."
     contents = []
-    text = u'⟨' + name + '[' + unicode(len(NewfangledChunk.names[name])) + '] '
+    text = u'⟨' + self.name + '[' + unicode(len(NewfangledChunk.names[self.name])) + '] '
     contents.append(Constant(text))
     contents.append(self.origin)
     text = ''
     if NewfangledChunk.firsttime:
+      Listing.numberer = ChunkNumberer()
       NewfangledChunk.firsttime = False
     else:
       text += ', add to '
     text += u'⟩'
-    if len(NewfangledChunk.names[name]) > 1:
+    if len(NewfangledChunk.names[self.name]) > 1:
       text += '+'
     text += u'≡'
     contents.append(Constant(text))
     return TaggedText().complete(contents, 'span class="chunkdecl"', True)
+
+class ChunkNumberer(object):
+  "A numberer for chunks."
+
+  lastchunk = None
+  counters = dict()
+
+  def start(self, listing):
+    "Get the starting counter for a listing."
+    if not ChunkNumberer.lastchunk:
+      return 0
+    name = ChunkNumberer.lastchunk.name
+    if not name in ChunkNumberer.counters:
+      ChunkNumberer.counters[name] = 0
+    return ChunkNumberer.counters[name]
+
+  def end(self, listing, counter):
+    "Store the ending counter for a listing."
+    if not ChunkNumberer.lastchunk:
+      return
+    ChunkNumberer.counters[ChunkNumberer.lastchunk.name] = counter
+
 

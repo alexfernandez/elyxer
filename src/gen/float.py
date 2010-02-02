@@ -131,14 +131,19 @@ class Caption(Container):
 class Listing(Container):
   "A code listing"
 
+  numberer = None
+
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('div class="listing"', True)
     self.numbered = None
-    self.counter = 0
 
   def process(self):
     "Remove all layouts"
+    if Listing.numberer:
+      self.counter = Listing.numberer.start(self)
+    else:
+      self.counter = 0
     self.processparams()
     self.type = 'listing'
     newcontents = []
@@ -146,6 +151,8 @@ class Listing(Container):
       newcontents += self.extract(container)
     tagged = TaggedText().complete(newcontents, 'pre class="listing"', False)
     self.contents = [tagged]
+    if Listing.numberer:
+      Listing.numberer.end(self, self.counter)
 
   def processparams(self):
     "Process listing parameteres."
