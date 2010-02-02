@@ -249,11 +249,11 @@ class LstParser(object):
 
   def parsecontainer(self, container):
     "Parse some lstparams from a container."
+    container.lstparams = LstParser.globalparams.copy()
     if not 'lstparams' in container.parameters:
-      container.lstparams = dict()
       return
     paramtext = container.parameters['lstparams']
-    container.lstparams = self.parselstparams(paramtext)
+    container.lstparams.update(self.parselstparams(paramtext))
 
   def parselstparams(self, text):
     "Parse a number of lstparams from a text."
@@ -261,7 +261,8 @@ class LstParser(object):
     paramlist = text.split(',')
     for param in paramlist:
       if not '=' in param:
-        Trace.error('Invalid listing parameter ' + param)
+        if len(param.strip()) > 0:
+          Trace.error('Invalid listing parameter ' + param)
       else:
         key, value = param.split('=', 1)
         paramdict[key] = value
