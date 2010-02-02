@@ -580,6 +580,7 @@ class FormulaConfig(object):
       u'\\textrm':u'span class="mathrm"', 
       u'\\textsc':u'span class="versalitas"', 
       u'\\textsf':u'span class="mathsf"', u'\\textsl':u'i', u'\\texttt':u'tt', 
+      u'\\textup':u'span class="normal"', 
       }
 
   unmodified = {

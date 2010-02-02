@@ -634,3 +634,6 @@ span.chunkdecl {
 	font-style: italic;
 	padding: 0em 2em;
 }
+span.normal {
+	font-style: normal;
+}
