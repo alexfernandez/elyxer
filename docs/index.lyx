@@ -126,7 +126,8 @@ target "userguide.html"
 
 \end_inset
 
- and the 
+ can be accessed online.
+ The 
 \begin_inset CommandInset href
 LatexCommand href
 name "developer guide"
@@ -134,7 +135,16 @@ target "devguide.html"
 
 \end_inset
 
- can also be accessed online.
+ is recommended reading for people that want to contribute to the development,
+ especially 
+\begin_inset CommandInset href
+LatexCommand href
+name "section 2.5"
+target "http://www.nongnu.org/elyxer/devguide.html#toc-Subsection-2.5"
+
+\end_inset
+
+.
  For the mathematically inclined: be sure to visit the 
 \begin_inset CommandInset href
 LatexCommand href
@@ -314,16 +324,24 @@ type "mailto:"
 \begin_layout Standard
 The author lingers around official LyX mailing lists and monitors for mentions
  of eLyXer.
- You can also join the 
+ You can also 
 \begin_inset CommandInset href
 LatexCommand href
-name "mailing list"
+name "join"
 target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
 
 \end_inset
 
-, although there is not much activity in it yet (mostly announcements of
- new versions).
+ the low-volume 
+\begin_inset CommandInset href
+LatexCommand href
+name "mailing list"
+target "elyxer-users@nongnu.org"
+type "mailto:"
+
+\end_inset
+
+, where announcements of new versions are always posted.
  Bugs can be reported at the 
 \begin_inset CommandInset href
 LatexCommand href
@@ -417,7 +435,7 @@ type "mailto:"
  Packagers Sven Hoexter (for Debian), Uwe Stöhr (on Windows) and Bennet
  Helm (for Mac OS X) have helped with their work to make it easy to try
  it out.
- Olivier Ripoll and Geremy Condra have provided the first patches.
+ Olivier Ripoll, Geremy Condra and Simon South have provided the first patches.
 \end_layout
 
 \begin_layout Standard

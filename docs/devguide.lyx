@@ -2457,7 +2457,7 @@ SplittingBasket
 --toc
 \family default
  option.
- (Warning: not yet working in version 0.36.)
+ (Warning: not yet working in version 0.41.)
 \end_layout
 
 \begin_layout Subsection
@@ -2523,6 +2523,28 @@ binary
 \end_layout
 
 \begin_layout Standard
+The configuration file 
+\family typewriter
+src/conf/config.py
+\family default
+ is also generated from another file, in this case 
+\family typewriter
+src/conf/base.cfg
+\family default
+.
+ Changes to the configuration should always go against this latter file;
+ running 
+\family typewriter
+make
+\family default
+ afterwards regenerates 
+\family typewriter
+config.py
+\family default
+.
+\end_layout
+
+\begin_layout Standard
 At the moment there is no way to do this packaging on non-Unix operating
  systems with a single script, e.g.
  a Windows 
@@ -2531,6 +2553,24 @@ At the moment there is no way to do this packaging on non-Unix operating
 \family default
  script.
  However the steps themselves are trivial.
+\end_layout
+
+\begin_layout Standard
+If you are willing to send a patch to the eLyXer mailing list then you should
+ patch against the proper sources in 
+\family typewriter
+src/
+\family default
+ and submit that to the 
+\begin_inset CommandInset href
+LatexCommand href
+name "mailing list"
+target "elyxer-users@nongnu.org"
+type "mailto:"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -2559,8 +2599,9 @@ All contributions will be published under this same license, so if you send
 \end_layout
 
 \begin_layout Standard
-At the moment there have been no external contributions; be the first and
- get an honourable mention in this section!
+The first external patches have started arriving during late 2009 and early
+ 2010 (provided by Olivier Ripoll, Geremy Condra and Simon South).
+ You can join in the fun!
 \end_layout
 
 \begin_layout Section
@@ -2854,7 +2895,16 @@ target "Savannah interface"
 
 \end_inset
 
-, or directly to the 
+, to the 
+\begin_inset CommandInset href
+LatexCommand href
+name "mailing list"
+target "elyxer-users@nongnu.org"
+type "mailto:"
+
+\end_inset
+
+ or directly to the 
 \begin_inset CommandInset href
 LatexCommand href
 name "main author"
