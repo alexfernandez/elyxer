@@ -64,10 +64,10 @@ class NewfangledChunk(Layout):
       NewfangledChunk.names[self.name] = []
       start = self
     else:
-      forwardlink = Link().complete(self.number + u'→', 'chunkforward:' + self.number, type='chunk')
-      backlink = Link().complete(u'←' + self.number + u' ', 'chunkback:' + self.number, type='chunk')
-      forwardlink.setmutualdestination(backlink)
       last = NewfangledChunk.names[self.name][-1]
+      forwardlink = Link().complete(self.number + u'→', 'chunkback:' + last.number, type='chunk')
+      backlink = Link().complete(u'←' + last.number + u' ', 'chunkforward:' + self.number, type='chunk')
+      forwardlink.setmutualdestination(backlink)
       last.right.contents.append(forwardlink)
       self.right.contents.append(backlink)
       start = NewfangledChunk.names[self.name][0]
