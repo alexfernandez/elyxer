@@ -140,7 +140,7 @@ target "devguide.html"
 \begin_inset CommandInset href
 LatexCommand href
 name "section 2.5"
-target "http://www.nongnu.org/elyxer/devguide.html#toc-Subsection-2.5"
+target "devguide.html#toc-Subsection-2.5"
 
 \end_inset
 
