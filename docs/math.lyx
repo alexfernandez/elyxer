@@ -859,6 +859,21 @@ x+1 & i<3\end{cases}$
 
 \end_layout
 
+\begin_layout Subsection
+Braces
+\end_layout
+
+\begin_layout Standard
+Values can be underbraced or overbraced.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\underbrace{a-b}=\overbrace{b+c+d+e}$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Section
 The End
 \end_layout

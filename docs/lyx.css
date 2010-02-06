@@ -637,3 +637,9 @@ span.chunkdecl {
 span.normal {
 	font-style: normal;
 }
+span.overbrace {
+	border-top: 2pt solid #000000;
+}
+span.underbrace {
+	border-bottom: 2pt solid #000000;
+}

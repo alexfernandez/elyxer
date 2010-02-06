@@ -185,6 +185,22 @@ Updated the developer guide for potential contributors; added link from
  the main page.
 \end_layout
 
+\begin_layout Itemize
+Support for 
+\family typewriter
+
+\backslash
+underbrace
+\family default
+ and 
+\family typewriter
+
+\backslash
+overbrace
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.40 (2010-01-19):
