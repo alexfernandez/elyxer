@@ -228,13 +228,14 @@ class FormulaConfig(object):
       }
 
   commands = {
-      u'\\!':u'', u'\\$':u'$', u'\\%':u'%', u'\\,':u' ', u'\\:':u' ', 
-      u'\\;':u' ', u'\\APLdownarrowbox':u'⍗', u'\\APLleftarrowbox':u'⍇', 
-      u'\\APLrightarrowbox':u'⍈', u'\\APLuparrowbox':u'⍐', u'\\Box':u'□', 
-      u'\\Bumpeq':u'≎', u'\\CIRCLE':u'●', u'\\Cap':u'⋒', u'\\CheckedBox':u'☑', 
-      u'\\Circle':u'○', u'\\Coloneqq':u'⩴', u'\\Corresponds':u'≙', 
-      u'\\Cup':u'⋓', u'\\Diamond':u'◇', u'\\Downarrow':u'⇓', u'\\EUR':u'€', 
-      u'\\Im':u'ℑ', u'\\Join':u'⨝', u'\\LEFTCIRCLE':u'◖', u'\\LEFTcircle':u'◐', 
+      u'\\ ':u' ', u'\\!':u'', u'\\$':u'$', u'\\%':u'%', u'\\,':u' ', 
+      u'\\:':u' ', u'\\;':u' ', u'\\APLdownarrowbox':u'⍗', 
+      u'\\APLleftarrowbox':u'⍇', u'\\APLrightarrowbox':u'⍈', 
+      u'\\APLuparrowbox':u'⍐', u'\\Box':u'□', u'\\Bumpeq':u'≎', 
+      u'\\CIRCLE':u'●', u'\\Cap':u'⋒', u'\\CheckedBox':u'☑', u'\\Circle':u'○', 
+      u'\\Coloneqq':u'⩴', u'\\Corresponds':u'≙', u'\\Cup':u'⋓', 
+      u'\\Diamond':u'◇', u'\\Downarrow':u'⇓', u'\\EUR':u'€', u'\\Im':u'ℑ', 
+      u'\\Join':u'⨝', u'\\LEFTCIRCLE':u'◖', u'\\LEFTcircle':u'◐', 
       u'\\Leftarrow':u'⇐', u'\\Leftrightarrow':u' ⇔ ', u'\\Lleftarrow':u'⇚', 
       u'\\Longleftarrow':u'⟸', u'\\Longleftrightarrow':u'⟺', 
       u'\\Longrightarrow':u'⟹', u'\\Lsh':u'↰', u'\\Mapsfrom':u'⇐|', 
