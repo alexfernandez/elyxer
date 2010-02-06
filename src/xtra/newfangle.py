@@ -86,8 +86,6 @@ class NewfangledChunk(Layout):
     if NewfangledChunk.firsttime:
       Listing.numberer = ChunkNumberer()
       NewfangledChunk.firsttime = False
-    else:
-      text += ', add to '
     text += u'⟩'
     if len(NewfangledChunk.names[self.name]) > 1:
       text += '+'
