@@ -131,7 +131,7 @@ class Caption(Container):
 class Listing(Container):
   "A code listing"
 
-  numberer = None
+  processor = None
 
   def __init__(self):
     self.parser = InsetParser()
@@ -140,19 +140,18 @@ class Listing(Container):
 
   def process(self):
     "Remove all layouts"
-    if Listing.numberer:
-      self.counter = Listing.numberer.start(self)
-    else:
-      self.counter = 0
-    self.processparams()
+    self.counter = 0
     self.type = 'listing'
+    self.processparams()
+    if Listing.processor:
+      Listing.processor.preprocess(self)
     newcontents = []
     for container in self.contents:
       newcontents += self.extract(container)
     tagged = TaggedText().complete(newcontents, 'pre class="listing"', False)
     self.contents = [tagged]
-    if Listing.numberer:
-      Listing.numberer.end(self, self.counter)
+    if Listing.processor:
+      Listing.processor.postprocess(self)
 
   def processparams(self):
     "Process listing parameteres."

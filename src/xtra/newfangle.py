@@ -49,7 +49,7 @@ class NewfangledChunk(Layout):
     self.number = self.order()
     self.createlinks()
     self.contents = [self.left, self.declaration(), self.right]
-    ChunkNumberer.lastchunk = self
+    ChunkProcessor.lastchunk = self
 
   def order(self):
     "Create the order number for the chunk."
@@ -62,7 +62,6 @@ class NewfangledChunk(Layout):
     self.right = TaggedText().constant('', 'span class="chunkright"', False)
     if not self.name in NewfangledChunk.names:
       NewfangledChunk.names[self.name] = []
-      start = self
     else:
       last = NewfangledChunk.names[self.name][-1]
       forwardlink = Link().complete(self.number + u'→', 'chunkback:' + last.number, type='chunk')
@@ -70,11 +69,25 @@ class NewfangledChunk(Layout):
       forwardlink.setmutualdestination(backlink)
       last.right.contents.append(forwardlink)
       self.right.contents.append(backlink)
-      start = NewfangledChunk.names[self.name][0]
-    self.origin = Link().complete(start.number, type='chunk')
-    self.origin.destination = start.leftlink
-    self.origin.computedestination()
     NewfangledChunk.names[self.name].append(self)
+    self.origin = self.createorigin()
+    if self.name in NewfangledChunkRef.references:
+      for ref in NewfangledChunkRef.references[self.name]:
+        Trace.debug('Dangling reference: ' + unicode(ref))
+        self.linkorigin(ref.origin)
+
+  def createorigin(self):
+    "Create a link that points to the chunks' origin."
+    link = Link()
+    self.linkorigin(link)
+    return link
+
+  def linkorigin(self, link):
+    "Create a link to the origin."
+    start = NewfangledChunk.names[self.name][0]
+    link.complete(start.number, type='chunk')
+    link.destination = start.leftlink
+    link.computedestination()
 
   def declaration(self):
     "Get the chunk declaration."
@@ -84,7 +97,7 @@ class NewfangledChunk(Layout):
     contents.append(self.origin)
     text = ''
     if NewfangledChunk.firsttime:
-      Listing.numberer = ChunkNumberer()
+      Listing.processor = ChunkProcessor()
       NewfangledChunk.firsttime = False
     text += u'⟩'
     if len(NewfangledChunk.names[self.name]) > 1:
@@ -93,25 +106,56 @@ class NewfangledChunk(Layout):
     contents.append(Constant(text))
     return TaggedText().complete(contents, 'span class="chunkdecl"', True)
 
-class ChunkNumberer(object):
-  "A numberer for chunks."
+class ChunkProcessor(object):
+  "A processor for listings that belong to chunks."
 
   lastchunk = None
   counters = dict()
 
-  def start(self, listing):
-    "Get the starting counter for a listing."
-    if not ChunkNumberer.lastchunk:
-      return 0
-    name = ChunkNumberer.lastchunk.name
-    if not name in ChunkNumberer.counters:
-      ChunkNumberer.counters[name] = 0
-    return ChunkNumberer.counters[name]
-
-  def end(self, listing, counter):
-    "Store the ending counter for a listing."
-    if not ChunkNumberer.lastchunk:
+  def preprocess(self, listing):
+    "Preprocess a listing: set the starting counter."
+    if not ChunkProcessor.lastchunk:
       return
-    ChunkNumberer.counters[ChunkNumberer.lastchunk.name] = counter
+    name = ChunkProcessor.lastchunk.name
+    if not name in ChunkProcessor.counters:
+      ChunkProcessor.counters[name] = 0
+    listing.counter = ChunkProcessor.counters[name]
+    for container in listing.searchall(StringContainer):
+      if '<=\\' in container.string:
+        start = container.string.index('<=\\') + len('<=\\')
+        if '>' in container.string[start:]:
+          end = container.string.index('>', start)
+          Trace.debug('Piece: ' + container.string[start, end])
 
+  def postprocess(self, listing):
+    "Postprocess a listing: store the ending counter for next chunk."
+    if not ChunkProcessor.lastchunk:
+      return
+    ChunkProcessor.counters[ChunkProcessor.lastchunk.name] = listing.counter
+
+class NewfangledChunkRef(Inset):
+  "A reference to a chunk."
+
+  references = dict()
+
+  def process(self):
+    "Show the reference."
+    self.output.tag = 'span class="chunkref"'
+    self.ref  = self.extracttext()
+    if not self.ref in NewfangledChunkRef.references:
+      NewfangledChunkRef.references[self.ref] = []
+    NewfangledChunkRef.references[self.ref].append(self)
+    if self.ref in NewfangledChunk.names:
+      start = NewfangledChunk.names[self.ref][0]
+      self.origin = start.createorigin()
+    else:
+      self.origin = Link()
+    self.contents.insert(0, Constant(u'⟨'))
+    self.contents.append(Constant(' '))
+    self.contents.append(self.origin)
+    self.contents.append(Constant(u'⟩'))
+
+  def __unicode__(self):
+    "Return a printable representation."
+    return 'Reference to chunk ' + self.ref
 
