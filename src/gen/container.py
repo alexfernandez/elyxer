@@ -210,7 +210,10 @@ class StringContainer(Container):
   
   def __unicode__(self):
     result = 'StringContainer@' + unicode(self.begin)
-    return result + ' (' + self.string.strip()[:15] + '...)'
+    ellipsis = '...'
+    if len(self.string.strip()) <= 15:
+      ellipsis = ''
+    return result + ' (' + self.string.strip()[:15] + ellipsis + ')'
 
 class Constant(StringContainer):
   "A constant string"
