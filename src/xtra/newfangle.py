@@ -111,6 +111,8 @@ class ChunkProcessor(object):
 
   lastchunk = None
   counters = dict()
+  endcommand = '}'
+  chunkref = 'chunkref'
 
   def preprocess(self, listing):
     "Preprocess a listing: set the starting counter."
@@ -120,12 +122,56 @@ class ChunkProcessor(object):
     if not name in ChunkProcessor.counters:
       ChunkProcessor.counters[name] = 0
     listing.counter = ChunkProcessor.counters[name]
-    for container in listing.searchall(StringContainer):
-      if '<=\\' in container.string:
-        start = container.string.index('<=\\') + len('<=\\')
-        if '>' in container.string[start:]:
-          end = container.string.index('>', start)
-          Trace.debug('Piece: ' + container.string[start, end])
+    for command, container, index in self.commandsinlisting(listing):
+      chunkref = self.getchunkref(command)
+      Trace.debug('Command: ' + command)
+      if chunkref:
+        Trace.debug('Chunkref: ' + chunkref)
+        self.insertchunkref(chunkref, container, index)
+
+  def commandsinlisting(self, listing):
+    "Find all newfangle commands in a listing."
+    for container in listing.contents:
+      for index in range(len(container.contents) - 2):
+        if self.findinelement(container, index):
+          third = container.contents[index + 2].string
+          end = third.index(NewfangleConfig.constants['endmark'])
+          command = third[:end]
+          container.contents[index].string = container.contents[index].string[:-2]
+          del container.contents[index + 1]
+          container.contents[index + 1].string = third[end:]
+          yield command, container, index
+
+  def findinelement(self, container, index):
+    "Find a newfangle command in an element."
+    for i in range(2):
+      if not isinstance(container.contents[index + i], StringContainer):
+        return False
+    first = container.contents[index].string
+    second = container.contents[index + 1].string
+    third = container.contents[index + 2].string
+    if not first.endswith(NewfangleConfig.constants['startmark']):
+      return False
+    if second != NewfangleConfig.constants['startcommand']:
+      return False
+    if not NewfangleConfig.constants['endmark'] in third:
+      return False
+    return True
+
+  def getchunkref(self, command):
+    "Get the contents of a chunkref command, if present."
+    if not command.startswith(NewfangleConfig.constants['chunkref']):
+      return None
+    if not NewfangleConfig.constants['endcommand'] in command:
+      return None
+    start = len(NewfangleConfig.constants['chunkref'])
+    end = command.index(NewfangleConfig.constants['endcommand'])
+    return command[start:end]
+
+  def insertchunkref(self, ref, container, index):
+    "Insert a chunkref after the given index at the given container."
+    chunkref = NewfangledChunkRef().complete(ref)
+    container.contents.insert(index + 1, chunkref)
 
   def postprocess(self, listing):
     "Postprocess a listing: store the ending counter for next chunk."
@@ -140,8 +186,12 @@ class NewfangledChunkRef(Inset):
 
   def process(self):
     "Show the reference."
+    self.complete(self.extracttext())
+
+  def complete(self, ref):
+    "Complete the reference to the given string."
+    self.ref = ref
     self.output.tag = 'span class="chunkref"'
-    self.ref  = self.extracttext()
     if not self.ref in NewfangledChunkRef.references:
       NewfangledChunkRef.references[self.ref] = []
     NewfangledChunkRef.references[self.ref].append(self)
@@ -154,6 +204,7 @@ class NewfangledChunkRef(Inset):
     self.contents.append(Constant(' '))
     self.contents.append(self.origin)
     self.contents.append(Constant(u'⟩'))
+    return self
 
   def __unicode__(self):
     "Return a printable representation."
