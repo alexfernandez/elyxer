@@ -452,10 +452,23 @@ Braces
 
 \begin_layout Standard
 Values can be underbraced or overbraced.
+\begin_inset Formula \[
+\underbrace{a-b}=\overbrace{c+d+e}+f.\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $\underbrace{a-b}=\overbrace{b+c+d+e}$
+Underbraces and overbraces can contain text.
+\begin_inset Formula \[
+\overbrace{a-b}^{over}=\underbrace{c+\overbrace{d+e}^{over}+f}_{under}+g.\]
+
+\end_inset
+
+They can also be inlined: 
+\begin_inset Formula $\overbrace{a+b}^{over}$
 \end_inset
 
 .
