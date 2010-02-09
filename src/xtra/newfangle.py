@@ -139,7 +139,7 @@ class ChunkProcessor(object):
           command = third[:end]
           container.contents[index].string = container.contents[index].string[:-2]
           del container.contents[index + 1]
-          container.contents[index + 1].string = third[end:]
+          container.contents[index + 1].string = third[end + len(NewfangleConfig.constants['endmark']):]
           yield command, container, index
 
   def findinelement(self, container, index):
@@ -186,12 +186,20 @@ class NewfangledChunkRef(Inset):
 
   def process(self):
     "Show the reference."
-    self.complete(self.extracttext())
+    self.output.tag = 'span class="chunkref"'
+    self.ref = self.extracttext()
+    self.addbits()
 
   def complete(self, ref):
     "Complete the reference to the given string."
+    self.output.tag = 'span'
     self.ref = ref
-    self.output.tag = 'span class="chunkref"'
+    self.contents = [Constant(self.ref)]
+    self.addbits()
+    return self
+
+  def addbits(self):
+    "Add the bits to the reference."
     if not self.ref in NewfangledChunkRef.references:
       NewfangledChunkRef.references[self.ref] = []
     NewfangledChunkRef.references[self.ref].append(self)
@@ -204,7 +212,6 @@ class NewfangledChunkRef(Inset):
     self.contents.append(Constant(' '))
     self.contents.append(self.origin)
     self.contents.append(Constant(u'⟩'))
-    return self
 
   def __unicode__(self):
     "Return a printable representation."
