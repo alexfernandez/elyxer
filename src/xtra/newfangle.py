@@ -128,6 +128,7 @@ class ChunkProcessor(object):
       if chunkref:
         Trace.debug('Chunkref: ' + chunkref)
         self.insertchunkref(chunkref, container, index)
+    listing.tree()
 
   def commandsinlisting(self, listing):
     "Find all newfangle commands in a listing."
@@ -137,7 +138,8 @@ class ChunkProcessor(object):
           third = container.contents[index + 2].string
           end = third.index(NewfangleConfig.constants['endmark'])
           command = third[:end]
-          container.contents[index].string = container.contents[index].string[:-2]
+          lenstart = len(NewfangleConfig.constants['startmark'])
+          container.contents[index].string = container.contents[index].string[:-lenstart]
           del container.contents[index + 1]
           container.contents[index + 1].string = third[end + len(NewfangleConfig.constants['endmark']):]
           yield command, container, index
@@ -192,7 +194,7 @@ class NewfangledChunkRef(Inset):
 
   def complete(self, ref):
     "Complete the reference to the given string."
-    self.output.tag = 'span'
+    self.output = ContentsOutput()
     self.ref = ref
     self.contents = [Constant(self.ref)]
     self.addbits()
