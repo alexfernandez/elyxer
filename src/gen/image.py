@@ -141,30 +141,45 @@ class ImageConverter(object):
 
   def buildcommand(self, image):
     "Build the command to convert the image."
-    if Options.inkscape and image.origin.hasext('.svg') and image.destination.hasext('.png'):
-      command = 'inkscape "' + unicode(image.origin) + '" --export-png="'
-      command += unicode(image.destination) + '"'
-      return 'Inkscape', command
-    command = 'convert '
+    if not Options.converter in ImageConfig.converters:
+      Trace.error('Converter ' + Options.converter + ' not configured.')
+      ImageConverter.active = False
+      return ''
+    command = ImageConfig.converters[Options.converter]
     params = self.getparams(image)
     for param in params:
-      command += '-' + param + ' ' + unicode(params[param]) + ' '
-    command += '"' + unicode(image.origin) + '" "'
-    command += unicode(image.destination) + '"'
-    return 'ImageMagick', command
+      command = command.replace('$' + param, unicode(params[param]))
+    # remove unwanted options
+    while '[' in command and ']' in command:
+      command = self.removeparam(command)
+    return Options.converter, command
+
+  def removeparam(self, command):
+    "Remove an unwanted param."
+    if command.index('[') > command.index(']'):
+      Trace.error('Converter command should be [...$...]: ' + command)
+      exit()
+    before = command[:command.index('[')]
+    after = command[command.index(']') + 1:]
+    between = command[command.index('[') + 1:command.index(']')]
+    if '$' in between:
+      return before + after
+    return before + between + after
 
   def getparams(self, image):
     "Get the parameters for ImageMagick conversion"
     params = dict()
+    params['input'] = image.origin
+    params['output'] = image.destination
     if image.origin.hasexts(Image.vectorformats):
       scale = 100
       if image.scale:
         scale = image.scale
         # descale
         image.scale = None
-      params['density'] = scale
-    elif image.origin.hasext('.pdf'):
-      params['define'] = 'pdf:use-cropbox=true'
+      params['scale'] = scale
+    # elif image.origin.hasext('.pdf'):
+      # params['define'] = 'pdf:use-cropbox=true'
     return params
 
 ImageConverter.instance = ImageConverter()

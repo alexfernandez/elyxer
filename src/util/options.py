@@ -58,7 +58,7 @@ class Options(object):
   memory = True
   lowmem = False
   nobib = False
-  inkscape = False
+  converter = 'imagemagick'
 
   branches = dict()
 
@@ -126,7 +126,7 @@ class Options(object):
     Trace.error('    --toc:                  create a table of contents')
     Trace.error('    --target "frame":       make all links point to the given frame')
     Trace.error('    --lowmem:               do the conversion on the fly (conserve memory)')
-    Trace.error('    --inkscape:             use Inkscape to convert SVG images')
+    Trace.error('    --converter inkscape:   use Inkscape to convert images')
     exit()
 
   def showversion(self):

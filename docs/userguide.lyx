@@ -1102,17 +1102,8 @@ reference "sub:HTML-Code"
 \begin_inset space ~
 \end_inset
 
-
-\series bold
-"
+".extension"
 \family default
-\series default
-.extension
-\family typewriter
-\series bold
-"
-\family default
-\series default
 : Force the format implied by the extension (e.g.
  
 \family typewriter
@@ -1224,11 +1215,41 @@ reference "sub:TOC"
 \begin_layout Description
 
 \family typewriter
---inkscape
+--converter
+\begin_inset space ~
+\end_inset
+
+
+\series bold
+"
+\series default
+converter
+\series bold
+"
 \family default
-: Use Inkscape as the SVG to PNG converter, instead of ImageMagick.
+\series default
+:
+\family typewriter
+ 
+\family default
+Use the given converter to convert images.
+ Right now only two converters are supported: 
+\family typewriter
+\series bold
+imagemagick
+\family default
+\series default
+ (default) and 
+\family typewriter
+\series bold
+inkscape
+\family default
+\series default
+.
+ The latter chooses Inkscape as the image converter, instead of the default
+ ImageMagick.
  Inkscape uses some non-standard extensions so it might be needed to convert
- SVG images.
+ SVG images to PNG.
 \end_layout
 
 \begin_layout Standard

@@ -93,7 +93,11 @@ textup
 \end_layout
 
 \begin_layout Itemize
-Added option --inkscape to use Inkscape as SVG converter.
+Added option 
+\family typewriter
+--converter inkscape
+\family default
+ to use Inkscape as SVG converter.
 \end_layout
 
 \begin_layout Itemize

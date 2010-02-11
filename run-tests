@@ -30,7 +30,7 @@ done
 cd test
 name="with images-1-5"
 rm -f elyxer-svg.png
-../elyxer.py --inkscape --quiet --css ../docs/lyx.css "$name.lyx" "$name-inkscape-test.html"
+../elyxer.py --converter inkscape --quiet --css ../docs/lyx.css "$name.lyx" "$name-inkscape-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-inkscape-good.html" "$name-inkscape-test.html"
 rm -f elyxer-svg.png
 ../elyxer.py --quiet --css ../docs/lyx.css "$name.lyx" "$name-test.html"
