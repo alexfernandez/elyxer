@@ -1,4 +1,4 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -105,7 +105,7 @@ Appendix Test
 \end_layout
 
 \begin_layout Author
-by The Great Deceiver
+Alex Fernández (elyxer@gmail.com)
 \end_layout
 
 \begin_layout Standard
@@ -742,48 +742,6 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset Wrap figure
-lines 0
-placement o
-overhang 0col%
-width "50col%"
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-Censored.
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\align center
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:rabbit-walrus-encore"
-
-\end_inset
-
-The rabbit-walrus does an encore.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
 \begin_inset Tabular
 <lyxtabular version="3" rows="2" columns="2">
 <features>

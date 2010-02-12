@@ -75,7 +75,7 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Changed author everywhere to avoid copyleft problems.
 \end_layout
 
 \end_deeper
