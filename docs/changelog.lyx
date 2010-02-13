@@ -78,6 +78,14 @@ target "index.html"
 Changed author everywhere to the real name, to avoid any copyleft uncertainties.
 \end_layout
 
+\begin_layout Itemize
+Remove hook in the main text (
+\color green
+[D→]
+\color inherit
+) from margin notes.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.41 (2010-02-11):
