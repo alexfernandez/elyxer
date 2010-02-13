@@ -85,6 +85,13 @@ class BibFile(object):
 
   def parse(self):
     "Parse the BibTeX file and extract all entries."
+    try:
+      self.parsefile()
+    except IOError:
+      Trace.error('Error reading ' + self.filename + '; make sure the file exists and can be read.')
+
+  def parsefile(self):
+    "Parse the whole file."
     bibpath = InputPath(self.filename)
     if Options.lowmem:
       pos = FilePosition(bibpath.path)
