@@ -140,7 +140,8 @@ class Bracket(FormulaBit):
     "Parse some text inside the bracket, following textual rules."
     factory = FormulaFactory()
     while not pos.finished():
-      if pos.current() == FormulaConfig.starts['command']:
+      if pos.current() == FormulaConfig.starts['command'] or \
+          pos.current() in FormulaConfig.symbolfunctions:
         bit = factory.parsebit(pos)
         pos.checkskip(' ')
       else:

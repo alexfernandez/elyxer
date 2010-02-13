@@ -557,6 +557,7 @@ class FormulaConfig(object):
       u'\\bar':u'span class="bar"', u'\\begin{array}':u'span class="arraydef"', 
       u'\\big':u'span class="symbol"', u'\\bigg':u'span class="largesymbol"', 
       u'\\bigl':u'span class="bigsymbol"', u'\\bigr':u'span class="bigsymbol"', 
+      u'\\ensuremath':u'span class="ensuremath"', 
       u'\\hphantom':u'span class="phantom"', u'\\left':u'span class="symbol"', 
       u'\\left.':u'<span class="leftdot"></span>', 
       u'\\middle':u'span class="symbol"', 
