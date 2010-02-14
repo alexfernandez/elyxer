@@ -322,6 +322,15 @@ span.symbolover {
 span.withsymbol {
 	display: inline-block;
 }
+span.symbolunder {
+	display: inline-block;
+	text-align: center;
+	position: relative;
+	float: right;
+	right: 80%;
+	top: 0.3em;
+	width: 0px;
+}
 span.dotted {
 	border-top: thin #000040 dotted;
 }

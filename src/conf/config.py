@@ -217,10 +217,10 @@ class FormulaConfig(object):
       u'\\iota':u'ι', u'\\kappa':u'κ', u'\\l':u'ł', u'\\lambda':u'λ', 
       u'\\mu':u'μ', u'\\nu':u'ν', u'\\o':u'ø', u'\\oe':u'œ', u'\\omega':u'ω', 
       u'\\phi':u'φ', u'\\pi':u'π', u'\\psi':u'ψ', u'\\rho':u'ρ', 
-      u'\\sigma':u'σ', u'\\ss':u'ß', u'\\tau':u'τ', u'\\theta':u'θ', 
-      u'\\upsilon':u'υ', u'\\varepsilon':u'ε', u'\\varkappa':u'ϰ', 
-      u'\\varphi':u'φ', u'\\varpi':u'ϖ', u'\\varrho':u'ϱ', u'\\varsigma':u'ς', 
-      u'\\vartheta':u'ϑ', u'\\xi':u'ξ', u'\\zeta':u'ζ', 
+      u'\\sigma':u'σ', u'\\ss':u'ß', u'\\tau':u'τ', u'\\textcrh':u'ħ', 
+      u'\\theta':u'θ', u'\\upsilon':u'υ', u'\\varepsilon':u'ε', 
+      u'\\varkappa':u'ϰ', u'\\varphi':u'φ', u'\\varpi':u'ϖ', u'\\varrho':u'ϱ', 
+      u'\\varsigma':u'ς', u'\\vartheta':u'ϑ', u'\\xi':u'ξ', u'\\zeta':u'ζ', 
       }
 
   array = {
@@ -586,6 +586,10 @@ class FormulaConfig(object):
       u'\\textsc':u'span class="versalitas"', 
       u'\\textsf':u'span class="mathsf"', u'\\textsl':u'i', u'\\texttt':u'tt', 
       u'\\textup':u'span class="normal"', 
+      }
+
+  underdecoratingfunctions = {
+      u'\\r':u'∘', u'\\s':u'ˌ', u'\\textsubring':u'∘', 
       }
 
   unmodified = {

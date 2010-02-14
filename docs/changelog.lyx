@@ -90,6 +90,21 @@ Remove hook in the main text (
 Do not crash when BibTeX files are not found, just show an error.
 \end_layout
 
+\begin_layout Itemize
+Added support for some IPA characters, including 
+\begin_inset Formula $\textcrh$
+\end_inset
+
+.
+ Better parsing of 
+\family typewriter
+
+\backslash
+textipa
+\family default
+ text.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.41 (2010-02-11):

@@ -208,15 +208,26 @@ class DecoratingFunction(OneParamFunction):
     self.output = TaggedOutput().settag('span class="withsymbol"')
     self.type = 'alpha'
     symbol = self.translated
-    tagged = TaggedBit().constant(symbol, 'span class="symbolover"')
-    self.contents.append(tagged)
-    parameter = self.parseparameter(pos)
-    parameter.output = TaggedOutput().settag('span class="undersymbol"')
+    self.symbol = TaggedBit().constant(symbol, 'span class="symbolover"')
+    self.contents.append(self.symbol)
+    self.parameter = self.parseparameter(pos)
+    self.parameter.output = TaggedOutput().settag('span class="undersymbol"')
     self.simplifyifpossible()
+
+class UnderDecoratingFunction(DecoratingFunction):
+  "A function that decorates some bit of text from below."
+
+  commandmap = FormulaConfig.underdecoratingfunctions
+
+  def parsebit(self, pos):
+    "Parse an under-decorating function."
+    DecoratingFunction.parsebit(self, pos)
+    self.symbol.output.settag('span class="symbolunder"')
+    self.parameter.output.settag('span class="oversymbol"')
 
 FormulaFactory.bits += [FormulaCommand(), SymbolFunction()]
 FormulaCommand.commandbits = [
     EmptyCommand(), AlphaCommand(), OneParamFunction(), DecoratingFunction(),
-    FontFunction(), LabelFunction(), TextFunction(),
+    FontFunction(), LabelFunction(), TextFunction(), UnderDecoratingFunction(),
     ]
 
