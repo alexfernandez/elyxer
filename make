@@ -34,8 +34,8 @@ cd src
 cd ../po
 for file in *.po; do
   lang=$(basename "$file" .po)
-  mkdir -p $lang
-  msgfmt -o $lang/elyxer.mo $lang.po
+  mkdir -p locale/$lang/LC_MESSAGES
+  msgfmt -o locale/$lang/LC_MESSAGES/elyxer.mo $lang.po
 done
 cd ..
 
