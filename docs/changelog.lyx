@@ -4,7 +4,6 @@
 \begin_header
 \textclass article
 \begin_preamble
-\usepackage{mathrsfs}
 %   eLyXer -- convert LyX source files to HTML output.
 %
 %   Copyright (C) 2009-2010 Alex Fernández
@@ -21,6 +20,7 @@
 %
 %   You should have received a copy of the GNU General Public License
 %   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+\usepackage{mathrsfs}
 \end_preamble
 \use_default_options false
 \language english
