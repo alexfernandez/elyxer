@@ -59,6 +59,7 @@ class Options(object):
   lowmem = False
   nobib = False
   converter = 'imagemagick'
+  numberfoot = False
 
   branches = dict()
 
@@ -121,12 +122,12 @@ class Options(object):
     Trace.error('  Esoteric options:')
     Trace.error('    --version:              show version number and release date')
     Trace.error('    --forceformat ".ext":   force image output format')
-    Trace.error('    --lyxformat:            return the highest LyX version that can be')
-    Trace.error('                            converted')
+    Trace.error('    --lyxformat:            return the highest LyX version supported')
     Trace.error('    --toc:                  create a table of contents')
     Trace.error('    --target "frame":       make all links point to the given frame')
     Trace.error('    --lowmem:               do the conversion on the fly (conserve memory)')
     Trace.error('    --converter inkscape:   use Inkscape to convert images')
+    Trace.error('    --numberfoot:           label footnotes with numbers instead of letters')
     exit()
 
   def showversion(self):

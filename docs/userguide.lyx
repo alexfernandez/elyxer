@@ -1252,6 +1252,20 @@ inkscape
  SVG images to PNG.
 \end_layout
 
+\begin_layout Description
+
+\family typewriter
+--numberfoot
+\family default
+:
+\family typewriter
+ 
+\family default
+Label footnotes using numbers, instead of letters.
+ Useful when bibliographical references are not numbered and therefore cannot
+ be confused with footnotes.
+\end_layout
+
 \begin_layout Standard
 When an option accepts an argument it can be added after a space as 
 \family typewriter

@@ -113,7 +113,10 @@ class Footnote(Container):
 
   def process(self):
     "Add a letter for the order, rotating"
-    letter = NumberGenerator.instance.letter(Footnote.order)
+    if Options.numberfoot:
+      letter = NumberGenerator.instance.generateunique('Footnote')
+    else:
+      letter = NumberGenerator.instance.letter(Footnote.order)
     span = 'span class="FootMarker"'
     pre = FootnoteConfig.constants['prefrom']
     post = FootnoteConfig.constants['postfrom']

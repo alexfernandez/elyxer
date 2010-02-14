@@ -105,6 +105,14 @@ textipa
  text.
 \end_layout
 
+\begin_layout Itemize
+Added option 
+\family typewriter
+--numberfoot
+\family default
+ to label footnotes with numbers instead of letters.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.41 (2010-02-11):
