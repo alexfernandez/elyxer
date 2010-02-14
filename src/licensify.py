@@ -38,17 +38,17 @@ def process(reader, writer, license):
     reader.nextline()
   while not reader.finished():
     line = reader.currentline()
-    writer.writestring(line)
+    writer.writeline(line)
     reader.nextline()
   reader.close()
 
 def processall(args):
   "Process all arguments"
   del args[0]
-  if len(args == 0):
+  if len(args) == 0:
     Trace.error('Usage: licensify.py licensefile [file...]')
     return
-  licensefile = args[0]
+  licensefile = BulkFile(args[0])
   license = licensefile.readall()
   del args[0]
   while len(args) > 0:

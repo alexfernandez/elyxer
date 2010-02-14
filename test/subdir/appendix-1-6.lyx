@@ -1,9 +1,26 @@
-#LyX 1.6.4 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
 \textclass scrbook
 \begin_preamble
+%   eLyXer -- convert LyX source files to HTML output.
+%
+%   Copyright (C) 2009-2010 Alex Fernández
+%
+%   This program is free software: you can redistribute it and/or modify
+%   it under the terms of the GNU General Public License as published by
+%   the Free Software Foundation, either version 3 of the License, or
+%   (at your option) any later version.
+%
+%   This program is distributed in the hope that it will be useful,
+%   but WITHOUT ANY WARRANTY; without even the implied warranty of
+%   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%   GNU General Public License for more details.
+%
+%   You should have received a copy of the GNU General Public License
+%   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 % DO NOT ALTER THIS PREAMBLE!!!
 %
 % This preamble is designed to ensure that the User's Guide prints
@@ -724,10 +741,10 @@ Laurinda's anger quantified, divided in two.
 
 \begin_layout Standard
 Interested in that last table? Let us repeat it but without a label and
- with a subimage and a subtable 
+ with a table and a subtable 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:rabbit-walrus-encore"
+reference "tab:rabbit-walrus-encore"
 
 \end_inset
 
@@ -742,30 +759,22 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset Wrap figure
-lines 0
-placement o
-overhang 0col%
-width "50col%"
+\begin_inset Float table
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-Censored.
+Censored
 \end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption
 
 \begin_layout Plain Layout
-\align center
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:rabbit-walrus-encore"
+name "tab:rabbit-walrus-encore"
 
 \end_inset
 
