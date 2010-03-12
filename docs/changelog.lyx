@@ -1,5 +1,5 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
-\lyxformat 345
+#LyX 1.5.7 created this file. For more info see http://www.lyx.org/
+\lyxformat 276
 \begin_document
 \begin_header
 \textclass article
@@ -22,7 +22,6 @@
 %   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \usepackage{mathrsfs}
 \end_preamble
-\use_default_options false
 \language english
 \inputencoding auto
 \font_roman default
@@ -33,11 +32,9 @@
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
-
 \graphics default
 \paperfontsize default
 \spacing single
-\use_hyperref false
 \papersize default
 \use_geometry false
 \use_amsmath 1
@@ -75,8 +72,7 @@ eLyXer Changelog
 This document lists all public versions, the date they were released on
  and the changes they contain.
  For more information about eLyXer visit the 
-\begin_inset CommandInset href
-LatexCommand href
+\begin_inset LatexCommand url
 name "main page"
 target "index.html"
 
@@ -127,6 +123,10 @@ Added option
 --numberfoot
 \family default
  to label footnotes with numbers instead of letters.
+\end_layout
+
+\begin_layout Itemize
+Solved bug in assignment of default formatting to references (thanks, Hans!).
 \end_layout
 
 \end_deeper
@@ -235,8 +235,7 @@ New option
 
 \begin_layout Itemize
 Support for Sam Liddicott's 
-\begin_inset CommandInset href
-LatexCommand href
+\begin_inset LatexCommand url
 name "Newfangle module"
 target "http://repo.or.cz/w/newfangle.git/blob_plain/master:/www/docs/newfangle.html"
 
@@ -669,8 +668,7 @@ New option
 
 \begin_layout Itemize
 Updated the 
-\begin_inset CommandInset href
-LatexCommand href
+\begin_inset LatexCommand url
 name "developer guide"
 target "devguide.html"
 
@@ -1204,8 +1202,7 @@ varepsilon
 
 \begin_layout Itemize
 Added TeX-to-Unicode mappings from 
-\begin_inset CommandInset href
-LatexCommand href
+\begin_inset LatexCommand url
 name "Markus Kuhn"
 target "http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt"
 
@@ -1332,8 +1329,7 @@ elyxerconv.py
 io/convert.py
 \family default
 ), see 
-\begin_inset CommandInset href
-LatexCommand href
+\begin_inset LatexCommand url
 name "lyx-devel thread"
 target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154647.html"
 
@@ -1349,8 +1345,7 @@ elyxer.py
 python -m
 \family default
 .; see also 
-\begin_inset CommandInset href
-LatexCommand href
+\begin_inset LatexCommand url
 name "lyx-devel thread"
 target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154749.html"
 
@@ -1361,8 +1356,7 @@ target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154749.html"
 
 \begin_layout Itemize
 eLyXer was added to the Python Package Index (
-\begin_inset CommandInset href
-LatexCommand href
+\begin_inset LatexCommand url
 name "PyPI"
 target "http://pypi.python.org/pypi"
 
@@ -1374,8 +1368,7 @@ target "http://pypi.python.org/pypi"
 
 \begin_layout Itemize
 Updated documentation (
-\begin_inset CommandInset href
-LatexCommand href
+\begin_inset LatexCommand url
 name "user guide"
 target "userguide.html"
 
@@ -1438,8 +1431,7 @@ elyxer.py
 
 \begin_layout Itemize
 Added 
-\begin_inset CommandInset href
-LatexCommand href
+\begin_inset LatexCommand url
 name "distutils"
 target "http://docs.python.org/distutils/index.html"
 
@@ -1464,10 +1456,7 @@ Added command line option
 \begin_layout Itemize
 Switched all options in command line help to quotes: 
 \family typewriter
---title
-\begin_inset space ~
-\end_inset
-
+--title\InsetSpace ~
 
 \series bold
 <
@@ -1479,10 +1468,7 @@ title
 \series default
  is now 
 \family typewriter
---title
-\begin_inset space ~
-\end_inset
-
+--title\InsetSpace ~
 
 \series bold
 "
@@ -1799,16 +1785,14 @@ Also show roots and arrays correctly in those browsers.
 
 \begin_layout Itemize
 Added 
-\begin_inset CommandInset href
-LatexCommand href
+\begin_inset LatexCommand url
 name "Math Showcase"
 target "math.html"
 
 \end_inset
 
  to test on 
-\begin_inset CommandInset href
-LatexCommand href
+\begin_inset LatexCommand url
 name "browsershots.org"
 target "http://browsershots.org/"
 
@@ -2630,8 +2614,7 @@ Range of supported quotes is greater.
 
 \begin_layout Itemize
 Default CSS is always on 
-\begin_inset CommandInset href
-LatexCommand href
+\begin_inset LatexCommand url
 name "nongnu.org"
 target "http://www.nongnu.org/elyxer/lyx.css"
 

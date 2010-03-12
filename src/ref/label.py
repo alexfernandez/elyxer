@@ -100,7 +100,10 @@ class Reference(Link):
 
   def format(self):
     "Format the reference contents."
-    formatkey = self.parameters['LatexCommand']
+    if 'LatexCommand' in self.parameters:
+      formatkey = self.parameters['LatexCommand']
+    else:
+      formatkey = 'ref'
     if not formatkey in self.formats:
       Trace.error('Unknown reference format ' + formatkey)
       formatstring = u'↕'
