@@ -60,6 +60,7 @@ class Options(object):
   nobib = False
   converter = 'imagemagick'
   numberfoot = False
+  raw = False
 
   branches = dict()
 
@@ -128,6 +129,7 @@ class Options(object):
     Trace.error('    --lowmem:               do the conversion on the fly (conserve memory)')
     Trace.error('    --converter inkscape:   use Inkscape to convert images')
     Trace.error('    --numberfoot:           label footnotes with numbers instead of letters')
+    Trace.error('    --raw:                  generate HTML without header or footer.')
     exit()
 
   def showversion(self):

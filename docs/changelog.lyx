@@ -129,6 +129,14 @@ Added option
 Solved bug in assignment of default formatting to references (thanks, Hans!).
 \end_layout
 
+\begin_layout Itemize
+Added option 
+\family typewriter
+--raw
+\family default
+ to output raw HTML without header or footer.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.41 (2010-02-11):

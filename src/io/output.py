@@ -111,6 +111,8 @@ class HeaderOutput(object):
 
   def gethtml(self, container):
     "Return a constant header"
+    if Options.raw:
+      return ['<!--starthtml-->\n']
     if Options.iso885915:
       encoding = 'ISO-8859-1'
     else:
@@ -160,6 +162,8 @@ class FooterOutput(object):
 
   def gethtml(self, container):
     "Footer HTML"
+    if Options.raw:
+      return ['\n\n<!--endhtml-->']
     html = []
     html.append('\n\n')
     if FooterOutput.author and not Options.nocopy:
