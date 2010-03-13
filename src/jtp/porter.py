@@ -23,6 +23,7 @@
 # Port a Java program to a Python equivalent. Used to port MathToWeb.
 
 from jtp.parser import *
+from jtp.grammar import *
 from util.trace import Trace
 
 
@@ -30,10 +31,12 @@ class JavaPorter(object):
   "Ports a Java file."
 
   def __init__(self):
+    self.grammar = Grammar()
     self.chooser = StatementChooser()
 
   def topy(self, filepos, writer):
     "Port the Java input file to Python."
+    return
     tok = Tokenizer(filepos)
     while not tok.finished():
       statement = self.nextstatement(tok)

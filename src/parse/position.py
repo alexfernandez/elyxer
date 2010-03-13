@@ -96,6 +96,10 @@ class Position(object):
     "Glob a bit of alpha text"
     return self.glob(lambda current: current.isalpha())
 
+  def globvariable(self):
+    "Glob alphanumeric and _ symbols"
+    return self.glob(lambda current: current.isalnum() or current == '_')
+
   def skipspace(self):
     "Skip all whitespace at current position"
     return self.glob(lambda current: current.isspace())
