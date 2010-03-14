@@ -49,6 +49,10 @@ class ConstantWord(Piece):
       return self
     return None
 
+  def __unicode__(self):
+    "Printable representation."
+    return '\'' + self.constant + '\''
+
 class IdentifierWord(Piece):
   "A word made of alphanumeric and _ characters."
 
@@ -119,10 +123,13 @@ class Alternatives(Piece):
     "Create an empty set of alternatives."
     self.alternatives = []
 
-  def add(self, alternative):
-    "Add a new alternative piece."
+  def add(self, pieces):
+    "Add a new set of alternative pieces."
+    alternative = Declaration('#' + unicode(len(self.alternatives)))
+    alternative.pieces = pieces
     self.alternatives.append(alternative)
     Trace.debug('Alternatives: ' + unicode(self))
+    return self
 
   def __unicode__(self):
     "Printable representation."
@@ -136,7 +143,7 @@ class Alternatives(Piece):
 class Declaration(object):
   "A grammar declaration consisting of several pieces."
 
-  notsymbol = '[]_ |'
+  notsymbol = '[]_ |$'
   pieces = []
 
   def __init__(self, key):
@@ -152,10 +159,11 @@ class Declaration(object):
         self.parsebracket(pos)
       elif pos.checkidentifier():
         self.parseidentifier(pos)
-      elif pos.checkfor(' '):
-        self.parseblank(pos)
+      elif pos.checkskip(' '):
+        # ignore blank characters
+        pass
       elif pos.checkskip('|'):
-        self.parsealternatives(pos)
+        self.parsealternative(pos)
       else:
         self.parsesymbol(pos)
     self.checkalternatives()
@@ -181,29 +189,26 @@ class Declaration(object):
     "Parse a constant identifier value."
     self.addconstant(pos.globidentifier())
 
-  def parseblank(self, pos):
-    "Parse a blank character."
-    self.pieces.append(pos.currentskip())
-
-  def parsealternatives(self, pos):
-    "Parse a group of alternatives."
+  def parsealternative(self, pos):
+    "Parse an alternative in a  group."
     if len(self.pieces) == 0:
       Trace.error('Empty beginning alternative at ' + pos.identifier())
       return
-    if len(self.pieces) > 0 and isinstance(self.pieces[-1], Alternatives):
-      Trace.error('Empty alternative at ' + pos.identifier())
-      return
     if self.checkalternatives():
       return
-    alt = Alternatives().add(self.pieces[-1])
-    self.pieces[-1] == alt
+    alt = Alternatives().add(self.pieces)
+    self.pieces = [alt]
 
   def checkalternatives(self):
-    "Check if the last piece belonged to a set of alternatives."
-    if len(self.pieces) > 1 and isinstance(self.pieces[-2], Alternatives):
-      self.pieces[-2].add(self.pieces[-1])
-      return True
-    return False
+    "Check if there is a set of alternatives active, and add everything there."
+    if len(self.pieces) == 0 or not isinstance(self.pieces[0], Alternatives):
+      return False
+    if len(self.pieces) == 1:
+      Trace.error('Empty alternative')
+      return
+    self.pieces[0].add(self.pieces[1:])
+    self.pieces = [self.pieces[0]]
+    return True
 
   def parsesymbol(self, pos):
     "Parse a symbol."
@@ -231,16 +236,19 @@ class Declaration(object):
       Trace.error('Repeated constant ' + constant)
       return
     Trace.debug('New constant: ' + constant)
-    self.pieces.append(constant)
+    self.pieces.append(ConstantWord(constant))
 
   def __unicode__(self):
     "Printable representation."
-    return 'declaration ' + self.key
     if len(self.pieces) == 0:
-      return ''
+      return 'empty'
     result = ''
     for piece in self.pieces:
-      result += ', ' + unicode(piece)
+      if isinstance(piece, Declaration):
+        pieceresult = piece.key
+      else:
+        pieceresult = unicode(piece)
+      result += ', ' + pieceresult
     return result[2:]
 
 class Grammar(object):
