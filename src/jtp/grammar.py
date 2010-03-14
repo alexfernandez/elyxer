@@ -85,7 +85,7 @@ class Bracket(Piece):
   def parse(self, pos):
     "Parse the bracket."
     pos.pushending(']')
-    declaration = Declaration().parse(pos)
+    declaration = Declaration('bracket').parse(pos)
     pos.popending(']')
     quantifier = pos.currentskip()
     if not quantifier in self.quantified:
@@ -112,19 +112,41 @@ Bracket.quantified = {
   '*': MultipleBracket(), '+': RepeatedBracket(), '?': ConditionalBracket()
 }
 
+class Alternatives(Piece):
+  "A group of alternatives to parse."
+
+  def __init__(self):
+    "Create an empty set of alternatives."
+    self.alternatives = []
+
+  def add(self, alternative):
+    "Add a new alternative piece."
+    self.alternatives.append(alternative)
+    Trace.debug('Alternatives: ' + unicode(self))
+
+  def __unicode__(self):
+    "Printable representation."
+    if len(self.alternatives) == 0:
+      return 'Empty alternatives'
+    result = ''
+    for alternative in self.alternatives:
+      result += ' | ' + unicode(alternative)
+    return result[3:]
+
 class Declaration(object):
   "A grammar declaration consisting of several pieces."
 
-  notsymbol = '[]_'
+  notsymbol = '[]_ |'
   pieces = []
 
-  def __init__(self):
+  def __init__(self, key):
+    self.key = key
     self.pieces = []
 
   def parse(self, pos):
     "Parse the given position."
     while not pos.finished():
-      if pos.checkfor('$'):
+      if pos.checkskip('$'):
         self.parsevariable(pos)
       elif pos.checkskip('['):
         self.parsebracket(pos)
@@ -132,8 +154,11 @@ class Declaration(object):
         self.parseidentifier(pos)
       elif pos.checkfor(' '):
         self.parseblank(pos)
+      elif pos.checkskip('|'):
+        self.parsealternatives(pos)
       else:
         self.parsesymbol(pos)
+    self.checkalternatives()
     return self
 
   def parsevariable(self, pos):
@@ -145,6 +170,7 @@ class Declaration(object):
     if not name in Grammar.instance.declarations:
       Trace.error('Unknown variable ' + name)
       return
+    Trace.debug('New variable ' + name)
     self.pieces.append(Grammar.instance.declarations[name])
 
   def parsebracket(self, pos):
@@ -159,12 +185,45 @@ class Declaration(object):
     "Parse a blank character."
     self.pieces.append(pos.currentskip())
 
+  def parsealternatives(self, pos):
+    "Parse a group of alternatives."
+    if len(self.pieces) == 0:
+      Trace.error('Empty beginning alternative at ' + pos.identifier())
+      return
+    if len(self.pieces) > 0 and isinstance(self.pieces[-1], Alternatives):
+      Trace.error('Empty alternative at ' + pos.identifier())
+      return
+    if self.checkalternatives():
+      return
+    alt = Alternatives().add(self.pieces[-1])
+    self.pieces[-1] == alt
+
+  def checkalternatives(self):
+    "Check if the last piece belonged to a set of alternatives."
+    if len(self.pieces) > 1 and isinstance(self.pieces[-2], Alternatives):
+      self.pieces[-2].add(self.pieces[-1])
+      return True
+    return False
+
   def parsesymbol(self, pos):
     "Parse a symbol."
     symbol = ''
-    while not pos.finished() and not pos.current() in self.notsymbol and not pos.checkidentifier():
+    while self.issymbol(pos):
       symbol += pos.currentskip()
+    if symbol == '':
+      symbol += pos.currentskip()
+      Trace.error('Empty symbol; acquiring ' + symbol)
     self.addconstant(symbol)
+
+  def issymbol(self, pos):
+    "Find out if the current character belongs to a larger symbol."
+    if pos.finished():
+      return False
+    if pos.current() in self.notsymbol:
+      return False
+    if pos.checkidentifier():
+      return False
+    return True
 
   def addconstant(self, constant):
     "Add a constant value."
@@ -176,6 +235,7 @@ class Declaration(object):
 
   def __unicode__(self):
     "Printable representation."
+    return 'declaration ' + self.key
     if len(self.pieces) == 0:
       return ''
     result = ''
@@ -199,7 +259,7 @@ class Grammar(object):
     for key in JavaToPyConfig.declarations:
       self.parse(key, JavaToPyConfig.declarations[key])
     for key in self.variables:
-      self.declarations[key] = Declaration()
+      self.declarations[key] = Declaration(key)
     for key in self.variables:
       Trace.debug('Interpreting ' + self.variables[key])
       pos = TextPosition(self.variables[key])
