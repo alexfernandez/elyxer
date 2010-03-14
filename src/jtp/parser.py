@@ -307,7 +307,7 @@ class Tokenizer(object):
     if self.finished():
       return None
     if self.isalphanumeric(self.pos.current()):
-      return self.pos.glob(self.isalphanumeric)
+      return self.pos.globidentifier()
     if self.pos.current() in self.javasymbols:
       result = self.pos.currentskip()
       while result + self.pos.current() in self.javasymbols:
@@ -325,13 +325,9 @@ class Tokenizer(object):
     self.pos.skipspace()
     return self.pos.finished()
 
-  def isalphanumeric(cls, char):
-    "Detect if a character is alphanumeric or underscore."
-    if char.isalpha():
-      return True
-    if char.isdigit():
-      return True
-    if char == '_':
+  def iscurrentidentifier(self):
+    "Return if the current token is an identifier (alphanumeric or _ characters)."
+    if self.currenttoken.replace('_', '').isalnum():
       return True
     return False
 
@@ -351,6 +347,4 @@ class Tokenizer(object):
     token = self.extractwithoutcomments()
     self.peeked = token
     return token
-
-  isalphanumeric = classmethod(isalphanumeric)
 

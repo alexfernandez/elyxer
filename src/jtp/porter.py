@@ -31,7 +31,7 @@ class JavaPorter(object):
   "Ports a Java file."
 
   def __init__(self):
-    self.grammar = Grammar()
+    Grammar.instance.process()
     self.chooser = StatementChooser()
 
   def topy(self, filepos, writer):
