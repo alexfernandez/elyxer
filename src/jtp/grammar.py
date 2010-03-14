@@ -140,7 +140,7 @@ class Alternatives(Piece):
       result += ' | ' + unicode(alternative)
     return result[3:]
 
-class Declaration(object):
+class Declaration(Piece):
   "A grammar declaration consisting of several pieces."
 
   notsymbol = '[]_ |$'
@@ -265,7 +265,7 @@ class Grammar(object):
   def process(self):
     "Process the grammar and create all necessary structures."
     for key in JavaToPyConfig.declarations:
-      self.parse(key, JavaToPyConfig.declarations[key])
+      self.variables[key] = JavaToPyConfig.declarations[key]
     for key in self.variables:
       self.declarations[key] = Declaration(key)
     for key in self.variables:
@@ -273,12 +273,13 @@ class Grammar(object):
       pos = TextPosition(self.variables[key])
       self.declarations[key].parse(pos)
 
-  def parse(self, key, value):
-    "Parse a single key-value pair."
-    if isinstance(value, list):
-      value = '[' + ','.join(value) + ']'
-    Trace.debug('Read ' + key + ': ' + value)
-    self.variables[key] = value
+  def parse(self, tok):
+    "Parse a whole file using a tokenizer."
+    filedecl = self.declarations['$file']
+    result = filedecl.match(tok)
+    if not result:
+      Trace.error('Actual file does not match $file.')
+      return
 
 Grammar.instance = Grammar()
 

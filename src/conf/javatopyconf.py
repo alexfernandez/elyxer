@@ -24,6 +24,7 @@ class JavaToPyConfig(object):
       u'$conditional':u'if ($condition) $block', 
       u'$declaration':u'$simpledeclaration|$declarationassignment', 
       u'$declarationassignment':u'$type $variablename = $value;', 
+      u'$file':u'[$class]+', 
       u'$inheritance':u'[extends $classlist]? [implements $classlist]?', 
       u'$logicalvalue':u'$orvalue|$andvalue', 
       u'$method':u'$scope [$qualifier]* $methodname ( $paramsdeclaration ) { $block }', 

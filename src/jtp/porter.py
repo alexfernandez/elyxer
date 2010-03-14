@@ -36,8 +36,9 @@ class JavaPorter(object):
 
   def topy(self, filepos, writer):
     "Port the Java input file to Python."
-    return
     tok = Tokenizer(filepos)
+    Grammar.instance.parse(tok)
+    return
     while not tok.finished():
       statement = self.nextstatement(tok)
       writer.writeline(statement)
