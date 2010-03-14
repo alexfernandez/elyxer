@@ -348,3 +348,13 @@ class Tokenizer(object):
     self.peeked = token
     return token
 
+  def mark(self):
+    "Mark the current state and return a handle."
+    Trace.error('Unimplemented mark()')
+    return None
+
+  def revert(self, state):
+    "Revert to a previous state as returned by mark()."
+    Trace.error('Unimplemented revert()')
+
+

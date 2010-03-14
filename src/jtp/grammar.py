@@ -106,11 +106,39 @@ class Bracket(Piece):
 class MultipleBracket(Bracket):
   "A bracket present zero or more times (quantifier *)."
 
+  def match(self, tok):
+    "Match the bracket zero or more times."
+    decl = Declaration('*')
+    result = self.declaration.match(tok)
+    while result != None:
+      decl.pieces.append(result)
+      result = self.declaration.match(tok)
+    return decl
+
 class RepeatedBracket(Bracket):
   "A bracket present one or more times (quantifier +)."
 
+  def match(self, tok):
+    "Match the bracket at least one time."
+    decl = Declaration('*')
+    result = self.declaration.match(tok)
+    if not result:
+      return None
+    while result != None:
+      decl.pieces.append(result)
+      result = self.declaration.match(tok)
+    return decl
+
 class ConditionalBracket(Bracket):
   "A bracket which may or may not be present (quantifier ?)."
+
+  def match(self, tok):
+    "Match the bracket, or not."
+    decl = Declaration('?')
+    result = self.declaration.match(tok)
+    if result:
+      decl.pieces.append(result)
+    return decl
 
 Bracket.quantified = {
   '*': MultipleBracket(), '+': RepeatedBracket(), '?': ConditionalBracket()
@@ -130,6 +158,14 @@ class Alternatives(Piece):
     self.alternatives.append(alternative)
     Trace.debug('Alternatives: ' + unicode(self))
     return self
+
+  def match(self, tok):
+    "Match any of the alternatives."
+    for alternative in self.alternatives:
+      result = alternative.match(tok)
+      if result:
+        return result
+    return None
 
   def __unicode__(self):
     "Printable representation."
@@ -238,10 +274,22 @@ class Declaration(Piece):
     Trace.debug('New constant: ' + constant)
     self.pieces.append(ConstantWord(constant))
 
+  def match(self, tok):
+    "Match the declaration against a tokenizer."
+    decl = Declaration(self.key)
+    state = tok.mark()
+    for piece in self.pieces:
+      result = piece.match(tok)
+      if not result:
+        tok.revert(state)
+        return None
+      decl.pieces.append(result)
+    return decl
+
   def __unicode__(self):
     "Printable representation."
     if len(self.pieces) == 0:
-      return 'empty'
+      return u'❲empty❳'
     result = ''
     for piece in self.pieces:
       if isinstance(piece, Declaration):
@@ -249,7 +297,7 @@ class Declaration(Piece):
       else:
         pieceresult = unicode(piece)
       result += ', ' + pieceresult
-    return result[2:]
+    return u'❲' + result[2:] + u'❳'
 
 class Grammar(object):
   "Read a complete grammar into memory."
