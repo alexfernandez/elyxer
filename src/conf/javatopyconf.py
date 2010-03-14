@@ -27,7 +27,7 @@ class JavaToPyConfig(object):
       u'$file':u'[$class]+', 
       u'$inheritance':u'[extends $classlist]? [implements $classlist]?', 
       u'$logicalvalue':u'$orvalue|$andvalue', 
-      u'$method':u'$scope [$qualifier]* $methodname ( $paramsdeclaration ) { $block }', 
+      u'$method':u'$scope [$qualifier]* $type $methodname ( $paramsdeclaration ) { $block }', 
       u'$methodcall':u'$value.$methodname($params)', u'$methodname':u'$$', 
       u'$orvalue':u'$value || $value', 
       u'$paramdeclaration':u'$type $variablename', 
