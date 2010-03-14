@@ -306,7 +306,7 @@ class Tokenizer(object):
     "Extract the next token."
     if self.finished():
       return None
-    if self.isalphanumeric(self.pos.current()):
+    if self.pos.checkidentifier():
       return self.pos.globidentifier()
     if self.pos.current() in self.javasymbols:
       result = self.pos.currentskip()

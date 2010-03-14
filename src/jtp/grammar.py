@@ -46,6 +46,7 @@ class ConstantWord(Piece):
   def match(self, tok):
     "Just match the current token against the constant."
     if tok.current() == self.constant:
+      tok.next()
       return self
     return None
 
@@ -67,7 +68,9 @@ class IdentifierWord(Piece):
   def match(self, tok):
     "Match the current token and store in the template."
     if tok.iscurrentidentifier():
-      return IdentifierWord().set(tok.current())
+      identifier = IdentifierWord().set(tok.current())
+      tok.next()
+      return identifier
     return None
 
 class Bracket(Piece):
@@ -279,8 +282,10 @@ class Declaration(Piece):
     decl = Declaration(self.key)
     state = tok.mark()
     for piece in self.pieces:
+      Trace.debug('Matching ' + tok.current() + ' against ' + unicode(piece))
       result = piece.match(tok)
       if not result:
+        Trace.error('Mismatch of ' + tok.current() + ' against ' + unicode(piece))
         tok.revert(state)
         return None
       decl.pieces.append(result)
@@ -323,6 +328,7 @@ class Grammar(object):
 
   def parse(self, tok):
     "Parse a whole file using a tokenizer."
+    tok.next()
     filedecl = self.declarations['$file']
     result = filedecl.match(tok)
     if not result:
