@@ -448,8 +448,9 @@ type "mailto:"
 
 \end_inset
 
-, William Crocker, Sara Teinturier for their testing and bug reporting.
- Thanks to Uwe Stöhr for his German translation.
+, William Crocker, Sara Teinturier, Hans Bezemer, Jack Desert for their
+ testing and bug reporting.
+ Thanks to Uwe Stöhr, Hans Bezemer for the translations.
  Packagers Sven Hoexter (for Debian), Uwe Stöhr (on Windows) and Bennet
  Helm (for Mac OS X) have helped with their work to make it easy to try
  it out.
