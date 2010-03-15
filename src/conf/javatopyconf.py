@@ -28,8 +28,8 @@ class JavaToPyConfig(object):
       u'$inheritance':u'[extends $classlist]? [implements $classlist]?', 
       u'$logicalvalue':u'$orvalue|$andvalue', 
       u'$method':u'$scope [$qualifier]* $type $methodname ( $paramsdeclaration ) { $block }', 
-      u'$methodcall':u'$value.$methodname($params)', u'$methodname':u'$$', 
-      u'$orvalue':u'$value || $value', 
+      u'$methodcall':u'$variablename[.$methodname($params)]+', 
+      u'$methodname':u'$$', u'$orvalue':u'$value || $value', 
       u'$paramdeclaration':u'$type $variablename', 
       u'$params':u'[$value]?[,$value]+', 
       u'$paramsdeclaration':u'[$paramdeclaration]?[,$paramdeclaration]*', 
@@ -37,7 +37,7 @@ class JavaToPyConfig(object):
       u'$simpledeclaration':u'$type $variablename;', 
       u'$statement':u'$conditional|$declaration|$assignment|$methodcall', 
       u'$type':u'int|String|$classname', 
-      u'$value':u'$methodcall|$variablename|$arithmeticexpression', 
+      u'$value':u'$variablename|$methodcall|$arithmeticexpression', 
       u'$variablename':u'$$', 
       }
 
