@@ -1,0 +1,109 @@
+# Dutch translations for PACKAGE package.
+# eLyXer version 0.42
+# Released on 2010-02-15
+# Contact: Alex Fernández <elyxer@gmail.com>
+# This file is distributed under the same license as the eLyXer package.
+# (C) 2010 chenno <elyxer@gmail.com>.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"PO-Revision-Date: 2010-03-12 21:17+0100\n"
+"Last-Translator: chenno <elyxer@gmail.com>\n"
+"Language-Team: Dutch\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: Subsubsection
+msgid "Subsubsection"
+msgstr "Subsubsectie"
+
+#: figure
+msgid "figure"
+msgstr "figuur"
+
+#: abstract
+msgid "Abstract"
+msgstr "Samenvatting"
+
+#: Book
+msgid "Book"
+msgstr "Boek"
+
+#: Subsection
+msgid "Subsection"
+msgstr "Subsectie"
+
+#: list-algorithm
+msgid "List of Algorithms"
+msgstr "Lijst van algoritmen"
+
+#: index
+msgid "Index"
+msgstr "Index"
+
+#: bibliography
+msgid "Bibliography"
+msgstr "Bibliografie"
+
+#: float-algorithm
+msgid "Algorithm "
+msgstr "Algoritme "
+
+#: list-table
+msgid "List of Tables"
+msgstr "Lijst van tabellen"
+
+#: Part
+msgid "Part"
+msgstr "Deel"
+
+#: toc
+msgid "Table of Contents"
+msgstr "Inhoudsopgave"
+
+#: Section
+msgid "Section"
+msgstr "Sectie"
+
+#: Chapter
+msgid "Chapter"
+msgstr "Hoofdstuk"
+
+#: list-tableau
+msgid "List of Tableaux"
+msgstr "Lijst van Tableaux"
+
+#: float-tableau
+msgid "Tableau "
+msgstr "Tableau "
+
+#: Paragraph
+msgid "Paragraph"
+msgstr "Paragraaf"
+
+#: list-figure
+msgid "List of Figures"
+msgstr "Lijst van figuren"
+
+#: float-listing
+msgid "Listing "
+msgstr "Listing "
+
+#: on-page
+msgid " on page "
+msgstr " op pagina "
+
+#: nomenclature
+msgid "Nomenclature"
+msgstr "Verklaring van symbolen"
+
+#: float-table
+msgid "Table "
+msgstr "Tabel "
+
+#: float-figure
+msgid "Figure "
+msgstr "Figuur "
