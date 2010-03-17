@@ -1,5 +1,5 @@
-#LyX 1.5.7 created this file. For more info see http://www.lyx.org/
-\lyxformat 276
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
 \begin_document
 \begin_header
 \textclass article
@@ -22,6 +22,7 @@
 %   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \usepackage{mathrsfs}
 \end_preamble
+\use_default_options false
 \language english
 \inputencoding auto
 \font_roman default
@@ -32,9 +33,11 @@
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
+
 \graphics default
 \paperfontsize default
 \spacing single
+\use_hyperref false
 \papersize default
 \use_geometry false
 \use_amsmath 1
@@ -71,10 +74,14 @@ eLyXer Changelog
 \begin_layout Standard
 This document lists all public versions, the date they were released on
  and the changes they contain.
- For more information about eLyXer visit the 
-\begin_inset LatexCommand url
-name "main page"
-target "index.html"
+ For more information about eLyXer visit the main page 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+index.html
+\end_layout
 
 \end_inset
 
@@ -82,7 +89,7 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
-0.42 (unreleased):
+0.42 (2010-03-17):
 \end_layout
 
 \begin_deeper
@@ -135,6 +142,10 @@ Added option
 --raw
 \family default
  to output raw HTML without header or footer.
+\end_layout
+
+\begin_layout Itemize
+Added French and Dutch translations.
 \end_layout
 
 \end_deeper
@@ -242,10 +253,14 @@ New option
 \end_layout
 
 \begin_layout Itemize
-Support for Sam Liddicott's 
-\begin_inset LatexCommand url
-name "Newfangle module"
-target "http://repo.or.cz/w/newfangle.git/blob_plain/master:/www/docs/newfangle.html"
+Support for Sam Liddicott's Newfangle module 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://repo.or.cz/w/newfangle.git/blob_plain/master:/www/docs/newfangle.html
+\end_layout
 
 \end_inset
 
@@ -675,10 +690,14 @@ New option
 \end_layout
 
 \begin_layout Itemize
-Updated the 
-\begin_inset LatexCommand url
-name "developer guide"
-target "devguide.html"
+Updated the developer guide 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+devguide.html
+\end_layout
 
 \end_inset
 
@@ -1209,10 +1228,14 @@ varepsilon
 \end_layout
 
 \begin_layout Itemize
-Added TeX-to-Unicode mappings from 
-\begin_inset LatexCommand url
-name "Markus Kuhn"
-target "http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt"
+Added TeX-to-Unicode mappings from Markus Kuhn 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt
+\end_layout
 
 \end_inset
 
@@ -1336,10 +1359,14 @@ elyxerconv.py
 \family typewriter
 io/convert.py
 \family default
-), see 
-\begin_inset LatexCommand url
-name "lyx-devel thread"
-target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154647.html"
+), see lyx-devel thread 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154647.html
+\end_layout
 
 \end_inset
 
@@ -1352,10 +1379,14 @@ elyxer.py
 \family typewriter
 python -m
 \family default
-.; see also 
-\begin_inset LatexCommand url
-name "lyx-devel thread"
-target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154749.html"
+.; see also lyx-devel thread 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154749.html
+\end_layout
 
 \end_inset
 
@@ -1363,10 +1394,14 @@ target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154749.html"
 \end_layout
 
 \begin_layout Itemize
-eLyXer was added to the Python Package Index (
-\begin_inset LatexCommand url
-name "PyPI"
-target "http://pypi.python.org/pypi"
+eLyXer was added to the Python Package Index (PyPI 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://pypi.python.org/pypi
+\end_layout
 
 \end_inset
 
@@ -1375,10 +1410,14 @@ target "http://pypi.python.org/pypi"
 \end_layout
 
 \begin_layout Itemize
-Updated documentation (
-\begin_inset LatexCommand url
-name "user guide"
-target "userguide.html"
+Updated documentation (user guide 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+userguide.html
+\end_layout
 
 \end_inset
 
@@ -1438,10 +1477,14 @@ elyxer.py
 \end_layout
 
 \begin_layout Itemize
-Added 
-\begin_inset LatexCommand url
-name "distutils"
-target "http://docs.python.org/distutils/index.html"
+Added distutils 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://docs.python.org/distutils/index.html
+\end_layout
 
 \end_inset
 
@@ -1464,7 +1507,10 @@ Added command line option
 \begin_layout Itemize
 Switched all options in command line help to quotes: 
 \family typewriter
---title\InsetSpace ~
+--title
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 <
@@ -1476,7 +1522,10 @@ title
 \series default
  is now 
 \family typewriter
---title\InsetSpace ~
+--title
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -1792,17 +1841,25 @@ Also show roots and arrays correctly in those browsers.
 \end_layout
 
 \begin_layout Itemize
-Added 
-\begin_inset LatexCommand url
-name "Math Showcase"
-target "math.html"
+Added Math Showcase 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+math.html
+\end_layout
 
 \end_inset
 
- to test on 
-\begin_inset LatexCommand url
-name "browsershots.org"
-target "http://browsershots.org/"
+ to test on browsershots.org 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://browsershots.org/
+\end_layout
 
 \end_inset
 
@@ -2621,10 +2678,14 @@ Range of supported quotes is greater.
 \end_layout
 
 \begin_layout Itemize
-Default CSS is always on 
-\begin_inset LatexCommand url
-name "nongnu.org"
-target "http://www.nongnu.org/elyxer/lyx.css"
+Default CSS is always on nongnu.org 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.nongnu.org/elyxer/lyx.css
+\end_layout
 
 \end_inset
 
