@@ -188,7 +188,6 @@ class List(FirstWorder):
     first = TaggedText().complete(firstword, 'span class="List-entry"')
     second = TaggedText().complete(self.contents, 'span class="List-contents"')
     self.contents = [first, second]
-    # self.contents.insert(0, TaggedText().complete(firstword, tag))
 
 class PlainLayout(Layout):
   "A plain layout"
