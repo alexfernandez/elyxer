@@ -31,10 +31,19 @@ from parse.position import *
 class Piece(object):
   "Represents a piece (word, bracket... of any type) in a grammar."
 
+  def __init__(self):
+    "Initialize common variables."
+    self.closed = False
+    self.valid = True
+
   def match(self, tok):
     "Match the piece against the current token and return the match."
     Trace.error('Unmatchable piece ' + unicode(self) + ' in ' + unicode(tok))
     return None
+
+  def fitnext(self, token):
+    "Try to fit the next token and return the corresponding declaration."
+    Trace.error('Unimplemented method: fit()')
 
 class ConstantWord(Piece):
   "Represents a constant word in a grammar."
@@ -49,6 +58,14 @@ class ConstantWord(Piece):
       tok.next()
       return self
     return None
+
+  def fitnext(self, token):
+    "Try to fit the next token."
+    self.closed = True
+    if token != self.constant:
+      self.valid = False
+      return None
+    return self
 
   def __unicode__(self):
     "Printable representation."
@@ -71,6 +88,13 @@ class IdentifierWord(Piece):
       identifier = IdentifierWord().set(tok.current())
       tok.next()
       return identifier
+    return None
+
+  def fitnext(self, token):
+    "Try to fit the next token."
+    self.closed = True
+    if token.iscurrentidentifier():
+      return IdentifierWord().set(tok.current())
     return None
 
 class Bracket(Piece):
@@ -142,6 +166,21 @@ class ConditionalBracket(Bracket):
     if result:
       decl.pieces.append(result)
     return decl
+
+  def fitnext(self, token):
+    "Try to fit the next token."
+    result = self.declaration.fitnext(token)
+    decl = None
+    if not self.declaration.valid:
+      self.closed = True
+    elif self.declaration.closed:
+      self.closed = True
+    if result:
+      return result
+    if token != self.constant:
+      self.valid = False
+      return None
+    return self
 
 Bracket.quantified = {
   '*': MultipleBracket(), '+': RepeatedBracket(), '?': ConditionalBracket()
