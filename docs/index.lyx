@@ -450,10 +450,9 @@ type "mailto:"
 
 , William Crocker, Sara Teinturier, Hans Bezemer, Jack Desert for their
  testing and bug reporting.
- Thanks to Uwe Stöhr, Hans Bezemer for the translations.
- Packagers Sven Hoexter (for Debian), Uwe Stöhr (on Windows) and Bennet
- Helm (for Mac OS X) have helped with their work to make it easy to try
- it out.
+ Thanks to Uwe Stöhr, Hans Bezemer, Sara Teinturier for their translations.
+ Packagers Sven Hoexter (for Debian) and Uwe Stöhr (on Windows) have helped
+ with their work to make it easy to try it out.
  Olivier Ripoll, Geremy Condra and Simon South have provided the first patches.
 \end_layout
 
