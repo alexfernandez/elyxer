@@ -148,6 +148,10 @@ Added option
 Added French and Dutch translations.
 \end_layout
 
+\begin_layout Itemize
+Solved indenting problem for lists: only the first line was being indented.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.41 (2010-02-11):
