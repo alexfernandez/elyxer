@@ -3,13 +3,13 @@
 # Released on 2010-02-15
 # Contact: Alex Fernández <elyxer@gmail.com>
 # This file is distributed under the same license as the eLyXer package.
-# (C) 2010 chenno <elyxer@gmail.com>.
+# (C) 2010 Hans Bezemer, Alex Fernández.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "PO-Revision-Date: 2010-03-12 21:17+0100\n"
-"Last-Translator: chenno <elyxer@gmail.com>\n"
+"Last-Translator: Hans Bezemer\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ASCII\n"
