@@ -390,6 +390,12 @@ span.Description-entry {
 span.List-entry {
 	display: inline-block;
 	width: 25%;
+	vertical-align: text-top;
+}
+span.List-contents {
+	display: inline-block;
+	width: 75%;
+	vertical-align: text-top;
 }
 div.Space {
 	display: none;

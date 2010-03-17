@@ -185,8 +185,10 @@ class List(FirstWorder):
     firstword = self.extractfirstword(self.contents)
     if not firstword:
       return
-    tag = 'span class="List-entry"'
-    self.contents.insert(0, TaggedText().complete(firstword, tag))
+    first = TaggedText().complete(firstword, 'span class="List-entry"')
+    second = TaggedText().complete(self.contents, 'span class="List-contents"')
+    self.contents = [first, second]
+    # self.contents.insert(0, TaggedText().complete(firstword, tag))
 
 class PlainLayout(Layout):
   "A plain layout"
