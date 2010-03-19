@@ -299,7 +299,7 @@ underbrace
 \backslash
 overbrace
 \family default
-.
+ (as bars and without sub/superscripts).
 \end_layout
 
 \end_deeper
