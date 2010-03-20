@@ -117,6 +117,14 @@ Added option
  to use jsMath for mathematical equations.
 \end_layout
 
+\begin_layout Itemize
+Added command help to 
+\family typewriter
+loremipsumize.py
+\family default
+ so it can be used outside of eLyXer.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.42 (2010-03-17):
