@@ -219,8 +219,6 @@ class ContentEntry(Entry):
       self.lineerror('Unexpected ,', pos)
       return ''
     value = self.parserecursive(pos)
-    if not '\\' in value:
-      return value
     for escape in self.escaped:
       if escape in value:
         value = value.replace(escape, self.escaped[escape])
