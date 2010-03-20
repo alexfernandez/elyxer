@@ -94,11 +94,11 @@ index.html
 
 \begin_deeper
 \begin_layout Itemize
-BibTeX improvements: new style 
+Many BibTeX improvements: new style 
 \emph on
 abbrvnat
 \emph default
-, look up types in lowercase, understand escaped 
+, conditional formatting, look up types in lowercase, understand 
 \begin_inset Quotes eld
 \end_inset
 
@@ -106,7 +106,15 @@ abbrvnat
 \begin_inset Quotes erd
 \end_inset
 
-.
+ as dash.
+\end_layout
+
+\begin_layout Itemize
+Added option 
+\family typewriter
+--jsmath
+\family default
+ to use jsMath for mathematical equations.
 \end_layout
 
 \end_deeper

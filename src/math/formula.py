@@ -39,6 +39,10 @@ class Formula(Container):
 
   def process(self):
     "Convert the formula to tags"
+    if Options.jsmath:
+      self.output = TaggedOutput().settag('span class="math"')
+      self.contents = [Constant(self.contents[0])]
+      return
     pos = TextPosition(self.contents[0])
     whole = WholeFormula()
     if not whole.detect(pos):

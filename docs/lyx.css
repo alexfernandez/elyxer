@@ -661,3 +661,7 @@ span.overbrace {
 span.underbrace {
 	border-bottom: 2pt solid #000000;
 }
+div.warning {
+	font-size: 120%;
+	color:#cc0000;
+}

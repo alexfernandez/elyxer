@@ -1116,6 +1116,22 @@ reference "sub:HTML-Code"
 \begin_layout Description
 
 \family typewriter
+--
+\family default
+jsmath: use the excellent JavaScript library 
+\begin_inset CommandInset href
+LatexCommand href
+name "jsMath"
+target "http://www.math.union.edu/locate/jsMath"
+
+\end_inset
+
+ to pretty-print mathematical equations.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
 --forceformat
 \begin_inset space ~
 \end_inset

@@ -37,6 +37,8 @@ class PostFormula(object):
 
   def postprocess(self, last, formula, next):
     "Postprocess any formulae"
+    if Options.jsmath:
+      return formula
     self.postnumbering(formula)
     self.postcontents(formula.contents)
     self.posttraverse(formula)

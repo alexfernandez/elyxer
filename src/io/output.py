@@ -111,6 +111,20 @@ class HeaderOutput(object):
 
   def gethtml(self, container):
     "Return a constant header"
+    html = self.getheader(container)
+    if Options.jsmath:
+      html.append(u'<noscript>\n')
+      html.append(u'<div class="warning">\n')
+      html.append(TranslationConfig.constants['jsmath-warning'])
+      html.append(u'<a href="http://www.math.union.edu/locate/jsMath">jsMath</a>')
+      html.append(TranslationConfig.constants['jsmath-requires'])
+      html.append(TranslationConfig.constants['jsmath-enable'] + '\n')
+      html.append(u'</div><hr/>\n')
+      html.append(u'</noscript>\n')
+    return html
+
+  def getheader(self, container):
+    "Get the header part."
     if Options.raw:
       return ['<!--starthtml-->\n']
     if Options.iso885915:
@@ -130,6 +144,8 @@ class HeaderOutput(object):
     html.append(u'<meta name="create-date" content="' + datetime.date.today().isoformat() + '"/>\n')
     html.append(u'<link rel="stylesheet" href="' + Options.css + '" type="text/css" media="screen"/>\n')
     html += TitleOutput().gethtml(container)
+    if Options.jsmath:
+      html.append(u'<script src="jsmath/easy/load.js"></script>')
     html.append('</head>\n')
     html.append('<body>\n')
     html.append('<div id="globalWrapper">\n')

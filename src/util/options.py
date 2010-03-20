@@ -61,6 +61,7 @@ class Options(object):
   converter = 'imagemagick'
   numberfoot = False
   raw = False
+  jsmath = False
 
   branches = dict()
 
@@ -119,6 +120,7 @@ class Options(object):
     Trace.error('    --html:                 output HTML 4.0 instead of the default XHTML')
     Trace.error('    --unicode:              full Unicode output')
     Trace.error('    --iso885915:            output a document with ISO-8859-15 encoding')
+    Trace.error('    --jsmath:               use jsMath to display equations')
     Trace.error('')
     Trace.error('  Esoteric options:')
     Trace.error('    --version:              show version number and release date')
