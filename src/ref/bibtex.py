@@ -161,7 +161,6 @@ class ContentEntry(Entry):
 
   nameseparators = ['{', '=', '"', '#']
   valueseparators = ['{', '"', '#', '\\', '}']
-  escaped = BibTeXConfig.escaped
 
   def __init__(self):
     self.key = None
@@ -214,11 +213,7 @@ class ContentEntry(Entry):
     if pos.checkfor(','):
       self.lineerror('Unexpected ,', pos)
       return ''
-    value = self.parserecursive(pos)
-    for escape in self.escaped:
-      if escape in value:
-        value = value.replace(escape, self.escaped[escape])
-    return value
+    return self.parserecursive(pos)
 
   def parserecursive(self, pos):
     "Parse brackets or quotes recursively."
@@ -300,6 +295,8 @@ class SpecialEntry(ContentEntry):
 class PubEntry(ContentEntry):
   "A publication entry"
 
+  escaped = BibTeXConfig.escaped
+
   def detect(self, pos):
     "Detect a publication entry"
     return pos.checkfor('@')
@@ -322,7 +319,7 @@ class PubEntry(ContentEntry):
     contents = self.template
     while contents.find('$') >= 0:
       contents = self.replacetag(contents)
-    return Constant(contents)
+    return Constant(self.escapeentry(contents))
 
   def replacetag(self, string):
     "Replace a tag with its value."
@@ -356,6 +353,13 @@ class PubEntry(ContentEntry):
     if not key in self.tags:
       return None
     return self.tags[key]
+
+  def escapeentry(self, string):
+    "Escape a string."
+    for escape in self.escaped:
+      if escape in string:
+        string = string.replace(escape, self.escaped[escape])
+    return string
 
   def __unicode__(self):
     "Return a string representation"

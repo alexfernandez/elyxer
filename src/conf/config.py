@@ -55,8 +55,8 @@ class BibTeXConfig(object):
   "Configuration class from config file"
 
   escaped = {
-      u'--':u'—', u'\\"a':u'ä', u'\\"e':u'ë', u'\\"i':u'ï', u'\\"o':u'ö', 
-      u'\\"u':u'ü', 
+      u'--':u'—', u'..':u'.', u'\\"a':u'ä', u'\\"e':u'ë', u'\\"i':u'ï', 
+      u'\\"o':u'ö', u'\\"u':u'ü', 
       }
 
 class ContainerConfig(object):
