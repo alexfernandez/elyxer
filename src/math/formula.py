@@ -39,8 +39,10 @@ class Formula(Container):
 
   def process(self):
     "Convert the formula to tags"
+    if self.header[0] != 'inline':
+      self.output.settag('div class="formula"', True)
     if Options.jsmath:
-      self.output = TaggedOutput().settag('span class="math"')
+      self.output.tag = self.output.tag.replace('formula', 'math')
       self.contents = [Constant(self.contents[0])]
       return
     pos = TextPosition(self.contents[0])
@@ -54,8 +56,6 @@ class Formula(Container):
     whole.process()
     self.contents = [whole]
     whole.parent = self
-    if self.header[0] != 'inline':
-      self.output.settag('div class="formula"', True)
 
   def __unicode__(self):
     "Return a printable representation."

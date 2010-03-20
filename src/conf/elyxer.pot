@@ -22,9 +22,17 @@ msgstr "figure"
 msgid  "Abstract"
 msgstr "Abstract"
 
+#: jsmath-warning
+msgid  "Warning: "
+msgstr "Warning: "
+
 #: Book
 msgid  "Book"
 msgstr "Book"
+
+#: jsmath-enable
+msgid  "Please enable JavaScript on your browser."
+msgstr "Please enable JavaScript on your browser."
 
 #: Subsection
 msgid  "Subsection"
@@ -101,3 +109,7 @@ msgstr "Table "
 #: float-figure
 msgid  "Figure "
 msgstr "Figure "
+
+#: jsmath-requires
+msgid  " requires JavaScript to correctly process the mathematics on this page. "
+msgstr " requires JavaScript to correctly process the mathematics on this page. "
