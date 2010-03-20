@@ -62,10 +62,7 @@ class BibTeX(Container):
       entry.template = style['default']
       type = entry.type.lower()
       if type in style:
-        Trace.debug('Entry type ' + type + ' found')
         entry.template = style[type]
-      else:
-        Trace.debug('Entry type ' + type + ' not found')
       entry.process()
       self.contents.append(entry)
 
@@ -74,7 +71,6 @@ class BibTeX(Container):
     options = self.parameters['options'].split(',')
     for option in options:
       if hasattr(BibStylesConfig, option):
-        Trace.debug('BibStyle ' + option)
         return getattr(BibStylesConfig, option)
     return BibStylesConfig.default
 
@@ -327,15 +323,29 @@ class PubEntry(ContentEntry):
     while contents.find('$') >= 0:
       tag = self.extracttag(contents)
       value = self.gettag(tag)
-      contents = contents.replace('$' + tag, value)
+      contents = self.replacetag(contents, tag, value)
     return Constant(contents)
+
+  def replacetag(self, string, tag, value):
+    "Replace a tag with its value."
+    if not value:
+      value = ''
+    return string.replace('$' + tag, value)
 
   def extracttag(self, string):
     "Extract the first tag in the form $tag"
-    pos = TextPosition(string)
-    pos.globexcluding('$')
-    pos.skip('$')
-    return pos.globalpha()
+    result = ''
+    index = string.index('$') + 1
+    while string[index].isalpha():
+      result += string[index]
+      index += 1
+    return result
+
+  def gettag(self, key):
+    "Get a tag with the given key"
+    if not key in self.tags:
+      return None
+    return self.tags[key]
 
   def __unicode__(self):
     "Return a string representation"
@@ -347,12 +357,6 @@ class PubEntry(ContentEntry):
     if title:
       string += '"' + title + '"'
     return string
-
-  def gettag(self, key):
-    "Get a tag with the given key"
-    if not key in self.tags:
-      return ''
-    return self.tags[key]
 
 Entry.entries += [CommentEntry(), SpecialEntry(), PubEntry()]
 
