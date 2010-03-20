@@ -9,7 +9,7 @@ class BibStylesConfig(object):
 
   abbrvnat = {
       
-      u'@article':u'$author. $title. <i>$journal</i>, $volume:$pages, $month $year.', 
+      u'@article':u'$author. $title. <i>$journal</i>,{ {$volume:}$pages,} $month $year.{ doi: $doi.}{ URL $url.}', 
       u'default':u'$author. <i>$title</i>. $publisher, $year.', 
       }
 

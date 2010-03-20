@@ -321,13 +321,23 @@ class PubEntry(ContentEntry):
     "Get the contents as a constant"
     contents = self.template
     while contents.find('$') >= 0:
-      tag = self.extracttag(contents)
-      value = self.gettag(tag)
-      contents = self.replacetag(contents, tag, value)
+      contents = self.replacetag(contents)
     return Constant(contents)
 
-  def replacetag(self, string, tag, value):
+  def replacetag(self, string):
     "Replace a tag with its value."
+    tag = self.extracttag(string)
+    value = self.gettag(tag)
+    dollar = string.find('$' + tag)
+    begin = string.rfind('{', 0, dollar)
+    end = string.find('}', dollar)
+    if begin != -1 and end != -1 and begin < end:
+      bracket = string[begin + 1:end]
+      if not value:
+        result = ''
+      else:
+        result = bracket.replace('$' + tag, value)
+      return string[0:begin] + result + string[end + 1:]
     if not value:
       value = ''
     return string.replace('$' + tag, value)
