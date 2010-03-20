@@ -1100,9 +1100,9 @@ reference "sub:HTML-Code"
 \begin_layout Description
 
 \family typewriter
---
+--iso885915
 \family default
-iso885915: generate a document using ISO-8859-1 encoding.
+: generate a document using ISO-8859-1 encoding.
  Again, see section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1116,9 +1116,9 @@ reference "sub:HTML-Code"
 \begin_layout Description
 
 \family typewriter
---
+--jsmath
 \family default
-jsmath: use the excellent JavaScript library 
+: use the excellent JavaScript library 
 \begin_inset CommandInset href
 LatexCommand href
 name "jsMath"
