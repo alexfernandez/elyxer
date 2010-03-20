@@ -60,8 +60,12 @@ class BibTeX(Container):
     style = self.readstyle()
     for entry in self.entries:
       entry.template = style['default']
-      if entry.type in style:
-        entry.template = style[entry.type]
+      type = entry.type.lower()
+      if type in style:
+        Trace.debug('Entry type ' + type + ' found')
+        entry.template = style[type]
+      else:
+        Trace.debug('Entry type ' + type + ' not found')
       entry.process()
       self.contents.append(entry)
 
@@ -70,6 +74,7 @@ class BibTeX(Container):
     options = self.parameters['options'].split(',')
     for option in options:
       if hasattr(BibStylesConfig, option):
+        Trace.debug('BibStyle ' + option)
         return getattr(BibStylesConfig, option)
     return BibStylesConfig.default
 
