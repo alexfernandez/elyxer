@@ -36,25 +36,26 @@ class BiblioCite(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TaggedOutput().settag('sup')
+    self.output = TaggedOutput().settag('span class="cite"', True)
     self.contents = []
-    self.entries = []
 
   def process(self):
     "Add a cite to every entry"
+    contents = []
     keys = self.parameters['key'].split(',')
     for key in keys:
       number = NumberGenerator.instance.generateunique('bibliocite')
       entry = self.createentry(key, number)
       cite = Link().complete(number, 'cite-' + number, type='bibliocite')
       cite.setmutualdestination(entry)
-      self.contents += [cite, Constant(',')]
+      contents += [cite, Constant(',')]
       if not key in BiblioCite.cites:
         BiblioCite.cites[key] = []
       BiblioCite.cites[key].append(cite)
     if len(keys) > 0:
       # remove trailing ,
-      self.contents.pop()
+      contents.pop()
+    self.contents = [TaggedText().complete(contents, 'sup')]
 
   def createentry(self, key, number):
     "Create the entry with the given key and number."
