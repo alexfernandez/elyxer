@@ -10,6 +10,7 @@ class BibStylesConfig(object):
   abbrvnat = {
       
       u'@article':u'$author. $title. <i>$journal</i>,{ {$volume:}$pages,} $month $year.{ doi: $doi.}{ URL $url.}', 
+      u'cite':u'[$surname($year)]', 
       u'default':u'$author. <i>$title</i>. $publisher, $year.', 
       }
 
@@ -17,6 +18,7 @@ class BibStylesConfig(object):
       
       u'@article':u'$author. $year. $title. <i>$journal</i>, <b>$volume</b>($number), $pages.', 
       u'@book':u'$author. $year. <i>$title</i>. $publisher.', 
+      u'cite':[u'$surname',u' $year',], 
       u'default':u'$author. $year. <i>$title</i>. $publisher.', 
       }
 
@@ -35,6 +37,7 @@ class BibStylesConfig(object):
       u'@proceedings':u'$author, “$title”, <i>$journal</i>, pp. $pages, $year.', 
       u'@techreport':u'$author, <i>$title</i>, $year.', 
       u'@unpublished':u'$author, “$title”, <i>$journal</i>, $year.', 
+      u'cite':u'[$number]', 
       u'default':u'$author, <i>$title</i>. $publisher, $year.', 
       }
 
@@ -42,12 +45,14 @@ class BibStylesConfig(object):
       
       u'@article':u'$author, “$title”, <i>$journal</i>, vol. $volume, no. $number, pp. $pages, $year.', 
       u'@book':u'$author, <i>$title</i>. $publisher, $year.', 
+      u'cite':u'[$number]', 
       }
 
   plain = {
       
       u'@article':u'$author. $title. <i>$journal</i>, $volumen($number):$pages, $year.', 
       u'@book':u'$author. <i>$title</i>. $publisher, $month $year.', 
+      u'cite':u'[$number]', 
       u'default':u'$author. <i>$title</i>. $publisher, $year.', 
       }
 
