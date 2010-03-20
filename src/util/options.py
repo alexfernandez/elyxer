@@ -105,6 +105,7 @@ class Options(object):
     Trace.error('Usage: ' + os.path.basename(Options.location) + ' [options] [filein] [fileout]')
     Trace.error('Convert LyX input file "filein" to HTML file "fileout".')
     Trace.error('If filein (or fileout) is not given use standard input (or output).')
+    Trace.error('Main program of the eLyXer package (http://elyxer.nongnu.org/).')
     self.showoptions()
 
   def showoptions(self):

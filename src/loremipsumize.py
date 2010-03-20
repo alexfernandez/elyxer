@@ -43,7 +43,10 @@ def readargs(args):
   del args[0]
   if len(args) == 0:
     usage()
-    return
+    return None, None
+  if args[0] == '-h' or args[0] == '--help':
+    usage()
+    return None, None
   reader = getreader(args[0])
   del args[0]
   fileout = sys.stdout
@@ -57,7 +60,12 @@ def readargs(args):
   return reader, writer
 
 def usage():
+  "Show command line help."
   Trace.error('Usage: loremipsumize.py filein [fileout]')
+  Trace.error('Mask your document using nonsensical words (Lorem Ipsum).')
+  Trace.error('Part of the eLyXer package (http://elyxer.nongnu.org/).')
+  Trace.error('  Options:')
+  Trace.error('    --help: show this message and quit.')
   return
 
 class LoremIpsumizer(object):
