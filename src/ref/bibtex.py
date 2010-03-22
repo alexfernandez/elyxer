@@ -305,7 +305,7 @@ class PubEntry(ContentEntry):
     "Check if the entry is referenced"
     if not self.key:
       return False
-    return self.key in BiblioEntry.entries
+    return self.key in BiblioReference.references
 
   def process(self):
     "Process the entry"

@@ -28,41 +28,41 @@ from io.output import *
 from ref.link import *
 
 
-class BiblioCite(Container):
-  "Cite of a bibliography entry"
+class BiblioCitation(Container):
+  "A complete bibliography citation (possibly with many cites)."
 
-  cites = dict()
-  generator = NumberGenerator()
+  citations = dict()
 
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('sup')
     self.contents = []
-    self.cites = []
 
   def process(self):
-    "Add a cite to every entry"
+    "Process the complete citation and all cites within."
     keys = self.parameters['key'].split(',')
     for key in keys:
-      number = NumberGenerator.instance.generateunique('bibliocite')
-      entry = self.createentry(key, number)
-      cite = Link().complete(number, 'cite-' + number, type='bibliocite')
-      cite.setmutualdestination(entry)
-      self.contents += [cite, Constant(',')]
-      if not key in BiblioCite.cites:
-        BiblioCite.cites[key] = []
-      BiblioCite.cites[key].append(cite)
+      self.contents += [BiblioCite().create(key), Constant(',')]
     if len(keys) > 0:
       # remove trailing ,
       self.contents.pop()
 
-  def createentry(self, key, number):
-    "Create the entry with the given key and number."
-    entry = Link().complete(number, 'biblio-' + number, type='biblioentry')
-    if not key in BiblioEntry.entries:
-      BiblioEntry.entries[key] = []
-    BiblioEntry.entries[key].append(entry)
-    return entry
+class BiblioCite(Link):
+  "Cite of a bibliography entry"
+
+  cites = dict()
+
+  def create(self, key):
+    "Create the cite to the given key."
+    self.key = key
+    number = NumberGenerator.instance.generateunique('bibliocite')
+    ref = BiblioReference().create(key, number)
+    self.complete(number, 'cite-' + number, type='bibliocite')
+    self.setmutualdestination(ref)
+    if not key in BiblioCite.cites:
+      BiblioCite.cites[key] = []
+    BiblioCite.cites[key].append(self)
+    return self
 
 class Bibliography(Container):
   "A bibliography layout containing an entry"
@@ -70,6 +70,20 @@ class Bibliography(Container):
   def __init__(self):
     self.parser = BoundedParser()
     self.output = TaggedOutput().settag('p class="biblio"', True)
+
+class BiblioReference(Link):
+  "A reference to a bibliographical entry."
+
+  references = dict()
+
+  def create(self, key, number):
+    "Create the reference with the given key and number."
+    self.key = key
+    self.complete(number, 'biblio-' + number, type='biblioentry')
+    if not key in BiblioReference.references:
+      BiblioReference.references[key] = []
+    BiblioReference.references[key].append(self)
+    return self
 
 class BiblioEntry(Container):
   "A bibliography entry"
@@ -87,13 +101,12 @@ class BiblioEntry(Container):
   def processcites(self, key):
     "Get all the cites of the entry"
     self.key = key
-    if not key in BiblioEntry.entries:
+    if not key in BiblioReference.references:
       self.contents.append(Constant('[-] '))
       return
-    entries = BiblioEntry.entries[key]
     self.contents = [Constant('[')]
-    for entry in entries:
-      self.contents.append(entry)
+    for ref in BiblioReference.references[key]:
+      self.contents.append(ref)
       self.contents.append(Constant(','))
     self.contents.pop(-1)
     self.contents.append(Constant('] '))
