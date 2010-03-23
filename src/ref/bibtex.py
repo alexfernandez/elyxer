@@ -309,6 +309,7 @@ class PubEntry(ContentEntry):
 
   def process(self):
     "Process the entry"
+    self.index = NumberGenerator.instance.generateunique('pubentry')
     biblio = BiblioEntry()
     biblio.processcites(self.key)
     self.contents = [biblio, Constant(' ')]
