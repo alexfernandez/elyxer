@@ -75,6 +75,7 @@ zip -qr elyxer-$DATE.zip elyxer/src/*.py
 zip -qr elyxer-$DATE.zip elyxer/src/**/*.py
 zip -q elyxer-$DATE.zip elyxer/docs/*
 zip -qr elyxer-$DATE.zip elyxer/test
+zip -qr elyxer-$DATE.zip elyxer/po
 mv elyxer-$DATE.zip elyxer/dist
 cd elyxer
 ./run-tests

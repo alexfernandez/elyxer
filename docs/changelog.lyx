@@ -125,6 +125,14 @@ loremipsumize.py
  so it can be used outside of eLyXer.
 \end_layout
 
+\begin_layout Itemize
+Include internationalization files in 
+\family typewriter
+.zip
+\family default
+ file.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.42 (2010-03-17):
