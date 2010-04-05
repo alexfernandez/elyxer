@@ -665,3 +665,6 @@ div.warning {
 	font-size: 120%;
 	color:#cc0000;
 }
+div.PlainVisible {
+	width: auto;
+}

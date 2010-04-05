@@ -197,3 +197,7 @@ class PlainLayout(Layout):
     self.output = ContentsOutput()
     self.type = 'Plain'
 
+  def makevisible(self):
+    "Make the layout visible, output as tagged text."
+    self.output = TaggedOutput().settag('div class="PlainVisible"', True)
+

@@ -133,6 +133,10 @@ Include internationalization files in
  file.
 \end_layout
 
+\begin_layout Itemize
+Solved bug in table parsing: separate different plain layouts (thanks, Sara!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.42 (2010-03-17):

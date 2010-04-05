@@ -38,6 +38,7 @@ class PostTable(object):
     for row in table.contents:
       index = 0
       while index < len(row.contents):
+        self.checkforplain(row, index)
         self.checkmulticolumn(row, index)
         index += 1
     return table
@@ -68,6 +69,15 @@ class PostTable(object):
     for row in table.contents:
       if attrname in row.parameters:
         row.output = EmptyOutput()
+
+  def checkforplain(self, row, index):
+    "Make plain layouts visible if necessary."
+    cell = row.contents[index]
+    plainlayouts = cell.searchall(PlainLayout)
+    if len(plainlayouts) <= 1:
+      return
+    for plain in plainlayouts:
+      plain.makevisible()
 
   def checkmulticolumn(self, row, index):
     "Process a multicolumn attribute"
