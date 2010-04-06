@@ -1309,6 +1309,14 @@ target "http://www.math.union.edu/locate/jsMath"
 \end_inset
 
  at the given URL to pretty-print mathematical equations.
+ See section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Math"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2250,6 +2258,87 @@ $localedir/my/LC_MESSAGES/elyxer.mo
 
 \begin_layout Standard
 and you are done.
+\end_layout
+
+\begin_layout Subsection
+Math
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Math"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Math equations are an important part of what takes LyX apart from other
+ browsers, since it supports the full LaTeX feature set -- that is, everything
+ under the sun.
+ Unfortunately, math support is hard to get right.
+ Many developers are focusing on MathML, but at the time of this writing
+ (Q2 2010) support on some common browsers is still missing.
+\end_layout
+
+\begin_layout Standard
+eLyXer follows its usual minimalistic approach and doesn't try to be everything
+ to everybody -- instead, it supports out of the box a set of usual constructs
+ (fraction, square root) and tries to simulate others (binomial, overbrace).
+ See the 
+\begin_inset CommandInset href
+LatexCommand href
+name "Math showcase"
+target "math.html"
+
+\end_inset
+
+ for yourself and learn what eLyXer supports and what not.
+\end_layout
+
+\begin_layout Standard
+For more sophisticated math equations there are a couple of advanced features.
+ The first is to use 
+\begin_inset CommandInset href
+LatexCommand href
+name "jsMath"
+target "http://www.math.union.edu/~dpvc/jsMath/welcome.html"
+
+\end_inset
+
+, for which you have to run eLyXer with the option 
+\family typewriter
+--jsmath
+\family default
+:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --jsmath jsmath/ math.lyx math-jsmath.html
+\end_layout
+
+\begin_layout Standard
+It uses the given URL to load the required JavaScript files and start rendering.
+ Unfortunately, all JavaScript code has to be loaded from the same domain
+ as the main document, so if you wish to use this method you will have to
+ host the jsMath on your site.
+ See the 
+\begin_inset CommandInset href
+LatexCommand href
+name "Math showcase (jsMath edition)"
+target "math-jsmath.html"
+
+\end_inset
+
+ to see how jsMath improves (or deteriorates) the picture for you.
+\end_layout
+
+\begin_layout Standard
+Another possibility is to use MathJax; support is underway.
 \end_layout
 
 \begin_layout Section
