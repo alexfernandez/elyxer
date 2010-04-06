@@ -145,8 +145,8 @@ class HeaderOutput(object):
     html.append(u'<link rel="stylesheet" href="' + Options.css + '" type="text/css" media="screen"/>\n')
     html += TitleOutput().gethtml(container)
     if Options.jsmath:
-      html.append(u'<script src="' + Options.jsmath + '/easy/load.js"></script>\n')
       html.append(u'<script src="' + Options.jsmath + '/plugins/noImageFonts.js"></script>\n')
+      html.append(u'<script src="' + Options.jsmath + '/easy/load.js"></script>\n')
     html.append('</head>\n')
     html.append('<body>\n')
     html.append('<div id="globalWrapper">\n')
