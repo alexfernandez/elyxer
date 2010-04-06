@@ -1116,22 +1116,6 @@ reference "sub:HTML-Code"
 \begin_layout Description
 
 \family typewriter
---jsmath
-\family default
-: use the excellent JavaScript library 
-\begin_inset CommandInset href
-LatexCommand href
-name "jsMath"
-target "http://www.math.union.edu/locate/jsMath"
-
-\end_inset
-
- to pretty-print mathematical equations.
-\end_layout
-
-\begin_layout Description
-
-\family typewriter
 --forceformat
 \begin_inset space ~
 \end_inset
@@ -1298,6 +1282,33 @@ inkscape
 Label footnotes using numbers, instead of letters.
  Useful when bibliographical references are not numbered and therefore cannot
  be confused with footnotes.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--jsmath
+\begin_inset space ~
+\end_inset
+
+
+\series bold
+"
+\series default
+URL
+\series bold
+"
+\family default
+\series default
+: use the excellent JavaScript library 
+\begin_inset CommandInset href
+LatexCommand href
+name "jsMath"
+target "http://www.math.union.edu/locate/jsMath"
+
+\end_inset
+
+ at the given URL to pretty-print mathematical equations.
 \end_layout
 
 \begin_layout Standard
