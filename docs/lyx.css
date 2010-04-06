@@ -529,10 +529,10 @@ div.Shaded {
 	outline-style: inset;
 }
 div.ovalbox {
-	outline-style: grooved;
+	outline-style: groove;
 }
 div.Ovalbox {
-	outline-style: ridged;
+	outline-style: ridge;
 }
 span.number-left {
 	float: left;
