@@ -133,8 +133,8 @@ class Options(object):
     Trace.error('    --converter inkscape:   use Inkscape to convert images')
     Trace.error('    --numberfoot:           label footnotes with numbers instead of letters')
     Trace.error('    --raw:                  generate HTML without header or footer.')
-    Trace.error('    --jsmath "URL":         use jsMath from given URL to display equations')
-    Trace.error('    --mathjax "URL":        use MathJax from given URL to display equations')
+    Trace.error('    --jsmath "URL":         use jsMath from the given URL to display equations')
+    Trace.error('    --mathjax "URL":        use MathJax from the given URL to display equations')
     exit()
 
   def showversion(self):

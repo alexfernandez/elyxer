@@ -2377,8 +2377,15 @@ target "math-jsmath.html"
 \end_layout
 
 \begin_layout Standard
-Another possibility is to use MathJax, which is just as simple with the
- option 
+Another possibility is to use 
+\begin_inset CommandInset href
+LatexCommand href
+name "MathJax"
+target "http://www.mathjax.org/"
+
+\end_inset
+
+, which is just as simple with the option 
 \family typewriter
 --mathjax
 \family default

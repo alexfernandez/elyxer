@@ -162,8 +162,16 @@ target "index.html"
 .
 \end_layout
 
+\begin_layout Subsection
+Versions
+\end_layout
+
 \begin_layout Standard
-There is a 
+There are several versions of this page:
+\end_layout
+
+\begin_layout Itemize
+A 
 \begin_inset CommandInset href
 LatexCommand href
 name "non-Unicode version"
@@ -171,7 +179,11 @@ target "math.html"
 
 \end_inset
 
- of this page with midspaces and a 
+ of this page with midspaces.
+\end_layout
+
+\begin_layout Itemize
+A 
 \begin_inset CommandInset href
 LatexCommand href
 name "Unicode version"
@@ -183,7 +195,11 @@ target "math-unicode.html"
 \family typewriter
 --unicode
 \family default
-), and also an 
+).
+\end_layout
+
+\begin_layout Itemize
+An 
 \begin_inset CommandInset href
 LatexCommand href
 name "ISO-8859-15 version"
@@ -196,12 +212,63 @@ target "math-iso885915.html"
 --iso885915
 \family default
 ).
- All of them are generated from the same 
+\end_layout
+
+\begin_layout Itemize
+A 
+\begin_inset CommandInset href
+LatexCommand href
+name "jsMath version"
+target "math-jsmath.html"
+
+\end_inset
+
+ that uses 
+\begin_inset CommandInset href
+LatexCommand href
+name "jsMath"
+target "http://www.math.union.edu/~dpvc/jsMath/welcome.html"
+
+\end_inset
+
+ (generated with 
+\family typewriter
+--jsmath
+\family default
+).
+\end_layout
+
+\begin_layout Itemize
+A 
+\begin_inset CommandInset href
+LatexCommand href
+name "MathJax version"
+target "math-mathjax.html"
+
+\end_inset
+
+ with 
+\begin_inset CommandInset href
+LatexCommand href
+name "MathJax"
+target "http://www.mathjax.org/"
+
+\end_inset
+
+ (generated with 
+\family typewriter
+--mathjax
+\family default
+).
+\end_layout
+
+\begin_layout Standard
+All of them are generated from the same 
 \family typewriter
 .lyx
 \family default
- source file.
- You can use the one that best suits you.
+ source file; they should help you decide which rendering options suit you
+ best.
 \end_layout
 
 \begin_layout Section

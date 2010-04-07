@@ -46,7 +46,7 @@ class Formula(Container):
       self.contents = [Constant(self.contents[0])]
       return
     if Options.mathjax:
-      self.output.tag = 'span class="MathJax"'
+      self.output.tag = 'span class="MathJax_Preview"'
       tag = 'script type="math/tex'
       if self.header[0] != 'inline':
         tag += ';mode=display'
