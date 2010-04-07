@@ -110,11 +110,31 @@ abbrvnat
 \end_layout
 
 \begin_layout Itemize
-Added option 
+Added options for mathematical equations: 
 \family typewriter
 --jsmath
 \family default
- to use jsMath for mathematical equations.
+ to use 
+\begin_inset CommandInset href
+LatexCommand href
+name "jsMath"
+target "math-jsmath.html"
+
+\end_inset
+
+ and 
+\family typewriter
+--mathjax
+\family default
+ to use 
+\begin_inset CommandInset href
+LatexCommand href
+name "MathJax"
+target "math-jsmath.html"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Itemize

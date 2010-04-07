@@ -62,6 +62,7 @@ class Options(object):
   numberfoot = False
   raw = False
   jsmath = None
+  mathjax = None
 
   branches = dict()
 
@@ -133,6 +134,7 @@ class Options(object):
     Trace.error('    --numberfoot:           label footnotes with numbers instead of letters')
     Trace.error('    --raw:                  generate HTML without header or footer.')
     Trace.error('    --jsmath "URL":         use jsMath from given URL to display equations')
+    Trace.error('    --mathjax "URL":        use MathJax from given URL to display equations')
     exit()
 
   def showversion(self):

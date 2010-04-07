@@ -112,11 +112,14 @@ class HeaderOutput(object):
   def gethtml(self, container):
     "Return a constant header"
     html = self.getheader(container)
-    if Options.jsmath:
+    if Options.jsmath or Options.mathjax:
       html.append(u'<noscript>\n')
       html.append(u'<div class="warning">\n')
       html.append(TranslationConfig.constants['jsmath-warning'])
-      html.append(u'<a href="http://www.math.union.edu/locate/jsMath">jsMath</a>')
+      if Options.jsmath:
+        html.append(u'<a href="http://www.math.union.edu/locate/jsMath">jsMath</a>')
+      if Options.mathjax:
+        html.append(u'<a href="http://www.mathjax.org/">MathJax</a>')
       html.append(TranslationConfig.constants['jsmath-requires'])
       html.append(TranslationConfig.constants['jsmath-enable'] + '\n')
       html.append(u'</div><hr/>\n')
@@ -145,8 +148,14 @@ class HeaderOutput(object):
     html.append(u'<link rel="stylesheet" href="' + Options.css + '" type="text/css" media="screen"/>\n')
     html += TitleOutput().gethtml(container)
     if Options.jsmath:
-      html.append(u'<script src="' + Options.jsmath + '/plugins/noImageFonts.js"></script>\n')
-      html.append(u'<script src="' + Options.jsmath + '/easy/load.js"></script>\n')
+      html.append(u'<script type="text/javascript" src="' + Options.jsmath + '/plugins/noImageFonts.js"></script>\n')
+      html.append(u'<script type="text/javascript" src="' + Options.jsmath + '/easy/load.js"></script>\n')
+    if Options.mathjax:
+      html.append(u'<script type="text/javascript" src="' + Options.mathjax + '">\n')
+      html.append(u'//  Load MathJax and get it running\n')
+      html.append(u'MathJax.Hub.Config({ jax: ["input/TeX","output/HTML-CSS"],\n')
+      html.append(u'extensions: ["tex2jax.js"], tex2jax: { processEscapes: 1 } });\n')
+      html.append(u'</script>\n')
     html.append('</head>\n')
     html.append('<body>\n')
     html.append('<div id="globalWrapper">\n')

@@ -1319,6 +1319,41 @@ reference "sub:Math"
 .
 \end_layout
 
+\begin_layout Description
+
+\family typewriter
+--mathjax
+\begin_inset space ~
+\end_inset
+
+
+\series bold
+"
+\series default
+URL
+\series bold
+"
+\family default
+\series default
+: use the promising JavaScript library 
+\begin_inset CommandInset href
+LatexCommand href
+name "MathJax"
+target "http://www.mathjax.org/"
+
+\end_inset
+
+ at the given URL to pretty-print mathematical equations.
+ See also section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Math"
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
 When an option accepts an argument it can be added after a space as 
 \family typewriter
@@ -2273,8 +2308,8 @@ name "sub:Math"
 
 \begin_layout Standard
 Math equations are an important part of what takes LyX apart from other
- browsers, since it supports the full LaTeX feature set -- that is, everything
- under the sun.
+ editors, since it supports the full LaTeX feature set -- that is, about
+ everything under the sun.
  Unfortunately, math support is hard to get right.
  Many developers are focusing on MathML, but at the time of this writing
  (Q2 2010) support on some common browsers is still missing.
@@ -2318,14 +2353,18 @@ target "http://www.math.union.edu/~dpvc/jsMath/welcome.html"
 \color blue
 $
 \color inherit
- elyxer.py --jsmath jsmath/ math.lyx math-jsmath.html
+ elyxer.py --jsmath jsMath/ math.lyx math-jsmath.html
 \end_layout
 
 \begin_layout Standard
-It uses the given URL to load the required JavaScript files and start rendering.
+It uses the given URL (in this case the relative URL 
+\family typewriter
+jsMath/
+\family default
+) to load the required JavaScript files and start rendering.
  Unfortunately, all JavaScript code has to be loaded from the same domain
  as the main document, so if you wish to use this method you will have to
- host the jsMath on your site.
+ host jsMath on your site.
  See the 
 \begin_inset CommandInset href
 LatexCommand href
@@ -2338,7 +2377,43 @@ target "math-jsmath.html"
 \end_layout
 
 \begin_layout Standard
-Another possibility is to use MathJax; support is underway.
+Another possibility is to use MathJax, which is just as simple with the
+ option 
+\family typewriter
+--mathjax
+\family default
+:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --mathjax MathJax/ math.lyx math-jsmath.html
+\end_layout
+
+\begin_layout Standard
+This option also uses the given URL (now 
+\family typewriter
+MathJax/
+\family default
+) to load MathJax from and set it up.
+ Although some code needs to be hosted on the same site as the pages, MathJax
+ uses a feature called web-fonts which can be downloaded from a public server;
+ this is quite easier to host.
+ See the 
+\begin_inset CommandInset href
+LatexCommand href
+name "Math showcase (MathJax edition)"
+target "math-mathjax.html"
+
+\end_inset
+
+ to see how MathJax fares with eLyXer.
+ Keep in mind that MathJax is still prerelease quality; it should improve
+ greatly during 2010.
 \end_layout
 
 \begin_layout Section

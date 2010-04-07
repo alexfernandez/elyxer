@@ -45,6 +45,13 @@ class Formula(Container):
       self.output.tag = self.output.tag.replace('formula', 'math')
       self.contents = [Constant(self.contents[0])]
       return
+    if Options.mathjax:
+      self.output.tag = 'span class="MathJax"'
+      tag = 'script type="math/tex'
+      if self.header[0] != 'inline':
+        tag += ';mode=display'
+      self.contents = [TaggedText().constant(self.contents[0], tag + '"', True)]
+      return
     pos = TextPosition(self.contents[0])
     whole = WholeFormula()
     if not whole.detect(pos):
