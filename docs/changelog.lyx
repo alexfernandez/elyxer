@@ -138,7 +138,7 @@ Solved bug in table parsing: separate different plain layouts (thanks, Sara!).
 \end_layout
 
 \begin_layout Itemize
-eLyXer compressed files now have a single directory called 
+eLyXer compressed files now contain a single directory called 
 \family typewriter
 elyxer-$VERSION
 \family default
