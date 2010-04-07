@@ -137,6 +137,18 @@ Include internationalization files in
 Solved bug in table parsing: separate different plain layouts (thanks, Sara!).
 \end_layout
 
+\begin_layout Itemize
+eLyXer compressed files now have a single directory called 
+\family typewriter
+elyxer-$VERSION
+\family default
+, instead of just 
+\family typewriter
+elyxer
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.42 (2010-03-17):

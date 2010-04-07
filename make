@@ -63,21 +63,20 @@ cd src
 cd ..
 
 # make compressed files
-mkdir -p dist
+rm -rf dist/elyxer-$VERSION
+mkdir -p dist/elyxer-$VERSION
+rsync -a --exclude "build" --exclude "dist" \
+       --exclude ".git" --exclude "samples" \
+       --exclude "docs/cvs" --exclude "docs/jsMath" \
+       --exclude "extras" --exclude "open-env" \
+       --exclude "*.pyc" --exclude "*.swp" \
+      . dist/elyxer-$VERSION/
+cd dist
+tar -czf elyxer-$VERSION.tar.gz elyxer-$VERSION
+rm -f elyxer-$VERSION.zip
+zip -qr elyxer-$VERSION.zip elyxer-$VERSION/*
 cd ..
-DATE=$(date "+%Y-%m-%d")
-tar --exclude "elyxer/dist" --exclude "elyxer/.git" \
-  --exclude "elyxer/samples" --exclude "src/*.pyc" \
-  --exclude "docs/cvs" --exclude "build" \
-  -czf elyxer-$DATE.tar.gz elyxer
-mv elyxer-$DATE.tar.gz elyxer/dist
-zip -q elyxer-$DATE.zip elyxer/* -x *dist* -x *build*
-zip -qr elyxer-$DATE.zip elyxer/src/*.py
-zip -qr elyxer-$DATE.zip elyxer/src/**/*.py
-zip -q elyxer-$DATE.zip elyxer/docs/*
-zip -qr elyxer-$DATE.zip elyxer/test
-zip -qr elyxer-$DATE.zip elyxer/po
-mv elyxer-$DATE.zip elyxer/dist
-cd elyxer
+
+# run the test suite
 ./run-tests
 
