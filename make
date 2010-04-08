@@ -63,21 +63,6 @@ cd src
 ./textchange.py "the latest version" "the latest version $VERSION, created on $DATE," ../docs/index.html
 cd ..
 
-# make compressed files
-rm -rf dist/elyxer-$VERSION
-mkdir -p dist/elyxer-$VERSION
-rsync -a --exclude "build" --exclude "dist" \
-       --exclude ".git" --exclude "samples" \
-       --exclude "docs/cvs" --exclude "docs/jsMath" \
-       --exclude "extras" --exclude "open-env" \
-       --exclude "*.pyc" --exclude "*.swp" \
-      . dist/elyxer-$VERSION/
-cd dist
-tar -czf elyxer-$VERSION.tar.gz elyxer-$VERSION
-rm -f elyxer-$VERSION.zip
-zip -qr elyxer-$VERSION.zip elyxer-$VERSION/*
-cd ..
-
 # run the test suite
 ./run-tests
 

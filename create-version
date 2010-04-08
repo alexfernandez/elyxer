@@ -31,10 +31,20 @@ src/textchange.py "unknown" $VERSION setup.py
 # Push code
 git push
 
-# Rename packages
+# make compressed files
+rm -rf dist/elyxer-$VERSION
+mkdir -p dist/elyxer-$VERSION
+rsync -a --exclude "build" --exclude "dist" \
+       --exclude ".git" --exclude "samples" \
+       --exclude "docs/cvs" \
+       --exclude "docs/jsMath" --exclude "docs/MathJax" \
+       --exclude "extras" --exclude "open-env" \
+       --exclude "*.pyc" --exclude "*.swp" \
+      . dist/elyxer-$VERSION/
 cd dist
-mv elyxer-$DATE.tar.gz elyxer-$VERSION.tar.gz
-mv elyxer-$DATE.zip elyxer-$VERSION.zip
+tar -czf elyxer-$VERSION.tar.gz elyxer-$VERSION
+rm -f elyxer-$VERSION.zip
+zip -qr elyxer-$VERSION.zip elyxer-$VERSION/*
 
 # Sign packages
 gpg -b elyxer-$VERSION.tar.gz
