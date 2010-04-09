@@ -306,6 +306,11 @@ Greek symbols are very important in equations:
 \end_inset
 
 .
+ Also the AMS italicized upper case: 
+\begin_inset Formula $\varGamma\varOmega$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection

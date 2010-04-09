@@ -169,6 +169,19 @@ elyxer
 .
 \end_layout
 
+\begin_layout Itemize
+Added italicized uppercase Greek letters: 
+\begin_inset Formula $\varGamma\varOmega$
+\end_inset
+
+.
+ De-italicized regular uppercase Greek letters: 
+\begin_inset Formula $\Gamma\Omega$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.42 (2010-03-17):
