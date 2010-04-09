@@ -152,11 +152,12 @@ class HeaderOutput(object):
       html.append(u'<script type="text/javascript" src="' + Options.jsmath + '/easy/load.js"></script>\n')
     if Options.mathjax:
       html.append(u'<script type="text/javascript" src="' + Options.mathjax + '/MathJax.js">\n')
-      html.append(u'//  Load MathJax and get it running\n')
-      html.append(u'MathJax.Hub.Config({ jax: ["input/TeX","output/NativeMML"],\n') # output/HTML-CSS
-      html.append(u'extensions: ["TeX/AMSmath.js","TeX/AMSsymbols.js"],\n')
-      html.append(u'"HTML-CSS": { imageFont: null },\n')
-      html.append(u'});\n')
+      html.append(u'  //  Load MathJax and get it running\n')
+      html.append(u'  MathJax.Hub.Config({ jax: ["input/TeX"],\n') # output/HTML-CSS
+      html.append(u'  config: ["MMLorHTML.js"],\n')
+      html.append(u'  extensions: ["TeX/AMSmath.js","TeX/AMSsymbols.js"],\n')
+      html.append(u'  "HTML-CSS": { imageFont: null },\n')
+      html.append(u'  });\n')
       html.append(u'</script>\n')
     html.append('</head>\n')
     html.append('<body>\n')
