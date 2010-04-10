@@ -2332,7 +2332,14 @@ target "math.html"
 
 \begin_layout Standard
 For more sophisticated math equations there are a couple of advanced features.
- The first is to use 
+\end_layout
+
+\begin_layout Subsubsection*
+jsMath
+\end_layout
+
+\begin_layout Standard
+The first is to use 
 \begin_inset CommandInset href
 LatexCommand href
 name "jsMath"
@@ -2374,6 +2381,10 @@ target "math-jsmath.html"
 \end_inset
 
  to see how jsMath improves (or deteriorates) the picture for you.
+\end_layout
+
+\begin_layout Subsubsection*
+MathJax
 \end_layout
 
 \begin_layout Standard
@@ -2421,6 +2432,74 @@ target "math-mathjax.html"
  to see how MathJax fares with eLyXer.
  Keep in mind that MathJax is still prerelease quality; it should improve
  greatly during 2010.
+\end_layout
+
+\begin_layout Subsubsection*
+Client-side Rendering
+\end_layout
+
+\begin_layout Standard
+Something to note is that both jsMath and MathJax are JavaScript libraries;
+ all rendering is done client-side by the user's browser.
+ This has quite a few advantages:
+\end_layout
+
+\begin_layout Itemize
+Math processing on the server is quite light; equations are basically surrounded
+ by a special tag and left in TeX form.
+\end_layout
+
+\begin_layout Itemize
+For developers: integration of these libraries is very easy.
+ It took just a few days to integrate both libraries with eLyXer.
+\end_layout
+
+\begin_layout Itemize
+Both libraries (especially MathJax) are improving all the time thanks to
+ the efforts of Davide P.
+ Cervone and the rest of the developer team; eLyXer and its users reap the
+ benefits readily.
+\end_layout
+
+\begin_layout Itemize
+The client browser already knows its abilities, and can choose the rendering
+ method it considers to be the best.
+ MathJax can even choose between MathML and HTML+CSS 
+\emph on
+at page rendering time
+\emph default
+, showing MathML on fancier browsers and simpler HTML where it is not available.
+\end_layout
+
+\begin_layout Standard
+It also brings some disadvantages:
+\end_layout
+
+\begin_layout Itemize
+JavaScript code can only be loaded from the server originating the page.
+ This means that you cannot host your pages e.g.
+ at www.myserver.com and MathJax at www.mymathjaxserver.com.
+\end_layout
+
+\begin_layout Itemize
+As a consequence, everyone publishing eLyXer pages converted with 
+\family typewriter
+--mathjax
+\family default
+ needs to also host the code for MathJax, and the same for jsMath.
+ (Web fonts used in MathJax can at least be hosted elsewhere, so publishers
+ do not need to also host the fonts package, but this hasn't still been
+ used in eLyXer.)
+\end_layout
+
+\begin_layout Itemize
+And of course it takes some time to render everything on the client, which
+ can degrade the user experience on older machines.
+\end_layout
+
+\begin_layout Standard
+Publishers should carefully consider pros and cons before deciding what
+ to use.
 \end_layout
 
 \begin_layout Section
@@ -2709,6 +2788,26 @@ n; local CSS files are more flexible but can also be confusing to novice
 \family default
  option as a fallback.
  
+\end_layout
+
+\begin_layout Description
+Q: My jsMath (MathJax) pages are not rendering correctly; equations are
+ silently ignored.
+\end_layout
+
+\begin_layout Description
+A: Check that jsMath (MathJax) is installed on the same server as your pages;
+ for security reasons the browser's 
+\begin_inset Quotes eld
+\end_inset
+
+same-origin
+\begin_inset Quotes erd
+\end_inset
+
+ policy mandates that JavaScript can only be loaded from the same site as
+ the original page.
+ Also make sure that JavaScript is enabled on the browser.
 \end_layout
 
 \begin_layout Description
