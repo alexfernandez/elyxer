@@ -201,3 +201,13 @@ class PlainLayout(Layout):
     "Make the layout visible, output as tagged text."
     self.output = TaggedOutput().settag('div class="PlainVisible"', True)
 
+class LyXCode(Layout):
+  "A bit of LyX-Code."
+
+  def process(self):
+    "Output as pre."
+    self.output.tag = 'pre class="LyX-Code"'
+    for newline in self.searchall(Newline):
+      index = newline.parent.contents.index(newline)
+      newline.parent.contents[index] = Constant('\n')
+

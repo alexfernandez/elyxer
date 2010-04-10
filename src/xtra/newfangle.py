@@ -73,7 +73,6 @@ class NewfangledChunk(Layout):
     self.origin = self.createorigin()
     if self.name in NewfangledChunkRef.references:
       for ref in NewfangledChunkRef.references[self.name]:
-        Trace.debug('Dangling reference: ' + unicode(ref))
         self.linkorigin(ref.origin)
 
   def createorigin(self):
@@ -124,11 +123,8 @@ class ChunkProcessor(object):
     listing.counter = ChunkProcessor.counters[name]
     for command, container, index in self.commandsinlisting(listing):
       chunkref = self.getchunkref(command)
-      Trace.debug('Command: ' + command)
       if chunkref:
-        Trace.debug('Chunkref: ' + chunkref)
         self.insertchunkref(chunkref, container, index)
-    listing.tree()
 
   def commandsinlisting(self, listing):
     "Find all newfangle commands in a listing."

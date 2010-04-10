@@ -534,6 +534,26 @@ Each line has its own number.
 \end_layout
 
 \begin_layout Standard
+As soon as we can get to it: a LyX-Code.
+\end_layout
+
+\begin_layout LyX-Code
+This is LyX-Code.
+\end_layout
+
+\begin_layout LyX-Code
+Code-LyX it's not.
+\end_layout
+
+\begin_layout LyX-Code
+My heart will explode,
+\end_layout
+
+\begin_layout LyX-Code
+My tongue's in a knot.
+\end_layout
+
+\begin_layout Standard
 And many other things.
 \end_layout
 
