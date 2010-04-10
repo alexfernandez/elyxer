@@ -617,7 +617,7 @@ class GeneralConfig(object):
   "Configuration class from config file"
 
   version = {
-      u'date':u'2010-04-10', u'lyxformat':u'345', u'number':u'0.43', 
+      u'date':u'2010-04-10', u'lyxformat':u'345', u'number':u'0.44', 
       }
 
 class HeaderConfig(object):

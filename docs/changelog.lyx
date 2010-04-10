@@ -89,6 +89,16 @@ index.html
 \end_layout
 
 \begin_layout Itemize
+0.44 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+MathJax: workaround bug in MSIE, that causes it to fail to render anything.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 0.43 (2010-04-10):
 \end_layout
 
