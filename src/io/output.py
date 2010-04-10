@@ -156,7 +156,7 @@ class HeaderOutput(object):
       html.append(u'  MathJax.Hub.Config({ jax: ["input/TeX"],\n') # output/HTML-CSS
       html.append(u'  config: ["MMLorHTML.js"],\n')
       html.append(u'  extensions: ["TeX/AMSmath.js","TeX/AMSsymbols.js"],\n')
-      html.append(u'  "HTML-CSS": { imageFont: null },\n')
+      html.append(u'  "HTML-CSS": { imageFont: null }\n')
       html.append(u'  });\n')
       html.append(u'</script>\n')
     html.append('</head>\n')
