@@ -23,6 +23,7 @@
 # eLyXer postprocessor for tables
 
 from util.trace import Trace
+from gen.layout import *
 from gen.table import *
 from post.postprocess import *
 
