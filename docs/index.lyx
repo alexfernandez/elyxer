@@ -454,6 +454,19 @@ type "mailto:"
  Packagers Sven Hoexter (for Debian) and Uwe Stöhr (on Windows) have helped
  with their work to make it easy to try it out.
  Olivier Ripoll, Geremy Condra and Simon South have provided the first patches.
+ Davide P.
+ Cervone has been extremely helpful and responsive about jsMath and MathJax
+ integration, while Paul Hunter has also gone beyond the call of duty with
+ his help integrating 
+\begin_inset CommandInset href
+LatexCommand href
+name "MathToWeb"
+target "http://www.mathtoweb.com/"
+
+\end_inset
+
+ (which unfortunately has not been fruitful yet, but not due to his lack
+ of interest but my lack of skill).
 \end_layout
 
 \begin_layout Standard
