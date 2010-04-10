@@ -26,6 +26,7 @@ from util.trace import Trace
 from util.numbering import *
 from gen.container import *
 from gen.layout import *
+from gen.inset import *
 from gen.float import *
 from ref.label import *
 

@@ -33,6 +33,7 @@ from gen.inset import *
 from gen.basket import *
 from gen.integral import *
 from post.postprocess import *
+from post.postlayout import *
 from post.postlist import *
 from post.posttable import *
 from ref.postlink import *
