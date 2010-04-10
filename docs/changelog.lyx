@@ -97,6 +97,10 @@ index.html
 MathJax: workaround bug in MSIE, that causes it to fail to render anything.
 \end_layout
 
+\begin_layout Itemize
+Add a margin to LyX-Code.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.43 (2010-04-10):

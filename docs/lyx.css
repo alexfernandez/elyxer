@@ -481,6 +481,9 @@ pre {
 	font-family: monospace;
 	line-height: 1.5em;
 }
+pre.LyX-Code {
+	margin: 0em em;
+}
 a.Label {
 	text-decoration: none;
 	color: #000000;
