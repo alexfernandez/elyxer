@@ -175,7 +175,7 @@ class EscapeConfig(object):
   "Configuration class from config file"
 
   chars = {
-      u'\n':u'', u' -- ':u' — ', u' --- ':u' — ', u'\'':u'’', u'`':u'‘', 
+      u'\n':u'', u' -- ':u' — ', u'\'':u'’', u'---':u'—', u'`':u'‘', 
       }
 
   commands = {
