@@ -102,6 +102,10 @@ Add a margin to LyX-Code.
  Also improve line break separation inside LyX-Code.
 \end_layout
 
+\begin_layout Itemize
+Coalesce Python code: use relative paths when importing (thanks, Jack!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.43 (2010-04-10):
