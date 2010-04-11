@@ -23,46 +23,57 @@
 # Coalesces (unifies) all into one file to generate an executable
 
 import sys
+import os.path
 from io.fileline import *
 from util.trace import Trace
 
-
-files = list()
-
-def getreader(filename):
-  "Get a reader for lines"
-  if filename in files:
-    # already parsed; skip
-    return None
-  files.append(filename)
-  return LineReader(filename)
-
-def readargs(args):
-  "Read arguments from the command line"
-  del args[0]
-  if len(args) == 0:
-    usage()
-    return
-  reader = getreader(args[0])
-  del args[0]
-  fileout = sys.stdout
-  if len(args) > 0:
-    fileout = args[0]
-    del args[0]
-  if len(args) > 0:
-    usage()
-    return
-  writer = LineWriter(fileout)
-  return reader, writer
-
-def usage():
-  Trace.error('Usage: coalesce.py filein [fileout]')
-  return
 
 class Coalescer(object):
 
   def __init__(self):
     self.comments = True
+    self.files = []
+    self.directory = ''
+  
+  def getreader(self, filename, directory = ''):
+    "Get a reader for lines"
+    if filename in self.files:
+      # already parsed; skip
+      return None
+    self.files.append(filename)
+    if not os.path.exists(filename):
+      filename = os.path.join(self.directory, filename)
+      if not os.path.exists(filename):
+        Trace.error('Missing file ' + filename)
+        return None
+    return LineReader(filename)
+
+  def readargs(self, args):
+    "Read arguments from the command line"
+    del args[0]
+    if len(args) == 0:
+      self.usage()
+      return
+    self.reader = self.getreader(args[0])
+    self.directory = os.path.dirname(args[0])
+    del args[0]
+    fileout = sys.stdout
+    if len(args) > 0:
+      fileout = args[0]
+      del args[0]
+    if len(args) > 0:
+      usage()
+      return
+    self.writer = LineWriter(fileout)
+
+  def usage():
+    Trace.error('Usage: coalesce.py filein [fileout]')
+    return
+
+  def coalesceall(self):
+    "Coalesce all files from the root reader."
+    self.coalesce(self.reader, self.writer)
+    self.writer.close()
 
   def coalesce(self, reader, writer):
     "Coalesce all Python files used in filein to fileout"
@@ -73,7 +84,7 @@ class Coalescer(object):
       if line.startswith('from'):
         self.comments = False
         filename = line.split()[1].replace('.', '/') + '.py'
-        newreader = getreader(filename)
+        newreader = self.getreader(filename)
         self.coalesce(newreader, writer)
       elif line.startswith('#'):
         if self.comments:
@@ -83,10 +94,9 @@ class Coalescer(object):
       reader.nextline()
     reader.close()
 
-reader, writer = readargs(sys.argv)
-if reader:
-  Coalescer().coalesce(reader, writer)
-  writer.close()
+coalescer = Coalescer()
+coalescer.readargs(sys.argv)
+coalescer.coalesceall()
 
   
 
