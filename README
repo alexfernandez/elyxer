@@ -2,7 +2,8 @@ eLyXer -- convert LyX source files to HTML output.
 
 Introduction
 ============
-eLyXer converts a LyX source file to a HTML page.
+eLyXer converts a LyX source file to a HTML page. Full documentation in HTML
+format can be found at docs/index.html.
 
 Installation
 ============
