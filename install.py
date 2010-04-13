@@ -32,6 +32,7 @@ class Installer(object):
   "The eLyXer installer."
 
   elyxer = 'elyxer.py'
+  separators = {'Linux':':', 'Windows':';', 'Darwin':':'}
 
   def error(self, string):
     "Print an error string."
@@ -48,49 +49,35 @@ class Installer(object):
     exit()
 
   def copybin(self):
-    "Check permissions, copy binary file."
-    self.show('Path: ' + unicode(sys.path))
+    "Check permissions, try to copy binary file to any system path."
     system = platform.system()
-    if system == 'Linux':
-      path = self.copylinux()
-    elif system == 'Windows':
-      path = self.copywindows()
-    else:
+    if not system in Installer.separators:
       self.error('Unknown operating system ' + system + '; aborting')
       self.usage()
-    if path:
-      self.show('eLyXer installed as a binary in ' + path + '.')
-
-  def copylinux(self):
-    "Copy binary on Linux."
-    return self.copypaths(os.environ['PATH'].split(':'))
-
-  def copywindows(self):
-    "Copy binary on Windows."
-    return self.copypaths(os.environ['PATH'].split(';'))
-
-  def copypaths(self, paths):
-    "Try to copy eLyXer to any of the given paths."
-    for path in paths:
+    separator = Installer.separators[system]
+    for path in os.environ['PATH'].split(separator):
       if path == '.':
         next
       try:
         shutil.copy2(Installer.elyxer, path)
-        return path
+        self.show('eLyXer installed as a binary in ' + path)
+        return
       except IOError:
         pass
-    return None
+    self.error('eLyXer not installed')
 
   def installmodule(self):
     "Install eLyXer as a module."
-    self.show('Uid: ' + unicode(os.getuid()))
+    self.checkpermissions()
     sys.argv.append('install')
     import setup
     self.show('eLyXer installed as a module.')
 
   def checkpermissions(self):
     "Check if the user has permissions to install as a module."
-    pass
+    if platform.system() == 'Linux':
+      if os.getuid() != 0:
+        self.error('Need to be root to install as a Python module')
 
   def checkversion(self):
     "Check the current version."
@@ -100,7 +87,6 @@ class Installer(object):
       self.usage()
     if int(version[1]) < 3:
       self.usage()
-    self.error('System: ' + platform.system())
     if int(version[1]) == 3:
       self.copybin()
     self.copybin()
