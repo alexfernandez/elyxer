@@ -41,31 +41,42 @@ class SplitPartHeader(object):
 
   def __init__(self, firstbasket):
     "Set the first basket as last basket."
-    self.lastbasket = firstbasket
+    self.lastcontainer = None
     self.nextlink = None
 
-  def create(self, basket):
+  def create(self, basket, container):
     "Write the header to the basket."
     basket.write(LyXHeader())
-    basket.write(self.createheader())
-    if hasattr(self.lastbasket, 'nextlink'):
-      self.lastbasket.nextlink.page = basket.page
-    self.lastbasket = basket
+    basket.write(self.createheader(container))
 
-  def createheader(self):
+  def createheader(self, container):
     "Create the header with all links."
-    prevlink = Link().complete('prev', 'prev', type='prev')
+    prevlink = Link().complete('', 'prev', type='prev')
     if self.nextlink:
+      self.setlinkname(prevlink, 'prev', self.lastcontainer)
+      self.setlinkname(self.nextlink, 'next', container)
       prevlink.setmutualdestination(self.nextlink)
-    nextlink = Link().complete('next', 'next', type='next')
-    self.nextlink = nextlink
+    nextlink = Link().complete('', 'next', type='next')
     toplink = Link().complete('top', url='', type='top')
     prevcontainer = TaggedText().complete([prevlink], 'span class="prev"')
     nextcontainer = TaggedText().complete([nextlink], 'span class="next"')
     topcontainer = TaggedText().complete([toplink], 'span class="top"')
     contents = [prevcontainer, topcontainer, nextcontainer]
     header = TaggedText().complete(contents, 'div class="splitheader"', True)
+    self.nextlink = nextlink
+    self.lastcontainer = container
     return header
+
+  def setlinkname(self, link, type, container):
+    "Set the name on the link."
+    if hasattr(container, 'mustsplit'):
+      entry = container.mustsplit
+    else:
+      entry = container.entry
+    link.contents = [Constant(type + ': ' + entry)]
+  
+  def linkname(self, container):
+    "Get the name for the navigation link."
 
 class SplitPartBasket(Basket):
   "A basket used to split the output in different files."
@@ -99,7 +110,7 @@ class SplitPartBasket(Basket):
         Trace.debug('New page ' + filename)
         basket.write(LyXFooter())
         basket = self.addbasket(LineWriter(filename))
-        header.create(basket)
+        header.create(basket, container)
       basket.write(container)
     for basket in self.baskets:
       basket.process()
