@@ -671,9 +671,15 @@ div.warning {
 div.PlainVisible {
 	width: auto;
 }
-div.next {
+div.splitheader {
+	margin: 1em 0;
 }
-div.top {
+span.next {
+	float: right;
 }
-div.prev {
+span.top {
+	text-align: center;
+}
+span.prev {
+	float: left;
 }

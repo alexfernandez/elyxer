@@ -28,7 +28,7 @@ from gen.integral import *
 
 
 class SplitPartLink(IntegralProcessor):
-  "A link processing for multi-page output."
+  "A link processor for multi-page output."
 
   processedtype = Link
 
@@ -37,6 +37,32 @@ class SplitPartLink(IntegralProcessor):
     link.page = self.page
 
 class SplitPartHeader(object):
+  "The header that comes with a new split page."
+
+  lastbasket = None
+
+  def create(self, basket):
+    "Write the header to the basket."
+    basket.write(LyXHeader())
+    return
+    basket.write(self.createheader(basket))
+    if self.lastbasket:
+      self.lastbasket.nextlink.page = basket.page
+    self.lastbasket = basket
+
+  def createheader(self, basket):
+    "Create the header with all links."
+    prevlink = Link().complete('prev', url='', type='prev')
+    prevlink.page = self.lastbasket.page
+    nextlink = Link().complete('next', url='', type='next')
+    basket.nextlink = nextlink
+    toplink = Link().complete('top', url='', type='top')
+    prevcontainer = TaggedText().complete([prevlink], 'span class="prev"')
+    nextcontainer = TaggedText().complete([nextlink], 'span class="next"')
+    topcontainer = TaggedText().complete([toplink], 'span class="top"')
+    contents = [prevcontainer, topcontainer, nextcontainer]
+    header = TaggedText().complete(contents, 'div class="splitheader"', True)
+    return header
 
 class SplitPartBasket(Basket):
   "A basket used to split the output in different files."
@@ -61,6 +87,7 @@ class SplitPartBasket(Basket):
   def finish(self):
     "Process the whole basket, create page baskets and flush all of them."
     self.basket.process()
+    header = SplitPartHeader()
     basket = self.addbasket(self.writer)
     for container in self.basket.contents:
       if self.mustsplit(container):
@@ -68,7 +95,7 @@ class SplitPartBasket(Basket):
         Trace.debug('New page ' + filename)
         basket.write(LyXFooter())
         basket = self.addbasket(LineWriter(filename))
-        basket.write(LyXHeader())
+        header.create(basket)
       basket.write(container)
     for basket in self.baskets:
       basket.process()
