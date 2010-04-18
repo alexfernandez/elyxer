@@ -27,6 +27,15 @@
 from gen.integral import *
 
 
+class IntegralLink(IntegralProcessor):
+  "Integral link processing for multi-page output."
+
+  processedtype = Link
+
+  def processeach(self, link):
+    "Process each link and add the current page."
+    link.page = self.page
+
 class SplitPartBasket(Basket):
   "A basket used to split the output in different files."
 

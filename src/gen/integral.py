@@ -207,12 +207,3 @@ class MemoryBasket(KeeperBasket):
       if processor.locate(container):
         processor.store(container)
 
-class IntegralLink(IntegralProcessor):
-  "Integral link processing for multi-page output."
-
-  processedtype = Link
-
-  def processeach(self, link):
-    "Process each link and add the current page."
-    link.page = self.page
-
