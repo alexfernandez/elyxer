@@ -32,6 +32,7 @@ from gen.toc import *
 from gen.inset import *
 from gen.basket import *
 from gen.integral import *
+from gen.splitpart import *
 from post.postprocess import *
 from post.postlayout import *
 from post.postlist import *
