@@ -39,23 +39,26 @@ class SplitPartLink(IntegralProcessor):
 class SplitPartHeader(object):
   "The header that comes with a new split page."
 
-  lastbasket = None
+  def __init__(self, firstbasket):
+    "Set the first basket as last basket."
+    self.lastbasket = firstbasket
+    self.nextlink = None
 
   def create(self, basket):
     "Write the header to the basket."
     basket.write(LyXHeader())
-    return
-    basket.write(self.createheader(basket))
-    if self.lastbasket:
+    basket.write(self.createheader())
+    if hasattr(self.lastbasket, 'nextlink'):
       self.lastbasket.nextlink.page = basket.page
     self.lastbasket = basket
 
-  def createheader(self, basket):
+  def createheader(self):
     "Create the header with all links."
-    prevlink = Link().complete('prev', url='', type='prev')
-    prevlink.page = self.lastbasket.page
-    nextlink = Link().complete('next', url='', type='next')
-    basket.nextlink = nextlink
+    prevlink = Link().complete('prev', 'prev', type='prev')
+    if self.nextlink:
+      prevlink.setmutualdestination(self.nextlink)
+    nextlink = Link().complete('next', 'next', type='next')
+    self.nextlink = nextlink
     toplink = Link().complete('top', url='', type='top')
     prevcontainer = TaggedText().complete([prevlink], 'span class="prev"')
     nextcontainer = TaggedText().complete([nextlink], 'span class="next"')
@@ -78,6 +81,7 @@ class SplitPartBasket(Basket):
     self.base, self.extension = os.path.splitext(writer.filename)
     self.converter = TOCConverter()
     self.basket = MemoryBasket()
+    self.basket.page = writer.filename
     return self
 
   def write(self, container):
@@ -87,7 +91,7 @@ class SplitPartBasket(Basket):
   def finish(self):
     "Process the whole basket, create page baskets and flush all of them."
     self.basket.process()
-    header = SplitPartHeader()
+    header = SplitPartHeader(self.basket)
     basket = self.addbasket(self.writer)
     for container in self.basket.contents:
       if self.mustsplit(container):
