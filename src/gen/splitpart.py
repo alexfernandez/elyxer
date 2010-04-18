@@ -27,7 +27,7 @@
 from gen.integral import *
 
 
-class SplittingBasket(Basket):
+class SplitPartBasket(Basket):
   "A basket used to split the output in different files."
 
   baskets = []

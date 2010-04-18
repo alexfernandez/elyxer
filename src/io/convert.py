@@ -59,7 +59,7 @@ class eLyXerConverter(object):
     if Options.toc:
       return TOCBasket()
     if Options.splitpart:
-      return SplittingBasket()
+      return SplitPartBasket()
     if Options.memory:
       return MemoryBasket()
     return WriterBasket()
