@@ -673,12 +673,12 @@ div.PlainVisible {
 }
 div.splitheader {
 	margin: 1em 0;
+	text-align: center;
 }
 span.next {
 	float: right;
 }
 span.top {
-	text-align: center;
 }
 span.prev {
 	float: left;
