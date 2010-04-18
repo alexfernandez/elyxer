@@ -17,25 +17,17 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Alex 20091129: accept all test files as good
+# Alex 20100419: accept all splitpart test files as good
 
-echo "Accepting all eLyXer test files as good"
+echo "Accepting all eLyXer splitpart test files as good"
 echo "You should only do this if you have made a large change in all test files"
 echo "  and you are sure that all files come out right!"
 
-# first from the test directory
-for file in *.lyx; do
-  name=$(basename "$file" .lyx)
-  mv -f "$name-test.html" "$name-good.html"
+
+# do it only for splitpart test files
+for file in *test*.html; do
+  goodname=${file/"test"/"good"}
+  mv -f "$file" "$goodname"
 done
 
-# now the test file in subdir
-cd subdir
-name="appendix-1-6"
-mv -f "$name-test.html" "$name-good.html"
-cd ..
-
-# and now for splitpart test files
-cd parts
-./accept-all
 
