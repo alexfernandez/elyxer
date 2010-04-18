@@ -94,7 +94,7 @@ class SplitPartBasket(Basket):
     entry = self.converter.convert(container)
     if not entry:
       return False
-    if hasattr(entry, 'split'):
+    if hasattr(entry, 'mustsplit'):
       return True
     return entry.depth <= Options.splitpart
 
@@ -107,13 +107,13 @@ class SplitPartBasket(Basket):
     if not found:
       return False
     container.depth = 0
-    container.split = found[0].lower().replace('print', '')
+    container.mustsplit = found[0].lower().replace('print', '')
     return True
 
   def getfilename(self, container):
     "Get the new file name for a given container."
-    if hasattr(container, 'split'):
-      partname = '-' + container.split
+    if hasattr(container, 'mustsplit'):
+      partname = '-' + container.mustsplit
     else:
       entry = self.converter.convert(container)
       if entry.depth == Options.splitpart:
