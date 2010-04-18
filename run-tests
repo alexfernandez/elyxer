@@ -71,7 +71,7 @@ name="index-1-6"
 ../elyxer.py --splitpart 1 --css ../docs/lyx.css "$name.lyx" "parts/$name-part-test.html"
 for file in parts/$name*.html; do
 	goodname=${file/"-test"/"-good"}
-	diff -u --ignore-matching-lines="create-date" "$file" "$goodname"
+	diff -u --ignore-matching-lines="create-date" "$goodname" "$file"
 done
 
 
