@@ -677,9 +677,18 @@ div.splitheader {
 }
 span.next {
 	float: right;
+	width: 15em;
+	text-align: right;
+	background: #fff0f0;
 }
 span.top {
+	display: inline-block;
+	text-align: center;
+	background: #f0fff0;
 }
 span.prev {
 	float: left;
+	width: 15em;
+	text-align: left;
+	background: #f0f0ff;
 }
