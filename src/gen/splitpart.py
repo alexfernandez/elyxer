@@ -117,7 +117,7 @@ class SplitPartBasket(Basket):
         partname = container.number
       else:
         if container.number == '':
-          partname = container.partkey.replace('toc-', '')
+          partname = container.partkey.replace('toc-', '').replace('*', '-')
         else:
           partname = container.type + '-' + container.number
     return self.base + '-' + partname + self.extension
