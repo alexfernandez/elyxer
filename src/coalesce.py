@@ -101,6 +101,9 @@ class Coalescer(object):
         newname = self.convert(nextname, os.path.dirname(filename))
         if newname:
           self.coalesce(newname)
+        else:
+          # make things like "from socket import gaierror" work
+          self.writer.writeline(line)
       elif line.startswith('#'):
         if self.comments:
           self.writer.writeline(line)
