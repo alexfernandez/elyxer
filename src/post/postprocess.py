@@ -50,6 +50,9 @@ class Postprocessor(object):
       return
     if len(container.contents) == 0:
       return
+    if hasattr(container, 'postprocess'):
+      if not container.postprocess:
+        return
     postprocessor = Postprocessor()
     contents = []
     for element in container.contents:
