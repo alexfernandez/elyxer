@@ -110,6 +110,10 @@ Coalesce Python code: use relative paths when importing (thanks, Jack!).
 Experimental installation script.
 \end_layout
 
+\begin_layout Itemize
+Avoid postprocessing child documents twice (thanks, Rainer!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.43 (2010-04-10):
