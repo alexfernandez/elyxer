@@ -213,6 +213,11 @@ class IncludeInset(Container):
       if self.parameters['LatexCommand'] == 'verbatiminput':
         self.readverbatim()
         return
+    olddir = Options.directory
+    newdir = os.path.dirname(self.parameters['filename'])
+    if newdir != '':
+      Trace.debug('Child dir: ' + newdir)
+      Options.directory = os.path.join(Options.directory, newdir)
     try:
       converter = IncludeInset.converterfactory.create(self)
       converter.convert()
@@ -220,6 +225,8 @@ class IncludeInset(Container):
     except:
       Trace.error('Could not read ' + self.filename + ', please check that the file exists and has read permissions.')
       self.contents = []
+    finally:
+      Options.directory = olddir
 
   def readverbatim(self):
     "Read a verbatim document."

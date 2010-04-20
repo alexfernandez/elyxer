@@ -114,6 +114,11 @@ Experimental installation script.
 Avoid postprocessing child documents twice (thanks, Rainer!).
 \end_layout
 
+\begin_layout Itemize
+Solved bug when loading images from child documents in subdirectories (thanks,
+ Rainer!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.43 (2010-04-10):
