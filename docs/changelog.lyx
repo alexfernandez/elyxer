@@ -119,6 +119,10 @@ Solved bug when loading images from child documents in subdirectories (thanks,
  Rainer!).
 \end_layout
 
+\begin_layout Itemize
+Solved bug in image scaling when only one dimension is set (thanks, Wolfgang!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.43 (2010-04-10):

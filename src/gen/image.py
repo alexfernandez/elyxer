@@ -272,21 +272,31 @@ class ImageOutput(object):
     "Get the HTML output of the image as a list"
     html = ['<img class="' + container.type + '"']
     if container.origin.exists():
-      figure = Translator.translate('figure')
-      html.append(' src="' + container.destination.url +
-          '" alt="' + figure + ' ' + container.destination.url + '"')
-      html.append(' style="')
-      if container.width:
-        html.append('width: ' + container.width + '; ')
-      if container.maxwidth:
-        html.append('max-width: ' + container.maxwidth + '; ')
-      if container.height:
-        html.append('height: ' + container.height + '; ')
-      if container.maxheight:
-        html.append('max-height: ' + container.maxheight + '; ')
-      html.append('"')
+      html += self.getimagehtml(container)
     else:
       html.append(' src="' + container.origin.url + '"')
     html.append('/>\n')
+    return html
+
+  def getimagehtml(self, container):
+    "Get the HTML corresponding to the image."
+    if container.width and not container.height:
+      container.height = 'auto'
+    if container.height and not container.width:
+      container.width = 'auto'
+    html = []
+    figure = Translator.translate('figure')
+    html.append(' src="' + container.destination.url +
+        '" alt="' + figure + ' ' + container.destination.url + '"')
+    html.append(' style="')
+    if container.width:
+      html.append('width: ' + container.width + '; ')
+    if container.maxwidth:
+      html.append('max-width: ' + container.maxwidth + '; ')
+    if container.height:
+      html.append('height: ' + container.height + '; ')
+    if container.maxheight:
+      html.append('max-height: ' + container.maxheight + '; ')
+    html.append('"')
     return html
 
