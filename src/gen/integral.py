@@ -127,10 +127,10 @@ class IntegralListOf(IntegralProcessor):
     "Get an entry for the list of floats."
     if float.parentfloat:
       return None
-    link = self.createlink(float)
-    if not link:
+    entry = TOCEntry().create(float)
+    if not entry:
       return None
-    return TaggedText().complete([link], 'div class="toc"', True)
+    return TaggedText().complete([entry], 'div class="toc"', True)
 
   def createlink(self, float):
     "Create the link to the float label."

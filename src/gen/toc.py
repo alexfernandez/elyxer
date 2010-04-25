@@ -61,8 +61,10 @@ class TOCEntry(Container):
       link.contents.append(Constant(u' '))
     link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)
-    self.depth = container.level
-    self.partkey = container.partkey
+    if hasattr(container, 'level'):
+      self.depth = container.level
+    if hasattr(container, 'partkey'):
+      self.partkey = container.partkey
     return self
 
   def gettitlecontents(self, container):
