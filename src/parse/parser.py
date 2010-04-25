@@ -237,15 +237,23 @@ class LstParser(object):
 
   def parselstset(self, reader):
     "Parse a declaration of lstparams in lstset."
-    paramtext = ''
-    while not reader.currentline().endswith('}'):
-      paramtext += reader.currentline()
-      reader.nextline()
+    paramtext = self.extractlstset(reader)
     if not '{' in paramtext:
       Trace.error('Missing opening bracket in lstset: ' + paramtext)
       return
-    paramtext = paramtext.split('{')[1].replace('}', '')
-    LstParser.globalparams = self.parselstparams(paramtext)
+    lefttext = paramtext.split('{')[1]
+    croppedtext = lefttext[:-1]
+    LstParser.globalparams = self.parselstparams(croppedtext)
+
+  def extractlstset(self, reader):
+    "Extract the global lstset parameters."
+    paramtext = ''
+    while not reader.finished():
+      paramtext += reader.currentline()
+      reader.nextline()
+      if paramtext.endswith('}'):
+        return paramtext
+    Trace.error('Could not find end of \\lstset settings; aborting')
 
   def parsecontainer(self, container):
     "Parse some lstparams from a container."
