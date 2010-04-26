@@ -133,6 +133,11 @@ lstset
  (thanks again, Rainer!).
 \end_layout
 
+\begin_layout Itemize
+Improved lists of figures, tables and algorithms: use short title, better
+ labeling of floats.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.43 (2010-04-10):
