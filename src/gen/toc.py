@@ -72,14 +72,12 @@ class TOCEntry(Container):
 
   def gettitlecontents(self, container):
     "Get the title of the container."
-    container.tree()
     shorttitles = container.searchall(ShortTitle)
     if len(shorttitles) > 0:
       contents = [Constant(u' ')]
       for shorttitle in shorttitles:
         contents += shorttitle.contents
       return contents
-    Trace.debug('Cloned: ' + unicode(self.safecontents(container)))
     return self.safecontents(container)
 
   def safecontents(self, container):
@@ -92,8 +90,6 @@ class TOCEntry(Container):
         contents.append(self.safeclone(element))
       elif element.__class__ in TOCEntry.extracted:
         contents += self.safecontents(element)
-      else:
-        Trace.debug('Rejected ' + element.__class__.__name__)
     return contents
 
   def safeclone(self, container):
