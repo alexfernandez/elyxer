@@ -27,6 +27,10 @@ from parse.parser import *
 from io.output import *
 from gen.structure import *
 from gen.container import *
+from post.postprocess import *
+from ref.label import *
+from util.numbering import *
+from ref.link import *
 
 
 class Layout(Container):
@@ -210,4 +214,72 @@ class LyXCode(Layout):
     for newline in self.searchall(Newline):
       index = newline.parent.contents.index(newline)
       newline.parent.contents[index] = Constant('\n')
+
+class PostLayout(object):
+  "Numerate an indexed layout"
+
+  processedclass = Layout
+
+  def postprocess(self, last, layout, next):
+    "Generate a number and place it before the text"
+    if not hasattr(layout, 'number'):
+      return layout
+    label = Label().create(layout.anchortext, layout.partkey, type='toc')
+    layout.contents.insert(0, label)
+    if layout.anchortext != '':
+      layout.contents.insert(1, Constant(u' '))
+    return layout
+
+  def modifylayout(self, layout, type):
+    "Modify a layout according to the given type."
+    layout.level = NumberGenerator.instance.getlevel(type)
+    layout.output.tag = layout.output.tag.replace('?', unicode(layout.level))
+
+  def containsappendix(self, layout):
+    "Find out if there is an appendix somewhere in the layout"
+    for element in layout.contents:
+      if isinstance(element, Appendix):
+        return True
+    return False
+
+  def activateappendix(self):
+    "Change first number to letter, and chapter to appendix"
+    NumberGenerator.instance.number = ['-']
+
+class PostStandard(object):
+  "Convert any standard spans in root to divs"
+
+  processedclass = StandardLayout
+
+  def postprocess(self, last, standard, next):
+    "Switch to div"
+    type = 'Standard'
+    if LyXHeader.indentstandard:
+      if isinstance(last, StandardLayout):
+        type = 'Indented'
+      else:
+        type = 'Unindented'
+    standard.output = TaggedOutput().settag('div class="' + type + '"', True)
+    return standard
+
+class PostLyXCode(object):
+  "Coalesce contiguous LyX-Code layouts."
+
+  processedclass = LyXCode
+
+  def postprocess(self, last, lyxcode, next):
+    "Coalesce if last was also LyXCode"
+    if not isinstance(last, LyXCode):
+      return lyxcode
+    if hasattr(last, 'first'):
+      lyxcode.first = last.first
+    else:
+      lyxcode.first = last
+    toappend = lyxcode.first.contents
+    toappend.append(Constant('\n'))
+    toappend += lyxcode.contents
+    lyxcode.output = EmptyOutput()
+    return lyxcode
+
+Postprocessor.stages += [PostLayout, PostStandard, PostLyXCode]
 

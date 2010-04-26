@@ -23,7 +23,6 @@
 # eLyXer postprocessor code
 
 from util.trace import Trace
-from gen.layout import *
 
 
 class Postprocessor(object):
