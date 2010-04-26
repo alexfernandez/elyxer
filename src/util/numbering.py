@@ -153,7 +153,7 @@ class LayoutNumberer(object):
     "Find out if a container requires numbering at all."
     return self.generator.isinordered(container) or self.generator.isunique(container)
 
-  def number(self, layout):
+  def numberlayout(self, layout):
     "Set all attributes: number, entry, level..."
     if self.generator.isunique(layout):
       number = self.generator.generateunique(layout.type)

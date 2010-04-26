@@ -53,7 +53,7 @@ class Layout(Container):
       return
     if self.containsappendix():
       self.activateappendix()
-    LayoutNumberer.instance.number(self)
+    LayoutNumberer.instance.numberlayout(self)
 
   def containsappendix(self):
     "Find out if there is an appendix somewhere in the layout"
