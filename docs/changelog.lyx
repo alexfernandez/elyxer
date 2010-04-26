@@ -138,6 +138,10 @@ Improved lists of figures, tables and algorithms: use short title, better
  labeling of floats.
 \end_layout
 
+\begin_layout Itemize
+Solved weird bug in float numbering when a chapter has only one layout.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.43 (2010-04-10):

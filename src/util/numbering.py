@@ -67,21 +67,26 @@ class NumberGenerator(object):
     self.number[level - 1] = self.increase(self.number[level - 1])
     return self.dotseparated(self.number)
 
-  def generatechaptered(self, type):
+  def generatechaptered(self, type, chapter = None):
     "Generate a number which goes with first-level numbers (chapters). "
     "For the article classes a unique number is generated."
     if NumberGenerator.startinglevel > 0:
       return self.generateunique(type)
-    if len(self.number) == 0:
-      chapter = 0
-    else:
-      chapter = self.number[0]
+    if not chapter:
+      chapter = self.getchapter()
     if not type in self.chaptered or self.chaptered[type][0] != chapter:
       self.chaptered[type] = [chapter, 0]
     chaptered = self.chaptered[type]
     chaptered[1] = self.increase(chaptered[1])
     self.chaptered[type] = chaptered
     return self.dotseparated(chaptered)
+
+  def getchapter(self):
+    "Get the current chapter number."
+    if len(self.number) == 0:
+      return 0
+    else:
+      return self.number[0]
 
   def getlevel(self, type):
     "Get the level that corresponds to a type."
