@@ -19,17 +19,53 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # --end--
-# Alex 20090524
-# eLyXer list postprocessing
+# Alex 20100427
+# eLyXer lists and list post-processing
 
-from gen.container import *
 from util.trace import Trace
-from gen.structure import *
-from gen.layout import *
-from gen.inset import *
-from ref.link import *
+from parse.parser import *
+from io.output import *
+from gen.container import *
 from post.postprocess import *
 
+
+class ListItem(Container):
+  "An element in a list"
+
+  def __init__(self):
+    "Output should be empty until the postprocessor can group items"
+    self.contents = list()
+    self.parser = BoundedParser()
+    self.output = EmptyOutput()
+
+  def process(self):
+    "Set the correct type and contents."
+    self.type = self.header[1]
+    tag = TaggedText().complete(self.contents, 'li', True)
+    self.contents = [tag]
+
+  def __unicode__(self):
+    return self.type + ' item @ ' + unicode(self.begin)
+
+class DeeperList(Container):
+  "A nested list"
+
+  def __init__(self):
+    "Output should be empty until the postprocessor can group items"
+    self.parser = BoundedParser()
+    self.output = EmptyOutput()
+
+  def process(self):
+    "Create the deeper list"
+    if len(self.contents) == 0:
+      Trace.error('Empty deeper list')
+      return
+
+  def __unicode__(self):
+    result = 'deeper list @ ' + unicode(self.begin) + ': ['
+    for element in self.contents:
+      result += unicode(element) + ', '
+    return result[:-2] + ']'
 
 class PendingList(object):
   "A pending list"

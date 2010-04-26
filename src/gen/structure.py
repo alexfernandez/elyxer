@@ -108,44 +108,6 @@ class Appendix(Container):
     self.parser = LoneCommand()
     self.output = EmptyOutput()
 
-class ListItem(Container):
-  "An element in a list"
-
-  def __init__(self):
-    "Output should be empty until the postprocessor can group items"
-    self.contents = list()
-    self.parser = BoundedParser()
-    self.output = EmptyOutput()
-
-  def process(self):
-    "Set the correct type and contents."
-    self.type = self.header[1]
-    tag = TaggedText().complete(self.contents, 'li', True)
-    self.contents = [tag]
-
-  def __unicode__(self):
-    return self.type + ' item @ ' + unicode(self.begin)
-
-class DeeperList(Container):
-  "A nested list"
-
-  def __init__(self):
-    "Output should be empty until the postprocessor can group items"
-    self.parser = BoundedParser()
-    self.output = EmptyOutput()
-
-  def process(self):
-    "Create the deeper list"
-    if len(self.contents) == 0:
-      Trace.error('Empty deeper list')
-      return
-
-  def __unicode__(self):
-    result = 'deeper list @ ' + unicode(self.begin) + ': ['
-    for element in self.contents:
-      result += unicode(element) + ', '
-    return result[:-2] + ']'
-
 class ERT(Container):
   "Evil Red Text"
 
