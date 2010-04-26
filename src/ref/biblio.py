@@ -23,9 +23,11 @@
 # eLyXer bibliography
 
 from util.trace import Trace
+from util.numbering import *
 from parse.parser import *
 from io.output import *
 from ref.link import *
+from post.postprocess import *
 
 
 class BiblioCitation(Container):
@@ -70,6 +72,22 @@ class Bibliography(Container):
   def __init__(self):
     self.parser = BoundedParser()
     self.output = TaggedOutput().settag('p class="biblio"', True)
+
+class PostBiblio(object):
+  "Insert a Bibliography legend before the first item"
+
+  processedclass = Bibliography
+
+  def postprocess(self, last, element, next):
+    "If we have the first bibliography insert a tag"
+    if isinstance(last, Bibliography) or Options.nobib:
+      return element
+    bibliography = Translator.translate('bibliography')
+    header = TaggedText().constant(bibliography, 'h1 class="biblio"')
+    layout = StandardLayout().complete([header, element])
+    return layout
+
+Postprocessor.stages += [PostBiblio]
 
 class BiblioReference(Link):
   "A reference to a bibliographical entry."

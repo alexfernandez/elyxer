@@ -35,7 +35,6 @@ from gen.integral import *
 from gen.splitpart import *
 from post.postprocess import *
 from post.posttable import *
-from ref.postlink import *
 from math.postformula import *
 
 
