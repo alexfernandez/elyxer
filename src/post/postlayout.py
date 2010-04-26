@@ -46,16 +46,6 @@ class PostLayout(object):
     if layout.anchortext != '':
       layout.contents.insert(1, Constant(u' '))
     return layout
-    if not LayoutNumberer.instance.isnumbered(layout):
-      return layout
-    if self.containsappendix(layout):
-      self.activateappendix()
-    LayoutNumberer.instance.numberlayout(layout)
-    label = Label().create(layout.anchortext, layout.partkey, type='toc')
-    layout.contents.insert(0, label)
-    if layout.anchortext != '':
-      layout.contents.insert(1, Constant(u' '))
-    return layout
 
   def modifylayout(self, layout, type):
     "Modify a layout according to the given type."
