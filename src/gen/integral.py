@@ -127,30 +127,7 @@ class IntegralListOf(IntegralProcessor):
     "Get an entry for the list of floats."
     if float.parentfloat:
       return None
-    entry = TOCEntry().create(float)
-    if not entry:
-      return None
-    return TaggedText().complete([entry], 'div class="toc"', True)
-
-  def createlink(self, float):
-    "Create the link to the float label."
-    captions = float.searchinside(float.contents, Caption)
-    if len(captions) == 0:
-      return None
-    labels = float.searchinside(float.contents, Label)
-    if len(labels) > 0:
-      label = labels[0]
-    else:
-      label = Label().create(' ', float.entry.replace(' ', '-'))
-      float.contents.insert(0, label)
-      labels.append(label)
-    if len(labels) > 1:
-      Trace.error('More than one label in ' + float.entry)
-    link = Link().complete(float.entry + u': ')
-    for caption in captions:
-      link.contents += caption.contents[1:]
-    link.destination = label
-    return link
+    return TOCEntry().create(float)
 
 class IntegralReference(IntegralProcessor):
   "A processor for a reference to a label."

@@ -36,6 +36,9 @@ class TOCEntry(Container):
       TextFamily, EmphaticText, VersalitasText, BarredText,
       SizeText, ColorText, LangLine, Formula
       ]
+  extracted = [
+      PlainLayout, TaggedText, Align, Caption
+      ]
 
   def header(self, container):
     "Create a TOC entry for header and footer (0 depth)."
@@ -69,24 +72,35 @@ class TOCEntry(Container):
 
   def gettitlecontents(self, container):
     "Get the title of the container."
+    container.tree()
     shorttitles = container.searchall(ShortTitle)
     if len(shorttitles) > 0:
       contents = [Constant(u' ')]
       for shorttitle in shorttitles:
         contents += shorttitle.contents
       return contents
-    return self.safeclone(container).contents
+    Trace.debug('Cloned: ' + unicode(self.safecontents(container)))
+    return self.safecontents(container)
+
+  def safecontents(self, container):
+    "Extract the safe contents for the TOC from a container."
+    contents = []
+    for element in container.contents:
+      if element.__class__ in TOCEntry.copied:
+        contents.append(element)
+      elif element.__class__ in TOCEntry.allowed:
+        contents.append(self.safeclone(element))
+      elif element.__class__ in TOCEntry.extracted:
+        contents += self.safecontents(element)
+      else:
+        Trace.debug('Rejected ' + element.__class__.__name__)
+    return contents
 
   def safeclone(self, container):
     "Return a new container with contents only in a safe list, recursively."
     clone = Cloner.clone(container)
     clone.output = container.output
-    clone.contents = []
-    for element in container.contents:
-      if element.__class__ in TOCEntry.copied:
-        clone.contents.append(element)
-      elif element.__class__ in TOCEntry.allowed:
-        clone.contents.append(self.safeclone(element))
+    clone.contents = self.safecontents(container)
     return clone
 
   def __unicode__(self):

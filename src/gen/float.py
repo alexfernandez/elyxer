@@ -91,8 +91,12 @@ class Float(Container):
     tagged = TaggedText().complete(self.contents, tag, True)
     self.contents = [tagged]
 
-  def searchinside(self, contents, type):
+  def searchinside(self, type):
     "Search for a given type in the contents"
+    return self.searchincontents(self.contents, type)
+
+  def searchincontents(self, contents, type):
+    "Search in the given contents for the required type."
     list = []
     for element in contents:
       list += self.searchinelement(element, type)
@@ -104,7 +108,7 @@ class Float(Container):
       return []
     if isinstance(element, type):
       return [element]
-    return self.searchinside(element.contents, type)
+    return self.searchincontents(element.contents, type)
 
   def __unicode__(self):
     "Return a printable representation"
@@ -194,6 +198,17 @@ class Listing(Container):
       contents.insert(0, TaggedText().constant(unicode(self.counter), tag))
     return contents
 
+class FloatNumber(Container):
+  "Holds the number for a float in the caption."
+
+  def __init__(self):
+    self.output = ContentsOutput()
+
+  def create(self, float):
+    "Create the float number."
+    self.contents = [Constant(float.entry)]
+    return self
+
 class PostFloat(object):
   "Postprocess a float: number it and move the label"
 
@@ -202,22 +217,19 @@ class PostFloat(object):
   def postprocess(self, last, float, next):
     "Move the label to the top and number the caption"
     self.postnumber(float)
-    captions = float.searchinside(float.contents, Caption)
-    for caption in captions:
+    number = FloatNumber().create(float)
+    for caption in float.searchinside(Caption):
       self.postlabels(float, caption)
-      self.numbercaption(caption, float)
+      caption.contents.insert(0, Constant(u' '))
+      caption.contents.insert(0, number)
     return float
 
   def postlabels(self, float, caption):
     "Search for labels and move them to the top"
     labels = caption.searchremove(Label)
     if len(labels) == 0:
-      return
+      labels = [Label().create(' ', float.entry.replace(' ', '-'))]
     float.contents = labels + float.contents
-
-  def numbercaption(self, caption, float):
-    "Number the caption"
-    caption.contents.insert(0, Constant(float.entry + u' '))
 
   def postnumber(self, float):
     "Number a float if it isn't numbered."
