@@ -63,6 +63,7 @@ class Options(object):
   raw = False
   jsmath = None
   mathjax = None
+  nofooter = None
 
   branches = dict()
 
@@ -125,6 +126,7 @@ class Options(object):
     Trace.error('')
     Trace.error('  Esoteric options:')
     Trace.error('    --version:              show version number and release date')
+    Trace.error('    --nofooter:             remove the footer "create by eLyXer"')
     Trace.error('    --forceformat ".ext":   force image output format')
     Trace.error('    --lyxformat:            return the highest LyX version supported')
     Trace.error('    --toc:                  create a table of contents')
