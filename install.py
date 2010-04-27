@@ -26,6 +26,7 @@ import platform
 import sys
 import os
 import shutil
+import gettext
 
 
 class Installer(object):
@@ -61,6 +62,7 @@ class Installer(object):
       try:
         shutil.copy2(Installer.elyxer, path)
         self.show('eLyXer installed as a binary in ' + path)
+        self.show('Please run as "elyxer.py [options] input.lyx output.html" to use it')
         return
       except IOError:
         pass
@@ -68,16 +70,38 @@ class Installer(object):
 
   def installmodule(self):
     "Install eLyXer as a module."
-    self.checkpermissions()
+    if not self.checkpermissions('install as a Python module'):
+      return
     sys.argv.append('install')
     import setup
     self.show('eLyXer installed as a module.')
+    self.show('Please run as "python -m elyxer [options] input.lyx output.html" to use it')
 
-  def checkpermissions(self):
-    "Check if the user has permissions to install as a module."
+  def installtranslations(self):
+    "Install the translation files."
+    destination = gettext.bindtextdomain('elyxer')
+    self.copy('po/locale', destination)
+
+  def copy(self, source, destination):
+    "Recursively copy a file or directory into another."
+    if not self.checkpermissions('install translation modules'):
+      return
+    if os.path.isfile(source):
+      shutil.copy2(source, destination)
+      return
+    if not os.path.exists(destination):
+      shutil.copytree(source, destination)
+      return
+    for filename in os.listdir(source):
+      self.copy(os.path.join(source, filename), os.path.join(destination, filename))
+
+  def checkpermissions(self, purpose):
+    "Check if the user has permissions as root to do something."
     if platform.system() == 'Linux':
       if os.getuid() != 0:
-        self.error('Need to be root to install as a Python module')
+        self.error('Need to be root to ' + purpose)
+        return False
+    return True
 
   def checkversion(self):
     "Check the current version."
@@ -89,8 +113,9 @@ class Installer(object):
       self.usage()
     if int(version[1]) == 3:
       self.copybin()
-    self.copybin()
-    self.installmodule()
+    else:
+      self.installmodule()
+    self.installtranslations()
 
 Installer().checkversion()
 
