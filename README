@@ -7,16 +7,49 @@ format can be found at docs/index.html.
 
 Installation
 ============
-To install eLyXer download a distributed file from
-http://www.nongnu.org/elyxer/, open a terminal window in the directory that
-contains this file and just write at the command line prompt:
+Quick installation guide (for the impatient):
+* download the latest version from http://www.nongnu.org/elyxer/,
+* decompress the .zip or .tar.gz
+* and install it using the provided script install.py as root:
+    # ./install.py
+  or on Windows:
+    > python install.py
+
+To install eLyXer first download a compressed version from
+  http://www.nongnu.org/elyxer/
+You will also need a recent (> 2.4) version of Python on your target machine.
+
+For decompression: open a terminal window in the directory that contains the
+downloaded file and just write at the command line prompt:
   $ tar -xzf elyxer-[version].tar.gz
 Or for the .zip version:
   $ unzip elyxer-[version].zip
+where [version] should be something like 0.44; the full name might be something
+like elyxer-0.44.tar.gz.
+
 On Windows or Mac OS X you can unzip the file using the graphical tool of your
-choice. In any case, a directory called elyxer should appear, where the main
-file elyxer.py can be found. This file can be copied to a directory included
-in the execution path. On Linux type as root:
+choice. In any case, a directory called elyxer-[version] should appear, where
+the installer script install.py can be found (along with this README).
+
+The recommended installation procedure is to just run this script. On Linux type as
+root:
+  # ./install.py
+and similarly for Mac OS X, while for Windows:
+  > python install.py
+Note the you don't need to write the prompt, # or >; it appears on the console.
+
+Double-clicking on install.py should also work if your Python installation is
+minimally sane. It will tell you as a result if it has installed Python as a
+module, which should be the typical result; in this case eLyXer should be run
+as a module:
+  $ python -m elyxer [input file] [output file]
+
+For ancient Python 2.3 the script will install Python as a binary, which is not
+recommended. In this case eLyXer is run like this:
+  $ elyxer.py [input file] [output file]
+
+An alternative installation procedure is to copy elyxer.py manually to a
+directory included in the execution path. On Linux type as root:
   # cp elyxer.py /usr/bin/
 or on Windows as any user:
   > copy elyxer.py c:\windows\
@@ -42,13 +75,17 @@ it.
 LyX Integration
 ===============
 
-To integrate eLyXer with LyX you have to copy elyxer.py into the LyX
-directory, and reconfigure it. Later versions will recognize eLyXer
-automatically if you install it using distutils.
+To integrate eLyXer with LyX you just have to reconfigure LyX, selecting
+Tools -> Reconfigure from within LyX. For rather old versions of LyX (< 1.6.2)
+you may have to copy elyxer.py into the LyX directory, and reconfigure it.
+Later versions will recognize eLyXer automatically, either if you install it
+using distutils (as a module) or as a binary.
 
 Usage
 =====
 eLyXer can be invoked from the command line as:
+  $ python -m elyxer [source file] [destination file]
+or, if it was installed as a binary:
   $ elyxer.py [source file] [destination file]
 
 If the source file is omitted then STDIN is used; likewise, if no destination
@@ -56,14 +93,14 @@ file is specified eLyXer will output to STDOUT. This allows its use in pipes
 and other flexible configurations.
 
 Examples:
-  $ elyxer.py file.lyx file.html
+  $ python -m elyxer file.lyx file.html
 converts file.lyx to file.html. Debug messages are shown.
-  $ cat file.lyx | elyxer > file.html
+  $ cat file.lyx | python -m elyxer > file.html
 converts file.lyx to file.html, as before. This time debug messages are not
 shown.
-  $ elyxer.py file.lyx | grep "<blockquote>" | wc
+  $ python -m elyxer file.lyx | grep "<blockquote>" | wc
 counts all blockquote paragraphs.
-  $ elyxer.py file.lyx | wget --no-check-certificate --spider -nv -F -i -
+  $ python -m elyxer file.lyx | wget --no-check-certificate --spider -nv -F -i -
 checks all external links in a document recursively. (Local links will appear
 as unresolved, but they can be ignored.)
 
