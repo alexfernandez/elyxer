@@ -24,15 +24,17 @@ echo "You should only do this if you have made a large change in all test files"
 echo "  and you are sure that all files come out right!"
 
 # first from the test directory
-for file in *.lyx; do
-  name=$(basename "$file" .lyx)
-  mv -f "$name-test.html" "$name-good.html"
+for oldfile in *-test.html; do
+  newfile=${oldfile/"test"/"good"}
+  mv -f "$oldfile" "$newfile"
 done
 
 # now the test file in subdir
 cd subdir
-name="appendix-1-6"
-mv -f "$name-test.html" "$name-good.html"
+for oldfile in *-test.html; do
+  newfile=${oldfile/"test"/"good"}
+  mv -f "$oldfile" "$newfile"
+done
 cd ..
 
 # and now for splitpart test files

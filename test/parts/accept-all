@@ -25,9 +25,9 @@ echo "  and you are sure that all files come out right!"
 
 
 # do it only for splitpart test files
-for file in *test*.html; do
-  goodname=${file/"test"/"good"}
-  mv -f "$file" "$goodname"
+for oldfile in *test*.html; do
+  newfile=${oldfile/"test"/"good"}
+  mv -f "$oldfile" "$newfile"
 done
 
 

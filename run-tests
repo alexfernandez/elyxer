@@ -64,7 +64,7 @@ diff -u --ignore-matching-lines="create-date" "$name-lowmem-good.html" "$name-lo
 # test stdin + stdout generation
 name="footnotes-1-6"
 cat "$name.lyx" | ../elyxer.py --css ../docs/lyx.css > "$name-stdio-test.html"
-diff -u --ignore-matching-lines="create-date" "$name-good.html" "$name-stdio-test.html"
+diff -u --ignore-matching-lines="create-date" "$name-stdio-good.html" "$name-stdio-test.html"
 
 # test --splitpart generation
 name="index-1-6"
