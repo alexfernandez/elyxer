@@ -201,7 +201,7 @@ class FooterOutput(object):
     html.append('\n\n')
     footer = self.createfooter()
     if len(footer) > 0:
-      html.append('<hr/>\n')
+      html.append('<hr class="footer"/>\n')
       html += footer
     html.append('</div>\n')
     html.append('</body>\n')
