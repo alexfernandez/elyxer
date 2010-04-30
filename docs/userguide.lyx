@@ -185,6 +185,14 @@ Installation
 \end_layout
 
 \begin_layout Standard
+This section looks at how to install eLyXer on your system.
+\end_layout
+
+\begin_layout Subsubsection*
+Download eLyXer
+\end_layout
+
+\begin_layout Standard
 First you will need to fetch the official distribution file from the 
 \begin_inset CommandInset href
 LatexCommand href
@@ -247,13 +255,16 @@ elyxer.py
 \end_layout
 
 \begin_layout Subsubsection*
-The Easy Way
+Using the Installer
 \end_layout
 
 \begin_layout Standard
-The easy way to install is just using this file directly, preferably placing
- it in the execution path.
- To do this on Linux, type as root:
+An installer is provided in the root directory, called 
+\family typewriter
+install.py
+\family default
+.
+ To run it just type in a console as root:
 \end_layout
 
 \begin_layout LyX-Code
@@ -262,11 +273,11 @@ The easy way to install is just using this file directly, preferably placing
 \color blue
 #
 \color inherit
- cp elyxer.py /usr/bin/
+ python install.py
 \end_layout
 
 \begin_layout Standard
-On Windows you can type (as a normal user):
+On Windows you can type (as a regular user):
 \end_layout
 
 \begin_layout LyX-Code
@@ -275,42 +286,28 @@ On Windows you can type (as a normal user):
 \color blue
 >
 \color inherit
- copy elyxer.py c:
-\backslash
-Windows
-\backslash
-
+ python.exe install.py
 \end_layout
 
 \begin_layout Standard
-And on Mac OS X any user with administrative privileges (like the default
- user):
+In any case, the script will look at your Python version and decide if it
+ can install eLyXer as a Python module or as a binary.
+ By default it will tell you how to run eLyXer as a module, so you can check
+ if it was installed successfully:
 \end_layout
 
 \begin_layout LyX-Code
 
 \family typewriter
 \color blue
-%
+$
 \color inherit
- sudo cp elyxer.py /usr/local/bin/
+ python -m elyxer --help
 \end_layout
 
 \begin_layout Standard
-You can also put 
-\family typewriter
-elyxer.py
-\family default
- on any other directory in your path, like 
-\family typewriter
-~/bin
-\family default
-, or even use an absolute path.
- In any instance you will be able to access 
-\family typewriter
-elyxer.py
-\family default
- as an executable file:
+or, if this option is not available (i.e.
+ if your Python version is below 2.4), as a binary:
 \end_layout
 
 \begin_layout LyX-Code
@@ -322,64 +319,97 @@ $
  elyxer.py --help
 \end_layout
 
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
->
-\color inherit
- elyxer.py --help
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
-%
-\color inherit
- elyxer.py --help
+\begin_layout Standard
+In any case, a brief help text and the list of command line options should
+ appear.
 \end_layout
 
 \begin_layout Standard
-On Windows you may also call explicitly the Python executable, and locate
- the file 
+In what follows we will assume that eLyXer has been installed as a module,
+ except where stated; substitute 
 \family typewriter
-elyxer.py
+"python -m elyxer"
 \family default
- on your disk:
-\end_layout
-
-\begin_layout LyX-Code
-
+ with 
 \family typewriter
-\color blue
->
-\color inherit
- Python.exe "c:
-\backslash
-route to
-\backslash
-elyxer.py" --help
+"elyxer.py"
+\family default
+ if your system has eLyXer as a binary.
 \end_layout
 
 \begin_layout Standard
-This last usage may be useful if you are having trouble with file paths
- that include spaces.
+The installer will also copy existing translation files to your hard drive
+ so that they can be used from within eLyXer for internationalization.
 \end_layout
 
 \begin_layout Subsubsection*
-The Elegant Way
+Prepackaged Versions
 \end_layout
 
 \begin_layout Standard
-The elegant (and not much more complicated) way of installing eLyXer is
- using Python distutils: it will install eLyXer as a Python module, available
- to any Python programs and as a standalone utility module.
- Go to the 
+The easiest way to install eLyXer is if someone has prepackaged it for your
+ system.
+ Some Linux distributions include eLyXer: 
+\begin_inset CommandInset href
+LatexCommand href
+name "Debian squeeze"
+target "http://packages.debian.org/squeeze/elyxer"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset href
+LatexCommand href
+name "Ubuntu Lucid"
+target "http://packages.ubuntu.com/lucid/elyxer"
+
+\end_inset
+
+.
+ In this case eLyXer needs to be run as 
 \family typewriter
-elyxer
+"elyxer"
 \family default
- directory and type, as root:
+:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer --help
+\end_layout
+
+\begin_layout Standard
+Another way is with the LyX installer: the 
+\begin_inset CommandInset href
+LatexCommand href
+name "alternate LyX installer"
+target "http://wiki.lyx.org/Windows/LyXWinInstaller"
+
+\end_inset
+
+ includes eLyXer in the default installation.
+ See 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:LyX-Integration"
+
+\end_inset
+
+ for LyX integration.
+\end_layout
+
+\begin_layout Subsubsection*
+Manual Installation
+\end_layout
+
+\begin_layout Standard
+If the installer did not work for you, you can manually install it as a
+ module.
+ On Linux go to the elyxer directory and type, as root:
 \end_layout
 
 \begin_layout LyX-Code
@@ -392,7 +422,7 @@ elyxer
 \end_layout
 
 \begin_layout Standard
-Once again, on Windows you don't have to be root:
+On Windows just type:
 \end_layout
 
 \begin_layout LyX-Code
@@ -401,15 +431,11 @@ Once again, on Windows you don't have to be root:
 \color blue
 >
 \color inherit
- python setup.py install
+ python.exe setup.py install
 \end_layout
 
 \begin_layout Standard
-On Mac OS X you can use 
-\family typewriter
-sudo
-\family default
- to have permission:
+On Mac OS X you can use sudo to have permission:
 \end_layout
 
 \begin_layout LyX-Code
@@ -435,43 +461,7 @@ $
 \end_layout
 
 \begin_layout Standard
-The main advantage is that you can run eLyXer without knowing the location
- of the file 
-\family typewriter
-elyxer.py
-\family default
-, or having to play with any system variables such as 
-\family typewriter
-$PATH
-\family default
- or 
-\family typewriter
-%PATH%
-\family default
-.
- This procedure will also ensure that any Python packages trying to access
- eLyXer will find it.
- See 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sub:LyX-Integration"
-
-\end_inset
-
- for LyX integration.
-\end_layout
-
-\begin_layout Standard
-From now on we will assume that you are running 
-\family typewriter
-elyxer.py
-\family default
- as an executable file, but you should substitute that for 
-\family typewriter
-python -m elyxer
-\family default
- if you have opted for this elegant procedure.
- We will see some examples in the next sections.
+The list of command line options should appear.
 \end_layout
 
 \begin_layout Subsection
@@ -488,12 +478,12 @@ Now you may want to try to convert the user guide:
 \color blue
 $
 \color inherit
- elyxer.py --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx docs/usergu
-ide2.html
+ python -m elyxer --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx
+ docs/userguide2.html
 \end_layout
 
 \begin_layout Standard
-or, for the elegant procedure:
+or, for the binary:
 \end_layout
 
 \begin_layout LyX-Code
@@ -502,8 +492,8 @@ or, for the elegant procedure:
 \color blue
 $
 \color inherit
- python -m elyxer --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx
- docs/userguide2.html
+ elyxer.py --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx docs/usergu
+ide2.html
 \end_layout
 
 \begin_layout Standard
@@ -637,11 +627,11 @@ eLyXer is a standalone command line tool.
 \color blue
 $
 \color inherit
- elyxer.py [options] [source file] [destination file]
+ python -m elyxer [options] [source file] [destination file]
 \end_layout
 
 \begin_layout Standard
-or, again for the elegant procedure:
+or, again for the binary:
 \end_layout
 
 \begin_layout LyX-Code
@@ -674,7 +664,7 @@ STDOUT
 \color blue
 $
 \color inherit
- elyxer.py file.lyx file.html
+ python -m elyxer file.lyx file.html
 \end_layout
 
 \begin_layout Standard
@@ -696,21 +686,7 @@ file.html
 \color blue
 $
 \color inherit
- python -m elyxer file.lyx file.html
-\end_layout
-
-\begin_layout Standard
-Just as before, but running eLyXer as a module (installed using the elegant
- procedure).
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
-$
-\color inherit
- cat file.lyx | elyxer.py > file.html
+ cat file.lyx | python -m elyxer > file.html
 \end_layout
 
 \begin_layout Standard
@@ -732,7 +708,7 @@ file.html
 \color blue
 $
 \color inherit
- elyxer.py file.lyx | grep "<blockquote>" | wc
+ python -m elyxer file.lyx | grep "<blockquote>" | wc
 \end_layout
 
 \begin_layout Standard
@@ -745,7 +721,8 @@ counts all blockquote paragraphs.
 \color blue
 $
 \color inherit
- elyxer.py file.lyx | wget --no-check-certificate --spider -nv -F -i -
+ python -m elyxer file.lyx | wget --no-check-certificate --spider -nv -F
+ -i -
 \end_layout
 
 \begin_layout Standard
@@ -795,99 +772,17 @@ LyX Integration
 \end_layout
 
 \begin_layout Standard
-If you followed the elegant installation procedure (installing eLyXer as
- a module) LyX will automatically detect it after reconfiguration.
+If you used the eLyXer installer LyX will automatically detect it after
+ reconfiguration.
  Just make sure that you are running LyX 1.6.5 or later, and click on Tools\SpecialChar \menuseparator
 Reconfi
 gure.
 \end_layout
 
 \begin_layout Standard
-If you followed the easy way (installing eLyXer as an executable file) integrati
-on of eLyXer within LyX requires a few steps depending on your operating
- system.
-\end_layout
-
-\begin_layout List
-\labelwidthstring 00.00.0000
-Unix/Linux: Make sure that the eLyXer program file (
-\family typewriter
-elyxer.py
-\family default
-) is in the execution path (e.g.
- 
-\family typewriter
-/usr/bin
-\family default
- on Linux).
- Now run LyX and click on Tools\SpecialChar \menuseparator
-Reconfigure.
- HTML export should now run 
-\family typewriter
-elyxer.py
-\family default
-.
-\end_layout
-
-\begin_layout List
-\labelwidthstring 00.00.0000
-Windows: Locate the directory where LyX was installed, and inside it the
- directory called 
-\family typewriter
-bin
-\family default
-.
- Now place the eLyXer program file (
-\family typewriter
-elyxer.py
-\family default
-) in the 
-\family typewriter
-bin
-\family default
- directory, and run Tools\SpecialChar \menuseparator
-Reconfigure.
- As before, HTML export should now run 
-\family typewriter
-elyxer.py
-\family default
-.
-\end_layout
-
-\begin_layout List
-\labelwidthstring 00.00.0000
-Mac
-\begin_inset space ~
-\end_inset
-
-OS
-\begin_inset space ~
-\end_inset
-
-X: Just like on every other Unix, place 
-\family typewriter
-elyxer.py
-\family default
- inside a directory in the execution path (like 
-\family typewriter
-/opt/local/bin
-\family default
-) and click on Tools\SpecialChar \menuseparator
-Reconfigure.
-\end_layout
-
-\begin_layout Standard
-On Windows, the 
-\begin_inset CommandInset href
-LatexCommand href
-name "alternate installer"
-target "http://wiki.lyx.org/Windows/LyXWinInstaller"
-
-\end_inset
-
- comes bundled with a version of eLyXer, and it is enabled by default in
- View\SpecialChar \menuseparator
-HTML.
+LyX should be able to detect if eLyXer was installed as a module or as a
+ binary, or even if it has been installed from a Linux distribution.
+ In any case, 
 \end_layout
 
 \begin_layout Section
@@ -1409,8 +1304,11 @@ Adding Options In LyX
 \begin_layout Standard
 To add one of these options so that it is used from within LyX, you have
  to modify the converter line.
- To this effect open View\SpecialChar \menuseparator
-HTML, find the converter for 
+ To this effect open Tools\SpecialChar \menuseparator
+Preferences\SpecialChar \ldots{}
+, go to External formats\SpecialChar \menuseparator
+Converters,
+ find the converter for 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1419,34 +1317,7 @@ LyX -> HTML
 \end_inset
 
  and edit the converter line.
- It should read something like this, if you followed the easy installation
- procedure:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-elyxer.py --directory $$r $$i $$o
-\end_layout
-
-\begin_layout Standard
-If you want to generate pure HTML instead of XHTML, change the line to:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-elyxer.py 
-\family default
-\series bold
---html
-\family typewriter
-\series default
- --directory $$r $$i $$o
-\end_layout
-
-\begin_layout Standard
-If you followed the elegant procedure it will rather be:
+ It should read something like this:
 \end_layout
 
 \begin_layout LyX-Code
@@ -1456,7 +1327,7 @@ python -m elyxer --directory $$r $$i $$o
 \end_layout
 
 \begin_layout Standard
-so change it to
+If you want to generate pure HTML instead of XHTML, change the line to:
 \end_layout
 
 \begin_layout LyX-Code
@@ -1473,6 +1344,20 @@ python -m elyxer
 
 \begin_layout Standard
 And so on.
+\end_layout
+
+\begin_layout Standard
+If eLyXer was installed as a binary the original line will be:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+elyxer.py --directory $$r $$i $$o
+\end_layout
+
+\begin_layout Standard
+So you will have to change it accordingly.
 \end_layout
 
 \begin_layout Standard
@@ -1903,8 +1788,52 @@ Segmenting Pages
 
 \begin_layout Standard
 Quite often you don't want a huge monolithic page, but a set of linked pages.
- At the moment eLyXer does not allow you to do that, but a planned extension
- will.
+ To do so you can use the 
+\family typewriter
+--splitpart
+\family default
+ option, specifying the level at which eLyXer should split pages.
+ For instance:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --splitpart 1 document.lyx output.html
+\end_layout
+
+\begin_layout Standard
+will split 
+\family typewriter
+document.lyx
+\family default
+ into pages at level 1, using 
+\family typewriter
+output.html
+\family default
+ as the root page.
+ Each page will get a number that starts with 
+\family typewriter
+output
+\family default
+ and ends with 
+\family typewriter
+.html
+\family default
+, with a suffix that depends on the page -- 
+\family typewriter
+output-2.html
+\family default
+ will correspond to the second split part.
+\end_layout
+
+\begin_layout Standard
+The level corresponding to 1 depends on the document class: books will be
+ split at chapters, but articles will get a section per page.
+ And so on with lower levels.
 \end_layout
 
 \begin_layout Subsection
