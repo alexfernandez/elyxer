@@ -39,6 +39,8 @@ class SplitPartLink(IntegralProcessor):
 class SplitPartHeader(object):
   "The header that comes with a new split page."
 
+  toppages = []
+
   def __init__(self, firstbasket):
     "Set the first basket as last basket."
     self.lastcontainer = None
@@ -67,6 +69,18 @@ class SplitPartHeader(object):
     self.lastcontainer = container
     return header
 
+  def gettoppage(self, container):
+    "Get the name of the top page."
+    if not hasattr(container, 'level'):
+      level = 1
+    else:
+      level = container.level + 1
+    if len(toppages) < level:
+      toppage = toppages[-1]
+    else:
+      toppage = toppages[level - 1]
+    Trace.debug('Level: ' + unicode(container.level))
+
   def setlinkname(self, link, type, container):
     "Set the name on the link."
     if hasattr(container, 'mustsplit'):
@@ -75,9 +89,6 @@ class SplitPartHeader(object):
       entry = container.entry
     link.contents = [Constant(type + ': ' + entry)]
   
-  def linkname(self, container):
-    "Get the name for the navigation link."
-
 class SplitPartBasket(Basket):
   "A basket used to split the output in different files."
 
@@ -89,7 +100,7 @@ class SplitPartBasket(Basket):
           'please supply an output filename.')
       exit()
     self.writer = writer
-    self.base, self.extension = os.path.splitext(writer.filename)
+    self.filename = writer.filename
     self.converter = TOCConverter()
     self.basket = MemoryBasket()
     self.basket.page = writer.filename
@@ -103,13 +114,13 @@ class SplitPartBasket(Basket):
     "Process the whole basket, create page baskets and flush all of them."
     self.basket.process()
     header = SplitPartHeader(self.basket)
-    basket = self.addbasket(self.writer)
+    basket = self.firstbasket()
     for container in self.basket.contents:
       if self.mustsplit(container):
         filename = self.getfilename(container)
         Trace.debug('New page ' + filename)
         basket.write(LyXFooter())
-        basket = self.addbasket(LineWriter(filename))
+        basket = self.addbasket(filename)
         header.create(basket, container)
       basket.write(container)
     for basket in self.baskets:
@@ -117,13 +128,19 @@ class SplitPartBasket(Basket):
     for basket in self.baskets:
       basket.flush()
 
-  def addbasket(self, writer):
+  def firstbasket(self):
+    "Create the first basket."
+    return self.addbasket(self.filename, self.writer)
+
+  def addbasket(self, filename, writer = None):
     "Add a new basket."
+    if not writer:
+      writer = LineWriter(filename)
     basket = MemoryBasket()
     basket.setwriter(writer)
     self.baskets.append(basket)
     # set the page name everywhere
-    basket.page = writer.filename
+    basket.page = filename
     splitpartlink = SplitPartLink()
     splitpartlink.page = os.path.basename(basket.page)
     basket.processors = [splitpartlink]
@@ -164,5 +181,6 @@ class SplitPartBasket(Basket):
           partname = container.partkey.replace('toc-', '').replace('*', '-')
         else:
           partname = container.type + '-' + container.number
-    return self.base + '-' + partname + self.extension
+    base, extension = os.path.splitext(self.filename)
+    return base + '-' + partname + extension
 
