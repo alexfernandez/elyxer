@@ -64,10 +64,9 @@ class Link(Container):
     "Use the destination link to fill in the destination URL."
     if not self.destination:
       return
-    if not self.destination.anchor:
-      Trace.error('Missing anchor in link destination ' + unicode(self.destination))
-      return
-    self.url = '#' + self.destination.anchor
+    self.url = ''
+    if self.destination.anchor:
+      self.url = '#' + self.destination.anchor
     if self.destination.page:
       self.url = self.destination.page + self.url
 
