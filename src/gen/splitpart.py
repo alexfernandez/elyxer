@@ -39,16 +39,18 @@ class SplitPartLink(IntegralProcessor):
 class SplitPartHeader(object):
   "The header that comes with a new split page."
 
-  toppages = []
+  topanchors = []
 
   def __init__(self, firstbasket):
     "Set the first basket as last basket."
     self.lastcontainer = None
     self.nextlink = None
+    firstbasket.write(self.inserttopanchor())
 
   def create(self, basket, container):
     "Write the header to the basket."
     basket.write(LyXHeader())
+    basket.write(self.createtopanchor(container))
     basket.write(self.createheader(container))
 
   def createheader(self, container):
@@ -60,26 +62,47 @@ class SplitPartHeader(object):
       prevlink.setmutualdestination(self.nextlink)
     nextlink = Link().complete('', 'next', type='next')
     toplink = Link().complete('top', url='', type='top')
+    toplink.destination = self.gettopdestination(container)
     prevcontainer = TaggedText().complete([prevlink], 'span class="prev"')
     nextcontainer = TaggedText().complete([nextlink], 'span class="next"')
     topcontainer = TaggedText().complete([toplink], 'span class="top"')
-    contents = [prevcontainer, topcontainer, nextcontainer]
+    contents = [prevcontainer, Constant('\n'), topcontainer, Constant('\n'), nextcontainer]
     header = TaggedText().complete(contents, 'div class="splitheader"', True)
     self.nextlink = nextlink
     self.lastcontainer = container
     return header
+  
+  def createtopanchor(self, container):
+    "Create the top anchor for the top links."
+    level = self.getlevel(container)
+    while len(SplitPartHeader.topanchors) > level:
+      del SplitPartHeader.topanchors[-1]
+    while len(SplitPartHeader.topanchors) < level:
+      SplitPartHeader.topanchors.append(SplitPartHeader.topanchors[-1])
+    return self.inserttopanchor()
 
-  def gettoppage(self, container):
+  def inserttopanchor(self):
+    "Insert the top anchor into the list of anchors."
+    topanchor = Link().complete('', '')
+    topanchor.output = EmptyOutput()
+    SplitPartHeader.topanchors.append(topanchor)
+    return topanchor
+
+  def gettopdestination(self, container):
     "Get the name of the top page."
+    level = self.getlevel(container)
+    if len(SplitPartHeader.topanchors) < level:
+      toppage = SplitPartHeader.topanchors[-1]
+    else:
+      toppage = SplitPartHeader.topanchors[level - 1]
+    return toppage
+
+  def getlevel(self, container):
+    "Get the level of the container."
     if not hasattr(container, 'level'):
-      level = 1
+      return 1
     else:
-      level = container.level + 1
-    if len(toppages) < level:
-      toppage = toppages[-1]
-    else:
-      toppage = toppages[level - 1]
-    Trace.debug('Level: ' + unicode(container.level))
+      return container.level + 1
 
   def setlinkname(self, link, type, container):
     "Set the name on the link."
@@ -113,8 +136,8 @@ class SplitPartBasket(Basket):
   def finish(self):
     "Process the whole basket, create page baskets and flush all of them."
     self.basket.process()
-    header = SplitPartHeader(self.basket)
     basket = self.firstbasket()
+    header = SplitPartHeader(basket)
     for container in self.basket.contents:
       if self.mustsplit(container):
         filename = self.getfilename(container)
