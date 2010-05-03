@@ -197,15 +197,15 @@ Resource usage is minimum.
 \begin_inset Formula $40000$
 \end_inset
 
- words) takes close to 50 seconds on my 1st-generation Asus Eee, which sports
- a 530MHz Celeron processor.
- On a modern machine it should be ligthning fast.
- Memory usage is also quite frugal, remaining always below 10 MB.
+ words) takes less than 15 seconds on my Asus EeePC 1000H, which sports
+ an Intel Atom processor at 1.60 GHz.
+ Memory usage is also quite frugal, remaining at about 35 MB even with in-memory
+ processing.
 \end_layout
 
 \begin_layout Standard
-The output requires XHTML, CSS2 and Unicode; therefore a CSS2-compatible
- browser is required.
+The output requires XHTML, CSS2 and Unicode; any CSS2-compatible browser
+ should do.
  Minimum browser versions for some popular programs are: Microsoft Internet
  Explorer 7, Mozilla Firefox 3, Safari 3 and Chrome 1.
 \end_layout
@@ -216,7 +216,34 @@ Usage
 
 \begin_layout Standard
 eLyXer is a command line tool written in Python.
- Basic usage is as simple as writing at the command line prompt:
+ Installation is done using the included installer; just type at the prompt
+ as root:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+#
+\color inherit
+ python install.py
+\end_layout
+
+\begin_layout Standard
+or, on Windows:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+>
+\color inherit
+ Python.exe install.py
+\end_layout
+
+\begin_layout Standard
+Basic usage is as simple as writing at the command line prompt:
 \end_layout
 
 \begin_layout LyX-Code
@@ -238,7 +265,7 @@ or, on Windows:
 \color blue
 >
 \color inherit
- Python.exe elyxer.py document.lyx page.html
+ elyxer.py document.lyx page.html
 \end_layout
 
 \begin_layout Standard
