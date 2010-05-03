@@ -34,6 +34,7 @@ class Installer(object):
 
   elyxer = 'elyxer.py'
   separators = {'Linux':':', 'Windows':';', 'Darwin':':'}
+  preferredstarts = ['/usr/bin', 'c:\\windows\\system', '/usr/local/bin']
 
   def error(self, string):
     "Print an error string."
@@ -51,14 +52,7 @@ class Installer(object):
 
   def copybin(self):
     "Check permissions, try to copy binary file to any system path."
-    system = platform.system()
-    if not system in Installer.separators:
-      self.error('Unknown operating system ' + system + '; aborting')
-      self.usage()
-    separator = Installer.separators[system]
-    for path in os.environ['PATH'].split(separator):
-      if path == '.':
-        next
+    for path in self.sortpaths():
       try:
         shutil.copy2(Installer.elyxer, path)
         self.show('eLyXer installed as a binary in ' + path)
@@ -68,6 +62,35 @@ class Installer(object):
         pass
     self.error('eLyXer not installed')
 
+  def sortpaths(self):
+    "Sort the environment variable PATH, place those containing 'python' first."
+    "Remove a dot directory."
+    system = platform.system()
+    if not system in Installer.separators:
+      self.error('Unknown operating system ' + system + '; aborting')
+      self.usage()
+    separator = Installer.separators[system]
+    paths = os.environ['PATH'].split(separator)
+    withpython = []
+    preferred = []
+    rest = []
+    while len(paths) > 0:
+      path = paths.pop()
+      if 'python' in path.lower():
+        withpython.append(path)
+      elif self.ispreferred(path):
+        preferred.append(path)
+      elif path != '.':
+        rest.append(path)
+    return withpython + preferred + rest
+
+  def ispreferred(self, path):
+    "Find out if the path starts with one of the preferred paths."
+    for preferredstart in Installer.preferredstarts:
+      if path.lower().startswith(preferredstart):
+        return True
+    return False
+
   def installmodule(self):
     "Install eLyXer as a module."
     if not self.checkpermissions('install as a Python module'):
@@ -75,7 +98,7 @@ class Installer(object):
     sys.argv.append('install')
     import setup
     self.show('eLyXer installed as a module.')
-    self.show('Please run as "python -m elyxer [options] input.lyx output.html" to use it')
+    self.show('You can also run eLyXer as "python -m elyxer [options] input.lyx output.html"')
 
   def installtranslations(self):
     "Install the translation files."
@@ -106,14 +129,13 @@ class Installer(object):
   def checkversion(self):
     "Check the current version."
     version = platform.python_version_tuple()
-    if int(version[0]) > 2:
-      self.error(unicode(version))
+    if int(version[0]) != 2:
+      self.error('Invalid Python version ' + version[0] + '.' + version[1])
       self.usage()
     if int(version[1]) < 3:
       self.usage()
-    if int(version[1]) == 3:
-      self.copybin()
-    else:
+    self.copybin()
+    if int(version[1]) > 3:
       self.installmodule()
     self.installtranslations()
 

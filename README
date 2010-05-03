@@ -3,7 +3,8 @@ eLyXer -- convert LyX source files to HTML output.
 Introduction
 ============
 eLyXer converts a LyX source file to a HTML page. Full documentation in HTML
-format can be found at docs/index.html.
+format can be found at docs/index.html, or on the web:
+  http://www.nongnu.org/elyxer/
 
 Installation
 ============
@@ -31,46 +32,29 @@ On Windows or Mac OS X you can unzip the file using the graphical tool of your
 choice. In any case, a directory called elyxer-[version] should appear, where
 the installer script install.py can be found (along with this README).
 
-The recommended installation procedure is to just run this script. On Linux type as
-root:
+The recommended installation procedure is to just run this script. On Linux
+type as root:
   # ./install.py
-and similarly for Mac OS X, while for Windows:
+and similarly for Mac OS X, while for Windows open a console and type:
   > python install.py
-Note the you don't need to write the prompt, # or >; it appears on the console.
-
-Double-clicking on install.py should also work if your Python installation is
-minimally sane. It will tell you as a result if it has installed Python as a
-module, which should be the typical result; in this case eLyXer should be run
-as a module:
-  $ python -m elyxer [input file] [output file]
-
-For ancient Python 2.3 the script will install Python as a binary, which is not
-recommended. In this case eLyXer is run like this:
+Note the you don't need to write the prompt, # or >; the console will print it
+for you. Double-clicking on install.py should also work if your Python
+installation is minimally sane. It will tell you as a result to which directory
+eLyXer has been installed as a binary, which is be the typical result; in this
+case eLyXer should be run as follows:
   $ elyxer.py [input file] [output file]
-
-An alternative installation procedure is to copy elyxer.py manually to a
-directory included in the execution path. On Linux type as root:
-  # cp elyxer.py /usr/bin/
-or on Windows as any user:
-  > copy elyxer.py c:\windows\
-and on Mac OS X as an admin user:
-  % sudo cp elyxer.py /usr/local/bin/
-
-You can also put elyxer.py on any other directory in your path, like ~/bin,
-or even use an absolute path:
-  $ /home/pepito/software/elyxer.py
 or, on Windows:
-  > c:\my documents\software\elyxer.py
-
-To install the eLyXer Python package using Python distutils just write as
-root:
-  # python setup.py install
+  > elyxer.py [input file] [output file]
+You can test that it works with the --help option:
+  $ elyxer.py --help
 or, on Windows:
-  > python setup.py install
-and on Mac OS X:
-  % sudo python setup.py install
-This will ensure that any Python packages trying to access eLyXer will find
-it.
+  > elyxer.py --help
+Usage and options should then be shown.
+
+Unless your Python version is as ancient as 2.3, the script will also install
+Python as a module, which can be handier to use. In this case eLyXer is run
+like this:
+  $ python -m elyxer [input file] [output file]
 
 LyX Integration
 ===============
@@ -84,23 +68,23 @@ using distutils (as a module) or as a binary.
 Usage
 =====
 eLyXer can be invoked from the command line as:
-  $ python -m elyxer [source file] [destination file]
-or, if it was installed as a binary:
   $ elyxer.py [source file] [destination file]
+or, if it was installed as a module:
+  $ python -m elyxer [source file] [destination file]
 
 If the source file is omitted then STDIN is used; likewise, if no destination
 file is specified eLyXer will output to STDOUT. This allows its use in pipes
 and other flexible configurations.
 
 Examples:
-  $ python -m elyxer file.lyx file.html
+  $ elyxer.py file.lyx file.html
 converts file.lyx to file.html. Debug messages are shown.
-  $ cat file.lyx | python -m elyxer > file.html
+  $ cat file.lyx | elyxer.py > file.html
 converts file.lyx to file.html, as before. This time debug messages are not
 shown.
-  $ python -m elyxer file.lyx | grep "<blockquote>" | wc
+  $ elyxer.py file.lyx | grep "<blockquote>" | wc
 counts all blockquote paragraphs.
-  $ python -m elyxer file.lyx | wget --no-check-certificate --spider -nv -F -i -
+  $ elyxer.py file.lyx | wget --no-check-certificate --spider -nv -F -i -
 checks all external links in a document recursively. (Local links will appear
 as unresolved, but they can be ignored.)
 

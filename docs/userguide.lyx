@@ -202,9 +202,8 @@ target "https://savannah.nongnu.org/files/?group=elyxer"
 \end_inset
 
 .
- Now, there are two ways to install eLyXer: the easy way and the elegant
- way.
- Both start by uncompressing the distributed file to a suitable directory.
+ Now, there is more than one way to install eLyXe, but all of them start
+ by uncompressing the distributed file to a suitable directory.
  Just write at the command prompt:
 \end_layout
 
@@ -263,7 +262,7 @@ An installer is provided in the root directory, called
 \family typewriter
 install.py
 \family default
-.
+; it is the recommended way to install eLyXer.
  To run it just type in a console as root:
 \end_layout
 
@@ -292,22 +291,8 @@ On Windows you can type (as a regular user):
 \begin_layout Standard
 In any case, the script will look at your Python version and decide if it
  can install eLyXer as a Python module or as a binary.
- By default it will tell you how to run eLyXer as a module, so you can check
- if it was installed successfully:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
-$
-\color inherit
- python -m elyxer --help
-\end_layout
-
-\begin_layout Standard
-or, if this option is not available (i.e.
- if your Python version is below 2.4), as a binary:
+ By default it will install eLyXer as a binary, so you can check if it was
+ installed successfully:
 \end_layout
 
 \begin_layout LyX-Code
@@ -320,21 +305,35 @@ $
 \end_layout
 
 \begin_layout Standard
+If it is possible (i.e.
+ if your Python version is above 2.3), it will also install eLyXer as a module:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ python -m elyxer --help
+\end_layout
+
+\begin_layout Standard
 In any case, a brief help text and the list of command line options should
  appear.
 \end_layout
 
 \begin_layout Standard
-In what follows we will assume that eLyXer has been installed as a module,
+In what follows we will assume that eLyXer has been installed as a binary,
  except where stated; substitute 
-\family typewriter
-"python -m elyxer"
-\family default
- with 
 \family typewriter
 "elyxer.py"
 \family default
- if your system has eLyXer as a binary.
+ with 
+\family typewriter
+"python -m elyxer"
+\family default
+ if your system has eLyXer as a module and you want to use it.
 \end_layout
 
 \begin_layout Standard
@@ -462,6 +461,23 @@ $
 
 \begin_layout Standard
 The list of command line options should appear.
+ You can also manually copy the file 
+\family typewriter
+elyxer.py
+\family default
+ to a directory found in the execution path (for instance, 
+\family typewriter
+/usr/bin
+\family default
+ on Linux or 
+\family typewriter
+c:
+\backslash
+windows
+\backslash
+system32
+\family default
+ on Windows).
 \end_layout
 
 \begin_layout Subsection
@@ -478,12 +494,12 @@ Now you may want to try to convert the user guide:
 \color blue
 $
 \color inherit
- python -m elyxer --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx
- docs/userguide2.html
+ elyxer.py --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx docs/usergu
+ide2.html
 \end_layout
 
 \begin_layout Standard
-or, for the binary:
+or, to run eLyXer as a Python module:
 \end_layout
 
 \begin_layout LyX-Code
@@ -492,8 +508,8 @@ or, for the binary:
 \color blue
 $
 \color inherit
- elyxer.py --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx docs/usergu
-ide2.html
+ python -m elyxer --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx
+ docs/userguide2.html
 \end_layout
 
 \begin_layout Standard
@@ -627,11 +643,11 @@ eLyXer is a standalone command line tool.
 \color blue
 $
 \color inherit
- python -m elyxer [options] [source file] [destination file]
+ elyxer.py [options] [source file] [destination file]
 \end_layout
 
 \begin_layout Standard
-or, again for the binary:
+or, again for the module:
 \end_layout
 
 \begin_layout LyX-Code
@@ -664,7 +680,7 @@ STDOUT
 \color blue
 $
 \color inherit
- python -m elyxer file.lyx file.html
+ elyxer.py file.lyx file.html
 \end_layout
 
 \begin_layout Standard
@@ -686,7 +702,7 @@ file.html
 \color blue
 $
 \color inherit
- cat file.lyx | python -m elyxer > file.html
+ cat file.lyx | elyxer.py > file.html
 \end_layout
 
 \begin_layout Standard
@@ -708,7 +724,7 @@ file.html
 \color blue
 $
 \color inherit
- python -m elyxer file.lyx | grep "<blockquote>" | wc
+ elyxer.py file.lyx | grep "<blockquote>" | wc
 \end_layout
 
 \begin_layout Standard
@@ -721,8 +737,7 @@ counts all blockquote paragraphs.
 \color blue
 $
 \color inherit
- python -m elyxer file.lyx | wget --no-check-certificate --spider -nv -F
- -i -
+ elyxer.py file.lyx | wget --no-check-certificate --spider -nv -F -i -
 \end_layout
 
 \begin_layout Standard
@@ -782,7 +797,24 @@ gure.
 \begin_layout Standard
 LyX should be able to detect if eLyXer was installed as a module or as a
  binary, or even if it has been installed from a Linux distribution.
- In any case, 
+ In any case you can verify that it has been recognized by LyX by opening
+ Tools\SpecialChar \menuseparator
+Preferences\SpecialChar \ldots{}
+, going to External formats\SpecialChar \menuseparator
+Converters, and finding the
+ converter for 
+\begin_inset Quotes eld
+\end_inset
+
+LyX -> HTML
+\begin_inset Quotes erd
+\end_inset
+
+.
+ If eLyXer is there, it worked! Now you can convert your documents using
+ View\SpecialChar \menuseparator
+HTML.
+ Otherwise try to reinstall eLyXer from scratch and then reconfigure LyX.
 \end_layout
 
 \begin_layout Section
@@ -1327,7 +1359,8 @@ python -m elyxer --directory $$r $$i $$o
 \end_layout
 
 \begin_layout Standard
-If you want to generate pure HTML instead of XHTML, change the line to:
+(By default LyX will prefer to use eLyXer as a module.) If you want to generate
+ pure HTML instead of XHTML, change the line to:
 \end_layout
 
 \begin_layout LyX-Code
