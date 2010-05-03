@@ -2452,7 +2452,8 @@ Work in Progress
 \end_layout
 
 \begin_layout Standard
-As you have already seen eLyXer is very much a work in progress.
+As you can see eLyXer is a mature and tried package, but it has some rough
+ edges.
 \end_layout
 
 \begin_layout Subsection
@@ -2603,9 +2604,9 @@ Extending eLyXer
 \end_layout
 
 \begin_layout Standard
-eLyXer does not at the moment support all LyX features; sometimes it will
- ignore a command, sometimes it will signal it, and it might even refuse
- to work with certain documents.
+eLyXer should now support most LyX features; but sometimes it will ignore
+ a command, sometimes it will signal it, and it might even refuse to work
+ with certain documents.
  What can you do if eLyXer does not work with your LyX file? Worry not!
  Its flexible approach to processing allows anyone to write support for
  the missing commands.
@@ -2677,8 +2678,8 @@ Q: What can we expect from the tool in the future?
 \end_layout
 
 \begin_layout Description
-A: eLyXer should fulfill the needs of 99% of LyX users in the long term.
- It should also learn a couple of tricks of its own such as page segmenting.
+A: eLyXer should fulfill the needs of 99% of LyX users in the short term.
+ It has also learned a couple of tricks of its own such as page segmenting.
  Eventually it could be distributed along with LyX as part of the standard
  installer.
 \end_layout
@@ -2693,10 +2694,10 @@ Q: Why did you leave out my favorite feature
 
 \begin_layout Description
 A: In short, because nobody asked for it.
- Usually it is better to first aim for your own needs and what others request,
- and then worry about supporting everything, or you will never get anything
- done.
- But if you let me know I will be glad to help.
+ Every feature which has been requested (either to me personally or to the
+ list) has been tended to, unless it was too far out or I forgot about it.
+ At this point of development every missing LyX feature will be considered
+ a high priority item for the next version, if at all possible to implement.
 \end_layout
 
 \begin_layout Description
