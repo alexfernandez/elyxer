@@ -1380,7 +1380,7 @@ And so on.
 \end_layout
 
 \begin_layout Standard
-If eLyXer was installed as a binary the original line will be:
+If eLyXer was only installed as a binary the original line will be:
 \end_layout
 
 \begin_layout LyX-Code
