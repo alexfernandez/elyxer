@@ -51,8 +51,14 @@ class DefiningFunction(HybridFunction):
     HybridFunction.parsebit(self, pos)
     macro = MathMacro(newcommand)
     Trace.debug('Params: ' + unicode(self.params))
-    macro.parameters = self.params['$n']
+    macro.parameters = self.readparameters()
     MathMacro.macros[newcommand] = macro
+
+  def readparameters(self):
+    "Read the number of parameters in the macro."
+    if not self.params['$n']:
+      return 0
+    return int(self.params['$n'].contents[0].contents[0].contents[0].original)
 
 class MacroFunction(CommandBit):
   "A function that was defined using a macro."
@@ -63,11 +69,11 @@ class MacroFunction(CommandBit):
     "Parse a number of input parameters."
     self.values = []
     macro = self.translated
-    for n in range(len(macro.parameters)):
+    for n in range(macro.parameters):
       self.values.append(self.parseparameter(pos))
     self.contents = self.completemacro(pos)
 
-  def completemacro(pos):
+  def completemacro(self, pos):
     "Complete the macro with the parameters read."
     return []
 
