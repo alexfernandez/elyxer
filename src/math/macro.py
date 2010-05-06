@@ -31,9 +31,11 @@ from parse.formulaparse import *
 class MathMacro(object):
   "A math macro: command, parameters, default values, definition."
 
-  def __init__(self):
-    self.command = ''
-    self.parameters = []
+  macros = dict()
+
+  def __init__(self, command):
+    self.command = command
+    self.parameters = 0
     self.defaults = []
     self.definition = None
 
@@ -44,22 +46,41 @@ class DefiningFunction(HybridFunction):
 
   def parsebit(self, pos):
     "Parse a function with [] and {} parameters."
+    newcommand = Bracket().parseliteral(pos).literal
+    Trace.debug('New command: ' + newcommand)
     HybridFunction.parsebit(self, pos)
-    readtemplate = self.translated[0]
+    macro = MathMacro(newcommand)
+    Trace.debug('Params: ' + unicode(self.params))
+    macro.parameters = self.params['$n']
+    MathMacro.macros[newcommand] = macro
+
+class MacroFunction(CommandBit):
+  "A function that was defined using a macro."
+
+  commandmap = MathMacro.macros
+
+  def parsebit(self, pos):
+    "Parse a number of input parameters."
+    self.values = []
+    macro = self.translated
+    for n in range(len(macro.parameters)):
+      self.values.append(self.parseparameter(pos))
+    self.contents = self.completemacro(pos)
+
+  def completemacro(pos):
+    "Complete the macro with the parameters read."
+    return []
 
 FormulaCommand.commandbits += [
-    DefiningFunction(),
+    DefiningFunction(), MacroFunction(),
     ]
 
 class FormulaMacro(Inset):
   "A math macro defined in an inset."
 
-  macros = dict()
-
   def __init__(self):
     self.parser = FormulaParser()
     self.output = EmptyOutput()
-    self.macro = MathMacro()
 
   def process(self):
     "Convert the formula to tags"
