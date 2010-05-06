@@ -31,8 +31,8 @@ from math.command import *
 
 
 class HybridFunction(CommandBit):
-  "Read a function with two parameters: [] and {}"
-  "The [] parameter is optional"
+  "Read a function with a variable number of parameters, defined in a template."
+  "[] parameters are optional, {} parameters are mandatory."
 
   commandmap = FormulaConfig.hybridfunctions
   parambrackets = [('[', ']'), ('{', '}')]
@@ -41,12 +41,12 @@ class HybridFunction(CommandBit):
     "Parse a function with [] and {} parameters"
     readtemplate = self.translated[0]
     writetemplate = self.translated[1]
-    params = self.readparams(readtemplate, pos)
-    self.contents = self.writeparams(params, writetemplate)
+    self.readparams(readtemplate, pos)
+    self.contents = self.writeparams(writetemplate)
 
   def readparams(self, readtemplate, pos):
     "Read the params according to the template."
-    params = dict()
+    self.params = dict()
     for paramdef in self.paramdefs(readtemplate):
       if paramdef.startswith('['):
         value = self.parsesquare(pos)
@@ -55,8 +55,7 @@ class HybridFunction(CommandBit):
       else:
         Trace.error('Invalid parameter definition ' + paramdef)
         value = None
-      params[paramdef[1:-1]] = value
-    return params
+      self.params[paramdef[1:-1]] = value
 
   def paramdefs(self, readtemplate):
     "Read each param definition in the template"
@@ -80,48 +79,48 @@ class HybridFunction(CommandBit):
     Trace.error('Wrong character in parameter template' + pos.currentskip())
     return None
 
-  def writeparams(self, params, writetemplate):
+  def writeparams(self, writetemplate):
     "Write all params according to the template"
-    return self.writepos(params, TextPosition(writetemplate))
+    return self.writepos(TextPosition(writetemplate))
 
-  def writepos(self, params, pos):
+  def writepos(self, pos):
     "Write all params as read in the parse position."
     result = []
     while not pos.finished():
       if pos.checkskip('$'):
-        param = self.writeparam(params, pos)
+        param = self.writeparam(pos)
         if param:
           result.append(param)
       elif pos.checkskip('f'):
-        function = self.writefunction(params, pos)
+        function = self.writefunction(pos)
         if function:
           result.append(function)
       else:
         result.append(FormulaConstant(pos.currentskip()))
     return result
 
-  def writeparam(self, params, pos):
+  def writeparam(self, pos):
     "Write a single param of the form $0, $x..."
     name = '$' + pos.currentskip()
-    if not name in params:
+    if not name in self.params:
       Trace.error('Unknown parameter ' + name)
       return None
-    if not params[name]:
+    if not self.params[name]:
       return None
     if pos.checkskip('.'):
-      params[name].type = pos.globalpha()
-    return params[name]
+      self.params[name].type = pos.globalpha()
+    return self.params[name]
 
-  def writefunction(self, params, pos):
+  def writefunction(self, pos):
     "Write a single function f0,...,fn."
-    tag = self.readtag(params, pos)
+    tag = self.readtag(pos)
     if not tag:
       return None
     if not pos.checkskip('{'):
       Trace.error('Function should be defined in {}')
       return None
     pos.pushending('}')
-    contents = self.writepos(params, pos)
+    contents = self.writepos(pos)
     pos.popending()
     if len(contents) == 0:
       return None
@@ -129,7 +128,7 @@ class HybridFunction(CommandBit):
     function.type = None
     return function
 
-  def readtag(self, params, pos):
+  def readtag(self, pos):
     "Get the tag corresponding to the given index. Does parameter substitution."
     if not pos.current().isdigit():
       Trace.error('Function should be f0,...,f9: f' + pos.current())
@@ -141,10 +140,10 @@ class HybridFunction(CommandBit):
     tag = self.translated[2 + index]
     if not '$' in tag:
       return tag
-    for name in params:
+    for name in self.params:
       if name in tag:
-        if params[name]:
-          value = params[name].original[1:-1]
+        if self.params[name]:
+          value = self.params[name].original[1:-1]
         else:
           value = ''
         tag = tag.replace(name, value)
