@@ -62,6 +62,13 @@ class NewlineInset(Newline):
     self.parser = InsetParser()
     self.output = FixedOutput()
 
+class NewPageInset(NewPage):
+  "A new page command."
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = FixedOutput()
+
 class Branch(Container):
   "A branch within a LyX document"
 
