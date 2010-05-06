@@ -39,6 +39,22 @@ class MathMacro(object):
     self.defaults = []
     self.definition = None
 
+class MacroParameter(FormulaBit):
+  "A parameter from a macro."
+
+  def detect(self, pos):
+    "Find a macro parameter: #n."
+    return pos.checkfor('#')
+
+  def parsebit(self, pos):
+    "Parse the parameter: #n."
+    if not pos.checkskip('#'):
+      Trace.error('Missing parameter start #.')
+      return
+    self.number = int(pos.currentskip())
+    Trace.debug('Parsed parameter ' + unicode(self.number))
+    self.contents = [TaggedBit().constant('#' + unicode(self.number), 'span class="unknown"')]
+
 class DefiningFunction(HybridFunction):
   "Read a function that defines a new command (a macro)."
 
@@ -52,6 +68,7 @@ class DefiningFunction(HybridFunction):
     macro = MathMacro(newcommand)
     Trace.debug('Params: ' + unicode(self.params))
     macro.parameters = self.readparameters()
+    macro.definition = self.params['$d']
     MathMacro.macros[newcommand] = macro
 
   def readparameters(self):
@@ -71,15 +88,18 @@ class MacroFunction(CommandBit):
     macro = self.translated
     for n in range(macro.parameters):
       self.values.append(self.parseparameter(pos))
-    self.contents = self.completemacro(pos)
+    self.contents = self.completemacro(macro)
 
-  def completemacro(self, pos):
+  def completemacro(self, macro):
     "Complete the macro with the parameters read."
-    return []
+    output = macro.definition
+    return [output]
 
 FormulaCommand.commandbits += [
     DefiningFunction(), MacroFunction(),
     ]
+
+FormulaFactory.bits += [ MacroParameter() ]
 
 class FormulaMacro(Inset):
   "A math macro defined in an inset."

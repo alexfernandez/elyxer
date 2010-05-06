@@ -619,7 +619,7 @@ class FormulaConfig(object):
 
   unmodified = {
       
-      u'characters':[u'.',u'*',u'€',u'(',u')',u'[',u']',u':',u'·',u'!',u';',u'|',u'§',u'"',u'#',], 
+      u'characters':[u'.',u'*',u'€',u'(',u')',u'[',u']',u':',u'·',u'!',u';',u'|',u'§',u'"',], 
       }
 
 class GeneralConfig(object):
