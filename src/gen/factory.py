@@ -32,7 +32,7 @@ from ref.label import *
 from ref.biblio import *
 from math.formula import *
 from math.command import *
-from math.variable import *
+from math.hybrid import *
 from gen.table import *
 from gen.image import *
 from gen.structure import *
@@ -42,6 +42,7 @@ from gen.float import *
 from math.array import *
 from ref.bibtex import *
 from xtra.newfangle import *
+from math.macro import *
 
 
 class ContainerFactory(object):
