@@ -24,6 +24,7 @@
 
 from gen.inset import *
 from util.trace import Trace
+from util.clone import Cloner
 from conf.config import *
 from parse.formulaparse import *
 
@@ -55,6 +56,9 @@ class MacroParameter(FormulaBit):
     Trace.debug('Parsed parameter ' + unicode(self.number))
     self.contents = [TaggedBit().constant('#' + unicode(self.number), 'span class="unknown"')]
 
+  def replaceself(self, value):
+    "Replace the macro parameter with its current value."
+
 class DefiningFunction(HybridFunction):
   "Read a function that defines a new command (a macro)."
 
@@ -66,7 +70,6 @@ class DefiningFunction(HybridFunction):
     Trace.debug('New command: ' + newcommand)
     HybridFunction.parsebit(self, pos)
     macro = MathMacro(newcommand)
-    Trace.debug('Params: ' + unicode(self.params))
     macro.parameters = self.readparameters()
     macro.definition = self.params['$d']
     MathMacro.macros[newcommand] = macro
@@ -88,12 +91,15 @@ class MacroFunction(CommandBit):
     macro = self.translated
     for n in range(macro.parameters):
       self.values.append(self.parseparameter(pos))
-    self.contents = self.completemacro(macro)
+    self.completemacro(macro)
 
   def completemacro(self, macro):
     "Complete the macro with the parameters read."
-    output = macro.definition
-    return [output]
+    self.contents = [macro.definition] #[Cloner.deepclone(macro.definition)]
+    for parameter in self.searchall(MacroParameter):
+      index = parameter.number - 1
+      Trace.debug('Index: ' + unicode(index))
+      parameter.contents = [self.values[index]]
 
 FormulaCommand.commandbits += [
     DefiningFunction(), MacroFunction(),

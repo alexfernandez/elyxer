@@ -670,7 +670,7 @@ Macros
 \begin_layout Standard
 Definitions can be added on the fly
 \begin_inset FormulaMacro
-\newcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
+\renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
 {#1\sqrt{#2}}
 \end_inset
 
@@ -682,7 +682,7 @@ Definitions can be added on the fly
 .
  They can accept default parameters
 \begin_inset FormulaMacro
-\newcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
+\renewcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
 {#1\sqrt{#2}}
 \end_inset
 
@@ -705,6 +705,10 @@ Other definitions from the preamble can be used:
 \begin_layout Standard
 Definitions on the fly are also possible: 
 \begin_inset Formula $\newcommand{\ontheflyroot}[2]{\sqrt[#1]{#2}}\ontheflyroot{7}{8}$
+\end_inset
+
+, and used with different values: 
+\begin_inset Formula $\ontheflyroot{a}{b}$
 \end_inset
 
 .
