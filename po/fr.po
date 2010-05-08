@@ -28,9 +28,21 @@ msgstr "Figure"
 msgid "Abstract"
 msgstr "Résumé"
 
+#: jsmath-warning
+msgid  "Warning: "
+msgstr "Warning: "
+
+#: up
+msgid  "Up"
+msgstr "Debout"
+
 #: Book
 msgid "Book"
 msgstr "Livre"
+
+#: jsmath-enable
+msgid  "Please enable JavaScript on your browser."
+msgstr "Please enable JavaScript on your browser."
 
 #: Subsection
 msgid "Subsection"
@@ -52,6 +64,10 @@ msgstr "Bibliographie"
 msgid "Algorithm "
 msgstr "Algorithme "
 
+#: next
+msgid  "Next"
+msgstr "Suivant"
+
 #: list-table
 msgid "List of Tables"
 msgstr "List des tables"
@@ -63,6 +79,10 @@ msgstr "Partie"
 #: toc
 msgid "Table of Contents"
 msgstr "Table des matières"
+
+#: prev
+msgid  "Previous"
+msgstr "Antérieur"
 
 #: Section
 msgid "Section"
@@ -107,3 +127,8 @@ msgstr "Table "
 #: float-figure
 msgid "Figure "
 msgstr "Figure "
+
+#: jsmath-requires
+msgid  " requires JavaScript to correctly process the mathematics on this page. "
+msgstr " requires JavaScript to correctly process the mathematics on this page. "
+
