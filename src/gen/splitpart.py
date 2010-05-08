@@ -39,63 +39,66 @@ class SplitPartLink(IntegralProcessor):
 class SplitPartHeader(object):
   "The header that comes with a new split page."
 
-  topanchors = []
+  upanchors = []
+  prev = TranslationConfig.constants['prev']
+  next = TranslationConfig.constants['next']
+  up = TranslationConfig.constants['up']
 
   def __init__(self, firstbasket):
     "Set the first basket as last basket."
     self.lastcontainer = None
     self.nextlink = None
-    firstbasket.write(self.inserttopanchor())
+    firstbasket.write(self.insertupanchor())
 
   def create(self, basket, container):
     "Write the header to the basket."
     basket.write(LyXHeader())
-    basket.write(self.createtopanchor(container))
+    basket.write(self.createupanchor(container))
     basket.write(self.createheader(container))
 
   def createheader(self, container):
     "Create the header with all links."
-    prevlink = Link().complete('', 'prev', type='prev')
+    prevlink = Link().complete(' ', 'prev', type='prev')
     if self.nextlink:
-      self.setlinkname(prevlink, 'prev', self.lastcontainer)
-      self.setlinkname(self.nextlink, 'next', container)
+      self.setlinkname(prevlink, SplitPartHeader.prev, self.lastcontainer)
+      self.setlinkname(self.nextlink, SplitPartHeader.next, container)
       prevlink.setmutualdestination(self.nextlink)
-    nextlink = Link().complete('', 'next', type='next')
-    toplink = Link().complete('top', url='', type='top')
-    toplink.destination = self.gettopdestination(container)
+    nextlink = Link().complete(' ', SplitPartHeader.next, type='next')
+    uplink = Link().complete(SplitPartHeader.up, url='', type='up')
+    uplink.destination = self.getupdestination(container)
     prevcontainer = TaggedText().complete([prevlink], 'span class="prev"')
     nextcontainer = TaggedText().complete([nextlink], 'span class="next"')
-    topcontainer = TaggedText().complete([toplink], 'span class="top"')
-    contents = [prevcontainer, Constant('\n'), topcontainer, Constant('\n'), nextcontainer]
+    upcontainer = TaggedText().complete([uplink], 'span class="up"')
+    contents = [prevcontainer, Constant('\n'), upcontainer, Constant('\n'), nextcontainer]
     header = TaggedText().complete(contents, 'div class="splitheader"', True)
     self.nextlink = nextlink
     self.lastcontainer = container
     return header
   
-  def createtopanchor(self, container):
-    "Create the top anchor for the top links."
+  def createupanchor(self, container):
+    "Create the up anchor for the up links."
     level = self.getlevel(container)
-    while len(SplitPartHeader.topanchors) > level:
-      del SplitPartHeader.topanchors[-1]
-    while len(SplitPartHeader.topanchors) < level:
-      SplitPartHeader.topanchors.append(SplitPartHeader.topanchors[-1])
-    return self.inserttopanchor()
+    while len(SplitPartHeader.upanchors) > level:
+      del SplitPartHeader.upanchors[-1]
+    while len(SplitPartHeader.upanchors) < level:
+      SplitPartHeader.upanchors.append(SplitPartHeader.upanchors[-1])
+    return self.insertupanchor()
 
-  def inserttopanchor(self):
-    "Insert the top anchor into the list of anchors."
-    topanchor = Link().complete('', '')
-    topanchor.output = EmptyOutput()
-    SplitPartHeader.topanchors.append(topanchor)
-    return topanchor
+  def insertupanchor(self):
+    "Insert the up anchor into the list of anchors."
+    upanchor = Link().complete('', '')
+    upanchor.output = EmptyOutput()
+    SplitPartHeader.upanchors.append(upanchor)
+    return upanchor
 
-  def gettopdestination(self, container):
-    "Get the name of the top page."
+  def getupdestination(self, container):
+    "Get the name of the up page."
     level = self.getlevel(container)
-    if len(SplitPartHeader.topanchors) < level:
-      toppage = SplitPartHeader.topanchors[-1]
+    if len(SplitPartHeader.upanchors) < level:
+      uppage = SplitPartHeader.upanchors[-1]
     else:
-      toppage = SplitPartHeader.topanchors[level - 1]
-    return toppage
+      uppage = SplitPartHeader.upanchors[level - 1]
+    return uppage
 
   def getlevel(self, container):
     "Get the level of the container."

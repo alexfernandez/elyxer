@@ -26,6 +26,10 @@ msgstr "Abstract"
 msgid  "Warning: "
 msgstr "Warning: "
 
+#: up
+msgid  "Up"
+msgstr "Up"
+
 #: Book
 msgid  "Book"
 msgstr "Book"
@@ -54,6 +58,10 @@ msgstr "Bibliography"
 msgid  "Algorithm "
 msgstr "Algorithm "
 
+#: next
+msgid  "Next"
+msgstr "Next"
+
 #: list-table
 msgid  "List of Tables"
 msgstr "List of Tables"
@@ -65,6 +73,10 @@ msgstr "Part"
 #: toc
 msgid  "Table of Contents"
 msgstr "Table of Contents"
+
+#: prev
+msgid  "Previous"
+msgstr "Previous"
 
 #: Section
 msgid  "Section"

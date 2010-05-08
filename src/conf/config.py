@@ -747,8 +747,9 @@ class TranslationConfig(object):
       u'jsmath-requires':u' requires JavaScript to correctly process the mathematics on this page. ', 
       u'jsmath-warning':u'Warning: ', u'list-algorithm':u'List of Algorithms', 
       u'list-figure':u'List of Figures', u'list-table':u'List of Tables', 
-      u'list-tableau':u'List of Tableaux', u'nomenclature':u'Nomenclature', 
-      u'on-page':u' on page ', u'toc':u'Table of Contents', 
+      u'list-tableau':u'List of Tableaux', u'next':u'Next', 
+      u'nomenclature':u'Nomenclature', u'on-page':u' on page ', 
+      u'prev':u'Previous', u'toc':u'Table of Contents', u'up':u'Up', 
       }
 
   languages = {
