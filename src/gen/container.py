@@ -188,8 +188,9 @@ class StringContainer(Container):
 
   def process(self):
     "Replace special chars from the contents."
-    self.string = self.replacespecial(self.contents[0])
-    self.contents = []
+    if len(self.contents) > 0:
+      self.string = self.replacespecial(self.contents[0])
+      self.contents = []
 
   def replacespecial(self, line):
     "Replace all special chars from a line"

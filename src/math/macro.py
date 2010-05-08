@@ -40,6 +40,11 @@ class MathMacro(object):
     self.defaults = []
     self.definition = None
 
+  def instantiate(self):
+    "Return an instance of the macro."
+    Trace.debug('Cloning: ' + self.definition.original)
+    return WholeFormula.parse(self.definition.original)
+
 class MacroParameter(FormulaBit):
   "A parameter from a macro."
 
@@ -53,6 +58,7 @@ class MacroParameter(FormulaBit):
       Trace.error('Missing parameter start #.')
       return
     self.number = int(pos.currentskip())
+    self.original = '#' + unicode(self.number)
     Trace.debug('Parsed parameter ' + unicode(self.number))
     self.contents = [TaggedBit().constant('#' + unicode(self.number), 'span class="unknown"')]
 
@@ -95,7 +101,7 @@ class MacroFunction(CommandBit):
 
   def completemacro(self, macro):
     "Complete the macro with the parameters read."
-    self.contents = [macro.definition] #[Cloner.deepclone(macro.definition)]
+    self.contents = [macro.instantiate()]
     for parameter in self.searchall(MacroParameter):
       index = parameter.number - 1
       Trace.debug('Index: ' + unicode(index))

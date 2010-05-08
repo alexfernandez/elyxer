@@ -52,15 +52,7 @@ class Formula(Container):
         tag += ';mode=display'
       self.contents = [TaggedText().constant(self.contents[0], tag + '"', True)]
       return
-    pos = TextPosition(self.contents[0])
-    whole = WholeFormula()
-    if not whole.detect(pos):
-      Trace.error('Unknown formula at: ' + pos.identifier())
-      constant = TaggedBit().constant(pos.identifier(), 'span class="unknown"')
-      self.contents = [constant]
-      return
-    whole.parsebit(pos)
-    whole.process()
+    whole = WholeFormula.parse(self.contents[0])
     self.contents = [whole]
     whole.parent = self
 
@@ -111,15 +103,14 @@ class TaggedBit(FormulaBit):
     self.output = TaggedOutput().settag(tag)
     return self
 
-class FormulaConstant(FormulaBit):
+class FormulaConstant(Constant):
   "A constant string in a formula"
 
   def __init__(self, string):
     "Set the constant string"
-    FormulaBit.__init__(self)
+    Constant.__init__(self, string)
     self.original = string
-    self.output = FixedOutput()
-    self.html = [string]
+    self.type = None
 
 class WholeFormula(FormulaBit):
   "Parse a whole formula"
@@ -153,6 +144,19 @@ class WholeFormula(FormulaBit):
         if last.type == 'number':
           #separate
           last.contents.append(FormulaConstant(u' '))
+
+  def parse(cls, formula):
+    "Parse a whole formula and return it."
+    pos = TextPosition(formula)
+    whole = WholeFormula()
+    if not whole.detect(pos):
+      Trace.error('Unknown formula at: ' + pos.identifier())
+      return TaggedBit().constant(pos.identifier(), 'span class="unknown"')
+    whole.parsebit(pos)
+    whole.process()
+    return whole
+
+  parse = classmethod(parse)
 
 class FormulaFactory(object):
   "Construct bits of formula"

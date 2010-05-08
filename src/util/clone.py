@@ -38,21 +38,5 @@ class Cloner(object):
     clone.__init__()
     return clone
 
-  def clonecontainer(cls, original):
-    "Return a deep copy of a container object."
-    if isinstance(original, StringContainer):
-      return Cloner.clonestringcontainer(original)
-    clone = Cloner.clone(original)
-    clone.output = original.output
-    clone.contents = []
-    for element in original.contents:
-      clone.contents.append(Cloner.clonecontainer(element))
-    return clone
-
-  def clonestringcontainer(cls, original):
-    "Return a clone of a string container."
-    return Constant(original.string)
-
   clone = classmethod(clone)
-  clonestringcontainer = classmethod(clonestringcontainer)
 
