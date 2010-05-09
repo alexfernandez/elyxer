@@ -150,6 +150,16 @@ First public release of option
 : split resulting web page at the given level.
 \end_layout
 
+\begin_layout Itemize
+Support for macros, both in LyX macro and as 
+\family typewriter
+
+\backslash
+newcommand
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.43 (2010-04-10):
