@@ -70,6 +70,10 @@ class HeaderParser(Parser):
     return self
 
 class PreambleParser(Parser):
+  "A parser for the LyX preamble."
+
+  preamble = []
+  parsed = False
 
   def __init__(self):
     self.ending = HeaderConfig.parameters['endpreamble']
@@ -77,9 +81,13 @@ class PreambleParser(Parser):
   def parsepreamble(self, reader):
     "Parse the full preamble with all statements."
     reader.nextline()
-    preamble = []
-    self.parseending(reader, lambda: preamble.append(reader.currentline()))
-    Trace.debug('Read preamble ' + unicode(preamble))
+    self.parseending(reader, lambda: self.parsepreambleline(reader))
+    Trace.debug('Read preamble ' + unicode(PreambleParser.preamble))
+
+  def parsepreambleline(self, reader):
+    "Parse a single preamble line."
+    PreambleParser.preamble.append(reader.currentline())
+    reader.nextline()
 
 class LstParser(object):
   "Parse global and local lstparams."
