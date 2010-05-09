@@ -34,8 +34,8 @@ class MathMacro(object):
 
   macros = dict()
 
-  def __init__(self, command):
-    self.command = command
+  def __init__(self):
+    self.newcommand = None
     self.parameters = 0
     self.defaults = []
     self.definition = None
@@ -43,6 +43,35 @@ class MathMacro(object):
   def instantiate(self):
     "Return an instance of the macro."
     return WholeFormula.parse(self.definition.original)
+
+  def parsepreamble(self):
+    "Parse the LyX preamble, if needed."
+    if len(PreambleParser.preamble) == 0:
+      return
+    pos = TextPosition('\n'.join(PreambleParser.preamble))
+    while not pos.finished():
+      if self.detectdefinition(pos):
+        self.parsedefinition(pos)
+      else:
+        pos.globincluding('\n')
+    PreambleParser.preamble = []
+
+  def detectdefinition(self, pos):
+    "Detect a macro definition."
+    for function in FormulaConfig.definingfunctions:
+      if pos.checkfor(function):
+        return True
+    return False
+
+  def parsedefinition(self, pos):
+    "Parse a macro definition."
+    command = FormulaCommand()
+    command.factory = FormulaFactory()
+    bit = command.parsebit(pos)
+    if not isinstance(bit, DefiningFunction):
+      Trace.error('Did not define a macro with ' + unicode(bit))
+
+Formula.initializations.append(MathMacro().parsepreamble)
 
 class MacroParameter(FormulaBit):
   "A parameter from a macro."
@@ -60,9 +89,6 @@ class MacroParameter(FormulaBit):
     self.original = '#' + unicode(self.number)
     self.contents = [TaggedBit().constant('#' + unicode(self.number), 'span class="unknown"')]
 
-  def replaceself(self, value):
-    "Replace the macro parameter with its current value."
-
 class DefiningFunction(HybridFunction):
   "Read a function that defines a new command (a macro)."
 
@@ -73,7 +99,8 @@ class DefiningFunction(HybridFunction):
     newcommand = Bracket().parseliteral(pos).literal
     Trace.debug('New command: ' + newcommand)
     HybridFunction.parsebit(self, pos)
-    macro = MathMacro(newcommand)
+    macro = MathMacro()
+    macro.newcommand = newcommand
     macro.parameters = self.readparameters()
     macro.definition = self.params['$d']
     index = 1

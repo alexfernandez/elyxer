@@ -33,12 +33,16 @@ from parse.formulaparse import *
 class Formula(Container):
   "A LaTeX formula"
 
+  initializations = []
+
   def __init__(self):
     self.parser = FormulaParser()
     self.output = TaggedOutput().settag('span class="formula"')
 
   def process(self):
     "Convert the formula to tags"
+    for init in Formula.initializations:
+      init()
     if self.header[0] != 'inline':
       self.output.settag('div class="formula"', True)
     if Options.jsmath:

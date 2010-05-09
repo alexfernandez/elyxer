@@ -36,10 +36,11 @@ class FormulaCommand(FormulaBit):
   "A LaTeX command inside a formula"
 
   commandbits = []
+  start = FormulaConfig.starts['command']
 
   def detect(self, pos):
     "Find the current command"
-    return pos.checkfor(FormulaConfig.starts['command'])
+    return pos.checkfor(FormulaCommand.start)
 
   def parsebit(self, pos):
     "Parse the command"
@@ -55,18 +56,18 @@ class FormulaCommand(FormulaBit):
     Trace.error('Unknown command ' + command)
     self.output = TaggedOutput().settag('span class="unknown"')
     self.add(FormulaConstant(command))
+    return self
 
   def extractcommand(self, pos):
     "Extract the command from the current position"
-    start = FormulaConfig.starts['command']
-    if not pos.checkskip(start):
+    if not pos.checkskip(FormulaCommand.start):
       Trace.error('Missing command start ' + start)
       return
     if pos.current().isalpha():
       # alpha command
-      return start + pos.globalpha()
+      return FormulaCommand.start + pos.globalpha()
     # symbol command
-    return start + pos.currentskip()
+    return FormulaCommand.start + pos.currentskip()
 
   def process(self):
     "Process the internals"
