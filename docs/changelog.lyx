@@ -143,6 +143,30 @@ Solved weird bug in float numbering when a chapter has only one layout.
 \end_layout
 
 \begin_layout Itemize
+Added 
+\family typewriter
+
+\backslash
+diagup
+\family default
+ and 
+\family typewriter
+
+\backslash
+diagdown
+\family default
+: 
+\begin_inset Formula $\diagup$
+\end_inset
+
+, 
+\begin_inset Formula $\diagdown$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
 First public release of option 
 \family typewriter
 --splitpart [level]
