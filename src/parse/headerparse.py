@@ -54,6 +54,7 @@ class HeaderParser(Parser):
     self.parseparameter(reader)
 
   def parsebranch(self, reader):
+    "Parse all branch definitions."
     branch = reader.currentline().split()[1]
     reader.nextline()
     subparser = HeaderParser().complete(HeaderConfig.parameters['endbranch'])
@@ -64,15 +65,21 @@ class HeaderParser(Parser):
     Options.branches[branch] = options
 
   def complete(self, ending):
+    "Complete the parser with the given ending."
     self.ending = ending
     return self
 
-class PreambleParser(BoundedParser):
-  "Parse the LyX preamble."
+class PreambleParser(Parser):
+
+  def __init__(self):
+    self.ending = HeaderConfig.parameters['endpreamble']
 
   def parsepreamble(self, reader):
     "Parse the full preamble with all statements."
     reader.nextline()
+    preamble = []
+    self.parseending(reader, lambda: preamble.append(reader.currentline()))
+    Trace.debug('Read preamble ' + unicode(preamble))
 
 class LstParser(object):
   "Parse global and local lstparams."
