@@ -34,7 +34,7 @@ msgstr "Waarschuwing: "
 
 #: up
 msgid  "Up"
-msgstr "Begin"
+msgstr "Terug"
 
 #: Book
 msgid "Book"
