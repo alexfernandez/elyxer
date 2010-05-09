@@ -633,9 +633,10 @@ class HeaderConfig(object):
   "Configuration class from config file"
 
   parameters = {
-      u'branch':u'\\branch', u'documentclass':u'\\textclass', 
-      u'endbranch':u'\\end_branch', u'language':u'\\language', 
-      u'lstset':u'\\lstset', u'paragraphseparation':u'\\paragraph_separation', 
+      u'beginpreamble':u'\\begin_preamble', u'branch':u'\\branch', 
+      u'documentclass':u'\\textclass', u'endbranch':u'\\end_branch', 
+      u'language':u'\\language', u'lstset':u'\\lstset', 
+      u'paragraphseparation':u'\\paragraph_separation', 
       u'pdftitle':u'\\pdf_title', u'secnumdepth':u'\\secnumdepth', 
       u'tocdepth':u'\\tocdepth', 
       }
