@@ -82,7 +82,6 @@ class PreambleParser(Parser):
     "Parse the full preamble with all statements."
     reader.nextline()
     self.parseending(reader, lambda: self.parsepreambleline(reader))
-    Trace.debug('Read preamble ' + unicode(PreambleParser.preamble))
 
   def parsepreambleline(self, reader):
     "Parse a single preamble line."

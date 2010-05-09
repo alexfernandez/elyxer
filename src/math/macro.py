@@ -106,7 +106,6 @@ class DefiningFunction(HybridFunction):
     index = 1
     while self.params['$' + unicode(index)]:
       macro.defaults.append(self.params['$' + unicode(index)])
-      Trace.debug('New default param ' + unicode(self.params['$' + unicode(index)]))
       index += 1
     MathMacro.macros[newcommand] = macro
 

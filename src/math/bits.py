@@ -93,7 +93,6 @@ class Comment(FormulaBit):
   def parsebit(self, pos):
     "Parse to the end of the line."
     comment = pos.globincluding('\n')
-    Trace.debug('Comment: ' + comment)
     self.original += comment
 
 class Bracket(FormulaBit):

@@ -38,11 +38,10 @@ class Formula(Container):
   def __init__(self):
     self.parser = FormulaParser()
     self.output = TaggedOutput().settag('span class="formula"')
+    self.initialize()
 
   def process(self):
     "Convert the formula to tags"
-    for init in Formula.initializations:
-      init()
     if self.header[0] != 'inline':
       self.output.settag('div class="formula"', True)
     if Options.jsmath:
@@ -59,6 +58,12 @@ class Formula(Container):
     whole = WholeFormula.parse(self.contents[0])
     self.contents = [whole]
     whole.parent = self
+
+  def initialize(self):
+    "Perform any necessary initializations."
+    "Introduced to process any macros in the preamble."
+    for init in Formula.initializations:
+      init()
 
   def __unicode__(self):
     "Return a printable representation."
