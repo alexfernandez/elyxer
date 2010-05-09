@@ -671,7 +671,7 @@ Macros
 Definitions can be added on the fly
 \begin_inset FormulaMacro
 \renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
-{#1\sqrt{#2}}
+{\sqrt[#1]{#2}}
 \end_inset
 
 .

@@ -76,6 +76,11 @@ class DefiningFunction(HybridFunction):
     macro = MathMacro(newcommand)
     macro.parameters = self.readparameters()
     macro.definition = self.params['$d']
+    index = 1
+    while self.params['$' + unicode(index)]:
+      macro.defaults.append(self.params['$' + unicode(index)])
+      Trace.debug('New default param ' + unicode(self.params['$' + unicode(index)]))
+      index += 1
     MathMacro.macros[newcommand] = macro
 
   def readparameters(self):
@@ -93,8 +98,13 @@ class MacroFunction(CommandBit):
     "Parse a number of input parameters."
     self.values = []
     macro = self.translated
-    for n in range(macro.parameters):
+    while self.factory.detectbit(pos):
       self.values.append(self.parseparameter(pos))
+    defaults = list(macro.defaults)
+    while len(self.values) < macro.parameters and len(defaults) > 0:
+      self.values.insert(0, defaults.pop())
+    if len(self.values) < macro.parameters:
+      Trace.error('Missing parameters in macro ' + unicode(self))
     self.completemacro(macro)
 
   def completemacro(self, macro):
