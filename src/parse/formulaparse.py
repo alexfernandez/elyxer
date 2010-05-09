@@ -130,7 +130,7 @@ class MacroParser(FormulaParser):
   
   def parse(self, reader):
     "Parse the formula until the end"
-    formula = self.parsemultiliner(reader, '\\begin_inset FormulaMacro', '\\end_inset')
+    formula = self.parsemultiliner(reader, self.parent.start, self.ending)
     reader.nextline()
     return [formula]
   
