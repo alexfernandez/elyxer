@@ -83,6 +83,19 @@ class Number(FormulaBit):
     self.add(FormulaConstant(digits))
     self.type = 'number'
 
+class Comment(FormulaBit):
+  "A LaTeX comment: % to the end of the line."
+
+  def detect(self, pos):
+    "Detect the %."
+    return pos.current() == '%'
+
+  def parsebit(self, pos):
+    "Parse to the end of the line."
+    comment = pos.globincluding('\n')
+    Trace.debug('Comment: ' + comment)
+    self.original += comment
+
 class Bracket(FormulaBit):
   "A {} bracket inside a formula"
 
@@ -164,5 +177,7 @@ class SquareBracket(Bracket):
   start = FormulaConfig.starts['squarebracket']
   ending = FormulaConfig.endings['squarebracket']
 
-FormulaFactory.bits += [ FormulaSymbol(), RawText(), Number(), Bracket() ]
+FormulaFactory.bits += [
+    FormulaSymbol(), RawText(), Number(), Comment(), Bracket()
+    ]
 
