@@ -48,6 +48,7 @@ class MathMacro(object):
     "Parse the LyX preamble, if needed."
     if len(PreambleParser.preamble) == 0:
       return
+    FormulaCommand.preambling = True
     pos = TextPosition('\n'.join(PreambleParser.preamble))
     while not pos.finished():
       if self.detectdefinition(pos):
@@ -55,6 +56,7 @@ class MathMacro(object):
       else:
         pos.globincluding('\n')
     PreambleParser.preamble = []
+    FormulaPreambling = False
 
   def detectdefinition(self, pos):
     "Detect a macro definition."
