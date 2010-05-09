@@ -30,7 +30,7 @@ msgstr "Résumé"
 
 #: jsmath-warning
 msgid  "Warning: "
-msgstr "Warning: "
+msgstr "Erreur: Javascript est nécessaire pour afficher correctement les fonctionnalités de "
 
 #: up
 msgid  "Up"
@@ -42,7 +42,7 @@ msgstr "Livre"
 
 #: jsmath-enable
 msgid  "Please enable JavaScript on your browser."
-msgstr "Please enable JavaScript on your browser."
+msgstr "Merci d'activer JavaScript dans votre navigateur."
 
 #: Subsection
 msgid "Subsection"
@@ -82,7 +82,7 @@ msgstr "Table des matières"
 
 #: prev
 msgid  "Previous"
-msgstr "Antérieur"
+msgstr "Précédent"
 
 #: Section
 msgid "Section"
@@ -130,5 +130,5 @@ msgstr "Figure "
 
 #: jsmath-requires
 msgid  " requires JavaScript to correctly process the mathematics on this page. "
-msgstr " requires JavaScript to correctly process the mathematics on this page. "
+msgstr ". "
 

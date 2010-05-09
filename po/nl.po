@@ -30,11 +30,11 @@ msgstr "Samenvatting"
 
 #: jsmath-warning
 msgid  "Warning: "
-msgstr "Warning: "
+msgstr "Waarschuwing: "
 
 #: up
 msgid  "Up"
-msgstr "Up"
+msgstr "Begin"
 
 #: Book
 msgid "Book"
@@ -42,7 +42,7 @@ msgstr "Boek"
 
 #: jsmath-enable
 msgid  "Please enable JavaScript on your browser."
-msgstr "Please enable JavaScript on your browser."
+msgstr "Activeer Javascript in uw browser."
 
 #: Subsection
 msgid "Subsection"
@@ -66,7 +66,7 @@ msgstr "Algoritme "
 
 #: next
 msgid  "Next"
-msgstr "Next"
+msgstr "Volgende"
 
 #: list-table
 msgid "List of Tables"
@@ -82,7 +82,7 @@ msgstr "Inhoudsopgave"
 
 #: prev
 msgid  "Previous"
-msgstr "Previous"
+msgstr "Vorige"
 
 #: Section
 msgid "Section"
@@ -130,5 +130,5 @@ msgstr "Figuur "
 
 #: jsmath-requires
 msgid  " requires JavaScript to correctly process the mathematics on this page. "
-msgstr " requires JavaScript to correctly process the mathematics on this page. "
+msgstr " om de formules op deze bladzijde correct weer te geven is Javascript benodigd. "
 
