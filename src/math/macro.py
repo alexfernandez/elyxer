@@ -42,7 +42,6 @@ class MathMacro(object):
 
   def instantiate(self):
     "Return an instance of the macro."
-    Trace.debug('Cloning: ' + self.definition.original)
     return WholeFormula.parse(self.definition.original)
 
 class MacroParameter(FormulaBit):
@@ -59,7 +58,6 @@ class MacroParameter(FormulaBit):
       return
     self.number = int(pos.currentskip())
     self.original = '#' + unicode(self.number)
-    Trace.debug('Parsed parameter ' + unicode(self.number))
     self.contents = [TaggedBit().constant('#' + unicode(self.number), 'span class="unknown"')]
 
   def replaceself(self, value):
@@ -104,7 +102,6 @@ class MacroFunction(CommandBit):
     self.contents = [macro.instantiate()]
     for parameter in self.searchall(MacroParameter):
       index = parameter.number - 1
-      Trace.debug('Index: ' + unicode(index))
       parameter.contents = [self.values[index]]
 
 FormulaCommand.commandbits += [
@@ -113,20 +110,14 @@ FormulaCommand.commandbits += [
 
 FormulaFactory.bits += [ MacroParameter() ]
 
-class FormulaMacro(Inset):
+class FormulaMacro(Formula):
   "A math macro defined in an inset."
 
   def __init__(self):
-    self.parser = FormulaParser()
+    self.parser = MacroParser()
     self.output = EmptyOutput()
-
-  def process(self):
-    "Convert the formula to tags"
-    pass
 
   def __unicode__(self):
     "Return a printable representation."
-    if self.macro.command:
-      return 'Macro: \\' + self.macro.command
-    return 'Unnamed macro'
+    return 'Math macro'
 
