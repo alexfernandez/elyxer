@@ -34,7 +34,7 @@ msgstr "Erreur: Javascript est nécessaire pour afficher correctement les foncti
 
 #: up
 msgid  "Up"
-msgstr "Debout"
+msgstr "Monter d'un niveau"
 
 #: Book
 msgid "Book"
