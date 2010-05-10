@@ -45,7 +45,10 @@ class Formula(Container):
     if self.header[0] != 'inline':
       self.output.settag('div class="formula"', True)
     if Options.jsmath:
-      self.output.tag = self.output.tag.replace('formula', 'math')
+      if self.header[0] != 'inline':
+        self.output = TaggedOutput().settag('div class="math"')
+      else:
+        self.output = TaggedOutput().settag('span class="math"')
       self.contents = [Constant(self.contents[0])]
       return
     if Options.mathjax:

@@ -79,6 +79,9 @@
 % macro for italic page numbers in the index
 \newcommand{\IndexDef}[1]{\textit{#1}}
 
+% test macro with two arguments
+\newcommand{\preambleroot}[2]{\sqrt[#1]{#2}}
+
 % redefine the greyed out note
 
 \usepackage{mathrsfs}
@@ -958,6 +961,69 @@ Values can be underbraced or overbraced.
 
 \begin_layout Standard
 \begin_inset Formula $\underbrace{a-b}=\overbrace{b+c+d+e}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Macros
+\end_layout
+
+\begin_layout Standard
+Now it's time for user-defined commands (sometimes called 
+\begin_inset Quotes eld
+\end_inset
+
+macros
+\begin_inset Quotes erd
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Definitions can be added as macros
+\begin_inset FormulaMacro
+\renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
+{\sqrt[#1]{#2}}
+\end_inset
+
+.
+ Then they can be used in formulae: 
+\begin_inset Formula $\stupidroot 12$
+\end_inset
+
+.
+ They can accept default parameters
+\begin_inset FormulaMacro
+\renewcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
+{#1\sqrt{#2}}
+\end_inset
+
+.
+ Again, useful in formulae: 
+\begin_inset Formula $\defaultroot$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Other definitions from the preamble can be used: 
+\begin_inset Formula $\preambleroot{3}{4}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Definitions on the fly are also possible: 
+\begin_inset Formula $\newcommand{\ontheflyroot}[2]{\sqrt[#1]{#2}}\ontheflyroot{7}{8}$
+\end_inset
+
+, and used with different values: 
+\begin_inset Formula $\ontheflyroot{a}{b}$
 \end_inset
 
 .
