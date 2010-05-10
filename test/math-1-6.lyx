@@ -668,7 +668,7 @@ Macros
 \end_layout
 
 \begin_layout Standard
-Definitions can be added on the fly
+Definitions can be added as macros
 \begin_inset FormulaMacro
 \renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
 {\sqrt[#1]{#2}}
