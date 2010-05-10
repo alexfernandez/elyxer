@@ -184,6 +184,10 @@ newcommand
 .
 \end_layout
 
+\begin_layout Itemize
+Added URLs to most BibTeX formats.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.43 (2010-04-10):
