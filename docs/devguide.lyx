@@ -119,8 +119,9 @@ target "index.html"
 \begin_layout Standard
 In this first section we will outline how eLyXer performs the basic tasks.
  Next section will be devoted to more arcane matters.
- The third section deals with future planned extensions, and the fourth
- one includes things that will probably 
+ The third section explains how to contribute to eLyXer, while the fourth
+ one deals with future planned extensions.
+ The fifth section includes things that will probably 
 \emph on
 not
 \emph default
@@ -2479,6 +2480,122 @@ SplittingBasket
 \end_layout
 
 \begin_layout Subsection
+Page Segmentors
+\end_layout
+
+\begin_layout Standard
+A page segmentor builds a set of pages and cross-reference them, but generally
+ avoids the complexities of the internal structure.
+ Ideally it should use templates to construct the header and footer.
+ A 
+\family typewriter
+--splitpart
+\family default
+ option to eLyXer achieves this result.
+ As a parameter it accepts the depth at which to split pages:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --splitpart 1
+\end_layout
+
+\begin_layout Standard
+yields one chapter per page (or one section per page for article classes).
+\end_layout
+
+\begin_layout Standard
+The complete package should implement something like the flow in figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pipeline"
+
+\end_inset
+
+.
+ This is the high-level design, but some details have to be filled in.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pipeline.svg
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:pipeline"
+
+\end_inset
+
+eLyXer pipeline for multiple pages.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+MathML
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:MathML"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are two options in place to generate MathML, as suggested by Günther
+ Milne and Abdelrazak Younes 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "milde-mathml,younes-elyxer"
+
+\end_inset
+
+.
+ Both rely on some JavaScript page manipulations, and they need to be hosted
+ on the same server as the documents.
+ MathJax is less mature but will probably grow faster so it will become
+ the preferred option in the future.
+\end_layout
+
+\begin_layout Section
+Contributing
+\end_layout
+
+\begin_layout Standard
+This chapter will show you how to contribute to eLyXer.
+\end_layout
+
+\begin_layout Subsection
 Distribution
 \begin_inset CommandInset label
 LatexCommand label
@@ -2592,7 +2709,148 @@ type "mailto:"
 \end_layout
 
 \begin_layout Subsection
-License and Contributions
+Configuration
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Configuration"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The make script does not just construct a single 
+\family typewriter
+.py
+\family default
+ file from all sources; it is also used to extract the configuration in
+ human-readable form and create a Python file which is then coalesced with
+ all the rest.
+ The original configuration file (the one you should modify) is called 
+\family typewriter
+base.cfg
+\family default
+, while the resulting Python file is called 
+\family typewriter
+config.py
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+The original configuration file uses this format:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+[ContainerConfig.startendings]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin_deeper:
+\backslash
+end_deeper
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin_inset:
+\backslash
+end_inset
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin_layout:
+\backslash
+end_layout
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where each section header is enclosed in square brackets; it contains an
+ object name and a section name.
+ In the example above the object is called 
+\family typewriter
+ContainerConfig
+\family default
+, while the section is called 
+\family typewriter
+startendings
+\family default
+.
+ Inside each section there are a number of 
+\family typewriter
+key:value
+\family default
+ pairs separated by a colon; the key is used to reference the value in other
+ Python code.
+\end_layout
+
+\begin_layout Standard
+To create 
+\family typewriter
+config.py
+\family default
+ go to the 
+\family typewriter
+src/
+\family default
+ folder and type:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\color blue
+$
+\color inherit
+ ./exportconfig py
+\end_layout
+
+\begin_layout Standard
+This will create all configuration objects to be used inside your Python
+ code, where each section will become an object attribute containing a map.
+ For instance, to access the first value above 
+\family typewriter
+
+\backslash
+end_deeper
+\family default
+ you would write in your Python code:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+ContainerConfig.startendings['
+\backslash
+begin_deeper']
+\end_layout
+
+\begin_layout Standard
+Each section can contain as many values as needed.
+\end_layout
+
+\begin_layout Subsection
+License
 \end_layout
 
 \begin_layout Standard
@@ -2607,6 +2865,10 @@ key "stallman-gplv3"
  This basically means that you can modify the code and distribute the result
  as desired, as long as you publish your modifications under the same license.
  But consult a lawyer if you want an authoritative opinion.
+\end_layout
+
+\begin_layout Subsection
+Contributions
 \end_layout
 
 \begin_layout Standard
@@ -2640,134 +2902,21 @@ Some header and footer content is automatically added to the resulting document.
 \end_layout
 
 \begin_layout Subsection
-Page Segmentors
-\end_layout
-
-\begin_layout Standard
-A page segmentor should build a set of pages and cross-reference them, but
- generally avoids the complexities of the internal structure.
- Ideally it uses templates to construct the header and footer.
- A 
-\family typewriter
---splitpart
-\family default
- option to eLyXer achieves this result.
- As a parameter it accepts the depth at which to split pages:
-\end_layout
-
-\begin_layout Quotation
-
-\family typewriter
-\color blue
-$
-\color inherit
- elyxer.py --splitpart 1
-\end_layout
-
-\begin_layout Standard
-yields one chapter per page (or one section per page for article classes).
-\end_layout
-
-\begin_layout Standard
-The complete package should implement something like the flow in figure
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:pipeline"
-
-\end_inset
-
-.
- This is the high-level design, but some details have to be filled in.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename pipeline.svg
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:pipeline"
-
-\end_inset
-
-eLyXer pipeline for multiple pages.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-MathML
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:MathML"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-As suggested by Günther Milne and Abdelrazak Younes 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "milde-mathml,younes-elyxer"
-
-\end_inset
-
-, MathML is by now well supported in Firefox.
- An option to emit MathML (instead of more-or-less clumsy HTML and CSS code)
- could be very useful.
-\end_layout
-
-\begin_layout Subsection
 Roadmap
 \end_layout
 
 \begin_layout Standard
-Nearing the end of Q4 2009, LyX integration is almost ready for Linux (Debian)
- and Windows.
- The full pipeline (document segmentation and in-memory processing) is also
- nearing completion.
- By the end of 2009 both tasks should be finished, marking the release of
- eLyXer 1.0.
+Nearing the end of Q2 2010, two options to generate MathML (jsMath and MathJax)
+ have been integrated; support for split page generation and in-memory processin
+g is ready, and macros are supported for the first time.
+ The polishing of these features will mark the release of eLyXer 1.0.
 \end_layout
 
 \begin_layout Standard
-From that point on, full LyX document support is the goal for 2010.
- By Q1 2010 equation numbering should be correct for all environments; arrays
- and cases should improve in appearance.
- Q2 2010 should see clean conversion of the Math guide and the 
-\family typewriter
---mathml
-\family default
- option.
- By Q3 2010 all other guides should convert without glitches, and for Q4
- 2010 all rough edges should be smoothed.
+From that point on, full LyX document support is the goal until the end
+ of 2010.
+ Q3 2010 should see clean conversion of all LyX guides without glitches,
+ and for Q4 2010 all rough edges should be smoothed.
  All this within the usual constraints: day job, family, etc.
 \end_layout
 
