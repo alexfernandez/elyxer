@@ -480,8 +480,15 @@ type "mailto:"
  Thanks to Uwe Stöhr, Hans Bezemer, Sara Teinturier for their translations.
  Packagers Sven Hoexter (for Debian) and Uwe Stöhr (on Windows) have helped
  with their work to make it easy to try it out.
- Olivier Ripoll, Geremy Condra, Simon South and Jack Desert have provided
- quite interesting patches.
+ Olivier Ripoll, Geremy Condra, Simon South, Jack Desert and 
+\begin_inset CommandInset href
+LatexCommand href
+name "John Boik"
+target "http://www.newearthbiomed.org/"
+
+\end_inset
+
+ have provided quite interesting patches.
  Davide P.
  Cervone has been extremely helpful and responsive about jsMath and MathJax
  integration, while Paul Hunter has also gone beyond the call of duty with
