@@ -98,7 +98,13 @@ class DefiningFunction(HybridFunction):
 
   def parsebit(self, pos):
     "Parse a function with [] and {} parameters."
-    newcommand = Bracket().parseliteral(pos).literal
+    if Bracket().detect(pos):
+      newcommand = Bracket().parseliteral(pos).literal
+    elif FormulaCommand().detect(pos):
+      newcommand = FormulaCommand().extractcommand(pos)
+    else:
+      Trace.error('Unknown formula bit in defining function at ' + pos.identifier())
+    bit = self.factory.parsebit(pos)
     Trace.debug('New command: ' + newcommand)
     HybridFunction.parsebit(self, pos)
     macro = MathMacro()
