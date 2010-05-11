@@ -582,9 +582,9 @@ class FormulaConfig(object):
       }
 
   modified = {
-      u'\n':u'', u' ':u'', u'&':u'	', u'\'':u'’', u'+':u' + ', u',':u', ', 
-      u'-':u' − ', u'/':u' ⁄ ', u'<':u' &lt; ', u'=':u' = ', u'>':u' &gt; ', 
-      u'@':u'', u'~':u'', 
+      u'\n':u'', u' ':u'', u'$':u'', u'&':u'	', u'\'':u'’', u'+':u' + ', 
+      u',':u', ', u'-':u' − ', u'/':u' ⁄ ', u'<':u' &lt; ', u'=':u' = ', 
+      u'>':u' &gt; ', u'@':u'', u'~':u'', 
       }
 
   onefunctions = {
