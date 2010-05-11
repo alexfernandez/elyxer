@@ -42,7 +42,7 @@ class MathMacro(object):
 
   def instantiate(self):
     "Return an instance of the macro."
-    return WholeFormula.parse(self.definition.original)
+    return self.definition.clone()
 
   def parsepreamble(self):
     "Parse the LyX preamble, if needed."
@@ -140,7 +140,7 @@ class MacroFunction(CommandBit):
     self.contents = [macro.instantiate()]
     for parameter in self.searchall(MacroParameter):
       index = parameter.number - 1
-      parameter.contents = [self.values[index]]
+      parameter.contents = [self.values[index].clone()]
 
 FormulaCommand.commandbits += [
     DefiningFunction(), MacroFunction(),

@@ -96,6 +96,10 @@ class FormulaBit(Container):
     if not pos.checkskip(string):
       Trace.error('String ' + string + ' not at ' + pos.identifier())
 
+  def clone(self):
+    "Return a copy of itself."
+    return WholeFormula.parse(self.original)
+
   def __unicode__(self):
     "Get a string representation"
     return self.__class__.__name__ + ' read in ' + self.original
