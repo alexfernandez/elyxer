@@ -89,7 +89,7 @@ index.html
 \end_layout
 
 \begin_layout Itemize
-0.44 (unreleased):
+0.98 (2010-05-13):
 \end_layout
 
 \begin_deeper
@@ -198,6 +198,15 @@ vancouver
 \end_inset
 
  for articles (thanks, John!).
+\end_layout
+
+\begin_layout Itemize
+Added a footer detailing eLyXer version and conversion date; it can be turned
+ off with 
+\family typewriter
+--nofooter
+\family default
+.
 \end_layout
 
 \end_deeper
