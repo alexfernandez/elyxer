@@ -518,8 +518,8 @@ class FormulaConfig(object):
       }
 
   definingfunctions = {
-      u'\\newcommand':[u'[$n][$1][$2][$3][$4][$5][$6][$7][$8][$9]{$d}',u'',], 
-      u'\\renewcommand':[u'[$n][$1][$2][$3][$4][$5][$6][$7][$8][$9]{$d}',u'',], 
+      u'\\newcommand':[u'[$n!][$1][$2][$3][$4][$5][$6][$7][$8][$9]{$d}',u'',], 
+      u'\\renewcommand':[u'[$n!][$1][$2][$3][$4][$5][$6][$7][$8][$9]{$d}',u'',], 
       }
 
   endings = {
@@ -561,16 +561,17 @@ class FormulaConfig(object):
       u'\\dbinom':[u'{$1}{$2}',u'f3{(}f0{f1{$1}f2{$2}}f3{)}',u'span class="fullbinom"',u'span class="upbinom"',u'span class="downbinom"',u'span class="bigsymbol"',], 
       u'\\dfrac':[u'{$1}{$2}',u'f0{f1{$1}f2{$2}}',u'span class="fullfraction"',u'span class="numerator"',u'span class="denominator"',], 
       u'\\frac':[u'{$1}{$2}',u'f0{f1{$1}f2{$2}}',u'span class="fraction"',u'span class="numerator"',u'span class="denominator"',], 
-      u'\\hspace':[u'{$p}',u'f0{ }',u'span class="hspace" style="width: $p;"',], 
-      u'\\leftroot':[u'{$p}',u'f0{ }',u'span class="leftroot" style="width: $p;px"',], 
+      u'\\hspace':[u'{$p!}',u'f0{ }',u'span class="hspace" style="width: $p;"',], 
+      u'\\leftroot':[u'{$p!}',u'f0{ }',u'span class="leftroot" style="width: $p;px"',], 
       u'\\nicefrac':[u'{$1}{$2}',u'f0{f1{$1}⁄f2{$2}}',u'span class="fraction"',u'sup class="numerator"',u'sub class="denominator"',], 
-      u'\\raisebox':[u'{$p}{$1}',u'f0{$1}',u'span class="raisebox" style="vertical-align: $p;"',], 
+      u'\\raisebox':[u'{$p!}{$1}',u'f0{$1}',u'span class="raisebox" style="vertical-align: $p;"',], 
+      u'\\renewenvironment':[u'{$1!}{$2!}{$3!}',u'',], 
       u'\\sqrt':[u'[$0]{$1}',u'f1{$0}f0{f2{√}f3{$1}}',u'span class="sqrt"',u'sup',u'span class="radical"',u'span class="root"',], 
       u'\\tbinom':[u'{$1}{$2}',u'f3{(}f0{f1{$1}f2{$2}}f3{)}',u'span class="fullbinom"',u'span class="upbinom"',u'span class="downbinom"',u'span class="bigsymbol"',], 
       u'\\unit':[u'[$0]{$1}',u'$0f0{$1.font}',u'span class="unit"',], 
       u'\\unitfrac':[u'[$0]{$1}{$2}',u'$0f0{f1{$1.font}⁄f2{$2.font}}',u'span class="fraction"',u'sup class="unit"',u'sub class="unit"',], 
-      u'\\uproot':[u'{$p}',u'f0{ }',u'span class="uproot" style="width: $p;px"',], 
-      u'\\vspace':[u'{$p}',u'f0{ }',u'span class="vspace" style="height: $p;"',], 
+      u'\\uproot':[u'{$p!}',u'f0{ }',u'span class="uproot" style="width: $p;px"',], 
+      u'\\vspace':[u'{$p!}',u'f0{ }',u'span class="vspace" style="height: $p;"',], 
       }
 
   labelfunctions = {

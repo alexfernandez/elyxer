@@ -121,7 +121,7 @@ class DefiningFunction(HybridFunction):
     "Read the number of parameters in the macro."
     if not self.params['$n']:
       return 0
-    return int(self.params['$n'].contents[0].contents[0].contents[0].original)
+    return int(self.params['$n'].original)
 
 class MacroFunction(CommandBit):
   "A function that was defined using a macro."

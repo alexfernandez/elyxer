@@ -30,12 +30,54 @@ from math.bits import *
 from math.command import *
 
 
+class ParameterDefinition(object):
+  "The definition of a parameter in a hybrid function."
+  "[] parameters are optional, {} parameters are mandatory."
+  "Each parameter has a one-character name, like {$1} or {$p}."
+  "A parameter that ends in ! like {$p!} is a literal."
+
+  parambrackets = [('[', ']'), ('{', '}')]
+
+  def __init__(self):
+    self.name = None
+    self.literal = False
+    self.optional = False
+    self.value = None
+    self.original = None
+
+  def parse(self, pos):
+    "Parse a parameter definition: [$0], {$x}, {$1!}..."
+    for (opening, closing) in ParameterDefinition.parambrackets:
+      if pos.checkskip(opening):
+        if opening == '[':
+          self.optional = True
+        if not pos.checkskip('$'):
+          Trace.error('Wrong parameter name ' + pos.current())
+          return None
+        self.name = pos.currentskip()
+        if pos.checkskip('!'):
+          self.literal = True
+        if not pos.checkskip(closing):
+          Trace.error('Wrong parameter closing ' + pos.currentskip())
+          return None
+        return self
+    Trace.error('Wrong character in parameter template' + pos.currentskip())
+    return None
+
+  def read(self, pos, function):
+    "Read the parameter itself using the definition."
+    if self.literal:
+      self.original = Bracket().parseliteral(pos).literal
+      self.value = FormulaConstant(self.original)
+    elif self.optional:
+      self.value = function.parsesquare(pos)
+    else:
+      self.value = function.parseparameter(pos)
+
 class HybridFunction(CommandBit):
   "Read a function with a variable number of parameters, defined in a template."
-  "[] parameters are optional, {} parameters are mandatory."
 
   commandmap = FormulaConfig.hybridfunctions
-  parambrackets = [('[', ']'), ('{', '}')]
 
   def parsebit(self, pos):
     "Parse a function with [] and {} parameters"
@@ -48,36 +90,16 @@ class HybridFunction(CommandBit):
     "Read the params according to the template."
     self.params = dict()
     for paramdef in self.paramdefs(readtemplate):
-      if paramdef.startswith('['):
-        value = self.parsesquare(pos)
-      elif paramdef.startswith('{'):
-        value = self.parseparameter(pos)
-      else:
-        Trace.error('Invalid parameter definition ' + paramdef)
-        value = None
-      self.params[paramdef[1:-1]] = value
+      paramdef.read(pos, self)
+      self.params['$' + paramdef.name] = paramdef
 
   def paramdefs(self, readtemplate):
     "Read each param definition in the template"
     pos = TextPosition(readtemplate)
     while not pos.finished():
-      paramdef = self.readparamdef(pos)
+      paramdef = ParameterDefinition().parse(pos)
       if paramdef:
-        if len(paramdef) != 4:
-          Trace.error('Parameter definition ' + paramdef + ' has wrong length')
-        else:
-          yield paramdef
-
-  def readparamdef(self, pos):
-    "Read a single parameter definition: [$0], {$x}..."
-    for (opening, closing) in HybridFunction.parambrackets:
-      if pos.checkskip(opening):
-        if not pos.checkfor('$'):
-          Trace.error('Wrong parameter name ' + pos.current())
-          return None
-        return opening + pos.globincluding(closing)
-    Trace.error('Wrong character in parameter template' + pos.currentskip())
-    return None
+        yield paramdef
 
   def writeparams(self, writetemplate):
     "Write all params according to the template"
@@ -108,8 +130,8 @@ class HybridFunction(CommandBit):
     if not self.params[name]:
       return None
     if pos.checkskip('.'):
-      self.params[name].type = pos.globalpha()
-    return self.params[name]
+      self.params[name].value.type = pos.globalpha()
+    return self.params[name].value
 
   def writefunction(self, pos):
     "Write a single function f0,...,fn."
@@ -140,13 +162,14 @@ class HybridFunction(CommandBit):
     tag = self.translated[2 + index]
     if not '$' in tag:
       return tag
-    for name in self.params:
-      if name in tag:
-        if self.params[name]:
-          value = self.params[name].original[1:-1]
-        else:
-          value = ''
-        tag = tag.replace(name, value)
+    for variable in self.params:
+      if variable in tag:
+        param = self.params[variable]
+        if not param.literal:
+          Trace.error('Parameters in tags should be literal: {' + variable + '!}')
+          continue
+        value = param.original
+        tag = tag.replace(variable, value)
     return tag
 
 FormulaCommand.commandbits += [
