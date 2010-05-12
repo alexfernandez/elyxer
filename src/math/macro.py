@@ -56,7 +56,7 @@ class MathMacro(object):
       else:
         pos.globincluding('\n')
     PreambleParser.preamble = []
-    FormulaPreambling = False
+    FormulaCommand.preambling = False
 
   def detectdefinition(self, pos):
     "Detect a macro definition."
@@ -110,10 +110,12 @@ class DefiningFunction(HybridFunction):
     macro.newcommand = newcommand
     macro.parameters = self.readparameters()
     macro.definition = self.params['$d'].value
-    index = 1
-    while self.params['$' + unicode(index)].value:
-      macro.defaults.append(self.params['$' + unicode(index)].value.contents[0])
-      index += 1
+    for index in range(9):
+      value = self.extractdefault(index + 1)
+      if value:
+        macro.defaults.append(value)
+      else:
+        break
     MathMacro.macros[newcommand] = macro
 
   def readparameters(self):
@@ -121,6 +123,15 @@ class DefiningFunction(HybridFunction):
     if not self.params['$n'].literalvalue:
       return 0
     return int(self.params['$n'].literalvalue)
+
+  def extractdefault(self, index):
+    "Extract the default value for parameter index."
+    value = self.params['$' + unicode(index)].value
+    if not value:
+      return None
+    if len(value.contents) == 0:
+      return FormulaConstant('')
+    return value.contents[0]
 
 class MacroFunction(CommandBit):
   "A function that was defined using a macro."

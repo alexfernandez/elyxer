@@ -175,7 +175,7 @@ First public release of option
 \end_layout
 
 \begin_layout Itemize
-Support for macros, both in LyX macro and as 
+Support for macros, both in LyX macro inset and as 
 \family typewriter
 
 \backslash
