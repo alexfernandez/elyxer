@@ -43,7 +43,7 @@ class ParameterDefinition(object):
     self.literal = False
     self.optional = False
     self.value = None
-    self.original = None
+    self.literalvalue = None
 
   def parse(self, pos):
     "Parse a parameter definition: [$0], {$x}, {$1!}..."
@@ -67,12 +67,25 @@ class ParameterDefinition(object):
   def read(self, pos, function):
     "Read the parameter itself using the definition."
     if self.literal:
-      self.original = Bracket().parseliteral(pos).literal
-      self.value = FormulaConstant(self.original)
+      if self.optional:
+        self.literalvalue = function.parsesquareliteral(pos)
+      else:
+        self.literalvalue = function.parseliteral(pos)
+      if self.literalvalue:
+        self.value = FormulaConstant(self.literalvalue)
     elif self.optional:
       self.value = function.parsesquare(pos)
     else:
       self.value = function.parseparameter(pos)
+
+  def __unicode__(self):
+    "Return a printable representation."
+    result = 'param ' + self.name
+    if self.value:
+      result += ': ' + unicode(self.value)
+    else:
+      result += ' (empty)'
+    return result
 
 class HybridFunction(CommandBit):
   "Read a function with a variable number of parameters, defined in a template."
@@ -168,7 +181,7 @@ class HybridFunction(CommandBit):
         if not param.literal:
           Trace.error('Parameters in tags should be literal: {' + variable + '!}')
           continue
-        value = param.original
+        value = param.literalvalue
         tag = tag.replace(variable, value)
     return tag
 

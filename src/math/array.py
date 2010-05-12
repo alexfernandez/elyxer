@@ -137,16 +137,13 @@ class FormulaArray(MultiRowFormula):
     "Parse the different alignments"
     # vertical
     self.valign = 'c'
-    vbracket = SquareBracket()
-    if vbracket.detect(pos):
-      vbracket.parseliteral(pos)
-      self.valign = vbracket.literal
-      self.add(vbracket)
+    literal = self.parsesquareliteral(pos)
+    if literal:
+      self.valign = literal
     # horizontal
-    bracket = Bracket().parseliteral(pos)
-    self.add(bracket)
+    literal = self.parseliteral(pos)
     self.alignments = []
-    for l in bracket.literal:
+    for l in literal:
       self.alignments.append(l)
 
 class FormulaCases(MultiRowFormula):
@@ -183,10 +180,9 @@ class BeginCommand(CommandBit):
 
   def parsebit(self, pos):
     "Parse the begin command"
-    bracket = Bracket().parseliteral(pos)
-    self.original += bracket.literal
-    bit = self.findbit(bracket.literal)
-    ending = FormulaConfig.array['end'] + '{' + bracket.literal + '}'
+    literal = self.parseliteral(pos)
+    bit = self.findbit(literal)
+    ending = FormulaConfig.array['end'] + '{' + literal + '}'
     pos.pushending(ending)
     bit.parsebit(pos)
     self.add(bit)

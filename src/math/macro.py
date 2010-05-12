@@ -99,29 +99,28 @@ class DefiningFunction(HybridFunction):
   def parsebit(self, pos):
     "Parse a function with [] and {} parameters."
     if Bracket().detect(pos):
-      newcommand = Bracket().parseliteral(pos).literal
+      newcommand = self.parseliteral(pos)
     elif FormulaCommand().detect(pos):
       newcommand = FormulaCommand().extractcommand(pos)
     else:
       Trace.error('Unknown formula bit in defining function at ' + pos.identifier())
-    bit = self.factory.parsebit(pos)
     Trace.debug('New command: ' + newcommand)
     HybridFunction.parsebit(self, pos)
     macro = MathMacro()
     macro.newcommand = newcommand
     macro.parameters = self.readparameters()
-    macro.definition = self.params['$d']
+    macro.definition = self.params['$d'].value
     index = 1
-    while self.params['$' + unicode(index)]:
-      macro.defaults.append(self.params['$' + unicode(index)])
+    while self.params['$' + unicode(index)].value:
+      macro.defaults.append(self.params['$' + unicode(index)].value)
       index += 1
     MathMacro.macros[newcommand] = macro
 
   def readparameters(self):
     "Read the number of parameters in the macro."
-    if not self.params['$n']:
+    if not self.params['$n'].literalvalue:
       return 0
-    return int(self.params['$n'].original)
+    return int(self.params['$n'].literalvalue)
 
 class MacroFunction(CommandBit):
   "A function that was defined using a macro."

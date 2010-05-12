@@ -129,7 +129,7 @@ class Bracket(FormulaBit):
     "Parse the start and end marks"
     if not pos.checkfor(self.start):
       Trace.error('Bracket should start with ' + self.start + ' at ' + pos.identifier())
-      return
+      return None
     self.skiporiginal(self.start, pos)
     pos.pushending(self.ending)
     innerparser(pos)

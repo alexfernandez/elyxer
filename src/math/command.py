@@ -93,7 +93,7 @@ class CommandBit(FormulaCommand):
     "Parse a parameter at the current position"
     if not self.factory.detectbit(pos):
       Trace.error('No parameter found at: ' + pos.identifier())
-      return
+      return None
     parameter = self.factory.parsebit(pos)
     self.add(parameter)
     return parameter
@@ -106,6 +106,23 @@ class CommandBit(FormulaCommand):
     bracket.parsebit(pos)
     self.add(bracket)
     return bracket
+
+  def parseliteral(self, pos):
+    "Parse a literal bracket."
+    bracket = Bracket()
+    if not bracket.detect(pos):
+      Trace.error('No literal parameter found at: ' + pos.identifier())
+      return None
+    self.add(bracket.parseliteral(pos))
+    return bracket.literal
+
+  def parsesquareliteral(self, pos):
+    "Parse a square bracket literally."
+    bracket = SquareBracket()
+    if not bracket.detect(pos):
+      return None
+    self.add(bracket.parseliteral(pos))
+    return bracket.literal
 
 class EmptyCommand(CommandBit):
   "An empty command (without parameters)"
@@ -181,7 +198,7 @@ class LabelFunction(CommandBit):
 
   def parsebit(self, pos):
     "Parse a literal parameter"
-    self.key = Bracket().parseliteral(pos).literal
+    self.key = self.parseliteral(pos)
 
   def process(self):
     "Add an anchor with the label contents."
