@@ -162,7 +162,12 @@ class Bracket(FormulaBit):
 
   def innerliteral(self, pos):
     "Parse a literal inside the bracket, which cannot generate html"
-    self.literal = pos.globexcluding(self.ending)
+    self.literal = ''
+    while not pos.current() == self.ending:
+      if pos.current() == self.start:
+        self.parseliteral(pos)
+      else:
+        self.literal += pos.currentskip()
     self.original += self.literal
 
   def process(self):
