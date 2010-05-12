@@ -179,9 +179,12 @@ class HybridFunction(CommandBit):
       if variable in tag:
         param = self.params[variable]
         if not param.literal:
-          Trace.error('Parameters in tags should be literal: {' + variable + '!}')
+          Trace.error('Parameters in tag ' + tag + ' should be literal: {' + variable + '!}')
           continue
-        value = param.literalvalue
+        if param.literalvalue:
+          value = param.literalvalue
+        else:
+          value = ''
         tag = tag.replace(variable, value)
     return tag
 
