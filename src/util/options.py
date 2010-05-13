@@ -123,6 +123,7 @@ class Options(object):
     Trace.error('    --html:                 output HTML 4.0 instead of the default XHTML')
     Trace.error('    --unicode:              full Unicode output')
     Trace.error('    --iso885915:            output a document with ISO-8859-15 encoding')
+    Trace.error('    --splitpart "level"     split the resulting webpage at the given level')
     Trace.error('')
     Trace.error('  Esoteric options:')
     Trace.error('    --version:              show version number and release date')

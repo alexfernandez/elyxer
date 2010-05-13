@@ -91,7 +91,11 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Added 
+\family typewriter
+--splitpart
+\family default
+ to online help (thanks, Sven!).
 \end_layout
 
 \end_deeper
