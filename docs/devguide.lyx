@@ -2588,11 +2588,12 @@ key "milde-mathml,younes-elyxer"
 \end_layout
 
 \begin_layout Section
-Contributing
+Developing and Contributing
 \end_layout
 
 \begin_layout Standard
-This chapter will show you how to contribute to eLyXer.
+This chapter will show you how to develop on eLyXer and how to contribute
+ your own code.
 \end_layout
 
 \begin_layout Subsection
@@ -2612,7 +2613,11 @@ You will notice that in the
 src/
 \family default
  folder there are several Python files, while in the main directory there
- is just a big one.
+ is just a big one called 
+\family typewriter
+elyxer.py
+\family default
+.
  The reason is that before distributing the source code is coalesced and
  placed on the main directory, so that users can run it without worrying
  about libraries, directories and the such.
@@ -2642,6 +2647,11 @@ $
 
 \begin_layout Standard
 at the prompt.
+ This coalesces all code and configuration into 
+\family typewriter
+elyxer.py
+\family default
+.
  It is a primitive way perhaps to generate the 
 \begin_inset Quotes eld
 \end_inset
@@ -2652,31 +2662,31 @@ binary
 
  (ok, not really a binary but a distributable Python file), but it works
  great.
- It also runs all of the included tests to check that no functionality has
- been lost from one release to the next -- although some issues in a feature
- can slip undetected if there is no test for them.
 \end_layout
 
 \begin_layout Standard
-The configuration file 
-\family typewriter
-src/conf/config.py
-\family default
- is also generated from another file, in this case 
-\family typewriter
-src/conf/base.cfg
-\family default
-.
- Changes to the configuration should always go against this latter file;
- running 
+The 
 \family typewriter
 make
 \family default
- afterwards regenerates 
+ script also runs all of the included tests to check that no functionality
+ has been lost from one release to the next.
+ These tests can also be run independently using the run-tests script:
+\end_layout
+
+\begin_layout Quotation
+
 \family typewriter
-config.py
-\family default
-.
+\color blue
+$
+\color inherit
+ ./run-tests
+\end_layout
+
+\begin_layout Standard
+They are used to verify that no functionality is lost from one version to
+ the next -- although issues can certainly slip undetected if there is no
+ test for them.
 \end_layout
 
 \begin_layout Standard
@@ -2690,22 +2700,63 @@ At the moment there is no way to do this packaging on non-Unix operating
  However the steps themselves are trivial.
 \end_layout
 
+\begin_layout Subsection
+Debugging
+\end_layout
+
 \begin_layout Standard
-If you are willing to send a patch to the eLyXer mailing list then you should
- patch against the proper sources in 
+Code problems are quite difficult to debug using the full 
 \family typewriter
-src/
+elyxer.py
 \family default
- and submit that to the 
-\begin_inset CommandInset href
-LatexCommand href
-name "mailing list"
-target "elyxer-users@nongnu.org"
-type "mailto:"
-
-\end_inset
-
+ file.
+ It is much better to use the uncoalesced version instead, since it is quite
+ modular and neatly divided.
+ To do so you just need to locate the file 
+\family typewriter
+src/principal.py
+\family default
+ and run that instead of 
+\family typewriter
+elyxer.py
+\family default
 .
+ For example, if you are in the 
+\family typewriter
+docs/
+\family default
+ directory and you want to convert 
+\family typewriter
+math.lyx
+\family default
+ you can run eLyXer as:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\color blue
+$
+\color inherit
+ ../src/principal.py math.lyx math.html
+\end_layout
+
+\begin_layout Standard
+For extra debugging information you can activate the --debug option:
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\color blue
+$
+\color inherit
+ ../src/principal.py --debug math.lyx math.html
+\end_layout
+
+\begin_layout Standard
+This will make any traces more meaningful and will let you follow the code
+ much more easily.
 \end_layout
 
 \begin_layout Subsection
@@ -2876,6 +2927,31 @@ All contributions will be published under this same license, so if you send
  them this way you implicitly give your consent.
  An explicit license grant would be even better and may be required for
  larger contributions.
+\end_layout
+
+\begin_layout Standard
+Please send any suggestions, patches, ideas and whatever else related to
+ development to the 
+\begin_inset CommandInset href
+LatexCommand href
+name "mailing list"
+target "elyxer-users@nongnu.org"
+type "mailto:"
+
+\end_inset
+
+.
+ If you are willing to create a patch and submit it, you should patch against
+ the proper sources in 
+\family typewriter
+src/
+\family default
+ and send it to the list.
+ This will make everyone's lives better than if you patch against 
+\family typewriter
+elyxer.py
+\family default
+.
 \end_layout
 
 \begin_layout Standard
