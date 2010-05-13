@@ -74,20 +74,27 @@ eLyXer Changelog
 \begin_layout Standard
 This document lists all public versions, the date they were released on
  and the changes they contain.
- For more information about eLyXer visit the main page 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-index.html
-\end_layout
+ For more information about eLyXer visit the 
+\begin_inset CommandInset href
+LatexCommand href
+name "main page"
+target "index.html"
 
 \end_inset
 
 .
 \end_layout
 
+\begin_layout Itemize
+0.99 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+.
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 0.98 (2010-05-13):
 \end_layout
