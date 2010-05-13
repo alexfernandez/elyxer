@@ -157,8 +157,8 @@ target "devguide.html"
  especially 
 \begin_inset CommandInset href
 LatexCommand href
-name "section 2.5"
-target "devguide.html#toc-Subsection-2.5"
+name "section 3"
+target "devguide.html#toc-Section-3"
 
 \end_inset
 
