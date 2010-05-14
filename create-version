@@ -38,9 +38,10 @@ rsync -a --exclude "build" --exclude "dist" \
        --exclude "docs/cvs" \
        --exclude "docs/jsMath" --exclude "docs/MathJax" \
        --exclude "extras" --exclude "open-env" \
-       --exclude "*.pyc" --exclude "*.swp" \
       . dist/elyxer-$VERSION/
 cd dist/elyxer-$VERSION
+find . -name "*.pyc" | xargs rm -f
+find . -name "*.swp" | xargs rm -f
 src/textchange.py "unknown" $VERSION setup.py
 cd ..
 tar -czf elyxer-$VERSION.tar.gz elyxer-$VERSION
