@@ -42,6 +42,7 @@ rsync -a --exclude "build" --exclude "dist" \
 cd dist/elyxer-$VERSION
 find . -name "*.pyc" | xargs rm -f
 find . -name "*.swp" | xargs rm -f
+find . -name "*.lyx~" | xargs rm -f
 src/textchange.py "unknown" $VERSION setup.py
 cd ..
 tar -czf elyxer-$VERSION.tar.gz elyxer-$VERSION
