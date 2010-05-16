@@ -213,9 +213,9 @@ class ContentEntry(Entry):
     if pos.checkfor(','):
       self.lineerror('Unexpected ,', pos)
       return ''
-    return self.parserecursive(pos)
+    return self.parserecursive(pos, True)
 
-  def parserecursive(self, pos):
+  def parserecursive(self, pos, initial=False):
     "Parse brackets or quotes recursively."
     contents = ''
     while not pos.finished():
@@ -225,11 +225,11 @@ class ContentEntry(Entry):
       if pos.checkfor('{'):
         contents += self.parsebracket(pos)
       elif pos.checkfor('"'):
-        contents += self.parsequoted(pos)
+        contents += self.parsequoted(pos, initial)
       elif pos.checkfor('\\'):
         contents += self.parseescaped(pos)
-      elif pos.checkskip('#'):
-        pos.skipspace()
+      elif pos.checkfor('#'):
+        contents += self.parsehash(pos, initial)
       else:
         self.lineerror('Unexpected character ' + pos.current(), pos)
         pos.currentskip()
@@ -257,11 +257,13 @@ class ContentEntry(Entry):
     pos.popending('}')
     return bracket
 
-  def parsequoted(self, pos):
+  def parsequoted(self, pos, initial):
     "Parse a piece of quoted text"
     if not pos.checkskip('"'):
       self.lineerror('Missing opening " in quote', pos)
       return ''
+    if not initial:
+      return '"'
     pos.pushending('"', True)
     quoted = self.parserecursive(pos)
     pos.popending('"')
@@ -271,6 +273,16 @@ class ContentEntry(Entry):
   def parsepiece(self, pos, undesired):
     "Parse a piece not structure."
     return pos.glob(lambda current: not current in undesired)
+
+  def parsehash(self, pos, initial):
+    "Parse a hash mark #."
+    if not pos.checkskip('#'):
+      self.lineerror('Missing # in hash', pos)
+      return ''
+    if not initial:
+      return '#'
+    pos.skipspace()
+    return ''
 
 class SpecialEntry(ContentEntry):
   "A special entry"
