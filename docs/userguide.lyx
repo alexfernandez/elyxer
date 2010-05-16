@@ -1377,10 +1377,7 @@ python -m elyxer
 
 \begin_layout Standard
 And so on.
-\end_layout
-
-\begin_layout Standard
-If eLyXer was only installed as a binary the original line will be:
+ If eLyXer was only installed as a binary the original line will be:
 \end_layout
 
 \begin_layout LyX-Code
@@ -1391,6 +1388,88 @@ elyxer.py --directory $$r $$i $$o
 
 \begin_layout Standard
 So you will have to change it accordingly.
+ Figure 1 shows what to do to add the 
+\family typewriter
+--html
+\family default
+ option when eLyXer is installed as a module: after editing the line and
+ adding the new option, click on 
+\begin_inset Quotes eld
+\end_inset
+
+Modify
+\begin_inset Quotes erd
+\end_inset
+
+ and then 
+\begin_inset Quotes eld
+\end_inset
+
+Save
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+Apply
+\begin_inset Quotes erd
+\end_inset
+
+ the changes.
+\begin_inset Marginal
+status open
+
+\begin_layout Plain Layout
+You should never remove the 
+\family typewriter
+$$i $$o
+\family default
+ at the end, since it is what tells eLyXer where to find the input and output
+ files.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename converters.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+eLyXer converter in LyX 1.6.5.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1398,7 +1477,7 @@ LyX 1.6.5 supports a new
 \begin_inset Quotes eld
 \end_inset
 
-extra options
+extra flag
 \begin_inset Quotes erd
 \end_inset
 
