@@ -24,6 +24,7 @@
 
 import codecs
 import os.path
+import sys
 from util.trace import *
 from util.clparse import *
 
@@ -138,29 +139,29 @@ class Options(object):
     Trace.error('    --raw:                  generate HTML without header or footer.')
     Trace.error('    --jsmath "URL":         use jsMath from the given URL to display equations')
     Trace.error('    --mathjax "URL":        use MathJax from the given URL to display equations')
-    exit()
+    sys.exit()
 
   def showversion(self):
     "Return the current eLyXer version string"
     string = 'eLyXer version ' + GeneralConfig.version['number']
     string += ' (' + GeneralConfig.version['date'] + ')'
     Trace.error(string)
-    exit()
+    sys.exit()
 
   def showhardversion(self):
     "Return just the version string"
     Trace.message(GeneralConfig.version['number'])
-    exit()
+    sys.exit()
 
   def showversiondate(self):
     "Return just the version dte"
     Trace.message(GeneralConfig.version['date'])
-    exit()
+    sys.exit()
 
   def showlyxformat(self):
     "Return just the lyxformat parameter"
     Trace.message(GeneralConfig.version['lyxformat'])
-    exit()
+    sys.exit()
 
 class BranchOptions(object):
   "A set of options for a branch"
