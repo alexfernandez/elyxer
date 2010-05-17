@@ -226,12 +226,13 @@ class IncludeInset(Container):
       Trace.debug('Child dir: ' + newdir)
       Options.directory = os.path.join(Options.directory, newdir)
     try:
-      converter = IncludeInset.converterfactory.create(self)
-      converter.convert()
-      self.contents = converter.getcontents()
-    except:
-      Trace.error('Could not read ' + self.filename + ', please check that the file exists and has read permissions.')
-      self.contents = []
+      try:
+        converter = IncludeInset.converterfactory.create(self)
+        converter.convert()
+        self.contents = converter.getcontents()
+      except:
+        Trace.error('Could not read ' + self.filename + ', please check that the file exists and has read permissions.')
+        self.contents = []
     finally:
       Options.directory = olddir
 
