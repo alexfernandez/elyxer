@@ -343,6 +343,7 @@ class PubEntry(ContentEntry):
       if piece:
         result += piece
       if not empty:
+        Trace.debug('Result is ' + result + ', not empty')
         globalempty = False
     return result, globalempty
 
@@ -361,7 +362,11 @@ class PubEntry(ContentEntry):
       Trace.error('Missing { in braces.')
       return None, True
     pos.pushending('}')
-    return self.parsepart(pos)
+    result, empty = self.parsepart(pos)
+    pos.popending('}')
+    if empty:
+      return '', True
+    return result, False
 
   def parsevariable(self, pos):
     "Parse a variable $name."

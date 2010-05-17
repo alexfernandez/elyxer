@@ -99,12 +99,16 @@ Added
 \end_layout
 
 \begin_layout Itemize
-Bibliography: improved template definitions for Vancouver style, better
- parsing of braces (in templates) and quotes (in 
+BibTeX: improved template definitions for Vancouver style.
+\end_layout
+
+\begin_layout Itemize
+BibTeX: better parsing of braces (in templates) and quotes (in 
 \family typewriter
 .bib
 \family default
  files).
+ Nested braces in templates are supported.
 \end_layout
 
 \begin_layout Itemize

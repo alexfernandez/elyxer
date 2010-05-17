@@ -52,7 +52,7 @@ class BibStylesConfig(object):
 
   plain = {
       
-      u'@article':u'$author. $title. <i>$journal</i>{, {$volumen}{($number)}{:$pages}}}{, $year}.{ URL <a href="$url">$url</a>.}', 
+      u'@article':u'$author. $title. <i>$journal</i>{, {$volumen}{($number)}{:$pages}}{, $year}.{ URL <a href="$url">$url</a>.}', 
       u'@book':u'$author. <i>$title</i>. $publisher, $month $year.{ URL <a href="$url">$url</a>.}', 
       u'cite':[u'$index',u'$rest',], 
       u'default':u'$author. <i>$title</i>. $publisher, $year.{ URL <a href="$url">$url</a>.}', 
