@@ -116,6 +116,20 @@ Restored compatibility with Python 2.4 (lost in 0.98 by mistake), added test
  to ensure it does not happen again.
 \end_layout
 
+\begin_layout Itemize
+Added 
+\family typewriter
+
+\backslash
+oint
+\family default
+ and friends as a bigsymbol: 
+\begin_inset Formula $\oint x\text{·}dx$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.98 (2010-05-13):
