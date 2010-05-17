@@ -107,6 +107,11 @@ Bibliography: improved template definitions for Vancouver style, better
  files).
 \end_layout
 
+\begin_layout Itemize
+Restored compatibility with Python 2.4 (lost in 0.98 by mistake), added test
+ to ensure it does not happen again.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.98 (2010-05-13):
