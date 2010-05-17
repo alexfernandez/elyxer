@@ -330,7 +330,7 @@ class PubEntry(ContentEntry):
   def getcontents(self):
     "Get the contents as a constant"
     pos = TextPosition(self.template)
-    result = self.parsepart(pos)
+    result, empty = self.parsepart(pos)
     return Constant(self.escapeentry(result))
 
   def parsepart(self, pos):
