@@ -86,6 +86,20 @@ key "pythonesque:1971"
 .
 \end_layout
 
+\begin_layout Section
+Spiny Norman
+\end_layout
+
+\begin_layout Standard
+We are going to need a reference here 
+\begin_inset LatexCommand cite
+key "reduced"
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
 \begin_inset LatexCommand bibtex
 options "bibtotoc,plain"

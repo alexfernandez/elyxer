@@ -169,7 +169,7 @@ class ContentEntry(Entry):
 
   def parse(self, pos):
     "Parse the entry between {}"
-    self.type = self.parsepiece(pos, self.nameseparators)
+    self.type = self.parseexcluding(pos, self.nameseparators)
     pos.skipspace()
     if not pos.checkskip('{'):
       self.lineerror('Entry should start with {', pos)
@@ -192,7 +192,7 @@ class ContentEntry(Entry):
         pos.popending(',')
   
   def parsetag(self, pos):
-    piece = self.parsepiece(pos, self.nameseparators)
+    piece = self.parseexcluding(pos, self.nameseparators)
     if pos.finished():
       self.key = piece
       return
@@ -219,7 +219,7 @@ class ContentEntry(Entry):
     "Parse brackets or quotes recursively."
     contents = ''
     while not pos.finished():
-      contents += self.parsepiece(pos, self.valueseparators)
+      contents += self.parseexcluding(pos, self.valueseparators)
       if pos.finished():
         return contents
       if pos.checkfor('{'):
@@ -270,10 +270,6 @@ class ContentEntry(Entry):
     pos.skipspace()
     return quoted
 
-  def parsepiece(self, pos, undesired):
-    "Parse a piece not structure."
-    return pos.glob(lambda current: not current in undesired)
-
   def parsehash(self, pos, initial):
     "Parse a hash mark #."
     if not pos.checkskip('#'):
@@ -283,6 +279,10 @@ class ContentEntry(Entry):
       return '#'
     pos.skipspace()
     return ''
+
+  def parseexcluding(self, pos, undesired):
+    "Parse a piece not structure."
+    return pos.glob(lambda current: not current in undesired)
 
 class SpecialEntry(ContentEntry):
   "A special entry"
@@ -329,13 +329,53 @@ class PubEntry(ContentEntry):
 
   def getcontents(self):
     "Get the contents as a constant"
-    contents = self.template
-    while contents.find('$') >= 0:
-      contents = self.replacetag(contents)
-    return Constant(self.escapeentry(contents))
+    pos = TextPosition(self.template)
+    result = self.parsepart(pos)
+    return Constant(self.escapeentry(result))
 
-  def replacetag(self, string):
-    "Replace a tag with its value."
+  def parsepart(self, pos):
+    "Parse a part of a template, return a tuple consisting of:"
+    "The resulting string, and if it contained non-empty variables."
+    result = ''
+    globalempty = True
+    while not pos.finished():
+      piece, empty = self.parsepiece(pos)
+      if piece:
+        result += piece
+      if not empty:
+        globalempty = False
+    return result, globalempty
+
+  def parsepiece(self, pos):
+    "Get the next piece of the template, return if it was empty."
+    if pos.checkfor('{'):
+      return self.parsebraces(pos)
+    elif pos.checkfor('$'):
+      return self.parsevariable(pos)
+    else:
+      return self.parseexcluding(pos, ['{', '$']), True
+
+  def parsebraces(self, pos):
+    "Parse a pair of curly braces {}."
+    if not pos.checkskip('{'):
+      Trace.error('Missing { in braces.')
+      return None, True
+    pos.pushending('}')
+    return self.parsepart(pos)
+
+  def parsevariable(self, pos):
+    "Parse a variable $name."
+    if not pos.checkskip('$'):
+      Trace.error('Missing $ in variable name.')
+      return None, True
+    variable = pos.globalpha()
+    value = self.gettag(variable)
+    if not value:
+      return None, True
+    return value, False
+
+  def replacevariable(self, string):
+    "Replace a variable with its value."
     tag = self.extracttag(string)
     value = self.gettag(tag)
     dollar = string.find('$' + tag)
