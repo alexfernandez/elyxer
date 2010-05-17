@@ -99,7 +99,12 @@ Added
 \end_layout
 
 \begin_layout Itemize
-Improved BibTeX definitions for Vancouver style.
+Bibliography: improved template definitions for Vancouver style, better
+ parsing of braces (in templates) and quotes (in 
+\family typewriter
+.bib
+\family default
+ files).
 \end_layout
 
 \end_deeper
