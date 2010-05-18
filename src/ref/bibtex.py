@@ -343,7 +343,6 @@ class PubEntry(ContentEntry):
       if piece:
         result += piece
       if not empty:
-        Trace.debug('Result is ' + result + ', not empty')
         globalempty = False
     return result, globalempty
 
@@ -379,38 +378,20 @@ class PubEntry(ContentEntry):
       return None, True
     return value, False
 
-  def replacevariable(self, string):
-    "Replace a variable with its value."
-    tag = self.extracttag(string)
-    value = self.gettag(tag)
-    dollar = string.find('$' + tag)
-    begin = string.rfind('{', 0, dollar)
-    end = string.find('}', dollar)
-    if begin != -1 and end != -1 and begin < end:
-      bracket = string[begin + 1:end]
-      if not value:
-        result = ''
-      else:
-        result = bracket.replace('$' + tag, value)
-      return string[0:begin] + result + string[end + 1:]
-    if not value:
-      value = ''
-    return string.replace('$' + tag, value)
-
-  def extracttag(self, string):
-    "Extract the first tag in the form $tag"
-    result = ''
-    index = string.index('$') + 1
-    while string[index].isalpha():
-      result += string[index]
-      index += 1
-    return result
-
   def gettag(self, key):
     "Get a tag with the given key"
     if not key in self.tags:
       return None
-    return self.tags[key]
+    result = ''
+    # remove whitespace
+    pos = TextPosition(self.tags[key])
+    while not pos.finished():
+      if pos.current().isspace():
+        result += ' '
+        pos.skipspace()
+      else:
+        result += pos.currentskip()
+    return result
 
   def escapeentry(self, string):
     "Escape a string."
