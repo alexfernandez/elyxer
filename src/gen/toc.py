@@ -31,14 +31,9 @@ from gen.structure import *
 class TOCEntry(Container):
   "A container for a TOC entry."
 
-  copied = [StringContainer, Constant, Space]
-  allowed = [
-      TextFamily, EmphaticText, VersalitasText, BarredText,
-      SizeText, ColorText, LangLine, Formula
-      ]
-  extracted = [
-      PlainLayout, TaggedText, Align, Caption
-      ]
+  copied = TOCConfig.containers['copied']
+  allowed = TOCConfig.containers['allowed']
+  extracted = TOCConfig.containers['extracted']
 
   def header(self, container):
     "Create a TOC entry for header and footer (0 depth)."
@@ -84,11 +79,11 @@ class TOCEntry(Container):
     "Extract the safe contents for the TOC from a container."
     contents = []
     for element in container.contents:
-      if element.__class__ in TOCEntry.copied:
+      if element.__class__.__name__ in TOCEntry.copied:
         contents.append(element)
-      elif element.__class__ in TOCEntry.allowed:
+      elif element.__class__.__name__ in TOCEntry.allowed:
         contents.append(self.safeclone(element))
-      elif element.__class__ in TOCEntry.extracted:
+      elif element.__class__.__name__ in TOCEntry.extracted:
         contents += self.safecontents(element)
     return contents
 

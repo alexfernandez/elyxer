@@ -716,6 +716,16 @@ class StyleConfig(object):
       u'\\space{}':u' ', u'\\thinspace{}':u' ', u'~':u' ', 
       }
 
+class TOCConfig(object):
+  "Configuration class from config file"
+
+  containers = {
+      
+      u'allowed':[u'TextFamily',u'EmphaticText',u'VersalitasText',u'BarredText',u'SizeText',u'ColorText',u'LangLine',u'Formula',], 
+      u'copied':[u'StringContainer',u'Constant',u'Space',], 
+      u'extracted':[u'PlainLayout',u'TaggedText',u'Align',u'Caption',], 
+      }
+
 class TagConfig(object):
   "Configuration class from config file"
 
