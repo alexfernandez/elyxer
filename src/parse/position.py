@@ -144,6 +144,8 @@ class TextPosition(Position):
     Position.__init__(self)
     self.pos = 0
     self.text = text
+    if ord(self.current()) == 0xfeff:
+      self.pos += 1
 
   def skip(self, string):
     "Skip a string of characters."
@@ -179,6 +181,8 @@ class FilePosition(Position):
     self.reader = LineReader(filename)
     self.number = 1
     self.pos = 0
+    if ord(self.current()) == 0xfeff:
+      self.pos += 1
 
   def skip(self, string):
     "Skip a string of characters."
