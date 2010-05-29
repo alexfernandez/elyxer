@@ -40,3 +40,27 @@ class Cloner(object):
 
   clone = classmethod(clone)
 
+class ContainerExtractor(object):
+  "A class to extract certain containers."
+
+  def extract(self, container, config):
+    "Extract a group of selected containers from a container."
+    "The config parameter is a map containing three lists: allowed, copied and extracted."
+    "Each of the three is a list of class names for containers."
+    "Copied containers are copied as is into the result."
+    "Allowed containers are cloned and placed into the result."
+    "Extracted containers are looked into."
+    list = []
+    allow = lambda c: c.__class__.__name__ in config.allowed
+    locate = lambda c: c.__class__.__name__ in config.extract
+    process = lambda c: list.append(c)
+    container.recursivesearch(allow, locate, process)
+    return list
+
+  def extractinside(self, container, config):
+    "Extract from a container only if it is in the extracted list."
+    if not container.__class__.__name__ in config['extracted']:
+      return None
+    return self.extract(container, config)
+
+
