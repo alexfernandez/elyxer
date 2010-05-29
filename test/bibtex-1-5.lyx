@@ -103,7 +103,7 @@ key "reduced"
 \begin_layout Standard
 \begin_inset LatexCommand bibtex
 options "bibtotoc,plain"
-bibfiles "test"
+bibfiles "bibtex-plain"
 
 \end_inset
 
