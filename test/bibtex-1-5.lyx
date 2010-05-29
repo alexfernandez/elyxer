@@ -100,10 +100,40 @@ key "reduced"
 .
 \end_layout
 
+\begin_layout Section
+In the Grillomat
+\end_layout
+
+\begin_layout Standard
+There are two kinds of vancouver references: with volume information
+\begin_inset LatexCommand cite
+key "withvolume"
+
+\end_inset
+
+ and without
+\begin_inset LatexCommand cite
+key "withoutvolume"
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
 \begin_inset LatexCommand bibtex
 options "bibtotoc,plain"
 bibfiles "bibtex-plain"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand bibtex
+options "vancouver"
+bibfiles "bibtex-vancouver"
 
 \end_inset
 
