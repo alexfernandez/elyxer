@@ -1,5 +1,5 @@
-#LyX 1.5.7 created this file. For more info see http://www.lyx.org/
-\lyxformat 276
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
 \begin_document
 \begin_header
 \textclass article
@@ -21,6 +21,7 @@
 %   You should have received a copy of the GNU General Public License
 %   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \end_preamble
+\use_default_options false
 \language english
 \inputencoding auto
 \font_roman default
@@ -31,9 +32,11 @@
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
+
 \graphics default
 \paperfontsize default
 \spacing single
+\use_hyperref false
 \papersize default
 \use_geometry false
 \use_amsmath 1
@@ -64,7 +67,8 @@ Ethel the Frog
 \begin_layout Standard
 Some random text.
  With a random reference 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "randomref"
 
 \end_inset
@@ -78,7 +82,8 @@ The Other Other Operation
 
 \begin_layout Standard
 And a book to prove that we have read one (untrue): 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "pythonesque:1971"
 
 \end_inset
@@ -92,7 +97,8 @@ Spiny Norman
 
 \begin_layout Standard
 We are going to need a reference here 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "reduced"
 
 \end_inset
@@ -106,13 +112,15 @@ In the Grillomat
 
 \begin_layout Standard
 There are two kinds of vancouver references: with volume information
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "withvolume"
 
 \end_inset
 
  and without
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "withoutvolume"
 
 \end_inset
@@ -121,9 +129,10 @@ key "withoutvolume"
 \end_layout
 
 \begin_layout Standard
-\begin_inset LatexCommand bibtex
-options "bibtotoc,plain"
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
 bibfiles "bibtex-plain"
+options "bibtotoc,plain"
 
 \end_inset
 
@@ -131,9 +140,10 @@ bibfiles "bibtex-plain"
 \end_layout
 
 \begin_layout Standard
-\begin_inset LatexCommand bibtex
-options "vancouver"
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
 bibfiles "bibtex-vancouver"
+options "vancouver"
 
 \end_inset
 
