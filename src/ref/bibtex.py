@@ -387,8 +387,9 @@ class PubEntry(ContentEntry):
     pos = TextPosition(self.tags[key])
     while not pos.finished():
       if pos.current().isspace():
-        result += ' '
         pos.skipspace()
+        if not pos.finished():
+          result += ' '
       else:
         result += pos.currentskip()
     return result
