@@ -35,6 +35,13 @@ class Position(object):
   def __init__(self):
     self.endinglist = EndingList()
 
+  def checkbytemark(self):
+    "Check for a Unicode byte mark and skip it."
+    if self.finished():
+      return
+    if ord(self.current()) == 0xfeff:
+      self.currentskip()
+
   def skip(self, string):
     "Skip a string"
     Trace.error('Unimplemented skip()')
@@ -144,8 +151,7 @@ class TextPosition(Position):
     Position.__init__(self)
     self.pos = 0
     self.text = text
-    if ord(self.current()) == 0xfeff:
-      self.pos += 1
+    self.checkbytemark()
 
   def skip(self, string):
     "Skip a string of characters."
@@ -181,8 +187,7 @@ class FilePosition(Position):
     self.reader = LineReader(filename)
     self.number = 1
     self.pos = 0
-    if ord(self.current()) == 0xfeff:
-      self.pos += 1
+    self.checkbytemark()
 
   def skip(self, string):
     "Skip a string of characters."
