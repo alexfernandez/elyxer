@@ -193,6 +193,14 @@ class FooterOutput(object):
 
   author = None
 
+  def appendauthor(cls, authorline):
+    "Append a line with author information."
+    if not cls.author:
+      cls.author = ''
+    cls.author += authorline
+
+  appendauthor = classmethod(appendauthor)
+
   def gethtml(self, container):
     "Footer HTML"
     if Options.raw:

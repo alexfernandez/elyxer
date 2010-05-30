@@ -105,9 +105,9 @@ class Author(Layout):
     self.type = 'author'
     self.output.tag = 'h2 class="author"'
     strings = self.searchall(StringContainer)
-    if len(strings) > 0:
-      FooterOutput.author = strings[0].string
-      Trace.debug('Author: ' + FooterOutput.author)
+    for line in strings:
+      Trace.debug('Author: ' + unicode(line.string))
+      FooterOutput.appendauthor(line.string)
 
 class Abstract(Layout):
   "A paper abstract"
