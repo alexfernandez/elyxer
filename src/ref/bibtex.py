@@ -60,6 +60,7 @@ class BibTeX(Container):
     style = self.readstyle()
     for entry in self.entries:
       entry.template = style['default']
+      entry.citetemplate = style['cite']
       type = entry.type.lower()
       if type in style:
         entry.template = style[type]
@@ -322,14 +323,25 @@ class PubEntry(ContentEntry):
   def process(self):
     "Process the entry"
     self.index = NumberGenerator.instance.generateunique('pubentry')
+    self.tags['index'] = self.index
     biblio = BiblioEntry()
+    biblio.citeref = self.createref()
+    Trace.debug('Cite ref: ' + biblio.citeref)
     biblio.processcites(self.key)
     self.contents = [biblio, Constant(' ')]
     self.contents.append(self.getcontents())
 
   def getcontents(self):
     "Get the contents as a constant"
-    pos = TextPosition(self.template)
+    return self.translatetemplate(self.template)
+
+  def createref(self):
+    "Create the reference to cite."
+    return self.translatetemplate(self.citetemplate)
+
+  def translatetemplate(self, template):
+    "Translate a complete template into a constant."
+    pos = TextPosition(template)
     result, empty = self.parsepart(pos)
     return Constant(self.escapeentry(result))
 
