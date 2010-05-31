@@ -333,17 +333,17 @@ class PubEntry(ContentEntry):
 
   def getcontents(self):
     "Get the contents as a constant"
-    return self.translatetemplate(self.template)
+    return Constant(self.translatetemplate(self.template))
 
   def createref(self):
     "Create the reference to cite."
     return self.translatetemplate(self.citetemplate)
 
   def translatetemplate(self, template):
-    "Translate a complete template into a constant."
+    "Translate a complete template into a string."
     pos = TextPosition(template)
     result, empty = self.parsepart(pos)
-    return Constant(self.escapeentry(result))
+    return self.escapeentry(result)
 
   def parsepart(self, pos):
     "Parse a part of a template, return a tuple consisting of:"
