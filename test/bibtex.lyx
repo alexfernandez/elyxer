@@ -132,6 +132,29 @@ key "withoutvolume"
 .
 \end_layout
 
+\begin_layout Section
+Alpha, Mr Belpit
+\end_layout
+
+\begin_layout Standard
+Two references in one: 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "alphabasic,alphavolume"
+
+\end_inset
+
+.
+ Also, a repeated reference
+\begin_inset CommandInset citation
+LatexCommand cite
+key "alphabasic"
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
@@ -148,6 +171,17 @@ options "bibtotoc,plain"
 LatexCommand bibtex
 bibfiles "bibtex-vancouver"
 options "vancouver"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "bibtex-alpha"
+options "alpha"
 
 \end_inset
 
