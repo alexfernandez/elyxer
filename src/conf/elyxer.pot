@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
 # eLyXer version 0.99
-# Released on 2010-05-31
+# Released on 2010-06-01
 # Contact: Alex Fernández <elyxer@gmail.com>
 # This file is distributed under the same license as the eLyXer package.
 # (C) YEAR FIRST AUTHOR <EMAIL@ADDRESS>.

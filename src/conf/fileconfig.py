@@ -214,7 +214,7 @@ class ConfigSerializer(object):
       result += self.escape(value) + ','
     if len(object) > 0:
       result = result[:-1]
-    return '[' + result + ']'
+    return ':[' + result + ']'
 
   def pyserialize(self, object):
     "Convert an object to a Python definition"
@@ -236,10 +236,10 @@ class ConfigSerializer(object):
 
   def deserialize(self, string):
     "Parse a string into an object (string or list)"
-    if not string.startswith('[') or not string.endswith(']') or not ',' in string:
+    if not string.startswith(':[') or not string.endswith(']'):
       return self.unescape(string)
     result = []
-    contents = string[1:-1].split(',')
+    contents = string[2:-1].split(',')
     for piece in contents:
       result.append(self.unescape(piece))
     return result

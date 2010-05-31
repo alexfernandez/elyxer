@@ -10,14 +10,14 @@ class BibStylesConfig(object):
   abbrvnat = {
       
       u'@article':u'$author. $title. <i>$journal</i>,{ {$volume:}$pages,} $month $year.{ doi: $doi.}{ URL <a href="$url">$url</a>.}', 
-      u'cite':[u'$surname($year){',u'$rest}',], 
+      u'cite':u'[$surname($year){,$rest}]', 
       u'default':u'$author. <i>$title</i>. $publisher, $year.{ URL <a href="$url">$url</a>.}', 
       }
 
   alpha = {
       
       u'@article':u'$author. $title. $journal{;{$volume}{($number)}}{: $pages}{, $year}{, <a href="$url">$url</a>}.', 
-      u'cite':[u'$surname',u' $year{; $rest}',], 
+      u'cite':u'[$surname, $year{; $rest}]', 
       u'default':u'$author. $title.{ $journal,} $year{, <a href="$url">$url</a>}.', 
       }
 
@@ -25,7 +25,7 @@ class BibStylesConfig(object):
       
       u'@article':u'$author. $year. $title. <i>$journal</i>, <b>$volume</b>($number), $pages.{ URL <a href="$url">$url</a>.}', 
       u'@book':u'$author. $year. <i>$title</i>. $publisher.{ URL <a href="$url">$url</a>.}', 
-      u'cite':[u'$surname',u' $year{; $rest}',], 
+      u'cite':u'[$surname, $year{; $rest}]', 
       u'default':u'$author. $year. <i>$title</i>. $publisher.{ URL <a href="$url">$url</a>.}', 
       }
 
@@ -45,7 +45,7 @@ class BibStylesConfig(object):
       u'@proceedings':u'$author, “$title”, <i>$journal</i>, pp. $pages, $year.{ URL <a href="$url">$url</a>.}', 
       u'@techreport':u'$author, <i>$title</i>, $year.{ URL <a href="$url">$url</a>.}', 
       u'@unpublished':u'$author, “$title”, <i>$journal</i>, $year.{ URL <a href="$url">$url</a>.}', 
-      u'cite':[u'$index{',u'$rest}',], 
+      u'cite':u'[$index{,$rest}]', 
       u'default':u'$author, <i>$title</i>. $publisher, $year.{ URL <a href="$url">$url</a>.}', 
       }
 
@@ -53,7 +53,7 @@ class BibStylesConfig(object):
       
       u'@article':u'$author, “$title”, <i>$journal</i>, vol. $volume, no. $number, pp. $pages, $year.{ URL <a href="$url">$url</a>.}', 
       u'@book':u'$author, <i>$title</i>. $publisher, $year.{ URL <a href="$url">$url</a>.}', 
-      u'cite':[u'$index{',u'$rest}',], 
+      u'cite':u'[$index{,$rest}]', 
       u'default':u'$author, “$title”. $year.{ URL <a href="$url">$url</a>.}', 
       }
 
@@ -62,7 +62,7 @@ class BibStylesConfig(object):
       u'@article':u'$author. $title.{ <i>$journal</i>{, {$volumen}{($number)}}{:$pages}{, $year}.}{ URL <a href="$url">$url</a>.}', 
       u'@book':u'$author. <i>$title</i>. $publisher, $month $year.{ URL <a href="$url">$url</a>.}', 
       u'@inproceedings':u'$author. $title.{ <i>$booktitle</i>{, {$volumen}{($number)}}{:$pages}{, $year}.}{ URL <a href="$url">$url</a>.}', 
-      u'cite':[u'$index{',u'$rest}',], 
+      u'cite':u'[$index{,$rest}]', 
       u'default':u'{$author. }$title.{{ $publisher,} $year.}{ URL <a href="$url">$url</a>.}', 
       }
 
@@ -70,7 +70,7 @@ class BibStylesConfig(object):
       
       u'@article':u'$author. $title. <i>$journal</i>, $year{;{<b>$volume</b>}{($number)}{:$pages}}.{ URL: <a href="$url">$url</a>.}', 
       u'@book':u'$author. $title. {$publisher, }$year.{ URL: <a href="$url">$url</a>.}', 
-      u'cite':[u'$index{',u'$rest}',], 
+      u'cite':u'[$index{,$rest}]', 
       u'default':u'$author. $title; {$publisher, }$year.{ $howpublished.}{ URL: <a href="$url">$url</a>.}', 
       }
 
@@ -98,7 +98,7 @@ class ContainerConfig(object):
       }
 
   extracttext = {
-      u'allowed':u'[]', u'copied':[u'StringContainer',u'Constant',], 
+      u'allowed':[u'',], u'copied':[u'StringContainer',u'Constant',], 
       u'extracted':[u'PlainLayout',u'TaggedText',u'Align',u'Caption',u'TextFamily',u'EmphaticText',u'VersalitasText',u'BarredText',u'SizeText',u'ColorText',u'LangLine',u'Formula',], 
       }
 
