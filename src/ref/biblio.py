@@ -43,12 +43,14 @@ class BiblioCitation(Container):
 
   def process(self):
     "Process the complete citation and all cites within."
+    self.contents = [Constant('[')]
     keys = self.parameters['key'].split(',')
     for key in keys:
       self.contents += [BiblioCite().create(key), Constant(',')]
     if len(keys) > 0:
       # remove trailing ,
       self.contents.pop()
+    self.contents.append(Constant(']'))
 
 class BiblioCite(Link):
   "Cite of a bibliography entry"
