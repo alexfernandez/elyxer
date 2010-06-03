@@ -112,6 +112,11 @@ BibTeX: better parsing of braces (in templates) and quotes (in
 \end_layout
 
 \begin_layout Itemize
+BibTeX: variable citing styles.
+ Enclose cites in brackets instead of using superscripts.
+\end_layout
+
+\begin_layout Itemize
 Restored compatibility with Python 2.4 (lost in 0.98 by mistake), added test
  to ensure it does not happen again.
 \end_layout
