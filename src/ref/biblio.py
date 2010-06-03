@@ -46,7 +46,7 @@ class BiblioCitation(Container):
     self.contents = [Constant('[')]
     keys = self.parameters['key'].split(',')
     for key in keys:
-      self.contents += [BiblioCite().create(key), Constant(',')]
+      self.contents += [BiblioCite().create(key), Constant(', ')]
     if len(keys) > 0:
       # remove trailing ,
       self.contents.pop()
