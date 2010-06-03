@@ -114,10 +114,10 @@ class Container(object):
       if locate(container):
         process(container)
 
-  def recursivesearch(self, allow, locate, process):
+  def recursivesearch(self, locate, recursive, process):
     "Perform a recursive search in the container."
     for container in self.contents:
-      if allow(container):
+      if recursive(container):
         container.recursivesearch(allow, locate, process)
       if locate(container):
         process(container)
@@ -129,14 +129,6 @@ class Container(object):
     for string in strings:
       text += string.string
     return text
-
-  def extractcontainers(self, config):
-    "Extract a group of selected containers."
-    "The config parameter is a map containing three lists: allowed, copied and extracted."
-    "Each of the three is a list of class names for containers."
-    "Copied containers are copied as is into the result."
-    "Allowed containers are cloned and placed into the result."
-    "Extracted containers are "
 
   def group(self, index, group, isingroup):
     "Group some adjoining elements into a group"

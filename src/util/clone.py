@@ -50,12 +50,18 @@ class ContainerExtractor(object):
     "Copied containers are copied as is into the result."
     "Allowed containers are cloned and placed into the result."
     "Extracted containers are looked into."
+    "All other containers are silently ignored."
     list = []
-    allow = lambda c: c.__class__.__name__ in config.allowed
-    locate = lambda c: c.__class__.__name__ in config.extract
+    locate = lambda c: c.__class__.__name__ in config.allowed + config.copied
+    recursive = lambda c: c.__class__.__name__ in config.extract
     process = lambda c: list.append(c)
-    container.recursivesearch(allow, locate, process)
+    container.recursivesearch(locate, recursive, process)
     return list
+
+  def process(self, config):
+    "Return true for allowed and copied containers."
+    return c.__class__.__name__ in config.allowed + config.copied
+
 
   def extractinside(self, container, config):
     "Extract from a container only if it is in the extracted list."
