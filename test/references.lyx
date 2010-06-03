@@ -64,6 +64,19 @@
 References Test
 \end_layout
 
+\begin_layout Title
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This note should not appear in the resulting page title
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Author
 Alex Fernández (elyxer@gmail.com)
 \end_layout
