@@ -71,9 +71,10 @@ class Config(object):
 
   def usage(self):
     "Show tool usage"
-    Trace.error('Usage: exportconfig.py [options] [cfg|py]')
+    Trace.error('Usage: exportconfig.py [options] [cfg|py|po]')
     Trace.error('  cfg: export to text configuration file')
     Trace.error('  py: export to python file')
+    Trace.error('  po: export elyxer.pot internationalization file')
     Trace.error('  options:')
     Trace.error('    --cfg base.cfg: choose base config file')
     Trace.error('    --addcfg add.cfg: load additional config file')
