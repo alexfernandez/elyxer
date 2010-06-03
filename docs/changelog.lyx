@@ -149,6 +149,10 @@ officialeuro
 .
 \end_layout
 
+\begin_layout Itemize
+Fix captions in lists of figures which use standard layouts (thanks, Hans!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.98 (2010-05-13):
