@@ -67,7 +67,10 @@ class FormulaCommand(FormulaBit):
       return
     if pos.current().isalpha():
       # alpha command
-      return FormulaCommand.start + pos.globalpha()
+      command = FormulaCommand.start + pos.globalpha()
+      # skip mark of short command
+      pos.checkskip('*')
+      return command
     # symbol command
     return FormulaCommand.start + pos.currentskip()
 
