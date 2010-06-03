@@ -94,9 +94,9 @@ class Title(Layout):
   def process(self):
     self.type = 'title'
     self.output.tag = 'h1 class="title"'
-    self.title = self.extracttext()
-    TitleOutput.title = self.title
-    Trace.message('Title: ' + self.title)
+    title = self.extracttext()
+    TitleOutput.title = title
+    Trace.message('Title: ' + title)
 
 class Author(Layout):
   "The document author"
