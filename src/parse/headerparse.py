@@ -32,13 +32,14 @@ class HeaderParser(Parser):
   "Parses the LyX header"
 
   def parse(self, reader):
-    "Parse header parameters into a dictionary"
-    self.parseending(reader, lambda: self.parseline(reader))
+    "Parse header parameters into a dictionary, return the preamble."
+    contents = []
+    self.parseending(reader, lambda: self.parseline(reader, contents))
     # skip last line
     reader.nextline()
-    return []
+    return contents
 
-  def parseline(self, reader):
+  def parseline(self, reader, contents):
     "Parse a single line as a parameter or as a start"
     line = reader.currentline()
     if line.startswith(HeaderConfig.parameters['branch']):
@@ -48,7 +49,7 @@ class HeaderParser(Parser):
       LstParser().parselstset(reader)
       return
     elif line.startswith(HeaderConfig.parameters['beginpreamble']):
-      PreambleParser().parsepreamble(reader)
+      contents.append(self.factory.createcontainer(reader))
       return
     # no match
     self.parseparameter(reader)
@@ -73,15 +74,12 @@ class PreambleParser(Parser):
   "A parser for the LyX preamble."
 
   preamble = []
-  parsed = False
 
-  def __init__(self):
-    self.ending = HeaderConfig.parameters['endpreamble']
-
-  def parsepreamble(self, reader):
+  def parse(self, reader):
     "Parse the full preamble with all statements."
-    reader.nextline()
+    self.ending = HeaderConfig.parameters['endpreamble']
     self.parseending(reader, lambda: self.parsepreambleline(reader))
+    return []
 
   def parsepreambleline(self, reader):
     "Parse a single preamble line."

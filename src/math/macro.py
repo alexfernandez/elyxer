@@ -29,22 +29,14 @@ from conf.config import *
 from parse.formulaparse import *
 
 
-class MathMacro(object):
-  "A math macro: command, parameters, default values, definition."
-
-  macros = dict()
+class LyXPreamble(Container):
+  "The preamble at the beginning of a LyX file. Parsed for macros."
 
   def __init__(self):
-    self.newcommand = None
-    self.parameters = 0
-    self.defaults = []
-    self.definition = None
+    self.parser = PreambleParser()
+    self.output = EmptyOutput()
 
-  def instantiate(self):
-    "Return an instance of the macro."
-    return self.definition.clone()
-
-  def parsepreamble(self):
+  def process(self):
     "Parse the LyX preamble, if needed."
     if len(PreambleParser.preamble) == 0:
       return
@@ -73,7 +65,20 @@ class MathMacro(object):
     if not isinstance(bit, DefiningFunction):
       Trace.error('Did not define a macro with ' + unicode(bit))
 
-Formula.initializations.append(MathMacro().parsepreamble)
+class MathMacro(object):
+  "A math macro: command, parameters, default values, definition."
+
+  macros = dict()
+
+  def __init__(self):
+    self.newcommand = None
+    self.parameters = 0
+    self.defaults = []
+    self.definition = None
+
+  def instantiate(self):
+    "Return an instance of the macro."
+    return self.definition.clone()
 
 class MacroParameter(FormulaBit):
   "A parameter from a macro."
