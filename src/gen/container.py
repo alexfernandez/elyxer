@@ -23,6 +23,7 @@
 # eLyXer containers for Lyx data that output HTML
 
 from util.trace import Trace
+from util.clone import *
 from parse.parser import *
 from io.output import *
 from conf.config import *
@@ -123,12 +124,8 @@ class Container(object):
         process(container)
 
   def extracttext(self):
-    "Search for all the strings and extract the text they contain"
-    text = ''
-    strings = self.searchall(StringContainer)
-    for string in strings:
-      text += string.string
-    return text
+    "Extract all text from allowed containers."
+    return ContainerExtractor.extracttext(self)
 
   def group(self, index, group, isingroup):
     "Group some adjoining elements into a group"
