@@ -43,30 +43,40 @@ class Cloner(object):
 class ContainerExtractor(object):
   "A class to extract certain containers."
 
-  def extract(self, container, config):
-    "Extract a group of selected containers from a container."
+  def __init__(self, config):
     "The config parameter is a map containing three lists: allowed, copied and extracted."
     "Each of the three is a list of class names for containers."
-    "Copied containers are copied as is into the result."
-    "Allowed containers are cloned and placed into the result."
+    "Allowed containers are included as is into the result."
+    "Cloned containers are cloned and placed into the result."
     "Extracted containers are looked into."
     "All other containers are silently ignored."
+    self.allowed = config['allowed']
+    self.cloned = config['cloned']
+    self.extracted = config['extracted']
+
+  def extract(self, container):
+    "Extract a group of selected containers from a container."
     list = []
-    locate = lambda c: c.__class__.__name__ in config.allowed + config.copied
-    recursive = lambda c: c.__class__.__name__ in config.extract
-    process = lambda c: list.append(c)
+    locate = lambda c: c.__class__.__name__ in self.allowed + self.cloned
+    recursive = lambda c: c.__class__.__name__ in self.extracted
+    process = lambda c: self.process(c, list)
     container.recursivesearch(locate, recursive, process)
     return list
 
-  def process(self, config):
-    "Return true for allowed and copied containers."
-    return c.__class__.__name__ in config.allowed + config.copied
+  def process(self, container, list):
+    "Add allowed containers, clone cloned containers and add the clone."
+    name = container.__class__.__name__
+    if name in self.allowed:
+      list.append(container)
+    elif name in self.cloned:
+      list.append(self.safeclone(container))
+    else:
+      Trace.error('Unknown container class ' + name)
 
-
-  def extractinside(self, container, config):
-    "Extract from a container only if it is in the extracted list."
-    if not container.__class__.__name__ in config['extracted']:
-      return None
-    return self.extract(container, config)
-
+  def safeclone(self, container):
+    "Return a new container with contents only in a safe list, recursively."
+    clone = Cloner.clone(container)
+    clone.output = container.output
+    clone.contents = self.extract(container)
+    return clone
 

@@ -31,10 +31,6 @@ from gen.structure import *
 class TOCEntry(Container):
   "A container for a TOC entry."
 
-  copied = TOCConfig.containers['copied']
-  allowed = TOCConfig.containers['allowed']
-  extracted = TOCConfig.containers['extracted']
-
   def header(self, container):
     "Create a TOC entry for header and footer (0 depth)."
     self.depth = 0
@@ -73,26 +69,8 @@ class TOCEntry(Container):
       for shorttitle in shorttitles:
         contents += shorttitle.contents
       return contents
-    return self.safecontents(container)
-
-  def safecontents(self, container):
-    "Extract the safe contents for the TOC from a container."
-    contents = []
-    for element in container.contents:
-      if element.__class__.__name__ in TOCEntry.copied:
-        contents.append(element)
-      elif element.__class__.__name__ in TOCEntry.allowed:
-        contents.append(self.safeclone(element))
-      elif element.__class__.__name__ in TOCEntry.extracted:
-        contents += self.safecontents(element)
-    return contents
-
-  def safeclone(self, container):
-    "Return a new container with contents only in a safe list, recursively."
-    clone = Cloner.clone(container)
-    clone.output = container.output
-    clone.contents = self.safecontents(container)
-    return clone
+    extractor = ContainerExtractor(TOCConfig.containers)
+    return extractor.extract(container)
 
   def __unicode__(self):
     "Return a printable representation."

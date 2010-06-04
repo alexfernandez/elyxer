@@ -118,7 +118,7 @@ class Container(object):
     "Perform a recursive search in the container."
     for container in self.contents:
       if recursive(container):
-        container.recursivesearch(allow, locate, process)
+        container.recursivesearch(locate, recursive, process)
       if locate(container):
         process(container)
 
