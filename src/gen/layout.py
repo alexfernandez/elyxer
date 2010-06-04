@@ -104,10 +104,9 @@ class Author(Layout):
   def process(self):
     self.type = 'author'
     self.output.tag = 'h2 class="author"'
-    strings = self.searchall(StringContainer)
-    for line in strings:
-      Trace.debug('Author: ' + unicode(line.string))
-      FooterOutput.appendauthor(line.string)
+    author = self.extracttext()
+    Trace.debug('Author: ' + author)
+    FooterOutput.appendauthor(author)
 
 class Abstract(Layout):
   "A paper abstract"
