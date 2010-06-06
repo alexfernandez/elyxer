@@ -407,7 +407,7 @@ class BibVariable(Container):
   escaped = BibTeXConfig.escaped
   
   def __init__(self):
-    self.output = ContentsOutput()
+    self.output = TaggedOutput()
     self.contents = []
 
   def parse(self, pos):
