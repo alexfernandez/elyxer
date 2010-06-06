@@ -49,7 +49,6 @@ class PubEntry(ContentEntry):
     self.tags['index'] = self.index
     biblio = BiblioEntry()
     biblio.citeref = self.createref()
-    Trace.debug('Cite ref: ' + unicode(biblio.citeref))
     biblio.processcites(self.key)
     self.contents = [biblio, Constant(' ')]
     self.contents += self.entrycontents()
