@@ -99,6 +99,11 @@ Added
 \end_layout
 
 \begin_layout Itemize
+Restored compatibility with Python 2.4 (lost in 0.98 by mistake), added test
+ to ensure it does not happen again.
+\end_layout
+
+\begin_layout Itemize
 BibTeX: improved template definitions for Vancouver style.
 \end_layout
 
@@ -117,8 +122,12 @@ BibTeX: variable citing styles.
 \end_layout
 
 \begin_layout Itemize
-Restored compatibility with Python 2.4 (lost in 0.98 by mistake), added test
- to ensure it does not happen again.
+BibTeX: Export all BibTeX variables in 
+\family typewriter
+bib-\SpecialChar \ldots{}
+
+\family default
+ spans.
 \end_layout
 
 \begin_layout Itemize
@@ -151,15 +160,6 @@ officialeuro
 
 \begin_layout Itemize
 Fix captions in lists of figures which use standard layouts (thanks, Hans!).
-\end_layout
-
-\begin_layout Itemize
-Export all BibTeX variables in 
-\family typewriter
-bib-\SpecialChar \ldots{}
-
-\family default
- spans.
 \end_layout
 
 \end_deeper
