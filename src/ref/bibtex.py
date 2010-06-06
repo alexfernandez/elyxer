@@ -308,8 +308,6 @@ class SpecialEntry(ContentEntry):
 class PubEntry(ContentEntry):
   "A publication entry"
 
-  escaped = BibTeXConfig.escaped
-
   def detect(self, pos):
     "Detect a publication entry"
     return pos.checkfor('@')
@@ -340,22 +338,17 @@ class PubEntry(ContentEntry):
     return self.translatetemplate(self.citetemplate)
 
   def translatetemplate(self, template):
-    "Translate a complete template into a string."
+    "Translate a complete template into a list of contents."
     pos = TextPosition(template)
-    result, empty = self.parsepart(pos)
-    return [Constant(self.escapestring(result))]
+    return self.parsepart(pos)
 
   def parsepart(self, pos):
     "Parse a part of a template, return a list of contents."
-    result = ''
-    globalempty = True
+    result = []
     while not pos.finished():
-      piece, empty = self.parsepiece(pos)
-      if piece:
-        result += piece
-      if not empty:
-        globalempty = False
-    return result, globalempty
+      piece = self.parsepiece(pos)
+      result += piece
+    return result
 
   def parsepiece(self, pos):
     "Get the next piece of the template, return if it was empty."
@@ -364,38 +357,85 @@ class PubEntry(ContentEntry):
     elif pos.checkfor('$'):
       return self.parsevariable(pos)
     else:
-      return self.parseexcluding(pos, ['{', '$']), True
+      result = self.parseexcluding(pos, ['{', '$'])
+      return [Constant(result)]
 
   def parsebraces(self, pos):
     "Parse a pair of curly braces {}."
     if not pos.checkskip('{'):
       Trace.error('Missing { in braces.')
-      return None, True
+      return []
     pos.pushending('}')
-    result, empty = self.parsepart(pos)
+    result = self.parsepart(pos)
     pos.popending('}')
+    empty = self.emptyvariables(result)
     if empty:
-      return '', True
-    return result, False
+      return []
+    return result
 
   def parsevariable(self, pos):
     "Parse a variable $name."
+    variable = BibVariable().parse(pos)
+    variable.processtags(self.tags)
+    return [variable]
+
+  def emptyvariables(self, contents):
+    "Find out if there are only empty variables in the list."
+    for variable in self.getvariables(contents):
+      if not variable.empty:
+        return False
+    return True
+
+  def getvariables(self, contents):
+    "Get all variables in the list of contents."
+    for element in contents:
+      if isinstance(element, BibVariable):
+        yield element
+
+  def __unicode__(self):
+    "Return a string representation"
+    string = ''
+    if 'author' in self.tags:
+      string += self.tags['author'] + ': '
+    if 'title' in self.tags:
+      string += '"' + self.tags['title'] + '"'
+    return string
+
+class BibVariable(Container):
+  "A variable in a BibTeX template."
+
+  escaped = BibTeXConfig.escaped
+  
+  def __init__(self):
+    self.output = ContentsOutput()
+    self.contents = []
+
+  def parse(self, pos):
+    "Parse the variable name."
     if not pos.checkskip('$'):
       Trace.error('Missing $ in variable name.')
-      return None, True
-    variable = pos.globalpha()
-    value = self.gettag(variable)
-    if not value:
-      return None, True
-    return value, False
+      return self
+    self.key = pos.globalpha()
+    self.output.tag = 'bib-' + self.key
+    return self
 
-  def gettag(self, key):
-    "Get a tag with the given key"
-    if not key in self.tags:
-      return None
-    result = ''
+  def processtags(self, tags):
+    "Find the tag with the appropriate key in the list of tags."
+    if not self.key in tags:
+      self.empty = True
+      return
+    self.empty = False
+    result = self.escapestring(tags[self.key])
+    self.contents = [Constant(result)]
+
+  def escapestring(self, string):
+    "Escape a string."
+    for escape in self.escaped:
+      if escape in string:
+        string = string.replace(escape, self.escaped[escape])
     # remove whitespace
-    pos = TextPosition(self.tags[key])
+    result = ''
+    pos = TextPosition(string)
     while not pos.finished():
       if pos.current().isspace():
         pos.skipspace()
@@ -403,36 +443,7 @@ class PubEntry(ContentEntry):
           result += ' '
       else:
         result += pos.currentskip()
-    text = TaggedText().complete(result, 'bib-' + key)
     return result
-
-  def escapestring(self, string):
-    "Escape a string."
-    for escape in self.escaped:
-      if escape in string:
-        string = string.replace(escape, self.escaped[escape])
-    return string
-
-  def __unicode__(self):
-    "Return a string representation"
-    string = ''
-    author = self.gettag('author')
-    if author:
-      string += author + ': '
-    title = self.gettag('title')
-    if title:
-      string += '"' + title + '"'
-    return string
-
-class BibVariable(Container):
-  "A variable in a BibTeX template."
-  
-  def __init__(self):
-    self.output = TaggedOutput()
-    self.empty = True
-
-  def process(self):
-    ""
 
 Entry.entries += [CommentEntry(), SpecialEntry(), PubEntry()]
 
