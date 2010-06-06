@@ -41,6 +41,7 @@ from gen.inset import *
 from gen.float import *
 from math.array import *
 from ref.bibtex import *
+from ref.bibentry import *
 from xtra.newfangle import *
 from math.macro import *
 
