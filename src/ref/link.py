@@ -234,6 +234,5 @@ class LinkOutput(object):
       tag += ' target="' + link.target + '"'
     if link.title:
       tag += ' title="' + link.title + '"'
-    text = TaggedText().complete(link.contents, tag)
-    return text.gethtml()
+    return TaggedOutput().settag(tag).gethtml(link)
 
