@@ -340,15 +340,14 @@ class PubEntry(ContentEntry):
   def translatetemplate(self, template):
     "Translate a complete template into a list of contents."
     pos = TextPosition(template)
-    return self.parsepart(pos)
+    return [self.parsepart(pos)]
 
   def parsepart(self, pos):
     "Parse a part of a template, return a list of contents."
-    result = []
+    part = BibPart()
     while not pos.finished():
-      piece = self.parsepiece(pos)
-      result += piece
-    return result
+      part.add(self.parsepiece(pos))
+    return part
 
   def parsepiece(self, pos):
     "Get the next piece of the template, return if it was empty."
@@ -357,40 +356,33 @@ class PubEntry(ContentEntry):
     elif pos.checkfor('$'):
       return self.parsevariable(pos)
     else:
-      result = self.parseexcluding(pos, ['{', '$'])
-      return [Constant(result)]
+      return Constant(self.parseexcluding(pos, ['{', '$']))
 
   def parsebraces(self, pos):
     "Parse a pair of curly braces {}."
     if not pos.checkskip('{'):
       Trace.error('Missing { in braces.')
-      return []
+      return None
     pos.pushending('}')
-    result = self.parsepart(pos)
+    part = self.parsepart(pos)
     pos.popending('}')
-    empty = self.emptyvariables(result)
+    empty = self.emptyvariables(part)
     if empty:
-      return []
-    return result
+      return None
+    return part
 
   def parsevariable(self, pos):
     "Parse a variable $name."
     variable = BibVariable().parse(pos)
     variable.processtags(self.tags)
-    return [variable]
+    return variable
 
-  def emptyvariables(self, contents):
-    "Find out if there are only empty variables in the list."
-    for variable in self.getvariables(contents):
+  def emptyvariables(self, part):
+    "Find out if there are only empty variables in the part."
+    for variable in part.searchall(BibVariable):
       if not variable.empty:
         return False
     return True
-
-  def getvariables(self, contents):
-    "Get all variables in the list of contents."
-    for element in contents:
-      if isinstance(element, BibVariable):
-        yield element
 
   def __unicode__(self):
     "Return a string representation"
@@ -400,6 +392,36 @@ class PubEntry(ContentEntry):
     if 'title' in self.tags:
       string += '"' + self.tags['title'] + '"'
     return string
+
+class BibPart(Container):
+  "A part of a BibTeX template."
+
+  def __init__(self):
+    self.output = ContentsOutput()
+    self.contents = []
+
+  def add(self, piece):
+    "Add a new piece to the current part."
+    if not piece:
+      return
+    if self.redundantdot(piece):
+      # remove extra dot
+      piece.string = piece.string[1:]
+    self.contents.append(piece)
+
+  def redundantdot(self, piece):
+    "Find out if there is a redundant dot in the next piece."
+    if not isinstance(piece, Constant):
+      return False
+    if not piece.string.startswith('.'):
+      return False
+    if len(self.contents) == 0:
+      return False
+    if not isinstance(self.contents[-1], BibVariable):
+      return False
+    if not self.contents[-1].extracttext().endswith('.'):
+      return False
+    return True
 
 class BibVariable(Container):
   "A variable in a BibTeX template."
