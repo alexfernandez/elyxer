@@ -117,7 +117,7 @@ class BiblioEntry(Container):
 
   def process(self):
     "Process the cites for the entry's key"
-    self.citeref = NumberGenerator.instance.generateunique('biblioentry')
+    self.citeref = [Constant(NumberGenerator.instance.generateunique('biblioentry'))]
     self.processcites(self.parameters['key'])
 
   def processcites(self, key):

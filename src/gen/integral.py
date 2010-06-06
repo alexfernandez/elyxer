@@ -88,11 +88,13 @@ class IntegralBiblioEntry(IntegralProcessor):
   def processeach(self, entry):
     "Process each entry."
     number = NumberGenerator.instance.generateunique('integralbib')
-    link = Link().complete(entry.citeref, 'biblio-' + number, type='biblioentry')
+    link = Link().complete('cite', 'biblio-' + number, type='biblioentry')
+    link.contents = entry.citeref
     entry.contents = [Constant('['), link, Constant('] ')]
     if entry.key in BiblioCite.cites:
       for cite in BiblioCite.cites[entry.key]:
-        cite.complete(entry.citeref, anchor = 'cite-' + number)
+        cite.contents = entry.citeref
+        cite.anchor = 'cite-' + number
         cite.destination = link
 
 class IntegralFloat(IntegralProcessor):

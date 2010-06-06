@@ -326,14 +326,14 @@ class PubEntry(ContentEntry):
     self.tags['index'] = self.index
     biblio = BiblioEntry()
     biblio.citeref = self.createref()
-    Trace.debug('Cite ref: ' + biblio.citeref)
+    Trace.debug('Cite ref: ' + unicode(biblio.citeref))
     biblio.processcites(self.key)
     self.contents = [biblio, Constant(' ')]
-    self.contents.append(self.getcontents())
+    self.contents += self.entrycontents()
 
-  def getcontents(self):
-    "Get the contents as a constant"
-    return Constant(self.translatetemplate(self.template))
+  def entrycontents(self):
+    "Get the contents of the entry."
+    return self.translatetemplate(self.template)
 
   def createref(self):
     "Create the reference to cite."
@@ -343,11 +343,10 @@ class PubEntry(ContentEntry):
     "Translate a complete template into a string."
     pos = TextPosition(template)
     result, empty = self.parsepart(pos)
-    return self.escapeentry(result)
+    return [Constant(self.escapestring(result))]
 
   def parsepart(self, pos):
-    "Parse a part of a template, return a tuple consisting of:"
-    "The resulting string, and if it contained non-empty variables."
+    "Parse a part of a template, return a list of contents."
     result = ''
     globalempty = True
     while not pos.finished():
@@ -404,9 +403,10 @@ class PubEntry(ContentEntry):
           result += ' '
       else:
         result += pos.currentskip()
+    text = TaggedText().complete(result, 'bib-' + key)
     return result
 
-  def escapeentry(self, string):
+  def escapestring(self, string):
     "Escape a string."
     for escape in self.escaped:
       if escape in string:
@@ -423,6 +423,16 @@ class PubEntry(ContentEntry):
     if title:
       string += '"' + title + '"'
     return string
+
+class BibVariable(Container):
+  "A variable in a BibTeX template."
+  
+  def __init__(self):
+    self.output = TaggedOutput()
+    self.empty = True
+
+  def process(self):
+    ""
 
 Entry.entries += [CommentEntry(), SpecialEntry(), PubEntry()]
 
