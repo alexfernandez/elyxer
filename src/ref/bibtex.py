@@ -204,6 +204,9 @@ class ContentEntry(Entry):
     pos.skipspace()
     value = self.parsevalue(pos)
     self.tags[name] = value
+    if hasattr(self, 'dissect' + name):
+      dissector = getattr(self, 'dissect' + name)
+      dissector(value)
     if not pos.finished():
       remainder = pos.globexcluding(',')
       self.lineerror('Ignored ' + remainder + ' before comma', pos)
@@ -284,6 +287,63 @@ class ContentEntry(Entry):
   def parseexcluding(self, pos, undesired):
     "Parse a piece not structure."
     return pos.glob(lambda current: not current in undesired)
+
+  def dissectauthor(self, authortag):
+    "Dissect the author tag into pieces."
+    authors = authortag.split(' and ')
+    for authorname in authors:
+      author = BibAuthor().parse(authorname)
+      Trace.debug('Author: ' + unicode(author))
+
+  def dissectyear(self, yeartag):
+    "Dissect the year tag into pieces."
+    if len(yeartag) != 4:
+      Trace.error('Year tag ' + yeartag + ' has bad length')
+      return
+    self.tags['YY'] = yeartag[2:]
+
+class BibAuthor(object):
+  "A BibTeX individual author."
+
+  def __init__(self):
+    self.surname = ''
+    self.firstnames = []
+
+  def parse(self, tag):
+    "Parse an individual author tag."
+    if ',' in tag:
+      bits = tag.split(',')
+      if len(bits) > 2:
+        Trace.error('Too many commas in ' + tag)
+        return
+      self.surname = bits[0].strip()
+      self.parsefirstnames(bits[1].strip())
+    else:
+      bits = tag.rsplit(None, 1)
+      self.surname = bits[-1].strip()
+      if len(bits) == 1:
+        return
+      self.parsefirstnames(bits[0].strip())
+
+  def parsefirstnames(self, firstnames):
+    "Parse the first name."
+    for firstname in firstnames.split():
+      self.firstnames.append(firstname)
+
+  def getinitial(self):
+    "Get the main initial for the author."
+    if len(self.surname) == 0:
+      return ''
+    return self.surname[0].toupper()
+
+  def __unicode__(self):
+    "Return a printable representation."
+    result = ''
+    for firstname in self.firstnames:
+      result += firstname + ' '
+    if len(self.firstnames) > 0:
+      result = result[:-1]
+    return result + self.surname
 
 class SpecialEntry(ContentEntry):
   "A special entry"
