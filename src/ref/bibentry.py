@@ -132,6 +132,7 @@ class BibPart(Container):
       # remove extra dot
       piece.string = piece.string[1:]
     self.contents.append(piece)
+    piece.parent = self
 
   def redundantdot(self, piece):
     "Find out if there is a redundant dot in the next piece."
