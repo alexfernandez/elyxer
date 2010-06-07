@@ -64,7 +64,11 @@ class PubEntry(ContentEntry):
   def translatetemplate(self, template):
     "Translate a complete template into a list of contents."
     pos = TextPosition(template)
-    return [self.parsepart(pos)]
+    part = self.parsepart(pos)
+    for variable in part.searchall(BibVariable):
+      if variable.empty:
+        Trace.error('Error parsing BibTeX template: ' + unicode(variable) + ' is empty')
+    return [part]
 
   def parsepart(self, pos):
     "Parse a part of a template, return a list of contents."
@@ -190,6 +194,13 @@ class BibVariable(Container):
           result += ' '
       else:
         result += pos.currentskip()
+    return result
+
+  def __unicode__(self):
+    "Return a printable representation."
+    result = 'variable ' + self.key
+    if not self.empty:
+      result += ':' + self.gettext()
     return result
 
 Entry.entries += [PubEntry()]
