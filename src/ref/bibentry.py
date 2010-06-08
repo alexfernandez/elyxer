@@ -184,17 +184,7 @@ class BibVariable(Container):
     for escape in self.escaped:
       if escape in string:
         string = string.replace(escape, self.escaped[escape])
-    # remove whitespace
-    result = ''
-    pos = TextPosition(string)
-    while not pos.finished():
-      if pos.current().isspace():
-        pos.skipspace()
-        if not pos.finished():
-          result += ' '
-      else:
-        result += pos.currentskip()
-    return result
+    return string.strip()
 
   def __unicode__(self):
     "Return a printable representation."

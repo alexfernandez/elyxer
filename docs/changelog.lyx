@@ -122,12 +122,20 @@ BibTeX: variable citing styles.
 \end_layout
 
 \begin_layout Itemize
-BibTeX: Export all BibTeX variables in 
+BibTeX: export all BibTeX variables in 
 \family typewriter
 bib-\SpecialChar \ldots{}
 
 \family default
  spans.
+\end_layout
+
+\begin_layout Itemize
+BibTeX: support for surname abbreviations as in style 
+\emph on
+alpha
+\emph default
+.
 \end_layout
 
 \begin_layout Itemize

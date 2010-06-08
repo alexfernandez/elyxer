@@ -170,8 +170,7 @@ class ContentEntry(Entry):
 
   def parse(self, pos):
     "Parse the entry between {}"
-    self.type = self.parseexcluding(pos, self.nameseparators)
-    pos.skipspace()
+    self.type = self.parseexcluding(pos, self.nameseparators).strip()
     if not pos.checkskip('{'):
       self.lineerror('Entry should start with {', pos)
       return
@@ -193,6 +192,8 @@ class ContentEntry(Entry):
         pos.popending(',')
   
   def parsetag(self, pos):
+    "Parse a single tag."
+    pos.skipspace()
     piece = self.parseexcluding(pos, self.nameseparators)
     if pos.finished():
       self.key = piece
@@ -223,10 +224,13 @@ class ContentEntry(Entry):
     "Parse brackets or quotes recursively."
     contents = ''
     while not pos.finished():
-      contents += self.parseexcluding(pos, self.valueseparators)
+      contents += self.parseexcludingspaces(pos, self.valueseparators)
       if pos.finished():
         return contents
-      if pos.checkfor('{'):
+      if pos.current().isspace():
+        contents += ' '
+        pos.skipspace()
+      elif pos.checkfor('{'):
         contents += self.parsebracket(pos)
       elif pos.checkfor('"'):
         contents += self.parsequoted(pos, initial)
@@ -285,15 +289,25 @@ class ContentEntry(Entry):
     return ''
 
   def parseexcluding(self, pos, undesired):
-    "Parse a piece not structure."
+    "Parse a piece not structure (including spaces)."
     return pos.glob(lambda current: not current in undesired)
+
+  def parseexcludingspaces(self, pos, undesired):
+    "Parse a piece not structure (excluding spaces)."
+    return pos.glob(lambda current: not current in undesired
+        and not current.isspace())
 
   def dissectauthor(self, authortag):
     "Dissect the author tag into pieces."
-    authors = authortag.split(' and ')
-    for authorname in authors:
+    authorsplit = authortag.split(' and ')
+    if len(authorsplit) == 0:
+      return
+    authors = []
+    for authorname in authorsplit:
       author = BibAuthor().parse(authorname)
       Trace.debug('Author: ' + unicode(author))
+      authors.append(author)
+    self.tags['Sur'] = authors[0].surname[0:3]
 
   def dissectyear(self, yeartag):
     "Dissect the year tag into pieces."
@@ -312,18 +326,27 @@ class BibAuthor(object):
   def parse(self, tag):
     "Parse an individual author tag."
     if ',' in tag:
-      bits = tag.split(',')
-      if len(bits) > 2:
-        Trace.error('Too many commas in ' + tag)
-        return
-      self.surname = bits[0].strip()
-      self.parsefirstnames(bits[1].strip())
+      self.parsecomma(tag)
     else:
-      bits = tag.rsplit(None, 1)
-      self.surname = bits[-1].strip()
-      if len(bits) == 1:
-        return
-      self.parsefirstnames(bits[0].strip())
+      self.parsewithoutcomma(tag)
+    return self
+
+  def parsecomma(self, tag):
+    "Parse an author with a comma: Python, M."
+    bits = tag.split(',')
+    if len(bits) > 2:
+      Trace.error('Too many commas in ' + tag)
+      return
+    self.surname = bits[0].strip()
+    self.parsefirstnames(bits[1].strip())
+
+  def parsewithoutcomma(self, tag):
+    "Parse an author without a comma: M. Python."
+    bits = tag.rsplit(None, 1)
+    self.surname = bits[-1].strip()
+    if len(bits) == 1:
+      return
+    self.parsefirstnames(bits[0].strip())
 
   def parsefirstnames(self, firstnames):
     "Parse the first name."
