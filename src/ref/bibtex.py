@@ -307,7 +307,13 @@ class ContentEntry(Entry):
       author = BibAuthor().parse(authorname)
       Trace.debug('Author: ' + unicode(author))
       authors.append(author)
-    self.tags['Sur'] = authors[0].surname[0:3]
+    if len(authors) == 1:
+      self.tags['Sur'] = authors[0].surname[0:3]
+    else:
+      initials = ''
+      for author in authors:
+        initials += author.surname[0:1]
+      self.tags['Sur'] = initials
 
   def dissectyear(self, yeartag):
     "Dissect the year tag into pieces."
@@ -364,8 +370,6 @@ class BibAuthor(object):
     result = ''
     for firstname in self.firstnames:
       result += firstname + ' '
-    if len(self.firstnames) > 0:
-      result = result[:-1]
     return result + self.surname
 
 class SpecialEntry(ContentEntry):
