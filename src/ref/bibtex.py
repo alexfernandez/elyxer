@@ -302,18 +302,23 @@ class ContentEntry(Entry):
     authorsplit = authortag.split(' and ')
     if len(authorsplit) == 0:
       return
-    authors = []
+    authorlist = []
     for authorname in authorsplit:
       author = BibAuthor().parse(authorname)
       Trace.debug('Author: ' + unicode(author))
-      authors.append(author)
-    if len(authors) == 1:
-      self.tags['Sur'] = authors[0].surname[0:3]
+      authorlist.append(author)
+    initials = ''
+    authors = ''
+    if len(authorlist) == 1:
+      initials = authorlist[0].surname[0:3]
+      authors = unicode(authorlist[0])
     else:
-      initials = ''
-      for author in authors:
+      for author in authorlist:
         initials += author.surname[0:1]
-      self.tags['Sur'] = initials
+        authors += unicode(author) + ', '
+      authors = authors[:-2]
+    self.tags['Sur'] = initials
+    self.tags['authors'] = authors
 
   def dissectyear(self, yeartag):
     "Dissect the year tag into pieces."
@@ -342,7 +347,6 @@ class BibAuthor(object):
     bits = tag.split(',')
     if len(bits) > 2:
       Trace.error('Too many commas in ' + tag)
-      return
     self.surname = bits[0].strip()
     self.parsefirstnames(bits[1].strip())
 
