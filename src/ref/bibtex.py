@@ -162,6 +162,9 @@ class ContentEntry(Entry):
 
   nameseparators = ['{', '=', '"', '#']
   valueseparators = ['{', '"', '#', '\\', '}']
+  escaped = BibTeXConfig.escaped
+  replaced = BibTeXConfig.replaced
+  replacedinitials = [x[0] for x in BibTeXConfig.replaced]
 
   def __init__(self):
     self.key = None
@@ -171,6 +174,7 @@ class ContentEntry(Entry):
   def parse(self, pos):
     "Parse the entry between {}"
     self.type = self.parseexcluding(pos, self.nameseparators).strip()
+    Trace.debug('Type: ' + self.type)
     if not pos.checkskip('{'):
       self.lineerror('Entry should start with {', pos)
       return
@@ -224,12 +228,9 @@ class ContentEntry(Entry):
     "Parse brackets or quotes recursively."
     contents = ''
     while not pos.finished():
-      contents += self.parseexcludingspaces(pos, self.valueseparators)
+      contents += self.parseexcluding(pos, self.valueseparators)
       if pos.finished():
         return contents
-      if pos.current().isspace():
-        contents += ' '
-        pos.skipspace()
       elif pos.checkfor('{'):
         contents += self.parsebracket(pos)
       elif pos.checkfor('"'):
@@ -244,16 +245,24 @@ class ContentEntry(Entry):
     return contents
 
   def parseescaped(self, pos):
-    "Parse an escaped character \\*."
+    "Parse an escaped string \\*."
     if not pos.checkskip('\\'):
       self.lineerror('Not an escaped character', pos)
       return ''
-    if not pos.checkskip('{'):
-      return '\\' + pos.currentskip()
-    current = pos.currentskip()
-    if not pos.checkskip('}'):
-      self.lineerror('Weird escaped but unclosed brackets \\{*', pos)
-    return '\\' + current
+    escaped = '\\'
+    if pos.checkskip('{'):
+      escaped += pos.currentskip()
+      if not pos.checkskip('}'):
+        self.lineerror('Weird escaped but unclosed brackets \\{*', pos)
+      if not escaped in ContentEntry.escaped:
+        self.lineerror('Unknown escaped character ' + escaped, pos)
+        return escaped[1:]
+      return ContentEntry.escaped[escaped]
+    for key in ContentEntry.escaped:
+      if pos.checkskip(key[1:]):
+        return ContentEntry.escaped[key]
+    self.lineerror('Unknown escaped string \\', pos)
+    return pos.currentskip()
 
   def parsebracket(self, pos):
     "Parse a {} bracket"
@@ -290,12 +299,29 @@ class ContentEntry(Entry):
 
   def parseexcluding(self, pos, undesired):
     "Parse a piece not structure (including spaces)."
-    return pos.glob(lambda current: not current in undesired)
+    result = ''
+    while not pos.finished():
+      if pos.current() in undesired:
+        return result
+      if pos.current().isspace():
+        result += ' '
+        pos.skipspace()
+      else:
+        replaced = self.parsereplaced(pos)
+        if replaced:
+          result += replaced
+        else:
+          result += pos.currentskip()
+    return result
 
-  def parseexcludingspaces(self, pos, undesired):
-    "Parse a piece not structure (excluding spaces)."
-    return pos.glob(lambda current: not current in undesired
-        and not current.isspace())
+  def parsereplaced(self, pos):
+    "Check for one of the replaced strings."
+    if not pos.current() in ContentEntry.replacedinitials:
+      return None
+    for key in ContentEntry.escaped:
+      if pos.checkskip(key):
+        return ContentEntry.escaped[key]
+    return None
 
   def dissectauthor(self, authortag):
     "Dissect the author tag into pieces."
