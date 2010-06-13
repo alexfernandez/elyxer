@@ -321,11 +321,17 @@ class ContentEntry(Entry):
     self.tags['authors'] = authors
 
   def dissectyear(self, yeartag):
-    "Dissect the year tag into pieces."
-    if len(yeartag) != 4:
-      Trace.error('Year tag ' + yeartag + ' has bad length')
-      return
-    self.tags['YY'] = yeartag[2:]
+    "Dissect the year tag into pieces, looking for 4 digits in a row."
+    pos = TextPosition(yeartag)
+    while not pos.finished():
+      if pos.current().isdigit():
+        number = pos.globnumber()
+        if len(number) == 4:
+          self.tags['YY'] = number[2:]
+          return
+      else:
+        pos.currentskip()
+    Trace.error('Invalid year tag ' + yeartag)
 
 class BibAuthor(object):
   "A BibTeX individual author."

@@ -103,6 +103,10 @@ class Position(object):
     "Glob a bit of alpha text"
     return self.glob(lambda current: current.isalpha())
 
+  def globnumber(self):
+    "Glob a row of digits."
+    return self.glob(lambda current: current.isdigit())
+
   def checkidentifier(self):
     "Check if the current character belongs to an identifier."
     return self.isidentifier(self.current())
