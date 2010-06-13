@@ -165,7 +165,7 @@ class ContentEntry(Entry):
 
   def __init__(self):
     self.key = None
-    self.tags = dict()
+    self.tags = dict(BibStylesConfig.defaulttags)
     self.output = TaggedOutput().settag('p class="biblio"', True)
 
   def parse(self, pos):
