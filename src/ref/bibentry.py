@@ -66,8 +66,9 @@ class PubEntry(ContentEntry):
     pos = TextPosition(template)
     part = self.parsepart(pos)
     for variable in part.searchall(BibVariable):
-      if variable.empty:
-        Trace.error('Error parsing BibTeX template: ' + unicode(variable) + ' is empty')
+      if variable.empty():
+        Trace.error('Error parsing BibTeX template for ' + unicode(self) + ': '
+            + unicode(variable) + ' is empty')
     return [part]
 
   def parsepart(self, pos):
@@ -108,7 +109,7 @@ class PubEntry(ContentEntry):
   def emptyvariables(self, part):
     "Find out if there are only empty variables in the part."
     for variable in part.searchall(BibVariable):
-      if not variable.empty:
+      if not variable.empty():
         return False
     return True
 
@@ -173,11 +174,17 @@ class BibVariable(Container):
   def processtags(self, tags):
     "Find the tag with the appropriate key in the list of tags."
     if not self.key in tags:
-      self.empty = True
       return
-    self.empty = False
     result = self.escapestring(tags[self.key])
     self.contents = [Constant(result)]
+
+  def empty(self):
+    "Find out if the variable is empty."
+    if not self.contents:
+      return True
+    if self.extracttext() == '':
+      return True
+    return False
 
   def escapestring(self, string):
     "Escape a string."
@@ -189,7 +196,7 @@ class BibVariable(Container):
   def __unicode__(self):
     "Return a printable representation."
     result = 'variable ' + self.key
-    if not self.empty:
+    if not self.empty():
       result += ':' + self.gettext()
     return result
 
