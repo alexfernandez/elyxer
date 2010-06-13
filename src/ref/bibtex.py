@@ -305,7 +305,6 @@ class ContentEntry(Entry):
     authorlist = []
     for authorname in authorsplit:
       author = BibAuthor().parse(authorname)
-      Trace.debug('Author: ' + unicode(author))
       authorlist.append(author)
     initials = ''
     authors = ''
@@ -331,7 +330,6 @@ class ContentEntry(Entry):
           return
       else:
         pos.currentskip()
-    Trace.error('Invalid year tag ' + yeartag)
 
 class BibAuthor(object):
   "A BibTeX individual author."
