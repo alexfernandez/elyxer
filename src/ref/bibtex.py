@@ -261,7 +261,11 @@ class ContentEntry(Entry):
     for key in ContentEntry.escaped:
       if pos.checkskip(key[1:]):
         return ContentEntry.escaped[key]
-    self.lineerror('Unknown escaped string \\', pos)
+    if pos.current().isalpha():
+      alpha = pos.globalpha()
+      self.lineerror('Unknown escaped command \\' + alpha, pos)
+      return ''
+    self.lineerror('Unknown escaped string \\' + pos.current(), pos)
     return pos.currentskip()
 
   def parsebracket(self, pos):
