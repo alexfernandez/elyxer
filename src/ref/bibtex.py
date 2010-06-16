@@ -174,7 +174,6 @@ class ContentEntry(Entry):
   def parse(self, pos):
     "Parse the entry between {}"
     self.type = self.parseexcluding(pos, self.nameseparators).strip()
-    Trace.debug('Type: ' + self.type)
     if not pos.checkskip('{'):
       self.lineerror('Entry should start with {', pos)
       return
@@ -322,9 +321,9 @@ class ContentEntry(Entry):
     "Check for one of the replaced strings."
     if not pos.current() in ContentEntry.replacedinitials:
       return None
-    for key in ContentEntry.escaped:
+    for key in ContentEntry.replaced:
       if pos.checkskip(key):
-        return ContentEntry.escaped[key]
+        return ContentEntry.replaced[key]
     return None
 
   def dissectauthor(self, authortag):
