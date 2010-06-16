@@ -135,7 +135,6 @@ class Entry(Container):
   def lineerror(self, message, pos):
     "Show an error message for a line."
     Trace.error(message + ': ' + pos.identifier())
-    pos.globincluding('\n')
 
 class CommentEntry(Entry):
   "A simple comment."
