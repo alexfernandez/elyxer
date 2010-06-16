@@ -175,7 +175,7 @@ class BibVariable(Container):
     "Find the tag with the appropriate key in the list of tags."
     if not self.key in tags:
       return
-    result = self.escapestring(tags[self.key])
+    result = tags[self.key].strip()
     self.contents = [Constant(result)]
 
   def empty(self):
