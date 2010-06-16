@@ -254,7 +254,7 @@ class EndingList(object):
 
   def pop(self, pos):
     "Remove the ending at the current position"
-    if pos.finished():
+    if pos.isout():
       Trace.error('No ending out of bounds')
       return ''
     ending = self.findending(pos)
