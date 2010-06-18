@@ -186,13 +186,6 @@ class BibVariable(Container):
       return True
     return False
 
-  def escapestring(self, string):
-    "Escape a string."
-    for escape in self.escaped:
-      if escape in string:
-        string = string.replace(escape, self.escaped[escape])
-    return string.strip()
-
   def __unicode__(self):
     "Return a printable representation."
     result = 'variable ' + self.key
