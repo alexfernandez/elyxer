@@ -131,7 +131,8 @@ bib-\SpecialChar \ldots{}
 \end_layout
 
 \begin_layout Itemize
-BibTeX: support for surname abbreviations as in style 
+BibTeX: limited author parsing, support for surname abbreviations as in
+ style 
 \emph on
 alpha
 \emph default
