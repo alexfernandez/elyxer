@@ -344,6 +344,7 @@ class ContentEntry(Entry):
         initials += author.surname[0:1]
         authors += unicode(author) + ', '
       authors = authors[:-2]
+    self.tags['surname'] = authorlist[0].surname
     self.tags['Sur'] = initials
     self.tags['authors'] = authors
 
