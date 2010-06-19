@@ -65,6 +65,7 @@ class Options(object):
   jsmath = None
   mathjax = None
   nofooter = None
+  template = None
 
   branches = dict()
 
@@ -139,6 +140,7 @@ class Options(object):
     Trace.error('    --raw:                  generate HTML without header or footer.')
     Trace.error('    --jsmath "URL":         use jsMath from the given URL to display equations')
     Trace.error('    --mathjax "URL":        use MathJax from the given URL to display equations')
+    Trace.error('    --template "file":      use a template, put everything in <!--$content-->')
     sys.exit()
 
   def showversion(self):

@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.6 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -1294,6 +1294,43 @@ reference "sub:Math"
 
 \end_inset
 
+.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--template
+\begin_inset space ~
+\end_inset
+
+
+\series bold
+"
+\series default
+file
+\series bold
+"
+\family default
+\series default
+: use an HTML template.
+ The raw converted document will be placed where 
+\family typewriter
+<!--$content-->
+\family default
+ appears in the template.
+ Available variables: 
+\family typewriter
+<!--$content-->
+\family default
+, 
+\family typewriter
+<!--$title-->
+\family default
+, 
+\family typewriter
+<!--$author-->
+\family default
 .
 \end_layout
 
