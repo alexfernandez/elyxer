@@ -2666,9 +2666,8 @@ Multi-column layouts are lost.
 \end_layout
 
 \begin_layout Enumerate
-BibTeX support is not quite complete.
- (Bear in mind that the current approach using templates can be improved,
- but it will never be perfect.)
+Many BibTeX styles are missing.
+ (They are quite trivial to add though.)
 \end_layout
 
 \begin_layout Enumerate
