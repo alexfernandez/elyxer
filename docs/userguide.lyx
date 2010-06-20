@@ -1331,6 +1331,46 @@ file
 \family typewriter
 <!--$author-->
 \family default
+, 
+\family typewriter
+<!--$encoding-->
+\family default
+, 
+\family typewriter
+<!--$css-->
+\family default
+, 
+\family typewriter
+<!--$navigation-->
+\family default
+, 
+\family typewriter
+<!--$year-->
+\family default
+, 
+\family typewriter
+<!--$date-->
+\family default
+, 
+\family typewriter
+<!--$datetime-->
+\family default
+, 
+\family typewriter
+<!--$version-->
+\family default
+, 
+\family typewriter
+<!--$script-->
+\family default
+, 
+\family typewriter
+<!--$mathjax-->
+\family default
+, 
+\family typewriter
+<!--$jsmath-->
+\family default
 .
 \end_layout
 
