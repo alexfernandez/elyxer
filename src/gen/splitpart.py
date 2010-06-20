@@ -52,7 +52,7 @@ class SplitPartHeader(object):
 
   def create(self, basket, container):
     "Write the header to the basket."
-    basket.write(LyXHeader())
+    basket.write(LyXHeader().process())
     basket.write(self.createupanchor(container))
     basket.write(self.createheader(container))
 

@@ -54,6 +54,7 @@ class LyXHeader(Container):
     NumberGenerator.maxdepth = self.getlevel('secnumdepth')
     Translator.language = self.getparameter('language')
     self.output.template = HTMLTemplate.get()
+    return self
 
   def getparameter(self, configparam):
     "Get a parameter configured in HeaderConfig."
