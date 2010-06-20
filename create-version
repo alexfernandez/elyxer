@@ -27,7 +27,8 @@ echo "Creating version $VERSION from $DATE"
 src/textchange.py "unreleased" $DATE docs/changelog.lyx
 ./elyxer.py --title="eLyXer changelog" --css "lyx.css" docs/changelog.lyx docs/changelog.html
 
-# Push code
+# Tag and push code
+git tag -a -m "Version $VERSION from $DATE to be released" $VERSION
 git push
 
 # make compressed files
