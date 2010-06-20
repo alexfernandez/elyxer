@@ -877,14 +877,22 @@ Parsing line 1000
 \begin_layout Description
 
 \family typewriter
---nocopy
+--copyright
 \family default
-: do not show the copyright notice at the bottom.
- If there is no author in the document 
+: include a copyright notice at the bottom.
+\end_layout
+
+\begin_layout Description
+
 \family typewriter
 --nocopy
 \family default
- is always enabled.
+
+\begin_inset space ~
+\end_inset
+
+(deprecated): no effect since the copyright notice is now optional, maintained
+ for backwards compatibility.
 \end_layout
 
 \begin_layout Description

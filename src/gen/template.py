@@ -97,7 +97,7 @@ class DefaultTemplate(HTMLTemplate):
     html.append(u'<meta name="generator" content="http://www.nongnu.org/elyxer/"/>\n')
     html.append(u'<meta name="create-date" content="<!--$date-->"/>\n')
     html.append(u'<link rel="stylesheet" href="<!--$css-->" type="text/css" media="screen"/>\n')
-    html.append(u'<title><!--$title--></title>')
+    html.append(u'<title><!--$title--></title>\n')
     if Options.jsmath:
       html.append(u'<script type="text/javascript" src="<!--$jsmath-->/plugins/noImageFonts.js"></script>\n')
       html.append(u'<script type="text/javascript" src="<!--$jsmath-->/easy/load.js"></script>\n')
@@ -131,7 +131,7 @@ class DefaultTemplate(HTMLTemplate):
   def createfooter(self):
     "Create the footer proper."
     html = []
-    if not Options.nocopy:
+    if Options.copyright:
       html.append('<div class="footer">\nCopyright (C) <!--$year--> <!--$author-->\n</div>\n')
     if Options.nofooter:
       return html

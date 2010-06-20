@@ -36,6 +36,7 @@ class Options(object):
 
   location = None
   nocopy = False
+  copyright = False
   debug = False
   quiet = False
   version = False
@@ -115,7 +116,6 @@ class Options(object):
   def showoptions(self):
     "Show all possible options"
     Trace.error('  Common options:')
-    Trace.error('    --nocopy:               disables the copyright notice at the bottom')
     Trace.error('    --quiet:                disables all runtime messages')
     Trace.error('    --debug:                enable debugging messages (for developers)')
     Trace.error('    --title "title":        set the generated page title')
@@ -141,6 +141,8 @@ class Options(object):
     Trace.error('    --jsmath "URL":         use jsMath from the given URL to display equations')
     Trace.error('    --mathjax "URL":        use MathJax from the given URL to display equations')
     Trace.error('    --template "file":      use a template, put everything in <!--$content-->')
+    Trace.error('    --copyright:            add a copyright notice at the bottom')
+    Trace.error('    --nocopy (deprecated):  no effect, maintained for backwards compatibility')
     sys.exit()
 
   def showversion(self):
