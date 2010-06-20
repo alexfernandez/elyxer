@@ -95,7 +95,7 @@ class Title(Layout):
     self.type = 'title'
     self.output.tag = 'h1 class="title"'
     title = self.extracttext()
-    TitleOutput.title = title
+    DocumentTitle.title = title
     Trace.message('Title: ' + title)
 
 class Author(Layout):
@@ -106,7 +106,7 @@ class Author(Layout):
     self.output.tag = 'h2 class="author"'
     author = self.extracttext()
     Trace.debug('Author: ' + author)
-    FooterOutput.appendauthor(author)
+    DocumentAuthor.appendauthor(author)
 
 class Abstract(Layout):
   "A paper abstract"

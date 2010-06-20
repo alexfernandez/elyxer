@@ -76,7 +76,9 @@ class TOCBasket(Basket):
   def setwriter(self, writer):
     Basket.setwriter(self, writer)
     Options.nocopy = True
-    self.writer.write(LyXHeader().gethtml())
+    header = LyXHeader()
+    header.process()
+    self.writer.write(header.gethtml())
     return self
 
   def write(self, container):

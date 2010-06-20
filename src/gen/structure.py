@@ -41,10 +41,11 @@ class LyXHeader(Container):
     self.contents = []
     self.parser = HeaderParser()
     self.output = HeaderOutput()
+    self.parameters = dict()
 
   def process(self):
     "Find pdf title"
-    TitleOutput.pdftitle = self.getparameter('pdftitle')
+    DocumentTitle.pdftitle = self.getparameter('pdftitle')
     if self.getparameter('documentclass') in HeaderConfig.styles['article']:
       NumberGenerator.startinglevel = 1
     if self.getparameter('paragraphseparation') == 'indent':
@@ -63,7 +64,10 @@ class LyXHeader(Container):
 
   def getlevel(self, configparam):
     "Get a level read as a parameter from HeaderConfig."
-    value = int(self.getparameter(configparam))
+    paramvalue = self.getparameter(configparam)
+    if not paramvalue:
+      return 0
+    value = int(paramvalue)
     if NumberGenerator.startinglevel == 1:
       return value
     return value + 1
