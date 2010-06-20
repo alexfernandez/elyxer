@@ -30,6 +30,7 @@ from io.bulk import *
 from gen.container import *
 from gen.structure import *
 from gen.layout import *
+from gen.float import *
 from gen.factory import *
 
 
@@ -220,6 +221,9 @@ class IncludeInset(Container):
       if self.parameters['LatexCommand'] == 'verbatiminput':
         self.readverbatim()
         return
+      if self.parameters['LatexCommand'] == 'lstinputlisting':
+        self.readlisting()
+        return
     olddir = Options.directory
     newdir = os.path.dirname(self.parameters['filename'])
     if newdir != '':
@@ -238,9 +242,20 @@ class IncludeInset(Container):
 
   def readverbatim(self):
     "Read a verbatim document."
-    verbatim = list()
+    self.contents = [TaggedText().complete(self.readcontents(), 'pre', True)]
+
+  def readlisting(self):
+    "Read a document as a listing."
+    listing = Listing()
+    listing.contents = self.readcontents()
+    listing.process()
+    self.contents = [listing]
+
+  def readcontents(self):
+    "Read the contents of a complete file."
+    contents = list()
     lines = BulkFile(self.filename).readall()
     for line in lines:
-      verbatim.append(Constant(line))
-    self.contents = [TaggedText().complete(verbatim, 'pre', True)]
+      contents.append(Constant(line))
+    return contents
 

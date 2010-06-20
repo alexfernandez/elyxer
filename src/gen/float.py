@@ -142,6 +142,7 @@ class Listing(Container):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('div class="listing"', True)
     self.numbered = None
+    self.parameters = []
 
   def process(self):
     "Remove all layouts"
