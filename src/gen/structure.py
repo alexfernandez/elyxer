@@ -27,6 +27,7 @@ from util.numbering import *
 from parse.parser import *
 from parse.headerparse import *
 from io.output import *
+from gen.template import *
 from gen.container import *
 
 
@@ -51,6 +52,7 @@ class LyXHeader(Container):
     LyXHeader.tocdepth = self.getlevel('tocdepth')
     NumberGenerator.maxdepth = self.getlevel('secnumdepth')
     Translator.language = self.getparameter('language')
+    self.output.template = HTMLTemplate.get()
 
   def getparameter(self, configparam):
     "Get a parameter configured in HeaderConfig."
@@ -73,6 +75,7 @@ class LyXFooter(Container):
     self.contents = []
     self.parser = BoundedDummy()
     self.output = FooterOutput()
+    self.output.template = HTMLTemplate.get()
 
 class Align(Container):
   "Bit of aligned text"
