@@ -111,7 +111,7 @@ class HeaderOutput(object):
 
   def gethtml(self, container):
     "Return a constant header"
-    html = self.getheader(container)
+    html = self.template.convertheader()
     if Options.jsmath or Options.mathjax:
       if Options.mathjax:
         html.append(u'<script type="math/tex">\n')
