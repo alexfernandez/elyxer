@@ -150,7 +150,7 @@ class VariableMap(object):
     self.variables['author'] = DocumentAuthor().getvalue()
     self.variables['version'] = GeneralConfig.version['number'] + ' (' \
         + GeneralConfig.version['date'] + ')'
-    self.variables['year'] = datetime.date.today().year
+    self.variables['year'] = unicode(datetime.date.today().year)
     self.variables['date'] = datetime.date.today().isoformat()
     self.variables['datetime'] = datetime.datetime.now().isoformat()
     self.variables['css'] = Options.css
@@ -178,6 +178,7 @@ class VariableMap(object):
     "Get the value of the variable at the given position."
     value = ''
     key = pos.globalpha()
+    Trace.debug('Value for ' + key)
     if not key in self.variables:
       Trace.error('Template variable ' + key + ' not found')
     else:
@@ -205,12 +206,10 @@ class DocumentTitle(object):
 class DocumentAuthor(object):
   "The author of the document."
 
-  author = None
+  author = ''
 
   def appendauthor(cls, authorline):
     "Append a line with author information."
-    if not cls.author:
-      cls.author = ''
     cls.author += authorline
 
   appendauthor = classmethod(appendauthor)

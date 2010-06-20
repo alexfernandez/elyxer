@@ -203,6 +203,7 @@ class FooterOutput(object):
 
   def gethtml(self, container):
     "Footer HTML"
+    return self.template.convertfooter()
     if Options.raw:
       return ['\n\n<!--endhtml-->']
     html = []
