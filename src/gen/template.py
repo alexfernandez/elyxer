@@ -178,7 +178,6 @@ class VariableMap(object):
     "Get the value of the variable at the given position."
     value = ''
     key = pos.globalpha()
-    Trace.debug('Value for ' + key)
     if not key in self.variables:
       Trace.error('Template variable ' + key + ' not found')
     else:
