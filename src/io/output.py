@@ -113,6 +113,10 @@ class HeaderOutput(object):
     "Return a constant header"
     html = self.getheader(container)
     if Options.jsmath or Options.mathjax:
+      if Options.mathjax:
+        html.append(u'<script type="math/tex">\n')
+        html.append(u'\\newcommand{\\lyxlock}{}\n')
+        html.append(u'</script>\n')
       html.append(u'<noscript>\n')
       html.append(u'<div class="warning">\n')
       html.append(TranslationConfig.constants['jsmath-warning'])
@@ -162,10 +166,6 @@ class HeaderOutput(object):
     html.append('</head>\n')
     html.append('<body>\n')
     html.append('<div id="globalWrapper">\n')
-    if Options.mathjax:
-      html.append(u'<script type="math/tex">\n')
-      html.append(u'\\newcommand{\\lyxlock}{}\n')
-      html.append(u'</script>\n')
     return html
 
 class TitleOutput(object):
