@@ -248,6 +248,7 @@ class IncludeInset(Container):
     "Read a document as a listing."
     listing = Listing()
     listing.contents = self.readcontents()
+    listing.parameters = self.parameters
     listing.process()
     self.contents = [listing]
 

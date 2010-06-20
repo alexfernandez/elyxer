@@ -133,6 +133,11 @@ class Caption(Container):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('div class="caption"', True)
 
+  def create(self, message):
+    "Create a caption with a given message."
+    self.contents = [Constant(message)]
+    return self
+
 class Listing(Container):
   "A code listing"
 
@@ -142,7 +147,6 @@ class Listing(Container):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('div class="listing"', True)
     self.numbered = None
-    self.parameters = []
 
   def process(self):
     "Remove all layouts"
@@ -156,15 +160,17 @@ class Listing(Container):
       newcontents += self.extract(container)
     tagged = TaggedText().complete(newcontents, 'pre class="listing"', False)
     self.contents = [tagged]
+    if 'caption' in self.lstparams:
+      text = self.lstparams['caption'][1:-1]
+      self.contents.insert(0, Caption().create(text))
     if Listing.processor:
       Listing.processor.postprocess(self)
 
   def processparams(self):
     "Process listing parameteres."
     LstParser().parsecontainer(self)
-    if not 'numbers' in self.lstparams:
-      return
-    self.numbered = self.lstparams['numbers']
+    if 'numbers' in self.lstparams:
+      self.numbered = self.lstparams['numbers']
 
   def extract(self, container):
     "Extract the container's contents and return them"
