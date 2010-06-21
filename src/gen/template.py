@@ -63,7 +63,8 @@ class HTMLTemplate(object):
     if not cls.current:
       if Options.raw:
         cls.current = RawTemplate()
-      cls.current = DefaultTemplate()
+      else:
+        cls.current = DefaultTemplate()
     return cls.current
 
   get = classmethod(get)
