@@ -64,54 +64,12 @@ class PubEntry(ContentEntry):
   def translatetemplate(self, template):
     "Translate a complete template into a list of contents."
     pos = TextPosition(template)
-    part = self.parsepart(pos)
+    part = BibPart(self.tags).parse(pos)
     for variable in part.searchall(BibVariable):
       if variable.empty():
         Trace.error('Error parsing BibTeX template for ' + unicode(self) + ': '
             + unicode(variable) + ' is empty')
     return [part]
-
-  def parsepart(self, pos):
-    "Parse a part of a template, return a list of contents."
-    part = BibPart()
-    while not pos.finished():
-      part.add(self.parsepiece(pos))
-    return part
-
-  def parsepiece(self, pos):
-    "Get the next piece of the template, return if it was empty."
-    if pos.checkfor('{'):
-      return self.parsebraces(pos)
-    elif pos.checkfor('$'):
-      return self.parsevariable(pos)
-    else:
-      return Constant(self.parseexcluding(pos, ['{', '$']))
-
-  def parsebraces(self, pos):
-    "Parse a pair of curly braces {}."
-    if not pos.checkskip('{'):
-      Trace.error('Missing { in braces.')
-      return None
-    pos.pushending('}')
-    part = self.parsepart(pos)
-    pos.popending('}')
-    empty = self.emptyvariables(part)
-    if empty:
-      return None
-    return part
-
-  def parsevariable(self, pos):
-    "Parse a variable $name."
-    variable = BibVariable().parse(pos)
-    variable.processtags(self.tags)
-    return variable
-
-  def emptyvariables(self, part):
-    "Find out if there are only empty variables in the part."
-    for variable in part.searchall(BibVariable):
-      if not variable.empty():
-        return False
-    return True
 
   def __unicode__(self):
     "Return a string representation"
@@ -125,9 +83,51 @@ class PubEntry(ContentEntry):
 class BibPart(Container):
   "A part of a BibTeX template."
 
-  def __init__(self):
+  def __init__(self, tags):
     self.output = ContentsOutput()
     self.contents = []
+    self.tags = tags
+
+  def parse(self, pos):
+    "Parse a part of a template, return a list of contents."
+    while not pos.finished():
+      self.add(self.parsepiece(pos))
+    return self
+
+  def parsepiece(self, pos):
+    "Get the next piece of the template, return if it was empty."
+    if pos.checkfor('{'):
+      return self.parsebraces(pos)
+    elif pos.checkfor('$'):
+      return self.parsevariable(pos)
+    result = ''
+    while not pos.finished() and not pos.current() in '{$':
+      result += pos.currentskip()
+    return Constant(result)
+
+  def parsebraces(self, pos):
+    "Parse a pair of curly braces {}."
+    if not pos.checkskip('{'):
+      Trace.error('Missing { in braces.')
+      return None
+    pos.pushending('}')
+    part = BibPart(self.tags).parse(pos)
+    pos.popending('}')
+    empty = part.emptyvariables()
+    if empty:
+      return None
+    return part
+
+  def parsevariable(self, pos):
+    "Parse a variable $name."
+    return BibVariable(self.tags).parse(pos)
+
+  def emptyvariables(self):
+    "Find out if there are only empty variables in the part."
+    for variable in self.searchall(BibVariable):
+      if not variable.empty():
+        return False
+    return True
 
   def add(self, piece):
     "Add a new piece to the current part."
@@ -158,9 +158,10 @@ class BibVariable(Container):
 
   escaped = BibTeXConfig.escaped
   
-  def __init__(self):
+  def __init__(self, tags):
     self.output = TaggedOutput()
     self.contents = []
+    self.tags = tags
 
   def parse(self, pos):
     "Parse the variable name."
@@ -169,13 +170,14 @@ class BibVariable(Container):
       return self
     self.key = pos.globalpha()
     self.output.tag = 'span class="bib-' + self.key + '"'
+    self.processtags()
     return self
 
-  def processtags(self, tags):
+  def processtags(self):
     "Find the tag with the appropriate key in the list of tags."
-    if not self.key in tags:
+    if not self.key in self.tags:
       return
-    result = tags[self.key].strip()
+    result = self.tags[self.key].strip()
     self.contents = [Constant(result)]
 
   def empty(self):
