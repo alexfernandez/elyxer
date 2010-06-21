@@ -87,6 +87,7 @@ class BibPart(Container):
     self.output = ContentsOutput()
     self.contents = []
     self.tags = tags
+    self.quotes = 0
 
   def parse(self, pos):
     "Parse a part of a template, return a list of contents."
@@ -102,6 +103,8 @@ class BibPart(Container):
       return self.parsevariable(pos)
     result = ''
     while not pos.finished() and not pos.current() in '{$':
+      if pos.current() == '"':
+        self.quotes += 1
       result += pos.currentskip()
     return Constant(result)
 
@@ -120,7 +123,11 @@ class BibPart(Container):
 
   def parsevariable(self, pos):
     "Parse a variable $name."
-    return BibVariable(self.tags).parse(pos)
+    var = BibVariable(self.tags).parse(pos)
+    if self.quotes % 2 == 1:
+      # odd number of quotes; don't add spans in an attribute
+      var.removetag()
+    return var
 
   def emptyvariables(self):
     "Find out if there are only empty variables in the part."
@@ -188,11 +195,15 @@ class BibVariable(Container):
       return True
     return False
 
+  def removetag(self):
+    "Remove the output tag and leave just the contents."
+    self.output = ContentsOutput()
+
   def __unicode__(self):
     "Return a printable representation."
     result = 'variable ' + self.key
     if not self.empty():
-      result += ':' + self.gettext()
+      result += ':' + self.extracttext()
     return result
 
 Entry.entries += [PubEntry()]
