@@ -168,7 +168,7 @@ class BibVariable(Container):
       Trace.error('Missing $ in variable name.')
       return self
     self.key = pos.globalpha()
-    self.output.tag = 'bib-' + self.key
+    self.output.tag = 'span class="bib-' + self.key + '"'
     return self
 
   def processtags(self, tags):
