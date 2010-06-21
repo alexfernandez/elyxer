@@ -140,6 +140,14 @@ alpha
 \end_layout
 
 \begin_layout Itemize
+BibTeX: use the 
+\family typewriter
+file
+\family default
+ tag to show a link to the local file.
+\end_layout
+
+\begin_layout Itemize
 Added 
 \family typewriter
 

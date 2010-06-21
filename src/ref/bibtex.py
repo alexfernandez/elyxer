@@ -360,6 +360,16 @@ class ContentEntry(Entry):
       else:
         pos.currentskip()
 
+  def dissectfile(self, filetag):
+    "Extract the filename from the file tag as ':filename:FORMAT'."
+    if not filetag.startswith(':'):
+      return
+    bits = filetag.split(':')
+    if len(bits) != 3:
+      return
+    self.tags['filename'] = bits[1]
+    self.tags['format'] = bits[2]
+
 class BibAuthor(object):
   "A BibTeX individual author."
 
