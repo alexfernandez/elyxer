@@ -24,6 +24,7 @@
 
 import codecs
 import datetime
+from io.bulk import *
 from parse.position import *
 from util.trace import Trace
 from util.options import *
@@ -63,6 +64,8 @@ class HTMLTemplate(object):
     if not cls.current:
       if Options.raw:
         cls.current = RawTemplate()
+      elif Options.template:
+        cls.current = FileTemplate().read()
       else:
         cls.current = DefaultTemplate()
     return cls.current
@@ -79,6 +82,49 @@ class RawTemplate(HTMLTemplate):
   def getfooter(self):
     "Get the raw footer."
     return ['\n\n<!--endhtml-->']
+
+class FileTemplate(HTMLTemplate):
+  "A template read from a file."
+
+  divider = '<!--$content-->'
+
+  def read(self):
+    "Read the file, separate header and footer."
+    self.header = []
+    lines = []
+    for line in self.templatelines():
+      if FileTemplate.divider == line:
+        self.header = lines
+        lines = []
+      else:
+        lines.append(line)
+    if self.header == []:
+      Trace.error('No ' + FileTemplate.divider + ' in template')
+      self.header = lines
+      lines = []
+    self.footer = lines
+    return self
+
+  def templatelines(self):
+    "Read all lines in the template, separate content into its own line."
+    template = BulkFile(Options.template).readall()
+    for line in template:
+      if not FileTemplate.divider in line:
+        yield line
+      else:
+        split = line.split(FileTemplate.divider)
+        for part in split[:-1]:
+          yield part
+          yield FileTemplate.divider
+        yield split[-1]
+
+  def getheader(self):
+    "Return the header (before content)."
+    return self.header
+
+  def getfooter(self):
+    "Return the footer (after the content)."
+    return self.footer
 
 class DefaultTemplate(HTMLTemplate):
   "The default HTML template when not configured."

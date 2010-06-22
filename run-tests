@@ -84,4 +84,9 @@ for file in parts/$name*.html; do
 	diff -u --ignore-matching-lines="create-date" "$goodname" "$file"
 done
 
+# test template generation
+name="helloworld"
+../elyxer.py --quiet --template template.html "$name.lyx" "$name-template-test.html"
+diff -u --ignore-matching-lines="create-date" "$name-template-good.html" "$name-template-test.html"
+
 
