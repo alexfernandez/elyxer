@@ -86,7 +86,17 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
-0.99 (unreleased):
+1.0.0 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+a
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+0.99 (2010-06-24):
 \end_layout
 
 \begin_deeper
