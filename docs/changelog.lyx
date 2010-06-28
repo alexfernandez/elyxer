@@ -91,7 +91,36 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-a
+Replicate the navigation bar for 
+\family typewriter
+--splitpart
+\family default
+ at the bottom of pages.
+ Use translated strings for 
+\begin_inset Quotes eld
+\end_inset
+
+previous
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+up
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+next
+\begin_inset Quotes erd
+\end_inset
+
+ links.
 \end_layout
 
 \end_deeper

@@ -24,7 +24,8 @@
 # http://www.nongnu.org/elyxer/
 
 
-from util.translate
+from util.translate import *
+from gen.basket import *
 from gen.integral import *
 
 
@@ -37,25 +38,32 @@ class SplitPartLink(IntegralProcessor):
     "Process each link and add the current page."
     link.page = self.page
 
-class SplitPartHeader(object):
-  "The header that comes with a new split page."
-
-  upanchors = []
+class SplitPartNavigation(object):
+  "Used to create the navigation links for a new split page."
 
   def __init__(self, firstbasket):
     "Set the first basket as last basket."
+    self.upanchors = []
     self.lastcontainer = None
     self.nextlink = None
+    self.lastnavigation = None
     firstbasket.write(self.insertupanchor())
 
-  def create(self, basket, container):
+  def writeheader(self, basket, container):
     "Write the header to the basket."
     basket.write(LyXHeader().process())
     basket.write(self.createupanchor(container))
-    basket.write(self.createheader(container))
+    self.lastnavigation = self.createnavigation(container)
+    basket.write(self.lastnavigation)
 
-  def createheader(self, container):
-    "Create the header with all links."
+  def writefooter(self, basket):
+    "Write the footer to the basket."
+    if self.lastnavigation:
+      basket.write(self.lastnavigation)
+    basket.write(LyXFooter())
+
+  def createnavigation(self, container):
+    "Create the navigation bar with all links."
     prevlink = Link().complete(' ', 'prev', type='prev')
     if self.nextlink:
       self.setlinkname(prevlink, Translator.translate('prev'), self.lastcontainer)
@@ -76,26 +84,26 @@ class SplitPartHeader(object):
   def createupanchor(self, container):
     "Create the up anchor for the up links."
     level = self.getlevel(container)
-    while len(SplitPartHeader.upanchors) > level:
-      del SplitPartHeader.upanchors[-1]
-    while len(SplitPartHeader.upanchors) < level:
-      SplitPartHeader.upanchors.append(SplitPartHeader.upanchors[-1])
+    while len(self.upanchors) > level:
+      del self.upanchors[-1]
+    while len(self.upanchors) < level:
+      self.upanchors.append(self.upanchors[-1])
     return self.insertupanchor()
 
   def insertupanchor(self):
     "Insert the up anchor into the list of anchors."
     upanchor = Link().complete('', '')
     upanchor.output = EmptyOutput()
-    SplitPartHeader.upanchors.append(upanchor)
+    self.upanchors.append(upanchor)
     return upanchor
 
   def getupdestination(self, container):
     "Get the name of the up page."
     level = self.getlevel(container)
-    if len(SplitPartHeader.upanchors) < level:
-      uppage = SplitPartHeader.upanchors[-1]
+    if len(self.upanchors) < level:
+      uppage = self.upanchors[-1]
     else:
-      uppage = SplitPartHeader.upanchors[level - 1]
+      uppage = self.upanchors[level - 1]
     return uppage
 
   def getlevel(self, container):
@@ -138,14 +146,14 @@ class SplitPartBasket(Basket):
     "Process the whole basket, create page baskets and flush all of them."
     self.basket.process()
     basket = self.firstbasket()
-    header = SplitPartHeader(basket)
+    navigation = SplitPartNavigation(basket)
     for container in self.basket.contents:
       if self.mustsplit(container):
         filename = self.getfilename(container)
         Trace.debug('New page ' + filename)
-        basket.write(LyXFooter())
+        navigation.writefooter(basket)
         basket = self.addbasket(filename)
-        header.create(basket, container)
+        navigation.writeheader(basket, container)
       basket.write(container)
     for basket in self.baskets:
       basket.process()
