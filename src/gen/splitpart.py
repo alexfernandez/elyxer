@@ -24,6 +24,7 @@
 # http://www.nongnu.org/elyxer/
 
 
+from util.translate
 from gen.integral import *
 
 
@@ -40,9 +41,6 @@ class SplitPartHeader(object):
   "The header that comes with a new split page."
 
   upanchors = []
-  prev = TranslationConfig.constants['prev']
-  next = TranslationConfig.constants['next']
-  up = TranslationConfig.constants['up']
 
   def __init__(self, firstbasket):
     "Set the first basket as last basket."
@@ -60,11 +58,11 @@ class SplitPartHeader(object):
     "Create the header with all links."
     prevlink = Link().complete(' ', 'prev', type='prev')
     if self.nextlink:
-      self.setlinkname(prevlink, SplitPartHeader.prev, self.lastcontainer)
-      self.setlinkname(self.nextlink, SplitPartHeader.next, container)
+      self.setlinkname(prevlink, Translator.translate('prev'), self.lastcontainer)
+      self.setlinkname(self.nextlink, Translator.translate('next'), container)
       prevlink.setmutualdestination(self.nextlink)
-    nextlink = Link().complete(' ', SplitPartHeader.next, type='next')
-    uplink = Link().complete(SplitPartHeader.up, url='', type='up')
+    nextlink = Link().complete(' ', Translator.translate('next'), type='next')
+    uplink = Link().complete(Translator.translate('up'), url='', type='up')
     uplink.destination = self.getupdestination(container)
     prevcontainer = TaggedText().complete([prevlink], 'span class="prev"')
     nextcontainer = TaggedText().complete([nextlink], 'span class="next"')
