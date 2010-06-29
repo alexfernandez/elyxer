@@ -34,7 +34,6 @@ from gen.basket import *
 from gen.integral import *
 from gen.splitpart import *
 from post.postprocess import *
-from post.posttable import *
 from math.postformula import *
 
 

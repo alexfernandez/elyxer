@@ -27,6 +27,7 @@ from gen.container import *
 from parse.parser import *
 from out.output import *
 from parse.tableparse import *
+from post.postprocess import *
 
 
 class Table(Container):
@@ -101,4 +102,85 @@ class Cell(Container):
   def setattribute(self, attribute, value):
     "Set a cell attribute in the tag"
     self.output.tag += ' ' + attribute + '="' + unicode(value) + '"'
+
+class PostTable(object):
+  "Postprocess a table"
+
+  processedclass = Table
+
+  def postprocess(self, last, table, next):
+    "Postprocess a table: long table, multicolumn rows"
+    self.longtable(table)
+    for row in table.contents:
+      index = 0
+      while index < len(row.contents):
+        self.checkforplain(row, index)
+        self.checkmulticolumn(row, index)
+        index += 1
+    return table
+
+  def longtable(self, table):
+    "Postprocess a long table, removing unwanted rows"
+    if not 'features' in table.parameters:
+      return
+    features = table.parameters['features']
+    if not 'islongtable' in features:
+      return
+    if features['islongtable'] != 'true':
+      return
+    if self.hasrow(table, 'endfirsthead'):
+      self.removerows(table, 'endhead')
+    if self.hasrow(table, 'endlastfoot'):
+      self.removerows(table, 'endfoot')
+
+  def hasrow(self, table, attrname):
+    "Find out if the table has a row of first heads"
+    for row in table.contents:
+      if attrname in row.parameters:
+        return True
+    return False
+
+  def removerows(self, table, attrname):
+    "Remove the head rows, since the table has first head rows."
+    for row in table.contents:
+      if attrname in row.parameters:
+        row.output = EmptyOutput()
+
+  def checkforplain(self, row, index):
+    "Make plain layouts visible if necessary."
+    cell = row.contents[index]
+    plainlayouts = cell.searchall(PlainLayout)
+    if len(plainlayouts) <= 1:
+      return
+    for plain in plainlayouts:
+      plain.makevisible()
+
+  def checkmulticolumn(self, row, index):
+    "Process a multicolumn attribute"
+    cell = row.contents[index]
+    if not hasattr(cell, 'parameters') or not 'multicolumn' in cell.parameters:
+      return
+    mc = cell.parameters['multicolumn']
+    if mc != '1':
+      Trace.error('Unprocessed multicolumn=' + unicode(multicolumn) +
+          ' cell ' + unicode(cell))
+      return
+    total = 1
+    index += 1
+    while self.checkbounds(row, index):
+      del row.contents[index]
+      total += 1
+    cell.setmulticolumn(total)
+
+  def checkbounds(self, row, index):
+    "Check if the index is within bounds for the row"
+    if index >= len(row.contents):
+      return False
+    if not 'multicolumn' in row.contents[index].parameters:
+      return False
+    if row.contents[index].parameters['multicolumn'] != '2':
+      return False
+    return True
+
+Postprocessor.stages.append(PostTable)
 
