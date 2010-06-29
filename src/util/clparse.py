@@ -23,7 +23,6 @@
 # Command line option parser
 
 from util.trace import *
-from conf.config import *
 
 
 class CommandLineParser(object):
