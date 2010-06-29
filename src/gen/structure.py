@@ -52,7 +52,6 @@ class LyXHeader(Container):
     LyXHeader.tocdepth = self.getlevel('tocdepth')
     NumberGenerator.maxdepth = self.getlevel('secnumdepth')
     Translator.language = self.getparameter('language')
-    self.template = HTMLTemplate.get()
     return self
 
   def getparameter(self, configparam):
@@ -79,7 +78,6 @@ class LyXFooter(Container):
     self.contents = []
     self.parser = BoundedDummy()
     self.output = FooterOutput()
-    self.template = HTMLTemplate.get()
 
 class Align(Container):
   "Bit of aligned text"

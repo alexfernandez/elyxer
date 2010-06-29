@@ -280,3 +280,18 @@ class DocumentAuthor(object):
   def getvalue(self):
     "Get the document author."
     return DocumentAuthor.author
+
+class HeaderOutput(object):
+  "Returns the HTML headers"
+
+  def gethtml(self, container):
+    "Return a constant header"
+    return HTMLTemplate.get().convertheader()
+
+class FooterOutput(object):
+  "Return the HTML code for the footer"
+
+  def gethtml(self, container):
+    "Footer HTML"
+    return HTMLTemplate.get().convertfooter()
+

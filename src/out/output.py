@@ -103,18 +103,3 @@ class StringOutput(object):
   def gethtml(self, container):
     "Return a bare string"
     return [container.string]
-
-class HeaderOutput(object):
-  "Returns the HTML headers"
-
-  def gethtml(self, container):
-    "Return a constant header"
-    return container.template.convertheader()
-
-class FooterOutput(object):
-  "Return the HTML code for the footer"
-
-  def gethtml(self, container):
-    "Footer HTML"
-    return container.template.convertfooter()
-
