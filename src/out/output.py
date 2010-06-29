@@ -109,24 +109,7 @@ class HeaderOutput(object):
 
   def gethtml(self, container):
     "Return a constant header"
-    html = container.template.convertheader()
-    if Options.jsmath or Options.mathjax:
-      if Options.mathjax:
-        html.append(u'<script type="math/tex">\n')
-        html.append(u'\\newcommand{\\lyxlock}{}\n')
-        html.append(u'</script>\n')
-      html.append(u'<noscript>\n')
-      html.append(u'<div class="warning">\n')
-      html.append(TranslationConfig.constants['jsmath-warning'])
-      if Options.jsmath:
-        html.append(u'<a href="http://www.math.union.edu/locate/jsMath">jsMath</a>')
-      if Options.mathjax:
-        html.append(u'<a href="http://www.mathjax.org/">MathJax</a>')
-      html.append(TranslationConfig.constants['jsmath-requires'])
-      html.append(TranslationConfig.constants['jsmath-enable'] + '\n')
-      html.append(u'</div><hr/>\n')
-      html.append(u'</noscript>\n')
-    return html
+    return container.template.convertheader()
 
 class FooterOutput(object):
   "Return the HTML code for the footer"
