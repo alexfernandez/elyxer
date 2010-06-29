@@ -22,7 +22,6 @@
 # Alex 20090503
 # eLyXer table parsing
 
-from gen.container import *
 from parse.parser import *
 
 
