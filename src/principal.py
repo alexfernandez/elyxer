@@ -25,8 +25,7 @@
 
 
 import sys
-from io.convert import *
-from util.options import *
+from main.convert import *
 
 
 def convertdoc(args):
