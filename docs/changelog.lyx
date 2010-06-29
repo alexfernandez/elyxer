@@ -124,7 +124,7 @@ next
 \end_layout
 
 \begin_layout Itemize
-Dependency cleanup between modules.
+Dependency cleanup between code modules.
 \end_layout
 
 \end_deeper
