@@ -24,7 +24,7 @@
 
 from util.trace import Trace
 from parse.parser import *
-from io.output import *
+from out.output import *
 from conf.config import *
 from gen.styles import *
 from ref.link import *

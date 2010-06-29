@@ -25,7 +25,7 @@
 from util.trace import Trace
 from util.clone import *
 from parse.parser import *
-from io.output import *
+from out.output import *
 from conf.config import *
 from parse.position import *
 

@@ -24,7 +24,7 @@
 
 from gen.container import *
 from parse.parser import *
-from io.output import *
+from out.output import *
 
 
 class TableParser(BoundedParser):

@@ -23,7 +23,7 @@
 # eLyXer BibTeX publication entries.
 
 from util.trace import Trace
-from io.output import *
+from out.output import *
 from conf.config import *
 from parse.position import *
 from ref.link import *
