@@ -23,7 +23,9 @@
 # eLyXer integral processing
 # http://www.nongnu.org/elyxer/
 
-
+from gen.layout import *
+from gen.float import *
+from ref.biblio import *
 from gen.basket import *
 
 

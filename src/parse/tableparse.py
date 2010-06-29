@@ -23,6 +23,7 @@
 # eLyXer table parsing
 
 from parse.parser import *
+from conf.config import *
 
 
 class TableParser(BoundedParser):

@@ -24,6 +24,7 @@
 
 from util.trace import Trace
 from util.options import *
+from conf.config import *
 
 
 class Parser(object):

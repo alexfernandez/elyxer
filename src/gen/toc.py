@@ -25,6 +25,8 @@
 
 
 from gen.header import *
+from gen.inset import *
+from ref.label import *
 
 
 class TOCEntry(Container):

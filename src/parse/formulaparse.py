@@ -24,6 +24,7 @@
 
 from util.trace import Trace
 from conf.config import *
+from parse.parser import *
 from parse.position import *
 
 

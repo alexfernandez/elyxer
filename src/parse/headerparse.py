@@ -25,6 +25,7 @@
 import codecs
 from util.trace import Trace
 from util.options import *
+from conf.config import *
 from parse.parser import *
 
 

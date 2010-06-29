@@ -27,6 +27,7 @@ from io.bulk import *
 from parse.position import *
 from util.trace import Trace
 from util.options import *
+from util.translate import *
 
 
 class HTMLTemplate(object):
