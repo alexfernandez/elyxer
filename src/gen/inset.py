@@ -28,10 +28,9 @@ from parse.parser import *
 from out.output import *
 from io.bulk import *
 from gen.container import *
-from gen.structure import *
+from gen.styles import *
 from gen.layout import *
 from gen.float import *
-from gen.factory import *
 
 
 class InsetText(Container):

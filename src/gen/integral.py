@@ -24,8 +24,6 @@
 # http://www.nongnu.org/elyxer/
 
 
-from gen.factory import *
-from gen.structure import *
 from gen.basket import *
 
 

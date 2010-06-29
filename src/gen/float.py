@@ -26,8 +26,6 @@ from util.trace import Trace
 from util.numbering import *
 from parse.parser import *
 from out.output import *
-from gen.container import *
-from gen.structure import *
 from gen.layout import *
 from gen.image import *
 from ref.label import *
