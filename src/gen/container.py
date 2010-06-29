@@ -125,7 +125,11 @@ class Container(object):
 
   def extracttext(self):
     "Extract all text from allowed containers."
-    return ContainerExtractor.extracttext(self)
+    result = ''
+    constants = ContainerExtractor(ContainerConfig.extracttext).extract(self)
+    for constant in constants:
+      result += constant.string
+    return result
 
   def group(self, index, group, isingroup):
     "Group some adjoining elements into a group"

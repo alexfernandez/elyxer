@@ -23,7 +23,6 @@
 # eLyXer object cloning
 
 from util.trace import Trace
-from conf.config import *
 
 
 class Cloner(object):
@@ -80,14 +79,4 @@ class ContainerExtractor(object):
     clone.output = container.output
     clone.contents = self.extract(container)
     return clone
-
-  def extracttext(cls, container):
-    "Extract all text from a container, using only allowed containers."
-    result = ''
-    constants = ContainerExtractor(ContainerConfig.extracttext).extract(container)
-    for constant in constants:
-      result += constant.string
-    return result
-
-  extracttext = classmethod(extracttext)
 
