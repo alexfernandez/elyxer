@@ -25,12 +25,13 @@
 import os
 import codecs
 from io.fileline import *
-from conf.config import *
 from util.trace import Trace
 
 
 class BulkFile(object):
   "A file to treat in bulk"
+
+  encodings = ['utf-8','Cp1252']
 
   def __init__(self, filename):
     self.filename = filename
@@ -38,7 +39,7 @@ class BulkFile(object):
 
   def readall(self):
     "Read the whole file"
-    for encoding in FileConfig.parsing['encodings']:
+    for encoding in BulkFile.encodings:
       try:
         return self.readcodec(encoding)
       except UnicodeDecodeError:
