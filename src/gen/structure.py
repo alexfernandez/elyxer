@@ -26,7 +26,7 @@ from util.numbering import *
 from parse.parser import *
 from parse.headerparse import *
 from out.output import *
-from gen.template import *
+from out.template import *
 from gen.container import *
 
 
