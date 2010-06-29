@@ -22,7 +22,6 @@
 # Alex 20100509
 # eLyXer: LyX header parsing.
 
-import codecs
 from util.trace import Trace
 from util.options import *
 from conf.config import *
