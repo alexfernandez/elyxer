@@ -23,7 +23,6 @@
 # eLyXer factory to create and parse containers
 
 from util.trace import Trace
-from parse.parser import *
 from conf.config import *
 from gen.styles import *
 from ref.link import *
