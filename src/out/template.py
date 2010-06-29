@@ -167,13 +167,13 @@ class DefaultTemplate(HTMLTemplate):
         html.append(u'</script>\n')
       html.append(u'<noscript>\n')
       html.append(u'<div class="warning">\n')
-      html.append(TranslationConfig.constants['jsmath-warning'])
+      html.append(Translator.translate('jsmath-warning'))
       if Options.jsmath:
         html.append(u'<a href="http://www.math.union.edu/locate/jsMath">jsMath</a>')
       if Options.mathjax:
         html.append(u'<a href="http://www.mathjax.org/">MathJax</a>')
-      html.append(TranslationConfig.constants['jsmath-requires'])
-      html.append(TranslationConfig.constants['jsmath-enable'] + '\n')
+      html.append(Translator.translate('jsmath-requires'))
+      html.append(Translator.translate('jsmath-enable') + '\n')
       html.append(u'</div><hr/>\n')
       html.append(u'</noscript>\n')
     return html
