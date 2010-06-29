@@ -23,7 +23,6 @@
 # eLyXer import configuration file
 
 from util.trace import Trace
-from util.options import *
 from io.fileline import *
 from conf.fileconfig import *
 

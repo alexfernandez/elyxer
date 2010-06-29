@@ -24,7 +24,6 @@
 
 import datetime
 from util.trace import Trace
-from util.options import *
 from io.fileline import *
 
 
