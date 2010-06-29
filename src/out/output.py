@@ -109,7 +109,7 @@ class HeaderOutput(object):
 
   def gethtml(self, container):
     "Return a constant header"
-    html = self.template.convertheader()
+    html = container.template.convertheader()
     if Options.jsmath or Options.mathjax:
       if Options.mathjax:
         html.append(u'<script type="math/tex">\n')
@@ -133,5 +133,5 @@ class FooterOutput(object):
 
   def gethtml(self, container):
     "Footer HTML"
-    return self.template.convertfooter()
+    return container.template.convertfooter()
 
