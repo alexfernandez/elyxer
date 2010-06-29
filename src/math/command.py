@@ -22,7 +22,6 @@
 # Alex 20090330
 # eLyXer commands in formula processing
 
-import sys
 from gen.container import *
 from ref.label import *
 from util.trace import Trace

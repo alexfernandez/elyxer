@@ -22,7 +22,6 @@
 # Alex 20090503
 # eLyXer formula parsing
 
-import sys
 from gen.container import *
 from util.trace import Trace
 from conf.config import *

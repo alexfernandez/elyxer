@@ -22,7 +22,6 @@
 # Alex 20090416
 # Command line option parser
 
-import codecs
 from util.trace import *
 from conf.config import *
 

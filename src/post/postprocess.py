@@ -22,8 +22,6 @@
 # Alex 20090324
 # eLyXer postprocessor code
 
-from util.trace import Trace
-
 
 class Postprocessor(object):
   "Postprocess a container keeping some context"

@@ -22,7 +22,6 @@
 # Alex 20090617
 # eLyXer import configuration file
 
-import codecs
 from util.trace import Trace
 from util.options import *
 from io.fileline import *

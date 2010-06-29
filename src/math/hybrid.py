@@ -22,7 +22,6 @@
 # Alex 20091214
 # eLyXer functions with a variable number of parameters.
 
-import sys
 from gen.container import *
 from util.trace import Trace
 from conf.config import *

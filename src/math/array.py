@@ -22,7 +22,6 @@
 # Alex 20090427
 # eLyXer arrays in formulae
 
-import sys
 from gen.container import *
 from util.trace import Trace
 from util.clone import *

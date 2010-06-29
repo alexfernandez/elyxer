@@ -22,7 +22,6 @@
 # Alex 20090313
 # eLyXer runtime options
 
-import codecs
 import os.path
 import sys
 from util.trace import *

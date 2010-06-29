@@ -22,7 +22,6 @@
 # Alex 20090614
 # eLyXer formula bits
 
-import sys
 from util.trace import Trace
 from conf.config import *
 from math.formula import *

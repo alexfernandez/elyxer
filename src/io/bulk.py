@@ -23,7 +23,6 @@
 # Bulk file processing
 
 import os
-import sys
 import codecs
 from io.fileline import *
 from conf.config import *

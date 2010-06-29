@@ -25,9 +25,7 @@
 
 
 import sys
-import os.path
 from io.convert import *
-from util.trace import Trace
 from util.options import *
 
 

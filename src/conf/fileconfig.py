@@ -22,7 +22,6 @@
 # Alex 20090203
 # eLyXer parsers
 
-import codecs
 import datetime
 from util.trace import Trace
 from util.options import *

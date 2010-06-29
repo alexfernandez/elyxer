@@ -24,7 +24,6 @@
 
 from gen.inset import *
 from util.trace import Trace
-from util.clone import Cloner
 from conf.config import *
 from parse.formulaparse import *
 

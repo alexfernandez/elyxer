@@ -24,7 +24,6 @@
 # http://www.nongnu.org/elyxer/
 
 
-import os.path
 from util.options import *
 from util.clone import *
 from gen.toc import *

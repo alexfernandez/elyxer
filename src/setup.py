@@ -22,7 +22,6 @@
 # Alex 20090908
 # eLyXer distutils management
 
-import sys
 from distutils.core import setup
 
 setup(name = 'eLyXer',

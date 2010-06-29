@@ -22,7 +22,6 @@
 # Alex 20100620
 # eLyXer HTML templates
 
-import codecs
 import datetime
 from io.bulk import *
 from parse.position import *

@@ -22,7 +22,6 @@
 # Alex 20090422
 # eLyXer postprocessor for formulae
 
-from util.trace import Trace
 from math.command import *
 from math.array import *
 from post.postprocess import *
