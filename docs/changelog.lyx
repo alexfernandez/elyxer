@@ -123,6 +123,10 @@ next
  links.
 \end_layout
 
+\begin_layout Itemize
+Dependency cleanup between modules.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.99 (2010-06-24):
