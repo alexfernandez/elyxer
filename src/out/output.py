@@ -23,7 +23,6 @@
 # eLyXer html outputters
 
 from util.trace import Trace
-from util.options import *
 
 
 class EmptyOutput(object):
