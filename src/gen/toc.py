@@ -138,10 +138,10 @@ class TOCConverter(object):
   "A converter from containers to TOC entries."
 
   cache = dict()
-  tree = TOCTree()
 
   def __init__(self):
     self.indenter = Indenter()
+    self.tree = TOCTree()
 
   def translate(self, container):
     "Translate a container to TOC entry + indentation."
@@ -158,11 +158,12 @@ class TOCConverter(object):
     if not hasattr(container, 'partkey'):
       return None
     if container.partkey in self.cache:
+      Trace.debug('Reusing ' + container.partkey)
       return TOCConverter.cache[container.partkey]
     if container.level > LyXHeader.tocdepth:
       return None
     entry = TOCEntry().create(container)
     TOCConverter.cache[container.partkey] = entry
-    TOCConverter.tree.store(entry)
+    self.tree.store(entry)
     return entry
 
