@@ -127,6 +127,11 @@ next
 Dependency cleanup between code modules.
 \end_layout
 
+\begin_layout Itemize
+Make file includes work on versions of Python built without universal newline
+ support.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.99 (2010-06-24):
