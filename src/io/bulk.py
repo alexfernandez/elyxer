@@ -51,8 +51,11 @@ class BulkFile(object):
     "Read the whole file with the given encoding"
     filein = codecs.open(self.filename, 'rU', encoding)
     lines = filein.readlines()
+    result = []
+    for line in lines:
+      result.append(line.strip('\r\n') + '\n')
     filein.close()
-    return lines
+    return result
 
   def getfiles(self):
     "Get reader and writer for a file name"
