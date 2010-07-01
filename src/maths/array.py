@@ -26,8 +26,8 @@ from gen.container import *
 from util.trace import Trace
 from util.clone import *
 from conf.config import *
-from math.formula import *
-from math.command import *
+from maths.formula import *
+from maths.command import *
 
 
 class FormulaEquation(CommandBit):

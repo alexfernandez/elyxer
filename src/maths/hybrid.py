@@ -25,8 +25,8 @@
 from gen.container import *
 from util.trace import Trace
 from conf.config import *
-from math.bits import *
-from math.command import *
+from maths.bits import *
+from maths.command import *
 
 
 class ParameterDefinition(object):

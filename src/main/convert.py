@@ -34,7 +34,7 @@ from gen.basket import *
 from gen.integral import *
 from gen.splitpart import *
 from post.postprocess import *
-from math.postformula import *
+from maths.postformula import *
 
 
 class eLyXerConverter(object):

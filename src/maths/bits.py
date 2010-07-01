@@ -24,7 +24,7 @@
 
 from util.trace import Trace
 from conf.config import *
-from math.formula import *
+from maths.formula import *
 
 
 class RawText(FormulaBit):

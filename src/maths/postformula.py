@@ -22,8 +22,8 @@
 # Alex 20090422
 # eLyXer postprocessor for formulae
 
-from math.command import *
-from math.array import *
+from maths.command import *
+from maths.array import *
 from post.postprocess import *
 from ref.link import *
 from ref.label import *

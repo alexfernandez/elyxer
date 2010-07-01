@@ -28,9 +28,9 @@ from gen.styles import *
 from ref.link import *
 from ref.label import *
 from ref.biblio import *
-from math.formula import *
-from math.command import *
-from math.hybrid import *
+from maths.formula import *
+from maths.command import *
+from maths.hybrid import *
 from gen.table import *
 from gen.image import *
 from gen.layout import *
@@ -38,11 +38,11 @@ from gen.list import *
 from gen.inset import *
 from gen.float import *
 from gen.header import *
-from math.array import *
+from maths.array import *
 from ref.bibtex import *
 from ref.bibentry import *
 from xtra.newfangle import *
-from math.macro import *
+from maths.macro import *
 
 
 class ContainerFactory(object):

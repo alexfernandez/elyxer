@@ -27,8 +27,8 @@ from ref.label import *
 from util.trace import Trace
 from util.clone import *
 from conf.config import *
-from math.formula import *
-from math.bits import *
+from maths.formula import *
+from maths.bits import *
 
 
 class FormulaCommand(FormulaBit):

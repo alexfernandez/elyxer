@@ -27,8 +27,8 @@ from util.trace import Trace
 from conf.config import *
 from parse.formulaparse import *
 from parse.headerparse import *
-from math.formula import *
-from math.hybrid import *
+from maths.formula import *
+from maths.hybrid import *
 
 
 class LyXPreamble(Container):
