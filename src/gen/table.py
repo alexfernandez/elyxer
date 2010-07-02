@@ -24,6 +24,7 @@
 
 from util.trace import Trace
 from gen.container import *
+from gen.layout import *
 from parse.parser import *
 from out.output import *
 from parse.tableparse import *
