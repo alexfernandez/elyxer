@@ -155,7 +155,7 @@ class TOCConverter(object):
     self.tree = TOCTree()
 
   def translate(self, container):
-    "Translate a container to TOC entry + indentation."
+    "Translate a container to an indented TOC entry."
     entry = self.convert(container)
     if not entry:
       return BlackBox()
