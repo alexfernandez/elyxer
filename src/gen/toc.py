@@ -106,6 +106,17 @@ class Indenter(object):
       indent += '</div>\n'
     return indent
 
+class IndentedEntry(Container):
+  "An entry with an indentation."
+
+  def __init__(self):
+    self.output = ContentsOutput()
+
+  def create(self, indent, entry):
+    "Create the indented entry."
+    self.contents = [indent, entry]
+    return self
+
 class TOCTree(object):
   "A tree that contains the full TOC."
 
@@ -147,9 +158,9 @@ class TOCConverter(object):
     "Translate a container to TOC entry + indentation."
     entry = self.convert(container)
     if not entry:
-      return []
+      return BlackBox()
     indent = self.indenter.getindent(entry.depth)
-    return [indent, entry]
+    return IndentedEntry().create(indent, entry)
 
   def convert(self, container):
     "Convert a container to a TOC entry."
@@ -159,7 +170,9 @@ class TOCConverter(object):
       return None
     if container.partkey in self.cache:
       Trace.debug('Reusing ' + container.partkey)
-      return TOCConverter.cache[container.partkey]
+      entry = TOCConverter.cache[container.partkey]
+      self.tree.store(entry)
+      return entry
     if container.level > LyXHeader.tocdepth:
       return None
     entry = TOCEntry().create(container)

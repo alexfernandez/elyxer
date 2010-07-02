@@ -106,6 +106,10 @@ class TableOfContents(ListInset):
     text = Translator.translate('toc')
     self.contents = [TaggedText().constant(text, 'div class="tocheader"', True)]
 
+  def add(self, entry):
+    "Add a new entry to the TOC."
+    self.contents.append(entry)
+
 class IndexEntry(Link):
   "An entry in the alphabetical index"
 

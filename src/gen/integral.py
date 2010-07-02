@@ -71,9 +71,9 @@ class IntegralTOC(IntegralProcessor):
     toc.output = TaggedOutput().settag('div class="fulltoc"', True)
     converter = TOCConverter()
     for container in IntegralLayout.tocentries:
-      toc.contents += converter.translate(container)
+      toc.add(converter.translate(container))
     # finish off with the footer to align indents
-    toc.contents += converter.translate(LyXFooter())
+    toc.add(converter.translate(LyXFooter()))
 
   def writetotoc(self, entries, toc):
     "Write some entries to the TOC."

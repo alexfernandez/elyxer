@@ -216,3 +216,16 @@ class SplitPartBasket(Basket):
     base, extension = os.path.splitext(self.filename)
     return base + '-' + partname + extension
 
+class SplitTOCBasket(MemoryBasket):
+  "A memory basket which contains a split table of contents."
+
+  def process(self):
+    MemoryBasket.process(self)
+    converter = TOCConverter()
+    toc = TableOfContents()
+    toc.process()
+    for container in self.contents:
+      entry = converter.translate(container)
+      toc.add(entry)
+    self.write(toc)
+
