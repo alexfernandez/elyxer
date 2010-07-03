@@ -132,6 +132,14 @@ Make file includes work on versions of Python built without universal newline
  support.
 \end_layout
 
+\begin_layout Itemize
+Added partial table of contents to pages generated with 
+\family typewriter
+--splitpart
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.99 (2010-06-24):

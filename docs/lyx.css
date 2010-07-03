@@ -582,7 +582,7 @@ div.toc {
 	font-size: 0.95em;
 }
 div.fulltoc {
-	padding: 1em;
+	padding: 2em;
 }
 span.hspace {
 	display: inline-block;
@@ -672,7 +672,7 @@ div.PlainVisible {
 	width: auto;
 }
 div.splitheader {
-	margin: 0em;
+	margin: 1em 0em;
 	text-align: center;
 	background: #f9f9f9;
 }

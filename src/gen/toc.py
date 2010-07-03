@@ -32,6 +32,10 @@ from ref.label import *
 class TOCEntry(Container):
   "A container for a TOC entry."
 
+  def __init__(self):
+    Container.__init__(self)
+    self.branches = []
+
   def header(self, container):
     "Create a TOC entry for header and footer (0 depth)."
     self.depth = 0
@@ -41,7 +45,6 @@ class TOCEntry(Container):
   def create(self, container):
     "Create the TOC entry for a container, consisting of a single link."
     self.entry = container.entry
-    self.branches = []
     text = container.entry + ':'
     labels = container.searchall(Label)
     if len(labels) == 0 or Options.toc:

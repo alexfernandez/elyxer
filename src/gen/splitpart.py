@@ -139,20 +139,21 @@ class SplitTOCBasket(MemoryBasket):
     self.entrycount += 1
     self.root = entry
 
-  def process(self):
-    MemoryBasket.process(self)
+  def addtoc(self):
+    "Add the table of contents if necessary."
     if self.entrycount != 1:
+      return
+    if self.root.branches == []:
       return
     toc = TableOfContents()
     toc.process()
     self.addentry(self.root, toc)
+    toc.add(self.converter.translate(LyXFooter()))
     self.write(toc)
 
   def addentry(self, entry, toc):
     "Add an entry and all of its branches to the table of contents."
     toc.add(self.converter.indent(entry))
-    if not hasattr(entry, 'branches'):
-      return
     for branch in entry.branches:
       self.addentry(branch, toc)
   
@@ -187,6 +188,7 @@ class SplitPartBasket(Basket):
       if self.mustsplit(container):
         filename = self.getfilename(container)
         Trace.debug('New page ' + filename)
+        basket.addtoc()
         navigation.writefooter(basket)
         basket = self.addbasket(filename)
         navigation.writeheader(basket, container)
