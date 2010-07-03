@@ -104,6 +104,7 @@ class TableOfContents(ListInset):
   def process(self):
     "Parse the header and get the type"
     text = Translator.translate('toc')
+    self.output = TaggedOutput().settag('div class="fulltoc"', True)
     self.contents = [TaggedText().constant(text, 'div class="tocheader"', True)]
 
   def add(self, entry):

@@ -68,7 +68,6 @@ class IntegralTOC(IntegralProcessor):
 
   def processeach(self, toc):
     "Fill in a Table of Contents."
-    toc.output = TaggedOutput().settag('div class="fulltoc"', True)
     converter = TOCConverter()
     for container in IntegralLayout.tocentries:
       toc.add(converter.translate(container))
