@@ -120,6 +120,43 @@ class SplitPartNavigation(object):
     else:
       entry = container.entry
     link.contents = [Constant(type + ': ' + entry)]
+
+class SplitTOCBasket(MemoryBasket):
+  "A memory basket which contains a split table of contents."
+
+  def __init__(self):
+    MemoryBasket.__init__(self)
+    self.entrycount = 0
+    self.root = None
+    self.converter = TOCConverter()
+
+  def write(self, container):
+    "Keep track of numbered layouts."
+    MemoryBasket.write(self, container)
+    if not hasattr(container, 'partkey'):
+      return
+    entry = self.converter.convert(container)
+    if not entry:
+      return
+    self.entrycount += 1
+    self.root = entry
+
+  def process(self):
+    MemoryBasket.process(self)
+    if self.entrycount != 1:
+      return
+    toc = TableOfContents()
+    toc.process()
+    self.addentry(self.root, toc)
+    self.write(toc)
+
+  def addentry(self, entry, toc):
+    "Add an entry and all of its branches to the table of contents."
+    toc.add(self.converter.indent(entry))
+    if not hasattr(entry, 'branches'):
+      return
+    for branch in entry.branches:
+      self.addentry(branch, toc)
   
 class SplitPartBasket(Basket):
   "A basket used to split the output in different files."
@@ -168,7 +205,7 @@ class SplitPartBasket(Basket):
     "Add a new basket."
     if not writer:
       writer = LineWriter(filename)
-    basket = MemoryBasket()
+    basket = SplitTOCBasket()
     basket.setwriter(writer)
     self.baskets.append(basket)
     # set the page name everywhere
@@ -215,17 +252,4 @@ class SplitPartBasket(Basket):
           partname = container.type + '-' + container.number
     base, extension = os.path.splitext(self.filename)
     return base + '-' + partname + extension
-
-class SplitTOCBasket(MemoryBasket):
-  "A memory basket which contains a split table of contents."
-
-  def process(self):
-    MemoryBasket.process(self)
-    converter = TOCConverter()
-    toc = TableOfContents()
-    toc.process()
-    for container in self.contents:
-      entry = converter.translate(container)
-      toc.add(entry)
-    self.write(toc)
 
