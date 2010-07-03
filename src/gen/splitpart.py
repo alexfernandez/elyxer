@@ -41,13 +41,11 @@ class SplitPartLink(IntegralProcessor):
 class SplitPartNavigation(object):
   "Used to create the navigation links for a new split page."
 
-  def __init__(self, firstbasket):
-    "Set the first basket as last basket."
+  def __init__(self):
     self.upanchors = []
     self.lastcontainer = None
     self.nextlink = None
     self.lastnavigation = None
-    firstbasket.write(self.insertupanchor())
 
   def writeheader(self, basket, container):
     "Write the header to the basket."
@@ -183,7 +181,8 @@ class SplitPartBasket(Basket):
     "Process the whole basket, create page baskets and flush all of them."
     self.basket.process()
     basket = self.firstbasket()
-    navigation = SplitPartNavigation(basket)
+    navigation = SplitPartNavigation()
+    basket.write(navigation.insertupanchor())
     for container in self.basket.contents:
       if self.mustsplit(container):
         filename = self.getfilename(container)
