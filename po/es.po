@@ -141,3 +141,7 @@ msgstr "Documento generado con "
 msgid  " on "
 msgstr " en "
 
+#: toc-for
+msgid  "Contents for "
+msgstr "Contenido de "
+

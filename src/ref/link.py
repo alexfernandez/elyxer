@@ -103,9 +103,13 @@ class TableOfContents(ListInset):
 
   def process(self):
     "Parse the header and get the type"
-    text = Translator.translate('toc')
+    self.create(Translator.translate('toc'))
+
+  def create(self, heading):
+    "Create a table of contents with the given heading text."
     self.output = TaggedOutput().settag('div class="fulltoc"', True)
-    self.contents = [TaggedText().constant(text, 'div class="tocheader"', True)]
+    self.contents = [TaggedText().constant(heading, 'div class="tocheader"', True)]
+    return self
 
   def add(self, entry):
     "Add a new entry to the TOC."

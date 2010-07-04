@@ -145,17 +145,17 @@ class SplitTOCBasket(MemoryBasket):
       return
     if self.root.branches == []:
       return
-    toc = TableOfContents()
-    toc.process()
-    self.addentry(self.root, toc)
+    text = Translator.translate('toc-for') + self.root.entry
+    toc = TableOfContents().create(text)
+    self.addbranches(self.root, toc)
     toc.add(self.converter.translate(LyXFooter()))
     self.write(toc)
 
-  def addentry(self, entry, toc):
+  def addbranches(self, entry, toc):
     "Add an entry and all of its branches to the table of contents."
-    toc.add(self.converter.indent(entry))
     for branch in entry.branches:
-      self.addentry(branch, toc)
+      toc.add(self.converter.indent(branch))
+      self.addbranches(branch, toc)
   
 class SplitPartBasket(Basket):
   "A basket used to split the output in different files."
