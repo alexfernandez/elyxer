@@ -38,6 +38,26 @@ class SplitPartLink(IntegralProcessor):
     "Process each link and add the current page."
     link.page = self.page
 
+class UpAnchor(Link):
+  "An anchor to the top of the page for the up links."
+
+  def create(self, container):
+    "Create the up anchor based on the first container."
+    if not hasattr(container, 'entry'):
+      return self.createliteral('None')
+    return self.createliteral(container.entry)
+
+  def createmain(self):
+    "Create the up anchor for the main page."
+    return self.createliteral(Translator.translate('main-page'))
+
+  def createliteral(self, literal):
+    "Create the up anchor based on a literal."
+    self.complete('', '')
+    self.output = EmptyOutput()
+    self.entry = literal
+    return self
+
 class SplitPartNavigation(object):
   "Used to create the navigation links for a new split page."
 
@@ -50,7 +70,7 @@ class SplitPartNavigation(object):
   def writeheader(self, basket, container):
     "Write the header to the basket."
     basket.write(LyXHeader().process())
-    basket.write(self.createupanchor(container))
+    basket.write(self.currentupanchor(container))
     self.lastnavigation = self.createnavigation(container)
     basket.write(self.lastnavigation)
 
@@ -79,24 +99,22 @@ class SplitPartNavigation(object):
     self.lastcontainer = container
     return header
   
-  def createupanchor(self, container):
-    "Create the up anchor for the up links."
+  def currentupanchor(self, container):
+    "Update the internal list of up anchors, and return the current one."
     level = self.getlevel(container)
     while len(self.upanchors) > level:
       del self.upanchors[-1]
     while len(self.upanchors) < level:
       self.upanchors.append(self.upanchors[-1])
-    if not hasattr(container, 'entry'):
-      return self.insertupanchor('None')
-    return self.insertupanchor(container.entry)
-
-  def insertupanchor(self, entry):
-    "Insert the up anchor into the list of anchors."
-    upanchor = Link().complete('', '')
-    upanchor.output = EmptyOutput()
-    upanchor.entry = entry
+    upanchor = UpAnchor().create(container)
     self.upanchors.append(upanchor)
     return upanchor
+
+  def createmainanchor(self):
+    "Create the up anchor to the main page."
+    mainanchor = UpAnchor().createmain()
+    self.upanchors.append(mainanchor)
+    return mainanchor
 
   def getupdestination(self, container):
     "Get the name of the up page."
@@ -186,7 +204,7 @@ class SplitPartBasket(Basket):
     self.basket.process()
     basket = self.firstbasket()
     navigation = SplitPartNavigation()
-    basket.write(navigation.insertupanchor(Translator.translate('main-page')))
+    basket.write(navigation.createmainanchor())
     for container in self.basket.contents:
       if self.mustsplit(container):
         filename = self.getfilename(container)
