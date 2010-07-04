@@ -144,3 +144,7 @@ msgstr " on "
 msgid  "Contents for "
 msgstr "Contents for "
 
+#: main-page
+msgid  "Main page"
+msgstr "Main page"
+

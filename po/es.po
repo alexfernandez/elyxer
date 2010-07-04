@@ -145,3 +145,7 @@ msgstr " en "
 msgid  "Contents for "
 msgstr "Contenido de "
 
+#: main-page
+msgid  "Main page"
+msgstr "Página principal"
+

@@ -86,7 +86,6 @@ class SplitPartNavigation(object):
       del self.upanchors[-1]
     while len(self.upanchors) < level:
       self.upanchors.append(self.upanchors[-1])
-    Trace.debug('For up anchor: ' + unicode(container))
     if not hasattr(container, 'entry'):
       return self.insertupanchor('None')
     return self.insertupanchor(container.entry)
@@ -187,7 +186,7 @@ class SplitPartBasket(Basket):
     self.basket.process()
     basket = self.firstbasket()
     navigation = SplitPartNavigation()
-    basket.write(navigation.insertupanchor('Main page'))
+    basket.write(navigation.insertupanchor(Translator.translate('main-page')))
     for container in self.basket.contents:
       if self.mustsplit(container):
         filename = self.getfilename(container)
