@@ -62,20 +62,21 @@ class SplitPartNavigation(object):
 
   def createnavigation(self, container):
     "Create the navigation bar with all links."
+    #upanchor = self.createupanchor(container)
     prevlink = Link().complete(' ', 'prev', type='prev')
     if self.nextlink:
       self.setlinkname(prevlink, Translator.translate('prev'), self.lastcontainer)
       self.setlinkname(self.nextlink, Translator.translate('next'), container)
       prevlink.setmutualdestination(self.nextlink)
-    nextlink = Link().complete(' ', Translator.translate('next'), type='next')
+    self.nextlink = Link().complete(' ', Translator.translate('next'), type='next')
     uplink = Link().complete(Translator.translate('up'), url='', type='up')
+    self.setlinkname(uplink, Translator.translate('up'), self.getupdestination(container))
     uplink.destination = self.getupdestination(container)
     prevcontainer = TaggedText().complete([prevlink], 'span class="prev"')
-    nextcontainer = TaggedText().complete([nextlink], 'span class="next"')
+    nextcontainer = TaggedText().complete([self.nextlink], 'span class="next"')
     upcontainer = TaggedText().complete([uplink], 'span class="up"')
     contents = [prevcontainer, Constant('\n'), upcontainer, Constant('\n'), nextcontainer]
     header = TaggedText().complete(contents, 'div class="splitheader"', True)
-    self.nextlink = nextlink
     self.lastcontainer = container
     return header
   
@@ -115,7 +116,11 @@ class SplitPartNavigation(object):
     "Set the name on the link."
     if hasattr(container, 'mustsplit'):
       entry = container.mustsplit
+    elif isinstance(container, Link):
+      link.contents = [Constant(type)]
+      return
     else:
+      Trace.debug('Up: ' + unicode(container))
       entry = container.entry
     link.contents = [Constant(type + ': ' + entry)]
 
