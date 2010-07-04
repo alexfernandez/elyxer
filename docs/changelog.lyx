@@ -100,7 +100,7 @@ Replicate the navigation bar for
 \begin_inset Quotes eld
 \end_inset
 
-previous
+Previous
 \begin_inset Quotes erd
 \end_inset
 
@@ -108,7 +108,7 @@ previous
 \begin_inset Quotes eld
 \end_inset
 
-up
+Up
 \begin_inset Quotes erd
 \end_inset
 
@@ -116,11 +116,36 @@ up
 \begin_inset Quotes eld
 \end_inset
 
-next
+Next
 \begin_inset Quotes erd
 \end_inset
 
  links.
+ Also added an explanatory text to the 
+\begin_inset Quotes eld
+\end_inset
+
+up
+\begin_inset Quotes erd
+\end_inset
+
+ link in the navigation bar, as in: 
+\begin_inset Quotes eld
+\end_inset
+
+Up: Chapter 1
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Added partial table of contents to pages generated with 
+\family typewriter
+--splitpart
+\family default
+.
 \end_layout
 
 \begin_layout Itemize
@@ -130,14 +155,6 @@ Dependency cleanup between code modules.
 \begin_layout Itemize
 Make file includes work on versions of Python built without universal newline
  support.
-\end_layout
-
-\begin_layout Itemize
-Added partial table of contents to pages generated with 
-\family typewriter
---splitpart
-\family default
-.
 \end_layout
 
 \end_deeper

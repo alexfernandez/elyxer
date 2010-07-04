@@ -62,7 +62,6 @@ class SplitPartNavigation(object):
 
   def createnavigation(self, container):
     "Create the navigation bar with all links."
-    #upanchor = self.createupanchor(container)
     prevlink = Link().complete(' ', 'prev', type='prev')
     if self.nextlink:
       self.setlinkname(prevlink, Translator.translate('prev'), self.lastcontainer)
@@ -87,12 +86,16 @@ class SplitPartNavigation(object):
       del self.upanchors[-1]
     while len(self.upanchors) < level:
       self.upanchors.append(self.upanchors[-1])
-    return self.insertupanchor()
+    Trace.debug('For up anchor: ' + unicode(container))
+    if not hasattr(container, 'entry'):
+      return self.insertupanchor('None')
+    return self.insertupanchor(container.entry)
 
-  def insertupanchor(self):
+  def insertupanchor(self, entry):
     "Insert the up anchor into the list of anchors."
     upanchor = Link().complete('', '')
     upanchor.output = EmptyOutput()
+    upanchor.entry = entry
     self.upanchors.append(upanchor)
     return upanchor
 
@@ -116,11 +119,7 @@ class SplitPartNavigation(object):
     "Set the name on the link."
     if hasattr(container, 'mustsplit'):
       entry = container.mustsplit
-    elif isinstance(container, Link):
-      link.contents = [Constant(type)]
-      return
     else:
-      Trace.debug('Up: ' + unicode(container))
       entry = container.entry
     link.contents = [Constant(type + ': ' + entry)]
 
@@ -188,7 +187,7 @@ class SplitPartBasket(Basket):
     self.basket.process()
     basket = self.firstbasket()
     navigation = SplitPartNavigation()
-    basket.write(navigation.insertupanchor())
+    basket.write(navigation.insertupanchor('Main page'))
     for container in self.basket.contents:
       if self.mustsplit(container):
         filename = self.getfilename(container)
