@@ -153,8 +153,16 @@ Dependency cleanup between code modules.
 \end_layout
 
 \begin_layout Itemize
-Make file includes work on versions of Python built without universal newline
- support.
+Child documents of type 
+\begin_inset Quotes eld
+\end_inset
+
+verbatim input
+\begin_inset Quotes erd
+\end_inset
+
+ are now correctly converted on versions of Python built without universal
+ newline support.
 \end_layout
 
 \end_deeper
