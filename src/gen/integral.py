@@ -61,6 +61,27 @@ class IntegralLayout(IntegralProcessor):
       return
     IntegralLayout.tocentries.append(layout)
 
+class IntegralNomenclature(IntegralProcessor):
+  "A processor for the nomenclature."
+
+  processedtype = PrintNomenclature
+
+  def processeach(self, nomenclature):
+    "Insert the relevant attributes to index the nomenclature into the parent."
+    self.setattributes(nomenclature, nomenclature.parent)
+
+  def setattributes(self, nomenclature, container):
+    "Set the attributes to index the nomenclature into the parent."
+    if not container:
+      return
+    container.partkey = nomenclature.partkey
+    container.level = nomenclature.level
+    container.entry = nomenclature.entry
+    container.number = nomenclature.number
+    if not hasattr(container, 'parent'):
+      return
+    self.setattributes(nomenclature, container.parent)
+
 class IntegralTOC(IntegralProcessor):
   "A processor for an integral TOC."
 
@@ -150,7 +171,8 @@ class MemoryBasket(KeeperBasket):
     KeeperBasket.__init__(self)
     self.processors = [
         IntegralLayout(), IntegralTOC(), IntegralBiblioEntry(),
-        IntegralFloat(), IntegralListOf(), IntegralReference()
+        IntegralFloat(), IntegralListOf(), IntegralReference(),
+        IntegralNomenclature()
         ]
 
   def finish(self):

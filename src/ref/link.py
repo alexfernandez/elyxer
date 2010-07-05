@@ -193,8 +193,12 @@ class PrintNomenclature(ListInset):
   "Print all nomenclature entries"
 
   def process(self):
-    nomenclature = Translator.translate('nomenclature')
-    self.contents = [TaggedText().constant(nomenclature,
+    "Create the nomenclature."
+    self.partkey = Translator.translate('nomenclature')
+    self.level = 0
+    self.entry = self.partkey
+    self.number = ''
+    self.contents = [TaggedText().constant(self.partkey,
       'h1 class="nomenclature"')]
     for key in self.sortdictionary(NomenclatureEntry.entries):
       entry = NomenclatureEntry.entries[key]
