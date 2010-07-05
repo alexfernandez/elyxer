@@ -212,7 +212,7 @@ class FloatNumber(Container):
 
   def create(self, float):
     "Create the float number."
-    self.contents = [Constant(float.entry)]
+    self.contents = [Constant(float.partkey.tocentry)]
     return self
 
 class PostFloat(object):
@@ -234,21 +234,23 @@ class PostFloat(object):
     "Search for labels and move them to the top"
     labels = caption.searchremove(Label)
     if len(labels) == 0:
-      labels = [Label().create(' ', float.entry.replace(' ', '-'))]
+      labels = [Label().create(' ', float.partkey.tocentry.replace(' ', '-'))]
     float.contents = labels + float.contents
 
   def postnumber(self, float):
     "Number a float if it isn't numbered."
-    if float.number:
+    if float.partkey:
       return
     if float.parentfloat:
       self.postnumber(float.parentfloat)
       index = float.parentfloat.children.index(float)
-      float.number = NumberGenerator.instance.letter(index).lower()
-      float.entry = '(' + float.number + ')'
+      number = NumberGenerator.instance.letter(index).lower()
+      entry = '(' + number + ')'
+      float.partkey = PartKey().createfloat(entry, number)
     else:
-      float.number = NumberGenerator.instance.generatechaptered(float.type, float.chapter)
-      float.entry = Translator.translate('float-' + float.type) + float.number
+      number = NumberGenerator.instance.generatechaptered(float.type, float.chapter)
+      entry = Translator.translate('float-' + float.type) + number
+      float.partkey = PartKey().createfloat(entry, number)
 
 class PostWrap(PostFloat):
   "For a wrap: exactly like a float"

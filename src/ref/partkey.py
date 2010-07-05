@@ -50,3 +50,11 @@ class PartKey(object):
     self.number = ''
     return self
 
+  def createfloat(self, partkey, number):
+    "Create a part key for a float."
+    self.partkey = partkey
+    self.level = 0
+    self.number = number
+    self.tocentry = partkey
+    return self
+
