@@ -75,11 +75,6 @@ class IntegralNomenclature(IntegralProcessor):
     if not container:
       return
     container.partkey = nomenclature.partkey
-    container.level = nomenclature.level
-    container.entry = nomenclature.entry
-    container.number = nomenclature.number
-    if not hasattr(container, 'parent'):
-      return
     self.setattributes(nomenclature, container.parent)
 
 class IntegralTOC(IntegralProcessor):

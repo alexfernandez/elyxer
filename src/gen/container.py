@@ -33,6 +33,9 @@ from parse.position import *
 class Container(object):
   "A container for text and objects in a lyx file"
 
+  partkey = None
+  parent = None
+
   def __init__(self):
     self.contents = list()
 

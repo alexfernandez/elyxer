@@ -37,6 +37,10 @@ class Label(Link):
 
   names = dict()
 
+  def __init__(self):
+    Link.__init__(self)
+    self.lastnumbered = None
+
   def process(self):
     "Process a label container."
     key = self.parameters['name']
@@ -55,16 +59,16 @@ class Label(Link):
   def labelnumber(self):
     "Get the number for the latest numbered container seen."
     numbered = self.numbered(self)
-    if numbered and numbered.number:
-      return numbered.number
+    if numbered and numbered.partkey:
+      return numbered.partkey.number
     return ''
 
   def numbered(self, container):
     "Get the numbered container for the label."
-    if hasattr(container, 'number'):
+    if container.partkey:
       return container
-    if not hasattr(container, 'parent'):
-      if hasattr(self, 'lastnumbered'):
+    if not container.parent:
+      if self.lastnumbered:
         return self.lastnumbered
       return None
     return self.numbered(container.parent)

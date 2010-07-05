@@ -38,31 +38,27 @@ class TOCEntry(Container):
 
   def header(self, container):
     "Create a TOC entry for header and footer (0 depth)."
-    self.depth = 0
+    self.partkey = PartKey().create('', '', 0)
     self.output = EmptyOutput()
     return self
 
   def create(self, container):
     "Create the TOC entry for a container, consisting of a single link."
-    self.entry = container.entry
-    text = container.entry + ':'
+    text = container.partkey.tocentry + ':'
     labels = container.searchall(Label)
     if len(labels) == 0 or Options.toc:
-      url = Options.toctarget + '#toc-' + container.type + '-' + container.number
+      url = Options.toctarget + '#toc-' + container.type + '-' + container.partkey.number
       link = Link().complete(text, url=url)
     else:
       label = labels[0]
       link = Link().complete(text)
       link.destination = label
     self.contents = [link]
-    if container.number == '':
+    if container.partkey.number == '':
       link.contents.append(Constant(u' '))
     link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)
-    if hasattr(container, 'level'):
-      self.depth = container.level
-    if hasattr(container, 'partkey'):
-      self.partkey = container.partkey
+    self.partkey = container.partkey
     return self
 
   def gettitlecontents(self, container):
@@ -78,7 +74,7 @@ class TOCEntry(Container):
 
   def __unicode__(self):
     "Return a printable representation."
-    return 'TOC entry: ' + self.entry
+    return 'TOC entry: ' + self.partkey.tocentry
 
 class Indenter(object):
   "Manages and writes indentation for the TOC."
@@ -129,10 +125,10 @@ class TOCTree(object):
 
   def store(self, entry):
     "Place the entry in a tree of entries."
-    while len(self.tree) < entry.depth:
+    while len(self.tree) < entry.partkey.level:
       self.tree.append(None)
-    if len(self.tree) > entry.depth:
-      self.tree = self.tree[:entry.depth]
+    if len(self.tree) > entry.partkey.level:
+      self.tree = self.tree[:entry.partkey.level]
     stem = self.findstem()
     if len(self.tree) == 0:
       self.branches.append(entry)
@@ -166,19 +162,19 @@ class TOCConverter(object):
 
   def indent(self, entry):
     "Indent a TOC entry."
-    indent = self.indenter.getindent(entry.depth)
+    indent = self.indenter.getindent(entry.partkey.level)
     return IndentedEntry().create(indent, entry)
 
   def convert(self, container):
     "Convert a container to a TOC entry."
     if container.__class__ in [LyXHeader, LyXFooter]:
       return TOCEntry().header(container)
-    if not hasattr(container, 'partkey'):
+    if not container.partkey:
       return None
-    if container.partkey in self.cache:
+    if container.partkey.partkey in self.cache:
       entry = TOCConverter.cache[container.partkey]
       return entry
-    if container.level > LyXHeader.tocdepth:
+    if container.partkey.level > LyXHeader.tocdepth:
       return None
     entry = TOCEntry().create(container)
     TOCConverter.cache[container.partkey] = entry

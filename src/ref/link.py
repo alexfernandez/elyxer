@@ -28,6 +28,7 @@ from parse.parser import *
 from out.output import *
 from gen.container import *
 from gen.styles import *
+from ref.partkey import *
 
 
 class Link(Container):
@@ -152,8 +153,9 @@ class PrintIndex(ListInset):
 
   def process(self):
     "Create the alphabetic index"
-    index = Translator.translate('index')
-    self.contents = [TaggedText().constant(index, 'h1 class="index"'),
+    name = Translator.translate('index')
+    self.partkey = PartKey().createindex(name)
+    self.contents = [TaggedText().constant(name, 'h1 class="index"'),
         Constant('\n')]
     for key in self.sortdictionary(IndexEntry.entries):
       entry = IndexEntry.entries[key]
@@ -194,12 +196,9 @@ class PrintNomenclature(ListInset):
 
   def process(self):
     "Create the nomenclature."
-    self.partkey = Translator.translate('nomenclature')
-    self.level = 0
-    self.entry = self.partkey
-    self.number = ''
-    self.contents = [TaggedText().constant(self.partkey,
-      'h1 class="nomenclature"')]
+    name = Translator.translate('nomenclature')
+    self.partkey = PartKey().createindex(name)
+    self.contents = [TaggedText().constant(name, 'h1 class="nomenclature"')]
     for key in self.sortdictionary(NomenclatureEntry.entries):
       entry = NomenclatureEntry.entries[key]
       contents = [entry, Constant(entry.symbol + u' ' + entry.description)]

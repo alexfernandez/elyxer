@@ -25,6 +25,7 @@
 from util.trace import Trace
 from util.translate import *
 from conf.config import *
+from ref.partkey import *
 
 
 class NumberGenerator(object):
@@ -162,10 +163,11 @@ class LayoutNumberer(object):
     "Set all attributes: number, entry, level..."
     if self.generator.isunique(layout):
       number = self.generator.generateunique(layout.type)
-      self.setcommonattrs(layout, number)
-      layout.anchortext = ''
-      if layout.number != '':
-        layout.anchortext = layout.entry + '.'
+      partkey = self.getpartkey(layout, number)
+      partkey.anchortext = ''
+      if partkey.number != '':
+        partkey.anchortext = partkey.tocentry + '.'
+      layout.partkey = partkey
       return
     if not self.generator.isinordered(layout):
       Trace.error('Trying to number wrong ' + unicode(layout))
@@ -175,22 +177,24 @@ class LayoutNumberer(object):
       number = self.generator.generateordered(layout.type)
     else:
       number = self.generator.generateunique(layout.type)
-    self.setcommonattrs(layout, number)
-    layout.anchortext = layout.number
-    layout.output.tag = layout.output.tag.replace('?', unicode(layout.level))
+    partkey = self.getpartkey(layout, number)
+    partkey.anchortext = partkey.number
+    layout.output.tag = layout.output.tag.replace('?', unicode(partkey.level))
+    layout.partkey = partkey
 
-  def setcommonattrs(self, layout, number):
-    "Set the common attributes for a layout."
-    layout.level = self.generator.getlevel(layout.type)
+  def getpartkey(self, layout, number):
+    "Get the common attributes for a layout."
     type = self.generator.deasterisk(layout.type)
-    layout.number = ''
+    partkey = PartKey().create(partkey = 'toc-' + layout.type + '-' + number,
+        tocentry = Translator.translate(type),
+        level = self.generator.getlevel(layout.type))
+    partkey.number = ''
     if self.generator.isnumbered(layout):
-      layout.number = number
-    layout.partkey = 'toc-' + layout.type + '-' + number
-    layout.entry = Translator.translate(type)
-    if layout.number != '':
+      partkey.number = number
+    if partkey.number != '':
       self.lastnumbered = layout
-      layout.entry += ' ' + layout.number
+      partkey.tocentry += ' ' + partkey.number
+    return partkey
 
 LayoutNumberer.instance = LayoutNumberer()
 
