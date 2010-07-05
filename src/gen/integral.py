@@ -57,7 +57,7 @@ class IntegralLayout(IntegralProcessor):
 
   def processeach(self, layout):
     "Keep only layouts that have an entry."
-    if not hasattr(layout, 'entry'):
+    if not layout.partkey:
       return
     IntegralLayout.tocentries.append(layout)
 

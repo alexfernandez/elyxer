@@ -43,9 +43,9 @@ class UpAnchor(Link):
 
   def create(self, container):
     "Create the up anchor based on the first container."
-    if not hasattr(container, 'entry'):
+    if not container.partkey:
       return self.createliteral('None')
-    return self.createliteral(container.entry)
+    return self.createliteral(container.partkey.entry)
 
   def createmain(self):
     "Create the up anchor for the main page."
@@ -137,7 +137,6 @@ class SplitPartNavigation(object):
     if hasattr(container, 'mustsplit'):
       entry = container.mustsplit
     else:
-      Trace.debug('Link name for ' + unicode(container))
       entry = container.partkey.tocentry
     link.contents = [Constant(type + ': ' + entry)]
 
