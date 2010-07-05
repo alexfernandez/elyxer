@@ -47,7 +47,6 @@ class PartKey(object):
     self.partkey = partkey
     self.tocentry = partkey
     self.level = 0
-    self.number = ''
     return self
 
   def createfloat(self, partkey, number):

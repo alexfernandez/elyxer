@@ -47,14 +47,16 @@ class TOCEntry(Container):
     text = container.partkey.tocentry + ':'
     labels = container.searchall(Label)
     if len(labels) == 0 or Options.toc:
-      url = Options.toctarget + '#toc-' + container.type + '-' + container.partkey.number
+      url = Options.toctarget + '#toc-' + container.type + '-'
+      if container.partkey.number:
+        url += container.partkey.number
       link = Link().complete(text, url=url)
     else:
       label = labels[0]
       link = Link().complete(text)
       link.destination = label
     self.contents = [link]
-    if container.partkey.number == '':
+    if not container.partkey.number:
       link.contents.append(Constant(u' '))
     link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)

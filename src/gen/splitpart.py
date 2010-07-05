@@ -55,7 +55,7 @@ class UpAnchor(Link):
     "Create the up anchor based on a literal."
     self.complete('', '')
     self.output = EmptyOutput()
-    self.entry = literal
+    self.mustsplit = literal
     return self
 
 class SplitPartNavigation(object):
@@ -137,7 +137,8 @@ class SplitPartNavigation(object):
     if hasattr(container, 'mustsplit'):
       entry = container.mustsplit
     else:
-      entry = container.entry
+      Trace.debug('Link name for ' + unicode(container))
+      entry = container.partkey.tocentry
     link.contents = [Constant(type + ': ' + entry)]
 
 class SplitTOCBasket(MemoryBasket):
@@ -241,12 +242,9 @@ class SplitPartBasket(Basket):
     "Find out if the oputput file has to be split at this entry."
     if self.splitalone(container):
       return True
-    if not hasattr(container, 'entry'):
+    if not container.partkey:
       return False
-    entry = self.converter.convert(container)
-    if not entry:
-      return False
-    return entry.depth <= Options.splitpart
+    return container.partkey.level <= Options.splitpart
 
   def splitalone(self, container):
     "Find out if the container must be split in its own page."
@@ -265,13 +263,13 @@ class SplitPartBasket(Basket):
     if hasattr(container, 'mustsplit'):
       partname = container.mustsplit
     else:
-      if container.level == Options.splitpart and container.number != '':
-        partname = container.number
+      if container.partkey.level == Options.splitpart and container.partkey.number:
+        partname = container.partkey.number
       else:
-        if container.number == '':
-          partname = container.partkey.replace('toc-', '').replace('*', '-')
+        if not container.partkey.number:
+          partname = container.partkey.partkey.replace('toc-', '').replace('*', '-')
         else:
-          partname = container.type + '-' + container.number
+          partname = container.type + '-' + container.partkey.number
     base, extension = os.path.splitext(self.filename)
     return base + '-' + partname + extension
 

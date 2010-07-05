@@ -165,7 +165,7 @@ class LayoutNumberer(object):
       number = self.generator.generateunique(layout.type)
       partkey = self.getpartkey(layout, number)
       partkey.anchortext = ''
-      if partkey.number != '':
+      if partkey.number:
         partkey.anchortext = partkey.tocentry + '.'
       layout.partkey = partkey
       return
@@ -188,10 +188,9 @@ class LayoutNumberer(object):
     partkey = PartKey().create(partkey = 'toc-' + layout.type + '-' + number,
         tocentry = Translator.translate(type),
         level = self.generator.getlevel(layout.type))
-    partkey.number = ''
     if self.generator.isnumbered(layout):
       partkey.number = number
-    if partkey.number != '':
+    if partkey.number:
       self.lastnumbered = layout
       partkey.tocentry += ' ' + partkey.number
     return partkey
