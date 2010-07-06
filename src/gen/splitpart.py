@@ -159,7 +159,6 @@ class SplitTOCBasket(MemoryBasket):
       return
     self.entrycount += 1
     self.root = entry
-    Trace.debug('Entry ' + unicode(entry) + ' for ' + unicode(container))
 
   def addtoc(self):
     "Add the table of contents if necessary."
