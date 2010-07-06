@@ -222,18 +222,18 @@ class PostLayout(object):
 
   def postprocess(self, last, layout, next):
     "Generate a number and place it before the text"
-    if not hasattr(layout, 'number'):
+    if not layout.partkey:
       return layout
-    label = Label().create(layout.anchortext, layout.partkey, type='toc')
+    label = Label().create(layout.partkey.anchortext, layout.partkey.partkey, type='toc')
     layout.contents.insert(0, label)
-    if layout.anchortext != '':
+    if layout.partkey.anchortext != '':
       layout.contents.insert(1, Constant(u' '))
     return layout
 
   def modifylayout(self, layout, type):
     "Modify a layout according to the given type."
-    layout.level = NumberGenerator.instance.getlevel(type)
-    layout.output.tag = layout.output.tag.replace('?', unicode(layout.level))
+    layout.partkey.level = NumberGenerator.instance.getlevel(type)
+    layout.output.tag = layout.output.tag.replace('?', unicode(layout.partkey.level))
 
   def containsappendix(self, layout):
     "Find out if there is an appendix somewhere in the layout"

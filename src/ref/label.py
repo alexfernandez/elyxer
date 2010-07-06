@@ -59,7 +59,7 @@ class Label(Link):
   def labelnumber(self):
     "Get the number for the latest numbered container seen."
     numbered = self.numbered(self)
-    if numbered and numbered.partkey:
+    if numbered and numbered.partkey and numbered.partkey.number:
       return numbered.partkey.number
     return ''
 

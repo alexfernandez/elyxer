@@ -60,7 +60,7 @@ class Formula(Container):
 
   def __unicode__(self):
     "Return a printable representation."
-    if hasattr(self, 'number'):
+    if self.partkey and self.partkey.number:
       return 'Formula (' + self.number + ')'
     return 'Unnumbered formula'
 

@@ -28,12 +28,13 @@ from util.trace import Trace
 class PartKey(object):
   "A key to identify a given document part (chapter, section...)."
 
+  partkey = None
+  tocentry = None
+  anchortext = None
+  number = None
+
   def __init__(self):
-    self.partkey = None
-    self.tocentry = None
     self.level = 0
-    self.anchortext = None
-    self.number = None
 
   def create(self, partkey, tocentry, level):
     "Create the part key."

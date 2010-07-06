@@ -262,6 +262,7 @@ class SplitPartBasket(Basket):
     if hasattr(container, 'mustsplit'):
       partname = container.mustsplit
     else:
+      # TODO: change logic
       if container.partkey.level == Options.splitpart and container.partkey.number:
         partname = container.partkey.number
       else:
