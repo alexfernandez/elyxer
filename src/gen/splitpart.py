@@ -45,7 +45,7 @@ class UpAnchor(Link):
     "Create the up anchor based on the first container."
     if not container.partkey:
       return self.createliteral('None')
-    return self.createliteral(container.partkey.entry)
+    return self.createliteral(container.partkey.tocentry)
 
   def createmain(self):
     "Create the up anchor for the main page."
