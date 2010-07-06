@@ -152,13 +152,14 @@ class SplitTOCBasket(MemoryBasket):
   def write(self, container):
     "Keep track of numbered layouts."
     MemoryBasket.write(self, container)
-    if not hasattr(container, 'partkey'):
+    if not container.partkey:
       return
     entry = self.converter.convert(container)
     if not entry:
       return
     self.entrycount += 1
     self.root = entry
+    Trace.debug('Entry ' + unicode(entry) + ' for ' + unicode(container))
 
   def addtoc(self):
     "Add the table of contents if necessary."
@@ -166,7 +167,7 @@ class SplitTOCBasket(MemoryBasket):
       return
     if self.root.branches == []:
       return
-    text = Translator.translate('toc-for') + self.root.entry
+    text = Translator.translate('toc-for') + self.root.partkey.tocentry
     toc = TableOfContents().create(text)
     self.addbranches(self.root, toc)
     toc.add(self.converter.translate(LyXFooter()))

@@ -137,6 +137,7 @@ class TOCTree(object):
     self.tree.append(entry)
     if stem:
       entry.stem = stem
+      Trace.debug('Adding ' + unicode(entry) + ' to ' + unicode(stem))
       stem.branches.append(entry)
 
   def findstem(self):
@@ -174,12 +175,12 @@ class TOCConverter(object):
     if not container.partkey:
       return None
     if container.partkey.partkey in self.cache:
-      entry = TOCConverter.cache[container.partkey]
+      entry = TOCConverter.cache[container.partkey.partkey]
       return entry
     if container.partkey.level > LyXHeader.tocdepth:
       return None
     entry = TOCEntry().create(container)
-    TOCConverter.cache[container.partkey] = entry
+    TOCConverter.cache[container.partkey.partkey] = entry
     TOCConverter.tree.store(entry)
     return entry
 
