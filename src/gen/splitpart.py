@@ -127,10 +127,10 @@ class SplitPartNavigation(object):
 
   def getlevel(self, container):
     "Get the level of the container."
-    if not hasattr(container, 'level'):
+    if not container.partkey:
       return 1
     else:
-      return container.level + 1
+      return container.partkey.level + 1
 
   def setlinkname(self, link, type, container):
     "Set the name on the link."
@@ -262,7 +262,6 @@ class SplitPartBasket(Basket):
     if hasattr(container, 'mustsplit'):
       partname = container.mustsplit
     else:
-      # TODO: change logic
       if container.partkey.level == Options.splitpart and container.partkey.number:
         partname = container.partkey.number
       else:
