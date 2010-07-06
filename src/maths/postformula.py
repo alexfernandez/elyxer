@@ -71,10 +71,10 @@ class PostFormula(object):
       formula.partkey = partkey
     if not function:
       label = Label()
-      label.create(entry + ' ', 'eq-' + number, type="eqnumber")
+      label.create(partkey.tocentry + ' ', 'eq-' + number, type="eqnumber")
     else:
       label = function.label
-      label.complete(entry + ' ')
+      label.complete(partkey.tocentry + ' ')
     return label
 
   def searchrow(self, function):

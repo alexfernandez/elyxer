@@ -62,6 +62,6 @@ class PartKey(object):
     "Create the part key for a formula."
     self.number = number
     self.partkey = '(' + number + ')'
-    self.entry = self.partkey
+    self.tocentry = self.partkey
     return self
 
