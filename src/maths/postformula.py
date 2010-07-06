@@ -66,10 +66,9 @@ class PostFormula(object):
     "Create a new label for a formula."
     "Add a label to a formula."
     number = NumberGenerator.instance.generatechaptered('formula')
-    entry = '(' + number + ')'
-    if not hasattr(formula, number) or not formula.number:
-      formula.number = number
-      formula.entry = entry
+    partkey = PartKey().createformula(number)
+    if not formula.partkey:
+      formula.partkey = partkey
     if not function:
       label = Label()
       label.create(entry + ' ', 'eq-' + number, type="eqnumber")

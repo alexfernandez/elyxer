@@ -57,3 +57,10 @@ class PartKey(object):
     self.tocentry = partkey
     return self
 
+  def createformula(self, number):
+    "Create the part key for a formula."
+    self.number = number
+    self.partkey = '(' + number + ')'
+    self.entry = self.partkey
+    return self
+

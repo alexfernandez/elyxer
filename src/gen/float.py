@@ -40,7 +40,6 @@ class Float(Container):
     self.output = TaggedOutput().settag('div class="float"', True)
     self.parentfloat = None
     self.children = []
-    self.number = None
 
   def process(self):
     "Get the float type."
