@@ -154,6 +154,8 @@ class SplitTOCBasket(MemoryBasket):
     MemoryBasket.write(self, container)
     if not container.partkey:
       return
+    if container.partkey.header:
+      return
     entry = self.converter.convert(container)
     if not entry:
       return
