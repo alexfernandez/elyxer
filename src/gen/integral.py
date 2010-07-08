@@ -53,13 +53,12 @@ class IntegralLayout(IntegralProcessor):
   "A processor for layouts that will appear in the TOC."
 
   processedtype = Layout
-  tocentries = []
 
   def processeach(self, layout):
     "Keep only layouts that have an entry."
     if not layout.partkey:
       return
-    IntegralLayout.tocentries.append(layout)
+    IntegralTOC.tocentries.append(layout)
 
 class IntegralNomenclature(IntegralProcessor):
   "A processor for the nomenclature."
@@ -68,14 +67,16 @@ class IntegralNomenclature(IntegralProcessor):
 
   def processeach(self, nomenclature):
     "Insert the relevant part key for the TOC into the parent."
-    self.setpartkey(nomenclature, nomenclature.parent)
+    self.upgradepartkey(nomenclature)
 
-  def setpartkey(self, nomenclature, container):
+  def upgradepartkey(self, container):
     "Set the part key for the TOC into the parent."
-    if not container:
+    if not container.parent:
+      # Store in TOC
+      IntegralTOC.tocentries.append(container)
       return
-    container.partkey = nomenclature.partkey
-    self.setpartkey(nomenclature, container.parent)
+    container.parent.partkey = container.partkey
+    self.upgradepartkey(container.parent)
 
 class IntegralIndex(IntegralNomenclature):
   "A processor for the general index."
@@ -84,17 +85,18 @@ class IntegralIndex(IntegralNomenclature):
 
   def processeach(self, index):
     "Insert the relevant part key for the TOC into the parent."
-    self.setpartkey(index, index.parent)
+    self.upgradepartkey(index)
 
 class IntegralTOC(IntegralProcessor):
   "A processor for an integral TOC."
 
   processedtype = TableOfContents
+  tocentries = []
 
   def processeach(self, toc):
     "Fill in a Table of Contents."
     converter = TOCConverter()
-    for container in IntegralLayout.tocentries:
+    for container in IntegralTOC.tocentries:
       toc.add(converter.translate(container))
     # finish off with the footer to align indents
     toc.add(converter.translate(LyXFooter()))
