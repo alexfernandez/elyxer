@@ -43,9 +43,7 @@ class TOCEntry(Container):
     text = container.partkey.tocentry + ':'
     labels = container.searchall(Label)
     if len(labels) == 0 or Options.toc:
-      url = Options.toctarget + '#toc-' + container.type + '-'
-      if container.partkey.number:
-        url += container.partkey.number
+      url = Options.toctarget + '#' + container.partkey.partkey
       link = Link().complete(text, url=url)
     else:
       label = labels[0]
