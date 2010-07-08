@@ -72,8 +72,6 @@ class IntegralNomenclature(IntegralProcessor):
   def upgradepartkey(self, container):
     "Set the part key for the TOC into the parent."
     if not container.parent:
-      # Store in TOC
-      IntegralTOC.tocentries.append(container)
       return
     container.parent.partkey = container.partkey
     self.upgradepartkey(container.parent)
@@ -176,9 +174,9 @@ class MemoryBasket(KeeperBasket):
     "Create all processors in one go."
     KeeperBasket.__init__(self)
     self.processors = [
+        IntegralNomenclature(), IntegralIndex(),
         IntegralLayout(), IntegralTOC(), IntegralBiblioEntry(),
         IntegralFloat(), IntegralListOf(), IntegralReference(),
-        IntegralNomenclature(), IntegralIndex()
         ]
 
   def finish(self):
