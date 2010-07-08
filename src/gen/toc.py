@@ -36,14 +36,10 @@ class TOCEntry(Container):
     Container.__init__(self)
     self.branches = []
 
-  def header(self, container):
-    "Create a TOC entry for header and footer (0 depth)."
-    self.partkey = PartKey().create('', '', 0)
-    self.output = EmptyOutput()
-    return self
-
   def create(self, container):
     "Create the TOC entry for a container, consisting of a single link."
+    if container.__class__ in [LyXHeader, LyXFooter]:
+      return self.header(container)
     text = container.partkey.tocentry + ':'
     labels = container.searchall(Label)
     if len(labels) == 0 or Options.toc:
@@ -61,6 +57,12 @@ class TOCEntry(Container):
     link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)
     self.partkey = container.partkey
+    return self
+
+  def header(self, container):
+    "Create a TOC entry for header and footer (0 depth)."
+    self.partkey = container.partkey
+    self.output = EmptyOutput()
     return self
 
   def gettitlecontents(self, container):
@@ -137,7 +139,6 @@ class TOCTree(object):
     self.tree.append(entry)
     if stem:
       entry.stem = stem
-      Trace.debug('Adding ' + unicode(entry) + ' to ' + unicode(stem))
       stem.branches.append(entry)
 
   def findstem(self):
@@ -170,13 +171,10 @@ class TOCConverter(object):
 
   def convert(self, container):
     "Convert a container to a TOC entry."
-    if container.__class__ in [LyXHeader, LyXFooter]:
-      return TOCEntry().header(container)
     if not container.partkey:
       return None
     if container.partkey.partkey in self.cache:
-      entry = TOCConverter.cache[container.partkey.partkey]
-      return entry
+      return TOCConverter.cache[container.partkey.partkey]
     if container.partkey.level > LyXHeader.tocdepth:
       return None
     entry = TOCEntry().create(container)

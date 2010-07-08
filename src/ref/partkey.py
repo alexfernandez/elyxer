@@ -23,6 +23,7 @@
 # eLyXer: key that identifies a given document part (chapter, section...).
 
 from util.trace import Trace
+from util.options import *
 
 
 class PartKey(object):
@@ -32,6 +33,7 @@ class PartKey(object):
   tocentry = None
   anchortext = None
   number = None
+  header = False
 
   def __init__(self):
     self.level = 0
@@ -62,4 +64,21 @@ class PartKey(object):
     self.partkey = '(' + number + ')'
     self.tocentry = self.partkey
     return self
+
+  def createheader(self, headorfooter):
+    "Create the part key for a header or footer."
+    self.partkey = headorfooter
+    self.tocentry = headorfooter
+    self.header = True
+    return self
+
+  def mustsplit(self):
+    "Find out if the part should stand in its own page."
+    if self.header:
+      return False
+    return self.level <= Options.splitpart
+
+  def __unicode__(self):
+    "Return a printable representation."
+    return 'Part key for ' + self.partkey
 

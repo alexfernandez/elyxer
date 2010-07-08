@@ -239,23 +239,9 @@ class SplitPartBasket(Basket):
 
   def mustsplit(self, container):
     "Find out if the oputput file has to be split at this entry."
-    if self.splitalone(container):
-      return True
     if not container.partkey:
       return False
-    return container.partkey.level <= Options.splitpart
-
-  def splitalone(self, container):
-    "Find out if the container must be split in its own page."
-    found = []
-    container.locateprocess(
-        lambda container: container.__class__ in [PrintNomenclature, PrintIndex],
-        lambda container: found.append(container.__class__.__name__))
-    if not found:
-      return False
-    container.depth = 0
-    container.mustsplit = found[0].lower().replace('print', '')
-    return True
+    return container.partkey.mustsplit()
 
   def getfilename(self, container):
     "Get the new file name for a given container."

@@ -67,15 +67,24 @@ class IntegralNomenclature(IntegralProcessor):
   processedtype = PrintNomenclature
 
   def processeach(self, nomenclature):
-    "Insert the relevant attributes to index the nomenclature into the parent."
-    self.setattributes(nomenclature, nomenclature.parent)
+    "Insert the relevant part key for the TOC into the parent."
+    self.setpartkey(nomenclature, nomenclature.parent)
 
-  def setattributes(self, nomenclature, container):
-    "Set the attributes to index the nomenclature into the parent."
+  def setpartkey(self, nomenclature, container):
+    "Set the part key for the TOC into the parent."
     if not container:
       return
     container.partkey = nomenclature.partkey
-    self.setattributes(nomenclature, container.parent)
+    self.setpartkey(nomenclature, container.parent)
+
+class IntegralIndex(IntegralNomenclature):
+  "A processor for the general index."
+
+  processedtype = PrintIndex
+
+  def processeach(self, index):
+    "Insert the relevant part key for the TOC into the parent."
+    self.setpartkey(index, index.parent)
 
 class IntegralTOC(IntegralProcessor):
   "A processor for an integral TOC."
@@ -167,7 +176,7 @@ class MemoryBasket(KeeperBasket):
     self.processors = [
         IntegralLayout(), IntegralTOC(), IntegralBiblioEntry(),
         IntegralFloat(), IntegralListOf(), IntegralReference(),
-        IntegralNomenclature()
+        IntegralNomenclature(), IntegralIndex()
         ]
 
   def finish(self):

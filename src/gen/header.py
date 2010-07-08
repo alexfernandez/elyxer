@@ -28,6 +28,7 @@ from parse.headerparse import *
 from out.output import *
 from out.template import *
 from gen.container import *
+from ref.partkey import *
 
 
 class LyXHeader(Container):
@@ -41,6 +42,7 @@ class LyXHeader(Container):
     self.parser = HeaderParser()
     self.output = HeaderOutput()
     self.parameters = dict()
+    self.partkey = PartKey().createheader('header')
 
   def process(self):
     "Find pdf title"
@@ -78,4 +80,5 @@ class LyXFooter(Container):
     self.contents = []
     self.parser = BoundedDummy()
     self.output = FooterOutput()
+    self.partkey = PartKey().createheader('footer')
 
