@@ -38,20 +38,17 @@ class TOCEntry(Container):
 
   def create(self, container):
     "Create the TOC entry for a container, consisting of a single link."
-    if container.__class__ in [LyXHeader, LyXFooter]:
+    if container.partkey.header:
       return self.header(container)
-    text = container.partkey.tocentry + ':'
     labels = container.searchall(Label)
     if len(labels) == 0 or Options.toc:
       url = Options.toctarget + '#' + container.partkey.partkey
-      link = Link().complete(text, url=url)
+      link = Link().complete(container.partkey.tocentry, url=url)
     else:
       label = labels[0]
-      link = Link().complete(text)
+      link = Link().complete(container.partkey.tocentry)
       link.destination = label
     self.contents = [link]
-    if not container.partkey.number:
-      link.contents.append(Constant(u' '))
     link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)
     self.partkey = container.partkey

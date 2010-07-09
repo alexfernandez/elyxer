@@ -185,14 +185,9 @@ class LayoutNumberer(object):
   def getpartkey(self, layout, number):
     "Get the common attributes for a layout."
     type = self.generator.deasterisk(layout.type)
-    partkey = PartKey().create(partkey = 'toc-' + layout.type + '-' + number,
-        tocentry = Translator.translate(type),
-        level = self.generator.getlevel(layout.type))
-    if self.generator.isnumbered(layout):
-      partkey.number = number
-    if partkey.number:
-      self.lastnumbered = layout
-      partkey.tocentry += ' ' + partkey.number
+    level = self.generator.getlevel(layout.type)
+    partkey = PartKey().createlayout(type, level, number)
+    self.lastnumbered = layout
     return partkey
 
 LayoutNumberer.instance = LayoutNumberer()

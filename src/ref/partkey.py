@@ -24,6 +24,7 @@
 
 from util.trace import Trace
 from util.options import *
+from util.translate import *
 
 
 class PartKey(object):
@@ -45,6 +46,14 @@ class PartKey(object):
     self.level = level
     return self
 
+  def createlayout(self, type, level, number):
+    "Create a part key for a layout."
+    self.partkey = 'toc-' + type + '-' + number
+    self.tocentry = Translator.translate(type) + ' ' + number + u': '
+    self.level = level
+    self.number = number
+    return self
+
   def createindex(self, partkey):
     "Create a part key for an index page."
     self.partkey = partkey
@@ -55,20 +64,20 @@ class PartKey(object):
     "Create a part key for a float."
     self.partkey = partkey
     self.number = number
-    self.tocentry = partkey
+    self.tocentry = partkey + ': '
     return self
 
   def createformula(self, number):
     "Create the part key for a formula."
     self.number = number
-    self.partkey = '(' + number + ')'
-    self.tocentry = self.partkey
+    self.partkey = 'formula-' + number
+    self.tocentry = '(' + number + ') :'
     return self
 
   def createheader(self, headorfooter):
     "Create the part key for a header or footer."
     self.partkey = headorfooter
-    self.tocentry = headorfooter
+    self.tocentry = None
     self.header = True
     return self
 
