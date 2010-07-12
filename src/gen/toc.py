@@ -49,7 +49,9 @@ class TOCEntry(Container):
       link = Link().complete(container.partkey.tocentry)
       link.destination = label
     self.contents = [link]
-    link.contents += self.gettitlecontents(container)
+    if container.partkey.tocsuffix:
+      link.contents.append(Constant(container.partkey.tocsuffix))
+      link.contents += self.gettitlecontents(container)
     self.output = TaggedOutput().settag('div class="toc"', True)
     self.partkey = container.partkey
     return self
@@ -64,7 +66,7 @@ class TOCEntry(Container):
     "Get the title of the container."
     shorttitles = container.searchall(ShortTitle)
     if len(shorttitles) > 0:
-      contents = [Constant(u' ')]
+      contents = []
       for shorttitle in shorttitles:
         contents += shorttitle.contents
       return contents

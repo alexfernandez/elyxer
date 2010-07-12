@@ -32,6 +32,7 @@ class PartKey(object):
 
   partkey = None
   tocentry = None
+  tocsuffix = None
   anchortext = None
   number = None
   header = False
@@ -49,7 +50,8 @@ class PartKey(object):
   def createlayout(self, type, level, number):
     "Create a part key for a layout."
     self.partkey = 'toc-' + type + '-' + number
-    self.tocentry = Translator.translate(type) + ' ' + number + u': '
+    self.tocentry = Translator.translate(type) + ' ' + number
+    self.tocsuffix = u': '
     self.level = level
     self.number = number
     return self
@@ -64,7 +66,7 @@ class PartKey(object):
     "Create a part key for a float."
     self.partkey = partkey
     self.number = number
-    self.tocentry = partkey + ': '
+    self.tocentry = partkey + u': '
     return self
 
   def createformula(self, number):
