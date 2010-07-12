@@ -35,6 +35,7 @@ from gen.integral import *
 from gen.splitpart import *
 from post.postprocess import *
 from maths.postformula import *
+from ref.postlabel import *
 
 
 class eLyXerConverter(object):

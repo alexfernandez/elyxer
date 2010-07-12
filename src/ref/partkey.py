@@ -25,6 +25,7 @@
 from util.trace import Trace
 from util.options import *
 from util.translate import *
+from ref.label import *
 
 
 class PartKey(object):
@@ -75,6 +76,7 @@ class PartKey(object):
     self.partkey = partkey
     self.tocentry = partkey
     self.filename = partkey
+    self.anchortext = partkey
     return self
 
   def createfloat(self, partkey, number):
@@ -98,6 +100,13 @@ class PartKey(object):
     self.tocentry = None
     self.header = True
     return self
+
+  def toclabel(self):
+    "Create the label for the TOC."
+    labeltext = ''
+    if self.anchortext:
+      labeltext = self.anchortext
+    return Label().create(labeltext, self.partkey, type='toc')
 
   def mustsplit(self):
     "Find out if the part should stand in its own page."

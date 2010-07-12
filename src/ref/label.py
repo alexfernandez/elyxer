@@ -27,7 +27,6 @@ from parse.parser import *
 from out.output import *
 from gen.container import *
 from gen.styles import *
-from util.numbering import *
 from ref.link import *
 from post.postprocess import *
 
@@ -123,16 +122,4 @@ class Reference(Link):
   def __unicode__(self):
     "Return a printable representation."
     return 'Reference ' + self.key
-
-class PostLabel(object):
-  "Postprocessing of a label: assign number of the referenced part."
-
-  processedclass = Label
-
-  def postprocess(self, last, label, next):
-    "Remember the last numbered container seen."
-    label.lastnumbered = LayoutNumberer.instance.lastnumbered
-    return label
-
-Postprocessor.stages += [PostLabel]
 

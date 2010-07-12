@@ -25,6 +25,7 @@
 
 from gen.layout import *
 from gen.float import *
+from ref.index import *
 from ref.biblio import *
 from gen.basket import *
 

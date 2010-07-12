@@ -28,6 +28,7 @@ from gen.styles import *
 from ref.link import *
 from ref.label import *
 from ref.biblio import *
+from ref.index import *
 from maths.formula import *
 from maths.command import *
 from maths.hybrid import *

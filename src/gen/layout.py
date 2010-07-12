@@ -222,10 +222,7 @@ class PostLayout(object):
     "Generate a number and place it before the text"
     if not layout.partkey:
       return layout
-    labeltext = ''
-    if layout.partkey.anchortext:
-      labeltext = layout.partkey.anchortext
-    label = Label().create(labeltext, layout.partkey.partkey, type='toc')
+    label = layout.partkey.toclabel()
     layout.contents.insert(0, label)
     if layout.partkey.anchortext:
       layout.contents.insert(1, Constant(u' '))
