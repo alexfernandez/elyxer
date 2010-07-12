@@ -51,7 +51,7 @@ class PartKey(object):
     "Create a part key for a layout."
     self.partkey = 'toc-' + type + '-' + number
     self.tocentry = Translator.translate(type) + ' ' + number
-    self.tocsuffix = u': '
+    self.tocsuffix = u':'
     self.level = level
     self.number = number
     return self
@@ -66,7 +66,8 @@ class PartKey(object):
     "Create a part key for a float."
     self.partkey = partkey
     self.number = number
-    self.tocentry = partkey + u': '
+    self.tocentry = partkey
+    self.tocsuffix = u':'
     return self
 
   def createformula(self, number):
