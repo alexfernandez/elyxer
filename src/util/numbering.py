@@ -184,7 +184,7 @@ class LayoutNumberer(object):
     type = self.generator.deasterisk(layout.type)
     level = self.generator.getlevel(layout.type)
     numbered = self.generator.isnumbered(layout)
-    partkey = PartKey().createlayout(layout.type, level, number, numbered)
+    partkey = LayoutPartKey(layout.type, level, number, numbered)
     self.lastnumbered = layout
     return partkey
 

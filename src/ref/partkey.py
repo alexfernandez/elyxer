@@ -49,28 +49,6 @@ class PartKey(object):
     self.level = level
     return self
 
-  def createlayout(self, rawtype, level, number, numbered):
-    "Create a part key for a layout."
-    self.partkey = 'toc-' + rawtype + '-' + number
-    realtype = self.deasterisk(rawtype)
-    self.tocentry = Translator.translate(realtype)
-    self.tocsuffix = u': '
-    if numbered:
-      self.tocentry += ' ' + number
-      self.tocsuffix = u':'
-    self.level = level
-    self.number = number
-    if self.level == Options.splitpart and numbered:
-      self.filename = number
-    else:
-      self.filename = self.partkey.replace('toc-', '').replace('*', '-')
-      # partname = container.type + '-' + container.partkey.number
-    return self
-
-  def deasterisk(self, type):
-    "Get the type without the asterisk for unordered types."
-    return type.replace('*', '')
-
   def createindex(self, partkey):
     "Create a part key for an index page."
     self.partkey = partkey
@@ -116,4 +94,27 @@ class PartKey(object):
   def __unicode__(self):
     "Return a printable representation."
     return 'Part key for ' + self.partkey
+
+class LayoutPartKey(PartKey):
+  "The part key for a layout."
+
+  def __init__(self, rawtype, level, number, numbered):
+    "Create a part key for a layout."
+    self.partkey = 'toc-' + rawtype + '-' + number
+    realtype = self.deasterisk(rawtype)
+    self.tocentry = Translator.translate(realtype)
+    self.tocsuffix = u': '
+    if numbered:
+      self.tocentry += ' ' + number
+      self.tocsuffix = u':'
+    self.level = level
+    self.number = number
+    if self.level == Options.splitpart and numbered:
+      self.filename = number
+    else:
+      self.filename = self.partkey.replace('toc-', '').replace('*', '-')
+
+  def deasterisk(self, type):
+    "Get the type without the asterisk for unordered types."
+    return type.replace('*', '')
 
