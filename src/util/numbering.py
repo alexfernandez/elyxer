@@ -155,10 +155,6 @@ class LayoutNumberer(object):
     self.generator = NumberGenerator.instance
     self.lastnumbered = None
 
-  def isnumbered(self, container):
-    "Find out if a container requires numbering at all."
-    return self.generator.isinordered(container) or self.generator.isunique(container)
-
   def numberlayout(self, layout):
     "Set all attributes: number, entry, level..."
     if self.generator.isunique(layout):
@@ -170,7 +166,6 @@ class LayoutNumberer(object):
       layout.partkey = partkey
       return
     if not self.generator.isinordered(layout):
-      Trace.error('Trying to number wrong ' + unicode(layout))
       return
     # ordered or unordered
     if self.generator.isnumbered(layout):

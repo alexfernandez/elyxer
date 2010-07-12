@@ -54,8 +54,6 @@ class Layout(Container):
 
   def numerate(self):
     "Numerate if necessary."
-    if not LayoutNumberer.instance.isnumbered(self):
-      return
     if self.containsappendix():
       self.activateappendix()
     LayoutNumberer.instance.numberlayout(self)
