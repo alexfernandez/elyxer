@@ -89,7 +89,7 @@ class PartKey(object):
     "Create the part key for a formula."
     self.number = number
     self.partkey = 'formula-' + number
-    self.tocentry = '(' + number + ') :'
+    self.tocentry = '(' + number + ')'
     return self
 
   def createheader(self, headorfooter):
