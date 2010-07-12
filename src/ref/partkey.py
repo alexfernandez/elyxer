@@ -35,6 +35,7 @@ class PartKey(object):
   tocsuffix = None
   anchortext = None
   number = None
+  filename = None
   header = False
 
   def __init__(self):
@@ -58,6 +59,11 @@ class PartKey(object):
       self.tocsuffix = u':'
     self.level = level
     self.number = number
+    if self.level == Options.splitpart and numbered:
+      self.filename = number
+    else:
+      self.filename = self.partkey.replace('toc-', '').replace('*', '-')
+      # partname = container.type + '-' + container.partkey.number
     return self
 
   def deasterisk(self, type):
@@ -68,6 +74,7 @@ class PartKey(object):
     "Create a part key for an index page."
     self.partkey = partkey
     self.tocentry = partkey
+    self.filename = partkey
     return self
 
   def createfloat(self, partkey, number):
