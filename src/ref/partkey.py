@@ -47,14 +47,22 @@ class PartKey(object):
     self.level = level
     return self
 
-  def createlayout(self, type, level, number):
+  def createlayout(self, rawtype, level, number, numbered):
     "Create a part key for a layout."
-    self.partkey = 'toc-' + type + '-' + number
-    self.tocentry = Translator.translate(type) + ' ' + number
-    self.tocsuffix = u':'
+    self.partkey = 'toc-' + rawtype + '-' + number
+    realtype = self.deasterisk(rawtype)
+    self.tocentry = Translator.translate(realtype)
+    self.tocsuffix = u': '
+    if numbered:
+      self.tocentry += ' ' + number
+      self.tocsuffix = u':'
     self.level = level
     self.number = number
     return self
+
+  def deasterisk(self, type):
+    "Get the type without the asterisk for unordered types."
+    return type.replace('*', '')
 
   def createindex(self, partkey):
     "Create a part key for an index page."

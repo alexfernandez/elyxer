@@ -161,7 +161,7 @@ class LayoutNumberer(object):
       number = self.generator.generateunique(layout.type)
       partkey = self.getpartkey(layout, number)
       partkey.anchortext = ''
-      if partkey.number:
+      if self.generator.isnumbered(layout):
         partkey.anchortext = partkey.tocentry + '.'
       layout.partkey = partkey
       return
@@ -173,7 +173,9 @@ class LayoutNumberer(object):
     else:
       number = self.generator.generateunique(layout.type)
     partkey = self.getpartkey(layout, number)
-    partkey.anchortext = partkey.number
+    partkey.anchortext = ''
+    if self.generator.isnumbered(layout):
+      partkey.anchortext = partkey.number
     layout.output.tag = layout.output.tag.replace('?', unicode(partkey.level))
     layout.partkey = partkey
 
@@ -181,7 +183,8 @@ class LayoutNumberer(object):
     "Get the common attributes for a layout."
     type = self.generator.deasterisk(layout.type)
     level = self.generator.getlevel(layout.type)
-    partkey = PartKey().createlayout(type, level, number)
+    numbered = self.generator.isnumbered(layout)
+    partkey = PartKey().createlayout(layout.type, level, number, numbered)
     self.lastnumbered = layout
     return partkey
 
