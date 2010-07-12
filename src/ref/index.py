@@ -111,8 +111,7 @@ class PrintIndex(ListInset):
     "Create the alphabetic index"
     name = Translator.translate('index')
     self.partkey = PartKey().createindex(name)
-    self.contents = [TaggedText().constant(name, 'h1 class="index"'),
-        Constant('\n')]
+    self.contents = [TaggedText().constant(name, 'h1 class="index"')]
     for key in self.sortdictionary(IndexEntry.entries):
       entry = IndexEntry.entries[key]
       entrytext = [IndexEntry.entries[key], Constant(': ')]
