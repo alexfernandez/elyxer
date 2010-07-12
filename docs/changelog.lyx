@@ -165,6 +165,10 @@ verbatim input
  newline support.
 \end_layout
 
+\begin_layout Itemize
+Include Index and Nomenclature in the Table of Contents.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.99 (2010-06-24):

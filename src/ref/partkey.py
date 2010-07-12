@@ -76,7 +76,6 @@ class PartKey(object):
     self.partkey = partkey
     self.tocentry = partkey
     self.filename = partkey
-    self.anchortext = partkey
     return self
 
   def createfloat(self, partkey, number):
