@@ -28,6 +28,7 @@ from parse.position import *
 from util.trace import Trace
 from util.options import *
 from util.translate import *
+from util.docparams import *
 
 
 class HTMLTemplate(object):
@@ -254,7 +255,6 @@ class VariableMap(object):
 class DocumentTitle(object):
   "The title of the whole document."
 
-  pdftitle = None
   title = None
 
   def getvalue(self):
@@ -263,8 +263,8 @@ class DocumentTitle(object):
       return Options.title
     if DocumentTitle.title:
       return DocumentTitle.title
-    if DocumentTitle.pdftitle:
-      return DocumentTitle.pdftitle
+    if DocumentParameters.pdftitle:
+      return DocumentParameters.pdftitle
     return 'Converted document'
 
 class DocumentAuthor(object):

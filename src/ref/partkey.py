@@ -25,6 +25,7 @@
 from util.trace import Trace
 from util.options import *
 from util.translate import *
+from util.docparams import *
 from ref.label import *
 
 
@@ -98,18 +99,22 @@ class PartKey(object):
 class LayoutPartKey(PartKey):
   "The part key for a layout."
 
-  def __init__(self, rawtype, level, number, numbered):
+  unique = NumberingConfig.layouts['unique']
+  ordered = NumberingConfig.layouts['ordered']
+
+  def __init__(self, layout, number):
     "Create a part key for a layout."
+    rawtype = layout.type
+    self.level = self.getlevel(layout.type)
     self.partkey = 'toc-' + rawtype + '-' + number
     realtype = self.deasterisk(rawtype)
     self.tocentry = Translator.translate(realtype)
     self.tocsuffix = u': '
-    if numbered:
+    if self.isnumbered(layout):
       self.tocentry += ' ' + number
       self.tocsuffix = u':'
-    self.level = level
     self.number = number
-    if self.level == Options.splitpart and numbered:
+    if self.level == Options.splitpart and self.isnumbered(layout):
       self.filename = number
     else:
       self.filename = self.partkey.replace('toc-', '').replace('*', '-')
@@ -117,4 +122,32 @@ class LayoutPartKey(PartKey):
   def deasterisk(self, type):
     "Get the type without the asterisk for unordered types."
     return type.replace('*', '')
+
+  def getlevel(self, type):
+    "Get the level that corresponds to a type."
+    type = self.deasterisk(type)
+    if type in self.unique:
+      return 0
+    level = self.ordered.index(type) + 1
+    return level - DocumentParameters.startinglevel
+
+  def isunique(sel):
+    "Find out if the container requires unique numbering."
+    return self.type in self.unique
+
+  def isinordered(self, container):
+    "Find out if a container is ordered or unordered."
+    return self.type in self.ordered
+
+  def isnumbered(self, container):
+    "Find out if a container is numbered."
+    if '*' in container.type:
+      return False
+    if self.level > DocumentParameters.maxdepth:
+      return False
+    return True
+
+  def __unicode__(self):
+    "Get a printable representation."
+    return 'Part key for layout ' + self.tocentry
 

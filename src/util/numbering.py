@@ -24,6 +24,7 @@
 
 from util.trace import Trace
 from util.translate import *
+from util.docparams import *
 from conf.config import *
 from ref.partkey import *
 
@@ -34,8 +35,6 @@ class NumberGenerator(object):
   letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
   instance = None
-  startinglevel = 0
-  maxdepth = 10
 
   unique = NumberingConfig.layouts['unique']
   ordered = NumberingConfig.layouts['ordered']
@@ -71,7 +70,7 @@ class NumberGenerator(object):
   def generatechaptered(self, type, chapter = None):
     "Generate a number which goes with first-level numbers (chapters). "
     "For the article classes a unique number is generated."
-    if NumberGenerator.startinglevel > 0:
+    if DocumentParameters.startinglevel > 0:
       return self.generateunique(type)
     if not chapter:
       chapter = self.getchapter()
@@ -95,7 +94,7 @@ class NumberGenerator(object):
     if type in NumberGenerator.unique:
       return 0
     level = NumberGenerator.ordered.index(type) + 1
-    return level - NumberGenerator.startinglevel
+    return level - DocumentParameters.startinglevel
 
   def isunique(self, container):
     "Find out if a container requires unique numbering."
@@ -109,7 +108,7 @@ class NumberGenerator(object):
     "Find out if a container is numbered."
     if '*' in container.type:
       return False
-    if self.getlevel(container.type) > NumberGenerator.maxdepth:
+    if self.getlevel(container.type) > DocumentParameters.maxdepth:
       return False
     return True
 
@@ -181,10 +180,7 @@ class LayoutNumberer(object):
 
   def getpartkey(self, layout, number):
     "Get the common attributes for a layout."
-    type = self.generator.deasterisk(layout.type)
-    level = self.generator.getlevel(layout.type)
-    numbered = self.generator.isnumbered(layout)
-    partkey = LayoutPartKey(layout.type, level, number, numbered)
+    partkey = LayoutPartKey(layout, number)
     self.lastnumbered = layout
     return partkey
 

@@ -22,7 +22,7 @@
 # Alex 20090312
 # LyX structure in containers
 
-from util.numbering import *
+from util.docparams import *
 from parse.parser import *
 from parse.headerparse import *
 from out.output import *
@@ -34,8 +34,6 @@ from ref.partkey import *
 class LyXHeader(Container):
   "Reads the header, outputs the HTML header"
 
-  indentstandard = False
-  tocdepth = 10
 
   def __init__(self):
     self.contents = []
@@ -46,14 +44,14 @@ class LyXHeader(Container):
 
   def process(self):
     "Find pdf title"
-    DocumentTitle.pdftitle = self.getparameter('pdftitle')
+    DocumentParameters.pdftitle = self.getparameter('pdftitle')
     if self.getparameter('documentclass') in HeaderConfig.styles['article']:
-      NumberGenerator.startinglevel = 1
+      DocumentParameters.startinglevel = 1
     if self.getparameter('paragraphseparation') == 'indent':
-      LyXHeader.indentstandard = True
-    LyXHeader.tocdepth = self.getlevel('tocdepth')
-    NumberGenerator.maxdepth = self.getlevel('secnumdepth')
-    Translator.language = self.getparameter('language')
+      DocumentParameters.indentstandard = True
+    DocumentParameters.tocdepth = self.getlevel('tocdepth')
+    DocumentParameters.maxdepth = self.getlevel('secnumdepth')
+    DocumentParameters.language = self.getparameter('language')
     return self
 
   def getparameter(self, configparam):
@@ -69,7 +67,7 @@ class LyXHeader(Container):
     if not paramvalue:
       return 0
     value = int(paramvalue)
-    if NumberGenerator.startinglevel == 1:
+    if DocumentParameters.startinglevel == 1:
       return value
     return value + 1
 

@@ -27,6 +27,7 @@
 from gen.header import *
 from gen.inset import *
 from ref.label import *
+from util.docparams import *
 
 
 class TOCEntry(Container):
@@ -172,7 +173,7 @@ class TOCConverter(object):
       return None
     if container.partkey.partkey in self.cache:
       return TOCConverter.cache[container.partkey.partkey]
-    if container.partkey.level > LyXHeader.tocdepth:
+    if container.partkey.level > DocumentParameters.tocdepth:
       return None
     entry = TOCEntry().create(container)
     TOCConverter.cache[container.partkey.partkey] = entry

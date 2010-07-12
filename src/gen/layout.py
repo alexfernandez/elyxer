@@ -252,7 +252,7 @@ class PostStandard(object):
   def postprocess(self, last, standard, next):
     "Switch to div"
     type = 'Standard'
-    if LyXHeader.indentstandard:
+    if DocumentParameters.indentstandard:
       if isinstance(last, StandardLayout):
         type = 'Indented'
       else:

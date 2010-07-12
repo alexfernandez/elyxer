@@ -24,6 +24,7 @@
 
 import gettext
 from util.trace import Trace
+from util.docparams import *
 from conf.config import *
 
 
@@ -32,7 +33,6 @@ class Translator(object):
   "Otherwise falls back to the messages in the config file."
 
   instance = None
-  language = None
 
   def translate(cls, key):
     "Get the translated message for a key."
@@ -47,15 +47,15 @@ class Translator(object):
   def findtranslation(self):
     "Find the translation for the document language."
     self.langcodes = None
-    if not self.language:
+    if not DocumentParameters.language:
       Trace.error('No language in document')
       return
-    if not self.language in TranslationConfig.languages:
-      Trace.error('Unknown language ' + self.language)
+    if not DocumentParameters.language in TranslationConfig.languages:
+      Trace.error('Unknown language ' + DocumentParameters.language)
       return
-    if TranslationConfig.languages[self.language] == 'en':
+    if TranslationConfig.languages[DocumentParameters.language] == 'en':
       return
-    langcodes = [TranslationConfig.languages[self.language]]
+    langcodes = [TranslationConfig.languages[DocumentParameters.language]]
     try:
       self.translation = gettext.translation('elyxer', None, langcodes)
     except IOError:
