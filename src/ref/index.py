@@ -104,6 +104,10 @@ class IndexEntry(Link):
     arrow.destination = self
     IndexEntry.arrows[key].append(arrow)
 
+  def __unicode__(self):
+    "Return a printable representation."
+    return 'Index entry for ' + self.name
+
 class PrintIndex(ListInset):
   "Command to print an index"
 
