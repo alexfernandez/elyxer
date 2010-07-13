@@ -111,7 +111,7 @@ class LayoutPartKey(PartKey):
       self.number = self.generator.generateunique(layout.type)
     else:
       if self.isnumbered(layout):
-        self.number = self.generator.generateordered(layout.type)
+        self.number = self.generator.generateordered(self.level)
       else:
         self.number = self.generator.generateunique(layout.type)
     rawtype = layout.type

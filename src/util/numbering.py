@@ -51,10 +51,9 @@ class NumberGenerator(object):
     self.uniques[type] = self.increase(self.uniques[type])
     return unicode(self.uniques[type])
 
-  def generateordered(self, type):
+  def generateordered(self, level):
     "Generate ordered numbering: a number to use and possibly concatenate "
     "with others. Example: Chapter 1, Section 1.5."
-    level = self.getlevel(type)
     if level == 0:
       Trace.error('Impossible level 0 for ' + type)
       return '.'
@@ -87,14 +86,6 @@ class NumberGenerator(object):
     else:
       return self.number[0]
 
-  def getlevel(self, type):
-    "Get the level that corresponds to a type."
-    type = self.deasterisk(type)
-    if type in NumberGenerator.unique:
-      return 0
-    level = NumberGenerator.ordered.index(type) + 1
-    return level - DocumentParameters.startinglevel
-
   def increase(self, number):
     "Increase the number (or letter)"
     if not isinstance(number, str):
@@ -121,10 +112,6 @@ class NumberGenerator(object):
     for piece in number:
       dotsep += '.' + unicode(piece)
     return dotsep[1:]
-
-  def deasterisk(self, type):
-    "Get the type without the asterisk for unordered types."
-    return type.replace('*', '')
 
 NumberGenerator.instance = NumberGenerator()
 
