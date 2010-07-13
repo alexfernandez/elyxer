@@ -26,7 +26,6 @@ from util.trace import Trace
 from util.translate import *
 from util.docparams import *
 from conf.config import *
-from ref.partkey import *
 
 
 class NumberGenerator(object):
@@ -144,38 +143,4 @@ class NumberGenerator(object):
     return type.replace('*', '')
 
 NumberGenerator.instance = NumberGenerator()
-
-class LayoutNumberer(object):
-  "Number a layout with the relevant attributes."
-
-  instance = None
-
-  def __init__(self):
-    self.generator = NumberGenerator.instance
-    self.lastnumbered = None
-
-  def numberlayout(self, layout):
-    "Set all attributes: number, entry, level..."
-    if self.generator.isunique(layout):
-      number = self.generator.generateunique(layout.type)
-      partkey = self.getpartkey(layout, number)
-      layout.partkey = partkey
-      return
-    if not self.generator.isinordered(layout):
-      return
-    # ordered or unordered
-    if self.generator.isnumbered(layout):
-      number = self.generator.generateordered(layout.type)
-    else:
-      number = self.generator.generateunique(layout.type)
-    partkey = self.getpartkey(layout, number)
-    layout.partkey = partkey
-
-  def getpartkey(self, layout, number):
-    "Get the common attributes for a layout."
-    partkey = LayoutPartKey(layout, number)
-    self.lastnumbered = layout
-    return partkey
-
-LayoutNumberer.instance = LayoutNumberer()
 

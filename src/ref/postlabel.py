@@ -27,8 +27,8 @@ from parse.parser import *
 from out.output import *
 from gen.container import *
 from gen.styles import *
-from util.numbering import *
 from ref.link import *
+from ref.partkey import *
 from post.postprocess import *
 
 
