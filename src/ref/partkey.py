@@ -110,15 +110,14 @@ class LayoutPartKey(PartKey):
     realtype = self.deasterisk(rawtype)
     self.tocentry = Translator.translate(realtype)
     self.tocsuffix = u': '
-    if self.isnumbered(layout):
-      self.tocentry += ' ' + number
-      self.tocsuffix = u':'
     self.number = number
     if self.level == Options.splitpart and self.isnumbered(layout):
       self.filename = number
     else:
       self.filename = self.partkey.replace('toc-', '').replace('*', '-')
     if self.isnumbered(layout):
+      self.tocentry += ' ' + number
+      self.tocsuffix = u':'
       if self.isunique(layout):
         self.anchortext = self.tocentry + '.'
       else:
