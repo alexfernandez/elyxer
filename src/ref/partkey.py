@@ -44,13 +44,6 @@ class PartKey(object):
   def __init__(self):
     self.level = 0
 
-  def create(self, partkey, tocentry, level):
-    "Create the part key."
-    self.partkey = partkey
-    self.tocentry = tocentry
-    self.level = level
-    return self
-
   def createindex(self, partkey):
     "Create a part key for an index page."
     self.partkey = partkey
