@@ -172,6 +172,13 @@ class PostListInset(object):
   def postprocess(self, container):
     "Postprocess a container, extract any list inset and return it."
     return container
+    listinsets = container.searchall(ListInset)
+    if len(listinsets) == 0:
+      return container
+    if len(listinsets) > 1:
+      Trace.error('More than one ListInset in container: ' + unicode(listinsets))
+      return container
+    return listinsets[0]
 
 Postprocessor.rootstages += [PostListInset()]
 

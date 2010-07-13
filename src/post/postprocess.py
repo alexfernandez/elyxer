@@ -41,8 +41,12 @@ class Postprocessor(object):
 
   def postprocessroot(self, root):
     "Postprocess the root container with all rootstages."
+    if not root:
+      return None
     for stage in self.rootstages:
       root = stage.postprocess(root)
+      if not root:
+        return None
     return root
 
   def postprocesscontainer(self, next):
