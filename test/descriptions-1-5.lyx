@@ -139,5 +139,22 @@ some
 .
 \end_layout
 
+\begin_layout Description
+\begin_inset LatexCommand index
+name "Word"
+
+\end_inset
+
+Word that leads a description and which appears in the Index.
+\end_layout
+
+\begin_layout Description
+\begin_inset LatexCommand printindex
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
