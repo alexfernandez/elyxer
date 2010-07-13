@@ -87,12 +87,6 @@ class PartKey(object):
       labeltext = self.anchortext
     return Label().create(labeltext, self.partkey, type='toc')
 
-  def mustsplit(self):
-    "Find out if the part should stand in its own page."
-    if self.header:
-      return False
-    return self.level <= Options.splitpart
-
   def __unicode__(self):
     "Return a printable representation."
     return 'Part key for ' + self.partkey
@@ -121,7 +115,7 @@ class LayoutPartKey(PartKey):
     self.tocsuffix = u': '
     if self.level == Options.splitpart and self.isnumbered(layout):
       self.filename = self.number
-    else:
+    elif self.level <= Options.splitpart:
       self.filename = self.partkey.replace('toc-', '').replace('*', '-')
     if self.isnumbered(layout):
       self.tocentry += ' ' + self.number

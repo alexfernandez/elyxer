@@ -243,7 +243,9 @@ class SplitPartBasket(Basket):
     "Find out if the oputput file has to be split at this entry."
     if not container.partkey:
       return False
-    return container.partkey.mustsplit()
+    if not container.partkey.filename:
+      return False
+    return True
 
   def getfilename(self, container):
     "Get the new file name for a given container."
