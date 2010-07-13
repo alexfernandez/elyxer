@@ -183,28 +183,6 @@ class PartKeyGenerator(object):
     "Get the part key for a layout."
     if not LayoutPartKey.needspartkey(layout):
       return None
-    return LayoutPartKey(layout)
-
-  def numberlayout(self, layout):
-    "Set all attributes: number, entry, level..."
-    if self.generator.isunique(layout):
-      number = self.generator.generateunique(layout.type)
-      partkey = self.getpartkey(layout, number)
-      layout.partkey = partkey
-      return
-    if not self.generator.isinordered(layout):
-      return
-    # ordered or unordered
-    if self.generator.isnumbered(layout):
-      number = self.generator.generateordered(layout.type)
-    else:
-      number = self.generator.generateunique(layout.type)
-    partkey = self.getpartkey(layout, number)
-    layout.partkey = partkey
-
-  def getpartkey(self, layout, number):
-    "Get the common attributes for a layout."
-    partkey = LayoutPartKey(layout, number)
     PartKeyGenerator.lastnumbered = layout
-    return partkey
+    return LayoutPartKey(layout)
 
