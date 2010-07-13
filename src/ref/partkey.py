@@ -73,6 +73,13 @@ class PartKey(object):
     self.header = True
     return self
 
+  def createanchor(self, partkey):
+    "Create an anchor for the page."
+    self.partkey = partkey
+    self.tocentry = partkey
+    self.header = True
+    return self
+
   def toclabel(self):
     "Create the label for the TOC."
     labeltext = ''

@@ -44,7 +44,8 @@ class UpAnchor(Link):
   def create(self, container):
     "Create the up anchor based on the first container."
     if not container.partkey:
-      return self.createliteral('None')
+      Trace.error('No part key for ' + unicode(container))
+      return None
     return self.createliteral(container.partkey.tocentry)
 
   def createmain(self):
@@ -52,10 +53,10 @@ class UpAnchor(Link):
     return self.createliteral(Translator.translate('main-page'))
 
   def createliteral(self, literal):
-    "Create the up anchor based on a literal."
+    "Create the up anchor based on a literal string."
     self.complete('', '')
     self.output = EmptyOutput()
-    self.mustsplit = literal
+    self.partkey = PartKey().createanchor(literal)
     return self
 
 class SplitPartNavigation(object):
@@ -134,11 +135,10 @@ class SplitPartNavigation(object):
 
   def setlinkname(self, link, type, container):
     "Set the name on the link."
-    if hasattr(container, 'mustsplit'):
-      entry = container.mustsplit
-    else:
-      entry = container.partkey.tocentry
-    link.contents = [Constant(type + ': ' + entry)]
+    if not container.partkey:
+      Trace.error('No part key for link name ' + unicode(container))
+      return
+    link.contents = [Constant(type + ': ' + container.partkey.tocentry)]
 
 class SplitTOCBasket(MemoryBasket):
   "A memory basket which contains a split table of contents."
