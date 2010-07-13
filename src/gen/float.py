@@ -245,11 +245,10 @@ class PostFloat(object):
       index = float.parentfloat.children.index(float)
       number = NumberGenerator.instance.letter(index).lower()
       entry = '(' + number + ')'
-      float.partkey = PartKey().createfloat(entry, number)
     else:
       number = NumberGenerator.instance.generatechaptered(float.type, float.chapter)
       entry = Translator.translate('float-' + float.type) + number
-      float.partkey = PartKey().createfloat(entry, number)
+    float.partkey = PartKey().createfloat(entry, number)
 
 class PostWrap(PostFloat):
   "For a wrap: exactly like a float"
