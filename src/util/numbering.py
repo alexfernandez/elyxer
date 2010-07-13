@@ -169,7 +169,6 @@ class LayoutNumberer(object):
     else:
       number = self.generator.generateunique(layout.type)
     partkey = self.getpartkey(layout, number)
-    layout.output.tag = layout.output.tag.replace('?', unicode(partkey.level))
     layout.partkey = partkey
 
   def getpartkey(self, layout, number):

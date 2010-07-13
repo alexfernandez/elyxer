@@ -57,6 +57,8 @@ class Layout(Container):
     if self.containsappendix():
       self.activateappendix()
     LayoutNumberer.instance.numberlayout(self)
+    if self.partkey:
+      self.output.tag = self.output.tag.replace('?', unicode(self.partkey.level))
 
   def containsappendix(self):
     "Find out if there is an appendix somewhere in the layout"
@@ -227,11 +229,6 @@ class PostLayout(object):
     if layout.partkey.anchortext:
       layout.contents.insert(1, Constant(u' '))
     return layout
-
-  def modifylayout(self, layout, type):
-    "Modify a layout according to the given type."
-    layout.partkey.level = NumberGenerator.instance.getlevel(type)
-    layout.output.tag = layout.output.tag.replace('?', unicode(layout.partkey.level))
 
   def containsappendix(self, layout):
     "Find out if there is an appendix somewhere in the layout"
