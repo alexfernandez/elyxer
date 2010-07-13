@@ -166,3 +166,12 @@ class PrintNomenclature(ListInset):
       text = TaggedText().complete(contents, 'div class="Nomenclated"', True)
       self.contents.append(text)
 
+class PostListInset(object):
+  "Postprocess any container that contains a list inset."
+
+  def postprocess(self, container):
+    "Postprocess a container, extract any list inset and return it."
+    return container
+
+Postprocessor.rootstages += [PostListInset()]
+
