@@ -131,10 +131,6 @@ class LayoutPartKey(PartKey):
       else:
         self.anchortext = self.number
 
-  def deasterisk(self, type):
-    "Get the type without the asterisk for unordered types."
-    return type.replace('*', '')
-
   def getlevel(self, type):
     "Get the level that corresponds to a type."
     type = self.deasterisk(type)
@@ -157,11 +153,11 @@ class LayoutPartKey(PartKey):
 
   def isunique(cls, layout):
     "Find out if the layout requires unique numbering."
-    return layout.type in LayoutPartKey.unique
+    return cls.deasterisk(layout.type) in LayoutPartKey.unique
 
   def isinordered(cls, layout):
     "Find out if a layout is ordered or unordered."
-    return layout.type in LayoutPartKey.ordered
+    return cls.deasterisk(layout.type) in LayoutPartKey.ordered
 
   def needspartkey(cls, layout):
     "Find out if a layout needs a part key."
@@ -169,9 +165,14 @@ class LayoutPartKey(PartKey):
       return True
     return cls.isinordered(layout)
 
+  def deasterisk(cls, type):
+    "Get the type without the asterisk for unordered types."
+    return type.replace('*', '')
+
   isunique = classmethod(isunique)
   isinordered = classmethod(isinordered)
   needspartkey = classmethod(needspartkey)
+  deasterisk = classmethod(deasterisk)
 
 class PartKeyGenerator(object):
   "Number a layout with the relevant attributes."
