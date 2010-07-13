@@ -118,6 +118,11 @@ class LayoutPartKey(PartKey):
       self.filename = number
     else:
       self.filename = self.partkey.replace('toc-', '').replace('*', '-')
+    if self.isnumbered(layout):
+      if self.isunique(layout):
+        self.anchortext = self.tocentry + '.'
+      else:
+        self.anchortext = number
 
   def deasterisk(self, type):
     "Get the type without the asterisk for unordered types."
@@ -131,17 +136,17 @@ class LayoutPartKey(PartKey):
     level = self.ordered.index(type) + 1
     return level - DocumentParameters.startinglevel
 
-  def isunique(sel):
-    "Find out if the container requires unique numbering."
-    return self.type in self.unique
+  def isunique(self, layout):
+    "Find out if the layout requires unique numbering."
+    return layout.type in self.unique
 
-  def isinordered(self, container):
-    "Find out if a container is ordered or unordered."
-    return self.type in self.ordered
+  def isinordered(self, layout):
+    "Find out if a layout is ordered or unordered."
+    return layout.type in self.ordered
 
-  def isnumbered(self, container):
-    "Find out if a container is numbered."
-    if '*' in container.type:
+  def isnumbered(self, layout):
+    "Find out if a layout is numbered."
+    if '*' in layout.type:
       return False
     if self.level > DocumentParameters.maxdepth:
       return False

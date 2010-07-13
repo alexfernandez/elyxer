@@ -159,9 +159,6 @@ class LayoutNumberer(object):
     if self.generator.isunique(layout):
       number = self.generator.generateunique(layout.type)
       partkey = self.getpartkey(layout, number)
-      partkey.anchortext = ''
-      if self.generator.isnumbered(layout):
-        partkey.anchortext = partkey.tocentry + '.'
       layout.partkey = partkey
       return
     if not self.generator.isinordered(layout):
@@ -172,9 +169,6 @@ class LayoutNumberer(object):
     else:
       number = self.generator.generateunique(layout.type)
     partkey = self.getpartkey(layout, number)
-    partkey.anchortext = ''
-    if self.generator.isnumbered(layout):
-      partkey.anchortext = partkey.number
     layout.output.tag = layout.output.tag.replace('?', unicode(partkey.level))
     layout.partkey = partkey
 
