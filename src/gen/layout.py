@@ -37,6 +37,8 @@ from ref.link import *
 class Layout(Container):
   "A layout (block of text) inside a lyx file"
 
+  generator = PartKeyGenerator()
+
   def __init__(self):
     self.contents = list()
     self.parser = BoundedParser()
@@ -47,7 +49,8 @@ class Layout(Container):
     if self.type in TagConfig.layouts:
       self.output.tag = TagConfig.layouts[self.type] + ' class="' + self.type + '"'
     elif self.type.replace('*', '') in TagConfig.layouts:
-      self.output.tag = TagConfig.layouts[self.type.replace('*', '')] + ' class="' +  self.type.replace('*', '-') + '"'
+      self.output.tag = TagConfig.layouts[self.type.replace('*', '')]
+      self.output.tag += ' class="' +  self.type.replace('*', '-') + '"'
     else:
       self.output.tag = 'div class="' + self.type + '"'
     self.numerate()
@@ -56,9 +59,10 @@ class Layout(Container):
     "Numerate if necessary."
     if self.containsappendix():
       self.activateappendix()
-    LayoutNumberer.instance.numberlayout(self)
-    if self.partkey:
-      self.output.tag = self.output.tag.replace('?', unicode(self.partkey.level))
+    partkey = self.generator.forlayout(self)
+    if partkey:
+      self.partkey = partkey
+      self.output.tag = self.output.tag.replace('?', unicode(partkey.level))
 
   def containsappendix(self):
     "Find out if there is an appendix somewhere in the layout"

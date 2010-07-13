@@ -95,22 +95,6 @@ class NumberGenerator(object):
     level = NumberGenerator.ordered.index(type) + 1
     return level - DocumentParameters.startinglevel
 
-  def isunique(self, container):
-    "Find out if a container requires unique numbering."
-    return self.deasterisk(container.type) in NumberGenerator.unique
-
-  def isinordered(self, container):
-    "Find out if a container is ordered or unordered."
-    return self.deasterisk(container.type) in NumberGenerator.ordered
-
-  def isnumbered(self, container):
-    "Find out if a container is numbered."
-    if '*' in container.type:
-      return False
-    if self.getlevel(container.type) > DocumentParameters.maxdepth:
-      return False
-    return True
-
   def increase(self, number):
     "Increase the number (or letter)"
     if not isinstance(number, str):

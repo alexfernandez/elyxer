@@ -100,29 +100,36 @@ class PartKey(object):
 class LayoutPartKey(PartKey):
   "The part key for a layout."
 
+  generator = NumberGenerator.instance
   unique = NumberingConfig.layouts['unique']
   ordered = NumberingConfig.layouts['ordered']
 
-  def __init__(self, layout, number):
+  def __init__(self, layout):
     "Create a part key for a layout."
-    rawtype = layout.type
     self.level = self.getlevel(layout.type)
-    self.partkey = 'toc-' + rawtype + '-' + number
+    if LayoutPartKey.isunique(layout):
+      self.number = self.generator.generateunique(layout.type)
+    else:
+      if self.isnumbered(layout):
+        self.number = self.generator.generateordered(layout.type)
+      else:
+        self.number = self.generator.generateunique(layout.type)
+    rawtype = layout.type
+    self.partkey = 'toc-' + rawtype + '-' + self.number
     realtype = self.deasterisk(rawtype)
     self.tocentry = Translator.translate(realtype)
     self.tocsuffix = u': '
-    self.number = number
     if self.level == Options.splitpart and self.isnumbered(layout):
-      self.filename = number
+      self.filename = self.number
     else:
       self.filename = self.partkey.replace('toc-', '').replace('*', '-')
     if self.isnumbered(layout):
-      self.tocentry += ' ' + number
+      self.tocentry += ' ' + self.number
       self.tocsuffix = u':'
       if self.isunique(layout):
         self.anchortext = self.tocentry + '.'
       else:
-        self.anchortext = number
+        self.anchortext = self.number
 
   def deasterisk(self, type):
     "Get the type without the asterisk for unordered types."
@@ -136,19 +143,11 @@ class LayoutPartKey(PartKey):
     level = self.ordered.index(type) + 1
     return level - DocumentParameters.startinglevel
 
-  def isunique(self, layout):
-    "Find out if the layout requires unique numbering."
-    return layout.type in self.unique
-
-  def isinordered(self, layout):
-    "Find out if a layout is ordered or unordered."
-    return layout.type in self.ordered
-
   def isnumbered(self, layout):
     "Find out if a layout is numbered."
     if '*' in layout.type:
       return False
-    if self.level > DocumentParameters.maxdepth:
+    if self.getlevel(layout.type) > DocumentParameters.maxdepth:
       return False
     return True
 
@@ -156,14 +155,34 @@ class LayoutPartKey(PartKey):
     "Get a printable representation."
     return 'Part key for layout ' + self.tocentry
 
-class LayoutNumberer(object):
+  def isunique(cls, layout):
+    "Find out if the layout requires unique numbering."
+    return layout.type in LayoutPartKey.unique
+
+  def isinordered(cls, layout):
+    "Find out if a layout is ordered or unordered."
+    return layout.type in LayoutPartKey.ordered
+
+  def needspartkey(cls, layout):
+    "Find out if a layout needs a part key."
+    if cls.isunique(layout):
+      return True
+    return cls.isinordered(layout)
+
+  isunique = classmethod(isunique)
+  isinordered = classmethod(isinordered)
+  needspartkey = classmethod(needspartkey)
+
+class PartKeyGenerator(object):
   "Number a layout with the relevant attributes."
 
-  instance = None
+  lastnumbered = None
 
-  def __init__(self):
-    self.generator = NumberGenerator.instance
-    self.lastnumbered = None
+  def forlayout(self, layout):
+    "Get the part key for a layout."
+    if not LayoutPartKey.needspartkey(layout):
+      return None
+    return LayoutPartKey(layout)
 
   def numberlayout(self, layout):
     "Set all attributes: number, entry, level..."
@@ -185,8 +204,6 @@ class LayoutNumberer(object):
   def getpartkey(self, layout, number):
     "Get the common attributes for a layout."
     partkey = LayoutPartKey(layout, number)
-    self.lastnumbered = layout
+    PartKeyGenerator.lastnumbered = layout
     return partkey
-
-LayoutNumberer.instance = LayoutNumberer()
 

@@ -39,7 +39,7 @@ class PostLabel(object):
 
   def postprocess(self, last, label, next):
     "Remember the last numbered container seen."
-    label.lastnumbered = LayoutNumberer.instance.lastnumbered
+    label.lastnumbered = PartKeyGenerator.lastnumbered
     return label
 
 Postprocessor.stages += [PostLabel]
