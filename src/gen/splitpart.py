@@ -248,7 +248,6 @@ class SplitPartBasket(Basket):
   def getfilename(self, container):
     "Get the new file name for a given container."
     partname = container.partkey.filename
-    Trace.debug('Part name for ' + unicode(container) + ': ' + partname)
     base, extension = os.path.splitext(self.filename)
     return base + '-' + partname + extension
 
