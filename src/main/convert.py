@@ -33,7 +33,7 @@ from gen.inset import *
 from gen.basket import *
 from gen.integral import *
 from gen.splitpart import *
-from post.postprocess import *
+from proc.process import *
 from maths.postformula import *
 from ref.postlabel import *
 
@@ -85,15 +85,16 @@ class eLyXerConverter(object):
   def processcontents(self):
     "Parse the contents and write it by containers"
     factory = ContainerFactory()
-    self.postproc = Postprocessor()
+    processor = Processor()
     while not self.reader.finished():
       container = factory.createcontainer(self.reader)
+      processor.process(container)
       if container and not self.filtered(container):
-        result = self.postproc.postprocess(container)
+        result = processor.postprocess(container)
         if result:
           self.basket.write(result)
     # last round: clear the pipeline
-    result = self.postproc.postprocess(None)
+    result = processor.postprocess(None)
     if result:
       self.basket.write(result)
     if not self.filtering:

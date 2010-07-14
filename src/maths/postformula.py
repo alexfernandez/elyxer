@@ -24,7 +24,7 @@
 
 from maths.command import *
 from maths.array import *
-from post.postprocess import *
+from proc.postprocess import *
 from ref.link import *
 from ref.label import *
 

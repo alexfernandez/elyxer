@@ -28,7 +28,7 @@ from out.output import *
 from gen.container import *
 from gen.styles import *
 from gen.header import *
-from post.postprocess import *
+from proc.postprocess import *
 from ref.label import *
 from ref.partkey import *
 from ref.link import *
@@ -38,6 +38,7 @@ class Layout(Container):
   "A layout (block of text) inside a lyx file"
 
   generator = PartKeyGenerator()
+  type = 'none'
 
   def __init__(self):
     self.contents = list()

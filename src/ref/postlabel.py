@@ -29,7 +29,7 @@ from gen.container import *
 from gen.styles import *
 from ref.link import *
 from ref.partkey import *
-from post.postprocess import *
+from proc.postprocess import *
 
 
 class PostLabel(object):

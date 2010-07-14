@@ -29,11 +29,13 @@ from out.output import *
 from gen.layout import *
 from gen.image import *
 from ref.label import *
-from post.postprocess import *
+from proc.postprocess import *
 
 
 class Float(Container):
   "A floating inset"
+
+  type = 'none'
 
   def __init__(self):
     self.parser = InsetParser()

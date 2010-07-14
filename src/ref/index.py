@@ -30,6 +30,7 @@ from gen.container import *
 from gen.styles import *
 from ref.link import *
 from ref.partkey import *
+from proc.process import *
 
 
 class ListInset(Container):
@@ -77,6 +78,7 @@ class IndexEntry(Link):
 
   entries = dict()
   arrows = dict()
+  name = 'none'
 
   namescapes = {'!':'', '|':', ', '  ':' '}
   keyescapes = {' ':'-', '--':'-', ',':''}
@@ -166,11 +168,11 @@ class PrintNomenclature(ListInset):
       text = TaggedText().complete(contents, 'div class="Nomenclated"', True)
       self.contents.append(text)
 
-class PostListInset(object):
-  "Postprocess any container that contains a list inset."
+class PreListInset(object):
+  "Preprocess any container that contains a list inset."
 
-  def postprocess(self, container):
-    "Postprocess a container, extract any list inset and return it."
+  def preprocess(self, container):
+    "Preprocess a container, extract any list inset and return it."
     return container
     listinsets = container.searchall(ListInset)
     if len(listinsets) == 0:
@@ -180,5 +182,5 @@ class PostListInset(object):
       return container
     return listinsets[0]
 
-Postprocessor.rootstages += [PostListInset()]
+Processor.prestages += [PreListInset()]
 

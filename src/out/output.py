@@ -57,8 +57,8 @@ class ContentsOutput(object):
 class TaggedOutput(ContentsOutput):
   "Outputs an HTML tag surrounding the contents"
 
-  def __init__(self):
-    self.breaklines = False
+  tag = 'none'
+  breaklines = False
 
   def settag(self, tag, breaklines=False):
     "Set the value for the tag"

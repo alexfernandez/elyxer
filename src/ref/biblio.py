@@ -27,7 +27,7 @@ from parse.parser import *
 from out.output import *
 from ref.link import *
 from gen.layout import *
-from post.postprocess import *
+from proc.postprocess import *
 
 
 class BiblioCitation(Container):

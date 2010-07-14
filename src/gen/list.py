@@ -26,11 +26,13 @@ from util.trace import Trace
 from parse.parser import *
 from out.output import *
 from gen.container import *
-from post.postprocess import *
+from proc.postprocess import *
 
 
 class ListItem(Container):
   "An element in a list"
+
+  type = 'none'
 
   def __init__(self):
     "Output should be empty until the postprocessor can group items"

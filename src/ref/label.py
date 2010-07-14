@@ -28,7 +28,7 @@ from out.output import *
 from gen.container import *
 from gen.styles import *
 from ref.link import *
-from post.postprocess import *
+from proc.postprocess import *
 
 
 class Label(Link):
@@ -86,6 +86,7 @@ class Reference(Link):
       'ref':u'@↕', 'eqref':u'(@↕)', 'pageref':u'#↕',
       'vref':u'@on-page#↕'
       }
+  key = 'none'
 
   def process(self):
     "Read the reference and set the arrow."

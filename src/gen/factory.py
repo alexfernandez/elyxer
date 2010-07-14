@@ -79,7 +79,6 @@ class ContainerFactory(object):
     container.begin = parser.begin
     container.contents = parser.parse(reader)
     container.parameters = parser.parameters
-    container.process()
     container.parser = None
 
   def getending(self, container):
