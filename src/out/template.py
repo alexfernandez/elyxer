@@ -182,7 +182,7 @@ class DefaultTemplate(HTMLTemplate):
   def getfooter(self):
     "Get the default footer (after content)."
     html = []
-    html.append('\n\n')
+    html.append('\n')
     footer = self.createfooter()
     if len(footer) > 0:
       html.append('<hr class="footer"/>\n')

@@ -4,13 +4,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="generator" content="http://www.nongnu.org/elyxer/"/>
-<meta name="create-date" content="2010-05-11"/>
+<meta name="create-date" content="2010-07-14"/>
 <link rel="stylesheet" href="../docs/lyx.css" type="text/css" media="screen"/>
 <title>Math Test</title>
 </head>
 <body>
 <div id="globalWrapper">
-
 <h1 class="title">
 Math Test
 </h1>
@@ -18,16 +17,16 @@ Math Test
 <a class="toc" name="toc-Section-1">1</a> Limit
 </h1>
 <div class="Unindented">
-A limit: 
-<div class="formula">
+A limit: <div class="formula">
 lim<sub><i>x</i> → ∞</sub><i>f</i>(<i>x</i>), 
-</div>which should appear as <span class="formula"><i>x</i> → ∞</span> in italics, and «lim» in plain style. Inlined: <span class="formula">lim<sub><i>x</i> → ∞</sub><i>f</i>(<i>x</i>)</span>.
+</div>
+which should appear as <span class="formula"><i>x</i> → ∞</span> in italics, and «lim» in plain style. Inlined: <span class="formula">lim<sub><i>x</i> → ∞</sub><i>f</i>(<i>x</i>)</span>.
 </div>
 <div class="Indented">
-And why not, a sum: 
-<div class="formula">
+And why not, a sum: <div class="formula">
 <span class="bigsymbol">∑</span><span class="limits"><sup class="bigsymbol">∞</sup><sub class="bigsymbol"><i>i</i> = 1</sub></span><i>x</i>, 
-</div>where the sum’s limits should appear below (<span class="formula"><i>i</i> = 1</span>) and above (<span class="formula">∞</span>) the <span class="formula"><span class="bigsymbol">∑</span></span>. Inlined: <span class="formula"><span class="bigsymbol">∑</span><span class="limits"><sup class="bigsymbol">∞</sup><sub class="bigsymbol"><i>i</i> = 1</sub></span><i>x</i>.</span> Integral: <span class="formula"><span class="bigsymbol">∫</span><span class="limits"><sup class="bigsymbol">∞</sup><sub class="bigsymbol"><i>i</i> = 1</sub></span><i>x</i>.</span>
+</div>
+where the sum’s limits should appear below (<span class="formula"><i>i</i> = 1</span>) and above (<span class="formula">∞</span>) the <span class="formula"><span class="bigsymbol">∑</span></span>. Inlined: <span class="formula"><span class="bigsymbol">∑</span><span class="limits"><sup class="bigsymbol">∞</sup><sub class="bigsymbol"><i>i</i> = 1</sub></span><i>x</i>.</span> Integral: <span class="formula"><span class="bigsymbol">∫</span><span class="limits"><sup class="bigsymbol">∞</sup><sub class="bigsymbol"><i>i</i> = 1</sub></span><i>x</i>.</span>
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-2">2</a> Numeration
@@ -36,19 +35,19 @@ And why not, a sum:
 Equations can be numbered, like <a class="Reference" href="#eq:first">1↓</a>.
 </div>
 <div class="Indented">
-
 <div class="formula">
 <a class="eqnumber" name="eq:first">(1) </a><i>y</i> = <i>x</i>
 </div>
+
 </div>
 <div class="Indented">
 And also like <a class="Reference" href="#eq:second">2↓</a>.
 </div>
 <div class="Indented">
-
 <div class="formula">
 <a class="eqnumber" name="eq:second">(2) </a><i>x</i> = 3
 </div>
+
 </div>
 <div class="Indented">
 Notice that eq. <a class="Reference" href="#eq:second">2↑</a> comes after eq. <a class="Reference" href="#eq:first">1↑</a>.
@@ -57,22 +56,18 @@ Notice that eq. <a class="Reference" href="#eq:second">2↑</a> comes after eq. 
 Some equations can also be numbered, even if they don’t have a label.
 </div>
 <div class="Indented">
-
 <div class="formula">
 <a class="eqnumber" name="eq-3">(3) </a><i>x</i> = 2<i>y</i>
 </div>
+
 </div>
 <div class="Indented">
 Other equations that contain * should not numbered, but perhaps aligned:
 </div>
 <div class="Indented">
-
 <div class="formula">
-
 <table class="environment">
-
 <tr>
-
 <td class="formula-r">
 <i>left</i>
 </td>
@@ -82,19 +77,19 @@ Other equations that contain * should not numbered, but perhaps aligned:
 <td class="formula-r">
 <i>right</i>
 </td>
+
 </tr>
+
 </table>
+
 </div>
+
 </div>
 <div class="Indented">
-Some environments allow for multiple labels: 
-<div class="formula">
-
+Some environments allow for multiple labels: <div class="formula">
 <table class="environment">
-
 <tr>
-<a class="eqnumber" name="eq:third">(4) </a>
-<td class="formula-r">
+<a class="eqnumber" name="eq:third">(4) </a><td class="formula-r">
 <i>a</i>
 </td>
 <td class="formula-c">
@@ -103,10 +98,10 @@ Some environments allow for multiple labels:
 <td class="formula-l">
 <i>b</i> × <i>c</i>
 </td>
+
 </tr>
 <tr>
-<a class="eqnumber" name="eq:fourth">(5) </a>
-<td class="formula-r">
+<a class="eqnumber" name="eq:fourth">(5) </a><td class="formula-r">
 <i>c</i> × <i>d</i> × <i>e</i>
 </td>
 <td class="formula-c">
@@ -115,72 +110,76 @@ Some environments allow for multiple labels:
 <td class="formula-l">
 <i>i</i>.
 </td>
+
 </tr>
+
 </table>
+
 </div>
+
 </div>
 <div class="Indented">
-Now a random environment:<span class="formula">
-<table class="environment">
-
+Now a random environment:<span class="formula"><table class="environment">
 <tr>
-
 <td class="formula-l">
 <i>x</i>
 </td>
+
 </tr>
-</table><i>y</i></span>.
+
+</table>
+<i>y</i></span>.
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-3">3</a> Parentheses
 </h1>
 <div class="Unindented">
-Some delimiters also taken from the Spanish Lyx User’s Guide. An array: 
-<div class="formula">
-<span class="symbol">[</span>
-<table class="formula">
-
+Some delimiters also taken from the Spanish Lyx User’s Guide. An array: <div class="formula">
+<span class="symbol">[</span><table class="formula">
 <tr>
-
 <td class="formula-l">
 12
 </td>
 <td class="formula-c">
 2
 </td>
+
 </tr>
 <tr>
-
 <td class="formula-l">
 3
 </td>
 <td class="formula-c">
 4 × <i>y</i><sup><i>x</i></sup>
 </td>
+
 </tr>
-</table><span class="symbol">]</span>
-</div>And an inline array <span class="formula"><span class="symbol">[</span>
-<table class="formula">
 
+</table>
+<span class="symbol">]</span>
+</div>
+And an inline array <span class="formula"><span class="symbol">[</span><table class="formula">
 <tr>
-
 <td class="formula-c">
 <i>a</i>
 </td>
 <td class="formula-c">
 <i>b</i>
 </td>
+
 </tr>
 <tr>
-
 <td class="formula-c">
 <i>c</i>
 </td>
 <td class="formula-c">
 <i>dio</i>
 </td>
+
 </tr>
-</table><span class="symbol">]</span></span>.
+
+</table>
+<span class="symbol">]</span></span>.
 </div>
 <div class="Indented">
 There are also big brackets: <span class="formula"><span class="symbol">(</span><i>a</i><span class="symbol">)</span></span> <span class="formula"><span class="symbol">[</span><i>b</i><span class="symbol">]</span></span> <span class="formula"><span class="symbol">{</span><i>c</i><span class="symbol">}</span></span> <span class="formula"><span class="symbol">⟨</span><i>d</i><span class="symbol">⟩</span></span> <span class="formula"><span class="symbol">|</span><i>e</i><span class="symbol">|</span></span> <span class="formula"><span class="bigsymbol">⟨</span><i>f</i><span class="bigsymbol">⟩</span></span>.
@@ -192,40 +191,40 @@ Aligned brackets can be present: <span class="formula"><span class="symbol">(</s
 <a class="toc" name="toc-Section-4">4</a> Fraction
 </h1>
 <div class="Unindented">
-A big recursive fraction: 
-<div class="formula">
+A big recursive fraction: <div class="formula">
 <span class="fraction"><span class="numerator">1</span><span class="denominator"><span class="symbol">(</span>1 + <span class="symbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + <span class="symbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + 2<i>x</i></span></span><span class="symbol">)</span></span></span><span class="symbol">)</span><span class="symbol">)</span></span></span>
 </div>
+
 </div>
 <div class="Indented">
 A nice fraction: <span class="formula"><span class="fraction"><sup class="numerator">5</sup>⁄<sub class="denominator">6</sub></span></span>.
 </div>
 <div class="Indented">
-A non-diminishing fraction containing alignments:
-<div class="formula">
+A non-diminishing fraction containing alignments:<div class="formula">
 <span class="fullfraction"><span class="numerator">1</span><span class="denominator">1 + <span class="symbol">(</span><span class="fullfraction"><span class="numeratorl">1</span><span class="denominator">1 + <i>x</i></span></span> × <span class="fullfraction"><span class="numeratorr">1</span><span class="denominator">1 + <i>x</i></span></span><span class="symbol">)</span></span></span>.
 </div>
+
 </div>
 <div class="Indented">
-A similar concept is a binomial coefficient: <span class="formula"><span class="bigsymbol">(</span><span class="binom"><span class="upbinom"><i>A</i> + 1</span><span class="downbinom"><i>B</i></span></span><span class="bigsymbol">)</span>.</span> It can be prettily presented: 
-<div class="formula">
+A similar concept is a binomial coefficient: <span class="formula"><span class="bigsymbol">(</span><span class="binom"><span class="upbinom"><i>A</i> + 1</span><span class="downbinom"><i>B</i></span></span><span class="bigsymbol">)</span>.</span> It can be prettily presented: <div class="formula">
 <span class="bigsymbol">(</span><span class="fullbinom"><span class="upbinom"><i>A</i></span><span class="downbinom"><i>B</i> + 1</span></span><span class="bigsymbol">)</span>.
 </div>
+
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-5">5</a> Roots
 </h1>
 <div class="Unindented">
-A square root: <span class="formula"><span class="sqrt"><span class="radical">√</span><span class="root">3</span></span>.</span> A more complex square root in a fraction:
-<div class="formula">
+A square root: <span class="formula"><span class="sqrt"><span class="radical">√</span><span class="root">3</span></span>.</span> A more complex square root in a fraction:<div class="formula">
 <span class="fraction"><span class="numerator">1</span><span class="denominator"><span class="symbol">(</span>1 + <span class="sqrt"><span class="radical">√</span><span class="root">2</span></span><span class="symbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + <span class="sqrt"><span class="radical">√</span><span class="root">2</span></span></span></span><span class="symbol">)</span> + <span class="sqrt"><span class="radical">√</span><span class="root"><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span></span><span class="symbol">)</span></span></span>.
 </div>
+
 </div>
 <div class="Indented">
-Higher order roots: <span class="formula"><sup>3</sup><span class="sqrt"><span class="radical">√</span><span class="root"><i>x</i> + <i>y</i></span></span></span>, <span class="formula"><sup><i>x</i> + 1</sup><span class="sqrt"><span class="radical">√</span><span class="root"><i>Weight</i></span></span></span>. In a fraction:
-<div class="formula">
+Higher order roots: <span class="formula"><sup>3</sup><span class="sqrt"><span class="radical">√</span><span class="root"><i>x</i> + <i>y</i></span></span></span>, <span class="formula"><sup><i>x</i> + 1</sup><span class="sqrt"><span class="radical">√</span><span class="root"><i>Weight</i></span></span></span>. In a fraction:<div class="formula">
 <span class="fraction"><span class="numerator"><sup><span class="fraction"><sup class="numerator">7</sup>⁄<sub class="denominator">8</sub></span></sup><span class="sqrt"><span class="radical">√</span><span class="root"><span class="fraction"><span class="numerator">8</span><span class="denominator">4</span></span><i>x</i></span></span></span><span class="denominator"><sup><i>s</i> + 5</sup><span class="sqrt"><span class="radical">√</span><span class="root"><span class="fraction"><span class="numerator">(78<i>x</i> + 45<i>y</i>) × <span class="sqrt"><span class="radical">√</span><span class="root"><i>Height</i></span></span></span><span class="denominator">sin(<i>x</i> + 1)</span></span> + 5</span></span></span></span>.
 </div>
+
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-6">6</a> Decorations
@@ -237,43 +236,43 @@ Higher order roots: <span class="formula"><sup>3</sup><span class="sqrt"><span c
 Used to switch several values.
 </div>
 <div class="Indented">
-<span class="formula"><i>y</i> = 
-<table class="cases">
-
+<span class="formula"><i>y</i> = <table class="cases">
 <tr>
-
 <td class="formula-l">
 <i>x</i>
 </td>
 <td class="formula-l">
 <i>i</i> = 0, 
 </td>
+
 </tr>
 <tr>
-
 <td class="formula-l">
 <i>x</i> + 1
 </td>
 <td class="formula-l">
 <i>i</i> &lt; 3
 </td>
+
 </tr>
-</table></span>
+
+</table>
+</span>
 </div>
 <h2 class="Subsection">
 <a class="toc" name="toc-Subsection-6.2">6.2</a> Braces
 </h2>
 <div class="Unindented">
-Values can be underbraced or overbraced.
-<div class="formula">
+Values can be underbraced or overbraced.<div class="formula">
 <span class="underbrace"><i>a</i> − <i>b</i></span> = <span class="overbrace"><i>c</i> + <i>d</i> + <i>e</i></span> + <i>f</i>.
 </div>
+
 </div>
 <div class="Indented">
-Underbraces and overbraces can contain text.
-<div class="formula">
+Underbraces and overbraces can contain text.<div class="formula">
 <span class="overbrace"><i>a</i> − <i>b</i></span><sup><i>over</i></sup> = <span class="underbrace"><i>c</i> + <span class="overbrace"><i>d</i> + <i>e</i></span><sup><i>over</i></sup> + <i>f</i></span><sub><i>under</i></sub> + <i>g</i>.
-</div>They can also be inlined: <span class="formula"><span class="overbrace"><i>a</i> + <i>b</i></span><sup><i>over</i></sup></span>.
+</div>
+They can also be inlined: <span class="formula"><span class="overbrace"><i>a</i> + <i>b</i></span><sup><i>over</i></sup></span>.
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-7">7</a> Spacing
@@ -335,7 +334,7 @@ That’s all folks!
 
 <hr class="footer"/>
 <div class="footer" id="generated-by">
-Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 0.44 (2010-05-11)</a> on <span class="create-date">2010-05-11T00:37:50.920634</span>
+Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.0.0 (2010-07-14)</a> on <span class="create-date">2010-07-14T20:46:27.145518</span>
 </div>
 </div>
 </body>

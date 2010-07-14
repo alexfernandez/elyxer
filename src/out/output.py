@@ -84,7 +84,7 @@ class TaggedOutput(ContentsOutput):
       return ''
     open = '<' + self.tag + '>'
     if self.breaklines:
-      return '\n' + open + '\n'
+      return open + '\n'
     return open
 
   def getclose(self, container):
@@ -93,7 +93,7 @@ class TaggedOutput(ContentsOutput):
       return ''
     close = '</' + self.tag.split()[0] + '>'
     if self.breaklines:
-      return '\n' + close
+      return '\n' + close + '\n'
     return close
 
 class StringOutput(object):
