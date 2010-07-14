@@ -87,6 +87,7 @@ class ContainerFactory(object):
     if isinstance(contents, basestring):
       # read a string, set as parsed
       container.parsed = contents
+      container.contents = []
     else:
       container.contents = contents
 

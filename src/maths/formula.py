@@ -45,16 +45,16 @@ class Formula(Container):
         self.output = TaggedOutput().settag('div class="math"')
       else:
         self.output = TaggedOutput().settag('span class="math"')
-      self.contents = [Constant(self.contents[0])]
+      self.contents = [Constant(self.parsed)]
       return
     if Options.mathjax:
       self.output.tag = 'span class="MathJax_Preview"'
       tag = 'script type="math/tex'
       if self.header[0] != 'inline':
         tag += ';mode=display'
-      self.contents = [TaggedText().constant(self.contents[0], tag + '"', True)]
+      self.contents = [TaggedText().constant(self.parsed, tag + '"', True)]
       return
-    whole = WholeFormula.parse(self.contents[0])
+    whole = WholeFormula.parse(self.parsed)
     self.contents = [whole]
     whole.parent = self
 

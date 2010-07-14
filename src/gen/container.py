@@ -199,7 +199,6 @@ class StringContainer(Container):
     self.parser = StringParser()
     self.output = StringOutput()
     self.string = ''
-    self.contents = []
 
   def process(self):
     "Replace special chars from the contents."

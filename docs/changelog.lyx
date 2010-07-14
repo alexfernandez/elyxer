@@ -169,6 +169,12 @@ verbatim input
 Include Index and Nomenclature in the Table of Contents.
 \end_layout
 
+\begin_layout Itemize
+When an Index, TOC, List of Figures\SpecialChar \ldots{}
+ and the like is embedded in another
+ layout, do not follow the style of the layout (thanks, Yaron!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.99 (2010-06-24):

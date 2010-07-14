@@ -27,6 +27,8 @@ from maths.array import *
 from proc.postprocess import *
 from ref.link import *
 from ref.label import *
+from ref.partkey import *
+from util.numbering import *
 
 
 class PostFormula(object):

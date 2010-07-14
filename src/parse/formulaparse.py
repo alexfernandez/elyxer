@@ -51,7 +51,7 @@ class FormulaParser(Parser):
         Trace.error('Unparsed formula line ' + stripped)
       reader.nextline()
     reader.nextline()
-    return [formula]
+    return formula
 
   def parseformula(self, reader):
     "Parse the formula contents"
@@ -131,5 +131,5 @@ class MacroParser(FormulaParser):
     "Parse the formula until the end"
     formula = self.parsemultiliner(reader, self.parent.start, self.ending)
     reader.nextline()
-    return [formula]
+    return formula
   
