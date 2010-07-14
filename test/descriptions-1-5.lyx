@@ -140,6 +140,19 @@ some
 \end_layout
 
 \begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+
+ERT precedes this description, it should be kept.
+\end_layout
+
+\begin_layout Description
 \begin_inset LatexCommand index
 name "Word"
 
