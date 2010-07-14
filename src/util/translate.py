@@ -77,6 +77,9 @@ class Translator(object):
 
   def getuntranslated(self, key):
     "Get the untranslated message."
+    if not key in TranslationConfig.constants:
+      Trace.error('Cannot translate ' + key)
+      return key
     return TranslationConfig.constants[key]
 
 Translator.instance = Translator()
