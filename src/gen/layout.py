@@ -150,10 +150,10 @@ class FirstWorder(Layout):
     return firstcontents, False
 
   def extractfirstcontainer(self, container):
-    "Extract the first word from a string container"
+    "Extract the first container that is a string."
     if isinstance(container, StringContainer):
       return self.extractfirststring(container)
-    if isinstance(container, ERT):
+    if isinstance(container, ERT) or isinstance(container, Link):
       return [container], False
     if len(container.contents) == 0:
       # empty container
