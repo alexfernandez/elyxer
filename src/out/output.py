@@ -57,7 +57,7 @@ class ContentsOutput(object):
 class TaggedOutput(ContentsOutput):
   "Outputs an HTML tag surrounding the contents"
 
-  tag = 'none'
+  tag = None
   breaklines = False
 
   def settag(self, tag, breaklines=False):
