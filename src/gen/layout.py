@@ -77,6 +77,9 @@ class Layout(Container):
     NumberGenerator.instance.number = ['-']
 
   def __unicode__(self):
+    "Return a printable representation."
+    if self.partkey:
+      return 'Layout ' + self.type + ' ' + self.partkey.number
     return 'Layout of type ' + self.type
 
 class StandardLayout(Layout):
