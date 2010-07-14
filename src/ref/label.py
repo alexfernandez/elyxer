@@ -35,6 +35,7 @@ class Label(Link):
   "A label to be referenced"
 
   names = dict()
+  lastlayout = None
 
   def __init__(self):
     Link.__init__(self)
@@ -44,6 +45,7 @@ class Label(Link):
     "Process a label container."
     key = self.parameters['name']
     self.create(' ', key)
+    self.lastnumbered = Label.lastlayout
 
   def create(self, text, key, type = 'Label'):
     "Create the label for a given key."

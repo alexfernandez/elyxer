@@ -171,12 +171,10 @@ class LayoutPartKey(PartKey):
 class PartKeyGenerator(object):
   "Number a layout with the relevant attributes."
 
-  lastnumbered = None
-
   def forlayout(self, layout):
     "Get the part key for a layout."
     if not LayoutPartKey.needspartkey(layout):
       return None
-    PartKeyGenerator.lastnumbered = layout
+    Label.lastlayout = layout
     return LayoutPartKey(layout)
 

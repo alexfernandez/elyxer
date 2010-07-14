@@ -36,12 +36,11 @@ class Processor(object):
     "Set filtering mode (to skip postprocessing)."
     self.filtering = filtering
     self.postprocessor = Postprocessor()
-    self.last = None
 
   def process(self, container):
     "Do the whole processing on a container."
     container = self.preprocess(container)
-    self.processcurrent(container)
+    self.processcontainer(container)
     if container and not self.filtered(container):
       container = self.postprocess(container)
       return container
@@ -57,12 +56,12 @@ class Processor(object):
         return None
     return root
 
-  def processcurrent(self, container):
+  def processcontainer(self, container):
     "Process a container and its contents, recursively."
     if not container:
       return
     for element in container.contents:
-      self.processcurrent(element)
+      self.processcontainer(element)
     container.process()
 
   def filtered(self, container):
