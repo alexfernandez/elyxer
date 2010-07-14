@@ -96,9 +96,9 @@ class IntegralTOC(IntegralProcessor):
     "Fill in a Table of Contents."
     converter = TOCConverter()
     for container in IntegralTOC.tocentries:
-      toc.add(converter.translate(container))
+      toc.add(converter.convertindented(container))
     # finish off with the footer to align indents
-    toc.add(converter.translate(LyXFooter()))
+    toc.add(converter.convertindented(LyXFooter()))
 
   def writetotoc(self, entries, toc):
     "Write some entries to the TOC."

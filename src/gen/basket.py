@@ -80,7 +80,7 @@ class TOCBasket(Basket):
 
   def write(self, container):
     "Write the table of contents for a container."
-    entry = self.converter.translate(container)
+    entry = self.converter.convertindented(container)
     self.writer.write(entry.gethtml())
 
   def finish(self):

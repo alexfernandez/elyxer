@@ -155,8 +155,8 @@ class TOCConverter(object):
   def __init__(self):
     self.indenter = Indenter()
 
-  def translate(self, container):
-    "Translate a container to an indented TOC entry."
+  def convertindented(self, container):
+    "Convert a container into an indented TOC entry."
     entry = self.convert(container)
     if not entry:
       return BlackBox()
@@ -175,6 +175,7 @@ class TOCConverter(object):
       return TOCConverter.cache[container.partkey.partkey]
     if container.partkey.level > DocumentParameters.tocdepth:
       return None
+    Trace.debug('Converting ' + unicode(container))
     entry = TOCEntry().create(container)
     TOCConverter.cache[container.partkey.partkey] = entry
     TOCConverter.tree.store(entry)

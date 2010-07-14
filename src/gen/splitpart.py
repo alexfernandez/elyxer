@@ -171,7 +171,7 @@ class SplitTOCBasket(MemoryBasket):
     text = Translator.translate('toc-for') + self.root.partkey.tocentry
     toc = TableOfContents().create(text)
     self.addbranches(self.root, toc)
-    toc.add(self.converter.translate(LyXFooter()))
+    toc.add(self.converter.convertindented(LyXFooter()))
     self.write(toc)
 
   def addbranches(self, entry, toc):
