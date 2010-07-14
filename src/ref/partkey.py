@@ -108,9 +108,9 @@ class LayoutPartKey(PartKey):
         self.number = self.generator.generateordered(self.level)
       else:
         self.number = self.generator.generateunique(layout.type)
-    rawtype = layout.type
-    self.partkey = 'toc-' + rawtype + '-' + self.number
-    realtype = self.deasterisk(rawtype)
+    anchortype = layout.type.replace('*', '-')
+    self.partkey = 'toc-' + anchortype + '-' + self.number
+    realtype = self.deasterisk(layout.type)
     self.tocentry = Translator.translate(realtype)
     self.tocsuffix = u': '
     if self.level == Options.splitpart and self.isnumbered(layout):
