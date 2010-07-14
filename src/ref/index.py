@@ -115,10 +115,10 @@ class PrintIndex(ListInset):
 
   def process(self):
     "Create the alphabetic index"
-    name = Translator.translate('index')
-    self.partkey = PartKey().createindex(name)
+    self.name = Translator.translate('index')
+    self.partkey = PartKeyGenerator.forindex(self)
     self.contents = [self.partkey.toclabel(),
-        TaggedText().constant(name, 'h1 class="index"')]
+        TaggedText().constant(self.name, 'h1 class="index"')]
     for key in self.sortdictionary(IndexEntry.entries):
       entry = IndexEntry.entries[key]
       entrytext = [IndexEntry.entries[key], Constant(': ')]
@@ -158,10 +158,10 @@ class PrintNomenclature(ListInset):
 
   def process(self):
     "Create the nomenclature."
-    name = Translator.translate('nomenclature')
-    self.partkey = PartKey().createindex(name)
+    self.name = Translator.translate('nomenclature')
+    self.partkey = PartKeyGenerator.forindex(self)
     self.contents = [self.partkey.toclabel(),
-        TaggedText().constant(name, 'h1 class="nomenclature"')]
+        TaggedText().constant(self.name, 'h1 class="nomenclature"')]
     for key in self.sortdictionary(NomenclatureEntry.entries):
       entry = NomenclatureEntry.entries[key]
       contents = [entry, Constant(entry.symbol + u' ' + entry.description)]

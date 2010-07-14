@@ -37,7 +37,6 @@ from ref.link import *
 class Layout(Container):
   "A layout (block of text) inside a lyx file"
 
-  generator = PartKeyGenerator()
   type = 'none'
 
   def __init__(self):
@@ -60,7 +59,7 @@ class Layout(Container):
     "Numerate if necessary."
     if self.containsappendix():
       self.activateappendix()
-    partkey = self.generator.forlayout(self)
+    partkey = PartKeyGenerator.forlayout(self)
     if partkey:
       self.partkey = partkey
       self.output.tag = self.output.tag.replace('?', unicode(partkey.level))

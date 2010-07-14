@@ -50,42 +50,6 @@ class IntegralProcessor(object):
     for container in self.storage:
       self.processeach(container)
 
-class IntegralLayout(IntegralProcessor):
-  "A processor for layouts that will appear in the TOC."
-
-  processedtype = Layout
-
-  def processeach(self, layout):
-    "Keep only layouts that have an entry."
-    if not layout.partkey:
-      return
-    IntegralTOC.tocentries.append(layout)
-
-class IntegralNomenclature(IntegralProcessor):
-  "A processor for the nomenclature."
-
-  processedtype = PrintNomenclature
-
-  def processeach(self, nomenclature):
-    "Insert the relevant part key for the TOC into the parent."
-    self.upgradepartkey(nomenclature)
-
-  def upgradepartkey(self, container):
-    "Set the part key for the TOC into the parent."
-    if not container.parent:
-      return
-    container.parent.partkey = container.partkey
-    self.upgradepartkey(container.parent)
-
-class IntegralIndex(IntegralNomenclature):
-  "A processor for the general index."
-
-  processedtype = PrintIndex
-
-  def processeach(self, index):
-    "Insert the relevant part key for the TOC into the parent."
-    self.upgradepartkey(index)
-
 class IntegralTOC(IntegralProcessor):
   "A processor for an integral TOC."
 
@@ -95,7 +59,7 @@ class IntegralTOC(IntegralProcessor):
   def processeach(self, toc):
     "Fill in a Table of Contents."
     converter = TOCConverter()
-    for container in IntegralTOC.tocentries:
+    for container in PartKeyGenerator.partkeyed:
       toc.add(converter.convertindented(container))
     # finish off with the footer to align indents
     toc.add(converter.convertindented(LyXFooter()))
@@ -175,8 +139,7 @@ class MemoryBasket(KeeperBasket):
     "Create all processors in one go."
     KeeperBasket.__init__(self)
     self.processors = [
-        IntegralNomenclature(), IntegralIndex(),
-        IntegralLayout(), IntegralTOC(), IntegralBiblioEntry(),
+        IntegralTOC(), IntegralBiblioEntry(),
         IntegralFloat(), IntegralListOf(), IntegralReference(),
         ]
 

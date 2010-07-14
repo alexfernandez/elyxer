@@ -171,10 +171,21 @@ class LayoutPartKey(PartKey):
 class PartKeyGenerator(object):
   "Number a layout with the relevant attributes."
 
-  def forlayout(self, layout):
+  partkeyed = []
+
+  def forlayout(cls, layout):
     "Get the part key for a layout."
     if not LayoutPartKey.needspartkey(layout):
       return None
     Label.lastlayout = layout
+    cls.partkeyed.append(layout)
     return LayoutPartKey(layout)
+
+  def forindex(cls, index):
+    "Get the part key for an index or nomenclature."
+    cls.partkeyed.append(index)
+    return PartKey().createindex(index.name)
+
+  forlayout = classmethod(forlayout)
+  forindex = classmethod(forindex)
 
