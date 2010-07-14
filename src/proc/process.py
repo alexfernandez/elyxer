@@ -32,8 +32,20 @@ class Processor(object):
 
   prestages = []
 
-  def __init__(self):
+  def __init__(self, filtering):
+    "Set filtering mode (to skip postprocessing)."
+    self.filtering = filtering
     self.postprocessor = Postprocessor()
+    self.last = None
+
+  def process(self, container):
+    "Do the whole processing on a container."
+    container = self.preprocess(container)
+    self.processcurrent(container)
+    if container and not self.filtered(container):
+      container = self.postprocess(container)
+      return container
+    return None
 
   def preprocess(self, root):
     "Preprocess a root container with all prestages."
@@ -45,13 +57,21 @@ class Processor(object):
         return None
     return root
 
-  def process(self, container):
+  def processcurrent(self, container):
     "Process a container and its contents, recursively."
     if not container:
       return
     for element in container.contents:
-      self.process(element)
+      self.processcurrent(element)
     container.process()
+
+  def filtered(self, container):
+    "Find out if the container is a header or footer and must be filtered."
+    if not self.filtering:
+      return False
+    if container.__class__ in [LyXHeader, LyXFooter]:
+      return True
+    return False
 
   def postprocess(self, root):
     "Postprocess the root container."

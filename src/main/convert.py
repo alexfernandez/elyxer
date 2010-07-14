@@ -85,29 +85,17 @@ class eLyXerConverter(object):
   def processcontents(self):
     "Parse the contents and write it by containers"
     factory = ContainerFactory()
-    processor = Processor()
+    processor = Processor(self.filtering)
     while not self.reader.finished():
       container = factory.createcontainer(self.reader)
-      container = processor.preprocess(container)
-      processor.process(container)
-      if container and not self.filtered(container):
-        result = processor.postprocess(container)
-        if result:
-          self.basket.write(result)
-    # last round: clear the pipeline
+      result = processor.process(container)
+      if result:
+        self.basket.write(result)
     result = processor.postprocess(None)
     if result:
       self.basket.write(result)
     if not self.filtering:
       self.basket.finish()
-
-  def filtered(self, container):
-    "Find out if the container is a header or footer and must be filtered."
-    if not self.filtering:
-      return False
-    if container.__class__ in [LyXHeader, LyXFooter]:
-      return True
-    return False
 
   def getcontents(self):
     "Return the contents of the basket."
