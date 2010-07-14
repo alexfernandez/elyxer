@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.6 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -146,6 +146,29 @@ This second chapter contains the label
 \begin_inset CommandInset label
 LatexCommand label
 name "cha:inchapter2"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+URIs
+\end_layout
+
+\begin_layout Standard
+Now a couple of test URIs: 
+\begin_inset CommandInset href
+LatexCommand href
+name "Savannah interface"
+target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
+
+\end_inset
+
+, 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 
 \end_inset
 
