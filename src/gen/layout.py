@@ -130,48 +130,52 @@ class Abstract(Layout):
 class FirstWorder(Layout):
   "A layout where the first word is extracted"
 
-  def extractfirstword(self, contents):
+  def extractfirstword(self):
     "Extract the first word as a list"
-    first, found = self.extractfirsttuple(contents)
-    return first
+    return self.extractincontents(self.contents)
 
-  def extractfirsttuple(self, contents):
-    "Extract the first word as a tuple"
+  def extractincontents(self, contents):
+    "Extract the first word in contents."
     firstcontents = []
-    index = 0
-    while index < len(contents):
-      first, found = self.extractfirstcontainer(contents[index])
-      if first:
-        firstcontents += first
-      if found:
-        return firstcontents, True
-      else:
-        del contents[index]
-    return firstcontents, False
+    while len(contents) > 0:
+      if self.spaceincontainer(contents[0]):
+        firstcontents += self.extractincontainer(contents[0])
+        return firstcontents
+      firstcontents.append(contents[0])
+      del contents[0]
+    return firstcontents
 
-  def extractfirstcontainer(self, container):
-    "Extract the first container that is a string."
+  def extractincontainer(self, container):
+    "Extract all elements up to the first space."
     if isinstance(container, StringContainer):
-      return self.extractfirststring(container)
-    if isinstance(container, ERT) or isinstance(container, Link):
-      return [container], False
-    if len(container.contents) == 0:
-      # empty container
-      return [container], False
-    first, found = self.extractfirsttuple(container.contents)
-    if isinstance(container, TaggedText) and hasattr(container, 'tag'):
-      newtag = TaggedText().complete(first, container.tag)
-      return [newtag], found
-    return first, found
+      return self.extractinstring(container)
+    firstcontents = self.extractincontents(container.contents)
+    if isinstance(container, TaggedText):
+      return [TaggedText().complete(firstcontents, container.output.tag)]
+    return firstcontents
 
-  def extractfirststring(self, container):
-    "Extract the first word from a string container"
-    string = container.string
-    if not ' ' in string:
-      return [container], False
-    split = string.split(' ', 1)
+  def extractinstring(self, container):
+    "Extract the first word from a string container."
+    if not ' ' in container.string:
+      Trace.error('No space in string ' + container.string)
+      return [container]
+    split = container.string.split(' ', 1)
     container.string = split[1]
-    return [Constant(split[0])], True
+    return [Constant(split[0])]
+
+  def spaceincontainer(self, container):
+    "Find out if the container contains a space somewhere."
+    if isinstance(container, StringContainer):
+      if self.spaceinstring(container):
+        return True
+    for element in container.contents:
+      if self.spaceincontainer(element):
+        return True
+    return False
+
+  def spaceinstring(self, container):
+    "Find out if the string container has a space."
+    return ' ' in container.string
 
 class Description(FirstWorder):
   "A description layout"
@@ -180,12 +184,12 @@ class Description(FirstWorder):
     "Set the first word to bold"
     self.type = 'Description'
     self.output.tag = 'div class="Description"'
-    firstword = self.extractfirstword(self.contents)
+    firstword = self.extractfirstword()
     if not firstword:
       return
-    firstword.append(Constant(u' '))
     tag = 'span class="Description-entry"'
     self.contents.insert(0, TaggedText().complete(firstword, tag))
+    self.contents.insert(1, Constant(u' '))
 
 class List(FirstWorder):
   "A list layout"
@@ -194,7 +198,7 @@ class List(FirstWorder):
     "Set the first word to bold"
     self.type = 'List'
     self.output.tag = 'div class="List"'
-    firstword = self.extractfirstword(self.contents)
+    firstword = self.extractfirstword()
     if not firstword:
       return
     first = TaggedText().complete(firstword, 'span class="List-entry"')
