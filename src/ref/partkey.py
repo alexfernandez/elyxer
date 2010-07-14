@@ -141,10 +141,6 @@ class LayoutPartKey(PartKey):
       return False
     return True
 
-  def __unicode__(self):
-    "Get a printable representation."
-    return 'Part key for layout ' + self.tocentry
-
   def isunique(cls, layout):
     "Find out if the layout requires unique numbering."
     return cls.deasterisk(layout.type) in LayoutPartKey.unique
@@ -162,6 +158,10 @@ class LayoutPartKey(PartKey):
   def deasterisk(cls, type):
     "Get the type without the asterisk for unordered types."
     return type.replace('*', '')
+
+  def __unicode__(self):
+    "Get a printable representation."
+    return 'Part key for layout ' + self.tocentry
 
   isunique = classmethod(isunique)
   isinordered = classmethod(isinordered)
