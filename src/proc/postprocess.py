@@ -27,7 +27,6 @@ class Postprocessor(object):
   "Postprocess a container keeping some context"
 
   stages = []
-  rootstages = []
 
   def __init__(self):
     self.stages = StageDict(Postprocessor.stages, self)
@@ -35,21 +34,6 @@ class Postprocessor(object):
     self.last = None
 
   def postprocess(self, next):
-    "Postprocess the root container and its contents"
-    next = self.postprocessroot(next)
-    return self.postprocesscontainer(next)
-
-  def postprocessroot(self, root):
-    "Postprocess the root container with all rootstages."
-    if not root:
-      return None
-    for stage in self.rootstages:
-      root = stage.postprocess(root)
-      if not root:
-        return None
-    return root
-
-  def postprocesscontainer(self, next):
     "Postprocess a container and its contents."
     self.postrecursive(self.current)
     result = self.postcurrent(next)
@@ -69,7 +53,7 @@ class Postprocessor(object):
     postprocessor = Postprocessor()
     contents = []
     for element in container.contents:
-      post = postprocessor.postprocesscontainer(element)
+      post = postprocessor.postprocess(element)
       if post:
         contents.append(post)
     # two rounds to empty the pipeline
