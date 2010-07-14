@@ -186,7 +186,7 @@ Solved an XHTML validation errors: asterisks (*) in anchor names.
 
 \begin_layout Itemize
 Make index entries work in Descriptions.
- Also, mixed styles should also work with Descriptions.
+ Also, mixed styles should work again within Descriptions.
 \end_layout
 
 \end_deeper
