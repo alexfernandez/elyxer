@@ -180,6 +180,10 @@ Changed how eLyXer outputs white space for tags: line breaks are output
  after the tag, not before.
 \end_layout
 
+\begin_layout Itemize
+Solved an XHTML validation errors: asterisks (*) in anchor names.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.99 (2010-06-24):
