@@ -49,8 +49,6 @@ class Processor(object):
     "Process a container and its contents, recursively."
     if not container:
       return
-    if isinstance(container, basestring):
-      return
     for element in container.contents:
       self.process(element)
     container.process()

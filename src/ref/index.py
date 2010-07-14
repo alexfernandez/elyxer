@@ -173,7 +173,6 @@ class PreListInset(object):
 
   def preprocess(self, container):
     "Preprocess a container, extract any list inset and return it."
-    return container
     listinsets = container.searchall(ListInset)
     if len(listinsets) == 0:
       return container

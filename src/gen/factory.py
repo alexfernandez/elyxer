@@ -77,9 +77,18 @@ class ContainerFactory(object):
     parser.factory = self
     container.header = parser.parseheader(reader)
     container.begin = parser.begin
-    container.contents = parser.parse(reader)
+    self.parsecontents(container, reader)
     container.parameters = parser.parameters
     container.parser = None
+
+  def parsecontents(self, container, reader):
+    "Parse the contents of a container."
+    contents = container.parser.parse(reader)
+    if isinstance(contents, basestring):
+      # read a string, set as parsed
+      container.parsed = contents
+    else:
+      container.contents = contents
 
   def getending(self, container):
     "Get the ending for a container"

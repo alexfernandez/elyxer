@@ -88,6 +88,7 @@ class eLyXerConverter(object):
     processor = Processor()
     while not self.reader.finished():
       container = factory.createcontainer(self.reader)
+      container = processor.preprocess(container)
       processor.process(container)
       if container and not self.filtered(container):
         result = processor.postprocess(container)

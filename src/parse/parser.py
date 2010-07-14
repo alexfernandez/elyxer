@@ -180,7 +180,7 @@ class StringParser(Parser):
 
   def parse(self, reader):
     "Parse a single line"
-    contents = [reader.currentline()]
+    contents = reader.currentline()
     reader.nextline()
     return contents
 

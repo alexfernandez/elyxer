@@ -193,16 +193,19 @@ class LyXFormat(BlackBox):
 class StringContainer(Container):
   "A container for a single string"
 
+  parsed = None
+
   def __init__(self):
     self.parser = StringParser()
     self.output = StringOutput()
     self.string = ''
+    self.contents = []
 
   def process(self):
     "Replace special chars from the contents."
-    if len(self.contents) > 0:
-      self.string = self.replacespecial(self.contents[0])
-      self.contents = []
+    if self.parsed:
+      self.string = self.replacespecial(self.parsed)
+      self.parsed = None
 
   def replacespecial(self, line):
     "Replace all special chars from a line"
