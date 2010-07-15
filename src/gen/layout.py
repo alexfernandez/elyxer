@@ -232,14 +232,26 @@ class PostLayout(object):
   processedclass = Layout
 
   def postprocess(self, last, layout, next):
-    "Generate a number and place it before the text"
-    if not layout.partkey:
+    "Group layouts and/or number them."
+    if layout.type in TagConfig.group['layouts']:
+      return self.group(last, layout)
+    if layout.partkey:
+      self.number(layout)
+    return layout
+
+  def group(self, last, layout):
+    "Group two layouts if they are the same type."
+    if not isinstance(last, Layout) or last.type != layout.type:
       return layout
+    last.contents += [Constant('<br/>\n')] + layout.contents
+    return None
+
+  def number(self, layout):
+    "Generate a number and place it before the text"
     label = layout.partkey.toclabel()
     layout.contents.insert(0, label)
     if layout.partkey.anchortext:
       layout.contents.insert(1, Constant(u' '))
-    return layout
 
   def containsappendix(self, layout):
     "Find out if there is an appendix somewhere in the layout"
