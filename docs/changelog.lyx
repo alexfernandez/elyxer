@@ -189,6 +189,10 @@ Make index entries work in Descriptions.
  Also, mixed styles should work again within Descriptions.
 \end_layout
 
+\begin_layout Itemize
+Group certain layouts together, such as Quote and Quotation.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.99 (2010-06-24):
