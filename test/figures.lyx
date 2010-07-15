@@ -596,6 +596,43 @@ end_command
 \end_layout
 
 \begin_layout Standard
+And an algorithm without caption.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Quotation
+
+\family typewriter
+
+\backslash
+my_first_tex_command
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+it should work this time!
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+
+\backslash
+end_command
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Now a numbered listing.
 \end_layout
 
