@@ -60,7 +60,7 @@ class ParameterDefinition(object):
           Trace.error('Wrong parameter closing ' + pos.currentskip())
           return None
         return self
-    Trace.error('Wrong character in parameter template' + pos.currentskip())
+    Trace.error('Wrong character in parameter template: ' + pos.currentskip())
     return None
 
   def read(self, pos, function):
