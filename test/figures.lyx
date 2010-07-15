@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.6 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -66,6 +66,14 @@ Figures Test
 
 \begin_layout Standard
 \begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList algorithm
 
 \end_inset
 
@@ -433,6 +441,10 @@ This image should wrap around the text.
  of the gruntwork of reading the resulting text.
 \end_layout
 
+\begin_layout Section
+Algorithms and Listings
+\end_layout
+
 \begin_layout Standard
 We can also add a listing.
 \end_layout
@@ -509,6 +521,81 @@ An algorithm.
 \end_layout
 
 \begin_layout Standard
+Another algorithm for the sake of it.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Quotation
+
+\family typewriter
+
+\backslash
+my_first_tex_command
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+it does not work at all!
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+
+\backslash
+end_command
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Another algorithm, embedded.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now the same text outside the algorithm.
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+
+\backslash
+my_first_tex_command
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+it does not work at all!
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+
+\backslash
+end_command
+\end_layout
+
+\begin_layout Standard
 Now a numbered listing.
 \end_layout
 
@@ -551,6 +638,61 @@ My heart will explode,
 
 \begin_layout LyX-Code
 My tongue's in a knot.
+\end_layout
+
+\begin_layout Standard
+Another algorithm, this time without styling.
+\end_layout
+
+\begin_layout Quote
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+Who shall declare this good, that ill
+\end_layout
+
+\begin_layout Plain Layout
+When good and ill so intertwine
+\end_layout
+
+\begin_layout Plain Layout
+But to fulfil the vast design of an omniscient will.
+\end_layout
+
+\begin_layout Plain Layout
+When seeming again but turns to loss
+\end_layout
+
+\begin_layout Plain Layout
+When earthly treasure proves but dross
+\end_layout
+
+\begin_layout Plain Layout
+And what seems lost but turns again
+\end_layout
+
+\begin_layout Plain Layout
+To high eternal gain.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+A poem by Dame Irene Stoat.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
