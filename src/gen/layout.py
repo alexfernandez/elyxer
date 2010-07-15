@@ -253,17 +253,6 @@ class PostLayout(object):
     if layout.partkey.anchortext:
       layout.contents.insert(1, Constant(u' '))
 
-  def containsappendix(self, layout):
-    "Find out if there is an appendix somewhere in the layout"
-    for element in layout.contents:
-      if isinstance(element, Appendix):
-        return True
-    return False
-
-  def activateappendix(self):
-    "Change first number to letter, and chapter to appendix"
-    NumberGenerator.instance.number = ['-']
-
 class PostStandard(object):
   "Convert any standard spans in root to divs"
 
