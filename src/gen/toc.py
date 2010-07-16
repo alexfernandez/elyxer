@@ -50,9 +50,10 @@ class TOCEntry(Container):
       link = Link().complete(container.partkey.tocentry)
       link.destination = label
     self.contents = [link]
-    if container.partkey.tocsuffix:
+    titlecontents = self.gettitlecontents(container)
+    if container.partkey.tocsuffix and titlecontents:
       link.contents.append(Constant(container.partkey.tocsuffix))
-      link.contents += self.gettitlecontents(container)
+      link.contents += titlecontents
     self.output = TaggedOutput().settag('div class="toc"', True)
     self.partkey = container.partkey
     return self
@@ -72,6 +73,9 @@ class TOCEntry(Container):
         contents += shorttitle.contents
       return contents
     extractor = ContainerExtractor(TOCConfig.containers)
+    captions = container.searchall(Caption)
+    if len(captions) == 1:
+      return extractor.extract(captions[0])
     return extractor.extract(container)
 
   def __unicode__(self):
