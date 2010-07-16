@@ -243,8 +243,10 @@ class PostLayout(object):
     "Group two layouts if they are the same type."
     if not isinstance(last, Layout) or last.type != layout.type:
       return layout
-    last.contents += [Constant('<br/>\n')] + layout.contents
-    return None
+    layout.contents = last.contents + [Constant('<br/>\n')] + layout.contents
+    last.contents = []
+    last.output = EmptyOutput()
+    return layout
 
   def number(self, layout):
     "Generate a number and place it before the text"
@@ -269,6 +271,19 @@ class PostStandard(object):
     standard.output = TaggedOutput().settag('div class="' + type + '"', True)
     return standard
 
+class PostPlainLayout(PostLayout):
+  "Numerate a plain layout"
+
+  processedclass = PlainLayout
+
+  def postprocess(self, last, plain, next):
+    "Group plain layouts."
+    if not isinstance(last, PlainLayout):
+      return plain
+    Trace.debug('Plain plain')
+    plain.makevisible()
+    return self.group(last, plain)
+
 class PostLyXCode(object):
   "Coalesce contiguous LyX-Code layouts."
 
@@ -288,5 +303,7 @@ class PostLyXCode(object):
     lyxcode.output = EmptyOutput()
     return lyxcode
 
-Postprocessor.stages += [PostLayout, PostStandard, PostLyXCode]
+Postprocessor.stages += [
+    PostLayout, PostStandard, PostLyXCode, PostPlainLayout
+    ]
 
