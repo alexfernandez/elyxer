@@ -72,7 +72,7 @@ class TOCEntry(Container):
       for shorttitle in shorttitles:
         contents += shorttitle.contents
       return contents
-    extractor = ContainerExtractor(TOCConfig.containers)
+    extractor = ContainerExtractor(TOCConfig.extracttitle)
     captions = container.searchall(Caption)
     if len(captions) == 1:
       return extractor.extract(captions[0])

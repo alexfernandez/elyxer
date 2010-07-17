@@ -287,7 +287,7 @@ class PostPlainLayout(PostLayout):
     "Find out if the container is only text."
     if not isinstance(container, PlainLayout):
       return False
-    extractor = ContainerExtractor(TOCConfig.combineplain)
+    extractor = ContainerExtractor(TOCConfig.extractplain)
     text = extractor.extract(container)
     return (len(text) > 0)
 
