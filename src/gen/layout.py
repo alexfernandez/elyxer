@@ -278,11 +278,18 @@ class PostPlainLayout(PostLayout):
 
   def postprocess(self, last, plain, next):
     "Group plain layouts."
-    if not isinstance(last, PlainLayout):
+    if not self.istext(last) or not self.istext(plain):
       return plain
-    Trace.debug('Plain plain')
     plain.makevisible()
     return self.group(last, plain)
+
+  def istext(self, container):
+    "Find out if the container is only text."
+    if not isinstance(container, PlainLayout):
+      return False
+    extractor = ContainerExtractor(TOCConfig.combineplain)
+    text = extractor.extract(container)
+    return (len(text) > 0)
 
 class PostLyXCode(object):
   "Coalesce contiguous LyX-Code layouts."
