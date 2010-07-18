@@ -21,6 +21,10 @@
 %   You should have received a copy of the GNU General Public License
 %   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \usepackage{mathrsfs}
+\newcommand{\varGamma}{\Gamma}
+\newcommand{\varOmega}{\Omega}
+\usepackage{color}
+\usepackage[gennarrow]{eurosym}
 \end_preamble
 \use_default_options false
 \language english
@@ -204,6 +208,41 @@ List of algorithms does now correctly extract the text from the caption.
 
 \begin_layout Itemize
 Increased line height for h2 in the main CSS (thanks, Wolfgang!).
+\end_layout
+
+\begin_layout Itemize
+Better color support in formulas: 
+\family typewriter
+
+\backslash
+color
+\family default
+, 
+\family typewriter
+
+\backslash
+textcolor
+\family default
+, 
+\family typewriter
+
+\backslash
+colorbox
+\family default
+.
+ 
+\begin_inset Formula ${\color{blue}blue}$
+\end_inset
+
+, 
+\begin_inset Formula $\colorbox{yellow}{\color{blue}blue}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Formulas and formula labels are not colored by default.
 \end_layout
 
 \end_deeper

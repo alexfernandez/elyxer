@@ -16,7 +16,7 @@ body {
 	line-height: 1.5em;
 	overflow: hidden;
 }
-a {
+a:link {
 	text-decoration: none;
 	color: #0030c0;
 	background: none;
@@ -214,7 +214,6 @@ span.white {
 	color: #ffffff;
 }
 .formula {
-	color: #000040;
 	text-align: center;
 	font-family: serif;
 	margin: 1.2em 0;
@@ -559,7 +558,6 @@ a.eqnumber {
 	float: right;
 	clear: right;
 	font-weight: bold;
-	color: #000040;
 }
 span.unknown {
 	color: #800000;
