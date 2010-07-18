@@ -16,10 +16,12 @@ body {
 	line-height: 1.5em;
 	overflow: hidden;
 }
-a:link {
+a {
 	text-decoration: none;
-	color: #0030c0;
 	background: none;
+}
+a:link {
+	color: #0030c0;
 }
 a:visited {
 	color: #603090;
