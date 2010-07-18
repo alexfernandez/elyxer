@@ -73,15 +73,10 @@ class TableOfContents(ListInset):
     "Add a new entry to the TOC."
     self.contents.append(entry)
 
-class IndexEntry(Link):
-  "An entry in the alphabetical index"
+class IndexReference(Link):
+  "A reference to an entry in the alphabetical index"
 
-  entries = dict()
-  arrows = dict()
   name = 'none'
-
-  namescapes = {'!':'', '|':', ', '  ':' '}
-  keyescapes = {' ':'-', '--':'-', ',':''}
 
   def process(self):
     "Put entry in index"
@@ -89,26 +84,62 @@ class IndexEntry(Link):
       name = self.parameters['name'].strip()
     else:
       name = self.extracttext()
-    self.name = self.escape(name, IndexEntry.namescapes)
-    key = self.escape(self.name, IndexEntry.keyescapes)
-    if not key in IndexEntry.entries:
-      # no entry yet; create
-      entry = Link().complete(name, 'index-' + key, None, 'printindex')
-      entry.name = name
-      IndexEntry.entries[key] = entry
-    if not key in IndexEntry.arrows:
-      # no arrows yet; create list
-      IndexEntry.arrows[key] = []
-    self.index = len(IndexEntry.arrows[key])
-    self.complete(u'↓', 'entry-' + key + '-' + unicode(self.index))
-    self.destination = IndexEntry.entries[key]
-    arrow = Link().complete(u'↑', 'index-' + key)
-    arrow.destination = self
-    IndexEntry.arrows[key].append(arrow)
+    entry = IndexEntry.get(name)
+    entry.addref(self)
+
+  def __unicode__(self):
+    "Return a printable representation."
+    return 'Reference to ' + self.name
+
+class IndexArrow(Link):
+  "An arrow in an index entry."
+
+  def create(self, reference):
+    "Create an arrow pointing to a reference."
+    self.contents = [Constant(u'↑')]
+    self.destination = reference
+    return self
+
+class IndexEntry(Container):
+  "An entry in the alphabetical index"
+
+  entries = dict()
+  arrows = dict()
+
+  keyescapes = {'!':'_', '|':'-', ' ':'-', '--':'-', ',':'', '\\':'', '@':'_', u'°':''}
+
+  def create(self, name):
+    "Create an index entry with the given name."
+    self.output = TaggedOutput().settag('p class="printindex"', True)
+    self.arrows = []
+    self.name = name
+    self.key = self.escape(self.name, self.keyescapes)
+    self.anchor = Link().complete('', 'index-' + self.key, None, 'printindex')
+    self.contents = [self.anchor, Constant(self.name + ': ')]
+    return self
+
+  def addref(self, reference):
+    "Add a reference to the entry."
+    reference.index = unicode(len(self.arrows))
+    reference.complete(u'↓', 'entry-' + self.key + '-' + reference.index)
+    reference.destination = self.anchor
+    arrow = IndexArrow().create(reference)
+    if len(self.arrows) > 0:
+      self.contents.append(Constant(u', '))
+    self.arrows.append(arrow)
+    self.contents.append(arrow)
+
+  def get(cls, name):
+    "Get the index entry for the given name."
+    if not name in cls.entries:
+      cls.entries[name] = IndexEntry().create(name)
+    return cls.entries[name]
 
   def __unicode__(self):
     "Return a printable representation."
     return 'Index entry for ' + self.name
+
+  get = classmethod(get)
 
 class PrintIndex(ListInset):
   "Command to print an index"
@@ -120,19 +151,7 @@ class PrintIndex(ListInset):
     self.contents = [self.partkey.toclabel(),
         TaggedText().constant(self.name, 'h1 class="index"')]
     for key in self.sortdictionary(IndexEntry.entries):
-      entry = IndexEntry.entries[key]
-      entrytext = [IndexEntry.entries[key], Constant(': ')]
-      contents = [TaggedText().complete(entrytext, 'i')]
-      contents += self.extractarrows(key)
-      self.contents.append(TaggedText().complete(contents, 'p class="printindex"',
-          True))
-
-  def extractarrows(self, key):
-    "Extract all arrows (links to the original reference) for a key."
-    arrows = []
-    for arrow in IndexEntry.arrows[key]:
-      arrows += [arrow, Constant(u', \n')]
-    return arrows[:-1]
+      self.contents.append(IndexEntry.entries[key])
 
 class NomenclatureEntry(Link):
   "An entry of LyX nomenclature"

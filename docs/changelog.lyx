@@ -245,6 +245,11 @@ colorbox
 Formulas and formula labels are not colored by default.
 \end_layout
 
+\begin_layout Itemize
+Improved Index output: there is only one anchor for each entry, and entries
+ are not shown in italics.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.99 (2010-06-24):
