@@ -92,99 +92,112 @@ class IndexReference(Link):
     "Return a printable representation."
     return 'Reference to ' + self.name
 
-class IndexArrow(Link):
-  "An arrow in an index entry."
-
-  def create(self, reference):
-    "Create an arrow pointing to a reference."
-    self.contents = [Constant(u'↑')]
-    self.destination = reference
-    return self
-
-class IndexGroup(Container):
-  "A group of entries in the alphabetical index."
-
-  root = None
-
-  def create(self, name):
-    "Create an index group with the given name."
-    self.entries = dict()
-    self.name = name
-    self.output = ContentsOutput()
-    if self.name:
-      self.contents = [Constant(self.name + ':\n')]
-    return self
-
-  def sort(self):
-    "Sort all entries in the group."
-    contents = []
-    for key in ListInset.sortdictionary(self.entries):
-      entry = self.entries[key]
-      if isinstance(entry, IndexGroup):
-        entry.sort()
-      contents.append(entry)
-    result = TaggedText().complete(contents, 'div class="indexgroup"', True)
-    self.contents.append(result)
-
-  def __unicode__(self):
-    "Return a printable representation."
-    return 'Index group for ' + self.name
-
-  def splitname(cls, name):
-    "Split a name in parts divided by !."
-    return [part.strip() for part in name.split('!')]
-
-  splitname = classmethod(splitname)
-
-IndexGroup.root = IndexGroup().create(None)
-
-class IndexEntry(Container):
-  "An entry in the alphabetical index."
-  "When an index entry is of the form 'part1 ! part2 ...', "
-  "a hierarchical structure is constructed."
+class IndexHeader(Link):
+  "The header line for an index entry. Keeps all arrows."
 
   keyescapes = {'!':'', '|':'-', ' ':'-', '--':'-', ',':'', '\\':'', '@':'_', u'°':''}
 
-  def create(self, fullname):
-    "Create an index entry with the given name."
+  def create(self, names):
+    "Create the header for the given index entry."
     self.output = TaggedOutput().settag('p class="printindex"', True)
-    self.arrows = []
-    self.name = IndexGroup.splitname(fullname)[-1]
-    self.key = self.escape(fullname, self.keyescapes)
+    self.name = names[-1]
+    keys = [self.escape(part, self.keyescapes) for part in names]
+    self.key = '-'.join(keys)
     self.anchor = Link().complete('', 'index-' + self.key, None, 'printindex')
     self.contents = [self.anchor, Constant(self.name + ': ')]
+    self.arrows = []
     return self
 
   def addref(self, reference):
-    "Add a reference to the entry."
+    "Create an arrow pointing to a reference."
     reference.index = unicode(len(self.arrows))
-    reference.complete(u'↓', 'entry-' + self.key + '-' + reference.index)
     reference.destination = self.anchor
-    arrow = IndexArrow().create(reference)
+    reference.complete(u'↓', 'entry-' + self.key + '-' + reference.index)
+    arrow = Link().complete(u'↑', type = 'IndexArrow')
+    arrow.destination = reference
     if len(self.arrows) > 0:
       self.contents.append(Constant(u', '))
     self.arrows.append(arrow)
     self.contents.append(arrow)
 
+  def __unicode__(self):
+    "Return a printable representation."
+    return 'Index header for ' + self.name
+
+class IndexGroup(Container):
+  "A group of entries in the alphabetical index, for an entry."
+
+  root = None
+
+  def create(self):
+    "Create an index group."
+    self.entries = dict()
+    self.output = EmptyOutput()
+    return self
+
+  def findentry(self, names):
+    "Find the entry with the given names."
+    if self == IndexGroup.root:
+      self.output = ContentsOutput()
+    else:
+      self.output = TaggedOutput().settag('div class="indexgroup"', True)
+    lastname = names[-1]
+    if not lastname in self.entries:
+      self.entries[lastname] = IndexEntry().create(names)
+    return self.entries[lastname]
+
+  def sort(self):
+    "Sort all entries in the group."
+    for key in ListInset.sortdictionary(self.entries):
+      entry = self.entries[key]
+      entry.group.sort()
+      self.contents.append(entry)
+
+  def __unicode__(self):
+    "Return a printable representation."
+    return 'Index group'
+
+IndexGroup.root = IndexGroup().create()
+
+class IndexEntry(Container):
+  "An entry in the alphabetical index."
+  "When an index entry is of the form 'part1 ! part2 ...', "
+  "a hierarchical structure in the form of an IndexGroup is constructed."
+  "An index entry contains a mandatory header, and an optional group."
+
+  def create(self, names):
+    "Create an index entry with the given name."
+    self.output = ContentsOutput()
+    self.header = IndexHeader().create(names)
+    self.group = IndexGroup().create()
+    self.contents = [self.header, self.group]
+    return self
+
+  def addref(self, reference):
+    "Add a reference to the entry."
+    self.header.addref(reference)
+
   def get(cls, name):
     "Get the index entry for the given name."
-    entries = IndexGroup.root.entries
-    parts = IndexGroup.splitname(name)
-    for part in parts[:-1]:
-      Trace.debug('Index part: ' + part)
-      if not part in entries:
-        entries[part] = IndexGroup().create(part)
-      entries = entries[part].entries
-    lastpart = parts[-1]
-    if not lastpart in entries:
-      entries[lastpart] = IndexEntry().create(name)
-    return entries[lastpart]
+    group = IndexGroup.root
+    parts = IndexEntry.splitname(name)
+    readparts = []
+    for part in parts:
+      readparts.append(part)
+      entry = group.findentry(readparts)
+      group = entry.group
+    return entry
+
+  def splitname(cls, name):
+    "Split a name in parts divided by !."
+    return [part.strip() for part in name.split('!')]
 
   def __unicode__(self):
     "Return a printable representation."
     return 'Index entry for ' + self.name
 
   get = classmethod(get)
+  splitname = classmethod(splitname)
 
 class PrintIndex(ListInset):
   "Command to print an index"
