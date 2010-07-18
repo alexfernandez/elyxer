@@ -202,6 +202,10 @@ Improved output for algorithms: do not run lines together, and do not separate
 List of algorithms does now correctly extract the text from the caption.
 \end_layout
 
+\begin_layout Itemize
+Increased line height for h2 in the main CSS (thanks, Wolfgang!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.99 (2010-06-24):

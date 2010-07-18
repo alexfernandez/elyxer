@@ -372,6 +372,9 @@ div.Plain {
 h1.title {
 	text-align: center;
 }
+h2 {
+	line-height: 1.4em;
+}
 h2.author {
 	text-align: center;
 }
