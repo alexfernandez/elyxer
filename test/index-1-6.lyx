@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.6 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -154,7 +154,7 @@ terms
 status open
 
 \begin_layout Plain Layout
-look up
+look ! up
 \end_layout
 
 \end_inset
@@ -220,7 +220,7 @@ Do you not want to look any of them up
 status open
 
 \begin_layout Plain Layout
-look up
+look ! up
 \end_layout
 
 \end_inset
@@ -269,6 +269,20 @@ reference "cha:Bulk"
 \end_inset
 
 , not everything is clear.
+\end_layout
+
+\begin_layout Standard
+You could also look down
+\begin_inset Index
+status open
+
+\begin_layout Plain Layout
+look ! down
+\end_layout
+
+\end_inset
+
+ on someone, but that is not nice.
 \end_layout
 
 \begin_layout Section

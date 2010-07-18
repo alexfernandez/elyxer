@@ -250,6 +250,18 @@ Improved Index output: there is only one anchor for each entry, and entries
  are not shown in italics.
 \end_layout
 
+\begin_layout Itemize
+Allow hierarchical index entries, of the form 
+\begin_inset Quotes eld
+\end_inset
+
+Main ! Secondary ! Final
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.99 (2010-06-24):

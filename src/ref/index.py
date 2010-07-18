@@ -47,6 +47,8 @@ class ListInset(Container):
     keys.sort()
     return keys
 
+  sortdictionary = classmethod(sortdictionary)
+
 class ListOf(ListInset):
   "A list of entities (figures, tables, algorithms)"
 
@@ -74,18 +76,17 @@ class TableOfContents(ListInset):
     self.contents.append(entry)
 
 class IndexReference(Link):
-  "A reference to an entry in the alphabetical index"
+  "A reference to an entry in the alphabetical index."
 
   name = 'none'
 
   def process(self):
     "Put entry in index"
     if 'name' in self.parameters:
-      name = self.parameters['name'].strip()
+      self.name = self.parameters['name'].strip()
     else:
-      name = self.extracttext()
-    entry = IndexEntry.get(name)
-    entry.addref(self)
+      self.name = self.extracttext()
+    IndexEntry.get(self.name).addref(self)
 
   def __unicode__(self):
     "Return a printable representation."
@@ -100,11 +101,47 @@ class IndexArrow(Link):
     self.destination = reference
     return self
 
-class IndexEntry(Container):
-  "An entry in the alphabetical index"
+class IndexGroup(Container):
+  "A group of entries in the alphabetical index."
 
-  entries = dict()
-  arrows = dict()
+  root = None
+
+  def create(self, name):
+    "Create an index group with the given name."
+    self.entries = dict()
+    self.name = name
+    self.output = ContentsOutput()
+    if self.name:
+      self.contents = [Constant(self.name + ':\n')]
+    return self
+
+  def sort(self):
+    "Sort all entries in the group."
+    contents = []
+    for key in ListInset.sortdictionary(self.entries):
+      entry = self.entries[key]
+      if isinstance(entry, IndexGroup):
+        entry.sort()
+      contents.append(entry)
+    result = TaggedText().complete(contents, 'div class="indexgroup"', True)
+    self.contents.append(result)
+
+  def __unicode__(self):
+    "Return a printable representation."
+    return 'Index group for ' + self.name
+
+  def splitname(cls, name):
+    "Split a name in parts divided by !."
+    return [part.strip() for part in name.split('!')]
+
+  splitname = classmethod(splitname)
+
+IndexGroup.root = IndexGroup().create(None)
+
+class IndexEntry(Container):
+  "An entry in the alphabetical index."
+  "When an index entry is of the form 'part1 ! part2 ...', "
+  "a hierarchical structure is constructed."
 
   keyescapes = {'!':'_', '|':'-', ' ':'-', '--':'-', ',':'', '\\':'', '@':'_', u'°':''}
 
@@ -112,7 +149,7 @@ class IndexEntry(Container):
     "Create an index entry with the given name."
     self.output = TaggedOutput().settag('p class="printindex"', True)
     self.arrows = []
-    self.name = name
+    self.name = IndexGroup.splitname(name)[-1]
     self.key = self.escape(self.name, self.keyescapes)
     self.anchor = Link().complete('', 'index-' + self.key, None, 'printindex')
     self.contents = [self.anchor, Constant(self.name + ': ')]
@@ -131,9 +168,17 @@ class IndexEntry(Container):
 
   def get(cls, name):
     "Get the index entry for the given name."
-    if not name in cls.entries:
-      cls.entries[name] = IndexEntry().create(name)
-    return cls.entries[name]
+    entries = IndexGroup.root.entries
+    parts = IndexGroup.splitname(name)
+    for part in parts[:-1]:
+      Trace.debug('Index part: ' + part)
+      if not part in entries:
+        entries[part] = IndexGroup().create(part)
+      entries = entries[part].entries
+    lastpart = parts[-1]
+    if not lastpart in entries:
+      entries[lastpart] = IndexEntry().create(name)
+    return entries[lastpart]
 
   def __unicode__(self):
     "Return a printable representation."
@@ -150,8 +195,8 @@ class PrintIndex(ListInset):
     self.partkey = PartKeyGenerator.forindex(self)
     self.contents = [self.partkey.toclabel(),
         TaggedText().constant(self.name, 'h1 class="index"')]
-    for key in self.sortdictionary(IndexEntry.entries):
-      self.contents.append(IndexEntry.entries[key])
+    IndexGroup.root.sort()
+    self.contents.append(IndexGroup.root)
 
 class NomenclatureEntry(Link):
   "An entry of LyX nomenclature"
