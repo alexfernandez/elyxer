@@ -143,14 +143,14 @@ class IndexEntry(Container):
   "When an index entry is of the form 'part1 ! part2 ...', "
   "a hierarchical structure is constructed."
 
-  keyescapes = {'!':'_', '|':'-', ' ':'-', '--':'-', ',':'', '\\':'', '@':'_', u'°':''}
+  keyescapes = {'!':'', '|':'-', ' ':'-', '--':'-', ',':'', '\\':'', '@':'_', u'°':''}
 
-  def create(self, name):
+  def create(self, fullname):
     "Create an index entry with the given name."
     self.output = TaggedOutput().settag('p class="printindex"', True)
     self.arrows = []
-    self.name = IndexGroup.splitname(name)[-1]
-    self.key = self.escape(self.name, self.keyescapes)
+    self.name = IndexGroup.splitname(fullname)[-1]
+    self.key = self.escape(fullname, self.keyescapes)
     self.anchor = Link().complete('', 'index-' + self.key, None, 'printindex')
     self.contents = [self.anchor, Constant(self.name + ': ')]
     return self
