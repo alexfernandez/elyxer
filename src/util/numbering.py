@@ -55,7 +55,7 @@ class NumberGenerator(object):
     "Generate ordered numbering: a number to use and possibly concatenate "
     "with others. Example: Chapter 1, Section 1.5."
     if level == 0:
-      Trace.error('Impossible level 0 for ' + type)
+      Trace.error('Impossible level 0 for ordered part')
       return '.'
     if len(self.number) >= level:
       self.number = self.number[:level]
