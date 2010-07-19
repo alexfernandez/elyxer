@@ -30,6 +30,7 @@ for file in "$@"; do
 	result=$?
 	if [ $result == "0" ]; then echo "$name.lyx OK"; fi
 	if [ $result != "0" ]; then
+		echo "$name.lyx KO"
 		report="$report  conversion of $name.lyx failed\n"
 	fi
 done
