@@ -80,26 +80,8 @@ class FormulaRow(FormulaCommand):
       self.add(cell)
       index += 1
       pos.checkskip(FormulaRow.cellseparator)
-    return
-    for cell in self.iteratecells(pos):
-      cell.parsebit(pos)
-      self.add(cell)
-
-  def iteratecells(self, pos):
-    "Iterate over all cells, finish when count ends"
-    for index, alignment in enumerate(self.alignments):
-      if self.anybutlast(index):
-        pos.pushending(cellseparator)
-      yield FormulaCell(alignment)
-      if self.anybutlast(index):
-        if not pos.checkfor(cellseparator):
-          Trace.error('No cell separator ' + cellseparator)
-        else:
-          self.original += pos.popending(cellseparator)
-
-  def anybutlast(self, index):
-    "Return true for all cells but the last"
-    return index < len(self.alignments) - 1
+    if len(self.contents) == 0:
+      self.output = EmptyOutput()
 
 class MultiRowFormula(CommandBit):
   "A formula with multiple rows."
