@@ -180,12 +180,8 @@ When an Index, TOC, List of Figures\SpecialChar \ldots{}
 \end_layout
 
 \begin_layout Itemize
-Changed how eLyXer outputs white space for tags: line breaks are output
- after the tag, not before.
-\end_layout
-
-\begin_layout Itemize
-Solved an XHTML validation errors: asterisks (*) in anchor names.
+Solved a couple of XHTML validation errors: removed asterisks (*) in anchor
+ names, avoid empty rows in arrays or case statements.
 \end_layout
 
 \begin_layout Itemize
@@ -260,10 +256,6 @@ Main ! Secondary ! Final
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Itemize
-Do not output empty rows in arrays or case statements.
 \end_layout
 
 \end_deeper
