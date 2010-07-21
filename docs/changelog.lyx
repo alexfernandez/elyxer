@@ -262,6 +262,10 @@ Main ! Secondary ! Final
 .
 \end_layout
 
+\begin_layout Itemize
+Do not output empty rows in arrays or case statements.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 0.99 (2010-06-24):
