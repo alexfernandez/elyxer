@@ -262,7 +262,9 @@ class ContentEntry(Entry):
       if pos.checkskip(key[1:]):
         return ContentEntry.escaped[key]
     if pos.current().isalpha():
-      alpha = pos.globalpha()
+      alpha = '\\' + pos.globalpha()
+      if alpha in FormulaConfig.commands:
+        return FormulaConfig.commands[alpha]
       self.lineerror('Unknown escaped command \\' + alpha, pos)
       return ''
     self.lineerror('Unknown escaped string \\' + pos.current(), pos)

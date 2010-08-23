@@ -96,6 +96,11 @@ target "index.html"
 \begin_deeper
 \begin_layout Itemize
 BibTeX: correctly parse entries separated by commas.
+ Use TeX commands from 
+\family typewriter
+FormulaConfig.commands
+\family default
+.
 \end_layout
 
 \begin_layout Itemize
