@@ -153,6 +153,17 @@ class Space(Container):
       return
     self.html = [StyleConfig.spaces[self.type]]
 
+class VerticalSpace(Container):
+  "An inset that contains a vertical space."
+
+  def __init__(self):
+    self.parser = InsetParser()
+
+  def process(self):
+    "Set the correct tag"
+    self.type = self.header[2]
+    self.output = TaggedOutput().settag('div class="' + self.type + '"', True)
+
 class Align(Container):
   "Bit of aligned text"
 
