@@ -103,6 +103,8 @@ class BibFile(object):
       pos = TextPosition(text)
     while not pos.finished():
       pos.skipspace()
+      if pos.checkskip(','):
+        pos.skipspace()
       self.parseentry(pos)
 
   def parseentry(self, pos):
@@ -117,9 +119,9 @@ class BibFile(object):
         else:
           self.ignored += 1
         return
-    # Skip the whole line, and show it as an error
-    pos.checkskip('\n')
-    Entry.entries[0].lineerror('Unidentified entry', pos)
+    # Skip a single character and show it as an error
+    skipped = pos.globincluding('\n').strip()
+    Trace.error('Unidentified BibTeX entry, skipped "' + skipped + '"')
 
   def __unicode__(self):
     "String representation"

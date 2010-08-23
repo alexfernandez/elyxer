@@ -95,7 +95,7 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+BibTeX: correctly parse entries separated by commas.
 \end_layout
 
 \end_deeper
