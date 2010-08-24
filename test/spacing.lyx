@@ -279,6 +279,20 @@ e
 f.
 \end_layout
 
+\begin_layout Standard
+Custom spaces can also be used: 0
+\begin_inset space \hspace{}
+\length 1cm
+\end_inset
+
+1cm
+\begin_inset space \hspace{}
+\length 1in
+\end_inset
+
+1in.
+\end_layout
+
 \begin_layout Subsection
 Half Spaces
 \end_layout

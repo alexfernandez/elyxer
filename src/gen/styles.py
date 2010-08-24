@@ -138,6 +138,16 @@ class LangLine(Container):
   def process(self):
     self.lang = self.header[1]
 
+class InsetLength(Container):
+  "A length measure inside an inset."
+
+  def __init__(self):
+    self.parser = LoneCommand()
+    self.output = EmptyOutput()
+
+  def process(self):
+    self.length = self.header[1]
+
 class Space(Container):
   "A space of several types"
 
@@ -152,6 +162,10 @@ class Space(Container):
       self.html = [' ']
       return
     self.html = [StyleConfig.hspaces[self.type]]
+    if len(self.contents) == 0 or not isinstance(self.contents[0], InsetLength):
+      return
+    length = self.contents[0].length
+    self.output = TaggedOutput().settag('span class="hspace" style="width: ' + length + ';"', False)
 
 class VerticalSpace(Container):
   "An inset that contains a vertical space."
@@ -165,9 +179,6 @@ class VerticalSpace(Container):
     self.type = self.header[2]
     if self.type not in StyleConfig.vspaces:
       self.output = TaggedOutput().settag('div class="vspace" style="height: ' + self.type + ';"', True)
-      return
-      Trace.error('Unknown vertical space type ' + self.type)
-      self.html = ['\n']
       return
     self.html = [StyleConfig.vspaces[self.type]]
 
