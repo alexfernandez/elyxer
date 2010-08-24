@@ -128,22 +128,14 @@ class BarredText(TaggedText):
       return
     self.output.tag = TagConfig.barred[self.type]
 
-class LangLine(Container):
+class LangLine(BlackBox):
   "A line with language information"
-
-  def __init__(self):
-    self.parser = LoneCommand()
-    self.output = EmptyOutput()
 
   def process(self):
     self.lang = self.header[1]
 
-class InsetLength(Container):
+class InsetLength(BlackBox):
   "A length measure inside an inset."
-
-  def __init__(self):
-    self.parser = LoneCommand()
-    self.output = EmptyOutput()
 
   def process(self):
     self.length = self.header[1]
@@ -210,12 +202,8 @@ class NewPage(Newline):
     "Process contents"
     self.html = ['<p><br/>\n</p>\n']
 
-class Appendix(Container):
+class Appendix(BlackBox):
   "An appendix to the main document"
-
-  def __init__(self):
-    self.parser = LoneCommand()
-    self.output = EmptyOutput()
 
 class ERT(Container):
   "Evil Red Text"
