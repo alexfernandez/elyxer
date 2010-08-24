@@ -147,22 +147,29 @@ class Space(Container):
   
   def process(self):
     self.type = self.header[2]
-    if self.type not in StyleConfig.spaces:
+    if self.type not in StyleConfig.hspaces:
       Trace.error('Unknown space type ' + self.type)
       self.html = [' ']
       return
-    self.html = [StyleConfig.spaces[self.type]]
+    self.html = [StyleConfig.hspaces[self.type]]
 
 class VerticalSpace(Container):
   "An inset that contains a vertical space."
 
   def __init__(self):
     self.parser = InsetParser()
+    self.output = FixedOutput()
 
   def process(self):
     "Set the correct tag"
     self.type = self.header[2]
-    self.output = TaggedOutput().settag('div class="' + self.type + '"', True)
+    if self.type not in StyleConfig.vspaces:
+      self.output = TaggedOutput().settag('div class="vspace" style="height: ' + self.type + ';"', True)
+      return
+      Trace.error('Unknown vertical space type ' + self.type)
+      self.html = ['\n']
+      return
+    self.html = [StyleConfig.vspaces[self.type]]
 
 class Align(Container):
   "Bit of aligned text"

@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -248,7 +248,38 @@ These tables should be separated by equal horizontal spacing.
  Can it be done? It should.
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
+Horizontal Space
+\end_layout
+
+\begin_layout Standard
+The horizontal space is inserted using Insert\SpecialChar \menuseparator
+Format\SpecialChar \menuseparator
+Horizontal space.
+ The result is as follows: a
+\begin_inset space \space{}
+\end_inset
+
+b
+\begin_inset space ~
+\end_inset
+
+c
+\begin_inset space \enskip{}
+\end_inset
+
+d
+\begin_inset space \quad{}
+\end_inset
+
+e
+\begin_inset space \qquad{}
+\end_inset
+
+f.
+\end_layout
+
+\begin_layout Subsection
 Half Spaces
 \end_layout
 
@@ -263,6 +294,75 @@ m, 3.53
 
 €.
  It is correctly converted to a thin space.
+\end_layout
+
+\begin_layout Section
+Issues in Vertical Spacing
+\end_layout
+
+\begin_layout Standard
+Vertical spacing can also be added.
+ Let us now separate a few sentences with it.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+J.
+ Losey
+\begin_inset VSpace smallskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+L.
+ Anderson
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+S.
+ Kubrick
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+P.P.
+ Pasolini
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace 1.5ex
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+O.
+ Welles
+\begin_inset VSpace 1in
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Late B.
+ Forbes
 \end_layout
 
 \end_body

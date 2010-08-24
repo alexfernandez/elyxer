@@ -127,6 +127,11 @@ textasciicircum
 .
 \end_layout
 
+\begin_layout Itemize
+Improved support for custom vertical spaces; absolute measures can now be
+ used.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.0 (2010-07-21):
