@@ -187,7 +187,12 @@ class BoxInset(Container):
   def process(self):
     "Set the correct tag"
     self.type = self.header[2]
-    self.output.settag('div class="' + self.type + '"', True)
+    tag = 'div class="' + self.type + '"'
+    if 'width' in self.parameters:
+      self.width = self.parameters['width']
+      Trace.debug('Box width: ' + self.width)
+      tag += ' style="width: ' + self.width.replace('col', '') + ';"'
+    self.output.settag(tag, True)
 
 class IncludeInset(Container):
   "A child document included within another."
