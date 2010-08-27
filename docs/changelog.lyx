@@ -132,6 +132,14 @@ Improved support for custom horizontal and vertical spaces; absolute measures
  can now be used.
 \end_layout
 
+\begin_layout Itemize
+Solved bug in 
+\family typewriter
+--nofooter
+\family default
+ which required a dummy argument (thanks, Yan!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.0 (2010-07-21):

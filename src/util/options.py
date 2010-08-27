@@ -64,7 +64,7 @@ class Options(object):
   raw = False
   jsmath = None
   mathjax = None
-  nofooter = None
+  nofooter = False
   template = None
 
   branches = dict()
