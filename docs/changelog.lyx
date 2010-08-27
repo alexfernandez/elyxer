@@ -114,7 +114,7 @@ textasciitilde
 \begin_inset Formula $\textasciitilde$
 \end_inset
 
- and 
+, 
 \family typewriter
 
 \backslash
@@ -124,7 +124,14 @@ textasciicircum
 \begin_inset Formula $\textasciicircum$
 \end_inset
 
-.
+ and a few other 
+\family typewriter
+
+\backslash
+text\SpecialChar \ldots{}
+
+\family default
+ commands.
 \end_layout
 
 \begin_layout Itemize
