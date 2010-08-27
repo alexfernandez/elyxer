@@ -162,8 +162,6 @@ class BibPart(Container):
 
 class BibVariable(Container):
   "A variable in a BibTeX template."
-
-  escaped = BibTeXConfig.escaped
   
   def __init__(self, tags):
     self.output = TaggedOutput()
