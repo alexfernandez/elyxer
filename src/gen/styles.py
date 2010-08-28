@@ -26,6 +26,7 @@ from util.trace import Trace
 from parse.parser import *
 from out.output import *
 from gen.container import *
+from gen.size import *
 
 
 class QuoteContainer(Container):
@@ -156,8 +157,8 @@ class Space(Container):
     self.html = [StyleConfig.hspaces[self.type]]
     if len(self.contents) == 0 or not isinstance(self.contents[0], InsetLength):
       return
-    length = self.contents[0].length
-    self.output = TaggedOutput().settag('span class="hspace" style="width: ' + length + ';"', False)
+    self.output = TaggedOutput().settag('span class="hspace"', False)
+    ContainerSize().set(self.contents[0].length).addstyle(self)
 
 class VerticalSpace(Container):
   "An inset that contains a vertical space."
