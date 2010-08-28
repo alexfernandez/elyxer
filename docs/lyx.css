@@ -520,11 +520,16 @@ div.framed {
 }
 div.frameless {
 }
-div.Framed {
-	outline-style: double;
-}
 div.Frameless {
-	outline-style: outset;
+}
+div.Boxed {
+	outline-width: thin;
+	outline-style: solid;
+}
+div.Framed {
+	outline-width: thin;
+	outline-style: solid;
+	line-height: 200%;
 }
 div.Doublebox {
 	outline-style: double;

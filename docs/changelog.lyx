@@ -144,6 +144,18 @@ Solved bug in
  which required a dummy argument (thanks, Yan!).
 \end_layout
 
+\begin_layout Itemize
+Corrected box styling: 
+\family typewriter
+<div class="Frameless">
+\family default
+ is now indeed frameless, while 
+\family typewriter
+<div class="Framed">
+\family default
+ no longer has a double border.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.0 (2010-07-21):
