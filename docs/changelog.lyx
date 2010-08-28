@@ -95,12 +95,9 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-BibTeX: correctly parse entries separated by commas.
- Use TeX commands from 
-\family typewriter
-FormulaConfig.commands
-\family default
-.
+BibTeX: more robust parsing, specifically: correctly parse entries separated
+ by commas.
+ Support all TeX commands already available in math formulae.
 \end_layout
 
 \begin_layout Itemize
