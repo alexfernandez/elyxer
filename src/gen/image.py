@@ -34,7 +34,7 @@ from io.path import *
 class Image(Container):
   "An embedded image"
 
-  ignoredtexts = ImageConfig.size['ignoredtexts']
+  ignoredtexts = StyleConfig.size['ignoredtexts']
   vectorformats = ImageConfig.formats['vector']
   rasterformats = ImageConfig.formats['raster']
   defaultformat = ImageConfig.formats['default']
