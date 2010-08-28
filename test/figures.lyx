@@ -737,7 +737,7 @@ And many other things.
 \end_layout
 
 \begin_layout Section
-Algorithms and Listings
+Boxes (Minipages)
 \end_layout
 
 \begin_layout Standard
@@ -746,6 +746,43 @@ We can insert a box here:
 
 \begin_layout Standard
 \begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\noindent
+Well I, I think that, er, nobody who has gone abroad should be allowed back
+ in the country.
+ I mean, er, blimey, blimey if they're not keen enough to stay here when
+ they're 'ere, why should we allow them back, er, at the tax-payers' expense?
+ I mean, be fair, I mean, I don't eat squirrels do I? I mean well perhaps
+ I do one or two but there's no law against that, is there? It's a free
+ country.
+ I mean if I want to eat a squirrel now and again, that's me own business,
+ innit? I mean, I'm no racialist.
+ I, oh, oh...
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A decorated centered box:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
 position "t"
 hor_pos "c"
 has_inner_box 1
@@ -811,11 +848,11 @@ DISTRACT-A-BEE
 \end_layout
 
 \begin_layout Standard
-And a decorated box with a certain width:
+And a double-decorated box with a certain width:
 \end_layout
 
 \begin_layout Standard
-\begin_inset Box Boxed
+\begin_inset Box Doublebox
 position "t"
 hor_pos "c"
 has_inner_box 1
@@ -829,6 +866,10 @@ status open
 
 \begin_layout Plain Layout
 Goodnight.
+ Ding-ding-ding-ding-ding, five, four, three, two, one\SpecialChar \ldots{}
+ Goodnight.
+ Ding-ding-ding-ding-ding, five, four, three, two, one\SpecialChar \ldots{}
+ Goodnight.
  Ding-ding-ding-ding-ding, five, four, three, two, one\SpecialChar \ldots{}
 
 \end_layout
