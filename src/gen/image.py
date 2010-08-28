@@ -41,7 +41,7 @@ class Image(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = ImageOutput()
+    self.output = TaggedOutput()
     self.type = 'embedded'
     self.width = None
     self.height = None
@@ -59,6 +59,7 @@ class Image(Container):
     self.setscale()
     ImageConverter.instance.convert(self)
     self.setsize()
+    self.settag()
 
   def getdestination(self, origin):
     "Convert origin path to destination path."
@@ -107,6 +108,34 @@ class Image(Container):
     "Scale the value according to the image scale and return it as unicode."
     scaled = value * int(self.scale) / 100
     return unicode(int(scaled)) + 'px'
+
+  def settag(self):
+    "Set the output tag for the image."
+    tag = 'img class="' + self.type + '"'
+    if self.origin.exists():
+      tag += self.imagetag()
+    else:
+      tag.append(' src="' + self.origin.url + '"')
+    self.output.settag(tag, True, empty=True)
+
+  def imagetag(self):
+    "Get the part of the tag corresponding to the image."
+    figure = Translator.translate('figure')
+    tag = ' src="' + self.destination.url + '"'
+    tag += ' alt="' + figure + ' ' + self.destination.url + '" style="'
+    if self.width:
+      tag += 'width: ' + self.width + '; '
+    elif self.height:
+      tag += 'width: auto; '
+    if self.maxwidth:
+      tag += 'max-width: ' + self.maxwidth + '; '
+    if self.height:
+      tag += 'height: ' + self.height + '; '
+    elif self.width:
+      tag += 'height: auto; '
+    if self.maxheight:
+      tag += 'max-height: ' + self.maxheight + '; '
+    return tag + '"'
 
 class ImageConverter(object):
   "A converter from one image file to another."
@@ -264,39 +293,4 @@ class ImageFile(object):
   def seek(self, file, bytes):
     "Seek forward, just by reading the given number of bytes"
     file.read(bytes)
-
-class ImageOutput(object):
-  "Returns an image in the output"
-
-  def gethtml(self, container):
-    "Get the HTML output of the image as a list"
-    html = ['<img class="' + container.type + '"']
-    if container.origin.exists():
-      html += self.getimagehtml(container)
-    else:
-      html.append(' src="' + container.origin.url + '"')
-    html.append('/>\n')
-    return html
-
-  def getimagehtml(self, container):
-    "Get the HTML corresponding to the image."
-    if container.width and not container.height:
-      container.height = 'auto'
-    if container.height and not container.width:
-      container.width = 'auto'
-    html = []
-    figure = Translator.translate('figure')
-    html.append(' src="' + container.destination.url +
-        '" alt="' + figure + ' ' + container.destination.url + '"')
-    html.append(' style="')
-    if container.width:
-      html.append('width: ' + container.width + '; ')
-    if container.maxwidth:
-      html.append('max-width: ' + container.maxwidth + '; ')
-    if container.height:
-      html.append('height: ' + container.height + '; ')
-    if container.maxheight:
-      html.append('max-height: ' + container.maxheight + '; ')
-    html.append('"')
-    return html
 

@@ -55,31 +55,37 @@ class ContentsOutput(object):
     return html
 
 class TaggedOutput(ContentsOutput):
-  "Outputs an HTML tag surrounding the contents"
+  "Outputs an HTML tag surrounding the contents."
 
   tag = None
   breaklines = False
+  empty = False
 
-  def settag(self, tag, breaklines=False):
-    "Set the value for the tag"
+  def settag(self, tag, breaklines=False, empty=False):
+    "Set the value for the tag and other attributes."
     self.tag = tag
-    self.breaklines = breaklines
+    if breaklines:
+      self.breaklines = breaklines
+    if empty:
+      self.empty = empty
     return self
 
   def setbreaklines(self, breaklines):
-    "Set the value for breaklines"
+    "Set the value for breaklines."
     self.breaklines = breaklines
     return self
 
   def gethtml(self, container):
-    "Return the HTML code"
-    html = [self.getopen(container)]
+    "Return the HTML code."
+    if self.empty:
+      return [self.selfclosing(container)]
+    html = [self.open(container)]
     html += ContentsOutput.gethtml(self, container)
-    html.append(self.getclose(container))
+    html.append(self.close(container))
     return html
 
-  def getopen(self, container):
-    "Get opening line"
+  def open(self, container):
+    "Get opening line."
     if self.tag == '':
       return ''
     open = '<' + self.tag + '>'
@@ -87,14 +93,21 @@ class TaggedOutput(ContentsOutput):
       return open + '\n'
     return open
 
-  def getclose(self, container):
-    "Get closing line"
+  def close(self, container):
+    "Get closing line."
     if self.tag == '':
       return ''
     close = '</' + self.tag.split()[0] + '>'
     if self.breaklines:
       return '\n' + close + '\n'
     return close
+
+  def selfclosing(self, container):
+    "Get self-closing line."
+    selfclosing = '<' + self.tag + '/>'
+    if self.breaklines:
+      return selfclosing + '\n'
+    return selfclosing
 
 class StringOutput(object):
   "Returns a bare string as output"

@@ -84,6 +84,7 @@ class Float(Container):
     image.type = 'figure'
     width = image.width
     image.width = None
+    image.settag()
     return ' style="max-width: ' + width + ';"'
 
   def embed(self, tag):
