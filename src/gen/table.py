@@ -95,8 +95,13 @@ class Column(Container):
     cell.setattribute('align', alignment)
     valignment = self.parameters['valignment']
     cell.setattribute('valign', valignment)
-    if self.width:
-      cell.setattribute('style', 'width: ' + self.width.replace('col', '') + ';')
+    if not self.width:
+      return
+    if self.width == '0':
+      return
+    if self.width.startswith('0'):
+      return
+    cell.setattribute('style', 'width: ' + self.width.replace('col', '') + ';')
 
 class Cell(Container):
   "A cell in a table"
