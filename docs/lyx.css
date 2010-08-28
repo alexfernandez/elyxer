@@ -169,10 +169,10 @@ td.numeric {
 td.empty {
 	text-align: center;
 }
-.right {
+div.right {
 	text-align: right;
 }
-.center {
+div.center {
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
