@@ -28,13 +28,13 @@ import os
 from util.trace import Trace
 from util.translate import *
 from gen.container import *
+from gen.size import *
 from io.path import *
 
 
 class Image(Container):
   "An embedded image"
 
-  ignoredtexts = StyleConfig.size['ignoredtexts']
   vectorformats = ImageConfig.formats['vector']
   rasterformats = ImageConfig.formats['raster']
   defaultformat = ImageConfig.formats['default']
@@ -43,11 +43,6 @@ class Image(Container):
     self.parser = InsetParser()
     self.output = TaggedOutput()
     self.type = 'embedded'
-    self.width = None
-    self.height = None
-    self.maxwidth = None
-    self.maxheight = None
-    self.scale = None
 
   def process(self):
     "Place the url, convert the image if necessary."
@@ -56,7 +51,7 @@ class Image(Container):
       Trace.error('Image ' + unicode(self.origin) + ' not found')
       return
     self.destination = self.getdestination(self.origin)
-    self.setscale()
+    self.size = ContainerSize().readparameters(self)
     ImageConverter.instance.convert(self)
     self.setsize()
     self.settag()
@@ -75,38 +70,22 @@ class Image(Container):
     destination.removebackdirs()
     return destination
 
-  def setscale(self):
-    "Set the scale attribute if present."
-    self.setifparam('scale')
-
   def setsize(self):
     "Set the size attributes width and height."
     imagefile = ImageFile(self.destination)
     width, height = imagefile.getdimensions()
     if width:
-      self.maxwidth = unicode(width) + 'px'
-      if self.scale:
-        self.width = self.scalevalue(width)
+      self.size.maxwidth = unicode(width) + 'px'
+      if self.size.scale and not self.size.width:
+        self.size.width = self.scalevalue(width)
     if height:
-      self.maxheight = unicode(height) + 'px'
-      if self.scale:
-        self.height = self.scalevalue(height)
-    self.setifparam('width')
-    self.setifparam('height')
-
-  def setifparam(self, name):
-    "Set the value in the container if it exists as a param."
-    if not name in self.parameters:
-      return
-    value = unicode(self.parameters[name])
-    for ignored in Image.ignoredtexts:
-      if ignored in value:
-        value = value.replace(ignored, '')
-    setattr(self, name, value)
+      self.size.maxheight = unicode(height) + 'px'
+      if self.size.scale and not self.size.height:
+        self.size.height = self.scalevalue(height)
 
   def scalevalue(self, value):
     "Scale the value according to the image scale and return it as unicode."
-    scaled = value * int(self.scale) / 100
+    scaled = value * int(self.size.scale) / 100
     return unicode(int(scaled)) + 'px'
 
   def settag(self):
@@ -123,18 +102,18 @@ class Image(Container):
     figure = Translator.translate('figure')
     tag = ' src="' + self.destination.url + '"'
     tag += ' alt="' + figure + ' ' + self.destination.url + '" style="'
-    if self.width:
-      tag += 'width: ' + self.width + '; '
-    elif self.height:
+    if self.size.width:
+      tag += 'width: ' + self.size.width + '; '
+    elif self.size.height:
       tag += 'width: auto; '
-    if self.maxwidth:
-      tag += 'max-width: ' + self.maxwidth + '; '
-    if self.height:
-      tag += 'height: ' + self.height + '; '
-    elif self.width:
+    if self.size.maxwidth:
+      tag += 'max-width: ' + self.size.maxwidth + '; '
+    if self.size.height:
+      tag += 'height: ' + self.size.height + '; '
+    elif self.size.width:
       tag += 'height: auto; '
-    if self.maxheight:
-      tag += 'max-height: ' + self.maxheight + '; '
+    if self.size.maxheight:
+      tag += 'max-height: ' + self.size.maxheight + '; '
     return tag + '"'
 
 class ImageConverter(object):
@@ -202,10 +181,10 @@ class ImageConverter(object):
     params['output'] = image.destination
     if image.origin.hasexts(Image.vectorformats):
       scale = 100
-      if image.scale:
-        scale = image.scale
+      if image.size.scale:
+        scale = image.size.scale
         # descale
-        image.scale = None
+        image.size.scale = None
       params['scale'] = scale
     # elif image.origin.hasext('.pdf'):
       # params['define'] = 'pdf:use-cropbox=true'

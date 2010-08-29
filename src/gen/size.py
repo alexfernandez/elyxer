@@ -33,6 +33,7 @@ class ContainerSize(object):
   height = None
   maxwidth = None
   maxheight = None
+  scale = None
 
   def set(self, width = None, height = None):
     "Set the proper size with width and height."
@@ -54,6 +55,7 @@ class ContainerSize(object):
     "Read some size parameters off a container."
     self.readparameter(container, 'width')
     self.readparameter(container, 'height')
+    self.readparameter(container, 'scale')
     return self
 
   def readparameter(self, container, name):
