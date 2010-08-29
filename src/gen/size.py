@@ -42,6 +42,14 @@ class ContainerSize(object):
       self.height = height
     return self
 
+  def setmax(self, maxwidth = None, maxheight = None):
+    "Set max width and/or height."
+    if maxwidth:
+      self.maxwidth = maxwidth
+    if maxheight:
+      self.maxheight = maxheight
+    return self
+
   def readparameters(self, container):
     "Read some size parameters off a container."
     self.readparameter(container, 'width')
@@ -67,8 +75,17 @@ class ContainerSize(object):
       # nothing to see here; move along
       return
     tag = ' style="'
-    if self.width:
-      tag += 'width: ' + self.width + ';'
+    tag += self.styleparameter('width')
+    tag += self.styleparameter('maxwidth')
+    if tag[-1] == ' ':
+      tag = tag[:-1]
     tag += '"'
     container.output.tag += tag
+
+  def styleparameter(self, name):
+    "Get the style for a single parameter."
+    value = getattr(self, name)
+    if value:
+      return name.replace('max', 'max-') + ': ' + value + '; '
+    return ''
 

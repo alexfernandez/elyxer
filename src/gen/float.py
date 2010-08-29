@@ -52,9 +52,15 @@ class Float(Container):
 
   def processtags(self):
     "Process the HTML tags."
+    tagged = self.embed()
+    self.applywideningtag(tagged)
+
+  def embed(self):
+    "Embed the whole contents in a div."
     embeddedtag = self.getembeddedtag()
-    wideningtag = self.getwideningtag()
-    self.embed(embeddedtag + wideningtag)
+    tagged = TaggedText().complete(self.contents, embeddedtag, True)
+    self.contents = [tagged]
+    return tagged
 
   def processfloats(self):
     "Process all floats contained inside."
@@ -71,8 +77,8 @@ class Float(Container):
       return 'div class="multi' + self.type + '"'
     return 'div class="' + self.type + '"'
 
-  def getwideningtag(self):
-    "Get the tag to set float width, if present."
+  def applywideningtag(self, container):
+    "Apply the tag to set float width, if present."
     images = self.searchall(Image)
     if len(images) != 1:
       return ''
@@ -82,15 +88,9 @@ class Float(Container):
     if not '%' in image.width:
       return ''
     image.type = 'figure'
-    width = image.width
+    ContainerSize().setmax(image.width).addstyle(container)
     image.width = None
     image.settag()
-    return ' style="max-width: ' + width + ';"'
-
-  def embed(self, tag):
-    "Embed the whole contents in a div"
-    tagged = TaggedText().complete(self.contents, tag, True)
-    self.contents = [tagged]
 
   def searchinside(self, type):
     "Search for a given type in the contents"
@@ -120,11 +120,10 @@ class Wrap(Float):
 
   def processtags(self):
     "Add the widening tag to the parent tag."
-    embeddedtag = self.getembeddedtag()
-    self.embed(embeddedtag)
+    self.embed()
     placement = self.parameters['placement']
-    wideningtag = self.getwideningtag()
-    self.output.tag = 'div class="wrap-' + placement + '"' + wideningtag
+    self.output.tag = 'div class="wrap-' + placement + '"'
+    self.applywideningtag(self)
 
 class Caption(Container):
   "A caption for a figure or a table"
