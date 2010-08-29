@@ -39,6 +39,7 @@ from gen.list import *
 from gen.inset import *
 from gen.float import *
 from gen.header import *
+from gen.change import *
 from maths.array import *
 from ref.bibtex import *
 from ref.bibentry import *

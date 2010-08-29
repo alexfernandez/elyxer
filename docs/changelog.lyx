@@ -165,6 +165,10 @@ Solved bug in text handling which separated consecutive centered lines with
  a space.
 \end_layout
 
+\begin_layout Itemize
+Support for LyX change tracking.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.0 (2010-07-21):
