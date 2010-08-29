@@ -91,7 +91,6 @@ class Parser(object):
     if not self.ending:
       Trace.error('No ending for ' + unicode(self))
       return
-    Trace.debug('Ending: ' + self.ending)
     while not reader.currentline().startswith(self.ending):
       process()
 
