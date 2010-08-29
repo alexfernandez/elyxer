@@ -64,6 +64,9 @@ class ContainerSize(object):
     if TextPosition(result).globnumber() == '0':
       Trace.debug('Zero width: ' + result)
       return
+    for ignored in StyleConfig.size['ignoredtexts']:
+      if ignored in result:
+        result = result.replace(ignored, '')
     Trace.debug('Container ' + name + ': ' + result)
     setattr(self, name, result)
 
