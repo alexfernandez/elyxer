@@ -35,6 +35,7 @@ class Container(object):
 
   partkey = None
   parent = None
+  begin = None
 
   def __init__(self):
     self.contents = list()
@@ -161,7 +162,7 @@ class Container(object):
 
   def __unicode__(self):
     "Get a description"
-    if not hasattr(self, 'begin'):
+    if not self.begin:
       return self.__class__.__name__
     return self.__class__.__name__ + '@' + unicode(self.begin)
 
@@ -205,7 +206,7 @@ class StringContainer(Container):
     if ContainerConfig.string['startcommand'] in replaced and len(replaced) > 1:
       # unprocessed commands
       if self.parser:
-        message = 'Unknown command at ' + unicode(self.parser.begin) + ': '
+        message = 'Unknown command at ' + unicode(self.begin) + ': '
       else:
         message = 'Unknown command: '
       Trace.error(message + replaced.strip())
@@ -219,7 +220,10 @@ class StringContainer(Container):
     return line
   
   def __unicode__(self):
-    result = 'StringContainer@' + unicode(self.begin)
+    "Return a printable representation."
+    result = 'StringContainer'
+    if self.begin:
+      result += '@' + unicode(self.begin)
     ellipsis = '...'
     if len(self.string.strip()) <= 15:
       ellipsis = ''
@@ -240,10 +244,7 @@ class TaggedText(Container):
   "Text inside a tag"
 
   def __init__(self):
-    ending = None
-    if self.__class__.__name__ in ContainerConfig.endings:
-      ending = ContainerConfig.endings[self.__class__.__name__]
-    self.parser = TextParser(ending)
+    self.parser = TextParser(self)
     self.output = TaggedOutput()
 
   def complete(self, contents, tag, breaklines=False):

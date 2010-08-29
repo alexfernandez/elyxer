@@ -88,6 +88,10 @@ class Parser(object):
 
   def parseending(self, reader, process):
     "Parse until the current ending is found"
+    if not self.ending:
+      Trace.error('No ending for ' + unicode(self))
+      return
+    Trace.debug('Ending: ' + self.ending)
     while not reader.currentline().startswith(self.ending):
       process()
 
@@ -113,9 +117,11 @@ class TextParser(Parser):
 
   stack = []
 
-  def __init__(self, ending):
+  def __init__(self, container):
     Parser.__init__(self)
-    self.ending = ending
+    self.ending = None
+    if container.__class__.__name__ in ContainerConfig.endings:
+      self.ending = ContainerConfig.endings[container.__class__.__name__]
     self.endings = []
 
   def parse(self, reader):
