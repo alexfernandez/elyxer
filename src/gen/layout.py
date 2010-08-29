@@ -241,12 +241,21 @@ class PostLayout(object):
 
   def group(self, last, layout):
     "Group two layouts if they are the same type."
-    if not isinstance(last, Layout) or last.type != layout.type:
+    if not self.isgroupable(layout) or not self.isgroupable(last) or last.type != layout.type:
       return layout
     layout.contents = last.contents + [Constant('<br/>\n')] + layout.contents
     last.contents = []
     last.output = EmptyOutput()
     return layout
+
+  def isgroupable(self, container):
+    "Check that the container can be grouped."
+    if not isinstance(container, Layout):
+      return False
+    for element in container.contents:
+      if not element.__class__.__name__ in LayoutConfig.groupable['allowed']:
+        return False
+    return True
 
   def number(self, layout):
     "Generate a number and place it before the text"

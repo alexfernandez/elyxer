@@ -156,6 +156,11 @@ Corrected box styling:
  no longer has a double border.
 \end_layout
 
+\begin_layout Itemize
+Solved bug in text handling which separated consecutive centered lines with
+ a space.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.0 (2010-07-21):
