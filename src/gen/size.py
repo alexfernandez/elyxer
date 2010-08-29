@@ -46,6 +46,7 @@ class ContainerSize(object):
     "Read some size parameters off a container."
     self.readparameter(container, 'width')
     self.readparameter(container, 'height')
+    return self
 
   def readparameter(self, container, name):
     "Read a size parameter off a container."
@@ -55,6 +56,7 @@ class ContainerSize(object):
     if TextPosition(result).globnumber() == '0':
       Trace.debug('Zero width: ' + result)
       return
+    Trace.debug('Container ' + name + ': ' + result)
     setattr(self, name, result)
 
   def addstyle(self, container):
@@ -66,7 +68,7 @@ class ContainerSize(object):
       return
     tag = ' style="'
     if self.width:
-      tag += 'width: ' + self.width + '; '
+      tag += 'width: ' + self.width + ';'
     tag += '"'
     container.output.tag += tag
 

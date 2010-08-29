@@ -79,13 +79,10 @@ class Column(Container):
   def __init__(self):
     self.parser = ColumnParser()
     self.output = EmptyOutput()
-    self.width = None
 
   def process(self):
-    "Set width if present."
-    if 'width' in self.parameters:
-      self.width = self.parameters['width']
-      Trace.debug('Column width: ' + self.width)
+    "Read size parameters if present."
+    self.size = ContainerSize().readparameters(self)
 
   def set(self, cell):
     "Set alignments in the corresponding cell"
@@ -95,13 +92,7 @@ class Column(Container):
     cell.setattribute('align', alignment)
     valignment = self.parameters['valignment']
     cell.setattribute('valign', valignment)
-    if not self.width:
-      return
-    if self.width == '0':
-      return
-    if self.width.startswith('0'):
-      return
-    cell.setattribute('style', 'width: ' + self.width.replace('col', '') + ';')
+    self.size.addstyle(cell)
 
 class Cell(Container):
   "A cell in a table"

@@ -137,6 +137,10 @@ Improved support for custom horizontal and vertical spaces; absolute measures
 \end_layout
 
 \begin_layout Itemize
+Support for sizes in table columns.
+\end_layout
+
+\begin_layout Itemize
 Solved bug in 
 \family typewriter
 --nofooter
