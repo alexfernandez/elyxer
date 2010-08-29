@@ -83,13 +83,11 @@ class Float(Container):
     if len(images) != 1:
       return ''
     image = images[0]
-    if not image.size.width:
-      return ''
-    if not '%' in image.size.width:
-      return ''
+    width = image.size.removepercentwidth()
+    if not width:
+      return
     image.type = 'figure'
-    ContainerSize().setmax(image.size.width).addstyle(container)
-    image.size.width = None
+    ContainerSize().setmax(width).addstyle(container)
     image.settag()
 
   def searchinside(self, type):

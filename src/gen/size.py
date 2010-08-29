@@ -53,24 +53,73 @@ class ContainerSize(object):
 
   def readparameters(self, container):
     "Read some size parameters off a container."
-    self.readparameter(container, 'width')
-    self.readparameter(container, 'height')
-    self.readparameter(container, 'scale')
+    self.setparameter(container, 'width')
+    self.setparameter(container, 'height')
+    self.setparameter(container, 'scale')
+    self.checkvalidheight(container)
     return self
 
-  def readparameter(self, container, name):
-    "Read a size parameter off a container."
+  def setparameter(self, container, name):
+    "Read a size parameter off a container, and set it if present."
+    value = self.extractparameter(container, name)
+    if value:
+      setattr(self, name, value)
+
+  def checkvalidheight(self, container):
+    "Check if the height parameter is valid; otherwise erase it."
+    heightspecial = self.extractparameter(container, 'height_special')
+    if self.height and self.extractnumber(self.height) == '1' and heightspecial == 'totalheight':
+      self.height = None
+
+  def extractparameter(self, container, name):
+    "Extract a parameter from a container, if present."
     if not name in container.parameters:
-      return
+      return None
     result = container.parameters[name]
-    if TextPosition(result).globnumber() == '0':
+    if self.extractnumber(result) == '0':
       Trace.debug('Zero width: ' + result)
-      return
+      return None
     for ignored in StyleConfig.size['ignoredtexts']:
       if ignored in result:
         result = result.replace(ignored, '')
     Trace.debug('Container ' + name + ': ' + result)
-    setattr(self, name, result)
+    return result
+
+  def extractnumber(self, text):
+    "Extract the first number in the given text."
+    return TextPosition(text).globnumber()
+
+  def checkimage(self, width, height):
+    "Check image dimensions, set them if possible."
+    if width:
+      self.maxwidth = unicode(width) + 'px'
+      if self.scale and not self.width:
+        self.width = self.scalevalue(width)
+    if height:
+      self.maxheight = unicode(height) + 'px'
+      if self.scale and not self.height:
+        self.height = self.scalevalue(height)
+    if self.width and not self.height:
+      self.height = 'auto'
+    if self.height and not self.width:
+      self.width = 'auto'
+
+  def scalevalue(self, value):
+    "Scale the value according to the image scale and return it as unicode."
+    scaled = value * int(self.scale) / 100
+    return unicode(int(scaled)) + 'px'
+
+  def removepercentwidth(self):
+    "Remove percent width if present, to set it at the figure level."
+    if not self.width:
+      return None
+    if not '%' in self.width:
+      return None
+    width = self.width
+    self.width = None
+    if self.height == 'auto':
+      self.height = None
+    return width
 
   def addstyle(self, container):
     "Add the proper style attribute to the output tag."
@@ -82,6 +131,8 @@ class ContainerSize(object):
     tag = ' style="'
     tag += self.styleparameter('width')
     tag += self.styleparameter('maxwidth')
+    tag += self.styleparameter('height')
+    tag += self.styleparameter('maxheight')
     if tag[-1] == ' ':
       tag = tag[:-1]
     tag += '"'

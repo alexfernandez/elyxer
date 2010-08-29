@@ -72,16 +72,8 @@ class Image(Container):
 
   def setsize(self):
     "Set the size attributes width and height."
-    imagefile = ImageFile(self.destination)
-    width, height = imagefile.getdimensions()
-    if width:
-      self.size.maxwidth = unicode(width) + 'px'
-      if self.size.scale and not self.size.width:
-        self.size.width = self.scalevalue(width)
-    if height:
-      self.size.maxheight = unicode(height) + 'px'
-      if self.size.scale and not self.size.height:
-        self.size.height = self.scalevalue(height)
+    width, height = ImageFile(self.destination).getdimensions()
+    self.size.checkimage(width, height)
 
   def scalevalue(self, value):
     "Scale the value according to the image scale and return it as unicode."
@@ -92,29 +84,12 @@ class Image(Container):
     "Set the output tag for the image."
     tag = 'img class="' + self.type + '"'
     if self.origin.exists():
-      tag += self.imagetag()
+      url = self.destination.url
     else:
-      tag.append(' src="' + self.origin.url + '"')
+      url = self.origin.url
+    tag += ' src="' + url + '" alt="' + Translator.translate('figure') + ' ' + url + '"'
     self.output.settag(tag, True, empty=True)
-
-  def imagetag(self):
-    "Get the part of the tag corresponding to the image."
-    figure = Translator.translate('figure')
-    tag = ' src="' + self.destination.url + '"'
-    tag += ' alt="' + figure + ' ' + self.destination.url + '" style="'
-    if self.size.width:
-      tag += 'width: ' + self.size.width + '; '
-    elif self.size.height:
-      tag += 'width: auto; '
-    if self.size.maxwidth:
-      tag += 'max-width: ' + self.size.maxwidth + '; '
-    if self.size.height:
-      tag += 'height: ' + self.size.height + '; '
-    elif self.size.width:
-      tag += 'height: auto; '
-    if self.size.maxheight:
-      tag += 'max-height: ' + self.size.maxheight + '; '
-    return tag + '"'
+    self.size.addstyle(self)
 
 class ImageConverter(object):
   "A converter from one image file to another."
