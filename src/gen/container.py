@@ -153,14 +153,6 @@ class Container(object):
     while len(container.contents) > 0:
       self.contents.insert(index, container.contents.pop())
 
-  def debug(self, level = 0):
-    "Show the contents in debug mode"
-    if not Trace.debugmode:
-      return
-    Trace.debug('  ' * level + unicode(self))
-    for element in self.contents:
-      element.debug(level + 1)
-
   def tree(self, level = 0):
     "Show in a tree"
     Trace.debug("  " * level + unicode(self))
