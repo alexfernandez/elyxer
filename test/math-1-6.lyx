@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -548,6 +548,11 @@ vspace
 \end_inset
 
 .
+ Protected space can be used: 
+\begin_inset Formula $a\ b$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
@@ -670,7 +675,7 @@ Macros
 \begin_layout Standard
 Definitions can be added as macros
 \begin_inset FormulaMacro
-\renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
+\newcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
 {\sqrt[#1]{#2}}
 \end_inset
 
@@ -682,7 +687,7 @@ Definitions can be added as macros
 .
  They can accept default parameters
 \begin_inset FormulaMacro
-\renewcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
+\newcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
 {#1\sqrt{#2}}
 \end_inset
 

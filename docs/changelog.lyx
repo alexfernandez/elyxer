@@ -128,7 +128,30 @@ textasciicircum
 text\SpecialChar \ldots{}
 
 \family default
- commands.
+ symbols.
+ Also, 
+\family typewriter
+
+\backslash
+textrm
+\family default
+, 
+\family typewriter
+
+\backslash
+textsf
+\family default
+ and 
+\family typewriter
+
+\backslash
+textnormal
+\family default
+ should be working now in equations: 
+\begin_inset Formula $a+\textrm{roman}+\textsf{sans-serif}+\textnormal{normal}+b$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Itemize

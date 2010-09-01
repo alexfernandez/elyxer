@@ -382,11 +382,28 @@ h2.author {
 h2.Date {
 	text-align: center;
 }
+span.mathrm {
+	font-family: serif;
+}
+span.mathsf {
+	font-family: sans-serif;
+}
 span.text {
+	font-style: normal;
+}
+span.textnormal {
 	font-style: normal;
 }
 span.textipa {
 	color: #008080;
+}
+span.textrm {
+	font-style: normal;
+	font-family: serif;
+}
+span.textsf {
+	font-style: normal;
+	font-family: sans-serif;
 }
 span.Description-entry {
 	font-weight: bold;
