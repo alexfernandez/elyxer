@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -480,7 +480,7 @@ hspace
 \begin_inset Formula $"\hspace{4mm}"$
 \end_inset
 
-, and 
+, 
 \family typewriter
 
 \backslash
@@ -488,6 +488,10 @@ vspace
 \family default
 : 
 \begin_inset Formula $"\vspace{1cm}"$
+\end_inset
+
+, protected space: 
+\begin_inset Formula $a\ b$
 \end_inset
 
 .
@@ -985,7 +989,7 @@ macros
 \begin_layout Standard
 Definitions can be added as macros
 \begin_inset FormulaMacro
-\renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
+\newcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
 {\sqrt[#1]{#2}}
 \end_inset
 
@@ -997,7 +1001,7 @@ Definitions can be added as macros
 .
  They can accept default parameters
 \begin_inset FormulaMacro
-\renewcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
+\newcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
 {#1\sqrt{#2}}
 \end_inset
 
