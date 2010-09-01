@@ -137,7 +137,7 @@ Improved support for custom horizontal and vertical spaces; absolute measures
 \end_layout
 
 \begin_layout Itemize
-Support for sizes in table columns.
+Support for sizes in table columns, figures and boxes.
 \end_layout
 
 \begin_layout Itemize
