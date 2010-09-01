@@ -166,7 +166,7 @@ Solved bug in text handling which separated consecutive centered lines with
 \end_layout
 
 \begin_layout Itemize
-Support for LyX change tracking.
+Basic support for LyX change tracking.
 \end_layout
 
 \end_deeper
