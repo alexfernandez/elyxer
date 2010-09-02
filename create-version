@@ -39,6 +39,7 @@ rsync -a --exclude "build" --exclude "dist" \
        --exclude "docs/cvs" \
        --exclude "docs/jsMath" --exclude "docs/MathJax" \
        --exclude "extras" --exclude "open-env" \
+       --exclude "docs/#*#" \
       . dist/elyxer-$VERSION/
 cd dist/elyxer-$VERSION
 find . -name "*.pyc" | xargs rm -f
