@@ -95,7 +95,15 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Updated 
+\begin_inset CommandInset href
+LatexCommand href
+name "MathJax"
+target "http://www.mathjax.org/"
+
+\end_inset
+
+ to version 1.0.1 (no changes to eLyXer documents are necessary).
 \end_layout
 
 \end_deeper
