@@ -87,8 +87,14 @@ class Image(Container):
       url = self.destination.url
     else:
       url = self.origin.url
-    tag += ' src="' + url + '" alt="' + Translator.translate('figure') + ' ' + url + '"'
-    self.output.settag(tag, True, empty=True)
+    alt = Translator.translate('figure') + ' ' + url
+    tag += ' src="' + url + '" alt="' + tag + '"'
+    emptytag = True
+    if self.destination.hasext('.svg'):
+      self.contents = [Constant(alt)]
+      tag = 'object class="' + self.type + '" data="' + url + '"'
+      emptytag = False
+    self.output.settag(tag, True, empty=emptytag)
     self.size.addstyle(self)
 
 class ImageConverter(object):
@@ -187,6 +193,8 @@ class ImageFile(object):
       dimensions = self.getpngdimensions()
     elif self.path.hasext('.jpg'):
       dimensions = self.getjpgdimensions()
+    elif self.path.hasext('.svg'):
+      dimensions = self.getsvgdimensions()
     ImageFile.dimensions[unicode(self.path)] = dimensions
     return dimensions
 
@@ -212,6 +220,10 @@ class ImageFile(object):
     width = self.readword(jpgfile)
     jpgfile.close()
     return (width, height)
+
+  def getsvgdimensions(self):
+    "Get the dimensions of a SVG image."
+    return (160, 160)
 
   def skipheaders(self, file, hexvalues):
     "Skip JPEG headers until one of the parameter headers is found"
