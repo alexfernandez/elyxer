@@ -82,6 +82,8 @@ class CommandLineParser(object):
     "Read a value with equals"
     split = arg.split('=', 1)
     key = split[0]
+    if not hasattr(self.options, key):
+      return None, key
     value = split[1]
     if not value.startswith('"'):
       return key, value
