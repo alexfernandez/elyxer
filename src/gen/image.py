@@ -223,7 +223,7 @@ class ImageFile(object):
 
   def getsvgdimensions(self):
     "Get the dimensions of a SVG image."
-    return (160, 160)
+    return (16, 16)
 
   def skipheaders(self, file, hexvalues):
     "Skip JPEG headers until one of the parameter headers is found"
