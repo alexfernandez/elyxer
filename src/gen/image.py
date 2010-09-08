@@ -60,6 +60,8 @@ class Image(Container):
     "Convert origin path to destination path."
     "Changes extension of destination to output image format."
     destination = OutputPath(origin)
+    if Options.noconvert:
+      return destination
     forceformat = '.jpg'
     forcedest = Image.defaultformat
     if Options.forceformat:
@@ -105,7 +107,7 @@ class ImageConverter(object):
 
   def convert(self, image):
     "Convert an image to PNG"
-    if not ImageConverter.active:
+    if not ImageConverter.active or Options.noconvert:
       return
     if image.origin.path == image.destination.path:
       return

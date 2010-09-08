@@ -66,6 +66,7 @@ class Options(object):
   mathjax = None
   nofooter = False
   template = None
+  noconvert = False
 
   branches = dict()
 
@@ -134,7 +135,6 @@ class Options(object):
     Trace.error('    --toc:                  create a table of contents')
     Trace.error('    --target "frame":       make all links point to the given frame')
     Trace.error('    --lowmem:               do the conversion on the fly (conserve memory)')
-    Trace.error('    --converter inkscape:   use Inkscape to convert images')
     Trace.error('    --numberfoot:           label footnotes with numbers instead of letters')
     Trace.error('    --raw:                  generate HTML without header or footer.')
     Trace.error('    --jsmath "URL":         use jsMath from the given URL to display equations')
@@ -142,6 +142,7 @@ class Options(object):
     Trace.error('    --template "file":      use a template, put everything in <!--$content-->')
     Trace.error('    --copyright:            add a copyright notice at the bottom')
     Trace.error('    --nocopy (deprecated):  no effect, maintained for backwards compatibility')
+    Trace.error('    --noconvert:            do not convert images, use in their original format')
     sys.exit()
 
   def showversion(self):
