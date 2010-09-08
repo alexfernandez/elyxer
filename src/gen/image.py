@@ -90,7 +90,7 @@ class Image(Container):
     else:
       url = self.origin.url
     alt = Translator.translate('figure') + ' ' + url
-    tag += ' src="' + url + '" alt="' + tag + '"'
+    tag += ' src="' + url + '" alt="' + alt + '"'
     emptytag = True
     if self.destination.hasext('.svg'):
       self.contents = [Constant(alt)]
