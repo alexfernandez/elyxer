@@ -123,6 +123,18 @@ Output
  Size information is not used as it causes problems on Firefox.
 \end_layout
 
+\begin_layout Itemize
+BibTeX: include 
+\family typewriter
+booktitle
+\family default
+ tag for the 
+\family typewriter
+@incollection
+\family default
+ format.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.1 (2010-09-01):
