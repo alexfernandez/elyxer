@@ -37,7 +37,7 @@ class BiblioCitation(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = ContentsOutput()
+    self.output = TaggedOutput().settag('span class="bibcites"')
     self.contents = []
 
   def process(self):

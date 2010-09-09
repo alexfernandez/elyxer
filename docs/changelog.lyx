@@ -135,6 +135,15 @@ booktitle
  format.
 \end_layout
 
+\begin_layout Itemize
+BibTex: added a tag 
+\family typewriter
+<span class="bibcites">
+\family default
+ around all bibliographical cites, so they can be e.g.
+ superscripted.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.1 (2010-09-01):
