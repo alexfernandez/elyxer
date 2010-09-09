@@ -103,7 +103,7 @@ target "http://www.mathjax.org/"
 
 \end_inset
 
- to version 1.0.1 (no changes to eLyXer documents are necessary).
+ to version 1.0.1 -- no changes to eLyXer documents are necessary.
 \end_layout
 
 \begin_layout Itemize
@@ -112,6 +112,15 @@ Added option
 --noconvert
 \family default
  to use images in their original formats, and avoid converting images altogether.
+\end_layout
+
+\begin_layout Itemize
+Output 
+\family typewriter
+<object>
+\family default
+ tags for SVG images.
+ Size information is not used as it causes problems on Firefox.
 \end_layout
 
 \end_deeper
