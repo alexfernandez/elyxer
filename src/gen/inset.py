@@ -116,7 +116,7 @@ class Footnote(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = ContentsOutput()
+    self.output = TaggedOutput().settag('span class="FootOuter"', True)
 
   def process(self):
     "Add a letter for the order, rotating"
@@ -125,14 +125,8 @@ class Footnote(Container):
     else:
       letter = NumberGenerator.instance.letter(Footnote.order)
     span = 'span class="FootMarker"'
-    pre = FootnoteConfig.constants['prefrom']
-    post = FootnoteConfig.constants['postfrom']
-    fromfoot = TaggedText().constant(pre + letter + post, span)
-    self.contents.insert(0, fromfoot)
     tag = TaggedText().complete(self.contents, 'span class="Foot"', True)
-    pre = FootnoteConfig.constants['preto']
-    post = FootnoteConfig.constants['postto']
-    tofoot = TaggedText().constant(pre + letter + post, span)
+    tofoot = TaggedText().constant('[' + letter + ']', span)
     self.contents = [tofoot, tag]
     Footnote.order += 1
 

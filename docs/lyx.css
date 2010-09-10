@@ -339,15 +339,20 @@ span.FootMarker {
 	color: #004000;
 }
 span.Foot {
-	float: right;
-	clear: right;
 	margin: 0.2ex;
 	border: thin solid #c0c0c0;
 	background: #ffffff;
-	width: 30%;
 	padding: 0.5ex;
 	font: small normal;
 	text-align: left;
+}
+span.FootOuter .Foot {
+	display:none;
+	position:absolute;
+}
+span.FootOuter:hover .Foot {
+	display: inline;
+	float:none;
 }
 span.Marginal {
 	float: right;
