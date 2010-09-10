@@ -144,6 +144,16 @@ BibTex: added a tag
  superscripted.
 \end_layout
 
+\begin_layout Itemize
+Show footnotes as hovering text instead of as marginal notes.
+ Footnote anchors are now superscript numbers by default, rendering the
+ option 
+\family typewriter
+--numberfoot
+\family default
+ useless.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.1 (2010-09-01):

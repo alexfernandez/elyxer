@@ -120,13 +120,10 @@ class Footnote(Container):
 
   def process(self):
     "Add a letter for the order, rotating"
-    if Options.numberfoot:
-      letter = NumberGenerator.instance.generateunique('Footnote')
-    else:
-      letter = NumberGenerator.instance.letter(Footnote.order)
+    letter = NumberGenerator.instance.generateunique('Footnote')
     span = 'span class="FootMarker"'
     tag = TaggedText().complete(self.contents, 'span class="Foot"', True)
-    tofoot = TaggedText().constant('[' + letter + ']', span)
+    tofoot = TaggedText().constant(letter, span)
     self.contents = [tofoot, tag]
     Footnote.order += 1
 

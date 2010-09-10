@@ -337,6 +337,9 @@ span.dotted {
 }
 span.FootMarker {
 	color: #004000;
+	font-size: 0.75em;
+	line-height: 0.5em;
+	vertical-align: text-top;
 }
 span.Foot {
 	margin: 0.2ex;

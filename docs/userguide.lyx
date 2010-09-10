@@ -1258,9 +1258,8 @@ reference "sub:TOC"
 \family typewriter
  
 \family default
-Label footnotes using numbers, instead of letters.
- Useful when bibliographical references are not numbered and therefore cannot
- be confused with footnotes.
+no effect since footnotes are now numbers by default, maintained for backwards
+ compatibility.
 \end_layout
 
 \begin_layout Description

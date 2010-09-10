@@ -142,7 +142,7 @@ class Options(object):
     Trace.error('    --target "frame":       make all links point to the given frame')
     Trace.error('    --toctarget "page":     generate a TOC that points to the given page')
     Trace.error('    --lowmem:               do the conversion on the fly (conserve memory)')
-    Trace.error('    --numberfoot:           label footnotes with numbers instead of letters')
+    Trace.error('    --numberfoot (deprec.): no effect, maintained for backwards compatibility')
     Trace.error('    --raw:                  generate HTML without header or footer.')
     Trace.error('    --jsmath "URL":         use jsMath from the given URL to display equations')
     Trace.error('    --mathjax "URL":        use MathJax from the given URL to display equations')
