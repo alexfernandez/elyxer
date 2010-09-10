@@ -839,7 +839,7 @@ eLyXer supports a few command line options:
 \family typewriter
 --help
 \family default
-: show command line help.
+: Show command line help.
 \end_layout
 
 \begin_layout Description
@@ -847,7 +847,7 @@ eLyXer supports a few command line options:
 \family typewriter
 --quiet
 \family default
-: be quiet and do not output messages (except errors).
+: Be quiet and do not output messages (except errors).
  This way you can avoid the comforting 
 \begin_inset Quotes eld
 \end_inset
@@ -874,7 +874,7 @@ Advanced Options
 \family typewriter
 --debug
 \family default
-: show debug messages.
+: Show debug messages.
  They may help a developer understand your problem.
 \end_layout
 
@@ -883,7 +883,7 @@ Advanced Options
 \family typewriter
 --version
 \family default
-: show version number and date.
+: Show version number and date.
  Use to check which version you are actually running.
 \end_layout
 
@@ -921,7 +921,7 @@ title
 "
 \family default
 \series default
-: change the title of the generated web page.
+: Change the title of the generated web page.
 \end_layout
 
 \begin_layout Description
@@ -940,7 +940,7 @@ new.css
 "
 \family default
 \series default
-: change default CSS.
+: Change default CSS.
  See section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -956,7 +956,7 @@ reference "sub:CSS"
 \family typewriter
 --html
 \family default
-: generate HTML 4.0 (instead of XHTML).
+: Generate HTML 4.0 (instead of XHTML).
  The resulting pages should be easier to import from certain word processors.
  See section 
 \begin_inset CommandInset ref
@@ -973,7 +973,7 @@ reference "sub:HTML-Code"
 \family typewriter
 --unicode
 \family default
-: restore full Unicode output.
+: Restore full Unicode output.
  Right now switches midspaces to medium mathematical spaces.
  See also section 
 \begin_inset CommandInset ref
@@ -990,7 +990,7 @@ reference "sub:HTML-Code"
 \family typewriter
 --iso885915
 \family default
-: generate a document using ISO-8859-1 encoding.
+: Generate a document using ISO-8859-1 encoding.
  Again, see section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1006,7 +1006,7 @@ reference "sub:HTML-Code"
 \family typewriter
 --nofooter
 \family default
-: omit the footer message 
+: Omit the footer message 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1042,7 +1042,7 @@ images_dir
 "
 \family default
 \series default
-: look for images in the directory specified.
+: Look for images in the directory specified.
 \end_layout
 
 \begin_layout Description
@@ -1066,7 +1066,7 @@ dest_dir
 "
 \family default
 \series default
-: converted images will end up into this directory.
+: Converted images will end up into this directory.
 \end_layout
 
 \begin_layout Description
@@ -1258,7 +1258,7 @@ reference "sub:TOC"
 \family typewriter
  
 \family default
-no effect since footnotes are now numbers by default, maintained for backwards
+No effect since footnotes are now numbers by default, maintained for backwards
  compatibility.
 \end_layout
 
@@ -1286,7 +1286,7 @@ URL
 "
 \family default
 \series default
-: use the excellent JavaScript library 
+: Use the excellent JavaScript library 
 \begin_inset CommandInset href
 LatexCommand href
 name "jsMath"
@@ -1321,7 +1321,7 @@ URL
 "
 \family default
 \series default
-: use the promising JavaScript library 
+: Use the promising JavaScript library 
 \begin_inset CommandInset href
 LatexCommand href
 name "MathJax"
@@ -1356,7 +1356,7 @@ file
 "
 \family default
 \series default
-: use an HTML template.
+: Use an HTML template.
  The raw converted document will be placed where 
 \family typewriter
 <!--$content-->
@@ -1422,7 +1422,7 @@ file
 \family typewriter
 --copyright
 \family default
-: include a copyright notice at the bottom.
+: Include a copyright notice at the bottom.
 \end_layout
 
 \begin_layout Description
@@ -1434,7 +1434,7 @@ file
 \begin_inset space ~
 \end_inset
 
-(deprecated): no effect since the copyright notice is now optional, maintained
+(deprecated): No effect since the copyright notice is now optional, maintained
  for backwards compatibility.
 \end_layout
 
