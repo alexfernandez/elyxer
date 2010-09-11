@@ -1,4 +1,4 @@
-#LyX 1.6.6 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -2587,6 +2587,272 @@ key "milde-mathml,younes-elyxer"
  the preferred option in the future.
 \end_layout
 
+\begin_layout Subsection
+Hybrid Functions
+\end_layout
+
+\begin_layout Standard
+Math processing is very configurable; most of it is based on configuration
+ options found in 
+\family typewriter
+src/conf/base.cfg
+\family default
+.
+ Parsing can be done using a few simple functions: commands (contained in
+ 
+\family typewriter
+[FormulaConfig.commands]
+\family default
+) output some content and don't have any parameters, while one-parameter
+ functions (in 
+\family typewriter
+[FormulaConfig.onefunctions]
+\family default
+) take exactly one parameter and output an HTML tag.
+ Thus, the definition for 
+\backslash
+bar is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+bar:span class="bar"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Whenever eLyXer finds the command it parses a parameter, then outputs the
+ tag 
+\family typewriter
+<span class="bar">
+\family default
+ surrounding the parameter.
+ For instance: e.g.
+ 
+\family typewriter
+
+\backslash
+bar{38}
+\family default
+ becomes 
+\family typewriter
+<span class="bar">38</span>
+\family default
+ in the output.
+ Decorating functions (in 
+\family typewriter
+[FormulaConfig.decoratingfunctions]
+\family default
+) place a symbol from in the definition above the parameter, and so on.
+\end_layout
+
+\begin_layout Standard
+Such simple processing is not always enough; there is a generic mechanism
+ for producing complex output from a number of parameters.
+ They are called hybrid functions.
+\end_layout
+
+\begin_layout Standard
+Each definition for a hybrid function contains: parser definition, output
+ definition and a number of function tags.
+ The parser definition tells eLyXer what to parse.
+ Hybrid functions can have any number of optional parameters, denoted as
+ 
+\family typewriter
+[$p]
+\family default
+; mandatory parameters are shown as 
+\family typewriter
+{$p}
+\family default
+.
+ Each parameter consists of the symbol 
+\family typewriter
+$
+\family default
+ followed by a letter or number: 
+\family typewriter
+$0
+\family default
+, 
+\family typewriter
+$p
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+The output definition contains regular text, plus parameters and functions.
+ Each function consists of the letter 
+\family typewriter
+f
+\family default
+ plus a number, such as 
+\family typewriter
+f0
+\family default
+; and each is associated with a tagged HTML element.
+ These function tags are the last part of the definition.
+ Presently there can be as many as 10 function tags (from 
+\family typewriter
+f0
+\family default
+ to 
+\family typewriter
+f9
+\family default
+).
+\end_layout
+
+\begin_layout Standard
+Let us see a simple example, equivalent to the above formula -- a one-parameter,
+ one-tag hybrid function:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+fun:[{$p},f0{$p},span class="fun"]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The only function tag 
+\family typewriter
+f0
+\family default
+ generates the HTML tag 
+\family typewriter
+<span class="fun">
+\family default
+.
+ Whenever eLyXer finds 
+\family typewriter
+
+\backslash
+fun
+\family default
+ in a math formula, it will parse one parameter and put it into 
+\family typewriter
+$p
+\family default
+.
+ Then it will generate 
+\family typewriter
+f0{$p}
+\family default
+, i.e.
+ apply the tag 
+\family typewriter
+<span class="fun">
+\family default
+.
+ Putting it all together: 
+\family typewriter
+
+\backslash
+fun{38}
+\family default
+ becomes 
+\family typewriter
+<span class="fun">38</span>
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+Parameters can be parsed as a literal, in which case eLyXer will take everything
+ between the brackets without parsing it.
+ Literal parameters can be used within a tag definition.
+ A real life hybrid function with literal parameters:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+raisebox:[{$p!}{$1},f0{$1},span class="raisebox" style="vertical-align:
+ $p;"]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case there are two mandatory parameters, the first one literal and
+ the second one a regular TeX expression.
+ The output is just one function tag, in this case using the first mandatory
+ parameter.
+ For instance, 
+\family typewriter
+
+\backslash
+raisebox{3cm}{5}
+\family default
+ would generate:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<span class="raisebox" style="vertical-align: 3cm;">5</span>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The parameter 
+\family typewriter
+$p
+\family default
+ is parsed as 
+\family typewriter
+3cm
+\family default
+, which is not parsed further.
+\end_layout
+
+\begin_layout Standard
+Hybrid functions are easy to configure once you get the hang of it.
+ Adding new TeX commands, even complex ones, becomes simply a matter of
+ configuration.
+\end_layout
+
 \begin_layout Section
 Developing and Contributing
 \end_layout
@@ -2961,23 +3227,6 @@ The first external patches have started arriving during late 2009 and early
 \end_layout
 
 \begin_layout Section
-Future Extensions
-\end_layout
-
-\begin_layout Standard
-The author has plans for the following extensions.
-\end_layout
-
-\begin_layout Subsection
-Templates
-\end_layout
-
-\begin_layout Standard
-Some header and footer content is automatically added to the resulting document.
- The use of templates might make the job far more flexible.
-\end_layout
-
-\begin_layout Subsection
 Roadmap
 \end_layout
 
