@@ -181,7 +181,9 @@ class LyXFormat(BlackBox):
     "Show warning if version < 276"
     version = int(self.header[1])
     if version < 276:
-      Trace.error('Warning: unsupported format version ' + str(version))
+      Trace.error('Warning: unsupported old format version ' + str(version))
+    if version > int(GeneralConfig.version['lyxformat']):
+      Trace.error('Warning: unsupported new format version ' + str(version))
 
 class StringContainer(Container):
   "A container for a single string"
