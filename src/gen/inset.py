@@ -112,7 +112,7 @@ class SideNote(Container):
 class Footnote(Container):
   "A footnote to the main text"
 
-  order = 0
+  order = '-'
 
   def __init__(self):
     self.parser = InsetParser()
@@ -120,12 +120,15 @@ class Footnote(Container):
 
   def process(self):
     "Add a letter for the order, rotating"
-    letter = NumberGenerator.instance.generateunique('Footnote')
+    if Options.numberfoot:
+      letter = NumberGenerator.instance.generateunique('Footnote')
+    else:
+      Footnote.order = NumberGenerator.instance.increase(Footnote.order)
+      letter = Footnote.order
     span = 'span class="FootMarker"'
     tag = TaggedText().complete(self.contents, 'span class="Foot"', True)
     tofoot = TaggedText().constant(letter, span)
     self.contents = [tofoot, tag]
-    Footnote.order += 1
 
 class Note(Container):
   "A LyX note of several types"
