@@ -162,6 +162,30 @@ Updated
  to 398 (2.0alpha5); added warning if document version is bigger than that.
 \end_layout
 
+\begin_layout Itemize
+Support for 
+\family typewriter
+
+\backslash
+textless
+\family default
+ and 
+\family typewriter
+
+\backslash
+textgreater
+\family default
+: 
+\begin_inset Formula $\textless$
+\end_inset
+
+, 
+\begin_inset Formula $\textgreater$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.1 (2010-09-01):
