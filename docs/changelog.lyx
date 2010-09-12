@@ -146,12 +146,18 @@ BibTex: added a tag
 
 \begin_layout Itemize
 Show footnotes as hovering text instead of as marginal notes.
- Footnote anchors are now superscript numbers by default, rendering the
- option 
-\family typewriter
---numberfoot
-\family default
- useless.
+ Make the default footnote marker a bluish superscript letter in brackets:
+ 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+like this
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Itemize

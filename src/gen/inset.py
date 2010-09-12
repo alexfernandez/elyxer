@@ -126,9 +126,9 @@ class Footnote(Container):
       Footnote.order = NumberGenerator.instance.increase(Footnote.order)
       letter = Footnote.order
     span = 'span class="FootMarker"'
-    tag = TaggedText().complete(self.contents, 'span class="Foot"', True)
-    tofoot = TaggedText().constant(letter, span)
-    self.contents = [tofoot, tag]
+    marker = TaggedText().constant('[' + letter + ']', span)
+    tag = TaggedText().complete([marker] + self.contents, 'span class="Foot"', True)
+    self.contents = [marker, tag]
 
 class Note(Container):
   "A LyX note of several types"
