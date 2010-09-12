@@ -116,7 +116,7 @@ class Footnote(Container):
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = TaggedOutput().settag('span class="FootOuter"', True)
+    self.output = TaggedOutput().settag('span class="FootOuter"', False)
 
   def process(self):
     "Add a letter for the order, rotating"
