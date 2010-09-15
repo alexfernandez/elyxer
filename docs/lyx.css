@@ -14,7 +14,6 @@ body {
 	padding: 20px;
 	background: #ffffff;
 	line-height: 1.5em;
-	overflow: hidden;
 }
 a {
 	text-decoration: none;
@@ -346,16 +345,18 @@ span.Foot {
 	border: thin solid #c0c0c0;
 	background: #ffffff;
 	padding: 0.5ex;
-	font: small normal;
+	font-size: small;
+	font-weight: normal;
+	line-height: 1.5em;
 	text-align: left;
 }
 span.FootOuter .Foot {
-	display:none;
-	position:absolute;
+	display: none;
+	position: absolute;
 }
 span.FootOuter:hover .Foot {
 	display: inline;
-	float:none;
+	float: none;
 }
 span.Marginal {
 	float: right;
@@ -365,7 +366,9 @@ span.Marginal {
 	background: #ffffff;
 	width: 30%;
 	padding: 0.5ex;
-	font: small normal;
+	font-size: small;
+	font-weight: normal;
+	line-height: 1.5em;
 	text-align: left;
 }
 span.Note {
@@ -735,4 +738,39 @@ div.Institute {
 }
 div.indexgroup {
 	margin-left: 2em;
+}
+/* CSS section for print */
+@media print {
+body {
+	font: 90% serif;
+	background: #ffffff;
+	color: black;
+	margin: 0;
+	padding: 0;
+}
+#globalWrapper {
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	background: #ffffff;
+	line-height: 1.5em;
+}
+span.FootOuter .Foot {
+	display: block;
+	position: relative;
+	float: right;
+	clear: right;
+	margin: 0.2ex;
+	border: thin solid #c0c0c0;
+	background: #ffffff;
+	width: 30%;
+	padding: 0.5ex;
+	font-size: small;
+	font-weight: normal;
+	line-height: 1.5em;
+	text-align: left;
+}
+a:visited {
+	color: #0030c0;
+}
 }

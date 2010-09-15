@@ -144,7 +144,7 @@ class DefaultTemplate(HTMLTemplate):
     html.append(u'<meta http-equiv="Content-Type" content="text/html; charset=<!--$encoding-->"/>\n')
     html.append(u'<meta name="generator" content="http://www.nongnu.org/elyxer/"/>\n')
     html.append(u'<meta name="create-date" content="<!--$date-->"/>\n')
-    html.append(u'<link rel="stylesheet" href="<!--$css-->" type="text/css" media="screen"/>\n')
+    html.append(u'<link rel="stylesheet" href="<!--$css-->" type="text/css" media="all"/>\n')
     html.append(u'<title><!--$title--></title>\n')
     if Options.jsmath:
       html.append(u'<script type="text/javascript" src="<!--$jsmath-->/plugins/noImageFonts.js"></script>\n')

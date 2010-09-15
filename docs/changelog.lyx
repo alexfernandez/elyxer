@@ -192,6 +192,10 @@ textgreater
 .
 \end_layout
 
+\begin_layout Itemize
+Added adjustments for better printing to default CSS.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.1 (2010-09-01):
