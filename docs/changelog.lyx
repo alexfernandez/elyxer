@@ -216,6 +216,14 @@ american
  (which translate to plain English).
 \end_layout
 
+\begin_layout Itemize
+Avoid extracting indexes out of the containing layout if there is anything
+ else in there (thanks, Amy!).
+ This bug caused some content to be lost (e.g.
+ child documents) if they were inside the same layout as e.g.
+ an alphabetical index.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.1 (2010-09-01):

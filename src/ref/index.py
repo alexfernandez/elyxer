@@ -253,8 +253,7 @@ class PreListInset(object):
     listinsets = container.searchall(ListInset)
     if len(listinsets) == 0:
       return container
-    if len(listinsets) > 1:
-      Trace.error('More than one ListInset in container: ' + unicode(listinsets))
+    if len(container.contents) > 1:
       return container
     return listinsets[0]
 
