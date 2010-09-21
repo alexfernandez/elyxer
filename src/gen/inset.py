@@ -248,6 +248,6 @@ class IncludeInset(Container):
   def __unicode__(self):
     "Return a printable description."
     if not self.filename:
-      return 'included unnamed file'
-    return 'included "' + self.filename + '"'
+      return 'Included unnamed file'
+    return 'Included "' + self.filename + '"'
 
