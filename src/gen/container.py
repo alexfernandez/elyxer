@@ -207,7 +207,7 @@ class StringContainer(Container):
     replaced = self.changeline(replaced)
     if ContainerConfig.string['startcommand'] in replaced and len(replaced) > 1:
       # unprocessed commands
-      if self.parser:
+      if self.begin:
         message = 'Unknown command at ' + unicode(self.begin) + ': '
       else:
         message = 'Unknown command: '
