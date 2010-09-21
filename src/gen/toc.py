@@ -80,6 +80,8 @@ class TOCEntry(Container):
 
   def __unicode__(self):
     "Return a printable representation."
+    if not self.partkey.tocentry:
+      return 'Unnamed TOC entry'
     return 'TOC entry: ' + self.partkey.tocentry
 
 class Indenter(object):
