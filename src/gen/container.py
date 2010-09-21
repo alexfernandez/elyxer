@@ -99,14 +99,10 @@ class Container(object):
 
   def searchremove(self, type):
     "Search for all containers of a type and remove them"
-    list = []
-    self.searchprocess(type, lambda container: self.appendremove(list, container))
+    list = self.searchall(type)
+    for container in list:
+      container.parent.contents.remove(container)
     return list
-
-  def appendremove(self, list, container):
-    "Append to a list and remove from own contents"
-    list.append(container)
-    container.parent.contents.remove(container)
 
   def searchprocess(self, type, process):
     "Search for elements of a given type and process them"
@@ -245,6 +241,8 @@ class Constant(StringContainer):
 class TaggedText(Container):
   "Text inside a tag"
 
+  output = None
+
   def __init__(self):
     self.parser = TextParser(self)
     self.output = TaggedOutput()
@@ -262,5 +260,8 @@ class TaggedText(Container):
     return self.complete([constant], tag, breaklines)
 
   def __unicode__(self):
+    "Return a printable representation."
+    if not self.output.tag:
+      return 'Tagged <unknown tag>'
     return 'Tagged <' + self.output.tag + '>'
 
