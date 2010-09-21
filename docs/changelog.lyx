@@ -95,7 +95,7 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Do not hide errors when parsing child documents.
 \end_layout
 
 \end_deeper

@@ -189,6 +189,7 @@ class IncludeInset(Container):
 
   # the converter factory will be set in converter.py
   converterfactory = None
+  filename = None
 
   def __init__(self):
     self.parser = InsetParser()
@@ -215,11 +216,12 @@ class IncludeInset(Container):
     try:
       try:
         converter = IncludeInset.converterfactory.create(self)
-        converter.convert()
-        self.contents = converter.getcontents()
       except:
         Trace.error('Could not read ' + self.filename + ', please check that the file exists and has read permissions.')
         self.contents = []
+        return
+      converter.convert()
+      self.contents = converter.getcontents()
     finally:
       Options.directory = olddir
 
@@ -242,4 +244,10 @@ class IncludeInset(Container):
     for line in lines:
       contents.append(Constant(line))
     return contents
+
+  def __unicode__(self):
+    "Return a printable description."
+    if not self.filename:
+      return 'included unnamed file'
+    return 'included "' + self.filename + '"'
 
