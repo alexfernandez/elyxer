@@ -38,6 +38,7 @@ class Image(Container):
   vectorformats = ImageConfig.formats['vector']
   rasterformats = ImageConfig.formats['raster']
   defaultformat = ImageConfig.formats['default']
+  size = None
 
   def __init__(self):
     self.parser = InsetParser()

@@ -83,6 +83,8 @@ class Float(Container):
     if len(images) != 1:
       return ''
     image = images[0]
+    if not image.size:
+      return
     width = image.size.removepercentwidth()
     if not width:
       return
