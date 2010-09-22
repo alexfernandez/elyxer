@@ -77,7 +77,6 @@ class ContainerSize(object):
       return None
     result = container.parameters[name]
     if self.extractnumber(result) == '0':
-      Trace.debug('Zero width: ' + result)
       return None
     for ignored in StyleConfig.size['ignoredtexts']:
       if ignored in result:
