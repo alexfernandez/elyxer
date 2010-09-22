@@ -98,6 +98,10 @@ target "index.html"
 Do not hide errors when parsing child documents.
 \end_layout
 
+\begin_layout Itemize
+Correctly convert documents even when images are not found.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.2 (2010-09-20):

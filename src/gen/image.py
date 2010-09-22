@@ -48,12 +48,12 @@ class Image(Container):
   def process(self):
     "Place the url, convert the image if necessary."
     self.origin = InputPath(self.parameters['filename'])
-    if not self.origin.exists():
-      Trace.error('Image ' + unicode(self.origin) + ' not found')
-      return
     self.destination = self.getdestination(self.origin)
     self.size = ContainerSize().readparameters(self)
-    ImageConverter.instance.convert(self)
+    if self.origin.exists():
+      ImageConverter.instance.convert(self)
+    else:
+      Trace.error('Image ' + unicode(self.origin) + ' not found')
     self.setsize()
     self.settag()
 
