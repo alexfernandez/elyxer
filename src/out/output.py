@@ -86,7 +86,7 @@ class TaggedOutput(ContentsOutput):
 
   def open(self, container):
     "Get opening line."
-    if self.tag == '':
+    if not self.checktag():
       return ''
     open = '<' + self.tag + '>'
     if self.breaklines:
@@ -95,7 +95,7 @@ class TaggedOutput(ContentsOutput):
 
   def close(self, container):
     "Get closing line."
-    if self.tag == '':
+    if not self.checktag():
       return ''
     close = '</' + self.tag.split()[0] + '>'
     if self.breaklines:
@@ -104,10 +104,21 @@ class TaggedOutput(ContentsOutput):
 
   def selfclosing(self, container):
     "Get self-closing line."
+    if not self.checktag():
+      return ''
     selfclosing = '<' + self.tag + '/>'
     if self.breaklines:
       return selfclosing + '\n'
     return selfclosing
+
+  def checktag(self):
+    "Check that the tag is valid."
+    if not self.tag:
+      Trace.error('No tag in ' + unicode(container))
+      return False
+    if self.tag == '':
+      return False
+    return True
 
 class StringOutput(object):
   "Returns a bare string as output"
