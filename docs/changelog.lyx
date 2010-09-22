@@ -102,6 +102,10 @@ Do not hide errors when parsing child documents.
 Correctly convert documents even when images are not found.
 \end_layout
 
+\begin_layout Itemize
+Do not center the content in figure or table floats by default.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.2 (2010-09-20):
