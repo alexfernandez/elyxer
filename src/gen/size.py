@@ -82,12 +82,21 @@ class ContainerSize(object):
     for ignored in StyleConfig.size['ignoredtexts']:
       if ignored in result:
         result = result.replace(ignored, '')
-    Trace.debug('Container ' + name + ': ' + result)
     return result
 
   def extractnumber(self, text):
     "Extract the first number in the given text."
-    return TextPosition(text).globnumber()
+    result = ''
+    decimal = False
+    for char in text:
+      if char.isdigit():
+        result += char
+      elif char == '.' and not decimal:
+        result += char
+        decimal = True
+      else:
+        return result
+    return result
 
   def checkimage(self, width, height):
     "Check image dimensions, set them if possible."
