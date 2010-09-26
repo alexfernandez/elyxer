@@ -66,7 +66,6 @@ class eLyXerConverter(object):
     self.filtering = True
     self.reader = reader
     self.basket = MemoryBasket()
-    self.writer = NullWriter()
     return self
 
   def convert(self):
@@ -88,13 +87,23 @@ class eLyXerConverter(object):
     while not self.reader.finished():
       container = factory.createcontainer(self.reader)
       result = processor.process(container)
-      if result:
-        self.basket.write(result)
+      self.processcontainer(result)
     result = processor.postprocess(None)
-    if result:
-      self.basket.write(result)
+    self.processcontainer(result)
     if not self.filtering:
       self.basket.finish()
+
+  def processcontainer(self, container):
+    "Write each container to the correct basket."
+    if not container:
+      return
+    includes = container.searchremove(IncludeInset)
+    self.basket.write(container)
+    # recursive processing for IncludeInset
+    for include in includes:
+      Trace.debug('Include inset: ' + unicode(include))
+      for element in include.contents:
+        self.processcontainer(element)
 
   def getcontents(self):
     "Return the contents of the basket."

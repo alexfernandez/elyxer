@@ -106,6 +106,10 @@ Correctly convert documents even when images are not found.
 Do not center the content in figure or table floats by default.
 \end_layout
 
+\begin_layout Itemize
+Correctly convert child documents even when inserted in layouts.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.2 (2010-09-20):
