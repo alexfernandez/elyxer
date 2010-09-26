@@ -101,7 +101,6 @@ class eLyXerConverter(object):
     self.basket.write(container)
     # recursive processing for IncludeInset
     for include in includes:
-      Trace.debug('Include inset: ' + unicode(include))
       for element in include.contents:
         self.processcontainer(element)
 
