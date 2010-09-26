@@ -194,7 +194,6 @@ class IncludeInset(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = ContentsOutput()
-    self.postprocess = False
 
   def process(self):
     "Include the provided child document"
