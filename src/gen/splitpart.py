@@ -68,12 +68,16 @@ class SplitPartNavigation(object):
     self.nextlink = None
     self.lastnavigation = None
 
+  def writefirstheader(self, basket):
+    "Write the first header to the basket."
+    basket.write(self.createmainanchor())
+    basket.write(self.createnavigation(container))
+
   def writeheader(self, basket, container):
     "Write the header to the basket."
     basket.write(LyXHeader().process())
     basket.write(self.currentupanchor(container))
-    self.lastnavigation = self.createnavigation(container)
-    basket.write(self.lastnavigation)
+    basket.write(self.createnavigation(container))
 
   def writefooter(self, basket):
     "Write the footer to the basket."
@@ -98,6 +102,7 @@ class SplitPartNavigation(object):
     contents = [prevcontainer, Constant('\n'), upcontainer, Constant('\n'), nextcontainer]
     header = TaggedText().complete(contents, 'div class="splitheader"', True)
     self.lastcontainer = container
+    self.lastnavigation = header
     return header
   
   def currentupanchor(self, container):
