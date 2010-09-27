@@ -68,9 +68,11 @@ class SplitPartNavigation(object):
     self.nextlink = None
     self.lastnavigation = None
 
-  def writefirstheader(self, basket, container):
+  def writefirstheader(self, basket):
     "Write the first header to the basket."
-    basket.write(self.createnavigation(container))
+    anchor = self.createmainanchor()
+    basket.write(anchor)
+    basket.write(self.createnavigation(anchor))
 
   def writeheader(self, basket, container):
     "Write the header to the basket."
@@ -210,8 +212,6 @@ class SplitPartBasket(Basket):
     self.basket.process()
     basket = self.firstbasket()
     navigation = SplitPartNavigation()
-    anchor = navigation.createmainanchor()
-    basket.write(anchor)
     for container in self.basket.contents:
       if self.mustsplit(container):
         filename = self.getfilename(container)
@@ -222,7 +222,7 @@ class SplitPartBasket(Basket):
         navigation.writeheader(basket, container)
       basket.write(container)
       if self.afterheader(container):
-        navigation.writefirstheader(basket, anchor)
+        navigation.writefirstheader(basket)
     for basket in self.baskets:
       basket.process()
     for basket in self.baskets:
