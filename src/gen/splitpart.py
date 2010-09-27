@@ -68,9 +68,8 @@ class SplitPartNavigation(object):
     self.nextlink = None
     self.lastnavigation = None
 
-  def writefirstheader(self, basket):
+  def writefirstheader(self, basket, container):
     "Write the first header to the basket."
-    basket.write(self.createmainanchor())
     basket.write(self.createnavigation(container))
 
   def writeheader(self, basket, container):
@@ -211,7 +210,8 @@ class SplitPartBasket(Basket):
     self.basket.process()
     basket = self.firstbasket()
     navigation = SplitPartNavigation()
-    basket.write(navigation.createmainanchor())
+    anchor = navigation.createmainanchor()
+    basket.write(anchor)
     for container in self.basket.contents:
       if self.mustsplit(container):
         filename = self.getfilename(container)
@@ -221,10 +221,16 @@ class SplitPartBasket(Basket):
         basket = self.addbasket(filename)
         navigation.writeheader(basket, container)
       basket.write(container)
+      if self.afterheader(container):
+        navigation.writefirstheader(basket, anchor)
     for basket in self.baskets:
       basket.process()
     for basket in self.baskets:
       basket.flush()
+
+  def afterheader(self, container):
+    "Find out if this is the header on the file."
+    return isinstance(container, LyXHeader)
 
   def firstbasket(self):
     "Create the first basket."
