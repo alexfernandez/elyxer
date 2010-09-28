@@ -1044,14 +1044,11 @@ New option
 \end_layout
 
 \begin_layout Itemize
-Support for Sam Liddicott's Newfangle module 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-http://repo.or.cz/w/newfangle.git/blob_plain/master:/www/docs/newfangle.html
-\end_layout
+Support for Sam Liddicott's 
+\begin_inset CommandInset href
+LatexCommand href
+name "Newfangle module"
+target "http://repo.or.cz/w/newfangle.git/blob_plain/master:/www/docs/newfangle.html"
 
 \end_inset
 
@@ -1481,14 +1478,11 @@ New option
 \end_layout
 
 \begin_layout Itemize
-Updated the developer guide 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-devguide.html
-\end_layout
+Updated the 
+\begin_inset CommandInset href
+LatexCommand href
+name "developer guide"
+target "devguide.html"
 
 \end_inset
 
@@ -2019,14 +2013,11 @@ varepsilon
 \end_layout
 
 \begin_layout Itemize
-Added TeX-to-Unicode mappings from Markus Kuhn 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt
-\end_layout
+Added TeX-to-Unicode mappings from 
+\begin_inset CommandInset href
+LatexCommand href
+name "Markus Kuhn"
+target "http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt"
 
 \end_inset
 
@@ -2150,14 +2141,11 @@ elyxerconv.py
 \family typewriter
 io/convert.py
 \family default
-), see lyx-devel thread 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154647.html
-\end_layout
+), see 
+\begin_inset CommandInset href
+LatexCommand href
+name "lyx-devel thread"
+target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154647.html"
 
 \end_inset
 
@@ -2170,14 +2158,11 @@ elyxer.py
 \family typewriter
 python -m
 \family default
-.; see also lyx-devel thread 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154749.html
-\end_layout
+.; see also 
+\begin_inset CommandInset href
+LatexCommand href
+name "lyx-devel thread"
+target "http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154749.html"
 
 \end_inset
 
@@ -2185,14 +2170,11 @@ http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154749.html
 \end_layout
 
 \begin_layout Itemize
-eLyXer was added to the Python Package Index (PyPI 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-http://pypi.python.org/pypi
-\end_layout
+eLyXer was added to the Python Package Index (
+\begin_inset CommandInset href
+LatexCommand href
+name "PyPI"
+target "http://pypi.python.org/pypi"
 
 \end_inset
 
@@ -2201,14 +2183,11 @@ http://pypi.python.org/pypi
 \end_layout
 
 \begin_layout Itemize
-Updated documentation (user guide 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-userguide.html
-\end_layout
+Updated documentation (
+\begin_inset CommandInset href
+LatexCommand href
+name "user guide"
+target "userguide.html"
 
 \end_inset
 
@@ -2268,14 +2247,11 @@ elyxer.py
 \end_layout
 
 \begin_layout Itemize
-Added distutils 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-http://docs.python.org/distutils/index.html
-\end_layout
+Added 
+\begin_inset CommandInset href
+LatexCommand href
+name "distutils"
+target "http://docs.python.org/distutils/index.html"
 
 \end_inset
 
@@ -2632,25 +2608,19 @@ Also show roots and arrays correctly in those browsers.
 \end_layout
 
 \begin_layout Itemize
-Added Math Showcase 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-math.html
-\end_layout
+Added 
+\begin_inset CommandInset href
+LatexCommand href
+name "Math Showcase"
+target "math.html"
 
 \end_inset
 
- to test on browsershots.org 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-http://browsershots.org/
-\end_layout
+ to test on 
+\begin_inset CommandInset href
+LatexCommand href
+name "browsershots.org"
+target "http://browsershots.org/"
 
 \end_inset
 
@@ -3469,14 +3439,11 @@ Range of supported quotes is greater.
 \end_layout
 
 \begin_layout Itemize
-Default CSS is always on nongnu.org 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-http://www.nongnu.org/elyxer/lyx.css
-\end_layout
+Default CSS is always on 
+\begin_inset CommandInset href
+LatexCommand href
+name "nongnu.org"
+target "http://www.nongnu.org/elyxer/lyx.css"
 
 \end_inset
 
