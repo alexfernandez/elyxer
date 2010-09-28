@@ -118,6 +118,10 @@ Generate navigation bars for first page created with
 .
 \end_layout
 
+\begin_layout Itemize
+Added wishlist to the user guide to keep track of requested features.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.2 (2010-09-20):
