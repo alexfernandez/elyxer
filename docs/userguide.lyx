@@ -1,5 +1,5 @@
-#LyX 1.5.7 created this file. For more info see http://www.lyx.org/
-\lyxformat 276
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
 \begin_document
 \begin_header
 \textclass article
@@ -21,6 +21,7 @@
 %   You should have received a copy of the GNU General Public License
 %   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \end_preamble
+\use_default_options false
 \language english
 \inputencoding auto
 \font_roman default
@@ -31,9 +32,11 @@
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
+
 \graphics default
 \paperfontsize default
 \spacing single
+\use_hyperref false
 \papersize default
 \use_geometry false
 \use_amsmath 1
@@ -72,7 +75,8 @@ Alex Fernández (elyxer@gmail.com)
 \end_layout
 
 \begin_layout Standard
-\begin_inset LatexCommand tableofcontents
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
 
 \end_inset
 
@@ -87,7 +91,8 @@ The Basics
 
 \emph on
 elixir, n: a substance believed to cure all ills
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "wordreference-elixir"
 
 \end_inset
@@ -108,7 +113,8 @@ elixir
 \begin_layout Standard
 eLyXer (including this guide and all accompanying materials) is licensed
  under the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "GPL version 3"
 target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
 
@@ -124,7 +130,8 @@ LICENSE
 
 \begin_layout Standard
 Please visit the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "main page"
 target "index.html"
 
@@ -187,7 +194,8 @@ Download eLyXer
 
 \begin_layout Standard
 First you will need to fetch the official distribution file from the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "download area"
 target "https://savannah.nongnu.org/files/?group=elyxer"
 
@@ -341,14 +349,16 @@ Prepackaged Versions
 The easiest way to install eLyXer is if someone has prepackaged it for your
  system.
  Some Linux distributions include eLyXer: 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "Debian squeeze"
 target "http://packages.debian.org/squeeze/elyxer"
 
 \end_inset
 
  and 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "Ubuntu Lucid"
 target "http://packages.ubuntu.com/lucid/elyxer"
 
@@ -373,7 +383,8 @@ $
 
 \begin_layout Standard
 Another way is with the LyX installer: the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "alternate LyX installer"
 target "http://wiki.lyx.org/Windows/LyXWinInstaller"
 
@@ -381,7 +392,8 @@ target "http://wiki.lyx.org/Windows/LyXWinInstaller"
 
  includes eLyXer in the default installation.
  See 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:LyX-Integration"
 
 \end_inset
@@ -517,7 +529,8 @@ $
 The typical output will contain just the changed lines, which in this case
  should be only the header with the file creation date.
  An example is shown on listing 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "alg:diff"
 
 \end_inset
@@ -555,11 +568,12 @@ status open
 > <meta name="create-date" content="2009-09-12"/>
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "alg:diff"
 
 \end_inset
@@ -763,7 +777,8 @@ Image location is fragile.
 \end_layout
 
 \begin_layout Subsection
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:LyX-Integration"
 
 \end_inset
@@ -893,7 +908,10 @@ Options to Control HTML output
 \begin_layout Description
 
 \family typewriter
---title\InsetSpace ~
+--title
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -909,7 +927,10 @@ title
 \begin_layout Description
 
 \family typewriter
---css\InsetSpace ~
+--css
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -921,7 +942,8 @@ new.css
 \series default
 : Change default CSS.
  See section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:CSS"
 
 \end_inset
@@ -937,7 +959,8 @@ reference "sub:CSS"
 : Generate HTML 4.0 (instead of XHTML).
  The resulting pages should be easier to import from certain word processors.
  See section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:HTML-Code"
 
 \end_inset
@@ -953,7 +976,8 @@ reference "sub:HTML-Code"
 : Restore full Unicode output.
  Right now switches midspaces to medium mathematical spaces.
  See also section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:HTML-Code"
 
 \end_inset
@@ -968,7 +992,8 @@ reference "sub:HTML-Code"
 \family default
 : Generate a document using ISO-8859-1 encoding.
  Again, see section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:HTML-Code"
 
 \end_inset
@@ -1001,7 +1026,10 @@ Options to Control image output
 \family typewriter
 --
 \family default
-directory\InsetSpace ~
+directory
+\begin_inset space ~
+\end_inset
+
 
 \family typewriter
 \series bold
@@ -1022,7 +1050,10 @@ images_dir
 \family typewriter
 --
 \family default
-destdirectory\InsetSpace ~
+destdirectory
+\begin_inset space ~
+\end_inset
+
 
 \family typewriter
 \series bold
@@ -1041,7 +1072,10 @@ dest_dir
 \begin_layout Description
 
 \family typewriter
---forceformat\InsetSpace ~
+--forceformat
+\begin_inset space ~
+\end_inset
+
 ".extension"
 \family default
 : Force the format implied by the extension (e.g.
@@ -1055,7 +1089,10 @@ dest_dir
 \begin_layout Description
 
 \family typewriter
---converter\InsetSpace ~
+--converter
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "program"
@@ -1102,7 +1139,10 @@ Advanced Options to Control HTML output
 \begin_layout Description
 
 \family typewriter
---splitpart\InsetSpace ~
+--splitpart
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -1114,7 +1154,8 @@ depth
 \series default
 : Split the resulting webpage at the given depth.
  See section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:Segmenting-Pages"
 
 \end_inset
@@ -1129,7 +1170,8 @@ reference "sub:Segmenting-Pages"
 \family default
 : Generate just a table of contents.
  See section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:TOC"
 
 \end_inset
@@ -1140,7 +1182,10 @@ reference "sub:TOC"
 \begin_layout Description
 
 \family typewriter
---target\InsetSpace ~
+--target
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -1157,7 +1202,8 @@ target
  attribute to every link in the generated HTML, making all links point to
  the provided frame.
  Again, see section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:TOC"
 
 \end_inset
@@ -1168,7 +1214,10 @@ reference "sub:TOC"
 \begin_layout Description
 
 \family typewriter
---toctarget\InsetSpace ~
+--toctarget
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -1180,7 +1229,8 @@ original.html
 \series default
 : Generate a table of contents with links to the original HTML file.
  See section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:TOC"
 
 \end_inset
@@ -1224,7 +1274,10 @@ Label footnotes using numbers, instead of letters.
 \begin_layout Description
 
 \family typewriter
---jsmath\InsetSpace ~
+--jsmath
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -1235,7 +1288,8 @@ URL
 \family default
 \series default
 : Use the excellent JavaScript library 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "jsMath"
 target "http://www.math.union.edu/locate/jsMath"
 
@@ -1243,7 +1297,8 @@ target "http://www.math.union.edu/locate/jsMath"
 
  at the given URL to pretty-print mathematical equations.
  See section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:Math"
 
 \end_inset
@@ -1254,7 +1309,10 @@ reference "sub:Math"
 \begin_layout Description
 
 \family typewriter
---mathjax\InsetSpace ~
+--mathjax
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -1265,7 +1323,8 @@ URL
 \family default
 \series default
 : Use the promising JavaScript library 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "MathJax"
 target "http://www.mathjax.org/"
 
@@ -1273,7 +1332,8 @@ target "http://www.mathjax.org/"
 
  at the given URL to pretty-print mathematical equations.
  See also section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:Math"
 
 \end_inset
@@ -1284,7 +1344,10 @@ reference "sub:Math"
 \begin_layout Description
 
 \family typewriter
---template\InsetSpace ~
+--template
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -1368,7 +1431,10 @@ file
 \family typewriter
 --nocopy
 \family default
-\InsetSpace ~
+
+\begin_inset space ~
+\end_inset
+
 (deprecated): No effect since the copyright notice is now optional, maintained
  for backwards compatibility.
 \end_layout
@@ -1376,7 +1442,10 @@ file
 \begin_layout Standard
 When an option accepts an argument it can be added after a space as 
 \family typewriter
---target\InsetSpace ~
+--target
+\begin_inset space ~
+\end_inset
+
 
 \series bold
 "
@@ -1494,7 +1563,7 @@ Apply
 \begin_inset Marginal
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 You should never remove the 
 \family typewriter
 $$i $$o
@@ -1514,7 +1583,7 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename converters.png
@@ -1524,10 +1593,10 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
+\begin_layout Plain Layout
 eLyXer converter in LyX 1.6.5.
 \end_layout
 
@@ -1536,7 +1605,7 @@ eLyXer converter in LyX 1.6.5.
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -1559,7 +1628,8 @@ extra flag
 
 \begin_layout Subsection
 CSS
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:CSS"
 
 \end_inset
@@ -1576,7 +1646,8 @@ HTML output, as generated, can be a bit crude.
 eLyXer tags most elements with the type so you can later modify them using
  a CSS.
  The HTML header reads like listing 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "alg:CSS"
 
 \end_inset
@@ -1616,11 +1687,12 @@ status open
 </head>
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "alg:CSS"
 
 \end_inset
@@ -1758,7 +1830,8 @@ $
 
 \begin_layout Subsection
 Table Of Contents
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:TOC"
 
 \end_inset
@@ -1820,59 +1893,92 @@ wide false
 sideways false
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family typewriter
 <html>
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 <frameset cols="30%,70%">
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 <frame name="toc" src="page-toc.html" />
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 <frame name="contents" src="page.html" />
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family typewriter
-\InsetSpace ~
-\InsetSpace ~
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
 </frameset>
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family typewriter
 </html>
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Caption
 
-\begin_layout Standard
-\begin_inset LatexCommand label
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
 name "alg:frameset"
 
 \end_inset
@@ -1920,7 +2026,8 @@ $
 With a little bit of practice you will be able to generate useful (and nice
  looking) TOC files.
  You can see an example for the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "user guide"
 target "userguide-frameset.html"
 
@@ -1931,7 +2038,8 @@ target "userguide-frameset.html"
 
 \begin_layout Subsection
 Segmenting Pages
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:Segmenting-Pages"
 
 \end_inset
@@ -1991,7 +2099,8 @@ The level corresponding to 1 depends on the document class: books will be
 
 \begin_layout Subsection
 HTML Code
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:HTML-Code"
 
 \end_inset
@@ -2001,7 +2110,8 @@ name "sub:HTML-Code"
 
 \begin_layout Standard
 The HTML code generated is technically XHTML Transitional, version 1.0 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "xhtml"
 
 \end_inset
@@ -2024,14 +2134,16 @@ $
 
 \begin_layout Standard
 Again, technically the code generated is HTML 4.01 Transitional 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "html-401"
 
 \end_inset
 
  using UTF-8 encoding.
  Both versions should pass the W3C tests 
-\begin_inset LatexCommand cite
+\begin_inset CommandInset citation
+LatexCommand cite
 key "w3c-validator"
 
 \end_inset
@@ -2047,7 +2159,8 @@ The CSS file for eLyXer uses some CSS2 features for math structures (fractions,
  This makes the output incompatible with older browsers; it requires Microsoft
  Internet Explorer 7, Firefox 3, Safari 3 or Chrome 1.
  Check the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "Math Showcase"
 target "math.html"
 
@@ -2081,7 +2194,8 @@ $
 
 \begin_layout Standard
 Check out the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "Math Showcase with Unicode"
 target "math-unicode.html"
 
@@ -2123,7 +2237,8 @@ This will make eLyXer output a document with all non-ASCII characters encoded
  This encoding is similar to ISO-8859-1, also called Latin-1, but including
  the Euro sign.
  The 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "Math Showcase (ISO-8859-15 edition)"
 target "math-iso885915.html"
 
@@ -2216,7 +2331,8 @@ $localedir
 \family default
 .
  As 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "the Python gettext page"
 target "http://docs.python.org/library/gettext.html"
 
@@ -2387,7 +2503,8 @@ and you are done.
 
 \begin_layout Subsection
 Math
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:Math"
 
 \end_inset
@@ -2409,7 +2526,8 @@ eLyXer follows its usual minimalistic approach and doesn't try to be everything
  to everybody -- instead, it supports out of the box a set of usual constructs
  (fraction, square root) and tries to simulate others (binomial, overbrace).
  See the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "Math showcase"
 target "math.html"
 
@@ -2428,7 +2546,8 @@ jsMath
 
 \begin_layout Standard
 The first is to use 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "jsMath"
 target "http://www.math.union.edu/~dpvc/jsMath/welcome.html"
 
@@ -2460,7 +2579,8 @@ jsMath/
  as the main document, so if you wish to use this method you will have to
  host jsMath on your site.
  See the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "Math showcase (jsMath edition)"
 target "math-jsmath.html"
 
@@ -2475,7 +2595,8 @@ MathJax
 
 \begin_layout Standard
 Another possibility is to use 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "MathJax"
 target "http://www.mathjax.org/"
 
@@ -2507,7 +2628,8 @@ MathJax/
  uses a feature called web-fonts which can be downloaded from a public server;
  this is quite easier to host.
  See the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "Math showcase (MathJax edition)"
 target "math-mathjax.html"
 
@@ -2629,7 +2751,7 @@ Some phonetic alphabet symbols are not well supported -- if generated with
 \begin_inset Note Note
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 This happens only in the HTML file converted with eLyXer, not from within
  LyX.
 \end_layout
@@ -2640,7 +2762,7 @@ This happens only in the HTML file converted with eLyXer, not from within
 \begin_inset Note Comment
 status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 By the way, the previous note (and this one) should not appear on the HTML.
 \end_layout
 
@@ -2696,17 +2818,17 @@ The following features have been requested by users (who are by default
 
 \begin_layout Standard
 \begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="4">
+<lyxtabular version="3" rows="9" columns="4">
 <features>
-<column alignment="left" valignment="top" leftline="true" width="0">
-<column alignment="center" valignment="top" leftline="true" width="0">
-<column alignment="center" valignment="top" leftline="true" width="0">
-<column alignment="center" valignment="top" leftline="true" rightline="true" width="0">
-<row topline="true" bottomline="true">
+<column alignment="left" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Feature
 \end_layout
 
@@ -2715,7 +2837,7 @@ Feature
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Date
 \end_layout
 
@@ -2724,7 +2846,7 @@ Date
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Users
 \end_layout
 
@@ -2733,18 +2855,18 @@ Users
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Status
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Option for footnotes at the end of each section
 \end_layout
 
@@ -2753,7 +2875,7 @@ Option for footnotes at the end of each section
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 2010-09-23
 \end_layout
 
@@ -2762,7 +2884,7 @@ Option for footnotes at the end of each section
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 1
 \end_layout
 
@@ -2771,20 +2893,21 @@ Option for footnotes at the end of each section
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Queued
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 EPUB output format (
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:EPUB-output-format"
 
 \end_inset
@@ -2797,7 +2920,7 @@ reference "sub:EPUB-output-format"
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 2010-09-23
 \end_layout
 
@@ -2806,7 +2929,7 @@ reference "sub:EPUB-output-format"
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 1
 \end_layout
 
@@ -2815,18 +2938,18 @@ reference "sub:EPUB-output-format"
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Too complex
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Option for footnotes at the margin
 \end_layout
 
@@ -2835,7 +2958,7 @@ Option for footnotes at the margin
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 2010-09-21
 \end_layout
 
@@ -2844,7 +2967,7 @@ Option for footnotes at the margin
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 1
 \end_layout
 
@@ -2853,18 +2976,18 @@ Option for footnotes at the margin
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Queued
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Understand 
 \backslash
 setcounter{section}{1}
@@ -2875,7 +2998,7 @@ setcounter{section}{1}
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 2010-05-15
 \end_layout
 
@@ -2884,7 +3007,7 @@ setcounter{section}{1}
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 1
 \end_layout
 
@@ -2893,24 +3016,25 @@ setcounter{section}{1}
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Queued
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Output SVG as 
 \family typewriter
 <img>
 \family default
  tags (
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:Output-SVG-as"
 
 \end_inset
@@ -2920,39 +3044,39 @@ reference "sub:Output-SVG-as"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 2010-09-22
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 1
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Pending
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Render change tracking: "Show changes in output"
 \end_layout
 
@@ -2961,7 +3085,7 @@ Render change tracking: "Show changes in output"
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 2010-09-18
 \end_layout
 
@@ -2970,27 +3094,27 @@ Render change tracking: "Show changes in output"
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 1
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Queued
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row topline="true" bottomline="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family roman
 \series medium
@@ -3008,7 +3132,7 @@ Option to turn off title prefixes in TOC
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family roman
 \series medium
@@ -3026,16 +3150,16 @@ Option to turn off title prefixes in TOC
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 1
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \family roman
 \series medium
@@ -3045,6 +3169,44 @@ Option to turn off title prefixes in TOC
 \bar no
 \noun off
 \color none
+Queued
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Use BibLaTeX with eLyXer
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 Queued
 \end_layout
 
@@ -3064,7 +3226,8 @@ Some features require further explanations.
 
 \begin_layout Subsubsection*
 EPUB output format
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:EPUB-output-format"
 
 \end_inset
@@ -3074,7 +3237,8 @@ name "sub:EPUB-output-format"
 
 \begin_layout Standard
 The EPUB management package 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "calibre"
 target "http://calibre-ebook.com/user_manual/conversion.html"
 
@@ -3082,7 +3246,8 @@ target "http://calibre-ebook.com/user_manual/conversion.html"
 
  does not output valid EPUB documents when converted from eLyXer HTML files,
  at least according to the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "Threepress validator"
 target "http://threepress.org/document/epub-validate"
 
@@ -3104,7 +3269,8 @@ Output SVG as
 <img>
 \family default
  tags
-\begin_inset LatexCommand label
+\begin_inset CommandInset label
+LatexCommand label
 name "sub:Output-SVG-as"
 
 \end_inset
@@ -3121,7 +3287,8 @@ This feature would be most welcome from the part of the author.
 \family default
  tags correctly for SVG.
  According to 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "bug #276431"
 target "https://bugzilla.mozilla.org/show_bug.cgi?id=276431"
 
@@ -3132,9 +3299,10 @@ target "https://bugzilla.mozilla.org/show_bug.cgi?id=276431"
 \end_layout
 
 \begin_layout Standard
-You can check out how your browser does with SVG images with 
-\begin_inset LatexCommand url
-name "this test page"
+You can check out how your browser does with SVG images with this 
+\begin_inset CommandInset href
+LatexCommand href
+name "SVG test page"
 target "svg/svg-test.html"
 
 \end_inset
@@ -3147,11 +3315,13 @@ Contact Information
 \end_layout
 
 \begin_layout Standard
-If your problem does not appear in the above lists, please let the author
+If your problem does not appear in the above list, please let the author
  know; you can find him at 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "elyxer@gmail.com"
 target "mailto:elyxer@gmail.com"
+type "mailto:"
 
 \end_inset
 
@@ -3173,7 +3343,8 @@ the tool's author really likes getting challenging documents and making
 
 \begin_layout Standard
 You can also join the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "mailing list"
 target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
 
@@ -3182,7 +3353,8 @@ target "http://lists.nongnu.org/mailman/listinfo/elyxer-users"
  to discuss any information related to eLyXer.
  The author monitors the official LyX lists for mentions of eLyXer.
  Bugs can also be reported at the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "Savannah page"
 target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 
@@ -3208,7 +3380,8 @@ eLyXer should now support most LyX features; but sometimes it will ignore
 eLyXer is written in Python so that it does not need to be compiled; its
  code is interpreted on the fly.
  See the accompanying 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "developer guide"
 target "devguide.html"
 
@@ -3299,7 +3472,8 @@ Q: My document changed its appearance without my intervention.
 \begin_layout Description
 A: It probably uses the online CSS file, which is regularly updated.
  See section 
-\begin_inset LatexCommand ref
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "sub:CSS"
 
 \end_inset
@@ -3352,15 +3526,18 @@ Q: I found a bug, what should I do?
 
 \begin_layout Description
 A: Just send it to the author at 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "elyxer@gmail.com"
 target "mailto:elyxer@gmail.com"
+type "mailto:"
 
 \end_inset
 
 .
  You can also report it to the 
-\begin_inset LatexCommand url
+\begin_inset CommandInset href
+LatexCommand href
 name "Savannah interface"
 target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 
@@ -3370,7 +3547,8 @@ target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "wordreference-elixir"
 
 \end_inset
@@ -3385,8 +3563,13 @@ definition of elixir
 
 , accessed March 2009.
  
-\begin_inset LatexCommand url
-target "http://www.wordreference.com/definition/elixir"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.wordreference.com/definition/elixir
+\end_layout
 
 \end_inset
 
@@ -3394,7 +3577,8 @@ target "http://www.wordreference.com/definition/elixir"
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "xhtml"
 
 \end_inset
@@ -3409,8 +3593,13 @@ XHTML™ 1.0 The Extensible HyperText Markup Language (Second Edition)
 
 , revised 1 August 2002.
  
-\begin_inset LatexCommand url
-target "http://www.w3.org/TR/xhtml1/"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.w3.org/TR/xhtml1/
+\end_layout
 
 \end_inset
 
@@ -3418,7 +3607,8 @@ target "http://www.w3.org/TR/xhtml1/"
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "html-401"
 
 \end_inset
@@ -3433,8 +3623,13 @@ HTML 4.01 Specification
 
 , 24 December 1999.
  
-\begin_inset LatexCommand url
-target "http://www.w3.org/TR/REC-html40/"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.w3.org/TR/REC-html40/
+\end_layout
 
 \end_inset
 
@@ -3442,7 +3637,8 @@ target "http://www.w3.org/TR/REC-html40/"
 \end_layout
 
 \begin_layout Bibliography
-\begin_inset LatexCommand bibitem
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "w3c-validator"
 
 \end_inset
@@ -3457,8 +3653,13 @@ Markup Validation Service
 
 , accessed March 2009.
  
-\begin_inset LatexCommand url
-target "http://validator.w3.org/"
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://validator.w3.org/
+\end_layout
 
 \end_inset
 
