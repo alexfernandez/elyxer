@@ -130,7 +130,7 @@ msgstr "Tabelle"
 
 #: float-figure
 msgid "Figure "
-msgstr "Abbildung"
+msgstr "Abbildung "
 
 #: jsmath-requires
 msgid  " requires JavaScript to correctly process the mathematics on this page. "
