@@ -477,8 +477,8 @@ type "mailto:"
 
 , William Crocker, Sara Teinturier, Hans Bezemer, Jack Desert, Hartmut Haase,
  Rainer Dorsch, Wolfgang Engelmann, Rodrigo Benenson, Stefano Franchi, Steve
- Litt, Paul Johnson, Yan Wong, Yaron Goland, Francis Girard for their testing
- and bug reporting.
+ Litt, Paul Johnson, Yan Wong, Yaron Goland, Francis Girard, Rene de Zwart
+ for their testing and bug reporting.
  Thanks to Uwe Stöhr, Hans Bezemer, Sara Teinturier for their translations.
  Packagers Sven Hoexter (for Debian) and Uwe Stöhr (on Windows) have helped
  with their work to make it easy to try it out.
