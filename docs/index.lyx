@@ -395,6 +395,15 @@ target "https://savannah.nongnu.org/bugs/?func=additem&group=elyxer"
 
 \end_inset
 
+; features can be requested too.
+ Feature requests that fit in will be added to the 
+\begin_inset CommandInset href
+LatexCommand href
+name "wish list"
+target "userguide.html#sub:Wish-List"
+
+\end_inset
+
 .
 \end_layout
 
