@@ -366,6 +366,31 @@ elyxer.py devguide.lyx devguide2.html
 \end_layout
 
 \begin_layout Standard
+If you want to install the created version you just have to run the provided
+ install script as root:
+\end_layout
+
+\begin_layout LyX-Code
+
+\color blue
+#
+\color inherit
+ ./install
+\end_layout
+
+\begin_layout Standard
+Once eLyXer has been installed it can be invoked as any other Unix command:
+\end_layout
+
+\begin_layout LyX-Code
+
+\color blue
+$
+\color inherit
+ elyxer.py devguide.lyx devguide3.html
+\end_layout
+
+\begin_layout Standard
 In the rest of this section we will delve a little bit into how eLyXer works.
 \end_layout
 
@@ -2336,6 +2361,92 @@ reference "sub:MathML"
 \end_layout
 
 \begin_layout Subsection
+MathML
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:MathML"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are two options in place to generate MathML, as suggested by Günther
+ Milne and Abdelrazak Younes 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "milde-mathml,younes-elyxer"
+
+\end_inset
+
+.
+ Both rely on some JavaScript page manipulations, and they need to be hosted
+ on the same server as the documents.
+ MathJax is less mature but it has grown faster so it has become the preferred
+ option.
+\end_layout
+
+\begin_layout Standard
+To use this last option in your own pages you just have to add the 
+\family typewriter
+--mathjax
+\family default
+ option:
+\end_layout
+
+\begin_layout LyX-Code
+
+\color blue
+$
+\color inherit
+ elyxer.py --mathjax ./MathJax math.lyx math.html
+\end_layout
+
+\begin_layout Standard
+You will notice that the 
+\family typewriter
+--mathjax
+\family default
+ option requires an argument: the directory where MathJax resides.
+ MathJax needs to live on your server; after 
+\begin_inset CommandInset href
+LatexCommand href
+name "downloading the package"
+target "http://www.mathjax.org/download/"
+
+\end_inset
+
+, deploy it to your server and give the installation directory as an argument
+ to 
+\family typewriter
+--mathjax
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+In principle you might think of using some external installation of MathJax
+ to avoid downloading it and serving it from your server, e.g.
+ from Savannah:
+\end_layout
+
+\begin_layout LyX-Code
+
+\color blue
+$
+\color inherit
+ elyxer.py --mathjax http://elyxer.nongnu.org/MathJax/ math.lyx math.html
+\end_layout
+
+\begin_layout Standard
+This approach may not work on certain browsers for two reasons: JavaScript
+ loaded from a different site may not work, and WebFonts are also subject
+ to this same-origin policy.
+ If you have made it work it would be great to hear about it.
+\end_layout
+
+\begin_layout Subsection
 Baskets
 \end_layout
 
@@ -2470,121 +2581,7 @@ SplittingBasket
 --splitpart
 \family default
  option.
- It can be taught to create a TOC at the top of each page with an additional
- 
-\family typewriter
---toc
-\family default
- option.
- (Warning: not yet working in version 0.41.)
-\end_layout
-
-\begin_layout Subsection
-Page Segmentors
-\end_layout
-
-\begin_layout Standard
-A page segmentor builds a set of pages and cross-reference them, but generally
- avoids the complexities of the internal structure.
- Ideally it should use templates to construct the header and footer.
- A 
-\family typewriter
---splitpart
-\family default
- option to eLyXer achieves this result.
- As a parameter it accepts the depth at which to split pages:
-\end_layout
-
-\begin_layout Quotation
-
-\family typewriter
-\color blue
-$
-\color inherit
- elyxer.py --splitpart 1
-\end_layout
-
-\begin_layout Standard
-yields one chapter per page (or one section per page for article classes).
-\end_layout
-
-\begin_layout Standard
-The complete package should implement something like the flow in figure
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:pipeline"
-
-\end_inset
-
-.
- This is the high-level design, but some details have to be filled in.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename pipeline.svg
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:pipeline"
-
-\end_inset
-
-eLyXer pipeline for multiple pages.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-MathML
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:MathML"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-There are two options in place to generate MathML, as suggested by Günther
- Milne and Abdelrazak Younes 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "milde-mathml,younes-elyxer"
-
-\end_inset
-
-.
- Both rely on some JavaScript page manipulations, and they need to be hosted
- on the same server as the documents.
- MathJax is less mature but will probably grow faster so it will become
- the preferred option in the future.
+ By default it creates a TOC at the top of each page.
 \end_layout
 
 \begin_layout Subsection
@@ -2858,7 +2855,7 @@ Developing and Contributing
 \end_layout
 
 \begin_layout Standard
-This chapter will show you how to develop on eLyXer and how to contribute
+This chapter will show you how to further develop eLyXer and how to contribute
  your own code.
 \end_layout
 
@@ -3207,8 +3204,17 @@ type "mailto:"
 \end_inset
 
 .
- If you are willing to create a patch and submit it, you should patch against
- the proper sources in 
+ (Alternatively you may contact 
+\begin_inset CommandInset href
+LatexCommand href
+name "elyxer@gmail.com"
+target "elyxer@gmail.com"
+type "mailto:"
+
+\end_inset
+
+ privately.) If you are willing to create a patch and submit it, you should
+ patch against the proper sources in 
 \family typewriter
 src/
 \family default
@@ -3231,18 +3237,28 @@ Roadmap
 \end_layout
 
 \begin_layout Standard
-Nearing the end of Q2 2010, two options to generate MathML (jsMath and MathJax)
- have been integrated; support for split page generation and in-memory processin
-g is ready, and macros are supported for the first time.
- The polishing of these features will mark the release of eLyXer 1.0.
+You can see what user features are planned for the near feature in the 
+\begin_inset CommandInset href
+LatexCommand href
+name "wish list"
+target "userguide.html#sub:Wish-List"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-From that point on, full LyX document support is the goal until the end
- of 2010.
- Q3 2010 should see clean conversion of all LyX guides without glitches,
- and for Q4 2010 all rough edges should be smoothed.
- All this within the usual constraints: day job, family, etc.
+After the release of eLyXer 1.0, full LyX document support is the goal until
+ the end of 2010.
+ Any deviation from the output of LyX on e.g.
+ PDF will be considered as bugs.
+ (Keep in mind that some deviations arise in an inherent limitation in the
+ design of eLyXer, and these will logically not be considered as bugs.)
+\end_layout
+
+\begin_layout Standard
+All this within the usual constraints: day job, family, etc.
 \end_layout
 
 \begin_layout Section
@@ -3250,11 +3266,8 @@ Discarded Bits
 \end_layout
 
 \begin_layout Standard
-Not everything that has been planned or can be done with eLyXer is planned;
- some extensions have been discarded.
- However, this means basically that the author is too ignorant to know how
- to do them right; help (and patches!) towards a sane implementation would
- be welcome if they fit with the design.
+Some features suggested for eLyXer have been discarded; they do not fit
+ with the design of eLyXer or are too much effort for the proposed gains.
 \end_layout
 
 \begin_layout Subsection
@@ -3344,16 +3357,6 @@ docs/lyx.css
 \end_layout
 
 \begin_layout Description
-Q: Why does your Python code suck so much? You don't make proper use of
- most features!
-\end_layout
-
-\begin_layout Description
-A: Because I'm mostly a novice with little Python culture.
- If you want to help it suck less, please send mail and enlighten me.
-\end_layout
-
-\begin_layout Description
 Q: How is the code maintained?
 \end_layout
 
@@ -3362,7 +3365,15 @@ A: It is kept in a
 \family typewriter
 git
 \family default
- repository.
+ repository 
+\begin_inset CommandInset href
+LatexCommand href
+name "on Savannah"
+target "http://git.savannah.gnu.org/cgit/elyxer.git/"
+
+\end_inset
+
+.
  Patches in 
 \family typewriter
 git
