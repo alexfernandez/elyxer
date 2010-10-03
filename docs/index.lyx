@@ -356,7 +356,7 @@ You can contact the main developer at
 \begin_inset CommandInset href
 LatexCommand href
 name "elyxer@gmail.com"
-target "mailto:elyxer@gmail.com"
+target "elyxer@gmail.com"
 type "mailto:"
 
 \end_inset
