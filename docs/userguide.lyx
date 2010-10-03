@@ -2808,12 +2808,21 @@ Images are never scaled above their nominal resolution.
 
 \begin_layout Subsection
 Wish List
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Wish-List"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-The following features have been requested by users (who are by default
- kept anonymous; people who don't mind that their names be published should
- say so explicitly).
+The following features have been requested by users; specific people are
+ referenced by a couple of initials so they can recognize themselves while
+ keeping some anonymity.
+ (If you prefer that your initials do not to appear here at all just let
+ me know.)
 \end_layout
 
 \begin_layout Standard
@@ -2885,7 +2894,7 @@ Option for footnotes at the end of each section
 \begin_inset Text
 
 \begin_layout Plain Layout
-1
+MJ
 \end_layout
 
 \end_inset
@@ -2930,7 +2939,7 @@ reference "sub:EPUB-output-format"
 \begin_inset Text
 
 \begin_layout Plain Layout
-1
+MJ
 \end_layout
 
 \end_inset
@@ -2968,7 +2977,7 @@ Option for footnotes at the margin
 \begin_inset Text
 
 \begin_layout Plain Layout
-1
+A
 \end_layout
 
 \end_inset
@@ -3008,7 +3017,7 @@ setcounter{section}{1}
 \begin_inset Text
 
 \begin_layout Plain Layout
-1
+JB
 \end_layout
 
 \end_inset
@@ -3057,7 +3066,7 @@ reference "sub:Output-SVG-as"
 \begin_inset Text
 
 \begin_layout Plain Layout
-1
+YG
 \end_layout
 
 \end_inset
@@ -3095,7 +3104,7 @@ Render change tracking: "Show changes in output"
 \begin_inset Text
 
 \begin_layout Plain Layout
-1
+YG
 \end_layout
 
 \end_inset
@@ -3151,7 +3160,7 @@ Option to turn off title prefixes in TOC
 \begin_inset Text
 
 \begin_layout Plain Layout
-1
+YG
 \end_layout
 
 \end_inset
@@ -3198,7 +3207,7 @@ Use BibLaTeX with eLyXer
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+PJ, WE
 \end_layout
 
 \end_inset
@@ -3243,7 +3252,7 @@ reference "sub:More-controls-for"
 \begin_inset Text
 
 \begin_layout Plain Layout
-1
+WE
 \end_layout
 
 \end_inset
