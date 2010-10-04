@@ -64,6 +64,9 @@
 % test macro with two arguments
 \newcommand{\preambleroot}[2]{\sqrt[#1]{#2}}
 
+% test macro with a lot of spaces (bug #31243)
+\renewcommand { \labelenumi }  { \Alph { enumi } . }
+
 % redefine the greyed out note
 
 \usepackage{mathrsfs}
@@ -675,7 +678,7 @@ Macros
 \begin_layout Standard
 Definitions can be added as macros
 \begin_inset FormulaMacro
-\newcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
+\renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
 {\sqrt[#1]{#2}}
 \end_inset
 
@@ -687,7 +690,7 @@ Definitions can be added as macros
 .
  They can accept default parameters
 \begin_inset FormulaMacro
-\newcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
+\renewcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
 {#1\sqrt{#2}}
 \end_inset
 
