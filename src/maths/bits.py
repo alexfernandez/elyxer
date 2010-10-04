@@ -91,8 +91,18 @@ class Comment(FormulaBit):
 
   def parsebit(self, pos):
     "Parse to the end of the line."
-    comment = pos.globincluding('\n')
-    self.original += comment
+    self.original += pos.globincluding('\n')
+
+class WhiteSpace(FormulaBit):
+  "Some white space inside a formula."
+
+  def detect(self, pos):
+    "Detect the white space."
+    return pos.current().isspace()
+
+  def parsebit(self, pos):
+    "Parse all whitespace."
+    self.original += pos.skipspace()
 
 class Bracket(FormulaBit):
   "A {} bracket inside a formula"
@@ -181,6 +191,6 @@ class SquareBracket(Bracket):
   ending = FormulaConfig.endings['squarebracket']
 
 FormulaFactory.bits += [
-    FormulaSymbol(), RawText(), Number(), Comment(), Bracket()
+    FormulaSymbol(), RawText(), Number(), Comment(), WhiteSpace(), Bracket()
     ]
 
