@@ -102,9 +102,12 @@ class DefiningFunction(HybridFunction):
   "Read a function that defines a new command (a macro)."
 
   commandmap = FormulaConfig.definingfunctions
+  space = WhiteSpace()
 
   def parsebit(self, pos):
     "Parse a function with [] and {} parameters."
+    while self.space.detect(pos):
+      self.space.parsebit(pos)
     if Bracket().detect(pos):
       newcommand = self.parseliteral(pos)
     elif FormulaCommand().detect(pos):
