@@ -111,6 +111,7 @@ class DefiningFunction(HybridFunction):
       newcommand = FormulaCommand().extractcommand(pos)
     else:
       Trace.error('Unknown formula bit in defining function at ' + pos.identifier())
+      return
     Trace.debug('New command: ' + newcommand)
     HybridFunction.parsebit(self, pos)
     macro = MathMacro()
