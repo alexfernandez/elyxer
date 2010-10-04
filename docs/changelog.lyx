@@ -122,6 +122,19 @@ Generate navigation bars for first page created with
 Added wishlist to the user guide to keep track of requested features.
 \end_layout
 
+\begin_layout Itemize
+Solved 
+\begin_inset CommandInset href
+LatexCommand href
+name "bug #31243"
+target "https://savannah.nongnu.org/bugs/index.php?31243"
+
+\end_inset
+
+: spaces in command definitions.
+ 
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.2 (2010-09-20):
