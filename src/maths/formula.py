@@ -132,7 +132,7 @@ class WholeFormula(FormulaBit):
   def parsebit(self, pos):
     "Parse with any formula bit"
     while self.factory.detectany(pos):
-      bit = self.factory.parsebit(pos)
+      bit = self.factory.parseany(pos)
       #Trace.debug(bit.original + ' -> ' + unicode(bit.gethtml()))
       self.add(bit)
 
@@ -190,8 +190,8 @@ class FormulaFactory(object):
       self.instances[type] = Cloner.create(type)
     return self.instances[type]
 
-  def parsebit(self, pos):
-    "Parse just one formula bit."
+  def parseany(self, pos):
+    "Parse any formula bit at the current location."
     for type in FormulaFactory.types:
       if self.detecttype(type, pos):
         bit = self.instance(type)

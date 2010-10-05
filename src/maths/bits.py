@@ -163,7 +163,7 @@ class Bracket(FormulaBit):
     while not pos.finished():
       if pos.current() == FormulaConfig.starts['command'] or \
           pos.current() in FormulaConfig.symbolfunctions:
-        bit = factory.parsebit(pos)
+        bit = factory.parseany(pos)
         pos.checkskip(' ')
       else:
         bit = FormulaConstant(pos.currentskip())

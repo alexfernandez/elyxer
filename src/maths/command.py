@@ -96,7 +96,7 @@ class CommandBit(FormulaCommand):
     if not self.factory.detectany(pos):
       Trace.error('No parameter found at: ' + pos.identifier())
       return None
-    parameter = self.factory.parsebit(pos)
+    parameter = self.factory.parseany(pos)
     self.add(parameter)
     return parameter
 
