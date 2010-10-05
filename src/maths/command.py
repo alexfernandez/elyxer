@@ -93,7 +93,7 @@ class CommandBit(FormulaCommand):
  
   def parseparameter(self, pos):
     "Parse a parameter at the current position"
-    if not self.factory.detectbit(pos):
+    if not self.factory.detectany(pos):
       Trace.error('No parameter found at: ' + pos.identifier())
       return None
     parameter = self.factory.parsebit(pos)

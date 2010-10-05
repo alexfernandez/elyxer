@@ -153,7 +153,7 @@ class MacroFunction(CommandBit):
     "Parse a number of input parameters."
     self.values = []
     macro = self.translated
-    while self.factory.detectbit(pos):
+    while self.factory.detectany(pos):
       self.values.append(self.parseparameter(pos))
     defaults = list(macro.defaults)
     while len(self.values) < macro.parameters and len(defaults) > 0:

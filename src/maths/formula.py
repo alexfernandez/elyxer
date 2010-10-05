@@ -127,11 +127,11 @@ class WholeFormula(FormulaBit):
 
   def detect(self, pos):
     "Check in the factory"
-    return self.factory.detectbit(pos)
+    return self.factory.detectany(pos)
 
   def parsebit(self, pos):
     "Parse with any formula bit"
-    while self.factory.detectbit(pos):
+    while self.factory.detectany(pos):
       bit = self.factory.parsebit(pos)
       #Trace.debug(bit.original + ' -> ' + unicode(bit.gethtml()))
       self.add(bit)
@@ -170,7 +170,7 @@ class FormulaFactory(object):
   # bits will be appended later
   bits = []
 
-  def detectbit(self, pos):
+  def detectany(self, pos):
     "Detect if there is a next bit"
     if pos.finished():
       return False
