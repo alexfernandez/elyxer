@@ -28,8 +28,6 @@ from util.trace import Trace
 class Cloner(object):
   "An object used to clone other objects."
 
-  clonelist = ['contents']
-
   def clone(cls, original):
     "Return an exact copy of an object."
     "The original object must have an empty constructor."
