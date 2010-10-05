@@ -190,7 +190,7 @@ class SquareBracket(Bracket):
   start = FormulaConfig.starts['squarebracket']
   ending = FormulaConfig.endings['squarebracket']
 
-FormulaFactory.bits += [
-    FormulaSymbol(), RawText(), Number(), Comment(), WhiteSpace(), Bracket()
+FormulaFactory.types += [
+    FormulaSymbol, RawText, Number, Comment, WhiteSpace, Bracket
     ]
 

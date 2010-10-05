@@ -247,7 +247,7 @@ class UnderDecoratingFunction(DecoratingFunction):
     self.symbol.output.settag('span class="symbolunder"')
     self.parameter.output.settag('span class="oversymbol"')
 
-FormulaFactory.bits += [FormulaCommand(), SymbolFunction()]
+FormulaFactory.types += [FormulaCommand, SymbolFunction]
 FormulaCommand.commandbits = [
     EmptyCommand(), AlphaCommand(), OneParamFunction(), DecoratingFunction(),
     FontFunction(), LabelFunction(), TextFunction(), UnderDecoratingFunction(),

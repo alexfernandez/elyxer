@@ -167,29 +167,40 @@ class WholeFormula(FormulaBit):
 class FormulaFactory(object):
   "Construct bits of formula"
 
-  # bits will be appended later
-  bits = []
+  # bit types will be appended later
+  types = []
+  instances = {}
 
   def detectany(self, pos):
     "Detect if there is a next bit"
     if pos.finished():
       return False
-    for bit in FormulaFactory.bits:
-      if bit.detect(pos):
+    for type in FormulaFactory.types:
+      if self.detecttype(type, pos):
         return True
     return False
 
+  def detecttype(self, type, pos):
+    "Detect a bit of a given type."
+    return self.instance(type).detect(pos)
+
+  def instance(self, type):
+    "Get an instance of the given type."
+    if not type in self.instances or not self.instances[type]:
+      self.instances[type] = Cloner.create(type)
+    return self.instances[type]
+
   def parsebit(self, pos):
     "Parse just one formula bit."
-    for bit in FormulaFactory.bits:
-      if bit.detect(pos):
-        # get a fresh bit and parse it
-        newbit = Cloner.clone(bit)
-        newbit.factory = self
-        returnedbit = newbit.parsebit(pos)
+    for type in FormulaFactory.types:
+      if self.detecttype(type, pos):
+        bit = self.instance(type)
+        self.instances[type] = None
+        bit.factory = self
+        returnedbit = bit.parsebit(pos)
         if returnedbit:
           return returnedbit
-        return newbit
+        return bit
     Trace.error('Unrecognized formula at ' + pos.identifier())
     return FormulaConstant(pos.currentskip())
 

@@ -169,12 +169,6 @@ class MacroFunction(CommandBit):
       index = parameter.number - 1
       parameter.contents = [self.values[index].clone()]
 
-FormulaCommand.commandbits += [
-    DefiningFunction(), MacroFunction(),
-    ]
-
-FormulaFactory.bits += [ MacroParameter() ]
-
 class FormulaMacro(Formula):
   "A math macro defined in an inset."
 
@@ -185,4 +179,10 @@ class FormulaMacro(Formula):
   def __unicode__(self):
     "Return a printable representation."
     return 'Math macro'
+
+FormulaCommand.commandbits += [
+    DefiningFunction(), MacroFunction(),
+    ]
+
+FormulaFactory.types += [ MacroParameter ]
 
