@@ -31,12 +31,16 @@ class Cloner(object):
   def clone(cls, original):
     "Return an exact copy of an object."
     "The original object must have an empty constructor."
-    type = original.__class__
+    return cls.create(original.__class__)
+
+  def create(cls, type):
+    "Create an object of a given class."
     clone = type.__new__(type)
     clone.__init__()
     return clone
 
   clone = classmethod(clone)
+  create = classmethod(create)
 
 class ContainerExtractor(object):
   "A class to extract certain containers."

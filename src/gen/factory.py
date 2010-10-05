@@ -63,9 +63,7 @@ class ContainerFactory(object):
     if reader.currentline() == '':
       reader.nextline()
       return None
-    type = self.tree.find(reader)
-    container = type.__new__(type)
-    container.__init__()
+    container = Cloner.create(self.tree.find(reader))
     container.start = reader.currentline().strip()
     self.parse(container, reader)
     return container
