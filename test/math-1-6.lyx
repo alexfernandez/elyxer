@@ -65,7 +65,8 @@
 \newcommand{\preambleroot}[2]{\sqrt[#1]{#2}}
 
 % test macro with a lot of spaces (bug #31243)
-\renewcommand { \labelenumi }  { \Alph { enumi } . }
+\renewcommand % Renewing a command with spaces and comments
+{ \labelenumi }  { \Alph { enumi } . }
 
 % redefine the greyed out note
 
