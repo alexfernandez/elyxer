@@ -102,27 +102,27 @@ class CommandBit(FormulaCommand):
 
   def parsesquare(self, pos):
     "Parse a square bracket"
-    bracket = SquareBracket()
-    if not bracket.detect(pos):
+    if not self.factory.detecttype(SquareBracket, pos):
       return None
+    bracket = SquareBracket()
     bracket.parsebit(pos)
     self.add(bracket)
     return bracket
 
   def parseliteral(self, pos):
     "Parse a literal bracket."
-    bracket = Bracket()
-    if not bracket.detect(pos):
+    if not self.factory.detecttype(Bracket, pos):
       Trace.error('No literal parameter found at: ' + pos.identifier())
       return None
+    bracket = Bracket()
     self.add(bracket.parseliteral(pos))
     return bracket.literal
 
   def parsesquareliteral(self, pos):
     "Parse a square bracket literally."
-    bracket = SquareBracket()
-    if not bracket.detect(pos):
+    if not self.factory.detecttype(SquareBracket, pos):
       return None
+    bracket = SquareBracket()
     self.add(bracket.parseliteral(pos))
     return bracket.literal
 

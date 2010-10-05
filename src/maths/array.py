@@ -51,11 +51,11 @@ class FormulaCell(FormulaCommand):
     self.output = TaggedOutput().settag('td class="formula-' + alignment +'"', True)
 
   def parsebit(self, pos):
-    formula = WholeFormula()
-    if not formula.detect(pos):
+    if not self.factory.detecttype(WholeFormula, pos):
       Trace.error('Unexpected end of array cell at ' + pos.identifier())
       pos.skip(pos.current())
       return
+    formula = WholeFormula()
     formula.parsebit(pos)
     self.add(formula)
 
@@ -76,6 +76,7 @@ class FormulaRow(FormulaCommand):
     while not pos.finished():
       alignment = self.alignments[index % len(self.alignments)]
       cell = FormulaCell(alignment)
+      cell.factory = self.factory
       cell.parsebit(pos)
       self.add(cell)
       index += 1
@@ -97,7 +98,9 @@ class MultiRowFormula(CommandBit):
     rowseparator = FormulaConfig.array['rowseparator']
     while True:
       pos.pushending(rowseparator, True)
-      yield FormulaRow(self.alignments)
+      row = FormulaRow(self.alignments)
+      row.factory = self.factory
+      yield row
       if pos.checkfor(rowseparator):
         self.original += pos.popending(rowseparator)
       else:
@@ -174,8 +177,10 @@ class BeginCommand(CommandBit):
     for bit in BeginCommand.innerbits:
       if bit.piece == piece:
         newbit = Cloner.clone(bit)
+        newbit.factory = self.factory
         return newbit
     bit = EquationEnvironment()
+    bit.factory = self.factory
     bit.piece = piece
     return bit
 
