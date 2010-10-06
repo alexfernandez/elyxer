@@ -186,6 +186,8 @@ class TextFunction(CommandBit):
   def parsebit(self, pos):
     "Parse a text parameter"
     self.output = TaggedOutput().settag(self.translated)
+    if not self.factory.detecttype(Bracket, pos):
+      Trace.error('No parameter for ' + unicode(self))
     bracket = Bracket().parsetext(pos)
     self.add(bracket)
 
