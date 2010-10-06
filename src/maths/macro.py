@@ -105,8 +105,6 @@ class DefiningFunction(HybridFunction):
 
   def parsebit(self, pos):
     "Parse a function with [] and {} parameters."
-    while self.factory.detecttype(WhiteSpace, pos):
-      WhiteSpace().parsebit(pos)
     if self.factory.detecttype(Bracket, pos):
       newcommand = self.parseliteral(pos)
     elif self.factory.detecttype(FormulaCommand, pos):
@@ -120,12 +118,7 @@ class DefiningFunction(HybridFunction):
     macro.newcommand = newcommand
     macro.parameters = self.readparameters()
     macro.definition = self.params['$d'].value
-    for index in range(9):
-      value = self.extractdefault(index + 1)
-      if value:
-        macro.defaults.append(value)
-      else:
-        break
+    self.extractdefaults(macro)
     MathMacro.macros[newcommand] = macro
 
   def readparameters(self):
@@ -133,6 +126,15 @@ class DefiningFunction(HybridFunction):
     if not self.params['$n'].literalvalue:
       return 0
     return int(self.params['$n'].literalvalue)
+
+  def extractdefaults(self, macro):
+    "Extract the default values for existing parameters."
+    for index in range(9):
+      value = self.extractdefault(index + 1)
+      if value:
+        macro.defaults.append(value)
+      else:
+        return
 
   def extractdefault(self, index):
     "Extract the default value for parameter index."
