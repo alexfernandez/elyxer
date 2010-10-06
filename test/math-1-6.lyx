@@ -683,7 +683,7 @@ Definitions can be added as macros
 
 .
  Then they can be used in formulae: 
-\begin_inset Formula $\stupidroot 12$
+\begin_inset Formula $\stupidroot{}{12}+\stupidroot 12$
 \end_inset
 
 .
