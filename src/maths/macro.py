@@ -168,6 +168,8 @@ class MacroFunction(CommandBit):
     self.contents = [macro.instantiate()]
     for parameter in self.searchall(MacroParameter):
       index = parameter.number - 1
+      if index >= len(self.values):
+        return
       parameter.contents = [self.values[index].clone()]
 
 class FormulaMacro(Formula):
