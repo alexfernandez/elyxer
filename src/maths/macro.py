@@ -154,14 +154,35 @@ class MacroFunction(CommandBit):
     "Parse a number of input parameters."
     self.values = []
     macro = self.translated
-    while self.factory.detectany(pos):
+    while self.factory.detecttype(Bracket, pos):
       self.values.append(self.parseparameter(pos))
     defaults = list(macro.defaults)
+    remaining = macro.parameters - len(self.values) - len(defaults)
+    if remaining > 0:
+      self.parsenumbers(remaining, pos)
     while len(self.values) < macro.parameters and len(defaults) > 0:
       self.values.insert(0, defaults.pop())
     if len(self.values) < macro.parameters:
       Trace.error('Missing parameters in macro ' + unicode(self))
     self.completemacro(macro)
+
+  def parsenumbers(self, remaining, pos):
+    "Parse the remaining parameters as a running number."
+    "For example, 12 would be {1}{2}."
+    if pos.finished():
+      return
+    if not self.factory.detecttype(Number, pos):
+      return
+    number = Number()
+    number.parsebit(pos)
+    if not len(number.original) == remaining:
+      self.values.append(number)
+      return
+    for digit in number.original:
+      value = Number()
+      value.add(FormulaConstant(digit))
+      value.type = number
+      self.values.append(value)
 
   def completemacro(self, macro):
     "Complete the macro with the parameters read."
