@@ -169,6 +169,7 @@ class FormulaFactory(object):
 
   # bit types will be appended later
   types = []
+  ignoredtypes = []
   instances = {}
 
   def detectany(self, pos):
@@ -182,6 +183,10 @@ class FormulaFactory(object):
 
   def detecttype(self, type, pos):
     "Detect a bit of a given type."
+    while self.clearignored(pos):
+      pass
+    if pos.finished():
+      return False
     return self.instance(type).detect(pos)
 
   def instance(self, type):
@@ -190,17 +195,31 @@ class FormulaFactory(object):
       self.instances[type] = Cloner.create(type)
     return self.instances[type]
 
+  def clearignored(self, pos):
+    "Clear any ignored types."
+    if pos.finished():
+      return False
+    for type in self.ignoredtypes:
+      if self.instance(type).detect(pos):
+        self.parsetype(type, pos)
+        return True
+    return False
+
   def parseany(self, pos):
     "Parse any formula bit at the current location."
     for type in FormulaFactory.types:
       if self.detecttype(type, pos):
-        bit = self.instance(type)
-        self.instances[type] = None
-        bit.factory = self
-        returnedbit = bit.parsebit(pos)
-        if returnedbit:
-          return returnedbit
-        return bit
+        return self.parsetype(type, pos)
     Trace.error('Unrecognized formula at ' + pos.identifier())
     return FormulaConstant(pos.currentskip())
+
+  def parsetype(self, type, pos):
+    "Parse the given type and return it."
+    bit = self.instance(type)
+    self.instances[type] = None
+    bit.factory = self
+    returnedbit = bit.parsebit(pos)
+    if returnedbit:
+      return returnedbit
+    return bit
 

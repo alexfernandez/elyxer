@@ -51,8 +51,13 @@ class FormulaCell(FormulaCommand):
     self.output = TaggedOutput().settag('td class="formula-' + alignment +'"', True)
 
   def parsebit(self, pos):
+    Trace.debug('endings: ' + unicode(pos.endinglist))
+    if pos.finished():
+      return
+    Trace.debug('Still with us')
     if not self.factory.detecttype(WholeFormula, pos):
       Trace.error('Unexpected end of array cell at ' + pos.identifier())
+      exit()
       pos.skip(pos.current())
       return
     formula = WholeFormula()
@@ -80,6 +85,7 @@ class FormulaRow(FormulaCommand):
       cell.parsebit(pos)
       self.add(cell)
       index += 1
+      Trace.debug('After cell: ' + pos.identifier())
       pos.checkskip(FormulaRow.cellseparator)
     if len(self.contents) == 0:
       self.output = EmptyOutput()

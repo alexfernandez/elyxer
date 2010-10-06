@@ -191,6 +191,9 @@ class SquareBracket(Bracket):
   ending = FormulaConfig.endings['squarebracket']
 
 FormulaFactory.types += [
-    FormulaSymbol, RawText, Number, Comment, WhiteSpace, Bracket
+    FormulaSymbol, RawText, Number, Bracket
+    ]
+FormulaFactory.ignoredtypes += [
+    Comment, WhiteSpace
     ]
 
