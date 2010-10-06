@@ -59,14 +59,12 @@
 \newcommand{\spce}{\textvisiblespace}
 
 % macro for italic page numbers in the index
-\newcommand{\IndexDef}[1]{\textit{#1}}
+% test macro with a lot of spaces (bug #31243)
+\newcommand % Renewing a command with spaces and comments
+{ \IndexDef } [1] { \textit {#1} }
 
 % test macro with two arguments
 \newcommand{\preambleroot}[2]{\sqrt[#1]{#2}}
-
-% test macro with a lot of spaces (bug #31243)
-\renewcommand % Renewing a command with spaces and comments
-{ \labelenumi }  { \Alph { enumi } . }
 
 % redefine the greyed out note
 
