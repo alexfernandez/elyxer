@@ -131,8 +131,7 @@ target "https://savannah.nongnu.org/bugs/index.php?31243"
 
 \end_inset
 
-: spaces in command definitions.
- 
+: spaces and comments in command definitions.
 \end_layout
 
 \end_deeper
