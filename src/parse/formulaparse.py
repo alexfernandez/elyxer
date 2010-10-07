@@ -112,7 +112,7 @@ class FormulaParser(Parser):
     index = line.index(start)
     line = line[index + len(start):].strip()
     while not line.endswith(ending):
-      formula += line
+      formula += line + '\n'
       reader.nextline()
       line = reader.currentline()
     formula += line[:-len(ending)]
