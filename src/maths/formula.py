@@ -195,13 +195,18 @@ class FormulaFactory(object):
     return self.instances[type]
 
   def clearignored(self, pos):
-    "Clear any ignored types."
-    if pos.finished():
-      return
+    "Clear all ignored types."
+    while not pos.finished():
+      if not self.clearany(pos):
+        return
+
+  def clearany(self, pos):
+    "Cleary any ignored type."
     for type in self.ignoredtypes:
       if self.instance(type).detect(pos):
         self.parsetype(type, pos)
-        self.clearignored(pos)
+        return True
+    return False
 
   def parseany(self, pos):
     "Parse any formula bit at the current location."
