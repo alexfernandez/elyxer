@@ -134,6 +134,20 @@ target "https://savannah.nongnu.org/bugs/index.php?31243"
 : spaces and comments in command definitions.
 \end_layout
 
+\begin_layout Itemize
+Support for 
+\family typewriter
+
+\backslash
+stackrel
+\family default
+: 
+\begin_inset Formula $x\stackrel{R}{\rightarrow}y$
+\end_inset
+
+ (thanks, José Ramón!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.2 (2010-09-20):

@@ -410,6 +410,25 @@ A similar concept is a binomial coefficient:
 
 \end_layout
 
+\begin_layout Standard
+A symbol can be stacked over another using 
+\family typewriter
+
+\backslash
+stackrel
+\family default
+: 
+\begin_inset Formula $x\stackrel{R}{\rightarrow}y$
+\end_inset
+
+.
+ Anything can be stacked: 
+\begin_inset Formula $\stackrel{head}{heels}$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Section
 Roots
 \end_layout

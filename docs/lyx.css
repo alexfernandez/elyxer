@@ -741,6 +741,22 @@ div.Institute {
 div.indexgroup {
 	margin-left: 2em;
 }
+span.stackrel {
+   display: inline-block;
+   vertical-align: bottom;
+   text-align: center;
+}
+span.upstackrel {
+       display: block;
+       padding: 0em;
+       position: relative;
+       top: 1em;
+       font-size: 80%;
+}
+span.downstackrel {
+       display: block;
+       padding: 0em;
+}
 /* CSS section for print */
 @media print {
 body {
@@ -775,4 +791,5 @@ span.FootOuter .Foot {
 a:visited {
 	color: #0030c0;
 }
+/* end of print CSS */
 }
