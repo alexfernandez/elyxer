@@ -153,11 +153,14 @@ class WholeFormula(FormulaBit):
 
   def parse(cls, formula):
     "Parse a whole formula and return it."
+    Trace.debug('Formula: *' + formula + '*')
     pos = TextPosition(formula)
     whole = WholeFormula()
     if not whole.detect(pos):
+      if pos.finished():
+        return FormulaConstant('')
       Trace.error('Unknown formula at: ' + pos.identifier())
-      return TaggedBit().constant(pos.identifier(), 'span class="unknown"')
+      return TaggedBit().constant(formula, 'span class="unknown"')
     whole.parsebit(pos)
     whole.process()
     return whole

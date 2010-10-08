@@ -677,7 +677,7 @@ Macros
 \begin_layout Standard
 Definitions can be added as macros
 \begin_inset FormulaMacro
-\renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
+\newcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
 {\sqrt[#1]{#2}}
 \end_inset
 
@@ -689,7 +689,7 @@ Definitions can be added as macros
 .
  They can accept default parameters
 \begin_inset FormulaMacro
-\renewcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
+\newcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
 {#1\sqrt{#2}}
 \end_inset
 
@@ -716,6 +716,24 @@ Definitions on the fly are also possible:
 
 , and used with different values: 
 \begin_inset Formula $\ontheflyroot{a}{b}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Pathological Cases
+\end_layout
+
+\begin_layout Standard
+Empty equations have been known to fail: 
+\begin_inset Formula $ $
+\end_inset
+
+.
+ Also, an equation with just a comment: 
+\begin_inset Formula $%Thisisacomment
+$
 \end_inset
 
 .
