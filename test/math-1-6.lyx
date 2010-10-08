@@ -731,9 +731,17 @@ Empty equations have been known to fail:
 \end_inset
 
 .
- Also, an equation with just a comment: 
-\begin_inset Formula $%Thisisacomment
-$
+\end_layout
+
+\begin_layout Standard
+An equation with an mbox containing a comment: 
+\begin_inset Formula $\mbox{text %comment
+more}$
+\end_inset
+
+, and a comment inside textrm: 
+\begin_inset Formula $\textrm{text %comment
+more}$
 \end_inset
 
 .

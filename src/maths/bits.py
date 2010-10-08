@@ -85,9 +85,11 @@ class Number(FormulaBit):
 class Comment(FormulaBit):
   "A LaTeX comment: % to the end of the line."
 
+  start = FormulaConfig.starts['comment']
+
   def detect(self, pos):
     "Detect the %."
-    return pos.current() == '%'
+    return pos.current() == self.start
 
   def parsebit(self, pos):
     "Parse to the end of the line."
@@ -160,9 +162,11 @@ class Bracket(FormulaBit):
   def innertext(self, pos):
     "Parse some text inside the bracket, following textual rules."
     factory = FormulaFactory()
+    specialchars = FormulaConfig.symbolfunctions.keys()
+    specialchars.append(FormulaConfig.starts['command'])
+    specialchars.append(Comment.start)
     while not pos.finished():
-      if pos.current() == FormulaConfig.starts['command'] or \
-          pos.current() in FormulaConfig.symbolfunctions:
+      if pos.current() in specialchars:
         bit = factory.parseany(pos)
         pos.checkskip(' ')
       else:
