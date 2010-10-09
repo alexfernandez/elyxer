@@ -764,6 +764,12 @@ more}$
 \end_inset
 
 .
+ Finally, a comment at the end of a text function: 
+\begin_inset Formula $\mbox{only text%comment
+}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section

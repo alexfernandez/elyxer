@@ -167,11 +167,10 @@ class Bracket(FormulaBit):
     specialchars.append(Comment.start)
     while not pos.finished():
       if pos.current() in specialchars:
-        bit = factory.parseany(pos)
-        pos.checkskip(' ')
+        if factory.detectany(pos):
+          self.add(factory.parseany(pos))
       else:
-        bit = FormulaConstant(pos.currentskip())
-      self.add(bit)
+        self.add(FormulaConstant(pos.currentskip()))
 
   def innerliteral(self, pos):
     "Parse a literal inside the bracket, which cannot generate html"
