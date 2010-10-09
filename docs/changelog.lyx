@@ -131,7 +131,8 @@ target "https://savannah.nongnu.org/bugs/index.php?31243"
 
 \end_inset
 
-: spaces and comments in command definitions.
+: spaces and comments in formulas (command definitions, empty formulas\SpecialChar \ldots{}
+).
 \end_layout
 
 \begin_layout Itemize
