@@ -165,6 +165,11 @@ Added escaped characters to BibTeX parsing:
 i}
 \family default
 .
+ Also added a field 
+\family typewriter
+note
+\family default
+ to all BibTeX styles.
 \end_layout
 
 \end_deeper
