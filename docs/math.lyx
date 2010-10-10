@@ -21,24 +21,6 @@
 %   You should have received a copy of the GNU General Public License
 %   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-% Commands inserted by lyx2lyx for PDF properties
-\usepackage{babel}
-\usepackage[unicode=true,
- bookmarks=true,
- bookmarksnumbered=true,
- bookmarksopen=false,
- breaklinks=false,
- pdfborder={0 0 1},
- backref=false,
- colorlinks=true]
- {hyperref}
-\hypersetup{%
- pdftitle={eLyXer Math Showcase},
- pdfauthor={Alex Fernández},
- pdfsubject={The amazing all-time-wonder eLyXer Math Showcase},
- pdfkeywords={LyX},
- linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels,pdftex }
-
 % DO NOT ALTER THIS PREAMBLE!!!
 %
 % This preamble is designed to ensure that the User's Guide prints
@@ -59,14 +41,6 @@
 % for correct jump positions whe clicking on a link to a float
 \usepackage[figure]{hypcap}
 
-% the pages of the TOC is numbered roman
-% and a pdf-bookmark for the TOC is added
-\let\myTOC\tableofcontents
-\renewcommand{\tableofcontents}{%
-  \frontmatter
-  \pdfbookmark[1]{\contentsname}{}
-  \myTOC
-  \mainmatter }
 
 % redefine the \LyX macro for PDF bookmarks
 \def\LyX{\texorpdfstring{%
@@ -85,6 +59,7 @@
 % redefine the greyed out note
 
 \usepackage{mathrsfs}
+\usepackage{eurosym}
 \end_preamble
 \options intoc,bibtotoc,idxtotoc,BCOR7mm,tablecaptionabove
 \use_default_options false
@@ -102,7 +77,20 @@
 \graphics default
 \paperfontsize 12
 \spacing single
-\use_hyperref false
+\use_hyperref true
+\pdf_title "eLyXer Math Showcase"
+\pdf_author "Alex Fernández"
+\pdf_subject "The amazing all-time-wonder eLyXer Math Showcase"
+\pdf_keywords "LyX"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
 \papersize default
 \use_geometry false
 \use_amsmath 1
@@ -146,6 +134,15 @@ eLyXer Math Showcase
 
 \begin_layout Author
 Alex Fernández (elyxer@gmail.com)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -765,6 +762,29 @@ A similar concept is a binomial coefficient:
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+A symbol can be stacked over another using 
+\family typewriter
+
+\backslash
+stackrel
+\family default
+: 
+\begin_inset Formula $x\stackrel{R}{\rightarrow}y$
+\end_inset
+
+.
+ Anything can be stacked: 
+\begin_inset Formula $d\stackrel{x>3}{\lim}x$
+\end_inset
+
+, 
+\begin_inset Formula $\stackrel{head}{heels}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection

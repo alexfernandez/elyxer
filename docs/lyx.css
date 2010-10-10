@@ -750,7 +750,7 @@ span.upstackrel {
        display: block;
        padding: 0em;
        position: relative;
-       top: 1em;
+       top: 0.7em;
        font-size: 80%;
 }
 span.downstackrel {
