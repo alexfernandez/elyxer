@@ -73,9 +73,9 @@ class ContainerSize(object):
 
   def extractparameter(self, container, name):
     "Extract a parameter from a container, if present."
-    if not name in container.parameters:
+    result = container.getparameter(name)
+    if not result:
       return None
-    result = container.parameters[name]
     if self.extractnumber(result) == '0':
       return None
     for ignored in StyleConfig.size['ignoredtexts']:

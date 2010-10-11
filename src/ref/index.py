@@ -82,8 +82,9 @@ class IndexReference(Link):
 
   def process(self):
     "Put entry in index"
-    if 'name' in self.parameters:
-      self.name = self.parameters['name'].strip()
+    name = self.getparameter('name')
+    if name:
+      self.name = name.strip()
     else:
       self.name = self.extracttext()
     IndexEntry.get(self.name).addref(self)
@@ -218,8 +219,8 @@ class NomenclatureEntry(Link):
 
   def process(self):
     "Put entry in index"
-    symbol = self.parameters['symbol']
-    description = self.parameters['description']
+    symbol = self.getparameter('symbol')
+    description = self.getparameter('description')
     key = symbol.replace(' ', '-').lower()
     if key in NomenclatureEntry.entries:
       Trace.error('Duplicated nomenclature entry ' + key)

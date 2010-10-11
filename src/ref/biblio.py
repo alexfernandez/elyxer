@@ -43,7 +43,7 @@ class BiblioCitation(Container):
   def process(self):
     "Process the complete citation and all cites within."
     self.contents = [Constant('[')]
-    keys = self.parameters['key'].split(',')
+    keys = self.getparameter('key').split(',')
     for key in keys:
       self.contents += [BiblioCite().create(key), Constant(', ')]
     if len(keys) > 0:
@@ -117,7 +117,7 @@ class BiblioEntry(Container):
   def process(self):
     "Process the cites for the entry's key"
     self.citeref = [Constant(NumberGenerator.instance.generateunique('biblioentry'))]
-    self.processcites(self.parameters['key'])
+    self.processcites(self.getparameter('key'))
 
   def processcites(self, key):
     "Get all the cites of the entry"

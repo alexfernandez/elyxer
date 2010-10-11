@@ -69,7 +69,7 @@ class BibTeX(Container):
 
   def readstyle(self):
     "Read the style from the bibliography options"
-    options = self.parameters['options'].split(',')
+    options = self.getparameter('options').split(',')
     for option in options:
       if hasattr(BibStylesConfig, option):
         return getattr(BibStylesConfig, option)
