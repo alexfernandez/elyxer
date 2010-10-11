@@ -121,7 +121,7 @@ class Wrap(Float):
   def processtags(self):
     "Add the widening tag to the parent tag."
     self.embed()
-    placement = self.parameters['placement']
+    placement = self.getparameter('placement')
     self.output.tag = 'div class="wrap-' + placement + '"'
     self.applywideningtag(self)
 

@@ -86,11 +86,11 @@ class Column(Container):
 
   def set(self, cell):
     "Set alignments in the corresponding cell"
-    alignment = self.parameters['alignment']
+    alignment = self.getparameter('alignment')
     if alignment == 'block':
       alignment = 'justify'
     cell.setattribute('align', alignment)
-    valignment = self.parameters['valignment']
+    valignment = self.getparameter('valignment')
     cell.setattribute('valign', valignment)
     self.size.addstyle(cell)
 
@@ -127,9 +127,9 @@ class PostTable(object):
 
   def longtable(self, table):
     "Postprocess a long table, removing unwanted rows"
-    if not 'features' in table.parameters:
+    features = table.getparameter('features')
+    if not features:
       return
-    features = table.parameters['features']
     if not 'islongtable' in features:
       return
     if features['islongtable'] != 'true':
@@ -164,9 +164,9 @@ class PostTable(object):
   def checkmulticolumn(self, row, index):
     "Process a multicolumn attribute"
     cell = row.contents[index]
-    if not hasattr(cell, 'parameters') or not 'multicolumn' in cell.parameters:
+    mc = cell.getparameter('multicolumn')
+    if not mc:
       return
-    mc = cell.parameters['multicolumn']
     if mc != '1':
       Trace.error('Unprocessed multicolumn=' + unicode(multicolumn) +
           ' cell ' + unicode(cell))
@@ -182,9 +182,8 @@ class PostTable(object):
     "Check if the index is within bounds for the row"
     if index >= len(row.contents):
       return False
-    if not 'multicolumn' in row.contents[index].parameters:
-      return False
-    if row.contents[index].parameters['multicolumn'] != '2':
+    mc = row.contents[index].getparameter('multicolumn')
+    if mc != '2':
       return False
     return True
 

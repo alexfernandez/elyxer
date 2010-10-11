@@ -47,7 +47,7 @@ class Image(Container):
 
   def process(self):
     "Place the url, convert the image if necessary."
-    self.origin = InputPath(self.parameters['filename'])
+    self.origin = InputPath(self.getparameter('filename'))
     self.destination = self.getdestination(self.origin)
     self.size = ContainerSize().readparameters(self)
     if self.origin.exists():

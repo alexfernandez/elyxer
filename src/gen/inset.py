@@ -168,8 +168,8 @@ class InfoInset(Container):
 
   def process(self):
     "Set the shortcut as text"
-    self.type = self.parameters['type']
-    self.contents = [Constant(self.parameters['arg'])]
+    self.type = self.getparameter('type')
+    self.contents = [Constant(self.getparameter('arg'))]
 
 class BoxInset(Container):
   "A box inset"
@@ -197,18 +197,18 @@ class IncludeInset(Container):
 
   def process(self):
     "Include the provided child document"
-    self.filename = os.path.join(Options.directory, self.parameters['filename'])
+    self.filename = os.path.join(Options.directory, self.getparameter('filename'))
     Trace.debug('Child document: ' + self.filename)
     LstParser().parsecontainer(self)
-    if 'LatexCommand' in self.parameters:
-      if self.parameters['LatexCommand'] == 'verbatiminput':
-        self.readverbatim()
-        return
-      if self.parameters['LatexCommand'] == 'lstinputlisting':
-        self.readlisting()
-        return
+    command = self.getparameter('LatexCommand')
+    if command == 'verbatiminput':
+      self.readverbatim()
+      return
+    elif command == 'lstinputlisting':
+      self.readlisting()
+      return
     olddir = Options.directory
-    newdir = os.path.dirname(self.parameters['filename'])
+    newdir = os.path.dirname(self.getparameter('filename'))
     if newdir != '':
       Trace.debug('Child dir: ' + newdir)
       Options.directory = os.path.join(Options.directory, newdir)
