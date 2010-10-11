@@ -46,7 +46,7 @@ class BibTeX(Container):
     bibliography = Translator.translate('bibliography')
     tag = TaggedText().constant(bibliography, 'h1 class="biblio"', True)
     self.contents.append(tag)
-    files = self.parameters['bibfiles'].split(',')
+    files = self.getparameter('bibfiles').split(',')
     for file in files:
       bibfile = BibFile(file)
       bibfile.parse()

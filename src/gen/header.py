@@ -44,17 +44,17 @@ class LyXHeader(Container):
 
   def process(self):
     "Find pdf title"
-    DocumentParameters.pdftitle = self.getparameter('pdftitle')
-    if self.getparameter('documentclass') in HeaderConfig.styles['article']:
+    DocumentParameters.pdftitle = self.getheaderparameter('pdftitle')
+    if self.getheaderparameter('documentclass') in HeaderConfig.styles['article']:
       DocumentParameters.startinglevel = 1
-    if self.getparameter('paragraphseparation') == 'indent':
+    if self.getheaderparameter('paragraphseparation') == 'indent':
       DocumentParameters.indentstandard = True
     DocumentParameters.tocdepth = self.getlevel('tocdepth')
     DocumentParameters.maxdepth = self.getlevel('secnumdepth')
-    DocumentParameters.language = self.getparameter('language')
+    DocumentParameters.language = self.getheaderparameter('language')
     return self
 
-  def getparameter(self, configparam):
+  def getheaderparameter(self, configparam):
     "Get a parameter configured in HeaderConfig."
     key = HeaderConfig.parameters[configparam]
     if not key in self.parameters:
@@ -63,7 +63,7 @@ class LyXHeader(Container):
 
   def getlevel(self, configparam):
     "Get a level read as a parameter from HeaderConfig."
-    paramvalue = self.getparameter(configparam)
+    paramvalue = self.getheaderparameter(configparam)
     if not paramvalue:
       return 0
     value = int(paramvalue)
