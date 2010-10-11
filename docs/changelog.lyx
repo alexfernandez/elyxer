@@ -164,12 +164,17 @@ Added a lot of escaped characters to BibTeX parsing:
 \backslash
 i}
 \family default
-.
+\SpecialChar \ldots{}
  Also added a field 
 \family typewriter
 note
 \family default
  to all BibTeX styles.
+\end_layout
+
+\begin_layout Itemize
+Show all references (even those not cited) in the bibliography if configured
+ to do so.
 \end_layout
 
 \end_deeper

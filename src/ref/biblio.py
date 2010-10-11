@@ -113,6 +113,7 @@ class BiblioEntry(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('span class="entry"')
+    self.contents = []
 
   def process(self):
     "Process the cites for the entry's key"

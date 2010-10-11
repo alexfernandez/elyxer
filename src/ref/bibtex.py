@@ -47,8 +47,11 @@ class BibTeX(Container):
     tag = TaggedText().constant(bibliography, 'h1 class="biblio"', True)
     self.contents.append(tag)
     files = self.getparameter('bibfiles').split(',')
+    showall = False
+    if self.getparameter('btprint') == 'btPrintAll':
+      showall = True
     for file in files:
-      bibfile = BibFile(file)
+      bibfile = BibFile(file, showall)
       bibfile.parse()
       self.entries += bibfile.entries
       Trace.message('Parsed ' + unicode(bibfile))
@@ -78,9 +81,10 @@ class BibTeX(Container):
 class BibFile(object):
   "A BibTeX file"
 
-  def __init__(self, filename):
+  def __init__(self, filename, showall):
     "Create the BibTeX file"
     self.filename = filename + '.bib'
+    self.showall = showall
     self.added = 0
     self.ignored = 0
     self.entries = []
@@ -113,7 +117,7 @@ class BibFile(object):
       if entry.detect(pos):
         newentry = Cloner.clone(entry)
         newentry.parse(pos)
-        if newentry.isreferenced():
+        if self.showall or newentry.isreferenced():
           self.entries.append(newentry)
           self.added += 1
         else:
