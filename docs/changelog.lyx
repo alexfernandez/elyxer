@@ -150,7 +150,7 @@ stackrel
 \end_layout
 
 \begin_layout Itemize
-Added escaped characters to BibTeX parsing: 
+Added a lot of escaped characters to BibTeX parsing: 
 \family typewriter
 
 \backslash
