@@ -72,6 +72,15 @@ Created by Alex Fernández
 This document was created with LyX 1.6.2rc2, a great text editor.
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Part
 The only part
 \end_layout
@@ -130,6 +139,20 @@ Now we include a different document.
 \begin_inset CommandInset include
 LatexCommand include
 filename "helloworld.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A document with parts.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "toc-article.lyx"
 
 \end_inset
 
