@@ -142,14 +142,14 @@ class PostTable(object):
   def hasrow(self, table, attrname):
     "Find out if the table has a row of first heads"
     for row in table.contents:
-      if attrname in row.parameters:
+      if row.getparameter(attrname):
         return True
     return False
 
   def removerows(self, table, attrname):
     "Remove the head rows, since the table has first head rows."
     for row in table.contents:
-      if attrname in row.parameters:
+      if row.getparameter(attrname):
         row.output = EmptyOutput()
 
   def checkforplain(self, row, index):

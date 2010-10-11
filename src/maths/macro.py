@@ -74,7 +74,7 @@ class MathMacro(object):
 
   def __init__(self):
     self.newcommand = None
-    self.parameters = 0
+    self.parameternumber = 0
     self.defaults = []
     self.definition = None
 
@@ -116,12 +116,12 @@ class DefiningFunction(HybridFunction):
     HybridFunction.parsebit(self, pos)
     macro = MathMacro()
     macro.newcommand = newcommand
-    macro.parameters = self.readparameters()
+    macro.parameternumber = self.readparameternumber()
     macro.definition = self.params['$d'].value
     self.extractdefaults(macro)
     MathMacro.macros[newcommand] = macro
 
-  def readparameters(self):
+  def readparameternumber(self):
     "Read the number of parameters in the macro."
     if not self.params['$n'].literalvalue:
       return 0
@@ -157,12 +157,12 @@ class MacroFunction(CommandBit):
     while self.factory.detecttype(Bracket, pos):
       self.values.append(self.parseparameter(pos))
     defaults = list(macro.defaults)
-    remaining = macro.parameters - len(self.values) - len(defaults)
+    remaining = macro.parameternumber - len(self.values) - len(defaults)
     if remaining > 0:
       self.parsenumbers(remaining, pos)
-    while len(self.values) < macro.parameters and len(defaults) > 0:
+    while len(self.values) < macro.parameternumber and len(defaults) > 0:
       self.values.insert(0, defaults.pop())
-    if len(self.values) < macro.parameters:
+    if len(self.values) < macro.parameternumber:
       Trace.error('Missing parameters in macro ' + unicode(self))
     self.completemacro(macro)
 

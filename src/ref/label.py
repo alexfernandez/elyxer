@@ -43,7 +43,7 @@ class Label(Link):
 
   def process(self):
     "Process a label container."
-    key = self.parameters['name']
+    key = self.getparameter('name')
     self.create(' ', key)
     self.lastnumbered = Label.lastlayout
 
@@ -92,7 +92,7 @@ class Reference(Link):
 
   def process(self):
     "Read the reference and set the arrow."
-    self.key = self.parameters['reference']
+    self.key = self.getparameter('reference')
     if self.key in Label.names:
       self.direction = u'↑'
       label = Label.names[self.key]
@@ -107,9 +107,8 @@ class Reference(Link):
 
   def format(self):
     "Format the reference contents."
-    if 'LatexCommand' in self.parameters:
-      formatkey = self.parameters['LatexCommand']
-    else:
+    formatkey = self.getparameter('LatexCommand')
+    if not formatkey:
       formatkey = 'ref'
     if not formatkey in self.formats:
       Trace.error('Unknown reference format ' + formatkey)
