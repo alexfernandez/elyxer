@@ -177,6 +177,15 @@ Show all references (even those not cited) in the bibliography if configured
  to do so.
 \end_layout
 
+\begin_layout Itemize
+Understand relative sizes (e.g.
+ 
+\family typewriter
+10col%
+\family default
+) in spaces (thanks, Uwe!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.2 (2010-09-20):

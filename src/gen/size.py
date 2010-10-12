@@ -37,18 +37,14 @@ class ContainerSize(object):
 
   def set(self, width = None, height = None):
     "Set the proper size with width and height."
-    if width:
-      self.width = width
-    if height:
-      self.height = height
+    self.setvalue('width', width)
+    self.setvalue('height', height)
     return self
 
   def setmax(self, maxwidth = None, maxheight = None):
     "Set max width and/or height."
-    if maxwidth:
-      self.maxwidth = maxwidth
-    if maxheight:
-      self.maxheight = maxheight
+    self.setvalue('maxwidth', maxwidth)
+    self.setvalue('maxheight', maxheight)
     return self
 
   def readparameters(self, container):
@@ -61,27 +57,31 @@ class ContainerSize(object):
 
   def setparameter(self, container, name):
     "Read a size parameter off a container, and set it if present."
-    value = self.extractparameter(container, name)
+    value = container.getparameter(name)
+    self.setvalue(name, value)
+
+  def setvalue(self, name, value):
+    "Set the value of a parameter name, only if it's valid."
+    value = self.processparameter(value)
     if value:
       setattr(self, name, value)
 
   def checkvalidheight(self, container):
     "Check if the height parameter is valid; otherwise erase it."
-    heightspecial = self.extractparameter(container, 'height_special')
+    heightspecial = container.getparameter('height_special')
     if self.height and self.extractnumber(self.height) == '1' and heightspecial == 'totalheight':
       self.height = None
 
-  def extractparameter(self, container, name):
-    "Extract a parameter from a container, if present."
-    result = container.getparameter(name)
-    if not result:
+  def processparameter(self, value):
+    "Do the full processing on a parameter."
+    if not value:
       return None
-    if self.extractnumber(result) == '0':
+    if self.extractnumber(value) == '0':
       return None
     for ignored in StyleConfig.size['ignoredtexts']:
-      if ignored in result:
-        result = result.replace(ignored, '')
-    return result
+      if ignored in value:
+        value = value.replace(ignored, '')
+    return value
 
   def extractnumber(self, text):
     "Extract the first number in the given text."

@@ -114,7 +114,6 @@ class Hfill(TaggedText):
   "Horizontall fill"
 
   def process(self):
-    Trace.debug('hfill')
     self.output.tag = 'span class="hfill"'
 
 class BarredText(TaggedText):
@@ -155,10 +154,17 @@ class Space(Container):
       self.html = [' ']
       return
     self.html = [StyleConfig.hspaces[self.type]]
-    if len(self.contents) == 0 or not isinstance(self.contents[0], InsetLength):
+    length = self.getlength()
+    if not length:
       return
     self.output = TaggedOutput().settag('span class="hspace"', False)
-    ContainerSize().set(self.contents[0].length).addstyle(self)
+    ContainerSize().set(length).addstyle(self)
+
+  def getlength(self):
+    "Get the space length from the contents or parameters."
+    if len(self.contents) == 0 or not isinstance(self.contents[0], InsetLength):
+      return None
+    return self.contents[0].length
 
 class VerticalSpace(Container):
   "An inset that contains a vertical space."
