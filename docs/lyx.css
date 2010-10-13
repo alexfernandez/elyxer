@@ -754,8 +754,8 @@ span.upstackrel {
 	font-size: 80%;
 }
 span.downstackrel {
-       display: block;
-       padding: 0em;
+	display: block;
+	padding: 0em;
 }
 /* CSS section for print */
 @media print {
