@@ -743,18 +743,17 @@ div.indexgroup {
 }
 span.stackrel {
 	display: inline-block;
-	vertical-align: bottom;
 	text-align: center;
 }
 span.upstackrel {
 	display: block;
 	padding: 0em;
-	position: relative;
-	bottom: 0.7em;
 	font-size: 80%;
+	line-height: 0.2em;
 }
 span.downstackrel {
 	display: block;
+	vertical-align: bottom;
 	padding: 0em;
 }
 /* CSS section for print */
