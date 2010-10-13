@@ -742,16 +742,16 @@ div.indexgroup {
 	margin-left: 2em;
 }
 span.stackrel {
-   display: inline-block;
-   vertical-align: bottom;
-   text-align: center;
+	display: inline-block;
+	vertical-align: bottom;
+	text-align: center;
 }
 span.upstackrel {
-       display: block;
-       padding: 0em;
-       position: relative;
-       top: 0.7em;
-       font-size: 80%;
+	display: block;
+	padding: 0em;
+	position: relative;
+	bottom: 0.7em;
+	font-size: 80%;
 }
 span.downstackrel {
        display: block;
