@@ -207,22 +207,41 @@ class IncludeInset(Container):
     elif command == 'lstinputlisting':
       self.readlisting()
       return
+    self.processinclude()
+
+  def processinclude(self):
+    "Process a regular include: standard child document."
+    self.contents = []
     olddir = Options.directory
     newdir = os.path.dirname(self.getparameter('filename'))
     if newdir != '':
       Trace.debug('Child dir: ' + newdir)
       Options.directory = os.path.join(Options.directory, newdir)
     try:
-      try:
-        converter = IncludeInset.converterfactory.create(self)
-      except:
-        Trace.error('Could not read ' + self.filename + ', please check that the file exists and has read permissions.')
-        self.contents = []
-        return
-      converter.convert()
-      self.contents = converter.getcontents()
+      self.convertinclude()
     finally:
       Options.directory = olddir
+
+  def convertinclude(self):
+    "Convert an included document."
+    try:
+      converter = IncludeInset.converterfactory.create(self)
+    except:
+      Trace.error('Could not read ' + self.filename + ', please check that the file exists and has read permissions.')
+      return
+    if self.hasemptyoutput():
+      return
+    converter.convert()
+    self.contents = converter.getcontents()
+
+  def hasemptyoutput(self):
+    "Check if the parent's output is empty."
+    current = self.parent
+    while current:
+      if isinstance(current.output, EmptyOutput):
+        return True
+      current = current.parent
+    return False
 
   def readverbatim(self):
     "Read a verbatim document."
