@@ -136,6 +136,19 @@ target "https://savannah.nongnu.org/bugs/index.php?31243"
 \end_layout
 
 \begin_layout Itemize
+Also reported in 
+\begin_inset CommandInset href
+LatexCommand href
+name "bug #31243"
+target "https://savannah.nongnu.org/bugs/index.php?31243"
+
+\end_inset
+
+: do not add numbering twice to child documents, and ignore child documents
+ in comments.
+\end_layout
+
+\begin_layout Itemize
 Added support for 
 \family typewriter
 
