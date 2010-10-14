@@ -104,16 +104,6 @@ class eLyXerConverter(object):
       for element in include.contents:
         self.basket.write(element)
 
-  def searchincludes(self, container):
-    "Search for all child documents, and remove them from the container."
-    "Remove also those which should not be output."
-    allincludes = container.searchremove(IncludeInset)
-    goodincludes = []
-    for include in allincludes:
-      if self.isgoodinclude(include):
-        goodincludes.append(include)
-    return goodincludes
-
   def isgoodinclude(self, include):
     "Check if an include should not be removed."
     current = include.parent
