@@ -87,13 +87,13 @@ class eLyXerConverter(object):
     while not self.reader.finished():
       container = factory.createcontainer(self.reader)
       result = processor.process(container)
-      self.processcontainer(result)
+      self.writecontainer(result)
     result = processor.postprocess(None)
-    self.processcontainer(result)
+    self.writecontainer(result)
     if not self.filtering:
       self.basket.finish()
 
-  def processcontainer(self, container):
+  def writecontainer(self, container):
     "Write each container to the correct basket."
     if not container:
       return
@@ -102,7 +102,7 @@ class eLyXerConverter(object):
     # recursive processing for IncludeInset
     for include in includes:
       for element in include.contents:
-        self.processcontainer(element)
+        self.basket.write(element)
 
   def getcontents(self):
     "Return the contents of the basket."

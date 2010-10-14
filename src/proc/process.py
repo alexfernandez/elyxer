@@ -25,6 +25,8 @@
 
 from util.trace import *
 from gen.header import *
+from ref.index import *
+from gen.layout import *
 from proc.postprocess import *
 
 
@@ -32,20 +34,26 @@ class Processor(object):
   "Process a container and its contents."
 
   prestages = []
+  skipfiltered = ['LyXHeader', 'LyXFooter', 'Title', 'Author', 'TableOfContents']
 
   def __init__(self, filtering):
     "Set filtering mode (to skip postprocessing)."
+    "With filtering on, the classes in skipfiltered are not processed at all."
     self.filtering = filtering
     self.postprocessor = Postprocessor()
 
   def process(self, container):
     "Do the whole processing on a container."
+    if self.filtering and container.__class__.__name__ in self.skipfiltered:
+      Trace.debug('Skipping ' + container.__class__.__name__)
+      return None
+    Trace.debug('Keeping ' + container.__class__.__name__)
     container = self.preprocess(container)
     self.processcontainer(container)
-    if container and not self.filtered(container):
-      container = self.postprocess(container)
+    if not container:
+      # do not postprocess empty containers from here
       return container
-    return None
+    return self.postprocess(container)
 
   def preprocess(self, root):
     "Preprocess a root container with all prestages."
@@ -65,15 +73,9 @@ class Processor(object):
       self.processcontainer(element)
     container.process()
 
-  def filtered(self, container):
-    "Find out if the container is a header or footer and must be filtered."
-    if not self.filtering:
-      return False
-    if container.__class__ in [LyXHeader, LyXFooter]:
-      return True
-    return False
-
-  def postprocess(self, root):
-    "Postprocess the root container."
-    return self.postprocessor.postprocess(root)
+  def postprocess(self, container):
+    "Postprocess a container, unless filtering is on."
+    if self.filtering:
+      return container
+    return self.postprocessor.postprocess(container)
 
