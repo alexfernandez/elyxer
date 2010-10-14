@@ -45,9 +45,7 @@ class Processor(object):
   def process(self, container):
     "Do the whole processing on a container."
     if self.filtering and container.__class__.__name__ in self.skipfiltered:
-      Trace.debug('Skipping ' + container.__class__.__name__)
       return None
-    Trace.debug('Keeping ' + container.__class__.__name__)
     container = self.preprocess(container)
     self.processcontainer(container)
     if not container:
