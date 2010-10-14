@@ -1,4 +1,4 @@
-#LyX 1.6.6 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -612,6 +612,16 @@ Unnumbered Chapter
 \begin_layout Standard
 This extra chapter contains nothing of interest except for a couple of unnumbere
 d parts (one actual part and one chapter).
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "toc-article.lyx"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
