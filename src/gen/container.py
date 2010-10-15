@@ -267,6 +267,8 @@ class TaggedText(Container):
 
   def __unicode__(self):
     "Return a printable representation."
+    if not hasattr(self.output, 'tag'):
+      return 'Emtpy tagged text'
     if not self.output.tag:
       return 'Tagged <unknown tag>'
     return 'Tagged <' + self.output.tag + '>'
