@@ -67,11 +67,8 @@ class Layout(Container):
       self.output.tag = self.output.tag.replace('?', unicode(partkey.level))
 
   def containsappendix(self):
-    "Find out if there is an appendix somewhere in the layout"
-    for element in self.contents:
-      if isinstance(element, Appendix):
-        return True
-    return False
+    "Find out if there is an appendix somewhere in the layout."
+    return self.searchall(Appendix) != []
     
   def activateappendix(self):
     "Change first number to letter, and chapter to appendix"
