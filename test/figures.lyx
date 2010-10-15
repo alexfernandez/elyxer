@@ -424,10 +424,6 @@ A wrapped image.
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
@@ -439,6 +435,48 @@ This image should wrap around the text.
  might not get so much text.
  After all typing just because tends to bore the readers, who bear the grunt
  of the gruntwork of reading the resulting text.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0in
+width "4cm"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename random.png
+	width 4cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Exterior wrapped image.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The next wrapping image should be smaller, and has default (outer) placement.
+ Again, a lot of text would be required so the image fits around the text;
+ the wrapped image will probably fall on some other page in the PDF, anyway.
 \end_layout
 
 \begin_layout Section

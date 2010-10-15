@@ -107,6 +107,15 @@ target "https://savannah.nongnu.org/bugs/index.php?31342"
  layout.
 \end_layout
 
+\begin_layout Itemize
+Fixed bug due to wrapped float placement not being mandatory anymore, despite
+ what 
+\family typewriter
+EmbeddedObjects.lyx
+\family default
+ says (thanks, Hans!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.3 (2010-10-15):

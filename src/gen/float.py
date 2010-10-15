@@ -122,6 +122,8 @@ class Wrap(Float):
     "Add the widening tag to the parent tag."
     self.embed()
     placement = self.getparameter('placement')
+    if not placement:
+      placement = 'o'
     self.output.tag = 'div class="wrap-' + placement + '"'
     self.applywideningtag(self)
 
