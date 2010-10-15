@@ -40,11 +40,13 @@ class Layout(Container):
   type = 'none'
 
   def __init__(self):
-    self.contents = list()
+    "Initialize the layout."
+    self.contents = []
     self.parser = BoundedParser()
     self.output = TaggedOutput().setbreaklines(True)
 
   def process(self):
+    "Get the type and numerate if necessary."
     self.type = self.header[1]
     if self.type in TagConfig.layouts:
       self.output.tag = TagConfig.layouts[self.type] + ' class="' + self.type + '"'
