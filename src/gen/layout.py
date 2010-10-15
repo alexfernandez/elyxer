@@ -59,20 +59,10 @@ class Layout(Container):
 
   def numerate(self):
     "Numerate if necessary."
-    if self.containsappendix():
-      self.activateappendix()
     partkey = PartKeyGenerator.forlayout(self)
     if partkey:
       self.partkey = partkey
       self.output.tag = self.output.tag.replace('?', unicode(partkey.level))
-
-  def containsappendix(self):
-    "Find out if there is an appendix somewhere in the layout."
-    return self.searchall(Appendix) != []
-    
-  def activateappendix(self):
-    "Change first number to letter, and chapter to appendix"
-    NumberGenerator.instance.number = ['-']
 
   def __unicode__(self):
     "Return a printable representation."

@@ -95,7 +95,16 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Solved 
+\begin_inset CommandInset href
+LatexCommand href
+name "bug #31342"
+target "https://savannah.nongnu.org/bugs/index.php?31342"
+
+\end_inset
+
+: detect appendices as they appear instead of looking at the containing
+ layout.
 \end_layout
 
 \end_deeper

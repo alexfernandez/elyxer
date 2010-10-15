@@ -23,6 +23,7 @@
 # LyX styles in containers
 
 from util.trace import Trace
+from util.numbering import *
 from parse.parser import *
 from out.output import *
 from gen.container import *
@@ -211,6 +212,10 @@ class NewPage(Newline):
 
 class Appendix(BlackBox):
   "An appendix to the main document"
+
+  def process(self):
+    "Activate the special numbering scheme for appendices, using letters."
+    NumberGenerator.instance.number = ['-']
 
 class ERT(Container):
   "Evil Red Text"
