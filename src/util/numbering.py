@@ -117,5 +117,33 @@ class NumberGenerator(object):
     "Start appendices here."
     self.number = ['-']
 
+  def deasterisk(self, type):
+    "Remove the possible asterisk in a layout type."
+    return type.replace('*', '')
+
+  def isunique(self, type):
+    "Find out if the layout type corresponds to a unique part."
+    return self.deasterisk(type) in NumberGenerator.unique
+
+  def isinordered(self, type):
+    "Find out if the layout type corresponds to an (un)ordered part."
+    return self.deasterisk(type) in NumberGenerator.ordered
+
+  def isnumbered(self, type):
+    "Find out if the type for a layout corresponds to a numbered layout."
+    if '*' in type:
+      return False
+    if self.getlevel(type) > DocumentParameters.maxdepth:
+      return False
+    return True
+
+  def getlevel(self, type):
+    "Get the level that corresponds to a layout type."
+    type = self.deasterisk(type)
+    if type in self.unique:
+      return 0
+    level = self.ordered.index(type) + 1
+    return level - DocumentParameters.startinglevel
+
 NumberGenerator.instance = NumberGenerator()
 

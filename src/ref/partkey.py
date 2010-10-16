@@ -95,91 +95,57 @@ class LayoutPartKey(PartKey):
   "The part key for a layout."
 
   generator = NumberGenerator.instance
-  unique = NumberingConfig.layouts['unique']
-  ordered = NumberingConfig.layouts['ordered']
 
-  def __init__(self, layout):
-    "Create a part key for a layout."
-    self.level = self.getlevel(layout.type)
-    if LayoutPartKey.isunique(layout):
+  def create(self, layout):
+    "Set the layout for which we are creating the part key."
+    self.level = self.generator.getlevel(layout.type)
+    if self.generator.isunique(layout.type):
       self.number = self.generator.generateunique(layout.type)
     else:
-      if self.isnumbered(layout):
+      if self.generator.isnumbered(layout.type):
         self.number = self.generator.generateordered(self.level)
       else:
         self.number = self.generator.generateunique(layout.type)
     anchortype = layout.type.replace('*', '-')
     self.partkey = 'toc-' + anchortype + '-' + self.number
-    realtype = self.deasterisk(layout.type)
-    self.tocentry = Translator.translate(realtype)
+    self.tocentry = Translator.translate(self.generator.deasterisk(layout.type))
     self.tocsuffix = u': '
-    if self.level == Options.splitpart and self.isnumbered(layout):
+    if self.level == Options.splitpart and self.generator.isnumbered(layout.type):
       self.filename = self.number
     elif self.level <= Options.splitpart:
       self.filename = self.partkey.replace('toc-', '').replace('*', '-')
-    if self.isnumbered(layout):
+    if self.generator.isnumbered(layout.type):
       self.tocentry += ' ' + self.number
       self.tocsuffix = u':'
-      if self.isunique(layout):
+      if self.generator.isunique(layout.type):
         self.anchortext = self.tocentry + '.'
       else:
         self.anchortext = self.number
+    return self
 
-  def getlevel(self, type):
-    "Get the level that corresponds to a type."
-    type = self.deasterisk(type)
-    if type in self.unique:
-      return 0
-    level = self.ordered.index(type) + 1
-    return level - DocumentParameters.startinglevel
-
-  def isnumbered(self, layout):
-    "Find out if a layout is numbered."
-    if '*' in layout.type:
-      return False
-    if self.getlevel(layout.type) > DocumentParameters.maxdepth:
-      return False
-    return True
-
-  def isunique(cls, layout):
-    "Find out if the layout requires unique numbering."
-    return cls.deasterisk(layout.type) in LayoutPartKey.unique
-
-  def isinordered(cls, layout):
-    "Find out if a layout is ordered or unordered."
-    return cls.deasterisk(layout.type) in LayoutPartKey.ordered
-
-  def needspartkey(cls, layout):
+  def needspartkey(self, layout):
     "Find out if a layout needs a part key."
-    if cls.isunique(layout):
+    if self.generator.isunique(layout.type):
       return True
-    return cls.isinordered(layout)
-
-  def deasterisk(cls, type):
-    "Get the type without the asterisk for unordered types."
-    return type.replace('*', '')
+    return self.generator.isinordered(layout.type)
 
   def __unicode__(self):
     "Get a printable representation."
     return 'Part key for layout ' + self.tocentry
 
-  isunique = classmethod(isunique)
-  isinordered = classmethod(isinordered)
-  needspartkey = classmethod(needspartkey)
-  deasterisk = classmethod(deasterisk)
-
 class PartKeyGenerator(object):
   "Number a layout with the relevant attributes."
 
   partkeyed = []
+  layoutpartkey = LayoutPartKey()
 
   def forlayout(cls, layout):
     "Get the part key for a layout."
-    if not LayoutPartKey.needspartkey(layout):
+    if not cls.layoutpartkey.needspartkey(layout):
       return None
     Label.lastlayout = layout
     cls.partkeyed.append(layout)
-    return LayoutPartKey(layout)
+    return LayoutPartKey().create(layout)
 
   def forindex(cls, index):
     "Get the part key for an index or nomenclature."
