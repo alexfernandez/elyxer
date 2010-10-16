@@ -108,6 +108,27 @@ target "https://savannah.nongnu.org/bugs/index.php?31342"
 \end_layout
 
 \begin_layout Itemize
+Also reported in 
+\begin_inset CommandInset href
+LatexCommand href
+name "bug #31342"
+target "https://savannah.nongnu.org/bugs/index.php?31342"
+
+\end_inset
+
+: set part name to 
+\begin_inset Quotes eld
+\end_inset
+
+Appendix A-Z
+\begin_inset Quotes erd
+\end_inset
+
+ in the TOC for appendices, instead of showing them as regular chapters
+ or sections.
+\end_layout
+
+\begin_layout Itemize
 Fixed bug due to wrapped float placement not being mandatory anymore, despite
  what 
 \family typewriter

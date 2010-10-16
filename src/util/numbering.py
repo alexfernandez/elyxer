@@ -140,6 +140,10 @@ class NumberGenerator(object):
       return False
     return True
 
+  def isunordered(self, type):
+    "Find out if the type contains an asterisk, basically."
+    return '*' in type
+
   def getlevel(self, type):
     "Get the level that corresponds to a layout type."
     type = self.deasterisk(type)
@@ -155,6 +159,13 @@ class NumberGenerator(object):
     if self.isnumbered(type):
       return self.generateordered(type)
     return self.generateunique(type)
+
+  def getparttype(self, type):
+    "Obtain the type for the part: without the asterisk, "
+    "and switched to Appendix if necessary."
+    if self.appendix and self.getlevel(type) == 1:
+      return 'Appendix'
+    return self.deasterisk(type)
 
 
 NumberGenerator.instance = NumberGenerator()

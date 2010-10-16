@@ -617,7 +617,7 @@ d parts (one actual part and one chapter).
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "toc-article.lyx"
+filename "toc-book.lyx"
 
 \end_inset
 

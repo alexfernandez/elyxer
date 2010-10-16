@@ -105,7 +105,7 @@ class LayoutPartKey(PartKey):
     "Process the layout type."
     self.level = self.generator.getlevel(type)
     self.number = self.generator.getnumber(type)
-    anchortype = type.replace('*', '-')
+    anchortype = self.getanchortype(type)
     self.partkey = 'toc-' + anchortype + '-' + self.number
     self.tocentry = self.gettocentry(type)
     self.tocsuffix = u': '
@@ -115,9 +115,16 @@ class LayoutPartKey(PartKey):
       self.tocsuffix = u':'
       self.anchortext = self.getanchortext(type)
 
+  def getanchortype(self, type):
+    "Get the type for the anchor."
+    parttype = self.generator.getparttype(type)
+    if self.generator.isunordered(type):
+      parttype += '-'
+    return parttype
+
   def gettocentry(self, type):
     "Get the entry for the TOC: Chapter, Section..."
-    return Translator.translate(self.generator.deasterisk(type))
+    return Translator.translate(self.generator.getparttype(type))
 
   def getanchortext(self, type):
     "Get the text for the anchor given to a layout type."
