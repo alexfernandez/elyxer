@@ -152,3 +152,7 @@ msgstr "Contents for "
 msgid  "Main page"
 msgstr "Main page"
 
+#: Appendix
+msgid  "Appendix"
+msgstr "Appendix"
+
