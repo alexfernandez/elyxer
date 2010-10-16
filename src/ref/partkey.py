@@ -98,30 +98,44 @@ class LayoutPartKey(PartKey):
 
   def create(self, layout):
     "Set the layout for which we are creating the part key."
-    self.level = self.generator.getlevel(layout.type)
-    if self.generator.isunique(layout.type):
-      self.number = self.generator.generateunique(layout.type)
-    else:
-      if self.generator.isnumbered(layout.type):
-        self.number = self.generator.generateordered(self.level)
-      else:
-        self.number = self.generator.generateunique(layout.type)
-    anchortype = layout.type.replace('*', '-')
+    self.processtype(layout.type)
+    return self
+
+  def processtype(self, type):
+    "Process the layout type."
+    self.level = self.generator.getlevel(type)
+    self.number = self.getnumber(type)
+    anchortype = type.replace('*', '-')
     self.partkey = 'toc-' + anchortype + '-' + self.number
-    self.tocentry = Translator.translate(self.generator.deasterisk(layout.type))
+    self.tocentry = Translator.translate(self.generator.deasterisk(type))
     self.tocsuffix = u': '
-    if self.level == Options.splitpart and self.generator.isnumbered(layout.type):
-      self.filename = self.number
-    elif self.level <= Options.splitpart:
-      self.filename = self.partkey.replace('toc-', '').replace('*', '-')
-    if self.generator.isnumbered(layout.type):
+    self.filename = self.getfilename(type)
+    if self.generator.isnumbered(type):
       self.tocentry += ' ' + self.number
       self.tocsuffix = u':'
-      if self.generator.isunique(layout.type):
-        self.anchortext = self.tocentry + '.'
-      else:
-        self.anchortext = self.number
-    return self
+      self.anchortext = self.getanchortext(type)
+
+  def getnumber(self, type):
+    "Get the part key number that corresponds to aa layout type."
+    if self.generator.isunique(type):
+      return self.generator.generateunique(type)
+    if self.generator.isnumbered(type):
+      return self.generator.generateordered(self.level)
+    return self.generator.generateunique(type)
+
+  def getanchortext(self, type):
+    "Get the text for the anchor given to a layout type."
+    if self.generator.isunique(type):
+      return self.tocentry + '.'
+    return self.number
+
+  def getfilename(self, type):
+    "Get the filename to be used if splitpart is active."
+    if self.level == Options.splitpart and self.generator.isnumbered(type):
+      return self.number
+    if self.level <= Options.splitpart:
+      self.filename = self.partkey.replace('toc-', '').replace('*', '-')
+    return None
 
   def needspartkey(self, layout):
     "Find out if a layout needs a part key."
