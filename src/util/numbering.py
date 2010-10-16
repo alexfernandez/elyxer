@@ -42,6 +42,7 @@ class NumberGenerator(object):
     self.number = []
     self.uniques = dict()
     self.chaptered = dict()
+    self.appendix = False
 
   def generateunique(self, type):
     "Generate unique numbering: a number to place in the title but not to "
@@ -51,9 +52,10 @@ class NumberGenerator(object):
     self.uniques[type] = self.increase(self.uniques[type])
     return unicode(self.uniques[type])
 
-  def generateordered(self, level):
+  def generateordered(self, type):
     "Generate ordered numbering: a number to use and possibly concatenate "
     "with others. Example: Chapter 1, Section 1.5."
+    level = self.getlevel(type)
     if level == 0:
       Trace.error('Impossible level 0 for ordered part')
       return '.'
@@ -116,6 +118,7 @@ class NumberGenerator(object):
   def startappendix(self):
     "Start appendices here."
     self.number = ['-']
+    self.appendix = True
 
   def deasterisk(self, type):
     "Remove the possible asterisk in a layout type."
@@ -144,6 +147,15 @@ class NumberGenerator(object):
       return 0
     level = self.ordered.index(type) + 1
     return level - DocumentParameters.startinglevel
+
+  def getnumber(self, type):
+    "Get the number for a layout type, can be unique or ordered."
+    if self.isunique(type):
+      return self.generateunique(type)
+    if self.isnumbered(type):
+      return self.generateordered(type)
+    return self.generateunique(type)
+
 
 NumberGenerator.instance = NumberGenerator()
 

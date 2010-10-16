@@ -104,7 +104,7 @@ class LayoutPartKey(PartKey):
   def processtype(self, type):
     "Process the layout type."
     self.level = self.generator.getlevel(type)
-    self.number = self.getnumber(type)
+    self.number = self.generator.getnumber(type)
     anchortype = type.replace('*', '-')
     self.partkey = 'toc-' + anchortype + '-' + self.number
     self.tocentry = self.gettocentry(type)
@@ -114,14 +114,6 @@ class LayoutPartKey(PartKey):
       self.tocentry += ' ' + self.number
       self.tocsuffix = u':'
       self.anchortext = self.getanchortext(type)
-
-  def getnumber(self, type):
-    "Get the part key number that corresponds to a layout type."
-    if self.generator.isunique(type):
-      return self.generator.generateunique(type)
-    if self.generator.isnumbered(type):
-      return self.generator.generateordered(self.level)
-    return self.generator.generateunique(type)
 
   def gettocentry(self, type):
     "Get the entry for the TOC: Chapter, Section..."
