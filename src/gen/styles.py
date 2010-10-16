@@ -210,12 +210,13 @@ class NewPage(Newline):
     "Process contents"
     self.html = ['<p><br/>\n</p>\n']
 
-class Appendix(BlackBox):
-  "An appendix to the main document"
+class StartAppendix(BlackBox):
+  "Mark to start an appendix here."
+  "From this point on, all chapters become appendices."
 
   def process(self):
     "Activate the special numbering scheme for appendices, using letters."
-    NumberGenerator.instance.number = ['-']
+    NumberGenerator.instance.startappendix()
 
 class ERT(Container):
   "Evil Red Text"

@@ -113,5 +113,9 @@ class NumberGenerator(object):
       dotsep += '.' + unicode(piece)
     return dotsep[1:]
 
+  def startappendix(self):
+    "Start appendices here."
+    self.number = ['-']
+
 NumberGenerator.instance = NumberGenerator()
 
