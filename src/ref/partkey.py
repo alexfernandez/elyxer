@@ -134,7 +134,7 @@ class LayoutPartKey(PartKey):
     if self.level == Options.splitpart and self.generator.isnumbered(type):
       return self.number
     if self.level <= Options.splitpart:
-      self.filename = self.partkey.replace('toc-', '').replace('*', '-')
+      self.filename = self.partkey.replace('toc-', '')
     return None
 
   def needspartkey(self, layout):
