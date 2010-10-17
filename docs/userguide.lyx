@@ -1024,48 +1024,24 @@ Options to Control image output
 \begin_layout Description
 
 \family typewriter
---
-\family default
-directory
+--directory
 \begin_inset space ~
 \end_inset
 
-
-\family typewriter
-\series bold
-"
+"images_dir"
 \family default
-\series default
-images_dir
-\family typewriter
-\series bold
-"
-\family default
-\series default
 : Look for images in the directory specified.
 \end_layout
 
 \begin_layout Description
 
 \family typewriter
---
-\family default
-destdirectory
+--destdirectory
 \begin_inset space ~
 \end_inset
 
-
-\family typewriter
-\series bold
-"
+"dest_dir"
 \family default
-\series default
-dest_dir
-\family typewriter
-\series bold
-"
-\family default
-\series default
 : Converted images will end up into this directory.
 \end_layout
 
