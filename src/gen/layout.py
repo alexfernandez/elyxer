@@ -259,8 +259,11 @@ class PostStandard(object):
   processedclass = StandardLayout
 
   def postprocess(self, last, standard, next):
-    "Switch to div"
+    "Switch to div, and clear if empty."
     type = 'Standard'
+    if self.isempty(standard):
+      standard.output = EmptyOutput()
+      return standard
     if DocumentParameters.indentstandard:
       if isinstance(last, StandardLayout):
         type = 'Indented'
@@ -268,6 +271,13 @@ class PostStandard(object):
         type = 'Unindented'
     standard.output = TaggedOutput().settag('div class="' + type + '"', True)
     return standard
+
+  def isempty(self, standard):
+    "Find out if the standard layout is empty."
+    for element in standard.contents:
+      if not isinstance(element.output, EmptyOutput):
+        return False
+    return True
 
 class PostPlainLayout(PostLayout):
   "Numerate a plain layout"
