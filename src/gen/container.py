@@ -162,6 +162,13 @@ class Container(object):
       return None
     return self.parameters[name]
 
+  def getparameterlist(self, name):
+    "Get the value of a comma-separated parameter as a list."
+    paramtext = self.getparameter(name)
+    if not paramtext:
+      return []
+    return paramtext.split(',')
+
   def hasemptyoutput(self):
     "Check if the parent's output is empty."
     current = self.parent

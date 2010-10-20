@@ -114,15 +114,12 @@ class LstParser(object):
   def parsecontainer(self, container):
     "Parse some lstparams from a container."
     container.lstparams = LstParser.globalparams.copy()
-    paramtext = container.getparameter('lstparams')
-    if not paramtext:
-      return
-    container.lstparams.update(self.parselstparams(paramtext))
+    paramlist = container.getparameterlist('lstparams')
+    container.lstparams.update(self.parselstparams(paramlist))
 
-  def parselstparams(self, text):
-    "Parse a number of lstparams from a text."
+  def parselstparams(self, paramlist):
+    "Process a number of lstparams from a list."
     paramdict = dict()
-    paramlist = text.split(',')
     for param in paramlist:
       if not '=' in param:
         if len(param.strip()) > 0:

@@ -43,7 +43,7 @@ class BiblioCitation(Container):
   def process(self):
     "Process the complete citation and all cites within."
     self.contents = [Constant('[')]
-    keys = self.getparameter('key').split(',')
+    keys = self.getparameterlist('key')
     for key in keys:
       self.contents += [BiblioCite().create(key), Constant(', ')]
     if len(keys) > 0:

@@ -41,11 +41,11 @@ class BibTeX(Container):
     self.output = ContentsOutput()
 
   def process(self):
-    "Read all bibtex files and process them"
+    "Read all bibtex files and process them."
     self.entries = []
     self.contents = [BiblioHeader()]
     bibliography = Translator.translate('bibliography')
-    files = self.getparameter('bibfiles').split(',')
+    files = self.getparameterlist('bibfiles')
     showall = False
     if self.getparameter('btprint') == 'btPrintAll':
       showall = True
@@ -71,7 +71,7 @@ class BibTeX(Container):
 
   def readstyle(self):
     "Read the style from the bibliography options"
-    options = self.getparameter('options').split(',')
+    options = self.getparameterlist('options')
     for option in options:
       if hasattr(BibStylesConfig, option):
         return getattr(BibStylesConfig, option)
