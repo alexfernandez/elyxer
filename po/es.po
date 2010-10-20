@@ -58,8 +58,8 @@ msgid "Index"
 msgstr "Índice alfabético"
 
 #: bibliography
-msgid "Bibliography"
-msgstr "Bibliografía"
+msgid "References"
+msgstr "Referencias"
 
 #: float-algorithm
 msgid "Algorithm "
