@@ -162,6 +162,15 @@ class Container(object):
       return None
     return self.parameters[name]
 
+  def hasemptyoutput(self):
+    "Check if the parent's output is empty."
+    current = self.parent
+    while current:
+      if isinstance(current.output, EmptyOutput):
+        return True
+      current = current.parent
+    return False
+
   def __unicode__(self):
     "Get a description"
     if not self.begin:

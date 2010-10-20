@@ -234,15 +234,6 @@ class IncludeInset(Container):
     converter.convert()
     self.contents = converter.getcontents()
 
-  def hasemptyoutput(self):
-    "Check if the parent's output is empty."
-    current = self.parent
-    while current:
-      if isinstance(current.output, EmptyOutput):
-        return True
-      current = current.parent
-    return False
-
   def readverbatim(self):
     "Read a verbatim document."
     self.contents = [TaggedText().complete(self.readcontents(), 'pre', True)]
