@@ -35,10 +35,9 @@ class ListItem(Container):
   type = 'none'
 
   def __init__(self):
-    "Output should be empty until the postprocessor can group items"
-    self.contents = list()
+    "Create a list item."
     self.parser = BoundedParser()
-    self.output = EmptyOutput()
+    self.output = ContentsOutput()
 
   def process(self):
     "Set the correct type and contents."
@@ -53,9 +52,9 @@ class DeeperList(Container):
   "A nested list"
 
   def __init__(self):
-    "Output should be empty until the postprocessor can group items"
+    "Create a nested list element."
     self.parser = BoundedParser()
-    self.output = EmptyOutput()
+    self.output = ContentsOutput()
 
   def process(self):
     "Create the deeper list"
@@ -86,7 +85,6 @@ class PendingList(object):
     "Add a deeper list item"
     if self.empty():
       self.insertfake()
-    item = self.contents[-1]
     self.contents[-1].contents += deeper.contents
 
   def generate(self):
