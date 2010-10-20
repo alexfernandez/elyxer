@@ -195,7 +195,7 @@ class IndexEntry(Container):
 
   def __unicode__(self):
     "Return a printable representation."
-    return 'Index entry for ' + self.name
+    return 'Index entry for ' + self.header.name
 
   get = classmethod(get)
   splitname = classmethod(splitname)

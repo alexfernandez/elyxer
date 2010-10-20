@@ -61,7 +61,7 @@ class Formula(Container):
   def __unicode__(self):
     "Return a printable representation."
     if self.partkey and self.partkey.number:
-      return 'Formula (' + self.number + ')'
+      return 'Formula (' + self.partkey.number + ')'
     return 'Unnumbered formula'
 
 class FormulaBit(Container):

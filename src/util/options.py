@@ -24,6 +24,7 @@
 
 import os.path
 import sys
+from conf.config import *
 from util.trace import *
 from util.clparse import *
 
