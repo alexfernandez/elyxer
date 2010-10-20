@@ -159,7 +159,6 @@ class PartKeyGenerator(object):
   def forlayout(cls, layout):
     "Get the part key for a layout."
     if layout.hasemptyoutput():
-      Trace.debug('No partkey for ' + unicode(layout))
       return None
     if not cls.layoutpartkey.needspartkey(layout):
       return None
