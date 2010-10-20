@@ -156,17 +156,17 @@ class Container(object):
     for container in self.contents:
       container.tree(level + 1)
 
-  def __unicode__(self):
-    "Get a description"
-    if not self.begin:
-      return self.__class__.__name__
-    return self.__class__.__name__ + '@' + unicode(self.begin)
-
   def getparameter(self, name):
     "Get the value of a parameter, if present."
     if not name in self.parameters:
       return None
     return self.parameters[name]
+
+  def __unicode__(self):
+    "Get a description"
+    if not self.begin:
+      return self.__class__.__name__
+    return self.__class__.__name__ + '@' + unicode(self.begin)
 
 class BlackBox(Container):
   "A container that does not output anything"
