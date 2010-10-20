@@ -64,6 +64,15 @@
 BibTeX Test
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Ethel the Frog
 \end_layout
