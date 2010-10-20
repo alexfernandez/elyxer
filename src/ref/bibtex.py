@@ -43,7 +43,7 @@ class BibTeX(Container):
   def process(self):
     "Read all bibtex files and process them."
     self.entries = []
-    self.contents = [BiblioHeader()]
+    self.contents = [self.createheader()]
     bibliography = Translator.translate('bibliography')
     files = self.getparameterlist('bibfiles')
     showall = False
@@ -56,6 +56,13 @@ class BibTeX(Container):
       Trace.message('Parsed ' + unicode(bibfile))
     self.entries.sort(key = unicode)
     self.applystyle()
+
+  def createheader(self):
+    "Create the header for the bibliography."
+    header = BiblioHeader()
+    if 'bibtotoc' in self.getparameterlist('options'):
+      header.addtotoc()
+    return header
 
   def applystyle(self):
     "Read the style and apply it to all entries"
@@ -71,8 +78,7 @@ class BibTeX(Container):
 
   def readstyle(self):
     "Read the style from the bibliography options"
-    options = self.getparameterlist('options')
-    for option in options:
+    for option in self.getparameterlist('options'):
       if hasattr(BibStylesConfig, option):
         return getattr(BibStylesConfig, option)
     return BibStylesConfig.default

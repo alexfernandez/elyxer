@@ -146,7 +146,8 @@ target "https://savannah.nongnu.org/bugs/index.php?31351"
 
 \end_inset
 
-: do not number (or add to the TOC) those document parts inside comments.
+: do not number (or add to the TOC) any document parts inside comments.
+ However, the bibliography should be added to the TOC if so configured.
 \end_layout
 
 \begin_layout Itemize

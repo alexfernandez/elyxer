@@ -88,9 +88,8 @@ class BiblioHeader(Container):
     "Add the bibliography header to the TOC."
     self.partkey = PartKeyGenerator.forindex(self)
     if not self.partkey:
-      return self
+      return
     self.contents.insert(0, self.partkey.toclabel())
-    return self
 
 class PostBiblio(object):
   "Insert a Bibliography legend before the first item"
