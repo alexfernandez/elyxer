@@ -179,7 +179,6 @@ div.center {
 	margin-right: auto;
 }
 p.biblio {
-	font-size: 0.90em;
 }
 div.Paragraph, div.Paragraph- {
 	font-weight: bold;
@@ -450,7 +449,6 @@ span.appendix {
 	display: none;
 }
 h1.biblio {
-	font-size: 140%;
 }
 table.formula {
 	display: inline-block;
