@@ -137,6 +137,18 @@ EmbeddedObjects.lyx
  says (thanks, Hans!).
 \end_layout
 
+\begin_layout Itemize
+Solved 
+\begin_inset CommandInset href
+LatexCommand href
+name "bug #31351"
+target "https://savannah.nongnu.org/bugs/index.php?31351"
+
+\end_inset
+
+: do not number (or add to the TOC) those document parts inside comments.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.3 (2010-10-15):
