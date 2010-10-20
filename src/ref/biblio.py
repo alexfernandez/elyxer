@@ -75,6 +75,15 @@ class Bibliography(Container):
     self.parser = BoundedParser()
     self.output = TaggedOutput().settag('p class="biblio"', True)
 
+class BiblioHeader(Container):
+  "The header of the bibliography."
+
+  def __init__(self):
+    "Create the header for the bibliography section."
+    self.output = TaggedOutput().settag('h1 class="biblio"')
+    self.name = Translator.translate('bibliography')
+    self.contents = [Constant(self.name)]
+
 class PostBiblio(object):
   "Insert a Bibliography legend before the first item"
 
@@ -84,9 +93,7 @@ class PostBiblio(object):
     "If we have the first bibliography insert a tag"
     if isinstance(last, Bibliography) or Options.nobib:
       return element
-    bibliography = Translator.translate('bibliography')
-    header = TaggedText().constant(bibliography, 'h1 class="biblio"')
-    layout = StandardLayout().complete([header, element])
+    layout = StandardLayout().complete([BiblioHeader(), element])
     return layout
 
 Postprocessor.stages += [PostBiblio]
