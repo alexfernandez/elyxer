@@ -158,6 +158,9 @@ class PartKeyGenerator(object):
 
   def forlayout(cls, layout):
     "Get the part key for a layout."
+    if layout.hasemptyoutput():
+      Trace.debug('No partkey for ' + unicode(layout))
+      return None
     if not cls.layoutpartkey.needspartkey(layout):
       return None
     Label.lastlayout = layout
@@ -166,6 +169,8 @@ class PartKeyGenerator(object):
 
   def forindex(cls, index):
     "Get the part key for an index or nomenclature."
+    if index.hasemptyoutput():
+      return None
     cls.partkeyed.append(index)
     return PartKey().createindex(index.name)
 
