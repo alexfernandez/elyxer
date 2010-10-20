@@ -114,9 +114,9 @@ class LstParser(object):
   def parsecontainer(self, container):
     "Parse some lstparams from a container."
     container.lstparams = LstParser.globalparams.copy()
-    if not 'lstparams' in container.parameters:
+    paramtext = container.getparameter('lstparams')
+    if not paramtext:
       return
-    paramtext = container.parameters['lstparams']
     container.lstparams.update(self.parselstparams(paramtext))
 
   def parselstparams(self, text):
