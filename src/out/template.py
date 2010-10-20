@@ -29,6 +29,7 @@ from util.trace import Trace
 from util.options import *
 from util.translate import *
 from util.docparams import *
+from out.output import *
 
 
 class HTMLTemplate(object):
@@ -282,14 +283,14 @@ class DocumentAuthor(object):
     "Get the document author."
     return DocumentAuthor.author
 
-class HeaderOutput(object):
+class HeaderOutput(ContainerOutput):
   "Returns the HTML headers"
 
   def gethtml(self, container):
     "Return a constant header"
     return HTMLTemplate.get().convertheader()
 
-class FooterOutput(object):
+class FooterOutput(ContainerOutput):
   "Return the HTML code for the footer"
 
   def gethtml(self, container):

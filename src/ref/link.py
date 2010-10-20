@@ -97,7 +97,7 @@ class FlexURL(URL):
     "Read URL from contents"
     self.url = self.extracttext()
 
-class LinkOutput(object):
+class LinkOutput(ContainerOutput):
   "A link pointing to some destination"
   "Or an anchor (destination)"
 

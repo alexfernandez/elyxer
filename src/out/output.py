@@ -25,21 +25,35 @@
 from util.trace import Trace
 
 
-class EmptyOutput(object):
-  "The output for some container"
+class ContainerOutput(object):
+  "The generic HTML output for a container."
 
   def gethtml(self, container):
-    "Return empty HTML code"
+    "Show an error."
+    Trace.error('gethtml() not implemented for ' + unicode(self))
+
+  def isempty(self):
+    "Decide if the output is empty: by default, not empty."
+    return False
+
+class EmptyOutput(ContainerOutput):
+
+  def gethtml(self, container):
+    "Return empty HTML code."
     return []
 
-class FixedOutput(object):
+  def isempty(self):
+    "This output is particularly empty."
+    return True
+
+class FixedOutput(ContainerOutput):
   "Fixed output"
 
   def gethtml(self, container):
     "Return constant HTML code"
     return container.html
 
-class ContentsOutput(object):
+class ContentsOutput(ContainerOutput):
   "Outputs the contents converted to HTML"
 
   def gethtml(self, container):
@@ -120,7 +134,7 @@ class TaggedOutput(ContentsOutput):
       return False
     return True
 
-class StringOutput(object):
+class StringOutput(ContainerOutput):
   "Returns a bare string as output"
 
   def gethtml(self, container):

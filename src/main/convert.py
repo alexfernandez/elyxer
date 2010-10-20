@@ -104,15 +104,6 @@ class eLyXerConverter(object):
       for element in include.contents:
         self.basket.write(element)
 
-  def isgoodinclude(self, include):
-    "Check if an include should not be removed."
-    current = include.parent
-    while current:
-      if isinstance(current.output, EmptyOutput):
-        return False
-      current = current.parent
-    return True
-
   def getcontents(self):
     "Return the contents of the basket."
     return self.basket.contents

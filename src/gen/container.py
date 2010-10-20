@@ -166,7 +166,7 @@ class Container(object):
     "Check if the parent's output is empty."
     current = self.parent
     while current:
-      if isinstance(current.output, EmptyOutput):
+      if current.output.isempty():
         return True
       current = current.parent
     return False

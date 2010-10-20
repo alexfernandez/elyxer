@@ -275,7 +275,7 @@ class PostStandard(object):
   def isempty(self, standard):
     "Find out if the standard layout is empty."
     for element in standard.contents:
-      if not isinstance(element.output, EmptyOutput):
+      if not element.output.isempty():
         return False
     return True
 
