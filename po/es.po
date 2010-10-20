@@ -55,7 +55,7 @@ msgstr "Índice de algoritmos"
 
 #: index
 msgid "Index"
-msgstr "Glosario"
+msgstr "Índice alfabético"
 
 #: bibliography
 msgid "Bibliography"
