@@ -80,9 +80,17 @@ class BiblioHeader(Container):
 
   def __init__(self):
     "Create the header for the bibliography section."
-    self.output = TaggedOutput().settag('h1 class="biblio"')
+    self.output = ContentsOutput()
     self.name = Translator.translate('bibliography')
-    self.contents = [Constant(self.name)]
+    self.contents = [TaggedText().constant(self.name, 'h1 class="biblio"', True)]
+
+  def addtotoc(self):
+    "Add the bibliography header to the TOC."
+    self.partkey = PartKeyGenerator.forindex(self)
+    if not self.partkey:
+      return self
+    self.contents.insert(0, self.partkey.toclabel())
+    return self
 
 class PostBiblio(object):
   "Insert a Bibliography legend before the first item"
