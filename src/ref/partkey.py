@@ -80,12 +80,13 @@ class PartKey(object):
     self.header = True
     return self
 
-  def toclabel(self):
-    "Create the label for the TOC."
+  def addtoclabel(self, container):
+    "Create the label for the TOC, and add it to the container."
     labeltext = ''
     if self.anchortext:
       labeltext = self.anchortext
-    return Label().create(labeltext, self.partkey, type='toc')
+    label = Label().create(labeltext, self.partkey, type='toc')
+    container.contents.insert(0, label)
 
   def __unicode__(self):
     "Return a printable representation."

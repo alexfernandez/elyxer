@@ -90,7 +90,7 @@ class BiblioHeader(Container):
     self.partkey = PartKeyGenerator.forindex(self)
     if not self.partkey:
       return
-    self.contents.insert(0, self.partkey.toclabel())
+    self.partkey.addtoclabel(self)
 
 class PostBiblio(object):
   "Insert a Bibliography legend before the first item"

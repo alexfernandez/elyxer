@@ -209,8 +209,8 @@ class PrintIndex(ListInset):
     self.partkey = PartKeyGenerator.forindex(self)
     if not self.partkey:
       return
-    self.contents = [self.partkey.toclabel(),
-        TaggedText().constant(self.name, 'h1 class="index"')]
+    self.contents = [TaggedText().constant(self.name, 'h1 class="index"')]
+    self.partkey.addtoclabel(self)
     IndexGroup.root.sort()
     self.contents.append(IndexGroup.root)
 
@@ -242,8 +242,8 @@ class PrintNomenclature(ListInset):
     self.partkey = PartKeyGenerator.forindex(self)
     if not self.partkey:
       return
-    self.contents = [self.partkey.toclabel(),
-        TaggedText().constant(self.name, 'h1 class="nomenclature"')]
+    self.contents = [TaggedText().constant(self.name, 'h1 class="nomenclature"')]
+    self.partkey.addtoclabel(self)
     for key in self.sortdictionary(NomenclatureEntry.entries):
       entry = NomenclatureEntry.entries[key]
       contents = [entry, Constant(entry.symbol + u' ' + entry.description)]

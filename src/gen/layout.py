@@ -248,8 +248,7 @@ class PostLayout(object):
 
   def number(self, layout):
     "Generate a number and place it before the text"
-    label = layout.partkey.toclabel()
-    layout.contents.insert(0, label)
+    layout.partkey.addtoclabel(layout)
     if layout.partkey.anchortext:
       layout.contents.insert(1, Constant(u' '))
 
