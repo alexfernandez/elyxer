@@ -151,7 +151,7 @@ target "https://savannah.nongnu.org/bugs/index.php?31351"
 \end_layout
 
 \begin_layout Itemize
-Also reported in 
+Also in 
 \begin_inset CommandInset href
 LatexCommand href
 name "bug #31351"
@@ -161,7 +161,10 @@ target "https://savannah.nongnu.org/bugs/index.php?31351"
 
 : show the bibliography in regular size, not smaller than the main text
  as before.
- Changed header from 
+\end_layout
+
+\begin_layout Itemize
+Changed header from 
 \begin_inset Quotes eld
 \end_inset
 
@@ -177,7 +180,7 @@ References
 \begin_inset Quotes erd
 \end_inset
 
-, as in the PDF output.
+ for document classes other than book and report.
 \end_layout
 
 \end_deeper

@@ -23,6 +23,7 @@
 # eLyXer bibliography
 
 from util.numbering import *
+from util.docparams import *
 from parse.parser import *
 from out.output import *
 from ref.link import *
@@ -81,7 +82,7 @@ class BiblioHeader(Container):
   def __init__(self):
     "Create the header for the bibliography section."
     self.output = ContentsOutput()
-    self.name = Translator.translate('bibliography')
+    self.name = Translator.translate(DocumentParameters.bibliography)
     self.contents = [TaggedText().constant(self.name, 'h1 class="biblio"', True)]
 
   def addtotoc(self):

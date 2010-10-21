@@ -45,8 +45,13 @@ class LyXHeader(Container):
   def process(self):
     "Find pdf title"
     DocumentParameters.pdftitle = self.getheaderparameter('pdftitle')
-    if self.getheaderparameter('documentclass') in HeaderConfig.styles['article']:
+    documentclass = self.getheaderparameter('documentclass')
+    if documentclass in HeaderConfig.styles['article']:
       DocumentParameters.startinglevel = 1
+    if documentclass in HeaderConfig.styles['bibliography']:
+      DocumentParameters.bibliography = 'bibliography'
+    else:
+      DocumentParameters.bibliography = 'references'
     if self.getheaderparameter('paragraphseparation') == 'indent':
       DocumentParameters.indentstandard = True
     DocumentParameters.tocdepth = self.getlevel('tocdepth')

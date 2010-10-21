@@ -58,6 +58,10 @@ msgid "Index"
 msgstr "Índice alfabético"
 
 #: bibliography
+msgid "Bibliography"
+msgstr "Bibliografía"
+
+#: references
 msgid "References"
 msgstr "Referencias"
 
