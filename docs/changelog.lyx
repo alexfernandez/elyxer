@@ -199,6 +199,18 @@ conf/config.py
 .
 \end_layout
 
+\begin_layout Itemize
+Show the 
+\begin_inset Quotes eld
+\end_inset
+
+Abstract
+\begin_inset Quotes erd
+\end_inset
+
+ header only for the first Abstract layout (thanks, Yaron!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.3 (2010-10-15):

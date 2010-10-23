@@ -108,12 +108,17 @@ class Author(Layout):
 class Abstract(Layout):
   "A paper abstract"
 
+  done = False
+
   def process(self):
     self.type = 'abstract'
     self.output.tag = 'div class="abstract"'
+    if Abstract.done:
+      return
     message = Translator.translate('abstract')
     tagged = TaggedText().constant(message, 'p class="abstract-message"', True)
     self.contents.insert(0, tagged)
+    Abstract.done = True
 
 class FirstWorder(Layout):
   "A layout where the first word is extracted"
