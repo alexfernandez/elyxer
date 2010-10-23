@@ -183,6 +183,22 @@ References
  for document classes other than book and report.
 \end_layout
 
+\begin_layout Itemize
+Solved 
+\begin_inset CommandInset href
+LatexCommand href
+name "bug #31414"
+target "https://savannah.nongnu.org/bugs/index.php?31414"
+
+\end_inset
+
+: bootstrap creation of 
+\family typewriter
+conf/config.py
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.3 (2010-10-15):

@@ -24,11 +24,8 @@
 
 import sys
 import datetime
-import conf.config
 from util.trace import Trace
-from util.options import *
-from util.translate import *
-from conf.config import *
+from util.clparse import *
 from conf.fileconfig import *
 from conf.importconfig import *
 
@@ -135,6 +132,29 @@ class Config(object):
         if not key in equiv:
           equiv[key] = value
           Trace.message('Key ' + key + ' not in base: ' + unicode(value))
+
+class TranslationExport(object):
+  "Export the translation to a file."
+
+  def __init__(self, writer):
+    self.writer = writer
+
+  def export(self, constants):
+    "Export the translation constants as a .po file."
+    self.writer.writeline('# eLyXer internationalization file.')
+    self.writer.writeline('# Created on ' + datetime.date.today().isoformat())
+    self.writer.writeline(u'# Contact: Alex Fernandez <elyxer@gmail.com>')
+    self.writer.writeline(u'# http://elyxer.nongnu.org/')
+    self.writer.writeline('# This file is distributed under the same license as the eLyXer package.')
+    self.writer.writeline('# (C) 2010 Alex Fernandez <elyxer@gmail.com>.')
+    self.writer.writeline('#')
+    self.writer.writeline('')
+    for key, message in constants.iteritems():
+      self.writer.writeline('')
+      self.writer.writeline('#: ' + key)
+      self.writer.writeline('msgid  "' + message + '"')
+      self.writer.writeline('msgstr "' + message + '"')
+    self.writer.close()
 
 config = Config()
 del sys.argv[0]

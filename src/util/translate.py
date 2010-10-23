@@ -84,29 +84,3 @@ class Translator(object):
 
 Translator.instance = Translator()
 
-class TranslationExport(object):
-  "Export the translation to a file."
-
-  def __init__(self, writer):
-    self.writer = writer
-
-  def export(self, constants):
-    "Export the translation constants as a .po file."
-    self.writer.writeline('# SOME DESCRIPTIVE TITLE.')
-    self.writer.writeline('# eLyXer version ' + GeneralConfig.version['number'])
-    self.writer.writeline('# Released on ' + GeneralConfig.version['date'])
-    self.writer.writeline(u'# Contact: Alex Fernández <elyxer@gmail.com>')
-    self.writer.writeline('# This file is distributed under the same license as the eLyXer package.')
-    self.writer.writeline('# (C) YEAR FIRST AUTHOR <EMAIL@ADDRESS>.')
-    self.writer.writeline('#')
-    self.writer.writeline('#, fuzzy')
-    self.writer.writeline('msgid ""')
-    self.writer.writeline('msgstr ""')
-    self.writer.writeline('')
-    for key, message in constants.iteritems():
-      self.writer.writeline('')
-      self.writer.writeline('#: ' + key)
-      self.writer.writeline('msgid  "' + message + '"')
-      self.writer.writeline('msgstr "' + message + '"')
-    self.writer.close()
-
