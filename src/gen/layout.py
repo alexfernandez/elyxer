@@ -67,7 +67,7 @@ class Layout(Container):
   def __unicode__(self):
     "Return a printable representation."
     if self.partkey:
-      return 'Layout ' + self.type + ' ' + self.partkey.number
+      return 'Layout ' + self.type + ' #' + unicode(self.partkey.number)
     return 'Layout of type ' + self.type
 
 class StandardLayout(Layout):

@@ -61,7 +61,7 @@ class BibTeX(Container):
     "Create the header for the bibliography."
     header = BiblioHeader()
     if 'bibtotoc' in self.getparameterlist('options'):
-      header.addtotoc()
+      header.addtotoc(self)
     return header
 
   def applystyle(self):

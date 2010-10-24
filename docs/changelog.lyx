@@ -147,7 +147,12 @@ target "https://savannah.nongnu.org/bugs/index.php?31351"
 \end_inset
 
 : do not number (or add to the TOC) any document parts inside comments.
- However, the bibliography should be added to the TOC if so configured.
+ However, the bibliography should be added to the TOC if so configured,
+ and split into its own page with 
+\family typewriter
+--splitpart
+\family default
+.
 \end_layout
 
 \begin_layout Itemize
