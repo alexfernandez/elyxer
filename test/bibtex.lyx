@@ -218,7 +218,7 @@ status open
 LatexCommand bibtex
 btprint "btPrintAll"
 bibfiles "bibtex-latin1"
-options "alpha"
+options "bibtotoc,alpha"
 
 \end_inset
 

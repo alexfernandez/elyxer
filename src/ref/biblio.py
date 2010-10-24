@@ -88,6 +88,7 @@ class BiblioHeader(Container):
 
   def addtotoc(self, parent):
     "Add the bibliography header to the TOC."
+    self.parent = parent
     self.partkey = PartKeyGenerator.forindex(self)
     if not self.partkey:
       return
