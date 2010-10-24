@@ -32,6 +32,11 @@ class NumberGenerator(object):
   "A number generator for unique sequences and hierarchical structures"
 
   letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  romannumerals = [
+      ('M', 1000), ('CM', 900), ('D', 500), ('CD', 400), ('C', 100),
+      ('XC', 90), ('L', 50), ('XL', 40), ('X', 10), ('IX', 9), ('V', 5),
+      ('IV', 4), ('I', 1)
+      ]
 
   instance = None
 
@@ -80,6 +85,12 @@ class NumberGenerator(object):
     chaptered[1] = self.increase(chaptered[1])
     self.chaptered[type] = chaptered
     return self.dotseparated(chaptered)
+
+  def generateroman(self, type):
+    "Generate a part number in roman numerals, to use in unique part numbers."
+    "E.g.: Part I, Book IV."
+    unique = int(self.generateunique(type))
+    return self.getroman(unique)
 
   def getchapter(self):
     "Get the current chapter number."
@@ -154,8 +165,11 @@ class NumberGenerator(object):
 
   def getnumber(self, type):
     "Get the number for a layout type, can be unique or ordered."
+    "Unique part types such as Part or Book generate roman numbers: Part I."
+    "Ordered part types return dot-separated tuples: Chapter 5, Section 2.3."
+    "Everything else generates unique numbers: Bibliography [1]."
     if self.isunique(type):
-      return self.generateunique(type)
+      return self.generateroman(type)
     if self.isnumbered(type):
       return self.generateordered(type)
     return self.generateunique(type)
@@ -166,6 +180,15 @@ class NumberGenerator(object):
     if self.appendix and self.getlevel(type) == 1:
       return 'Appendix'
     return self.deasterisk(type)
+
+  def getroman(self, number):
+    "Get the roman numeral that corresponds to the given arabic numeral."
+    result = ''
+    for numeral, value in self.romannumerals:
+      if number >= value:
+        result += numeral * (number / value)
+        number = number % value
+    return result
 
 
 NumberGenerator.instance = NumberGenerator()
