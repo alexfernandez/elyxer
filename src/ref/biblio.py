@@ -106,7 +106,10 @@ class PostBiblio(object):
     "If we have the first bibliography insert a tag"
     if isinstance(last, Bibliography) or Options.nobib:
       return element
-    layout = StandardLayout().complete([BiblioHeader(), element])
+    layout = StandardLayout()
+    header = BiblioHeader()
+    header.addtotoc(layout)
+    layout.complete([header, element])
     return layout
 
 Postprocessor.stages += [PostBiblio]

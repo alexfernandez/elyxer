@@ -200,10 +200,19 @@ An appendix here, an appendix there.
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 bibfiles "bibtex-plain"
 options "bibtotoc,plain"
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
