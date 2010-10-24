@@ -256,8 +256,8 @@ Abstract
 \end_layout
 
 \begin_layout Itemize
-Remodeled unit tests to try out Python 2.4 only if present, remove test files
- from previous runs.
+Remodeled unit tests to try out Python 2.4 only if present, and to remove
+ test files from previous runs.
 \end_layout
 
 \end_deeper
