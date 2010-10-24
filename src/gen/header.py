@@ -48,7 +48,7 @@ class LyXHeader(Container):
     documentclass = self.getheaderparameter('documentclass')
     if documentclass in HeaderConfig.styles['article']:
       DocumentParameters.startinglevel = 1
-    if documentclass in HeaderConfig.styles['bibliography']:
+    if documentclass in HeaderConfig.styles['book']:
       DocumentParameters.bibliography = 'bibliography'
     else:
       DocumentParameters.bibliography = 'references'
