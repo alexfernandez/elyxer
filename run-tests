@@ -70,8 +70,13 @@ diff -u --ignore-matching-lines="create-date" "$name-lowmem-good.html" "$name-lo
 
 # test Python 2.4 generation
 name="index-1-6"
-python2.4 ../elyxer.py --quiet --css ../docs/lyx.css "$name.lyx" "$name-py2.4-test.html"
-diff -u --ignore-matching-lines="create-date" "$name-good.html" "$name-py2.4-test.html"
+type -P python2.4 &> /dev/null
+if [ $? = 0 ] ; then
+	python2.4 ../elyxer.py --quiet --css ../docs/lyx.css "$name.lyx" "$name-py2.4-test.html"
+	diff -u --ignore-matching-lines="create-date" "$name-good.html" "$name-py2.4-test.html"
+else
+	echo "python2.4 not found, cannot test it"
+fi
 
 # test stdin + stdout generation
 name="footnotes-1-6"

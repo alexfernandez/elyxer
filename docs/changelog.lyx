@@ -255,6 +255,10 @@ Abstract
  header only for the first Abstract layout (thanks, Yaron!).
 \end_layout
 
+\begin_layout Itemize
+Remodeled unit tests to try Python 2.4 only if present.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.3 (2010-10-15):
