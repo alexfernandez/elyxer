@@ -2,7 +2,7 @@
 \lyxformat 345
 \begin_document
 \begin_header
-\textclass scrbook
+\textclass book
 \begin_preamble
 %   eLyXer -- convert LyX source files to HTML output.
 %
@@ -312,9 +312,7 @@ in
 \size normal
 the
 \size default
- 
-\bar under
-world
+ world
 \end_layout
 
 \begin_layout Standard
