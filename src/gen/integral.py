@@ -76,7 +76,7 @@ class IntegralBiblioEntry(IntegralProcessor):
 
   def processeach(self, entry):
     "Process each entry."
-    number = NumberGenerator.instance.generateunique('integralbib')
+    number = NumberGenerator.unique.generate('integralbib')
     link = Link().complete('cite', 'biblio-' + number, type='biblioentry')
     link.contents = entry.citeref
     entry.contents = [Constant('['), link, Constant('] ')]

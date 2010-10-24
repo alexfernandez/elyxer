@@ -67,7 +67,7 @@ class PostFormula(object):
   def createlabel(self, formula, function = None):
     "Create a new label for a formula."
     "Add a label to a formula."
-    number = NumberGenerator.instance.generatechaptered('formula')
+    number = NumberGenerator.chaptered.generate('formula')
     partkey = PartKey().createformula(number)
     if not formula.partkey:
       formula.partkey = partkey

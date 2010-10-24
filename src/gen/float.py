@@ -48,7 +48,7 @@ class Float(Container):
     self.type = self.header[2]
     self.processfloats()
     self.processtags()
-    self.chapter = NumberGenerator.instance.getchapter()
+    self.chapter = NumberGenerator.ordered.getchapter()
 
   def processtags(self):
     "Process the HTML tags."
@@ -247,10 +247,10 @@ class PostFloat(object):
     if float.parentfloat:
       self.postnumber(float.parentfloat)
       index = float.parentfloat.children.index(float)
-      number = NumberGenerator.instance.letter(index).lower()
+      number = NumberGenerator.chaptered.letter(index).lower()
       entry = '(' + number + ')'
     else:
-      number = NumberGenerator.instance.generatechaptered(float.type, float.chapter)
+      number = NumberGenerator.chaptered.generate(float.type, float.chapter)
       entry = Translator.translate('float-' + float.type) + number
     float.partkey = PartKey().createfloat(entry, number)
 

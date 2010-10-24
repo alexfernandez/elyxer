@@ -95,7 +95,7 @@ class PartKey(object):
 class LayoutPartKey(PartKey):
   "The part key for a layout."
 
-  generator = NumberGenerator.instance
+  generator = NumberGenerator()
 
   def create(self, layout):
     "Set the layout for which we are creating the part key."
