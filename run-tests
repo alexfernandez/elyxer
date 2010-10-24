@@ -19,6 +19,10 @@
 
 # Alex 20090319: run all tests
 
+# remove result files from previous test runs
+rm -f "test/*-test.html"
+rm -f "test/subdir/*-test.html"
+
 # first from the current directory
 echo "Testing eLyXer -- any text below this line signals an error"
 for file in test/*.lyx; do
@@ -85,8 +89,10 @@ diff -u --ignore-matching-lines="create-date" "$name-stdio-good.html" "$name-std
 
 # test --splitpart generation
 name="index-1-6"
+testfiles="parts/$name-part-test*.html"
+rm -f $testfiles
 ../elyxer.py --quiet --splitpart 1 --css ../../docs/lyx.css "$name.lyx" "parts/$name-part-test.html"
-for file in parts/$name*.html; do
+for file in $testfiles; do
 	goodname=${file/"-test"/"-good"}
 	diff -u --ignore-matching-lines="create-date" "$goodname" "$file"
 done
