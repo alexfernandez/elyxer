@@ -529,10 +529,12 @@ div.wrap-r {
 	float: right;
 }
 div.abstract {
-	margin: 3em;
-	text-align: center;
+	margin: 1em 3em;
+	text-align: left;
+	font-size: 0.95em;
 }
 p.abstract-message {
+	text-align: center;
 	font-weight: bold;
 }
 div.listing {

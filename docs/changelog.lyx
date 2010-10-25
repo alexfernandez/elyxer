@@ -256,6 +256,11 @@ Abstract
 \end_layout
 
 \begin_layout Itemize
+Do not separate consecutive Abstract paragraphs, and display the abstract
+ in slightly smaller font size.
+\end_layout
+
+\begin_layout Itemize
 Remodeled unit tests to try out Python 2.4 only if present, and to remove
  test files from previous runs.
 \end_layout
