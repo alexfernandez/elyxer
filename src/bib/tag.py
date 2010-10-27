@@ -36,6 +36,7 @@ class BibTagParser(object):
   escaped = BibTeXConfig.escaped
   replaced = BibTeXConfig.replaced
   replacedinitials = [x[0] for x in BibTeXConfig.replaced]
+  stringdefs = dict()
 
   def __init__(self):
     self.key = None
@@ -81,7 +82,6 @@ class BibTagParser(object):
 
   def getkeyvalue(self, pos):
     "Parse a string of the form key=value."
-    pos.skipspace()
     piece = self.parseexcluding(pos, self.nameseparators).strip()
     if pos.finished():
       return (piece, None)
@@ -110,7 +110,7 @@ class BibTagParser(object):
       if pos.finished():
         return contents
       elif pos.checkfor('{'):
-        contents += self.parsebracket(pos)
+        contents += self.parsebracket(pos, initial)
       elif pos.checkfor('"'):
         contents += self.parsequoted(pos, initial)
       elif pos.checkfor('\\'):
@@ -125,7 +125,12 @@ class BibTagParser(object):
   def parsetext(self, pos, initial):
     "Parse a bit of text."
     "If on the initial level, try to substitute strings with string defs."
-    return self.parseexcluding(pos, self.valueseparators)
+    text = self.parseexcluding(pos, self.valueseparators)
+    key = text.strip()
+    if initial and key in self.stringdefs:
+      Trace.debug('Replacing ' + key)
+      return self.stringdefs[key]
+    return text
 
   def parseescaped(self, pos):
     "Parse an escaped string \\*."
@@ -153,13 +158,13 @@ class BibTagParser(object):
     self.lineerror('Unknown escaped string \\' + pos.current(), pos)
     return pos.skipcurrent()
 
-  def parsebracket(self, pos):
+  def parsebracket(self, pos, initial):
     "Parse a {} bracket"
     if not pos.checkskip('{'):
       self.lineerror('Missing opening { in bracket', pos)
       return ''
     pos.pushending('}')
-    bracket = self.parserecursive(pos)
+    bracket = self.parserecursive(pos, initial)
     pos.popending('}')
     return bracket
 

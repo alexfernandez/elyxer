@@ -274,7 +274,12 @@ target "https://savannah.nongnu.org/bugs/index.php?31345"
 
 \end_inset
 
-: ignore preamble, comments and string definitions in BibTeX files.
+: ignore preamble and comments in BibTeX files.
+ Use string definitions (
+\family typewriter
+@string
+\family default
+) in other entries.
 \end_layout
 
 \begin_layout Itemize

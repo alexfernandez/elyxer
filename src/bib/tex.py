@@ -219,17 +219,41 @@ class StringEntry(SpecialEntry):
   "A string definition. The definition can later be used in other entries."
 
   parser = BibTagParser()
+  start = '@string'
+  key = None
 
   def detect(self, pos):
     "Detect the string definition."
-    return pos.checkforlower('@string')
+    return pos.checkforlower(self.start)
 
-  def parsenew(self, pos):
+  def parse(self, pos):
     "Parse a single tag, which will define a string."
+    self.type = self.start
+    if not pos.checkskip('@'):
+      Trace.error('Missing @ from string definition')
+      return
+    name = '@' + pos.globalpha()
+    if not name.lower() == self.start.lower():
+      Trace.error('Invalid start @' + name +', missing ' + self.start + ' from ' + unicode(self))
+      pos.globincluding('\n')
+      return
+    pos.skipspace()
+    if not pos.checkskip('{'):
+      Trace.error('Missing opening { in ' + unicode(self))
+      pos.globincluding('\n')
+      return
     pos.pushending('}')
-    aself.parsetags(pos)
+    (self.key, value) = self.parser.getkeyvalue(pos)
+    self.parser.stringdefs[self.key] = value
+    Trace.debug('@string for ' + self.key + ': ' + value)
     pos.popending('}')
 
+  def __unicode__(self):
+    "Return a printable representation."
+    result = 'string definition'
+    if self.key:
+      result += ' for ' + self.key
+    return result
 
 
 # More instances will be added later
