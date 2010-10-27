@@ -69,7 +69,7 @@ class BibTagParser(object):
     pos.skipspace()
     piece = self.parseexcluding(pos, self.nameseparators)
     if pos.finished():
-      self.key = piece
+      self.key = piece.strip()
       return
     if not pos.checkskip('='):
       self.lineerror('Undesired character in tag name ' + piece, pos)
