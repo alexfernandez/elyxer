@@ -1,8 +1,11 @@
 %% eLyXer: test BibTeX bibliography.
 %% Created on 20090905 by Alex Fernandez.
 
+@preamble { This text should be ignored. }
 
 @STRING{ tei = "The Spanish Inquisition" }
+
+@string{ inlowercase = "string in lowercase" }
 
 @article{randomref,
 	Author = {Colonel, S.W.},
@@ -37,6 +40,8 @@
 	Year = {1970}}
 
 @COMMENT { Do not look at the pretty lights }
+
+@comment { "A comment including double quotes because we like it." }
 
 @book{pythonesque:1971,
 	Author = {Cleese, J.M.

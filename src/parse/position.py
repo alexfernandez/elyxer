@@ -59,10 +59,18 @@ class Position(object):
     Trace.error('Unimplemented current()')
     return ''
 
+  def extract(self, length):
+    "Extract the next string of the given length, or None if not enough text."
+    Trace.error('Unimplemented extract()')
+    return None
+
   def checkfor(self, string):
     "Check for a string at the given position."
-    Trace.error('Unimplemented checkfor()')
-    return False
+    return string == self.extract(len(string))
+
+  def checkforlower(self, string):
+    "Check for a string in lower case."
+    return string.lower() == self.extract(len(string)).lower()
 
   def finished(self):
     "Find out if the current formula has finished"
@@ -174,11 +182,11 @@ class TextPosition(Position):
     "Return the current character, assuming we are not out."
     return self.text[self.pos]
 
-  def checkfor(self, string):
-    "Check for a string at the given position."
-    if self.pos + len(string) > len(self.text):
-      return False
-    return self.text[self.pos : self.pos + len(string)] == string
+  def extract(self, length):
+    "Extract the next string of the given length, or None if not enough text."
+    if self.pos + length > len(self.text):
+      return None
+    return self.text[self.pos : self.pos + length]
 
 class FilePosition(Position):
   "A parse position based on an underlying file."
@@ -228,11 +236,11 @@ class FilePosition(Position):
       return '*'
     return self.reader.currentline()[self.pos]
 
-  def checkfor(self, string):
-    "Check for a string at the given position."
-    if self.pos + len(string) > len(self.reader.currentline()):
-      return False
-    return self.reader.currentline()[self.pos : self.pos + len(string)] == string
+  def extract(self, length):
+    "Extract the next string of the given length, or None if not enough text."
+    if self.pos + length > len(self.reader.currentline()):
+      return None
+    return self.reader.currentline()[self.pos : self.pos + length]
 
 class EndingList(object):
   "A list of position endings"

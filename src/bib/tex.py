@@ -182,12 +182,16 @@ class CommentEntry(BibEntry):
 class SpecialEntry(BibEntry):
   "A special entry"
 
-  types = ['@STRING', '@PREAMBLE', '@COMMENT']
+  types = ['@string', '@preamble', '@comment']
+
+  def __init__(self):
+    self.contents = []
+    self.output = EmptyOutput()
 
   def detect(self, pos):
     "Detect the special entry"
     for type in SpecialEntry.types:
-      if pos.checkfor(type):
+      if pos.checkforlower(type):
         return True
     return False
 

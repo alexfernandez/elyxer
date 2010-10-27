@@ -274,6 +274,18 @@ target "https://savannah.nongnu.org/bugs/index.php?31345"
 
 \end_inset
 
+: ignore comments and string definitions in BibTeX files.
+\end_layout
+
+\begin_layout Itemize
+Also in 
+\begin_inset CommandInset href
+LatexCommand href
+name "bug #31345"
+target "https://savannah.nongnu.org/bugs/index.php?31345"
+
+\end_inset
+
 : avoid endless loops for undesired characters in BibTeX entries.
 \end_layout
 
