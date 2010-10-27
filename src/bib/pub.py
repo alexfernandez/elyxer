@@ -31,7 +31,7 @@ from bib.tex import *
 from bib.tag import *
 
 
-class PubEntry(Entry):
+class PubEntry(BibEntry):
   "A publication entry"
 
   def __init__(self):
@@ -214,5 +214,5 @@ class BibVariable(Container):
       result += ':' + self.extracttext()
     return result
 
-Entry.instances += [PubEntry()]
+BibEntry.instances += [PubEntry()]
 

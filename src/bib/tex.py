@@ -118,7 +118,7 @@ class BibFile(object):
 
   def parseentry(self, pos):
     "Parse a single entry"
-    for entry in Entry.instances:
+    for entry in BibEntry.instances:
       if entry.detect(pos):
         newentry = Cloner.clone(entry)
         newentry.parse(pos)
@@ -138,7 +138,7 @@ class BibFile(object):
     string += unicode(self.ignored) + ' entries ignored'
     return string
 
-class Entry(Container):
+class BibEntry(Container):
   "An entry in a BibTeX file"
 
   instances = []
@@ -159,7 +159,7 @@ class Entry(Container):
     "Return a string representation"
     return 'BibTeX entry ' + self.__class__.__name__
 
-class CommentEntry(Entry):
+class CommentEntry(BibEntry):
   "A simple comment."
 
   def detect(self, pos):
@@ -179,7 +179,7 @@ class CommentEntry(Entry):
     "Return a string representation"
     return 'Comment'
 
-class SpecialEntry(Entry):
+class SpecialEntry(BibEntry):
   "A special entry"
 
   types = ['@STRING', '@PREAMBLE', '@COMMENT']
@@ -212,5 +212,6 @@ class SpecialEntry(Entry):
     "Return a string representation"
     return self.type
 
-Entry.instances += [CommentEntry(), SpecialEntry()]
+# More instances will be added later
+BibEntry.instances += [CommentEntry(), SpecialEntry()]
 
