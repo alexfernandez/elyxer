@@ -28,28 +28,38 @@ from conf.config import *
 from parse.position import *
 from ref.link import *
 from ref.bibtex import *
+from ref.bibtag import *
 
 
-class PubEntry(ContentEntry):
+class PubEntry(Entry):
   "A publication entry"
 
+  def __init__(self):
+    self.output = TaggedOutput().settag('p class="biblio"', True)
+
   def detect(self, pos):
-    "Detect a publication entry"
+    "Detect a publication entry."
     return pos.checkfor('@')
 
+  def parse(self, pos):
+    "Parse the publication entry."
+    self.parser = BibTagParser()
+    self.parser.parse(pos)
+    self.type = self.parser.type
+
   def isreferenced(self):
-    "Check if the entry is referenced"
-    if not self.key:
+    "Check if the entry is referenced."
+    if not self.parser.key:
       return False
-    return self.key in BiblioReference.references
+    return self.parser.key in BiblioReference.references
 
   def process(self):
-    "Process the entry"
+    "Process the entry."
     self.index = NumberGenerator.unique.generate('pubentry')
-    self.tags['index'] = self.index
+    self.parser.tags['index'] = self.index
     biblio = BiblioEntry()
     biblio.citeref = self.createref()
-    biblio.processcites(self.key)
+    biblio.processcites(self.parser.key)
     self.contents = [biblio, Constant(' ')]
     self.contents += self.entrycontents()
 
@@ -64,7 +74,7 @@ class PubEntry(ContentEntry):
   def translatetemplate(self, template):
     "Translate a complete template into a list of contents."
     pos = TextPosition(template)
-    part = BibPart(self.tags).parse(pos)
+    part = BibPart(self.parser.tags).parse(pos)
     for variable in part.searchall(BibVariable):
       if variable.empty():
         Trace.error('Error parsing BibTeX template for ' + unicode(self) + ': '
@@ -74,10 +84,10 @@ class PubEntry(ContentEntry):
   def __unicode__(self):
     "Return a string representation"
     string = ''
-    if 'author' in self.tags:
-      string += self.tags['author'] + ': '
-    if 'title' in self.tags:
-      string += '"' + self.tags['title'] + '"'
+    if 'author' in self.parser.tags:
+      string += self.parser.tags['author'] + ': '
+    if 'title' in self.parser.tags:
+      string += '"' + self.parser.tags['title'] + '"'
     return string
 
 class BibPart(Container):
@@ -204,5 +214,5 @@ class BibVariable(Container):
       result += ':' + self.extracttext()
     return result
 
-Entry.entries += [PubEntry()]
+Entry.instances += [PubEntry()]
 

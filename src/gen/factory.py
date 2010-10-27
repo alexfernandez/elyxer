@@ -42,7 +42,7 @@ from gen.header import *
 from gen.change import *
 from maths.array import *
 from ref.bibtex import *
-from ref.bibentry import *
+from ref.bibpub import *
 from xtra.newfangle import *
 from maths.macro import *
 
