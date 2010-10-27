@@ -115,7 +115,7 @@ class BibPart(Container):
     while not pos.finished() and not pos.current() in '{$':
       if pos.current() == '"':
         self.quotes += 1
-      result += pos.currentskip()
+      result += pos.skipcurrent()
     return Constant(result)
 
   def parsebraces(self, pos):

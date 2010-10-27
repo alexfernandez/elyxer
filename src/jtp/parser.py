@@ -309,11 +309,11 @@ class Tokenizer(object):
     if self.pos.checkidentifier():
       return self.pos.globidentifier()
     if self.pos.current() in self.javasymbols:
-      result = self.pos.currentskip()
+      result = self.pos.skipcurrent()
       while result + self.pos.current() in self.javasymbols:
-        result += self.pos.currentskip()
+        result += self.pos.skipcurrent()
       return result
-    current = self.pos.currentskip()
+    current = self.pos.skipcurrent()
     raise Exception('Unrecognized character: ' + current)
 
   def current(self):

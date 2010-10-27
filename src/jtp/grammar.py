@@ -118,7 +118,7 @@ class Bracket(Piece):
     pos.pushending(']')
     declaration = Declaration('bracket').parse(pos)
     pos.popending(']')
-    quantifier = pos.currentskip()
+    quantifier = pos.skipcurrent()
     if not quantifier in self.quantified:
       Trace.error('Unknown quantifier ' + quantifier)
       return self
@@ -292,9 +292,9 @@ class Declaration(Piece):
     "Parse a symbol."
     symbol = ''
     while self.issymbol(pos):
-      symbol += pos.currentskip()
+      symbol += pos.skipcurrent()
     if symbol == '':
-      symbol += pos.currentskip()
+      symbol += pos.skipcurrent()
       Trace.error('Empty symbol; acquiring ' + symbol)
     self.addconstant(symbol)
 

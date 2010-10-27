@@ -195,13 +195,13 @@ class SpecialEntry(Entry):
     "Parse and ignore."
     self.type = 'special'
     while not pos.checkskip('{'):
-      pos.currentskip()
+      pos.skipcurrent()
     pos.pushending('}')
     while not pos.finished():
       if pos.checkfor('{'):
         self.parse(pos)
       else:
-        pos.currentskip()
+        pos.skipcurrent()
     pos.popending()
 
   def isreferenced(self):

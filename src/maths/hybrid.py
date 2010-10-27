@@ -53,14 +53,14 @@ class ParameterDefinition(object):
         if not pos.checkskip('$'):
           Trace.error('Wrong parameter name ' + pos.current())
           return None
-        self.name = pos.currentskip()
+        self.name = pos.skipcurrent()
         if pos.checkskip('!'):
           self.literal = True
         if not pos.checkskip(closing):
-          Trace.error('Wrong parameter closing ' + pos.currentskip())
+          Trace.error('Wrong parameter closing ' + pos.skipcurrent())
           return None
         return self
-    Trace.error('Wrong character in parameter template: ' + pos.currentskip())
+    Trace.error('Wrong character in parameter template: ' + pos.skipcurrent())
     return None
 
   def read(self, pos, function):
@@ -130,12 +130,12 @@ class HybridFunction(CommandBit):
         if function:
           result.append(function)
       else:
-        result.append(FormulaConstant(pos.currentskip()))
+        result.append(FormulaConstant(pos.skipcurrent()))
     return result
 
   def writeparam(self, pos):
     "Write a single param of the form $0, $x..."
-    name = '$' + pos.currentskip()
+    name = '$' + pos.skipcurrent()
     if not name in self.params:
       Trace.error('Unknown parameter ' + name)
       return None
@@ -167,7 +167,7 @@ class HybridFunction(CommandBit):
     if not pos.current().isdigit():
       Trace.error('Function should be f0,...,f9: f' + pos.current())
       return None
-    index = int(pos.currentskip())
+    index = int(pos.skipcurrent())
     if 2 + index > len(self.translated):
       Trace.error('Function f' + unicode(index) + ' is not defined')
       return None

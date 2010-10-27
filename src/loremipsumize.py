@@ -103,7 +103,7 @@ class LoremIpsumizer(object):
       return alpha
     if pos.current().isspace():
       return pos.skipspace()
-    return pos.currentskip()
+    return pos.skipcurrent()
 
 reader, writer = readargs(sys.argv)
 if reader:

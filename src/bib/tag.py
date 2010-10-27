@@ -73,7 +73,7 @@ class BibTagParser(object):
       return
     if not pos.checkskip('='):
       self.lineerror('Undesired character in tag name ' + piece, pos)
-      pos.currentskip()
+      pos.skipcurrent()
       return
     name = piece.lower().strip()
     pos.skipspace()
@@ -111,7 +111,7 @@ class BibTagParser(object):
         contents += self.parsehash(pos, initial)
       else:
         self.lineerror('Unexpected character ' + pos.current(), pos)
-        pos.currentskip()
+        pos.skipcurrent()
     return contents
 
   def parseescaped(self, pos):
@@ -121,7 +121,7 @@ class BibTagParser(object):
       return ''
     escaped = '\\'
     if pos.checkskip('{'):
-      escaped += pos.currentskip()
+      escaped += pos.skipcurrent()
       if not pos.checkskip('}'):
         self.lineerror('Weird escaped but unclosed brackets \\{*', pos)
       if not escaped in BibTagParser.escaped:
@@ -138,7 +138,7 @@ class BibTagParser(object):
       self.lineerror('Unknown escaped command \\' + alpha, pos)
       return ''
     self.lineerror('Unknown escaped string \\' + pos.current(), pos)
-    return pos.currentskip()
+    return pos.skipcurrent()
 
   def parsebracket(self, pos):
     "Parse a {} bracket"
@@ -187,7 +187,7 @@ class BibTagParser(object):
         if replaced:
           result += replaced
         else:
-          result += pos.currentskip()
+          result += pos.skipcurrent()
     return result
 
   def parsereplaced(self, pos):
@@ -232,7 +232,7 @@ class BibTagParser(object):
           self.tags['YY'] = number[2:]
           return
       else:
-        pos.currentskip()
+        pos.skipcurrent()
 
   def dissectfile(self, filetag):
     "Extract the filename from the file tag as ':filename:FORMAT'."

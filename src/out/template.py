@@ -238,7 +238,7 @@ class VariableMap(object):
       if pos.checkskip('<!--$'):
         result += self.getvalue(pos)
       else:
-        result += pos.currentskip()
+        result += pos.skipcurrent()
     return result
 
   def getvalue(self, pos):

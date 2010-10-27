@@ -71,7 +71,7 @@ class FormulaCommand(FormulaBit):
       pos.checkskip('*')
       return command
     # symbol command
-    return FormulaCommand.start + pos.currentskip()
+    return FormulaCommand.start + pos.skipcurrent()
 
   def process(self):
     "Process the internals"

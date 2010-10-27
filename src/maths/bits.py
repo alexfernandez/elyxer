@@ -171,7 +171,7 @@ class Bracket(FormulaBit):
           self.add(factory.parseany(pos))
           pos.checkskip(' ')
       else:
-        self.add(FormulaConstant(pos.currentskip()))
+        self.add(FormulaConstant(pos.skipcurrent()))
 
   def innerliteral(self, pos):
     "Parse a literal inside the bracket, which cannot generate html"
@@ -180,7 +180,7 @@ class Bracket(FormulaBit):
       if pos.current() == self.start:
         self.parseliteral(pos)
       else:
-        self.literal += pos.currentskip()
+        self.literal += pos.skipcurrent()
     self.original += self.literal
 
   def process(self):

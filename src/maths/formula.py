@@ -216,7 +216,7 @@ class FormulaFactory(object):
       if self.detecttype(type, pos):
         return self.parsetype(type, pos)
     Trace.error('Unrecognized formula at ' + pos.identifier())
-    return FormulaConstant(pos.currentskip())
+    return FormulaConstant(pos.skipcurrent())
 
   def parsetype(self, type, pos):
     "Parse the given type and return it."

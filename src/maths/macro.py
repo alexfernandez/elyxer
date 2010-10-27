@@ -94,7 +94,7 @@ class MacroParameter(FormulaBit):
     if not pos.checkskip('#'):
       Trace.error('Missing parameter start #.')
       return
-    self.number = int(pos.currentskip())
+    self.number = int(pos.skipcurrent())
     self.original = '#' + unicode(self.number)
     self.contents = [TaggedBit().constant('#' + unicode(self.number), 'span class="unknown"')]
 

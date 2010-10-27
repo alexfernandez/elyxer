@@ -88,7 +88,7 @@ class Container(object):
         result += '&#' + codepoint[1:] + ';'
       else:
         result += pos.current()
-      pos.currentskip()
+      pos.skipcurrent()
     return result
 
   def searchall(self, type):

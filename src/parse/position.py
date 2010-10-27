@@ -38,7 +38,7 @@ class Position(object):
     if self.finished():
       return
     if ord(self.current()) == 0xfeff:
-      self.currentskip()
+      self.skipcurrent()
 
   def skip(self, string):
     "Skip a string"
@@ -71,7 +71,7 @@ class Position(object):
       return True
     return self.endinglist.checkin(self)
 
-  def currentskip(self):
+  def skipcurrent(self):
     "Return the current character and skip it."
     current = self.current()
     self.skip(current)
@@ -79,7 +79,7 @@ class Position(object):
 
   def next(self):
     "Advance the position and return the next character."
-    self.currentskip()
+    self.skipcurrent()
     return self.current()
 
   def checkskip(self, string):
