@@ -274,7 +274,7 @@ target "https://savannah.nongnu.org/bugs/index.php?31345"
 
 \end_inset
 
-: ignore comments and string definitions in BibTeX files.
+: ignore preamble, comments and string definitions in BibTeX files.
 \end_layout
 
 \begin_layout Itemize
