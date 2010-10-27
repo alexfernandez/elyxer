@@ -229,13 +229,7 @@ class StringEntry(SpecialEntry):
   def parse(self, pos):
     "Parse a single tag, which will define a string."
     self.type = self.start
-    if not pos.checkskip('@'):
-      Trace.error('Missing @ from string definition')
-      return
-    name = '@' + pos.globalpha()
-    if not name.lower() == self.start.lower():
-      Trace.error('Invalid start @' + name +', missing ' + self.start + ' from ' + unicode(self))
-      pos.globincluding('\n')
+    if not self.checkstart(pos):
       return
     pos.skipspace()
     if not pos.checkskip('{'):
@@ -245,8 +239,19 @@ class StringEntry(SpecialEntry):
     pos.pushending('}')
     (self.key, value) = self.parser.getkeyvalue(pos)
     self.parser.stringdefs[self.key] = value
-    Trace.debug('@string for ' + self.key + ': ' + value)
     pos.popending('}')
+
+  def checkstart(self, pos):
+    "Check that the entry starts with @string."
+    if not pos.checkskip('@'):
+      Trace.error('Missing @ from string definition')
+      return False
+    name = '@' + pos.globalpha()
+    if not name.lower() == self.start.lower():
+      Trace.error('Invalid start @' + name +', missing ' + self.start + ' from ' + unicode(self))
+      pos.globincluding('\n')
+      return False
+    return True
 
   def __unicode__(self):
     "Return a printable representation."
