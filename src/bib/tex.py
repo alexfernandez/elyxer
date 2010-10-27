@@ -30,7 +30,7 @@ from io.bulk import *
 from conf.config import *
 from parse.position import *
 from ref.link import *
-from ref.biblio import *
+from bib.biblio import *
 
 
 class BibTeX(Container):

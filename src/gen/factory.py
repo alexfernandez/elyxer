@@ -27,7 +27,7 @@ from conf.config import *
 from gen.styles import *
 from ref.link import *
 from ref.label import *
-from ref.biblio import *
+from bib.biblio import *
 from ref.index import *
 from maths.formula import *
 from maths.command import *
@@ -41,8 +41,8 @@ from gen.float import *
 from gen.header import *
 from gen.change import *
 from maths.array import *
-from ref.bibtex import *
-from ref.bibpub import *
+from bib.tex import *
+from bib.pub import *
 from xtra.newfangle import *
 from maths.macro import *
 

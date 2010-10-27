@@ -26,7 +26,6 @@ from util.trace import Trace
 from util.clone import *
 from conf.config import *
 from parse.position import *
-from ref.bibtex import *
 
 
 class BibTagParser(object):

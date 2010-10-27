@@ -27,8 +27,8 @@ from out.output import *
 from conf.config import *
 from parse.position import *
 from ref.link import *
-from ref.bibtex import *
-from ref.bibtag import *
+from bib.tex import *
+from bib.tag import *
 
 
 class PubEntry(Entry):
