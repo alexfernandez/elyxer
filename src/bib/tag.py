@@ -98,7 +98,7 @@ class BibTagParser(object):
     "Parse brackets or quotes recursively."
     contents = ''
     while not pos.finished():
-      contents += self.parseexcluding(pos, self.valueseparators)
+      contents += self.parsetext(pos, initial)
       if pos.finished():
         return contents
       elif pos.checkfor('{'):
@@ -113,6 +113,11 @@ class BibTagParser(object):
         self.lineerror('Unexpected character ' + pos.current(), pos)
         pos.skipcurrent()
     return contents
+
+  def parsetext(self, pos, initial):
+    "Parse a bit of text."
+    "If on the initial level, try to substitute strings with string defs."
+    return self.parseexcluding(pos, self.valueseparators)
 
   def parseescaped(self, pos):
     "Parse an escaped string \\*."

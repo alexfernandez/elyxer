@@ -181,7 +181,7 @@ class CommentEntry(BibEntry):
 class SpecialEntry(BibEntry):
   "A special entry"
 
-  types = ['@string', '@preamble', '@comment']
+  types = ['@preamble', '@comment']
 
   def __init__(self):
     self.contents = []
@@ -189,7 +189,7 @@ class SpecialEntry(BibEntry):
 
   def detect(self, pos):
     "Detect the special entry"
-    for type in SpecialEntry.types:
+    for type in self.types:
       if pos.checkforlower(type):
         return True
     return False
@@ -215,6 +215,13 @@ class SpecialEntry(BibEntry):
     "Return a string representation"
     return self.type
 
+class StringEntry(SpecialEntry):
+  "A string definition. The definition can later be used in other entries."
+
+  def detect(self, pos):
+    "Detect the string definition."
+    return pos.checkforlower('@string')
+
 # More instances will be added later
-BibEntry.instances += [CommentEntry(), SpecialEntry()]
+BibEntry.instances += [CommentEntry(), SpecialEntry(), StringEntry()]
 
