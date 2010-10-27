@@ -31,6 +31,7 @@ from conf.config import *
 from parse.position import *
 from ref.link import *
 from bib.biblio import *
+from bib.tag import *
 
 
 class BibTeX(Container):
@@ -197,8 +198,7 @@ class SpecialEntry(BibEntry):
   def parse(self, pos):
     "Parse and ignore."
     self.type = 'special'
-    while not pos.checkskip('{'):
-      pos.skipcurrent()
+    pos.globincluding('{')
     pos.pushending('}')
     while not pos.finished():
       if pos.checkfor('{'):
@@ -218,9 +218,19 @@ class SpecialEntry(BibEntry):
 class StringEntry(SpecialEntry):
   "A string definition. The definition can later be used in other entries."
 
+  parser = BibTagParser()
+
   def detect(self, pos):
     "Detect the string definition."
     return pos.checkforlower('@string')
+
+  def parsenew(self, pos):
+    "Parse a single tag, which will define a string."
+    pos.pushending('}')
+    aself.parsetags(pos)
+    pos.popending('}')
+
+
 
 # More instances will be added later
 BibEntry.instances += [CommentEntry(), SpecialEntry(), StringEntry()]

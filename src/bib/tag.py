@@ -42,7 +42,7 @@ class BibTagParser(object):
     self.tags = dict(BibStylesConfig.defaulttags)
 
   def parse(self, pos):
-    "Parse the entry between {}"
+    "Parse the entry between {}."
     self.type = self.parseexcluding(pos, self.nameseparators).strip()
     if not pos.checkskip('{'):
       self.lineerror('Entry should start with {', pos)
@@ -53,7 +53,7 @@ class BibTagParser(object):
     pos.skipspace()
 
   def parsetags(self, pos):
-    "Parse all tags in the entry"
+    "Parse all tags in the entry."
     pos.skipspace()
     while not pos.finished():
       if pos.checkskip('{'):
@@ -66,18 +66,11 @@ class BibTagParser(object):
   
   def parsetag(self, pos):
     "Parse a single tag."
-    pos.skipspace()
-    piece = self.parseexcluding(pos, self.nameseparators)
-    if pos.finished():
-      self.key = piece.strip()
+    (key, value) = self.getkeyvalue(pos)
+    if not value:
+      self.key = key
       return
-    if not pos.checkskip('='):
-      self.lineerror('Undesired character in tag name ' + piece, pos)
-      pos.skipcurrent()
-      return
-    name = piece.lower().strip()
-    pos.skipspace()
-    value = self.parsevalue(pos)
+    name = key.lower()
     self.tags[name] = value
     if hasattr(self, 'dissect' + name):
       dissector = getattr(self, 'dissect' + name)
@@ -86,8 +79,23 @@ class BibTagParser(object):
       remainder = pos.globexcluding(',')
       self.lineerror('Ignored ' + remainder + ' before comma', pos)
 
+  def getkeyvalue(self, pos):
+    "Parse a string of the form key=value."
+    pos.skipspace()
+    piece = self.parseexcluding(pos, self.nameseparators).strip()
+    if pos.finished():
+      return (piece, None)
+    if not pos.checkskip('='):
+      self.lineerror('Undesired character in tag name ' + piece, pos)
+      pos.skipcurrent()
+      return (piece, None)
+    key = piece.lower()
+    pos.skipspace()
+    value = self.parsevalue(pos)
+    return (key, value)
+
   def parsevalue(self, pos):
-    "Parse the value for a tag"
+    "Parse the value for a tag."
     pos.skipspace()
     if pos.checkfor(','):
       self.lineerror('Unexpected ,', pos)
