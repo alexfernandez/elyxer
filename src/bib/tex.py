@@ -128,9 +128,8 @@ class BibFile(object):
         else:
           self.ignored += 1
         return
-    # Skip a single character and show it as an error
-    skipped = pos.globincluding('\n').strip()
-    Trace.error('Unidentified BibTeX entry, skipped "' + skipped + '"')
+    # Skip the whole line since it's a comment outside an entry
+    pos.globincluding('\n').strip()
 
   def __unicode__(self):
     "String representation"
