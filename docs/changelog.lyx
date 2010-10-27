@@ -265,6 +265,18 @@ Remodeled unit tests to try out Python 2.4 only if present, and to remove
  test files from previous runs.
 \end_layout
 
+\begin_layout Itemize
+Solved 
+\begin_inset CommandInset href
+LatexCommand href
+name "bug #31345"
+target "https://savannah.nongnu.org/bugs/index.php?31345"
+
+\end_inset
+
+: avoid endless loops for undesired characters in BibTeX entries.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.3 (2010-10-15):

@@ -213,6 +213,7 @@ class ContentEntry(Entry):
       return
     if not pos.checkskip('='):
       self.lineerror('Undesired character in tag name ' + piece, pos)
+      pos.currentskip()
       return
     name = piece.lower().strip()
     pos.skipspace()
