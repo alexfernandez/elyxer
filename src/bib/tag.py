@@ -114,7 +114,8 @@ class BibTagParser(object):
       elif pos.checkfor('"'):
         contents += self.parsequoted(pos, initial)
       elif pos.checkfor('\\'):
-        contents += self.parseescaped(pos)
+        Trace.error('Escaped string should not be here.')
+        return contents
       elif pos.checkfor('#'):
         contents += self.parsehash(pos, initial)
       else:
@@ -125,18 +126,27 @@ class BibTagParser(object):
   def parsetext(self, pos, initial):
     "Parse a bit of text."
     "If on the initial level, try to substitute strings with string defs."
-    text = self.parseexcluding(pos, self.valueseparators)
+    text = self.parsetoseparator(pos)
     key = text.strip()
+    if key == '':
+      return ''
     if initial and key in self.stringdefs:
-      Trace.debug('Replacing ' + key)
       return self.stringdefs[key]
+    return text
+
+  def parsetoseparator(self, pos):
+    "Parse some text up to the next separator (excluding the escape string \\)."
+    text = ''
+    while not pos.finished():
+      text += self.parseexcluding(pos, self.valueseparators)
+      if pos.checkskip('\\'):
+        text += self.parseescaped(pos)
+      else:
+        return text
     return text
 
   def parseescaped(self, pos):
     "Parse an escaped string \\*."
-    if not pos.checkskip('\\'):
-      self.lineerror('Not an escaped character', pos)
-      return ''
     escaped = '\\'
     if pos.checkskip('{'):
       escaped += pos.skipcurrent()
@@ -188,7 +198,6 @@ class BibTagParser(object):
       return ''
     if not initial:
       return '#'
-    pos.skipspace()
     return ''
 
   def parseexcluding(self, pos, undesired):
