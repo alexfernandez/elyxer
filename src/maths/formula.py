@@ -118,6 +118,10 @@ class FormulaConstant(Constant):
     self.original = string
     self.type = None
 
+  def clone(self):
+    "Return a copy of itself."
+    return FormulaConstant(self.original)
+
 class WholeFormula(FormulaBit):
   "Parse a whole formula"
 
