@@ -244,6 +244,19 @@ conf/config.py
 \end_layout
 
 \begin_layout Itemize
+Also in 
+\begin_inset CommandInset href
+LatexCommand href
+name "bug #31414"
+target "https://savannah.nongnu.org/bugs/index.php?31414"
+
+\end_inset
+
+: remodeled unit tests to try out Python 2.4 only if present, and to remove
+ test files from previous runs.
+\end_layout
+
+\begin_layout Itemize
 Show the 
 \begin_inset Quotes eld
 \end_inset
@@ -258,11 +271,6 @@ Abstract
 \begin_layout Itemize
 Do not separate consecutive Abstract paragraphs, and display the abstract
  in slightly smaller font size.
-\end_layout
-
-\begin_layout Itemize
-Remodeled unit tests to try out Python 2.4 only if present, and to remove
- test files from previous runs.
 \end_layout
 
 \begin_layout Itemize
