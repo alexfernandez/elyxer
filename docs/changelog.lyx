@@ -21,8 +21,8 @@
 %   You should have received a copy of the GNU General Public License
 %   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \usepackage{mathrsfs}
-\newcommand{\varGamma}{\Gamma}
-\newcommand{\varOmega}{\Omega}
+\renewcommand{\varGamma}{\Gamma}
+\renewcommand{\varOmega}{\Omega}
 \usepackage{color}
 \usepackage[gennarrow]{eurosym}
 \end_preamble
@@ -300,6 +300,46 @@ target "https://savannah.nongnu.org/bugs/index.php?31345"
 \end_inset
 
 : avoid endless loops for undesired characters in BibTeX entries.
+\end_layout
+
+\begin_layout Itemize
+Support for 
+\family typewriter
+
+\backslash
+fbox
+\family default
+, 
+\family typewriter
+
+\backslash
+boxed
+\family default
+, 
+\family typewriter
+
+\backslash
+framebox
+\family default
+ and 
+\family typewriter
+
+\backslash
+fcolorbox
+\family default
+: 
+\begin_inset Formula $\fbox{\ensuremath{fbox}}$
+\end_inset
+
+, 
+\begin_inset Formula $\boxed{boxed}$
+\end_inset
+
+, 
+\begin_inset Formula $\framebox[25mm][l]{framebox}$
+\end_inset
+
+.
 \end_layout
 
 \end_deeper

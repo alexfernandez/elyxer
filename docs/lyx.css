@@ -267,7 +267,7 @@ span.numeratorr {
 span.denominator {
 	display: block;
 	padding: 0;
-	border-top: thin solid #000040;
+	border-top: thin solid;
 }
 span.sqrt {
 	display: inline-block;
@@ -281,7 +281,7 @@ span.radical {
 }
 span.root {
 	display: inline-block;
-	border-top: thin #000040 solid;
+	border-top: thin solid;
 	padding: 0;
 	vertical-align: middle;
 }
@@ -333,7 +333,7 @@ span.symbolunder {
 	width: 0px;
 }
 span.dotted {
-	border-top: thin #000040 dotted;
+	border-top: thin dotted;
 }
 span.FootMarker {
 	color: #0030c0;
@@ -477,7 +477,7 @@ table.cases {
 	text-align: center;
 	border-collapse: collapse;
 	margin: 0.2em;
-	border-left: thin solid #000040;
+	border-left: thin solid;
 	vertical-align: middle;
 }
 table.cases tr td {
@@ -697,10 +697,10 @@ span.normal {
 	font-style: normal;
 }
 span.overbrace {
-	border-top: 2pt solid #000000;
+	border-top: 2pt solid;
 }
 span.underbrace {
-	border-bottom: 2pt solid #000000;
+	border-bottom: 2pt solid;
 }
 div.warning {
 	font-size: 120%;
@@ -758,6 +758,38 @@ span.downstackrel {
 	display: block;
 	vertical-align: bottom;
 	padding: 0em;
+}
+span.colorbox {
+	display: inline-block;
+	padding: 5px;
+}
+span.fbox {
+	display: inline-block;
+	border: thin solid black;
+	padding: 2px;
+}
+span.boxed {
+	display: inline-block;
+	border: thin solid black;
+	padding: 5px;
+}
+span.framebox- {
+	display: inline-block;
+	border: thin solid black;
+	text-align: center;
+	padding: 5px;
+}
+span.framebox-l {
+	display: inline-block;
+	border: thin solid black;
+	text-align: left;
+	padding: 5px;
+}
+span.framebox-r {
+	display: inline-block;
+	border: thin solid black;
+	text-align: right;
+	padding: 5px;
 }
 /* CSS section for print */
 @media print {
