@@ -2802,6 +2802,16 @@ The following features have been requested by users; specific people are
 \end_layout
 
 \begin_layout Standard
+Queued features will be added at the next big release -- the priority for
+ each feature will be set by the number of users requesting it and date
+ requested.
+ Pending features need some assessment.
+ Those marked as too complex have been evaluated as requiring too much work,
+ but the decision might be reversed if there are enough people interested
+ or a simple way to implement them is found.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Tabular
 <lyxtabular version="3" rows="18" columns="4">
 <features>
