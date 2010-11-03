@@ -29,6 +29,8 @@ from out.output import *
 from out.template import *
 from gen.container import *
 from ref.partkey import *
+from maths.command import *
+from maths.macro import *
 
 
 class LyXHeader(Container):
@@ -74,6 +76,42 @@ class LyXHeader(Container):
     if DocumentParameters.startinglevel == 1:
       return value
     return value + 1
+
+class LyXPreamble(Container):
+  "The preamble at the beginning of a LyX file. Parsed for macros."
+
+  def __init__(self):
+    self.parser = PreambleParser()
+    self.output = EmptyOutput()
+
+  def process(self):
+    "Parse the LyX preamble, if needed."
+    if len(PreambleParser.preamble) == 0:
+      return
+    FormulaCommand.preambling = True
+    pos = TextPosition('\n'.join(PreambleParser.preamble))
+    while not pos.finished():
+      if self.detectdefinition(pos):
+        self.parsedefinition(pos)
+      else:
+        pos.globincluding('\n')
+    PreambleParser.preamble = []
+    FormulaCommand.preambling = False
+
+  def detectdefinition(self, pos):
+    "Detect a macro definition."
+    for function in FormulaConfig.definingfunctions:
+      if pos.checkfor(function):
+        return True
+    return False
+
+  def parsedefinition(self, pos):
+    "Parse a macro definition."
+    command = FormulaCommand()
+    command.factory = FormulaFactory()
+    bit = command.parsebit(pos)
+    if not isinstance(bit, DefiningFunction):
+      Trace.error('Did not define a macro with ' + unicode(bit))
 
 class LyXFooter(Container):
   "Reads the footer, outputs the HTML footer"

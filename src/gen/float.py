@@ -29,6 +29,7 @@ from out.output import *
 from gen.layout import *
 from gen.image import *
 from ref.label import *
+from ref.partkey import *
 from proc.postprocess import *
 
 
