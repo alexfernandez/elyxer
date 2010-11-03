@@ -34,7 +34,6 @@ from ref.partkey import *
 class LyXHeader(Container):
   "Reads the header, outputs the HTML header"
 
-
   def __init__(self):
     self.contents = []
     self.parser = HeaderParser()
