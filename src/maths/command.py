@@ -36,7 +36,7 @@ class FormulaCommand(FormulaBit):
 
   commandbits = []
   start = FormulaConfig.starts['command']
-  preambling = False
+  defining = False
 
   def detect(self, pos):
     "Find the current command"
@@ -53,7 +53,7 @@ class FormulaCommand(FormulaBit):
         newbit.parsebit(pos)
         self.add(newbit)
         return newbit
-    if not self.preambling:
+    if not self.defining:
       Trace.error('Unknown command ' + command)
     self.output = TaggedOutput().settag('span class="unknown"')
     self.add(FormulaConstant(command))
