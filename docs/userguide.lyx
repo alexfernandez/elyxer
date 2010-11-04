@@ -2809,6 +2809,7 @@ Queued features will be added at the next big release -- the priority for
  Those marked as too complex have been evaluated as requiring too much work,
  but the decision might be reversed if there are enough people interested
  or a simple way to implement them is found.
+ Once done, features are marked with the first release where they appear.
 \end_layout
 
 \begin_layout Standard
@@ -3012,7 +3013,7 @@ JB
 \begin_inset Text
 
 \begin_layout Plain Layout
-Queued
+1.1.0
 \end_layout
 
 \end_inset

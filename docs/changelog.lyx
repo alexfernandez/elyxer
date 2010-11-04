@@ -95,7 +95,13 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Wish list: understand 
+\family typewriter
+
+\backslash
+setcounter
+\family default
+ in the preamble to set the number of the first Chapter or Section.
 \end_layout
 
 \end_deeper
