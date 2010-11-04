@@ -62,7 +62,7 @@ class MacroParameter(FormulaBit):
     self.original = '#' + unicode(self.number)
     self.contents = [TaggedBit().constant('#' + unicode(self.number), 'span class="unknown"')]
 
-class DefiningFunction(HybridFunction):
+class DefiningFunction(ParameterFunction):
   "Read a function that defines a new command (a macro)."
 
   commandmap = FormulaConfig.definingfunctions
@@ -77,7 +77,9 @@ class DefiningFunction(HybridFunction):
       Trace.error('Unknown formula bit in defining function at ' + pos.identifier())
       return
     Trace.debug('New command: ' + newcommand)
-    HybridFunction.parsebit(self, pos)
+    template = self.translated
+    self.readparams(template, pos)
+    self.contents = []
     macro = MathMacro()
     macro.newcommand = newcommand
     macro.parameternumber = self.readparameternumber()

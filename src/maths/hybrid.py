@@ -34,6 +34,7 @@ class ParameterDefinition(object):
   "[] parameters are optional, {} parameters are mandatory."
   "Each parameter has a one-character name, like {$1} or {$p}."
   "A parameter that ends in ! like {$p!} is a literal."
+  "Example: [$1]{$p!} reads an optional parameter $1 and a literal mandatory parameter p."
 
   parambrackets = [('[', ']'), ('{', '}')]
 
@@ -86,17 +87,9 @@ class ParameterDefinition(object):
       result += ' (empty)'
     return result
 
-class HybridFunction(CommandBit):
-  "Read a function with a variable number of parameters, defined in a template."
-
-  commandmap = FormulaConfig.hybridfunctions
-
-  def parsebit(self, pos):
-    "Parse a function with [] and {} parameters"
-    readtemplate = self.translated[0]
-    writetemplate = self.translated[1]
-    self.readparams(readtemplate, pos)
-    self.contents = self.writeparams(writetemplate)
+class ParameterFunction(CommandBit):
+  "A function with a variable number of parameters defined in a template."
+  "The parameters are defined as a parameter definition."
 
   def readparams(self, readtemplate, pos):
     "Read the params according to the template."
@@ -112,6 +105,25 @@ class HybridFunction(CommandBit):
       paramdef = ParameterDefinition().parse(pos)
       if paramdef:
         yield paramdef
+
+class HybridFunction(ParameterFunction):
+  """
+  A parameter function where the output is also defined using a template.
+  The template can use a number of functions; each function has an associated tag.
+  Example: [f0{$1},span class="fbox"] defines a function f0 which corresponds to
+  a span of class fbox, yielding <span class="fbox">$1</span>.
+  Literal parameters can be used in tags definitions: [f0{$1},span style="color: $p;"]
+  yields <span style="color: $p;">$1</span>, where $p is a literal parameter.
+  """
+
+  commandmap = FormulaConfig.hybridfunctions
+
+  def parsebit(self, pos):
+    "Parse a function with [] and {} parameters"
+    readtemplate = self.translated[0]
+    writetemplate = self.translated[1]
+    self.readparams(readtemplate, pos)
+    self.contents = self.writeparams(writetemplate)
 
   def writeparams(self, writetemplate):
     "Write all params according to the template"
