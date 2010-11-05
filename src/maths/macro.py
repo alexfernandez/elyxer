@@ -72,7 +72,7 @@ class DefiningFunction(ParameterFunction):
     if self.factory.detecttype(Bracket, pos):
       newcommand = self.parseliteral(pos)
     elif self.factory.detecttype(FormulaCommand, pos):
-      newcommand = FormulaCommand().extractcommand(pos)
+      newcommand = FormulaCommand().setfactory(self.factory).extractcommand(pos)
     else:
       Trace.error('Unknown formula bit in defining function at ' + pos.identifier())
       return
@@ -174,9 +174,9 @@ class FormulaMacro(Formula):
     "Return a printable representation."
     return 'Math macro'
 
-FormulaCommand.commandbits += [
-    DefiningFunction(), MacroFunction(),
-    ]
-
 FormulaFactory.types += [ MacroParameter ]
+
+FormulaCommand.types += [
+    DefiningFunction, MacroFunction,
+    ]
 

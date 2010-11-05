@@ -199,7 +199,5 @@ class HybridFunction(ParameterFunction):
         tag = tag.replace(variable, value)
     return tag
 
-FormulaCommand.commandbits += [
-    HybridFunction(),
-    ]
+FormulaCommand.types += [HybridFunction]
 

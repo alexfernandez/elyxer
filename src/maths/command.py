@@ -34,7 +34,7 @@ from maths.bits import *
 class FormulaCommand(FormulaBit):
   "A LaTeX command inside a formula"
 
-  commandbits = []
+  types = []
   start = FormulaConfig.starts['command']
 
   def detect(self, pos):
@@ -44,10 +44,9 @@ class FormulaCommand(FormulaBit):
   def parsebit(self, pos):
     "Parse the command"
     command = self.extractcommand(pos)
-    for bit in FormulaCommand.commandbits:
-      if bit.recognize(command):
-        newbit = Cloner.clone(bit)
-        newbit.factory = self.factory
+    for type in FormulaCommand.types:
+      if command in type.commandmap:
+        newbit = self.factory.create(type)
         newbit.setcommand(command)
         newbit.parsebit(pos)
         self.add(newbit)
@@ -79,10 +78,6 @@ class FormulaCommand(FormulaBit):
 
 class CommandBit(FormulaCommand):
   "A formula bit that includes a command"
-
-  def recognize(self, command):
-    "Recognize the command as own"
-    return command in self.commandmap
 
   def setcommand(self, command):
     "Set the command in the bit"
@@ -249,8 +244,8 @@ class UnderDecoratingFunction(DecoratingFunction):
     self.parameter.output.settag('span class="oversymbol"')
 
 FormulaFactory.types += [FormulaCommand, SymbolFunction]
-FormulaCommand.commandbits = [
-    EmptyCommand(), AlphaCommand(), OneParamFunction(), DecoratingFunction(),
-    FontFunction(), LabelFunction(), TextFunction(), UnderDecoratingFunction(),
+FormulaCommand.types = [
+    EmptyCommand, AlphaCommand, OneParamFunction, DecoratingFunction,
+    FontFunction, LabelFunction, TextFunction, UnderDecoratingFunction,
     ]
 

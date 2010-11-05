@@ -161,14 +161,13 @@ class Bracket(FormulaBit):
 
   def innertext(self, pos):
     "Parse some text inside the bracket, following textual rules."
-    factory = self.factory
     specialchars = FormulaConfig.symbolfunctions.keys()
     specialchars.append(FormulaConfig.starts['command'])
     specialchars.append(Comment.start)
     while not pos.finished():
       if pos.current() in specialchars:
-        if factory.detectany(pos):
-          self.add(factory.parseany(pos))
+        if self.factory.detectany(pos):
+          self.add(self.factory.parseany(pos))
           pos.checkskip(' ')
       else:
         self.add(FormulaConstant(pos.skipcurrent()))

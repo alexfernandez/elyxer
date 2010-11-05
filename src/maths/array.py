@@ -78,8 +78,7 @@ class FormulaRow(FormulaCommand):
     pos.pushending(self.cellseparator, optional=True)
     while not pos.finished():
       alignment = self.alignments[index % len(self.alignments)]
-      cell = FormulaCell().setalignment(alignment)
-      cell.factory = self.factory
+      cell = FormulaCell().setfactory(self.factory).setalignment(alignment)
       cell.parsebit(pos)
       self.add(cell)
       index += 1
@@ -101,8 +100,7 @@ class MultiRowFormula(CommandBit):
     rowseparator = FormulaConfig.array['rowseparator']
     while True:
       pos.pushending(rowseparator, True)
-      row = FormulaRow().setalignments(self.alignments)
-      row.factory = self.factory
+      row = FormulaRow().setfactory(self.factory).setalignments(self.alignments)
       yield row
       if pos.checkfor(rowseparator):
         self.original += pos.popending(rowseparator)
@@ -163,7 +161,7 @@ class BeginCommand(CommandBit):
 
   commandmap = {FormulaConfig.array['begin']:''}
 
-  innerbits = [FormulaEquation(), FormulaArray(), FormulaCases()]
+  types = [FormulaEquation, FormulaArray, FormulaCases]
 
   def parsebit(self, pos):
     "Parse the begin command"
@@ -177,15 +175,12 @@ class BeginCommand(CommandBit):
 
   def findbit(self, piece):
     "Find the command bit corresponding to the \\begin{piece}"
-    for bit in BeginCommand.innerbits:
-      if bit.piece == piece:
-        newbit = Cloner.clone(bit)
-        newbit.factory = self.factory
-        return newbit
-    bit = EquationEnvironment()
-    bit.factory = self.factory
+    for type in BeginCommand.types:
+      if type.piece == piece:
+        return self.factory.create(type)
+    bit = EquationEnvironment().setfactory(self.factory)
     bit.piece = piece
     return bit
 
-FormulaCommand.commandbits += [BeginCommand()]
+FormulaCommand.types += [BeginCommand]
 

@@ -199,10 +199,12 @@ class FormulaFactory(object):
   def instance(self, type):
     "Get an instance of the given type."
     if not type in self.instances or not self.instances[type]:
-      instance = Cloner.create(type)
-      instance.factory = self
-      self.instances[type] = instance
+      self.instances[type] = self.create(type)
     return self.instances[type]
+
+  def create(self, type):
+    "Create a new formula bit of the given type."
+    return Cloner.create(type).setfactory(self)
 
   def clearignored(self, pos):
     "Clear all ignored types."
@@ -232,7 +234,6 @@ class FormulaFactory(object):
     self.instances[type] = None
     returnedbit = bit.parsebit(pos)
     if returnedbit:
-      returnedbit.factory = self
-      return returnedbit
+      return returnedbit.setfactory(self)
     return bit
 
