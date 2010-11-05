@@ -38,9 +38,7 @@ class FormulaEquation(CommandBit):
   def parsebit(self, pos):
     "Parse the array"
     self.output = ContentsOutput()
-    inner = WholeFormula().setfactory(self.factory)
-    inner.parsebit(pos)
-    self.add(inner)
+    self.add(self.factory.parsetype(WholeFormula, pos))
 
 class FormulaCell(FormulaCommand):
   "An array cell inside a row"
@@ -58,9 +56,7 @@ class FormulaCell(FormulaCommand):
       Trace.error('Unexpected end of array cell at ' + pos.identifier())
       pos.skip(pos.current())
       return
-    formula = WholeFormula().setfactory(self.factory)
-    formula.parsebit(pos)
-    self.add(formula)
+    self.add(self.factory.parsetype(WholeFormula, pos))
 
 class FormulaRow(FormulaCommand):
   "An array row inside an array"
@@ -78,7 +74,7 @@ class FormulaRow(FormulaCommand):
     pos.pushending(self.cellseparator, optional=True)
     while not pos.finished():
       alignment = self.alignments[index % len(self.alignments)]
-      cell = FormulaCell().setfactory(self.factory).setalignment(alignment)
+      cell = self.factory.create(FormulaCell).setalignment(alignment)
       cell.parsebit(pos)
       self.add(cell)
       index += 1
@@ -100,8 +96,8 @@ class MultiRowFormula(CommandBit):
     rowseparator = FormulaConfig.array['rowseparator']
     while True:
       pos.pushending(rowseparator, True)
-      row = FormulaRow().setfactory(self.factory).setalignments(self.alignments)
-      yield row
+      row = self.factory.create(FormulaRow)
+      yield row.setalignments(self.alignments)
       if pos.checkfor(rowseparator):
         self.original += pos.popending(rowseparator)
       else:
@@ -165,9 +161,9 @@ class BeginCommand(CommandBit):
 
   def parsebit(self, pos):
     "Parse the begin command"
-    literal = self.parseliteral(pos)
-    bit = self.findbit(literal)
-    ending = FormulaConfig.array['end'] + '{' + literal + '}'
+    command = self.parseliteral(pos)
+    bit = self.findbit(command)
+    ending = FormulaConfig.array['end'] + '{' + command + '}'
     pos.pushending(ending)
     bit.parsebit(pos)
     self.add(bit)
@@ -178,7 +174,7 @@ class BeginCommand(CommandBit):
     for type in BeginCommand.types:
       if type.piece == piece:
         return self.factory.create(type)
-    bit = EquationEnvironment().setfactory(self.factory)
+    bit = self.factory.create(EquationEnvironment)
     bit.piece = piece
     return bit
 

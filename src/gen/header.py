@@ -105,10 +105,9 @@ class LyXPreamble(Container):
 
   def parsedefinition(self, pos):
     "Parse a macro definition."
-    command = FormulaCommand().setfactory(FormulaFactory())
-    bit = command.parsebit(pos)
-    if not isinstance(bit, DefiningFunction):
-      Trace.error('Did not define a macro with ' + unicode(bit))
+    command = FormulaFactory().parsetype(FormulaCommand, pos)
+    if not isinstance(command, DefiningFunction):
+      Trace.error('Did not define a macro with ' + unicode(command))
 
 class LyXFooter(Container):
   "Reads the footer, outputs the HTML footer"

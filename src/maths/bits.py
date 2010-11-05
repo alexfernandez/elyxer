@@ -148,10 +148,8 @@ class Bracket(FormulaBit):
 
   def innerformula(self, pos):
     "Parse a whole formula inside the bracket"
-    self.inner = WholeFormula().setfactory(self.factory)
-    if self.inner.detect(pos):
-      self.inner.parsebit(pos)
-      self.add(self.inner)
+    if self.factory.detecttype(WholeFormula, pos):
+      self.add(self.factory.parsetype(WholeFormula, pos))
       return
     if pos.finished():
       return

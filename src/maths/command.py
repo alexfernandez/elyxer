@@ -98,8 +98,7 @@ class CommandBit(FormulaCommand):
     "Parse a square bracket"
     if not self.factory.detecttype(SquareBracket, pos):
       return None
-    bracket = SquareBracket().setfactory(self.factory)
-    bracket.parsebit(pos)
+    bracket = self.factory.parsetype(SquareBracket, pos)
     self.add(bracket)
     return bracket
 
@@ -213,6 +212,7 @@ class FontFunction(OneParamFunction):
 
   def process(self):
     "Simplify if possible using a single character."
+    Trace.debug('Processing font')
     self.type = 'font'
     self.simplifyifpossible()
 

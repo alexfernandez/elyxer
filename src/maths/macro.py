@@ -72,7 +72,7 @@ class DefiningFunction(ParameterFunction):
     if self.factory.detecttype(Bracket, pos):
       newcommand = self.parseliteral(pos)
     elif self.factory.detecttype(FormulaCommand, pos):
-      newcommand = FormulaCommand().setfactory(self.factory).extractcommand(pos)
+      newcommand = self.factory.create(FormulaCommand).extractcommand(pos)
     else:
       Trace.error('Unknown formula bit in defining function at ' + pos.identifier())
       return
@@ -143,13 +143,12 @@ class MacroFunction(CommandBit):
       return
     if not self.factory.detecttype(FormulaNumber, pos):
       return
-    number = FormulaNumber().setfactory(self.factory)
-    number.parsebit(pos)
+    number = self.factory.parsetype(FormulaNumber, pos)
     if not len(number.original) == remaining:
       self.values.append(number)
       return
     for digit in number.original:
-      value = FormulaNumber().setfactory(self.factory)
+      value = self.factory.create(FormulaNumber)
       value.add(FormulaConstant(digit))
       value.type = number
       self.values.append(value)

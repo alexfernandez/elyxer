@@ -54,8 +54,7 @@ class Formula(Container):
         tag += ';mode=display'
       self.contents = [TaggedText().constant(self.parsed, tag + '"', True)]
       return
-    whole = WholeFormula().setfactory(FormulaFactory())
-    whole.parseformula(self.parsed)
+    whole = FormulaFactory().parseformula(self.parsed)
     self.contents = [whole]
     whole.parent = self
 
@@ -94,9 +93,7 @@ class FormulaBit(Container):
 
   def clone(self):
     "Return a copy of itself."
-    formula = WholeFormula().setfactory(self.factory)
-    formula.parseformula(self.original)
-    return formula
+    return self.factory.parseformula(self.original)
 
   def __unicode__(self):
     "Get a string representation"
@@ -133,18 +130,6 @@ class FormulaConstant(Constant):
 class WholeFormula(FormulaBit):
   "Parse a whole formula"
 
-  def parseformula(self, formula):
-    "Parse a string of text that contains a whole formula."
-    pos = TextPosition(formula)
-    if not self.detect(pos):
-      if pos.finished():
-        return
-      Trace.error('Unknown formula at: ' + pos.identifier())
-      self.add(TaggedBit().constant(formula, 'span class="unknown"'))
-      return
-    self.parsebit(pos)
-    self.process()
-
   def detect(self, pos):
     "Check in the factory"
     return self.factory.detectany(pos)
@@ -158,18 +143,9 @@ class WholeFormula(FormulaBit):
 
   def process(self):
     "Process the whole formula"
-    for index, bit in enumerate(self.contents):
+    for bit in self.contents:
+      Trace.debug('Processing ' + unicode(bit))
       bit.process()
-      # no units processing
-      continue
-      if bit.type == 'alpha':
-        # make variable
-        self.contents[index] = TaggedBit().complete([bit], 'i')
-      elif bit.type == 'font' and index > 0:
-        last = self.contents[index - 1]
-        if last.type == 'number':
-          #separate
-          last.contents.append(FormulaConstant(u' '))
 
 class FormulaFactory(object):
   "Construct bits of formula"
@@ -236,4 +212,18 @@ class FormulaFactory(object):
     if returnedbit:
       return returnedbit.setfactory(self)
     return bit
+
+  def parseformula(self, formula):
+    "Parse a string of text that contains a whole formula."
+    pos = TextPosition(formula)
+    whole = self.create(WholeFormula)
+    if whole.detect(pos):
+      whole.parsebit(pos)
+      whole.process()
+      return whole
+    # no formula found
+    if not pos.finished():
+      Trace.error('Unknown formula at: ' + pos.identifier())
+      whole.add(TaggedBit().constant(formula, 'span class="unknown"'))
+    return whole
 
