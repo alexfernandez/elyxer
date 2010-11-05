@@ -36,7 +36,6 @@ class FormulaCommand(FormulaBit):
 
   commandbits = []
   start = FormulaConfig.starts['command']
-  defining = False
 
   def detect(self, pos):
     "Find the current command"
@@ -53,7 +52,7 @@ class FormulaCommand(FormulaBit):
         newbit.parsebit(pos)
         self.add(newbit)
         return newbit
-    if not self.defining:
+    if not self.factory.defining:
       Trace.error('Unknown command ' + command)
     self.output = TaggedOutput().settag('span class="unknown"')
     self.add(FormulaConstant(command))
@@ -104,7 +103,7 @@ class CommandBit(FormulaCommand):
     "Parse a square bracket"
     if not self.factory.detecttype(SquareBracket, pos):
       return None
-    bracket = SquareBracket()
+    bracket = SquareBracket().setfactory(self.factory)
     bracket.parsebit(pos)
     self.add(bracket)
     return bracket
@@ -114,7 +113,7 @@ class CommandBit(FormulaCommand):
     if not self.factory.detecttype(Bracket, pos):
       Trace.error('No literal parameter found at: ' + pos.identifier())
       return None
-    bracket = Bracket()
+    bracket = Bracket().setfactory(self.factory)
     self.add(bracket.parseliteral(pos))
     return bracket.literal
 
@@ -122,7 +121,7 @@ class CommandBit(FormulaCommand):
     "Parse a square bracket literally."
     if not self.factory.detecttype(SquareBracket, pos):
       return None
-    bracket = SquareBracket()
+    bracket = SquareBracket().setfactory(self.factory)
     self.add(bracket.parseliteral(pos))
     return bracket.literal
 
@@ -188,7 +187,7 @@ class TextFunction(CommandBit):
     self.output = TaggedOutput().settag(self.translated)
     if not self.factory.detecttype(Bracket, pos):
       Trace.error('No parameter for ' + unicode(self))
-    bracket = Bracket().parsetext(pos)
+    bracket = Bracket().setfactory(self.factory).parsetext(pos)
     self.add(bracket)
 
   def process(self):

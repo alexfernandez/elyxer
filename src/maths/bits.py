@@ -69,7 +69,7 @@ class FormulaSymbol(FormulaBit):
     self.skiporiginal(pos.current(), pos)
     self.contents.append(FormulaConstant(symbol))
 
-class Number(FormulaBit):
+class FormulaNumber(FormulaBit):
   "A string of digits in a formula"
 
   def detect(self, pos):
@@ -148,7 +148,7 @@ class Bracket(FormulaBit):
 
   def innerformula(self, pos):
     "Parse a whole formula inside the bracket"
-    self.inner = WholeFormula()
+    self.inner = WholeFormula().setfactory(self.factory)
     if self.inner.detect(pos):
       self.inner.parsebit(pos)
       self.add(self.inner)
@@ -161,7 +161,7 @@ class Bracket(FormulaBit):
 
   def innertext(self, pos):
     "Parse some text inside the bracket, following textual rules."
-    factory = FormulaFactory()
+    factory = self.factory
     specialchars = FormulaConfig.symbolfunctions.keys()
     specialchars.append(FormulaConfig.starts['command'])
     specialchars.append(Comment.start)
@@ -195,7 +195,7 @@ class SquareBracket(Bracket):
   ending = FormulaConfig.endings['squarebracket']
 
 FormulaFactory.types += [
-    FormulaSymbol, RawText, Number, Bracket
+    FormulaSymbol, RawText, FormulaNumber, Bracket
     ]
 FormulaFactory.ignoredtypes += [
     Comment, WhiteSpace

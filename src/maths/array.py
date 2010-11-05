@@ -38,17 +38,17 @@ class FormulaEquation(CommandBit):
   def parsebit(self, pos):
     "Parse the array"
     self.output = ContentsOutput()
-    inner = WholeFormula()
+    inner = WholeFormula().setfactory(self.factory)
     inner.parsebit(pos)
     self.add(inner)
 
 class FormulaCell(FormulaCommand):
   "An array cell inside a row"
 
-  def __init__(self, alignment):
-    FormulaCommand.__init__(self)
+  def setalignment(self, alignment):
     self.alignment = alignment
     self.output = TaggedOutput().settag('td class="formula-' + alignment +'"', True)
+    return self
 
   def parsebit(self, pos):
     self.factory.clearignored(pos)
@@ -58,7 +58,7 @@ class FormulaCell(FormulaCommand):
       Trace.error('Unexpected end of array cell at ' + pos.identifier())
       pos.skip(pos.current())
       return
-    formula = WholeFormula()
+    formula = WholeFormula().setfactory(self.factory)
     formula.parsebit(pos)
     self.add(formula)
 
@@ -67,23 +67,23 @@ class FormulaRow(FormulaCommand):
 
   cellseparator = FormulaConfig.array['cellseparator']
 
-  def __init__(self, alignments):
-    FormulaCommand.__init__(self)
+  def setalignments(self, alignments):
     self.alignments = alignments
     self.output = TaggedOutput().settag('tr', True)
+    return self
 
   def parsebit(self, pos):
     "Parse a whole row"
     index = 0
-    pos.pushending(FormulaRow.cellseparator, optional=True)
+    pos.pushending(self.cellseparator, optional=True)
     while not pos.finished():
       alignment = self.alignments[index % len(self.alignments)]
-      cell = FormulaCell(alignment)
+      cell = FormulaCell().setalignment(alignment)
       cell.factory = self.factory
       cell.parsebit(pos)
       self.add(cell)
       index += 1
-      pos.checkskip(FormulaRow.cellseparator)
+      pos.checkskip(self.cellseparator)
     if len(self.contents) == 0:
       self.output = EmptyOutput()
 
@@ -101,7 +101,7 @@ class MultiRowFormula(CommandBit):
     rowseparator = FormulaConfig.array['rowseparator']
     while True:
       pos.pushending(rowseparator, True)
-      row = FormulaRow(self.alignments)
+      row = FormulaRow().setalignments(self.alignments)
       row.factory = self.factory
       yield row
       if pos.checkfor(rowseparator):

@@ -54,7 +54,8 @@ class Formula(Container):
         tag += ';mode=display'
       self.contents = [TaggedText().constant(self.parsed, tag + '"', True)]
       return
-    whole = WholeFormula.parse(self.parsed)
+    whole = WholeFormula().setfactory(FormulaFactory())
+    whole.parseformula(self.parsed)
     self.contents = [whole]
     whole.parent = self
 
@@ -74,6 +75,11 @@ class FormulaBit(Container):
     self.contents = []
     self.output = ContentsOutput()
 
+  def setfactory(self, factory):
+    "Set the internal formula factory."
+    self.factory = factory
+    return self
+
   def add(self, bit):
     "Add any kind of formula bit already processed"
     self.contents.append(bit)
@@ -88,7 +94,9 @@ class FormulaBit(Container):
 
   def clone(self):
     "Return a copy of itself."
-    return WholeFormula.parse(self.original)
+    formula = WholeFormula().setfactory(self.factory)
+    formula.parseformula(self.original)
+    return formula
 
   def __unicode__(self):
     "Get a string representation"
@@ -125,9 +133,17 @@ class FormulaConstant(Constant):
 class WholeFormula(FormulaBit):
   "Parse a whole formula"
 
-  def __init__(self):
-    FormulaBit.__init__(self)
-    self.factory = FormulaFactory()
+  def parseformula(self, formula):
+    "Parse a string of text that contains a whole formula."
+    pos = TextPosition(formula)
+    if not self.detect(pos):
+      if pos.finished():
+        return
+      Trace.error('Unknown formula at: ' + pos.identifier())
+      self.add(TaggedBit().constant(formula, 'span class="unknown"'))
+      return
+    self.parsebit(pos)
+    self.process()
 
   def detect(self, pos):
     "Check in the factory"
@@ -155,21 +171,6 @@ class WholeFormula(FormulaBit):
           #separate
           last.contents.append(FormulaConstant(u' '))
 
-  def parse(cls, formula):
-    "Parse a whole formula and return it."
-    pos = TextPosition(formula)
-    whole = WholeFormula()
-    if not whole.detect(pos):
-      if pos.finished():
-        return FormulaConstant('')
-      Trace.error('Unknown formula at: ' + pos.identifier())
-      return TaggedBit().constant(formula, 'span class="unknown"')
-    whole.parsebit(pos)
-    whole.process()
-    return whole
-
-  parse = classmethod(parse)
-
 class FormulaFactory(object):
   "Construct bits of formula"
 
@@ -177,6 +178,7 @@ class FormulaFactory(object):
   types = []
   ignoredtypes = []
   instances = {}
+  defining = False
 
   def detectany(self, pos):
     "Detect if there is a next bit"
@@ -197,7 +199,9 @@ class FormulaFactory(object):
   def instance(self, type):
     "Get an instance of the given type."
     if not type in self.instances or not self.instances[type]:
-      self.instances[type] = Cloner.create(type)
+      instance = Cloner.create(type)
+      instance.factory = self
+      self.instances[type] = instance
     return self.instances[type]
 
   def clearignored(self, pos):
@@ -226,9 +230,9 @@ class FormulaFactory(object):
     "Parse the given type and return it."
     bit = self.instance(type)
     self.instances[type] = None
-    bit.factory = self
     returnedbit = bit.parsebit(pos)
     if returnedbit:
+      returnedbit.factory = self
       return returnedbit
     return bit
 

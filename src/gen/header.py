@@ -88,7 +88,6 @@ class LyXPreamble(Container):
     "Parse the LyX preamble, if needed."
     if len(PreambleParser.preamble) == 0:
       return
-    FormulaCommand.defining = True
     pos = TextPosition('\n'.join(PreambleParser.preamble))
     while not pos.finished():
       if self.detectdefinition(pos):
@@ -96,7 +95,6 @@ class LyXPreamble(Container):
       else:
         pos.globincluding('\n')
     PreambleParser.preamble = []
-    FormulaCommand.defining = False
 
   def detectdefinition(self, pos):
     "Detect a macro definition."
@@ -107,8 +105,7 @@ class LyXPreamble(Container):
 
   def parsedefinition(self, pos):
     "Parse a macro definition."
-    command = FormulaCommand()
-    command.factory = FormulaFactory()
+    command = FormulaCommand().setfactory(FormulaFactory())
     bit = command.parsebit(pos)
     if not isinstance(bit, DefiningFunction):
       Trace.error('Did not define a macro with ' + unicode(bit))

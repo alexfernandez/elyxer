@@ -78,7 +78,11 @@ class DefiningFunction(ParameterFunction):
       return
     Trace.debug('New command: ' + newcommand)
     template = self.translated
+    self.factory.defining = True
+    Trace.debug('Defining: yes')
     self.readparams(template, pos)
+    self.factory.defining = False
+    Trace.debug('Defining: no')
     self.contents = []
     macro = MathMacro()
     macro.newcommand = newcommand
@@ -137,15 +141,15 @@ class MacroFunction(CommandBit):
     "For example, 12 would be {1}{2}."
     if pos.finished():
       return
-    if not self.factory.detecttype(Number, pos):
+    if not self.factory.detecttype(FormulaNumber, pos):
       return
-    number = Number()
+    number = FormulaNumber().setfactory(self.factory)
     number.parsebit(pos)
     if not len(number.original) == remaining:
       self.values.append(number)
       return
     for digit in number.original:
-      value = Number()
+      value = FormulaNumber().setfactory(self.factory)
       value.add(FormulaConstant(digit))
       value.type = number
       self.values.append(value)
