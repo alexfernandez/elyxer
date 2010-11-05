@@ -180,11 +180,6 @@ class Bracket(FormulaBit):
         self.literal += pos.skipcurrent()
     self.original += self.literal
 
-  def process(self):
-    "Process the bracket"
-    if self.inner:
-      self.inner.process()
-
 class SquareBracket(Bracket):
   "A [] bracket inside a formula"
 

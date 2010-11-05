@@ -71,11 +71,6 @@ class FormulaCommand(FormulaBit):
     # symbol command
     return FormulaCommand.start + pos.skipcurrent()
 
-  def process(self):
-    "Process the internals"
-    for bit in self.contents:
-      bit.process()
-
 class CommandBit(FormulaCommand):
   "A formula bit that includes a command"
 
@@ -212,7 +207,6 @@ class FontFunction(OneParamFunction):
 
   def process(self):
     "Simplify if possible using a single character."
-    Trace.debug('Processing font')
     self.type = 'font'
     self.simplifyifpossible()
 
