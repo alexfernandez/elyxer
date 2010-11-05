@@ -79,10 +79,8 @@ class DefiningFunction(ParameterFunction):
     Trace.debug('New command: ' + newcommand)
     template = self.translated
     self.factory.defining = True
-    Trace.debug('Defining: yes')
     self.readparams(template, pos)
     self.factory.defining = False
-    Trace.debug('Defining: no')
     self.contents = []
     macro = MathMacro()
     macro.newcommand = newcommand

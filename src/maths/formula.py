@@ -155,8 +155,11 @@ class FormulaFactory(object):
   # bit types will be appended later
   types = []
   ignoredtypes = []
-  instances = {}
   defining = False
+
+  def __init__(self):
+    "Initialize the map of instances."
+    self.instances = dict()
 
   def detectany(self, pos):
     "Detect if there is a next bit"
