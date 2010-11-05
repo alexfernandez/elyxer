@@ -128,30 +128,22 @@ class PostFormula(object):
 
   def posttraverse(self, formula):
     "Traverse over the contents to alter variables and space units."
-    flat = self.flatten(formula)
     last = None
-    for bit, contents in self.traverse(flat):
+    for bit, contents in self.traverse(formula):
       if bit.type == 'alpha':
         self.italicize(bit, contents)
       elif bit.type == 'font' and last and last.type == 'number':
         bit.contents.insert(0, FormulaConstant(u' '))
-        # last.contents.append(FormulaConstant(u' '))
       last = bit
 
-  def flatten(self, bit):
-    "Return all bits as a single list of (bit, list) pairs."
-    flat = []
+  def traverse(self, bit):
+    "Traverse a formula and yield a flattened structure of (bit, list) pairs."
     for element in bit.contents:
       if element.type:
-        flat.append((element, bit.contents))
+        yield (element, bit.contents)
       elif isinstance(element, FormulaBit):
-        flat += self.flatten(element)
-    return flat
-
-  def traverse(self, flattened):
-    "Traverse each (bit, list) pairs of the formula."
-    for element in flattened:
-      yield element
+        for pair in self.traverse(element):
+          yield pair
 
   def italicize(self, bit, contents):
     "Italicize the given bit of text."
