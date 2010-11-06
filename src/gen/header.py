@@ -90,23 +90,26 @@ class LyXPreamble(Container):
       return
     pos = TextPosition('\n'.join(PreambleParser.preamble))
     while not pos.finished():
-      if self.detectdefinition(pos):
-        self.parsedefinition(pos)
+      if self.detectfunction(pos):
+        self.parsefunction(pos)
       else:
         pos.globincluding('\n')
     PreambleParser.preamble = []
 
-  def detectdefinition(self, pos):
-    "Detect a macro definition."
+  def detectfunction(self, pos):
+    "Detect a macro definition or a preamble function."
     for function in FormulaConfig.definingfunctions:
+      if pos.checkfor(function):
+        return True
+    for function in FormulaConfig.preamblefunctions:
       if pos.checkfor(function):
         return True
     return False
 
-  def parsedefinition(self, pos):
-    "Parse a macro definition."
+  def parsefunction(self, pos):
+    "Parse a macro definition or a preamble function."
     command = FormulaFactory().parsetype(FormulaCommand, pos)
-    if not isinstance(command, DefiningFunction):
+    if not isinstance(command, DefiningFunction) and not isinstance(command, PreambleFunction):
       Trace.error('Did not define a macro with ' + unicode(command))
 
 class LyXFooter(Container):
@@ -117,4 +120,25 @@ class LyXFooter(Container):
     self.parser = BoundedDummy()
     self.output = FooterOutput()
     self.partkey = PartKey().createheader('footer')
+
+class PreambleFunction(ParameterFunction):
+  "A function which is used in the preamble to perform some operation."
+
+  commandmap = FormulaConfig.preamblefunctions
+
+  def parsebit(self, pos):
+    "Parse a function with [] and {} parameters."
+    template = self.translated[0]
+    self.readparams(template, pos)
+    operation = self.translated[1]
+    operate = getattr(self, operation)
+    operate()
+
+  def setcounter(self):
+    "Set a global counter."
+    counter = self.getliteralvalue('$p')
+    value = self.getintvalue('$n')
+    Trace.debug('Setting counter ' + unicode(counter) + ' to ' + unicode(value))
+
+FormulaCommand.types += [PreambleFunction]
 

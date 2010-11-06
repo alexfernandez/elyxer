@@ -116,12 +116,19 @@ class ParameterFunction(CommandBit):
     "Get the value of a parameter."
     return self.getparam(name).value
 
-  def getintvalue(self, name):
-    "Get the value of a literal parameter as an int."
+  def getliteralvalue(self, name):
+    "Get the literal value of a parameter."
     param = self.getparam(name)
     if not param or not param.literalvalue:
+      return None
+    return param.literalvalue
+
+  def getintvalue(self, name):
+    "Get the value of a literal parameter as an int."
+    value = self.getliteralvalue(name)
+    if not value:
       return 0
-    return int(param.literalvalue)
+    return int(value)
 
 class HybridFunction(ParameterFunction):
   """
