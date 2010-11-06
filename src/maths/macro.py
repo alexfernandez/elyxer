@@ -19,7 +19,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # --end--
-# Alex 20101506
+# Alex 20100615
 # eLyXer macro processing
 
 from gen.inset import *
