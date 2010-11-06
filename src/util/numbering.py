@@ -45,6 +45,8 @@ class NumberGenerator(object):
   romanlayouts = NumberingConfig.layouts['roman']
   orderedlayouts = NumberingConfig.layouts['ordered']
 
+  counters = dict()
+
   def increase(self, number):
     "Increase the number (or letter)."
     if not isinstance(number, str):
@@ -124,10 +126,6 @@ class UniqueGenerator(NumberGenerator):
   "Generate unique part numbers."
   "Used in footnotes or bibliographical entry numbers: [3]."
 
-  def __init__(self):
-    "Initialize the dictionary for unique parts."
-    self.uniques = dict()
-
   def generate(self, type):
     "Generate unique numbering: a number to place in the title,"
     "but not to append to others. Example: Footnote 15."
@@ -135,10 +133,10 @@ class UniqueGenerator(NumberGenerator):
 
   def create(self, type):
     "Return a unique numbering as an integer."
-    if not type in self.uniques:
-      self.uniques[type] = 0
-    self.uniques[type] = self.increase(self.uniques[type])
-    return self.uniques[type]
+    if not type in self.counters:
+      self.counters[type] = 0
+    self.counters[type] = self.increase(self.counters[type])
+    return self.counters[type]
 
 class OrderedGenerator(NumberGenerator):
   "Generate ordered part numbers separated by a dot, as in 2.3 or 7.5.4."
@@ -184,9 +182,6 @@ class ChapteredGenerator(OrderedGenerator):
   "Generate chaptered numbers, as in Chapter.Number."
   "Used in equations, figures: Equation (5.3), figure 8.15."
 
-  def __init__(self):
-    self.chaptered = dict()
-
   def generate(self, type, chapter = None):
     "Generate a number which goes with first-level numbers (chapters). "
     "For the article classes a unique number is generated."
@@ -194,11 +189,11 @@ class ChapteredGenerator(OrderedGenerator):
       return NumberGenerator.unique.generate(type)
     if not chapter:
       chapter = NumberGenerator.ordered.getchapter()
-    if not type in self.chaptered or self.chaptered[type][0] != chapter:
-      self.chaptered[type] = [chapter, 0]
-    chaptered = self.chaptered[type]
+    if not type in self.counters or self.counters[type][0] != chapter:
+      self.counters[type] = [chapter, 0]
+    chaptered = self.counters[type]
     chaptered[1] = self.increase(chaptered[1])
-    self.chaptered[type] = chaptered
+    self.counters[type] = chaptered
     return self.dotseparated(chaptered)
 
 class RomanGenerator(UniqueGenerator):
