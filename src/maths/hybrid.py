@@ -106,6 +106,23 @@ class ParameterFunction(CommandBit):
       if paramdef:
         yield paramdef
 
+  def getparam(self, name):
+    "Get a parameter as parsed."
+    if not name in self.params:
+      return None
+    return self.params[name]
+
+  def getvalue(self, name):
+    "Get the value of a parameter."
+    return self.getparam(name).value
+
+  def getintvalue(self, name):
+    "Get the value of a literal parameter as an int."
+    param = self.getparam(name)
+    if not param or not param.literalvalue:
+      return 0
+    return int(param.literalvalue)
+
 class HybridFunction(ParameterFunction):
   """
   A parameter function where the output is also defined using a template.

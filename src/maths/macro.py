@@ -84,16 +84,10 @@ class DefiningFunction(ParameterFunction):
     self.contents = []
     macro = MathMacro()
     macro.newcommand = newcommand
-    macro.parameternumber = self.readparameternumber()
-    macro.definition = self.params['$d'].value
+    macro.parameternumber = self.getintvalue('$n')
+    macro.definition = self.getvalue('$d')
     self.extractdefaults(macro)
     MathMacro.macros[newcommand] = macro
-
-  def readparameternumber(self):
-    "Read the number of parameters in the macro."
-    if not self.params['$n'].literalvalue:
-      return 0
-    return int(self.params['$n'].literalvalue)
 
   def extractdefaults(self, macro):
     "Extract the default values for existing parameters."
@@ -106,7 +100,7 @@ class DefiningFunction(ParameterFunction):
 
   def extractdefault(self, index):
     "Extract the default value for parameter index."
-    value = self.params['$' + unicode(index)].value
+    value = self.getvalue('$' + unicode(index))
     if not value:
       return None
     if len(value.contents) == 0:
