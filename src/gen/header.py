@@ -138,7 +138,10 @@ class PreambleFunction(ParameterFunction):
     "Set a global counter."
     counter = self.getliteralvalue('$p')
     value = self.getintvalue('$n')
+    counter = counter[0].upper() + counter[1:]
     Trace.debug('Setting counter ' + unicode(counter) + ' to ' + unicode(value))
+    NumberGenerator.unique.uniques[counter] = value
+    NumberGenerator.roman.uniques[counter] = value
 
 FormulaCommand.types += [PreambleFunction]
 
