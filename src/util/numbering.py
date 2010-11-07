@@ -131,8 +131,8 @@ class NumberGenerator(object):
   chaptered = None
   generator = None
 
-  romanlayouts = NumberingConfig.layouts['roman']
-  orderedlayouts = NumberingConfig.layouts['ordered']
+  romanlayouts = [x.lower() for x in NumberingConfig.layouts['roman']]
+  orderedlayouts = [x.lower() for x in NumberingConfig.layouts['ordered']]
 
   counters = dict()
 
@@ -159,11 +159,11 @@ class NumberGenerator(object):
 
   def isunique(self, type):
     "Find out if the layout type corresponds to a unique part."
-    return self.deasterisk(type) in NumberGenerator.romanlayouts
+    return self.deasterisk(type).lower() in self.romanlayouts
 
   def isinordered(self, type):
     "Find out if the layout type corresponds to an (un)ordered part."
-    return self.deasterisk(type) in NumberGenerator.orderedlayouts
+    return self.deasterisk(type).lower() in self.orderedlayouts
 
   def isnumbered(self, type):
     "Find out if the type for a layout corresponds to a numbered layout."
@@ -179,12 +179,12 @@ class NumberGenerator(object):
 
   def getlevel(self, type):
     "Get the level that corresponds to a layout type."
-    type = self.deasterisk(type)
-    if type in self.romanlayouts:
+    if self.isunique(type):
       return 0
-    if not type in self.orderedlayouts:
+    if not self.isinordered(type):
       Trace.error('Unknown layout type ' + type)
       return 0
+    type = self.deasterisk(type).lower()
     level = self.orderedlayouts.index(type) + 1
     return level - DocumentParameters.startinglevel
 
@@ -206,12 +206,14 @@ class NumberGenerator(object):
       return 'Appendix'
     return self.deasterisk(type)
 
-  def getcounter(self, type):
-    "Get the counter for the given type."
-    realtype = type.lower()
-    if not realtype in self.counters:
-      self.counters[realtype] = NumberCounter(type)
-    return self.counters[realtype]
+  def getcounter(self, name):
+    "Get the counter with the given name."
+    name = name.lower()
+    if not name in self.counters:
+      self.counters[name] = NumberCounter(name)
+      if name in self.romanlayouts:
+        self.counters[name].type = 'I'
+    return self.counters[name]
 
   def getchapter(self):
     "Get the current chapter counter."
