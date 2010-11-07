@@ -32,6 +32,7 @@ class NumberCounter(object):
   "A counter for numbers (by default)."
   "The type can be changed to return letters, roman numbers..."
 
+  name = None
   value = None
   type = None
 
@@ -41,6 +42,10 @@ class NumberCounter(object):
       ('XC', 90), ('L', 50), ('XL', 40), ('X', 10), ('IX', 9), ('V', 5),
       ('IV', 4), ('I', 1)
       ]
+
+  def __init__(self, name):
+    "Give a name to the counter."
+    self.name = name
 
   def init(self, value):
     "Set an initial value."
@@ -85,6 +90,13 @@ class NumberCounter(object):
   def reset(self):
     "Reset the counter."
     self.value = 0
+
+  def __unicode__(self):
+    "Return a printable representation."
+    result = 'Counter ' + self.name
+    if self.type:
+      result += ' of type ' + self.type
+    return result
 
 class ChapteredCounter(NumberCounter):
   "A counter which depends on the chapter."
@@ -198,7 +210,7 @@ class NumberGenerator(object):
     "Get the counter for the given type."
     realtype = type.lower()
     if not realtype in self.counters:
-      self.counters[realtype] = NumberCounter()
+      self.counters[realtype] = NumberCounter(type)
     return self.counters[realtype]
 
   def getchapter(self):
@@ -233,7 +245,7 @@ class OrderedGenerator(NumberGenerator):
       self.sequence = self.sequence[:level]
     else:
       while len(self.sequence) < level:
-        self.sequence.append(NumberCounter())
+        self.sequence.append(NumberCounter(type))
     self.sequence[level - 1].increase()
     return self.dotseparated(self.sequence)
 
@@ -271,7 +283,7 @@ class ChapteredGenerator(OrderedGenerator):
   def getchapteredcounter(self, type):
     "Get (or create) a chaptered counter of the given type."
     if not type in self.counters:
-      counter = ChapteredCounter().setchapter(self.getchapter())
+      counter = ChapteredCounter(type).setchapter(self.getchapter())
       self.counters[type] = counter
     return self.counters[type]
 
