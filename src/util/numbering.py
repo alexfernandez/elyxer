@@ -105,23 +105,23 @@ class NumberCounter(object):
       result += ' in mode ' + self.mode
     return result
 
-class ChapteredCounter(NumberCounter):
-  "A counter which depends on the chapter."
+class DependentCounter(NumberCounter):
+  "A counter which depends on another one (the master)."
 
-  chapter = None
+  master = None
 
-  def setchapter(self, chapter):
-    "Set the chapter counter."
-    self.chapter = chapter
-    self.last = self.chapter.getvalue()
+  def setmaster(self, master):
+    "Set the master counter."
+    self.master = master
+    self.last = self.master.getvalue()
     return self
 
   def increase(self):
-    "Increase or, if in a new chapter, restart."
-    if self.last != self.chapter.getvalue():
+    "Increase or, if the master counter has changed, restart."
+    if self.last != self.master.getvalue():
       self.reset()
     NumberCounter.increase(self)
-    self.last = self.chapter.getvalue()
+    self.last = self.master.getvalue()
 
 class NumberGenerator(object):
   "A number generator for unique sequences and hierarchical structures. Used in:"
@@ -266,15 +266,14 @@ class ChapteredGenerator(OrderedGenerator):
     if DocumentParameters.startinglevel > 0:
       return NumberGenerator.unique.generate(type)
     chapter = NumberGenerator.ordered.getchapter()
-    counter = self.getchapteredcounter(type)
+    counter = self.getdependentcounter(type, chapter)
     counter.increase()
     return self.dotseparated([chapter, counter])
 
-  def getchapteredcounter(self, type):
-    "Get (or create) a chaptered counter of the given type."
-    if not type in self.counters or not isinstance(self.counters[type], ChapteredCounter):
-      counter = ChapteredCounter(type).setchapter(self.getchapter())
-      self.counters[type] = counter
+  def getdependentcounter(self, type, master):
+    "Get (or create) a counter of the given type that depends on another."
+    if not type in self.counters or not isinstance(self.counters[type], DependentCounter):
+      self.counters[type] = DependentCounter(type).setmaster(master)
     return self.counters[type]
 
 class RomanGenerator(UniqueGenerator):
