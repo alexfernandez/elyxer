@@ -282,7 +282,7 @@ class ChapteredGenerator(OrderedGenerator):
 
   def getchapteredcounter(self, type):
     "Get (or create) a chaptered counter of the given type."
-    if not type in self.counters:
+    if not type in self.counters or not isinstance(self.counters[type], ChapteredCounter):
       counter = ChapteredCounter(type).setchapter(self.getchapter())
       self.counters[type] = counter
     return self.counters[type]

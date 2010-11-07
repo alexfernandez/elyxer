@@ -125,7 +125,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Figure 4.5 it is.
+Figure 4.1 it is.
 \end_layout
 
 \end_inset
@@ -140,22 +140,28 @@ Figure 4.5 it is.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+Section Four Point One
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-setcounter{section}{1}
+This is the section 4.1, even if sections were bumped to 2.
 \end_layout
 
-\end_inset
+\begin_layout Subsection
+Subsection 4.1.1
+\end_layout
 
+\begin_layout Standard
+Ignoring the subsection 
+\family typewriter
 
+\backslash
+setcounter
+\family default
+ statement in the preamble.
 \end_layout
 
 \begin_layout Section
@@ -163,29 +169,7 @@ Section Four Point Two
 \end_layout
 
 \begin_layout Standard
-This is the section 4.2, even if it's the first one.
-\end_layout
-
-\begin_layout Subsection
-Subsection 4.2.5
-\end_layout
-
-\begin_layout Standard
-Because of multiple 
-\family typewriter
-
-\backslash
-setcounter
-\family default
- statements in the preamble.
-\end_layout
-
-\begin_layout Section
-Section Four Point Three
-\end_layout
-
-\begin_layout Standard
-Section 4.3 comes next.
+Section 4.2 comes next.
 \end_layout
 
 \begin_layout Chapter
