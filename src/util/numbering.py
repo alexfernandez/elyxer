@@ -34,7 +34,7 @@ class NumberCounter(object):
 
   name = None
   value = None
-  type = None
+  mode = None
 
   letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
   romannumerals = [
@@ -77,14 +77,14 @@ class NumberCounter(object):
     return result
 
   def getvalue(self):
-    "Get the current value as configured in the current type."
-    if not self.type or self.type in ['text', '1']:
+    "Get the current value as configured in the current mode."
+    if not self.mode or self.mode in ['text', '1']:
       return self.gettext()
-    if self.type == 'A':
+    if self.mode == 'A':
       return self.getletter()
-    if self.type == 'I':
+    if self.mode == 'I':
       return self.getroman()
-    Trace.error('Unknown counter type ' + self.type)
+    Trace.error('Unknown counter mode ' + self.mode)
     return self.gettext()
 
   def reset(self):
@@ -94,8 +94,8 @@ class NumberCounter(object):
   def __unicode__(self):
     "Return a printable representation."
     result = 'Counter ' + self.name
-    if self.type:
-      result += ' of type ' + self.type
+    if self.mode:
+      result += ' in mode ' + self.mode
     return result
 
 class ChapteredCounter(NumberCounter):
@@ -212,7 +212,7 @@ class NumberGenerator(object):
     if not name in self.counters:
       self.counters[name] = NumberCounter(name)
       if name in self.romanlayouts:
-        self.counters[name].type = 'I'
+        self.counters[name].mode = 'I'
     return self.counters[name]
 
   def getchapter(self):
@@ -226,7 +226,7 @@ class UniqueGenerator(NumberGenerator):
   def generate(self, type):
     "Generate unique numbering: a number to place in the title,"
     "but not to append to others. Example: Footnote 15."
-    return self.getcounter(type).increase().gettext()
+    return self.getcounter(type).increase().getvalue()
 
 class OrderedGenerator(NumberGenerator):
   "Generate ordered part numbers separated by a dot, as in 2.3 or 7.5.4."
@@ -265,7 +265,7 @@ class OrderedGenerator(NumberGenerator):
     "Start appendices here."
     self.sequence = self.sequence[:1]
     self.sequence[0].reset()
-    self.sequence[0].type = 'A'
+    self.sequence[0].mode = 'A'
     self.appendix = True
 
 class ChapteredGenerator(OrderedGenerator):

@@ -112,21 +112,19 @@ class SideNote(Container):
 class Footnote(Container):
   "A footnote to the main text"
 
-  order = '-'
-
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('span class="FootOuter"', False)
 
   def process(self):
-    "Add a letter for the order, rotating"
-    if Options.numberfoot:
-      letter = NumberGenerator.unique.generate('Footnote')
-    else:
-      Footnote.order = NumberGenerator.unique.increase(Footnote.order)
-      letter = Footnote.order
+    "Add a counter for the footnote."
+    "Can be numeric or a letter depending on runtime options."
+    counter = NumberGenerator.unique.getcounter('Footnote')
+    if not Options.numberfoot:
+      counter.mode = 'A'
+    order = NumberGenerator.unique.generate('Footnote')
     span = 'span class="FootMarker"'
-    marker = TaggedText().constant('[' + letter + ']', span)
+    marker = TaggedText().constant('[' + order + ']', span)
     tag = TaggedText().complete([marker] + self.contents, 'span class="Foot"', True)
     self.contents = [marker, tag]
 
