@@ -123,9 +123,9 @@ class DependentCounter(NumberCounter):
     NumberCounter.increase(self)
     self.last = self.master.getvalue()
 
-  def getcombinedvalue(self):
-    "Get the value of the combined counter."
-    return self.master.getvalue() + '.' + self.getvalue()
+  def getvalue(self):
+    "Get the value of the combined counter: master.dependent."
+    return self.master.getvalue() + '.' + NumberCounter.getvalue(self)
 
 class NumberGenerator(object):
   "A number generator for unique sequences and hierarchical structures. Used in:"
@@ -239,19 +239,9 @@ class OrderedGenerator(NumberGenerator):
       self.sequence = self.sequence[:level]
     else:
       while len(self.sequence) < level:
-        self.sequence.append(NumberCounter(type))
-    self.sequence[level - 1].increase()
-    return self.dotseparated(self.sequence)
-
-  def dotseparated(self, sequence):
-    "Get the sequence of counters as a number separated by dots: 1.1.3."
-    dotsep = ''
-    if len(sequence) == 0:
-      Trace.error('Empty number sequence')
-      return '.'
-    for counter in sequence:
-      dotsep += '.' + counter.getvalue()
-    return dotsep[1:]
+        self.sequence.append(DependentCounter(type).setmaster(self.sequence[-1]))
+    self.sequence[-1].increase()
+    return self.sequence[-1].getvalue()
 
   def startappendix(self):
     "Start appendices here."
@@ -272,7 +262,7 @@ class ChapteredGenerator(OrderedGenerator):
     chapter = NumberGenerator.ordered.getchapter()
     counter = self.getdependentcounter(type, chapter)
     counter.increase()
-    return counter.getcombinedvalue()
+    return counter.getvalue()
 
   def getdependentcounter(self, type, master):
     "Get (or create) a counter of the given type that depends on another."
