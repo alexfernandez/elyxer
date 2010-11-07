@@ -60,7 +60,6 @@ class Float(Container):
 
   def processnumber(self):
     "Number a float if it isn't numbered."
-    Trace.debug('Numbering ' + unicode(self))
     if not self.isparent():
       # do nothing; parent will take care of numbering
       return

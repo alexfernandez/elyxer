@@ -86,6 +86,24 @@ class NumberCounter(object):
     "Reset the counter."
     self.value = 0
 
+class ChapteredCounter(NumberCounter):
+  "A counter which depends on the chapter."
+
+  chapter = None
+
+  def setchapter(self, chapter):
+    "Set the chapter counter."
+    self.chapter = chapter
+    self.last = self.chapter.getvalue()
+    return self
+
+  def increase(self):
+    "Increase or, if in a new chapter, restart."
+    if self.last != self.chapter.getvalue():
+      self.reset()
+    NumberCounter.increase(self)
+    self.last = self.chapter.getvalue()
+
 class NumberGenerator(object):
   "A number generator for unique sequences and hierarchical structures. Used in:"
   "  * ordered part numbers: Chapter 3, Section 5.3."
@@ -106,10 +124,6 @@ class NumberGenerator(object):
 
   counters = dict()
 
-  def __init__(self):
-    self.sequence = []
-    self.appendix = False
-
   def increase(self, number):
     "Increase the number (or letter)."
     if not isinstance(number, str):
@@ -126,13 +140,6 @@ class NumberGenerator(object):
   def letter(self, index):
     "Get the letter that corresponds to the given index."
     return NumberGenerator.letters[index % len(NumberGenerator.letters)]
-
-  def startappendix(self):
-    "Start appendices here."
-    self.sequence = self.sequence[:1]
-    self.sequence[0].reset()
-    self.sequence[0].type = 'A'
-    self.appendix = True
 
   def deasterisk(self, type):
     "Remove the possible asterisk in a layout type."
@@ -213,6 +220,10 @@ class OrderedGenerator(NumberGenerator):
   "Generate ordered part numbers separated by a dot, as in 2.3 or 7.5.4."
   "Used in chapters, sections... as in Chapter 5, Section 5.3."
 
+  def __init__(self):
+    self.sequence = []
+    self.appendix = False
+
   def generate(self, type):
     "Generate ordered numbering: a number to use and possibly concatenate "
     "with others. Example: Chapter 1, Section 1.5."
@@ -248,23 +259,33 @@ class OrderedGenerator(NumberGenerator):
     "Get the current chapter as a number."
     return self.getchaptercounter().getvalue()
 
+  def startappendix(self):
+    "Start appendices here."
+    self.sequence = self.sequence[:1]
+    self.sequence[0].reset()
+    self.sequence[0].type = 'A'
+    self.appendix = True
+
 class ChapteredGenerator(OrderedGenerator):
   "Generate chaptered numbers, as in Chapter.Number."
   "Used in equations, figures: Equation (5.3), figure 8.15."
 
-  def generate(self, type, chapter = None):
+  def generate(self, type):
     "Generate a number which goes with first-level numbers (chapters). "
     "For the article classes a unique number is generated."
     if DocumentParameters.startinglevel > 0:
       return NumberGenerator.unique.generate(type)
-    if not chapter:
-      chapter = NumberGenerator.ordered.getchaptercounter()
-    if not type in self.counters or self.counters[type][0] != chapter:
-      self.counters[type] = [chapter, NumberCounter()]
-    chaptered = self.counters[type]
-    chaptered[1].increase()
-    Trace.debug('Chaptered: ' + unicode(chaptered))
-    return self.dotseparated(chaptered)
+    chapter = NumberGenerator.ordered.getchaptercounter()
+    counter = self.getcounter(type)
+    counter.increase()
+    return self.dotseparated([chapter, counter])
+
+  def getcounter(self, type):
+    "Get (or create) the proper counter of the given type."
+    if not type in self.counters:
+      counter = ChapteredCounter().setchapter(NumberGenerator.ordered.getchaptercounter())
+      self.counters[type] = counter
+    return self.counters[type]
 
 class RomanGenerator(UniqueGenerator):
   "Generate roman numerals for part numbers."
@@ -280,15 +301,6 @@ class RomanGenerator(UniqueGenerator):
     "Generate a part number in roman numerals, to use in unique part numbers."
     "E.g.: Part I, Book IV."
     return self.getcounter(type).increase().getroman()
-
-  def getroman(self, number):
-    "Get the roman numeral that corresponds to the given arabic numeral."
-    result = ''
-    for numeral, value in self.romannumerals:
-      if number >= value:
-        result += numeral * (number / value)
-        number = number % value
-    return result
 
 
 NumberGenerator.unique = UniqueGenerator()
