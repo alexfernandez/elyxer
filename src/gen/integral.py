@@ -116,7 +116,7 @@ class IntegralListOf(IntegralProcessor):
 
   def processfloat(self, float):
     "Get an entry for the list of floats."
-    if float.parentfloat:
+    if not float.isparent():
       return None
     return TOCEntry().create(float)
 

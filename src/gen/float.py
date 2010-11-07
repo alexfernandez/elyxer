@@ -41,15 +41,32 @@ class Float(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('div class="float"', True)
-    self.parentfloat = None
-    self.children = []
 
   def process(self):
     "Get the float type."
     self.type = self.header[2]
+    self.processnumber()
     self.processfloats()
     self.processtags()
-    self.chapter = NumberGenerator.ordered.getchaptercounter()
+
+  def isparent(self):
+    "Find out whether the float is the parent float or is contained in another float."
+    current = self.parent
+    while current:
+      if isinstance(current, Float):
+        return False
+      current = current.parent
+    return True
+
+  def processnumber(self):
+    "Number a float if it isn't numbered."
+    Trace.debug('Numbering ' + unicode(self))
+    if not self.isparent():
+      # do nothing
+      return
+    number = NumberGenerator.chaptered.generate(self.type)
+    entry = Translator.translate('float-' + self.type) + number
+    self.partkey = PartKey().createfloat(entry, number)
 
   def processtags(self):
     "Process the HTML tags."
@@ -66,10 +83,12 @@ class Float(Container):
   def processfloats(self):
     "Process all floats contained inside."
     floats = self.searchall(Float)
-    for float in floats:
-      float.output.tag = float.output.tag.replace('div', 'span')
-      float.parentfloat = self
-      self.children.append(float)
+    for index, subfloat in enumerate(floats):
+      subfloat.output.tag = subfloat.output.tag.replace('div', 'span')
+      # number the float
+      number = NumberGenerator.chaptered.letter(index).lower()
+      entry = '(' + number + ')'
+      subfloat.partkey = PartKey().createfloat(entry, number)
 
   def getembeddedtag(self):
     "Get the tag for the embedded object."
@@ -226,7 +245,6 @@ class PostFloat(object):
 
   def postprocess(self, last, float, next):
     "Move the label to the top and number the caption"
-    self.postnumber(float)
     number = FloatNumber().create(float)
     for caption in float.searchinside(Caption):
       self.postlabels(float, caption)
@@ -240,20 +258,6 @@ class PostFloat(object):
     if len(labels) == 0:
       labels = [Label().create(' ', float.partkey.tocentry.replace(' ', '-'))]
     float.contents = labels + float.contents
-
-  def postnumber(self, float):
-    "Number a float if it isn't numbered."
-    if float.partkey:
-      return
-    if float.parentfloat:
-      self.postnumber(float.parentfloat)
-      index = float.parentfloat.children.index(float)
-      number = NumberGenerator.chaptered.letter(index).lower()
-      entry = '(' + number + ')'
-    else:
-      number = NumberGenerator.chaptered.generate(float.type, float.chapter)
-      entry = Translator.translate('float-' + float.type) + number
-    float.partkey = PartKey().createfloat(entry, number)
 
 class PostWrap(PostFloat):
   "For a wrap: exactly like a float"
