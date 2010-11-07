@@ -130,8 +130,6 @@ class NumberGenerator(object):
   "  * chaptered part numbers: Figure 3.15, Equation (8.3)."
   "  * unique roman part numbers: Part I, Book IV."
 
-  letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
   unique = None
   ordered = None
   roman = None
@@ -142,23 +140,6 @@ class NumberGenerator(object):
   orderedlayouts = [x.lower() for x in NumberingConfig.layouts['ordered']]
 
   counters = dict()
-
-  def increase(self, number):
-    "Increase the number (or letter)."
-    if not isinstance(number, str):
-      return number + 1
-    if number == '-':
-      index = 0
-    elif not number in NumberGenerator.letters:
-      Trace.error('Unknown letter numeration ' + number)
-      return 0
-    else:
-      index = NumberGenerator.letters.index(number) + 1
-    return self.letter(index)
-
-  def letter(self, index):
-    "Get the letter that corresponds to the given index."
-    return NumberGenerator.letters[index % len(NumberGenerator.letters)]
 
   def deasterisk(self, type):
     "Remove the possible asterisk in a layout type."
