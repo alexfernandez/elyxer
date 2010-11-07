@@ -219,7 +219,7 @@ class NumberGenerator(object):
     if not name in self.counters:
       self.counters[name] = NumberCounter(name)
       if name in self.romanlayouts:
-        self.counters[name].mode = 'I'
+        self.counters[name].setmode('I')
     return self.counters[name]
 
   def getchapter(self):
@@ -272,7 +272,7 @@ class OrderedGenerator(NumberGenerator):
     "Start appendices here."
     self.sequence = self.sequence[:1]
     self.sequence[0].reset()
-    self.sequence[0].mode = 'A'
+    self.sequence[0].setmode('A')
     self.appendix = True
 
 class ChapteredGenerator(OrderedGenerator):

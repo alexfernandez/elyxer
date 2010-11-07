@@ -121,7 +121,7 @@ class Footnote(Container):
     "Can be numeric or a letter depending on runtime options."
     counter = NumberGenerator.unique.getcounter('Footnote')
     if not Options.numberfoot:
-      counter.mode = 'A'
+      counter.setmode('A')
     order = NumberGenerator.unique.generate('Footnote')
     span = 'span class="FootMarker"'
     marker = TaggedText().constant('[' + order + ']', span)
