@@ -140,7 +140,7 @@ class PreambleFunction(ParameterFunction):
     value = self.getintvalue('$n')
     counter = counter[0].upper() + counter[1:]
     Trace.debug('Setting counter ' + unicode(counter) + ' to ' + unicode(value))
-    NumberGenerator.counters[counter] = value
+    NumberGenerator.generator.getcounter(counter).init(value)
 
 FormulaCommand.types += [PreambleFunction]
 

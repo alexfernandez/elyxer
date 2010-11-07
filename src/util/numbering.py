@@ -28,6 +28,64 @@ from util.docparams import *
 from conf.config import *
 
 
+class NumberCounter(object):
+  "A counter for numbers (by default)."
+  "The type can be changed to return letters, roman numbers..."
+
+  value = None
+  type = None
+
+  letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  romannumerals = [
+      ('M', 1000), ('CM', 900), ('D', 500), ('CD', 400), ('C', 100),
+      ('XC', 90), ('L', 50), ('XL', 40), ('X', 10), ('IX', 9), ('V', 5),
+      ('IV', 4), ('I', 1)
+      ]
+
+  def init(self, value):
+    "Set an initial value."
+    self.value = value
+
+  def getnext(self):
+    "Get the next value."
+    if not self.value:
+      self.value = 0
+    self.value += 1
+    return self.value
+
+  def gettext(self):
+    "Get the next value as a text string."
+    return unicode(self.getnext())
+
+  def getletter(self):
+    "Get the next value as a letter."
+    return self.letters[self.getnext() % len(self.letters)]
+
+  def getroman(self):
+    "Get the next value as a roman number."
+    result = ''
+    number = self.getnext()
+    for numeral, value in self.romannumerals:
+      if number >= value:
+        result += numeral * (number / value)
+        number = number % value
+    return result
+
+  def getvalue(self):
+    "Get the current value as configured in the current type."
+    if not self.type or self.type in ['text', '1']:
+      return self.gettext()
+    if self.type == 'a':
+      return self.getletter()
+    if self.type == 'I':
+      return self.getroman()
+    Trace.error('Unknown counter type ' + self.type)
+    return self.gettext()
+
+  def reset(self):
+    "Reset the counter."
+    self.value = 0
+
 class NumberGenerator(object):
   "A number generator for unique sequences and hierarchical structures. Used in:"
   "  * ordered part numbers: Chapter 3, Section 5.3."
@@ -41,6 +99,7 @@ class NumberGenerator(object):
   ordered = None
   roman = None
   chaptered = None
+  generator = None
 
   romanlayouts = NumberingConfig.layouts['roman']
   orderedlayouts = NumberingConfig.layouts['ordered']
@@ -66,7 +125,7 @@ class NumberGenerator(object):
 
   def startappendix(self):
     "Start appendices here."
-    self.number = ['-']
+    self.sequence = ['-']
     self.appendix = True
 
   def deasterisk(self, type):
@@ -122,6 +181,12 @@ class NumberGenerator(object):
       return 'Appendix'
     return self.deasterisk(type)
 
+  def getcounter(self, type):
+    "Get the counter for the given type."
+    if not type in self.counters:
+      self.counters[type] = NumberCounter()
+    return self.counters[type]
+
 class UniqueGenerator(NumberGenerator):
   "Generate unique part numbers."
   "Used in footnotes or bibliographical entry numbers: [3]."
@@ -129,7 +194,7 @@ class UniqueGenerator(NumberGenerator):
   def generate(self, type):
     "Generate unique numbering: a number to place in the title,"
     "but not to append to others. Example: Footnote 15."
-    return unicode(self.create(type))
+    return self.getcounter(type).gettext()
 
   def create(self, type):
     "Return a unique numbering as an integer."
@@ -143,7 +208,7 @@ class OrderedGenerator(NumberGenerator):
   "Used in chapters, sections... as in Chapter 5, Section 5.3."
 
   def __init__(self):
-    self.number = []
+    self.sequence = []
     self.appendix = False
 
   def generate(self, type):
@@ -153,30 +218,30 @@ class OrderedGenerator(NumberGenerator):
     if level == 0:
       Trace.error('Impossible level 0 for ordered part')
       return '.'
-    if len(self.number) >= level:
-      self.number = self.number[:level]
+    if len(self.sequence) >= level:
+      self.sequence = self.sequence[:level]
     else:
-      while len(self.number) < level:
-        self.number.append(0)
-    self.number[level - 1] = self.increase(self.number[level - 1])
-    return self.dotseparated(self.number)
+      while len(self.sequence) < level:
+        self.sequence.append(0)
+    self.sequence[level - 1] = self.increase(self.sequence[level - 1])
+    return self.dotseparated(self.sequence)
 
-  def dotseparated(self, number):
+  def dotseparated(self, sequence):
     "Get the number separated by dots: 1.1.3"
     dotsep = ''
-    if len(number) == 0:
-      Trace.error('Empty number')
+    if len(sequence) == 0:
+      Trace.error('Empty number sequence')
       return '.'
-    for piece in number:
+    for piece in sequence:
       dotsep += '.' + unicode(piece)
     return dotsep[1:]
 
   def getchapter(self):
     "Get the current chapter number."
-    if len(self.number) == 0:
+    if len(self.sequence) == 0:
       return 0
     else:
-      return self.number[0]
+      return self.sequence[0]
 
 class ChapteredGenerator(OrderedGenerator):
   "Generate chaptered numbers, as in Chapter.Number."
@@ -209,7 +274,7 @@ class RomanGenerator(UniqueGenerator):
   def generate(self, type):
     "Generate a part number in roman numerals, to use in unique part numbers."
     "E.g.: Part I, Book IV."
-    return self.getroman(self.create(type))
+    return self.getcounter(type).getroman()
 
   def getroman(self, number):
     "Get the roman numeral that corresponds to the given arabic numeral."
@@ -225,4 +290,5 @@ NumberGenerator.unique = UniqueGenerator()
 NumberGenerator.ordered = OrderedGenerator()
 NumberGenerator.chaptered = ChapteredGenerator()
 NumberGenerator.roman = RomanGenerator()
+NumberGenerator.generator = NumberGenerator()
 
