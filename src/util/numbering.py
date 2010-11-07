@@ -200,6 +200,14 @@ class NumberGenerator(object):
       self.counters[type] = NumberCounter()
     return self.counters[type]
 
+  def getchaptercounter(self):
+    "Get the current chapter counter."
+    return self.getcounter('Chapter')
+
+  def getchapter(self):
+    "Get the current chapter as a number."
+    return self.getchaptercounter().getvalue()
+
 class UniqueGenerator(NumberGenerator):
   "Generate unique part numbers."
   "Used in footnotes or bibliographical entry numbers: [3]."
@@ -221,7 +229,7 @@ class OrderedGenerator(NumberGenerator):
   "Used in chapters, sections... as in Chapter 5, Section 5.3."
 
   def __init__(self):
-    self.sequence = []
+    self.sequence = [self.getchaptercounter()]
     self.appendix = False
 
   def generate(self, type):
@@ -248,16 +256,6 @@ class OrderedGenerator(NumberGenerator):
     for counter in sequence:
       dotsep += '.' + counter.getvalue()
     return dotsep[1:]
-
-  def getchaptercounter(self):
-    "Get the current chapter counter."
-    if len(self.sequence) == 0:
-      return NumberCounter()
-    return self.sequence[0]
-
-  def getchapter(self):
-    "Get the current chapter as a number."
-    return self.getchaptercounter().getvalue()
 
   def startappendix(self):
     "Start appendices here."
