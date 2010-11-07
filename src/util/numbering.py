@@ -123,6 +123,10 @@ class DependentCounter(NumberCounter):
     NumberCounter.increase(self)
     self.last = self.master.getvalue()
 
+  def getcombinedvalue(self):
+    "Get the value of the combined counter."
+    return self.master.getvalue() + '.' + self.getvalue()
+
 class NumberGenerator(object):
   "A number generator for unique sequences and hierarchical structures. Used in:"
   "  * ordered part numbers: Chapter 3, Section 5.3."
@@ -268,7 +272,7 @@ class ChapteredGenerator(OrderedGenerator):
     chapter = NumberGenerator.ordered.getchapter()
     counter = self.getdependentcounter(type, chapter)
     counter.increase()
-    return self.dotseparated([chapter, counter])
+    return counter.getcombinedvalue()
 
   def getdependentcounter(self, type, master):
     "Get (or create) a counter of the given type that depends on another."
