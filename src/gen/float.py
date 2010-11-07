@@ -62,7 +62,7 @@ class Float(Container):
     "Number a float if it isn't numbered."
     Trace.debug('Numbering ' + unicode(self))
     if not self.isparent():
-      # do nothing
+      # do nothing; parent will take care of numbering
       return
     number = NumberGenerator.chaptered.generate(self.type)
     entry = Translator.translate('float-' + self.type) + number
