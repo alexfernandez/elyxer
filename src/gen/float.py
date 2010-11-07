@@ -82,10 +82,12 @@ class Float(Container):
   def processfloats(self):
     "Process all floats contained inside."
     floats = self.searchall(Float)
-    for index, subfloat in enumerate(floats):
+    counter = NumberCounter('subfloat').setmode('a')
+    for subfloat in floats:
       subfloat.output.tag = subfloat.output.tag.replace('div', 'span')
       # number the float
-      number = NumberGenerator.chaptered.letter(index).lower()
+      counter.increase()
+      number = counter.getvalue()
       entry = '(' + number + ')'
       subfloat.partkey = PartKey().createfloat(entry, number)
 

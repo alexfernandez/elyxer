@@ -47,6 +47,11 @@ class NumberCounter(object):
     "Give a name to the counter."
     self.name = name
 
+  def setmode(self, mode):
+    "Set the counter mode. Can be changed at runtime."
+    self.mode = mode
+    return self
+
   def init(self, value):
     "Set an initial value."
     self.value = value
@@ -82,6 +87,8 @@ class NumberCounter(object):
       return self.gettext()
     if self.mode == 'A':
       return self.getletter()
+    if self.mode == 'a':
+      return self.getletter().lower()
     if self.mode == 'I':
       return self.getroman()
     Trace.error('Unknown counter mode ' + self.mode)
