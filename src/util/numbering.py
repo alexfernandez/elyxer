@@ -46,25 +46,25 @@ class NumberCounter(object):
     "Set an initial value."
     self.value = value
 
-  def getnext(self):
-    "Get the next value."
+  def increase(self):
+    "Increase the counter value and return the counter."
     if not self.value:
       self.value = 0
     self.value += 1
-    return self.value
+    return self
 
   def gettext(self):
     "Get the next value as a text string."
-    return unicode(self.getnext())
+    return unicode(self.value)
 
   def getletter(self):
     "Get the next value as a letter."
-    return self.letters[self.getnext() % len(self.letters)]
+    return self.letters[(self.value - 1) % len(self.letters)]
 
   def getroman(self):
     "Get the next value as a roman number."
     result = ''
-    number = self.getnext()
+    number = self.value
     for numeral, value in self.romannumerals:
       if number >= value:
         result += numeral * (number / value)
@@ -75,7 +75,7 @@ class NumberCounter(object):
     "Get the current value as configured in the current type."
     if not self.type or self.type in ['text', '1']:
       return self.gettext()
-    if self.type == 'a':
+    if self.type == 'A':
       return self.getletter()
     if self.type == 'I':
       return self.getroman()
@@ -106,6 +106,10 @@ class NumberGenerator(object):
 
   counters = dict()
 
+  def __init__(self):
+    self.sequence = []
+    self.appendix = False
+
   def increase(self, number):
     "Increase the number (or letter)."
     if not isinstance(number, str):
@@ -125,7 +129,9 @@ class NumberGenerator(object):
 
   def startappendix(self):
     "Start appendices here."
-    self.sequence = ['-']
+    self.sequence = self.sequence[:1]
+    self.sequence[0].reset()
+    self.sequence[0].type = 'A'
     self.appendix = True
 
   def deasterisk(self, type):
@@ -194,7 +200,7 @@ class UniqueGenerator(NumberGenerator):
   def generate(self, type):
     "Generate unique numbering: a number to place in the title,"
     "but not to append to others. Example: Footnote 15."
-    return self.getcounter(type).gettext()
+    return self.getcounter(type).increase().gettext()
 
   def create(self, type):
     "Return a unique numbering as an integer."
@@ -207,10 +213,6 @@ class OrderedGenerator(NumberGenerator):
   "Generate ordered part numbers separated by a dot, as in 2.3 or 7.5.4."
   "Used in chapters, sections... as in Chapter 5, Section 5.3."
 
-  def __init__(self):
-    self.sequence = []
-    self.appendix = False
-
   def generate(self, type):
     "Generate ordered numbering: a number to use and possibly concatenate "
     "with others. Example: Chapter 1, Section 1.5."
@@ -222,26 +224,29 @@ class OrderedGenerator(NumberGenerator):
       self.sequence = self.sequence[:level]
     else:
       while len(self.sequence) < level:
-        self.sequence.append(0)
-    self.sequence[level - 1] = self.increase(self.sequence[level - 1])
+        self.sequence.append(NumberCounter())
+    self.sequence[level - 1].increase()
     return self.dotseparated(self.sequence)
 
   def dotseparated(self, sequence):
-    "Get the number separated by dots: 1.1.3"
+    "Get the sequence of counters as a number separated by dots: 1.1.3."
     dotsep = ''
     if len(sequence) == 0:
       Trace.error('Empty number sequence')
       return '.'
-    for piece in sequence:
-      dotsep += '.' + unicode(piece)
+    for counter in sequence:
+      dotsep += '.' + counter.getvalue()
     return dotsep[1:]
 
-  def getchapter(self):
-    "Get the current chapter number."
+  def getchaptercounter(self):
+    "Get the current chapter counter."
     if len(self.sequence) == 0:
-      return 0
-    else:
-      return self.sequence[0]
+      return NumberCounter()
+    return self.sequence[0]
+
+  def getchapter(self):
+    "Get the current chapter as a number."
+    return self.getchaptercounter().getvalue()
 
 class ChapteredGenerator(OrderedGenerator):
   "Generate chaptered numbers, as in Chapter.Number."
@@ -253,12 +258,12 @@ class ChapteredGenerator(OrderedGenerator):
     if DocumentParameters.startinglevel > 0:
       return NumberGenerator.unique.generate(type)
     if not chapter:
-      chapter = NumberGenerator.ordered.getchapter()
+      chapter = NumberGenerator.ordered.getchaptercounter()
     if not type in self.counters or self.counters[type][0] != chapter:
-      self.counters[type] = [chapter, 0]
+      self.counters[type] = [chapter, NumberCounter()]
     chaptered = self.counters[type]
-    chaptered[1] = self.increase(chaptered[1])
-    self.counters[type] = chaptered
+    chaptered[1].increase()
+    Trace.debug('Chaptered: ' + unicode(chaptered))
     return self.dotseparated(chaptered)
 
 class RomanGenerator(UniqueGenerator):
@@ -274,7 +279,7 @@ class RomanGenerator(UniqueGenerator):
   def generate(self, type):
     "Generate a part number in roman numerals, to use in unique part numbers."
     "E.g.: Part I, Book IV."
-    return self.getcounter(type).getroman()
+    return self.getcounter(type).increase().getroman()
 
   def getroman(self, number):
     "Get the roman numeral that corresponds to the given arabic numeral."

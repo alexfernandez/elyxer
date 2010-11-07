@@ -49,7 +49,7 @@ class Float(Container):
     self.type = self.header[2]
     self.processfloats()
     self.processtags()
-    self.chapter = NumberGenerator.ordered.getchapter()
+    self.chapter = NumberGenerator.ordered.getchaptercounter()
 
   def processtags(self):
     "Process the HTML tags."
