@@ -196,17 +196,14 @@ class NumberGenerator(object):
 
   def getcounter(self, type):
     "Get the counter for the given type."
-    if not type in self.counters:
-      self.counters[type] = NumberCounter()
-    return self.counters[type]
-
-  def getchaptercounter(self):
-    "Get the current chapter counter."
-    return self.getcounter('Chapter')
+    realtype = type.lower()
+    if not realtype in self.counters:
+      self.counters[realtype] = NumberCounter()
+    return self.counters[realtype]
 
   def getchapter(self):
-    "Get the current chapter as a number."
-    return self.getchaptercounter().getvalue()
+    "Get the current chapter counter."
+    return self.getcounter('Chapter')
 
 class UniqueGenerator(NumberGenerator):
   "Generate unique part numbers."
@@ -217,19 +214,12 @@ class UniqueGenerator(NumberGenerator):
     "but not to append to others. Example: Footnote 15."
     return self.getcounter(type).increase().gettext()
 
-  def create(self, type):
-    "Return a unique numbering as an integer."
-    if not type in self.counters:
-      self.counters[type] = 0
-    self.counters[type] = self.increase(self.counters[type])
-    return self.counters[type]
-
 class OrderedGenerator(NumberGenerator):
   "Generate ordered part numbers separated by a dot, as in 2.3 or 7.5.4."
   "Used in chapters, sections... as in Chapter 5, Section 5.3."
 
   def __init__(self):
-    self.sequence = [self.getchaptercounter()]
+    self.sequence = [self.getchapter()]
     self.appendix = False
 
   def generate(self, type):
@@ -273,27 +263,21 @@ class ChapteredGenerator(OrderedGenerator):
     "For the article classes a unique number is generated."
     if DocumentParameters.startinglevel > 0:
       return NumberGenerator.unique.generate(type)
-    chapter = NumberGenerator.ordered.getchaptercounter()
-    counter = self.getcounter(type)
+    chapter = NumberGenerator.ordered.getchapter()
+    counter = self.getchapteredcounter(type)
     counter.increase()
     return self.dotseparated([chapter, counter])
 
-  def getcounter(self, type):
-    "Get (or create) the proper counter of the given type."
+  def getchapteredcounter(self, type):
+    "Get (or create) a chaptered counter of the given type."
     if not type in self.counters:
-      counter = ChapteredCounter().setchapter(NumberGenerator.ordered.getchaptercounter())
+      counter = ChapteredCounter().setchapter(self.getchapter())
       self.counters[type] = counter
     return self.counters[type]
 
 class RomanGenerator(UniqueGenerator):
   "Generate roman numerals for part numbers."
   "Used in parts and books: Part I, Book IV."
-
-  romannumerals = [
-      ('M', 1000), ('CM', 900), ('D', 500), ('CD', 400), ('C', 100),
-      ('XC', 90), ('L', 50), ('XL', 40), ('X', 10), ('IX', 9), ('V', 5),
-      ('IV', 4), ('I', 1)
-      ]
 
   def generate(self, type):
     "Generate a part number in roman numerals, to use in unique part numbers."
