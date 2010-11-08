@@ -35,6 +35,7 @@ class NumberCounter(object):
   name = None
   value = None
   mode = None
+  master = None
 
   letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
   romannumerals = [
@@ -108,8 +109,6 @@ class NumberCounter(object):
 class DependentCounter(NumberCounter):
   "A counter which depends on another one (the master)."
 
-  master = None
-
   def setmaster(self, master):
     "Set the master counter."
     self.master = master
@@ -122,6 +121,7 @@ class DependentCounter(NumberCounter):
       self.reset()
     NumberCounter.increase(self)
     self.last = self.master.getvalue()
+    return self
 
   def getvalue(self):
     "Get the value of the combined counter: master.dependent."
@@ -211,6 +211,12 @@ class NumberGenerator(object):
     "Get the current chapter counter."
     return self.getcounter('Chapter')
 
+  def getdependentcounter(self, type, master):
+    "Get (or create) a counter of the given type that depends on another."
+    if not type in self.counters or not self.counters[type].master:
+      self.counters[type] = DependentCounter(type).setmaster(master)
+    return self.counters[type]
+
 class UniqueGenerator(NumberGenerator):
   "Generate unique part numbers."
   "Used in footnotes or bibliographical entry numbers: [3]."
@@ -224,30 +230,39 @@ class OrderedGenerator(NumberGenerator):
   "Generate ordered part numbers separated by a dot, as in 2.3 or 7.5.4."
   "Used in chapters, sections... as in Chapter 5, Section 5.3."
 
-  def __init__(self):
-    self.sequence = [self.getchapter()]
-    self.appendix = False
+  appendix = False
+  sequence = []
+
+  def createsequence(self):
+    "Create the original sequence."
+    sequence = []
+    for type in self.orderedlayouts:
+      if sequence == []:
+        counter = self.getcounter(type)
+      else:
+        counter = self.getdependentcounter(type, sequence[-1])
+      sequence.append(counter)
+      if len(sequence) + 1 > DocumentParameters.maxdepth:
+        return sequence
+    return sequence
 
   def generate(self, type):
     "Generate ordered numbering: a number to use and possibly concatenate "
     "with others. Example: Chapter 1, Section 1.5."
+    if self.sequence == []:
+      self.sequence = self.createsequence()
     level = self.getlevel(type)
     if level == 0:
       Trace.error('Impossible level 0 for ordered part')
       return '.'
-    if len(self.sequence) >= level:
-      self.sequence = self.sequence[:level]
-    else:
-      while len(self.sequence) < level:
-        self.sequence.append(DependentCounter(type).setmaster(self.sequence[-1]))
-    self.sequence[-1].increase()
-    return self.sequence[-1].getvalue()
+    if level > len(self.sequence):
+      return NumberGenerator.unique.generate(type)
+    counter = self.sequence[level - 1]
+    return counter.increase().getvalue()
 
   def startappendix(self):
     "Start appendices here."
-    self.sequence = self.sequence[:1]
-    self.sequence[0].reset()
-    self.sequence[0].setmode('A')
+    self.sequence[0].setmode('A').reset()
     self.appendix = True
 
 class ChapteredGenerator(OrderedGenerator):
@@ -263,12 +278,6 @@ class ChapteredGenerator(OrderedGenerator):
     counter = self.getdependentcounter(type, chapter)
     counter.increase()
     return counter.getvalue()
-
-  def getdependentcounter(self, type, master):
-    "Get (or create) a counter of the given type that depends on another."
-    if not type in self.counters or not isinstance(self.counters[type], DependentCounter):
-      self.counters[type] = DependentCounter(type).setmaster(master)
-    return self.counters[type]
 
 class RomanGenerator(UniqueGenerator):
   "Generate roman numerals for part numbers."
