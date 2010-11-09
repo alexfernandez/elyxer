@@ -151,6 +151,10 @@ class NumberGenerator(object):
 
   def isunique(self, type):
     "Find out if the layout type corresponds to a unique part."
+    return self.isroman(type)
+
+  def isroman(self, type):
+    "Find out if the layout type should have roman numeration."
     return self.deasterisk(type).lower() in self.romanlayouts
 
   def isinordered(self, type):
@@ -160,6 +164,10 @@ class NumberGenerator(object):
   def isnumbered(self, type):
     "Find out if the type for a layout corresponds to a numbered layout."
     if '*' in type:
+      return False
+    if self.isroman(type):
+      return True
+    if not self.isinordered(type):
       return False
     if self.getlevel(type) > DocumentParameters.maxdepth:
       return False
@@ -185,11 +193,8 @@ class NumberGenerator(object):
     "Unique part types such as Part or Book generate roman numbers: Part I."
     "Ordered part types return dot-separated tuples: Chapter 5, Section 2.3."
     "Everything else generates unique numbers: Bibliography [1]."
-    if self.isunique(type):
-      return NumberGenerator.roman.generate(type)
-    if self.isnumbered(type):
-      return NumberGenerator.ordered.generate(type)
-    return NumberGenerator.unique.generate(type)
+    "Each invocation results in a new number."
+    return self.getcounter(type).increase().getvalue()
 
   def getparttype(self, type):
     "Obtain the type for the part: without the asterisk, "
@@ -198,14 +203,24 @@ class NumberGenerator(object):
       return 'Appendix'
     return self.deasterisk(type)
 
-  def getcounter(self, name):
-    "Get the counter with the given name."
-    name = name.lower()
-    if not name in self.counters:
-      self.counters[name] = NumberCounter(name)
-      if name in self.romanlayouts:
-        self.counters[name].setmode('I')
-    return self.counters[name]
+  def getcounter(self, type):
+    "Get the counter for the given type."
+    type = type.lower()
+    if not type in self.counters:
+      self.counters[type] = self.create(type)
+    return self.counters[type]
+
+  def create(self, type):
+    "Create a counter for the given type."
+    if self.isnumbered(type) and self.getlevel(type) > 1:
+      index = self.orderedlayouts.index(type)
+      above = self.orderedlayouts[index - 1]
+      master = self.getcounter(above)
+      return self.createdependent(type, master)
+    counter = NumberCounter(type)
+    if self.isroman(type):
+      counter.setmode('I')
+    return counter
 
   def getchapter(self):
     "Get the current chapter counter."
@@ -214,8 +229,20 @@ class NumberGenerator(object):
   def getdependentcounter(self, type, master):
     "Get (or create) a counter of the given type that depends on another."
     if not type in self.counters or not self.counters[type].master:
-      self.counters[type] = DependentCounter(type).setmaster(master)
+      self.counters[type] = self.createdependent(type, master)
     return self.counters[type]
+
+  def createdependent(self, type, master):
+    "Create a dependent counter given the master."
+    return DependentCounter(type).setmaster(master)
+
+  def startappendix(self):
+    "Start appendices here."
+    firsttype = self.orderedlayouts[DocumentParameters.startinglevel]
+    Trace.debug('First type: ' + firsttype)
+    counter = self.getcounter(firsttype)
+    counter.setmode('A').reset()
+    self.appendix = True
 
 class UniqueGenerator(NumberGenerator):
   "Generate unique part numbers."
@@ -259,11 +286,6 @@ class OrderedGenerator(NumberGenerator):
       return NumberGenerator.unique.generate(type)
     counter = self.sequence[level - 1]
     return counter.increase().getvalue()
-
-  def startappendix(self):
-    "Start appendices here."
-    self.sequence[0].setmode('A').reset()
-    self.appendix = True
 
 class ChapteredGenerator(OrderedGenerator):
   "Generate chaptered numbers, as in Chapter.Number."
