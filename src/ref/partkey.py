@@ -38,6 +38,7 @@ class PartKey(object):
   anchortext = None
   number = None
   filename = None
+  showtitle = False
   header = False
 
   def __init__(self):
@@ -55,6 +56,7 @@ class PartKey(object):
     self.partkey = partkey
     self.number = number
     self.tocentry = partkey
+    self.showtitle = True
     return self
 
   def createformula(self, number):
@@ -108,6 +110,7 @@ class LayoutPartKey(PartKey):
     anchortype = self.getanchortype(type)
     self.partkey = 'toc-' + anchortype + '-' + self.number
     self.tocentry = self.gettocentry(type)
+    self.showtitle = True
     self.filename = self.getfilename(type)
     if self.generator.isnumbered(type):
       self.tocentry += ' ' + self.number

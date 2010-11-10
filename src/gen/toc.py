@@ -41,19 +41,7 @@ class TOCEntry(Container):
     "Create the TOC entry for a container, consisting of a single link."
     if container.partkey.header:
       return self.header(container)
-    labels = container.searchall(Label)
-    if len(labels) == 0 or Options.toc:
-      url = Options.toctarget + '#' + container.partkey.partkey
-      link = Link().complete(container.partkey.tocentry, url=url)
-    else:
-      label = labels[0]
-      link = Link().complete(container.partkey.tocentry)
-      link.destination = label
-    self.contents = [link]
-    titlecontents = self.gettitlecontents(container)
-    if titlecontents:
-      link.contents.append(Constant(u': '))
-      link.contents += titlecontents
+    self.contents = [self.createlink(container)]
     self.output = TaggedOutput().settag('div class="toc"', True)
     self.partkey = container.partkey
     return self
@@ -63,6 +51,23 @@ class TOCEntry(Container):
     self.partkey = container.partkey
     self.output = EmptyOutput()
     return self
+
+  def createlink(self, container):
+    "Create the link that will make the whole TOC entry."
+    labels = container.searchall(Label)
+    if len(labels) == 0 or Options.toc:
+      url = Options.toctarget + '#' + container.partkey.partkey
+      link = Link().complete(container.partkey.tocentry, url=url)
+    else:
+      label = labels[0]
+      link = Link().complete(container.partkey.tocentry)
+      link.destination = label
+    if container.partkey.showtitle:
+      titlecontents = self.gettitlecontents(container)
+      if titlecontents:
+        link.contents.append(Constant(u': '))
+        link.contents += titlecontents
+    return link
 
   def gettitlecontents(self, container):
     "Get the title of the container."
