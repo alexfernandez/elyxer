@@ -254,8 +254,6 @@ class PostLayout(object):
   def number(self, layout):
     "Generate a number and place it before the text"
     layout.partkey.addtoclabel(layout)
-    if layout.partkey.anchortext:
-      layout.contents.insert(1, Constant(u' '))
 
 class PostStandard(object):
   "Convert any standard spans in root to divs"

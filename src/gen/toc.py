@@ -51,8 +51,8 @@ class TOCEntry(Container):
       link.destination = label
     self.contents = [link]
     titlecontents = self.gettitlecontents(container)
-    if container.partkey.tocsuffix and titlecontents:
-      link.contents.append(Constant(container.partkey.tocsuffix))
+    if titlecontents:
+      link.contents.append(Constant(u': '))
       link.contents += titlecontents
     self.output = TaggedOutput().settag('div class="toc"', True)
     self.partkey = container.partkey

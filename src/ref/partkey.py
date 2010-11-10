@@ -35,7 +35,6 @@ class PartKey(object):
 
   partkey = None
   tocentry = None
-  tocsuffix = None
   anchortext = None
   number = None
   filename = None
@@ -85,6 +84,7 @@ class PartKey(object):
     labeltext = ''
     if self.anchortext:
       labeltext = self.anchortext
+      container.contents.insert(0, Separator(u' '))
     label = Label().create(labeltext, self.partkey, type='toc')
     container.contents.insert(0, label)
 
@@ -109,11 +109,9 @@ class LayoutPartKey(PartKey):
     anchortype = self.getanchortype(type)
     self.partkey = 'toc-' + anchortype + '-' + self.number
     self.tocentry = self.gettocentry(type)
-    self.tocsuffix = u': '
     self.filename = self.getfilename(type)
     if self.generator.isnumbered(type):
       self.tocentry += ' ' + self.number
-      self.tocsuffix = u':'
       self.anchortext = self.getanchortext(type)
 
   def getanchortype(self, type):

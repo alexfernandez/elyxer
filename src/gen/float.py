@@ -249,7 +249,7 @@ class PostFloat(object):
     number = FloatNumber().create(float)
     for caption in float.searchinside(Caption):
       self.postlabels(float, caption)
-      caption.contents.insert(0, Constant(u' '))
+      caption.contents.insert(0, Separator(u' '))
       caption.contents.insert(0, number)
     return float
 

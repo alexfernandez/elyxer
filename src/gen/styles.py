@@ -210,6 +210,14 @@ class NewPage(Newline):
     "Process contents"
     self.html = ['<p><br/>\n</p>\n']
 
+class Separator(Container):
+  "A separator string which is not extracted by extracttext()."
+
+  def __init__(self, constant):
+    self.output = FixedOutput()
+    self.contents = []
+    self.html = [constant]
+
 class StartAppendix(BlackBox):
   "Mark to start an appendix here."
   "From this point on, all chapters become appendices."
