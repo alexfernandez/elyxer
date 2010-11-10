@@ -216,7 +216,7 @@ class StartAppendix(BlackBox):
 
   def process(self):
     "Activate the special numbering scheme for appendices, using letters."
-    NumberGenerator.ordered.startappendix()
+    NumberGenerator.generator.startappendix()
 
 class ERT(Container):
   "Evil Red Text"

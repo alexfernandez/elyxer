@@ -105,7 +105,7 @@ class LayoutPartKey(PartKey):
   def processtype(self, type):
     "Process the layout type."
     self.level = self.generator.getlevel(type)
-    self.number = self.generator.getnumber(type)
+    self.number = self.generator.generate(type)
     anchortype = self.getanchortype(type)
     self.partkey = 'toc-' + anchortype + '-' + self.number
     self.tocentry = self.gettocentry(type)

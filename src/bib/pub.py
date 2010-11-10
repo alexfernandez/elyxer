@@ -55,7 +55,7 @@ class PubEntry(BibEntry):
 
   def process(self):
     "Process the entry."
-    self.index = NumberGenerator.unique.generate('pubentry')
+    self.index = NumberGenerator.generator.generate('pubentry')
     self.parser.tags['index'] = self.index
     biblio = BiblioEntry()
     biblio.citeref = self.createref()

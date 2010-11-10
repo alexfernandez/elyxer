@@ -95,6 +95,10 @@ class NumberCounter(object):
     Trace.error('Unknown counter mode ' + self.mode)
     return self.gettext()
 
+  def getnext(self):
+    "Get the next value as configured: increase() and getvalue()."
+    return self.increase().getvalue()
+
   def reset(self):
     "Reset the counter."
     self.value = 0
@@ -134,9 +138,6 @@ class NumberGenerator(object):
   "  * chaptered part numbers: Figure 3.15, Equation (8.3)."
   "  * unique roman part numbers: Part I, Book IV."
 
-  unique = None
-  ordered = None
-  roman = None
   chaptered = None
   generator = None
 
@@ -144,6 +145,7 @@ class NumberGenerator(object):
   orderedlayouts = [x.lower() for x in NumberingConfig.layouts['ordered']]
 
   counters = dict()
+  appendix = None
 
   def deasterisk(self, type):
     "Remove the possible asterisk in a layout type."
@@ -188,18 +190,18 @@ class NumberGenerator(object):
     level = self.orderedlayouts.index(type) + 1
     return level - DocumentParameters.startinglevel
 
-  def getnumber(self, type):
-    "Get the number for a layout type, can be unique or ordered."
+  def generate(self, type):
+    "Generate a number for a layout type."
     "Unique part types such as Part or Book generate roman numbers: Part I."
-    "Ordered part types return dot-separated tuples: Chapter 5, Section 2.3."
+    "Ordered part types return dot-separated tuples: Chapter 5, Subsection 2.3.5."
     "Everything else generates unique numbers: Bibliography [1]."
     "Each invocation results in a new number."
-    return self.getcounter(type).increase().getvalue()
+    return self.getcounter(type).getnext()
 
   def getparttype(self, type):
     "Obtain the type for the part: without the asterisk, "
     "and switched to Appendix if necessary."
-    if NumberGenerator.ordered.appendix and self.getlevel(type) == 1:
+    if NumberGenerator.appendix and self.getlevel(type) == 1:
       return 'Appendix'
     return self.deasterisk(type)
 
@@ -239,55 +241,11 @@ class NumberGenerator(object):
   def startappendix(self):
     "Start appendices here."
     firsttype = self.orderedlayouts[DocumentParameters.startinglevel]
-    Trace.debug('First type: ' + firsttype)
     counter = self.getcounter(firsttype)
     counter.setmode('A').reset()
-    self.appendix = True
+    NumberGenerator.appendix = True
 
-class UniqueGenerator(NumberGenerator):
-  "Generate unique part numbers."
-  "Used in footnotes or bibliographical entry numbers: [3]."
-
-  def generate(self, type):
-    "Generate unique numbering: a number to place in the title,"
-    "but not to append to others. Example: Footnote 15."
-    return self.getcounter(type).increase().getvalue()
-
-class OrderedGenerator(NumberGenerator):
-  "Generate ordered part numbers separated by a dot, as in 2.3 or 7.5.4."
-  "Used in chapters, sections... as in Chapter 5, Section 5.3."
-
-  appendix = False
-  sequence = []
-
-  def createsequence(self):
-    "Create the original sequence."
-    sequence = []
-    for type in self.orderedlayouts:
-      if sequence == []:
-        counter = self.getcounter(type)
-      else:
-        counter = self.getdependentcounter(type, sequence[-1])
-      sequence.append(counter)
-      if len(sequence) + 1 > DocumentParameters.maxdepth:
-        return sequence
-    return sequence
-
-  def generate(self, type):
-    "Generate ordered numbering: a number to use and possibly concatenate "
-    "with others. Example: Chapter 1, Section 1.5."
-    if self.sequence == []:
-      self.sequence = self.createsequence()
-    level = self.getlevel(type)
-    if level == 0:
-      Trace.error('Impossible level 0 for ordered part')
-      return '.'
-    if level > len(self.sequence):
-      return NumberGenerator.unique.generate(type)
-    counter = self.sequence[level - 1]
-    return counter.increase().getvalue()
-
-class ChapteredGenerator(OrderedGenerator):
+class ChapteredGenerator(NumberGenerator):
   "Generate chaptered numbers, as in Chapter.Number."
   "Used in equations, figures: Equation (5.3), figure 8.15."
 
@@ -295,25 +253,11 @@ class ChapteredGenerator(OrderedGenerator):
     "Generate a number which goes with first-level numbers (chapters). "
     "For the article classes a unique number is generated."
     if DocumentParameters.startinglevel > 0:
-      return NumberGenerator.unique.generate(type)
-    chapter = NumberGenerator.ordered.getchapter()
-    counter = self.getdependentcounter(type, chapter)
-    counter.increase()
-    return counter.getvalue()
-
-class RomanGenerator(UniqueGenerator):
-  "Generate roman numerals for part numbers."
-  "Used in parts and books: Part I, Book IV."
-
-  def generate(self, type):
-    "Generate a part number in roman numerals, to use in unique part numbers."
-    "E.g.: Part I, Book IV."
-    return self.getcounter(type).increase().getroman()
+      return NumberGenerator.generator.generate(type)
+    chapter = self.getchapter()
+    return self.getdependentcounter(type, chapter).getnext()
 
 
-NumberGenerator.unique = UniqueGenerator()
-NumberGenerator.ordered = OrderedGenerator()
 NumberGenerator.chaptered = ChapteredGenerator()
-NumberGenerator.roman = RomanGenerator()
 NumberGenerator.generator = NumberGenerator()
 

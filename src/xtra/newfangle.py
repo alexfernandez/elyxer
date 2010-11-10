@@ -54,7 +54,7 @@ class NewfangledChunk(Layout):
 
   def order(self):
     "Create the order number for the chunk."
-    return NumberGenerator.unique.generate('chunk')
+    return NumberGenerator.generator.generate('chunk')
 
   def createlinks(self):
     "Create back and forward links."

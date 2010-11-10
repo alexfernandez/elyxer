@@ -60,7 +60,7 @@ class BiblioCite(Link):
   def create(self, key):
     "Create the cite to the given key."
     self.key = key
-    number = NumberGenerator.unique.generate('bibliocite')
+    number = NumberGenerator.generator.generate('bibliocite')
     ref = BiblioReference().create(key, number)
     self.complete(number, 'cite-' + number, type='bibliocite')
     self.setmutualdestination(ref)
@@ -140,7 +140,7 @@ class BiblioEntry(Container):
 
   def process(self):
     "Process the cites for the entry's key"
-    self.citeref = [Constant(NumberGenerator.unique.generate('biblioentry'))]
+    self.citeref = [Constant(NumberGenerator.generator.generate('biblioentry'))]
     self.processcites(self.getparameter('key'))
 
   def processcites(self, key):

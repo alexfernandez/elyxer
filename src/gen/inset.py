@@ -116,14 +116,13 @@ class Footnote(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('span class="FootOuter"', False)
+    if not Options.numberfoot:
+      NumberGenerator.generator.getcounter('Footnote').setmode('A')
 
   def process(self):
     "Add a counter for the footnote."
     "Can be numeric or a letter depending on runtime options."
-    counter = NumberGenerator.unique.getcounter('Footnote')
-    if not Options.numberfoot:
-      counter.setmode('A')
-    order = NumberGenerator.unique.generate('Footnote')
+    order = NumberGenerator.generator.generate('Footnote')
     span = 'span class="FootMarker"'
     marker = TaggedText().constant('[' + order + ']', span)
     tag = TaggedText().complete([marker] + self.contents, 'span class="Foot"', True)
