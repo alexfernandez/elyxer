@@ -55,16 +55,8 @@ class Formula(Container):
       self.contents = [TaggedText().constant(self.parsed, tag + '"', True)]
       return
     whole = FormulaFactory().parseformula(self.parsed)
-    self.processcontents(whole)
     whole.parent = self
     self.contents = [whole]
-
-  def processcontents(self, bit):
-    "Process the contents of every formula bit."
-    bit.process()
-    for element in bit.contents:
-      if isinstance(element, FormulaBit):
-        self.processcontents(element)
 
   def __unicode__(self):
     "Return a printable representation."
@@ -224,10 +216,18 @@ class FormulaFactory(object):
     whole = self.create(WholeFormula)
     if whole.detect(pos):
       whole.parsebit(pos)
+      self.processcontents(whole)
       return whole
     # no formula found
     if not pos.finished():
       Trace.error('Unknown formula at: ' + pos.identifier())
       whole.add(TaggedBit().constant(formula, 'span class="unknown"'))
     return whole
+
+  def processcontents(self, bit):
+    "Process the contents of every formula bit."
+    bit.process()
+    for element in bit.contents:
+      if isinstance(element, FormulaBit):
+        self.processcontents(element)
 
