@@ -22,7 +22,6 @@
 # Alex 20100615
 # eLyXer macro processing
 
-from gen.inset import *
 from util.trace import Trace
 from conf.config import *
 from parse.formulaparse import *
