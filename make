@@ -24,6 +24,7 @@ cd src
 ./exportconfig.py py
 ./coalesce.py principal.py > ../elyxer.py
 ./coalesce.py loremipsumize.py > ../loremipsumize.py
+./coalesce.py maths/math2html.py > ../math2html.py
 cp setup.py ../setup.py
 cd ..
 chmod 755 elyxer.py
