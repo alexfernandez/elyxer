@@ -68,7 +68,7 @@ class TOCEntry(Container):
     "Get the title of the container."
     shorttitles = container.searchall(ShortTitle)
     if len(shorttitles) > 0:
-      contents = [Constant(u' ')]
+      contents = []
       for shorttitle in shorttitles:
         contents += shorttitle.contents
       return contents

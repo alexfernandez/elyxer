@@ -55,7 +55,6 @@ class PartKey(object):
     self.partkey = partkey
     self.number = number
     self.tocentry = partkey
-    self.tocsuffix = u':'
     return self
 
   def createformula(self, number):
