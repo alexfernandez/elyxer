@@ -31,6 +31,10 @@ src/textchange.py "unreleased" $DATE docs/changelog.lyx
 git tag -a -m "Version $VERSION from $DATE to be released" $VERSION
 git push
 
+# Add version to setup.py for PyPI
+cp src/setup.py setup.py
+src/textchange.py "unknown" $VERSION setup.py
+
 # make compressed files
 rm -rf dist/elyxer-$VERSION
 mkdir -p dist/elyxer-$VERSION
@@ -47,7 +51,6 @@ cd dist/elyxer-$VERSION
 find . -name "*.pyc" | xargs rm -f
 find . -name "*.swp" | xargs rm -f
 find . -name "*.lyx~" | xargs rm -f
-src/textchange.py "unknown" $VERSION setup.py
 cd ..
 tar -czf elyxer-$VERSION.tar.gz elyxer-$VERSION
 rm -f elyxer-$VERSION.zip
