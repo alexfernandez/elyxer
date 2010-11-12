@@ -55,22 +55,23 @@ class TOCEntry(Container):
   def createlink(self, container):
     "Create the link that will make the whole TOC entry."
     labels = container.searchall(Label)
+    link = Link()
     if len(labels) == 0 or Options.toc:
-      url = Options.toctarget + '#' + container.partkey.partkey
-      link = Link().complete(container.partkey.tocentry, url=url)
+      link.url = Options.toctarget + '#' + container.partkey.partkey
     else:
       label = labels[0]
-      link = Link().complete(container.partkey.tocentry)
       link.destination = label
-    if container.partkey.showtitle:
-      titlecontents = self.gettitlecontents(container)
-      if titlecontents:
+    link.complete(container.partkey.tocentry)
+    titlecontents = self.gettitlecontents(container)
+    if titlecontents:
         link.contents.append(Constant(u': '))
         link.contents += titlecontents
     return link
 
   def gettitlecontents(self, container):
     "Get the title of the container."
+    if not container.partkey.showtitle:
+      return None
     shorttitles = container.searchall(ShortTitle)
     if len(shorttitles) > 0:
       contents = []
