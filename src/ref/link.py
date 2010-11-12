@@ -33,17 +33,19 @@ from gen.styles import *
 class Link(Container):
   "A link to another part of the document"
 
+  anchor = None
+  url = None
+  type = None
+  page = None
+  target = None
+  destination = None
+  title = None
+
   def __init__(self):
-    Container.__init__(self)
+    "Initialize the link, add target if configured."
+    self.contents = []
     self.parser = InsetParser()
     self.output = LinkOutput()
-    self.anchor = None
-    self.url = None
-    self.type = None
-    self.page = None
-    self.target = None
-    self.destination = None
-    self.title = None
     if Options.target:
       self.target = Options.target
 
