@@ -59,11 +59,9 @@ class FormulaProcessor(object):
       return
     if not bit.command in FormulaConfig.limits['commands']:
       return
-    Trace.debug('Found ' + unicode(bit))
     limits = self.findlimits(contents, index + 1)
     limits.reverse()
     if len(limits) == 0:
-      Trace.debug('No limits')
       return
     tagged = TaggedBit().complete(limits, 'span class="limits"')
     contents.insert(index + 1, tagged)
