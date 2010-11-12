@@ -27,6 +27,7 @@ from util.trace import Trace
 from util.clone import *
 from conf.config import *
 from parse.formulaparse import *
+from proc.formulaproc import *
 
 
 class Formula(Container):
@@ -55,6 +56,7 @@ class Formula(Container):
       self.contents = [TaggedText().constant(self.parsed, tag + '"', True)]
       return
     whole = FormulaFactory().parseformula(self.parsed)
+    FormulaProcessor().process(whole)
     whole.parent = self
     self.contents = [whole]
 
@@ -63,69 +65,6 @@ class Formula(Container):
     if self.partkey and self.partkey.number:
       return 'Formula (' + self.partkey.number + ')'
     return 'Unnumbered formula'
-
-class FormulaBit(Container):
-  "A bit of a formula"
-
-  def __init__(self):
-    # type can be 'alpha', 'number', 'font'
-    self.type = None
-    self.original = ''
-    self.contents = []
-    self.output = ContentsOutput()
-
-  def setfactory(self, factory):
-    "Set the internal formula factory."
-    self.factory = factory
-    return self
-
-  def add(self, bit):
-    "Add any kind of formula bit already processed"
-    self.contents.append(bit)
-    self.original += bit.original
-    bit.parent = self
-
-  def skiporiginal(self, string, pos):
-    "Skip a string and add it to the original formula"
-    self.original += string
-    if not pos.checkskip(string):
-      Trace.error('String ' + string + ' not at ' + pos.identifier())
-
-  def clone(self):
-    "Return a copy of itself."
-    return self.factory.parseformula(self.original)
-
-  def __unicode__(self):
-    "Get a string representation"
-    return self.__class__.__name__ + ' read in ' + self.original
-
-class TaggedBit(FormulaBit):
-  "A tagged string in a formula"
-
-  def constant(self, constant, tag):
-    "Set the constant and the tag"
-    self.output = TaggedOutput().settag(tag)
-    self.add(FormulaConstant(constant))
-    return self
-
-  def complete(self, contents, tag):
-    "Set the constant and the tag"
-    self.contents = contents
-    self.output = TaggedOutput().settag(tag)
-    return self
-
-class FormulaConstant(Constant):
-  "A constant string in a formula"
-
-  def __init__(self, string):
-    "Set the constant string"
-    Constant.__init__(self, string)
-    self.original = string
-    self.type = None
-
-  def clone(self):
-    "Return a copy of itself."
-    return FormulaConstant(self.original)
 
 class WholeFormula(FormulaBit):
   "Parse a whole formula"
@@ -145,8 +84,8 @@ class FormulaFactory(object):
   "Construct bits of formula"
 
   # bit types will be appended later
-  types = []
-  ignoredtypes = []
+  types = [FormulaSymbol, RawText, FormulaNumber, Bracket]
+  ignoredtypes = [Comment, WhiteSpace]
   defining = False
 
   def __init__(self):
@@ -216,18 +155,10 @@ class FormulaFactory(object):
     whole = self.create(WholeFormula)
     if whole.detect(pos):
       whole.parsebit(pos)
-      self.processcontents(whole)
       return whole
     # no formula found
     if not pos.finished():
       Trace.error('Unknown formula at: ' + pos.identifier())
       whole.add(TaggedBit().constant(formula, 'span class="unknown"'))
     return whole
-
-  def processcontents(self, bit):
-    "Process the contents of every formula bit."
-    bit.process()
-    for element in bit.contents:
-      if isinstance(element, FormulaBit):
-        self.processcontents(element)
 

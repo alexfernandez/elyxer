@@ -29,12 +29,14 @@ from maths.command import *
 from maths.hybrid import *
 from maths.array import *
 from maths.macro import *
+from proc.formulaproc import *
 
 
 def math2html(formula):
   "Convert some TeX math to HTML."
   factory = FormulaFactory()
   whole = factory.parseformula(formula)
+  FormulaProcessor().process(whole)
   whole.process()
   return ''.join(whole.gethtml())
 

@@ -27,6 +27,69 @@ from conf.config import *
 from maths.formula import *
 
 
+class FormulaBit(Container):
+  "A bit of a formula"
+
+  def __init__(self):
+    # type can be 'alpha', 'number', 'font'
+    self.type = None
+    self.original = ''
+    self.contents = []
+    self.output = ContentsOutput()
+
+  def setfactory(self, factory):
+    "Set the internal formula factory."
+    self.factory = factory
+    return self
+
+  def add(self, bit):
+    "Add any kind of formula bit already processed"
+    self.contents.append(bit)
+    self.original += bit.original
+    bit.parent = self
+
+  def skiporiginal(self, string, pos):
+    "Skip a string and add it to the original formula"
+    self.original += string
+    if not pos.checkskip(string):
+      Trace.error('String ' + string + ' not at ' + pos.identifier())
+
+  def clone(self):
+    "Return a copy of itself."
+    return self.factory.parseformula(self.original)
+
+  def __unicode__(self):
+    "Get a string representation"
+    return self.__class__.__name__ + ' read in ' + self.original
+
+class TaggedBit(FormulaBit):
+  "A tagged string in a formula"
+
+  def constant(self, constant, tag):
+    "Set the constant and the tag"
+    self.output = TaggedOutput().settag(tag)
+    self.add(FormulaConstant(constant))
+    return self
+
+  def complete(self, contents, tag):
+    "Set the constant and the tag"
+    self.contents = contents
+    self.output = TaggedOutput().settag(tag)
+    return self
+
+class FormulaConstant(Constant):
+  "A constant string in a formula"
+
+  def __init__(self, string):
+    "Set the constant string"
+    Constant.__init__(self, string)
+    self.original = string
+    self.type = None
+
+  def clone(self):
+    "Return a copy of itself."
+    return FormulaConstant(self.original)
+
 class RawText(FormulaBit):
   "A bit of text inside a formula"
 
@@ -148,9 +211,8 @@ class Bracket(FormulaBit):
 
   def innerformula(self, pos):
     "Parse a whole formula inside the bracket"
-    if self.factory.detecttype(WholeFormula, pos):
-      self.add(self.factory.parsetype(WholeFormula, pos))
-      return
+    while self.factory.detectany(pos):
+      self.add(self.factory.parseany(pos))
     if pos.finished():
       return
     if pos.current() != self.ending:
@@ -186,10 +248,4 @@ class SquareBracket(Bracket):
   start = FormulaConfig.starts['squarebracket']
   ending = FormulaConfig.endings['squarebracket']
 
-FormulaFactory.types += [
-    FormulaSymbol, RawText, FormulaNumber, Bracket
-    ]
-FormulaFactory.ignoredtypes += [
-    Comment, WhiteSpace
-    ]
 

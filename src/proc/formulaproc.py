@@ -19,89 +19,51 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # --end--
-# Alex 20090422
-# eLyXer postprocessor for formulae
+# Alex 20101111
+# eLyXer formulae processing.
 
-from maths.command import *
-from maths.array import *
-from proc.postprocess import *
-from ref.link import *
-from ref.label import *
-from ref.partkey import *
-from util.numbering import *
+from util.trace import *
+from conf.config import *
+from maths.bits import *
 
 
-class PostFormula(object):
-  "Postprocess a formula"
+class FormulaProcessor(object):
+  "A processor specifically for formulas."
 
-  processedclass = Formula
+  def process(self, bit):
+    "Process the contents of every formula bit, recursively."
+    self.processcontents(bit)
+    self.processlimits(bit)
+    self.traversewhole(bit)
 
-  def postprocess(self, last, formula, next):
-    "Postprocess any formulae"
-    if Options.jsmath or Options.mathjax:
-      return formula
-    self.postnumbering(formula)
-    #self.postcontents(formula.contents)
-    #self.posttraverse(formula)
-    return formula
-
-  def postnumbering(self, formula):
-    "Check if it's a numbered equation, insert number."
-    if formula.header[0] != 'numbered':
+  def processcontents(self, bit):
+    "Process the contents of a formula bit."
+    if not isinstance(bit, FormulaBit):
       return
-    functions = formula.searchremove(LabelFunction)
-    if len(functions) == 0:
-      label = self.createlabel(formula)
-    elif len(functions) == 1:
-      label = self.createlabel(formula, functions[0])
-    if len(functions) <= 1:
-      label.parent = formula
-      formula.contents.insert(0, label)
+    bit.process()
+    for element in bit.contents:
+      self.processcontents(element)
+
+  def processlimits(self, bit):
+    "Process any limits in a formula bit."
+    if not isinstance(bit, FormulaBit):
       return
-    for function in functions:
-      label = self.createlabel(formula, function)
-      row = self.searchrow(function)
-      label.parent = row
-      row.contents.insert(0, label)
-
-  def createlabel(self, formula, function = None):
-    "Create a new label for a formula."
-    "Add a label to a formula."
-    number = NumberGenerator.chaptered.generate('formula')
-    partkey = PartKey().createformula(number)
-    if not formula.partkey:
-      formula.partkey = partkey
-    if not function:
-      label = Label()
-      label.create(partkey.tocentry + ' ', 'eq-' + number, type="eqnumber")
-    else:
-      label = function.label
-      label.complete(partkey.tocentry + ' ')
-    return label
-
-  def searchrow(self, function):
-    "Search for the row that contains the label function."
-    if isinstance(function.parent, Formula) or isinstance(function.parent, FormulaRow):
-      return function.parent
-    return self.searchrow(function.parent)
-
-  def postcontents(self, contents):
-    "Search for sum or integral"
-    for index, bit in enumerate(contents):
-      self.checklimited(contents, index)
-      if isinstance(bit, FormulaBit):
-        self.postcontents(bit.contents)
+    for index, element in enumerate(bit.contents):
+      self.checklimited(bit.contents, index)
+      self.processlimits(element)
 
   def checklimited(self, contents, index):
     "Check for a command with limits"
     bit = contents[index]
-    if not isinstance(bit, EmptyCommand):
+    if not hasattr(bit, 'command'):
       return
     if not bit.command in FormulaConfig.limits['commands']:
       return
+    Trace.debug('Found ' + unicode(bit))
     limits = self.findlimits(contents, index + 1)
     limits.reverse()
     if len(limits) == 0:
+      Trace.debug('No limits')
       return
     tagged = TaggedBit().complete(limits, 'span class="limits"')
     contents.insert(index + 1, tagged)
@@ -119,14 +81,14 @@ class PostFormula(object):
   def checklimits(self, contents, index):
     "Check for a command making the limits"
     bit = contents[index]
-    if not isinstance(bit, SymbolFunction):
-      return False
+    if not hasattr(bit, 'command'):
+      return
     if not bit.command in FormulaConfig.limits['operands']:
       return False
     bit.output.tag += ' class="bigsymbol"'
     return True
 
-  def posttraverse(self, formula):
+  def traversewhole(self, formula):
     "Traverse over the contents to alter variables and space units."
     last = None
     for bit, contents in self.traverse(formula):
@@ -139,7 +101,7 @@ class PostFormula(object):
   def traverse(self, bit):
     "Traverse a formula and yield a flattened structure of (bit, list) pairs."
     for element in bit.contents:
-      if element.type:
+      if hasattr(element, 'type') and element.type:
         yield (element, bit.contents)
       elif isinstance(element, FormulaBit):
         for pair in self.traverse(element):
@@ -150,5 +112,4 @@ class PostFormula(object):
     index = contents.index(bit)
     contents[index] = TaggedBit().complete([bit], 'i')
 
-Postprocessor.stages.append(PostFormula)
 
