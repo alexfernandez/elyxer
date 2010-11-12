@@ -847,6 +847,7 @@ where the sum's limits should appear below (
 \end_inset
 
 .
+ Again, in HTML the limits are shown to the right.
  Inlined: 
 \begin_inset Formula $\sum_{i=1}^{\infty}x.$
 \end_inset

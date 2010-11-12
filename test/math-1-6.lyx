@@ -178,13 +178,26 @@ where the sum's limits should appear below (
 \begin_inset Formula $\sum$
 \end_inset
 
-.
+ but to the right.
  Inlined: 
 \begin_inset Formula $\sum_{i=1}^{\infty}x.$
 \end_inset
 
  Integral: 
 \begin_inset Formula $\intop_{i=1}^{\infty}x.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A sum inside another element (red color):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\textcolor{red}{\sum_{i=1}^{\infty}x}.\]
+
 \end_inset
 
 
