@@ -22,12 +22,16 @@
 # download current docs
 mkdir cvs
 cd cvs
-rm -Rf elyxer
-cvs -z3 -d:ext:alexfernandez@cvs.savannah.nongnu.org:/web/elyxer co elyxer
+#rm -Rf elyxer
+#cvs -z3 -d:ext:alexfernandez@cvs.savannah.nongnu.org:/web/elyxer co elyxer
+cvs  -z3 -d:ext:alexfernandez@cvs.savannah.nongnu.org:/web/elyxer update elyxer
 # overwrite with current docs
 cp ../*.html elyxer/
 cp ../*.png elyxer/
 cp ../*.css elyxer/
+# remove MathJaX and jsMath (comment if they are updated)
+#rm -Rf elyxer/MathJax
+#rm -Rf elyxer/jsMath
 # commit
 cd elyxer
 cvs commit -m "Automatic upload"
