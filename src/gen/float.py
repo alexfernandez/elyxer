@@ -64,7 +64,9 @@ class Float(Container):
       # do nothing; parent will take care of numbering
       return
     number = NumberGenerator.chaptered.generate(self.type)
-    entry = Translator.translate('float-' + self.type) + number
+    entry = number
+    if not Options.notoclabels:
+      entry = Translator.translate('float-' + self.type) + entry
     self.partkey = PartKey().createfloat(entry, number)
 
   def processtags(self):

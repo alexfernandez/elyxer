@@ -61,11 +61,17 @@ class TOCEntry(Container):
     else:
       label = labels[0]
       link.destination = label
-    link.complete(container.partkey.tocentry)
+    if container.partkey.tocentry:
+      link.complete(container.partkey.tocentry)
     titlecontents = self.gettitlecontents(container)
     if titlecontents:
-        link.contents.append(Constant(u': '))
-        link.contents += titlecontents
+      if Options.notoclabels:
+        separator = u'. '
+      else:
+        separator = u': '
+      if container.partkey.tocentry:
+        link.contents.append(Constant(separator))
+      link.contents += titlecontents
     return link
 
   def gettitlecontents(self, container):

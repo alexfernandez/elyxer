@@ -62,6 +62,11 @@ name="appendix-1-6"
 ../elyxer.py --quiet --toc --toctarget "$name-test.html" --css ../docs/toc.css --target contents "$name.lyx" "$name-toc-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-toc-good.html" "$name-toc-test.html"
 
+# test --notoclabels
+name="toc-book"
+../elyxer.py --quiet --notoclabels --css ../docs/lyx.css "$name.lyx" "$name-notoclabels-test.html"
+diff -u --ignore-matching-lines="create-date" "$name-notoclabels-good.html" "$name-notoclabels-test.html"
+
 # test raw generation
 name="helloworld"
 ../elyxer.py --quiet --raw "$name.lyx" "$name-raw-test.html"
@@ -101,5 +106,4 @@ done
 name="helloworld"
 ../elyxer.py --quiet --template template.html "$name.lyx" "$name-template-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-template-good.html" "$name-template-test.html"
-
 

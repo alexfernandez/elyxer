@@ -112,6 +112,14 @@ math2html.py
  file with an API to convert raw LaTeX code to HTML.
 \end_layout
 
+\begin_layout Itemize
+Wish list: new option 
+\family typewriter
+--notoclabels
+\family default
+ to omit part labels in the TOC.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.4 (2010-10-29):

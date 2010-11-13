@@ -1217,6 +1217,57 @@ reference "sub:TOC"
 \begin_layout Description
 
 \family typewriter
+--notoclabels
+\family default
+: Omit 
+\begin_inset Quotes eld
+\end_inset
+
+Chapter
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Part
+\begin_inset Quotes erd
+\end_inset
+
+ and similar labels from the TOC; just output part numbers (and separate
+ using a period).
+ For instance, a chapter that without this option is labeled 
+\begin_inset Quotes eld
+\end_inset
+
+Chapter 2: Advanced Use
+\begin_inset Quotes erd
+\end_inset
+
+ in the TOC would now become 
+\begin_inset Quotes eld
+\end_inset
+
+2.
+ Advanced Use
+\begin_inset Quotes erd
+\end_inset
+
+, as on the PDF.
+ Option adapted from the wish list: 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Wish-List"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
 --lowmem
 \family default
 : Activate a low memory mode which does not keep the whole document in memory:
@@ -3156,16 +3207,7 @@ YG
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\noun off
-\color none
-Queued
+1.1.0
 \end_layout
 
 \end_inset

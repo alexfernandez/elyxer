@@ -68,6 +68,7 @@ class Options(object):
   nofooter = False
   template = None
   noconvert = False
+  notoclabels = False
 
   branches = dict()
 
@@ -142,6 +143,7 @@ class Options(object):
     Trace.error('    --toc:                  create a table of contents')
     Trace.error('    --target "frame":       make all links point to the given frame')
     Trace.error('    --toctarget "page":     generate a TOC that points to the given page')
+    Trace.error('    --notoclabels:          omit the part labels in the TOC, such as Chapter')
     Trace.error('    --lowmem:               do the conversion on the fly (conserve memory)')
     Trace.error('    --numberfoot:           label footnotes with numbers instead of letters')
     Trace.error('    --raw:                  generate HTML without header or footer.')

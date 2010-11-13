@@ -113,7 +113,11 @@ class LayoutPartKey(PartKey):
     self.showtitle = True
     self.filename = self.getfilename(type)
     if self.generator.isnumbered(type):
-      self.tocentry += ' ' + self.number
+      if not self.tocentry:
+        self.tocentry = ''
+      else:
+        self.tocentry += ' '
+      self.tocentry += self.number
       self.anchortext = self.getanchortext(type)
 
   def getanchortype(self, type):
@@ -125,7 +129,15 @@ class LayoutPartKey(PartKey):
 
   def gettocentry(self, type):
     "Get the entry for the TOC: Chapter, Section..."
+    if Options.notoclabels:
+      return ''
     return Translator.translate(self.generator.getparttype(type))
+
+  def addtotocentry(self, text):
+    "Add some text to the tocentry; create if None."
+    if not self.tocentry:
+      self.tocentry = ''
+    self.tocentry += text
 
   def getanchortext(self, type):
     "Get the text for the anchor given to a layout type."
