@@ -35,4 +35,5 @@ class DocumentParameters(object):
   maxdepth = 10
   language = None
   bibliography = None
+  outputchanges = False
 

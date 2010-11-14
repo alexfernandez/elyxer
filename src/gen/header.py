@@ -58,6 +58,8 @@ class LyXHeader(Container):
     DocumentParameters.tocdepth = self.getlevel('tocdepth')
     DocumentParameters.maxdepth = self.getlevel('secnumdepth')
     DocumentParameters.language = self.getheaderparameter('language')
+    if self.getheaderparameter('outputchanges') == 'true':
+      DocumentParameters.outputchanges = True
     return self
 
   def getheaderparameter(self, configparam):

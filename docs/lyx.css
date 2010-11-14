@@ -791,6 +791,14 @@ span.framebox-r {
 	text-align: right;
 	padding: 5px;
 }
+/* change tracking */
+span.inserted {
+	color: #0000ff;
+}
+span.deleted {
+	color: #ff0000;
+	text-decoration: line-through;
+}
 /* CSS section for print */
 @media print {
 body {

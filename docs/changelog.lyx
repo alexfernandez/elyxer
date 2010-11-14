@@ -120,6 +120,18 @@ Wish list: new option
  to omit part labels in the TOC.
 \end_layout
 
+\begin_layout Itemize
+Wish list: make 
+\begin_inset Quotes eld
+\end_inset
+
+show changes in the output
+\begin_inset Quotes erd
+\end_inset
+
+ work for change tracking.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.4 (2010-10-29):

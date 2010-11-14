@@ -34,7 +34,7 @@
 \papersides 1
 \paperpagestyle default
 \tracking_changes true
-\output_changes false
+\output_changes true
 \author "chenno,,," 
 \end_header
 

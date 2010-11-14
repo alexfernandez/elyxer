@@ -23,6 +23,7 @@
 # Change tracking
 
 from util.trace import Trace
+from util.docparams import *
 from gen.container import *
 
 
@@ -31,12 +32,18 @@ class ChangeInserted(Container):
 
   def __init__(self):
     self.parser = TextParser(self)
-    self.output = ContentsOutput()
+    if DocumentParameters.outputchanges:
+      self.output = TaggedOutput().settag('span class="inserted"')
+    else:
+      self.output = ContentsOutput()
 
 class ChangeDeleted(TaggedText):
   "A change which consists of a deletion."
 
   def __init__(self):
     self.parser = TextParser(self)
-    self.output = EmptyOutput()
+    if DocumentParameters.outputchanges:
+      self.output = TaggedOutput().settag('span class="deleted"')
+    else:
+      self.output = EmptyOutput()
 
