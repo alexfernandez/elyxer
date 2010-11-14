@@ -95,7 +95,7 @@ with odd spaces.
 \family typewriter
 Mixed
 \family default
- type description.
+ font description.
 \end_layout
 
 \begin_layout Description
@@ -103,7 +103,7 @@ Mixed
 \family typewriter
 An even
 \family default
- more difficult description with change of type in the middle.
+ more difficult description with change of font in the middle.
 \end_layout
 
 \begin_layout Description
