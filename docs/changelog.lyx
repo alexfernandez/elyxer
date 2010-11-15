@@ -132,6 +132,11 @@ show changes in the output
  work for change tracking.
 \end_layout
 
+\begin_layout Itemize
+Solve an existing issue with Description and List layouts: correct splitting
+ of first words when intermixing styles.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.4 (2010-10-29):

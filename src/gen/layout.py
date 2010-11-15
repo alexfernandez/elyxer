@@ -125,50 +125,42 @@ class FirstWorder(Layout):
 
   def extractfirstword(self):
     "Extract the first word as a list"
-    return self.extractincontents(self.contents)
+    return self.clonecontents(self.contents)
 
-  def extractincontents(self, contents):
+  def clonecontents(self, contents):
     "Extract the first word in contents."
     firstcontents = []
     while len(contents) > 0:
       if self.spaceincontainer(contents[0]):
-        firstcontents += self.extractincontainer(contents[0])
+        cloned = self.clonecontainer(contents[0])
+        firstcontents.append(cloned)
         return firstcontents
       firstcontents.append(contents[0])
       del contents[0]
     return firstcontents
 
-  def extractincontainer(self, container):
-    "Extract all elements up to the first space."
+  def clonecontainer(self, container):
+    "Clone a container including the output."
     if isinstance(container, StringContainer):
-      return self.extractinstring(container)
-    firstcontents = self.extractincontents(container.contents)
-    if isinstance(container, TaggedText):
-      return [TaggedText().complete(firstcontents, container.output.tag)]
-    return firstcontents
+      return self.clonestring(container)
+    result = Cloner.clone(container)
+    result.output = container.output
+    result.contents = self.clonecontents(container.contents)
+    return result
 
-  def extractinstring(self, container):
+  def clonestring(self, container):
     "Extract the first word from a string container."
     if not ' ' in container.string:
       Trace.error('No space in string ' + container.string)
-      return [container]
+      return container
     split = container.string.split(' ', 1)
     container.string = split[1]
-    return [Constant(split[0])]
+    Trace.debug('First: ' + split[0] + ', second: ' + split[1])
+    return Constant(split[0])
 
   def spaceincontainer(self, container):
     "Find out if the container contains a space somewhere."
-    if isinstance(container, StringContainer):
-      if self.spaceinstring(container):
-        return True
-    for element in container.contents:
-      if self.spaceincontainer(element):
-        return True
-    return False
-
-  def spaceinstring(self, container):
-    "Find out if the string container has a space."
-    return ' ' in container.string
+    return ' ' in container.extracttext()
 
 class Description(FirstWorder):
   "A description layout"

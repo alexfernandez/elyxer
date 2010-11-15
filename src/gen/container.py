@@ -238,6 +238,10 @@ class StringContainer(Container):
       return line
     line = self.escape(line, EscapeConfig.commands)
     return line
+
+  def extracttext(self):
+    "Return all text."
+    return self.string
   
   def __unicode__(self):
     "Return a printable representation."

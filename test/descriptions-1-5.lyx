@@ -107,6 +107,18 @@ An even
 \end_layout
 
 \begin_layout Description
+
+\family typewriter
+A
+\color red
+n 
+\family default
+i
+\color inherit
+mpossible description with intermixed changes of font and color.
+\end_layout
+
+\begin_layout Description
 A description which leads to 
 \family typewriter
 fixed 
