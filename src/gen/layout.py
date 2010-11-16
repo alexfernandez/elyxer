@@ -155,7 +155,6 @@ class FirstWorder(Layout):
       return container
     split = container.string.split(' ', 1)
     container.string = split[1]
-    Trace.debug('First: ' + split[0] + ', second: ' + split[1])
     return Constant(split[0])
 
   def spaceincontainer(self, container):
