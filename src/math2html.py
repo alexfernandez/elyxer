@@ -40,3 +40,14 @@ def math2html(formula):
   whole.process()
   return ''.join(whole.gethtml())
 
+def main():
+  "Main function, called if invoked from the command line"
+  if len(sys.argv) <= 1:
+    Trace.error('Usage: math2html.py escaped_string')
+    exit()
+  result = math2html(sys.argv[1])
+  Trace.message(result)
+
+if __name__ == '__main__':
+  main()
+

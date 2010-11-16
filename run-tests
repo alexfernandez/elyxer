@@ -107,3 +107,10 @@ name="helloworld"
 ../elyxer.py --quiet --template template.html "$name.lyx" "$name-template-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-template-good.html" "$name-template-test.html"
 
+# test math2html
+result=$(../math2html.py 'N = \frac{\text{number of apples}}{7}')
+good='<i>N</i> = <span class="fraction"><span class="numerator"><span class="text">number of apples</span></span><span class="denominator">7</span></span>'
+if [ "$result" != "$good" ] ; then
+	echo "Error in math2html: $result != $good"
+fi
+

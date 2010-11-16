@@ -109,7 +109,8 @@ Generate a new
 \family typewriter
 math2html.py
 \family default
- file with an API to convert raw LaTeX code to HTML.
+ file with an API to convert raw LaTeX code to HTML, and a command line
+ utility.
 \end_layout
 
 \begin_layout Itemize
