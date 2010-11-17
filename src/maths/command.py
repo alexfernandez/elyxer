@@ -218,32 +218,26 @@ class DecoratingFunction(OneParamFunction):
 
   def parsebit(self, pos):
     "Parse a decorating function"
-    self.output = TaggedOutput().settag('span class="withsymbol"')
     self.type = 'alpha'
-    if self.cancombine():
-      self.combine(pos)
-      return
     symbol = self.translated
     self.symbol = TaggedBit().constant(symbol, 'span class="symbolover"')
-    self.contents.append(self.symbol)
     self.parameter = self.parseparameter(pos)
+    if self.combines():
+      return
+    self.output = TaggedOutput().settag('span class="withsymbol"')
+    self.contents.insert(0, self.symbol)
     self.parameter.output = TaggedOutput().settag('span class="undersymbol"')
     self.simplifyifpossible()
 
-  def cancombine(self):
-    "Find out if the decoration can be done with Unicode combining."
-    return False
-    if len(self.translated) != 1:
+  def combines(self):
+    "Find out if the decoration can be done with Unicode combining, and do it."
+    if not self.command in FormulaConfig.combiningfunctions:
       return False
-    if not unicode.combining(self.translated):
+    if len(self.parameter.extracttext()) != 1:
       return False
-    if len(self.parameter.original) != 1:
-      return False
+    combining = FormulaConfig.combiningfunctions[self.command]
+    self.contents.append(Constant(combining))
     return True
-
-  def combine(self, pos):
-    "Combine a Unicode combining character."
-    return
 
 class UnderDecoratingFunction(DecoratingFunction):
   "A function that decorates some bit of text from below."

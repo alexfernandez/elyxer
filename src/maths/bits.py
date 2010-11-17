@@ -90,6 +90,10 @@ class FormulaConstant(Constant):
     "Return a copy of itself."
     return FormulaConstant(self.original)
 
+  def __unicode__(self):
+    "Return a printable representation."
+    return 'Formula constant: ' + self.string
+
 class RawText(FormulaBit):
   "A bit of text inside a formula"
 
