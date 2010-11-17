@@ -22,6 +22,7 @@
 # Alex 20090330
 # eLyXer commands in formula processing
 
+import unicodedata
 from gen.container import *
 from ref.label import *
 from util.trace import Trace
@@ -219,12 +220,30 @@ class DecoratingFunction(OneParamFunction):
     "Parse a decorating function"
     self.output = TaggedOutput().settag('span class="withsymbol"')
     self.type = 'alpha'
+    if self.cancombine():
+      self.combine(pos)
+      return
     symbol = self.translated
     self.symbol = TaggedBit().constant(symbol, 'span class="symbolover"')
     self.contents.append(self.symbol)
     self.parameter = self.parseparameter(pos)
     self.parameter.output = TaggedOutput().settag('span class="undersymbol"')
     self.simplifyifpossible()
+
+  def cancombine(self):
+    "Find out if the decoration can be done with Unicode combining."
+    return False
+    if len(self.translated) != 1:
+      return False
+    if not unicode.combining(self.translated):
+      return False
+    if len(self.parameter.original) != 1:
+      return False
+    return True
+
+  def combine(self, pos):
+    "Combine a Unicode combining character."
+    return
 
 class UnderDecoratingFunction(DecoratingFunction):
   "A function that decorates some bit of text from below."
