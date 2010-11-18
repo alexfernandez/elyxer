@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -178,7 +178,14 @@ laborum, laborum
 \end_layout
 
 \begin_layout Standard
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "eiusmod"
+description "eiusmod indeed"
+
+\end_inset
+
  tempor incididunt ut 
 \begin_inset Foot
 status open
@@ -200,8 +207,17 @@ labore
 \end_inset
 
  et dolore magna aliqua.
- Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
- ut aliquip ex ea commodo consequat.
+ Ut enim ad minim veniam, quis nostrud exercitation ullamco
+\begin_inset Index
+status open
+
+\begin_layout Plain Layout
+ullamco
+\end_layout
+
+\end_inset
+
+ laboris nisi ut aliquip ex ea commodo consequat.
  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
  eu fugiat nulla pariatur.
  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
@@ -255,6 +271,35 @@ id
 \end_inset
 
  est laborum.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomencl_print
+LatexCommand printnomenclature
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "bibtex-alpha"
+options "plain"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset index_print
+LatexCommand printindex
+
+\end_inset
+
+
 \end_layout
 
 \end_body
