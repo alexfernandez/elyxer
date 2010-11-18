@@ -69,8 +69,19 @@ class Options(object):
   template = None
   noconvert = False
   notoclabels = False
+  hoverfoot = True
+  marginfoot = False
+  footfoot = False
+  footnotes = None
 
   branches = dict()
+
+  footnotesoptions = {
+      'number': 'numberfoot',
+      'margin': 'marginfoot',
+      'hover': 'hoverfoot',
+      'foot': 'foot',
+      }
 
   def parseoptions(self, args):
     "Parse command line options"
@@ -102,6 +113,7 @@ class Options(object):
         self.usage()
     if Options.lowmem or Options.toc:
       Options.memory = False
+    self.parsefootnotes()
     # set in Trace if necessary
     for param in dir(Options):
       if hasattr(Trace, param + 'mode'):
@@ -114,6 +126,20 @@ class Options(object):
     Trace.error('If filein (or fileout) is not given use standard input (or output).')
     Trace.error('Main program of the eLyXer package (http://elyxer.nongnu.org/).')
     self.showoptions()
+
+  def parsefootnotes(self):
+    "Parse footnotes options."
+    if not Options.footnotes:
+      return
+    Options.marginfoot = False
+    options = Options.footnotes.split(',')
+    for option in options:
+      if option in self.footnotesoptions:
+        setattr(Options, self.footnotesoptions[option], True)
+      else:
+        Trace.error('Unknown footnotes option: ' + option)
+    if not Options.footfoot and not Options.marginfoot and not Options.hoverfoot:
+      Options.hoverfoot = True
 
   def showoptions(self):
     "Show all possible options"
@@ -138,14 +164,20 @@ class Options(object):
     Trace.error('    --forceformat ".ext":   force image output format')
     Trace.error('    --converter "inkscape": use an alternative program to convert images')
     Trace.error('    --noconvert:            do not convert images, use in their original format')
+    Trace.error('  Options for footnote display:')
+    Trace.error('    --numberfoot:           label footnotes with numbers instead of letters')
+    Trace.error('    --hoverfoot:            show footnotes as hovering text (default)')
+    Trace.error('    --marginfoot:           show footnotes with numbers instead of letters')
+    Trace.error('    --footfoot:             show footnotes at the end of the page')
+    Trace.error('    --footnotes "options":  specify several footnotes options')
+    Trace.error('      Available options are: "number", "hover", "margin", "foot"')
     Trace.error('  Advanced output options:')
-    Trace.error('    --splitpart "depth"     split the resulting webpage at the given depth')
+    Trace.error('    --splitpart "depth":    split the resulting webpage at the given depth')
     Trace.error('    --toc:                  create a table of contents')
     Trace.error('    --target "frame":       make all links point to the given frame')
     Trace.error('    --toctarget "page":     generate a TOC that points to the given page')
     Trace.error('    --notoclabels:          omit the part labels in the TOC, such as Chapter')
     Trace.error('    --lowmem:               do the conversion on the fly (conserve memory)')
-    Trace.error('    --numberfoot:           label footnotes with numbers instead of letters')
     Trace.error('    --raw:                  generate HTML without header or footer.')
     Trace.error('    --jsmath "URL":         use jsMath from the given URL to display equations')
     Trace.error('    --mathjax "URL":        use MathJax from the given URL to display equations')
