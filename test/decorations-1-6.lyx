@@ -182,7 +182,7 @@ Decorations and commands.
 
 
 \begin_inset Tabular
-<lyxtabular version="3" rows="13" columns="3">
+<lyxtabular version="3" rows="14" columns="3">
 <features>
 <column alignment="center" valignment="top" width="0pt">
 <column alignment="center" valignment="top" width="0pt">
@@ -437,6 +437,42 @@ dot
 \begin_inset Text
 
 \begin_layout Plain Layout
+triple dot
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+
+\backslash
+dddot
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dddot{o}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 breve
 \end_layout
 
@@ -617,7 +653,7 @@ overrightarrow
 \begin_inset Text
 
 \begin_layout Plain Layout
-triple dot
+wide hat
 \end_layout
 
 \end_inset
@@ -630,7 +666,7 @@ triple dot
 \series bold
 
 \backslash
-dddot
+widehat
 \end_layout
 
 \end_inset
@@ -639,7 +675,7 @@ dddot
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\dddot{o}$
+\begin_inset Formula $\widehat{house}$
 \end_inset
 
 

@@ -211,6 +211,19 @@ class FontFunction(OneParamFunction):
     self.type = 'font'
     self.simplifyifpossible()
 
+class CombiningFunction(OneParamFunction):
+
+  commandmap = FormulaConfig.combiningfunctions
+
+  def parsebit(self, pos):
+    "Parse a combining function."
+    self.type = 'alpha'
+    combining = self.translated
+    parameter = self.parseparameter(pos)
+    if len(parameter.extracttext()) != 1:
+      Trace.error('Applying combining function to invalid string ' + parameter.extracttext())
+    self.contents.append(Constant(combining))
+
 class DecoratingFunction(OneParamFunction):
   "A function that decorates some bit of text"
 
@@ -222,22 +235,10 @@ class DecoratingFunction(OneParamFunction):
     symbol = self.translated
     self.symbol = TaggedBit().constant(symbol, 'span class="symbolover"')
     self.parameter = self.parseparameter(pos)
-    if self.combines():
-      return
     self.output = TaggedOutput().settag('span class="withsymbol"')
     self.contents.insert(0, self.symbol)
     self.parameter.output = TaggedOutput().settag('span class="undersymbol"')
     self.simplifyifpossible()
-
-  def combines(self):
-    "Find out if the decoration can be done with Unicode combining, and do it."
-    if not self.command in FormulaConfig.combiningfunctions:
-      return False
-    if len(self.parameter.extracttext()) != 1:
-      return False
-    combining = FormulaConfig.combiningfunctions[self.command]
-    self.contents.append(Constant(combining))
-    return True
 
 class UnderDecoratingFunction(DecoratingFunction):
   "A function that decorates some bit of text from below."
@@ -254,5 +255,6 @@ FormulaFactory.types += [FormulaCommand, SymbolFunction]
 FormulaCommand.types = [
     EmptyCommand, AlphaCommand, OneParamFunction, DecoratingFunction,
     FontFunction, LabelFunction, TextFunction, UnderDecoratingFunction,
+    CombiningFunction
     ]
 

@@ -138,6 +138,34 @@ Solve an existing issue with Description and List layouts: correct splitting
  of first words when intermixing styles.
 \end_layout
 
+\begin_layout Itemize
+Show decorations using Unicode combining characters, whenever possible.
+\end_layout
+
+\begin_layout Itemize
+Support for 
+\family typewriter
+
+\backslash
+dddot
+\family default
+: 
+\begin_inset Formula $\dddot{o}$
+\end_inset
+
+ (with combining character) and 
+\family typewriter
+
+\backslash
+widehat
+\family default
+: 
+\begin_inset Formula $\widehat{abc}$
+\end_inset
+
+ (with overlay).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.4 (2010-10-29):
