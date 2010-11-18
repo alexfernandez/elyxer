@@ -37,6 +37,7 @@ from gen.image import *
 from gen.layout import *
 from gen.list import *
 from gen.inset import *
+from gen.notes import *
 from gen.float import *
 from gen.header import *
 from gen.change import *

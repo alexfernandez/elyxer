@@ -99,49 +99,6 @@ class ShortTitle(Container):
     self.parser = InsetParser()
     self.output = EmptyOutput()
 
-class SideNote(Container):
-  "A side note that appears at the right."
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = TaggedOutput()
-
-  def process(self):
-    "Enclose everything in a marginal span."
-    self.output.settag('span class="Marginal"', True)
-
-class Footnote(Container):
-  "A footnote to the main text"
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = TaggedOutput().settag('span class="FootOuter"', False)
-    if not Options.numberfoot:
-      NumberGenerator.generator.getcounter('Footnote').setmode('A')
-
-  def process(self):
-    "Add a counter for the footnote."
-    "Can be numeric or a letter depending on runtime options."
-    order = NumberGenerator.generator.generate('Footnote')
-    span = 'span class="FootMarker"'
-    marker = TaggedText().constant('[' + order + ']', span)
-    tag = TaggedText().complete([marker] + self.contents, 'span class="Foot"', True)
-    self.contents = [marker, tag]
-
-class Note(Container):
-  "A LyX note of several types"
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = EmptyOutput()
-
-  def process(self):
-    "Hide note and comment, dim greyed out"
-    self.type = self.header[2]
-    if TagConfig.notes[self.type] == '':
-      return
-    self.output = TaggedOutput().settag(TagConfig.notes[self.type], True)
-
 class FlexInset(Container):
   "A flexible inset, generic version."
 
