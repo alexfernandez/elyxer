@@ -240,21 +240,9 @@ class DecoratingFunction(OneParamFunction):
     self.parameter.output = TaggedOutput().settag('span class="undersymbol"')
     self.simplifyifpossible()
 
-class UnderDecoratingFunction(DecoratingFunction):
-  "A function that decorates some bit of text from below."
-
-  commandmap = FormulaConfig.underdecoratingfunctions
-
-  def parsebit(self, pos):
-    "Parse an under-decorating function."
-    DecoratingFunction.parsebit(self, pos)
-    self.symbol.output.settag('span class="symbolunder"')
-    self.parameter.output.settag('span class="oversymbol"')
-
 FormulaFactory.types += [FormulaCommand, SymbolFunction]
 FormulaCommand.types = [
     EmptyCommand, AlphaCommand, OneParamFunction, DecoratingFunction,
-    FontFunction, LabelFunction, TextFunction, UnderDecoratingFunction,
-    CombiningFunction
+    FontFunction, LabelFunction, TextFunction, CombiningFunction,
     ]
 
