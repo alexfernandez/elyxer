@@ -71,7 +71,7 @@ class Options(object):
   notoclabels = False
   hoverfoot = True
   marginfoot = False
-  footfoot = False
+  endfoot = False
   footnotes = None
 
   branches = dict()
@@ -80,7 +80,7 @@ class Options(object):
       'number': 'numberfoot',
       'margin': 'marginfoot',
       'hover': 'hoverfoot',
-      'foot': 'foot',
+      'end': 'endfoot',
       }
 
   def parseoptions(self, args):
@@ -138,7 +138,7 @@ class Options(object):
         setattr(Options, self.footnotesoptions[option], True)
       else:
         Trace.error('Unknown footnotes option: ' + option)
-    if not Options.footfoot and not Options.marginfoot and not Options.hoverfoot:
+    if not Options.endfoot and not Options.marginfoot and not Options.hoverfoot:
       Options.hoverfoot = True
 
   def showoptions(self):
@@ -168,9 +168,9 @@ class Options(object):
     Trace.error('    --numberfoot:           label footnotes with numbers instead of letters')
     Trace.error('    --hoverfoot:            show footnotes as hovering text (default)')
     Trace.error('    --marginfoot:           show footnotes with numbers instead of letters')
-    Trace.error('    --footfoot:             show footnotes at the end of the page')
+    Trace.error('    --endfoot:             show footnotes at the end of the page')
     Trace.error('    --footnotes "options":  specify several footnotes options')
-    Trace.error('      Available options are: "number", "hover", "margin", "foot"')
+    Trace.error('      Available options are: "number", "hover", "margin", "end"')
     Trace.error('  Advanced output options:')
     Trace.error('    --splitpart "depth":    split the resulting webpage at the given depth')
     Trace.error('    --toc:                  create a table of contents')
