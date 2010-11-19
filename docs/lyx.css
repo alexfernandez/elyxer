@@ -359,6 +359,47 @@ span.FootOuter:hover .Foot {
 	display: inline;
 	float: none;
 }
+span.FootFoot {
+	margin: 0.2ex;
+	border: thin solid #c0c0c0;
+	background: #ffffff;
+	padding: 0.5ex;
+	font-size: small;
+	font-weight: normal;
+	line-height: 1.5em;
+	text-align: left;
+}
+span.MarginFoot {
+	float: right;
+	clear: right;
+	margin: 0.2ex;
+	border: thin solid #c0c0c0;
+	background: #ffffff;
+	width: 30%;
+	padding: 0.5ex;
+	font-size: small;
+	font-weight: normal;
+	line-height: 1.5em;
+	text-align: left;
+}
+span.HoverFoot {
+	margin: 0.2ex;
+	border: thin solid #c0c0c0;
+	background: #ffffff;
+	padding: 0.5ex;
+	font-size: small;
+	font-weight: normal;
+	line-height: 1.5em;
+	text-align: left;
+}
+span.FootOuter .HoverFoot {
+	display: none;
+	position: absolute;
+}
+span.FootOuter:hover .HoverFoot {
+	display: inline;
+	float: none;
+}
 span.Marginal {
 	float: right;
 	clear: right;

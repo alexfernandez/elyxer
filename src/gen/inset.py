@@ -23,7 +23,6 @@
 # LyX insets
 
 from util.trace import Trace
-from util.numbering import *
 from parse.parser import *
 from parse.headerparse import *
 from out.output import *

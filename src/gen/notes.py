@@ -41,7 +41,7 @@ class SideNote(Container):
     self.output.settag('span class="Marginal"', True)
 
 class Footnote(Container):
-  "A footnote to the main text"
+  "A footnote to the main text."
 
   def __init__(self):
     self.parser = InsetParser()
@@ -53,10 +53,32 @@ class Footnote(Container):
     "Add a counter for the footnote."
     "Can be numeric or a letter depending on runtime options."
     order = NumberGenerator.generator.generate('Footnote')
-    span = 'span class="FootMarker"'
-    marker = TaggedText().constant('[' + order + ']', span)
-    tag = TaggedText().complete([marker] + self.contents, 'span class="Foot"', True)
-    self.contents = [marker, tag]
+    marker = TaggedText().constant('[' + order + ']', 'span class="FootMarker"')
+    notecontents = [marker] + list(self.contents)
+    self.contents = [marker]
+    if Options.hoverfoot:
+      self.contents.append(self.createnote(notecontents, 'HoverFoot'))
+    if Options.marginfoot:
+      self.contents.append(self.createnote(notecontents, 'MarginFoot'))
+    if Options.footfoot:
+      Footnotes.footnotes.append(self.createnote(notecontents, 'FootFoot'))
+
+  def createnote(self, contents, spanclass):
+    "Create a note with the given contents and span class."
+    return TaggedText().complete(contents, 'span class="' + spanclass + '"', True)
+
+class Footnotes(Container):
+  "The collection of footnotes at the document end."
+
+  footnotes = []
+
+  def __init__(self):
+    self.contents = []
+
+  def process(self):
+    "Generate all footnotes and a proper header for them all."
+    header = TaggedText().constant(Translator.translate('footnotes'), 'h1 class="footnotes"')
+    self.contents.append(Translator.translate('footnotes'))
 
 class Note(Container):
   "A LyX note of several types"
