@@ -2874,11 +2874,11 @@ referring
 [A]
 \color inherit
 , so markers are not mistaken with other superscript constructs such as
- exponents: 
+ exponents (like 
 \begin_inset Formula $e^{a}$
 \end_inset
 
-.
+).
 \end_layout
 
 \begin_layout Standard
@@ -2971,6 +2971,8 @@ The most interesting part is that these three options can be combined at
 --footnotes hover,end
 \family default
 , which will show notes as hovering text and also at the end of the page.
+ Note however that in this case notes will be printed twice (at the margin
+ instead of hovering and at the end).
 \end_layout
 
 \begin_layout Section
