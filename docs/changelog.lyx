@@ -166,6 +166,22 @@ widehat
  (with character on top).
 \end_layout
 
+\begin_layout Itemize
+Wish list: add several options for 
+\begin_inset CommandInset href
+LatexCommand href
+name "footnote generation"
+target "userguide.html#sub:Footnotes"
+
+\end_inset
+
+, and a generic 
+\family typewriter
+--footnotes
+\family default
+ option to aggregate them all.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.4 (2010-10-29):

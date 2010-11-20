@@ -1109,6 +1109,79 @@ inkscape
 \end_layout
 
 \begin_layout Subsubsection*
+Options to Control footnote output
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--numberfoot
+\family default
+: Number all footnotes using numbers: 
+\begin_inset Quotes eld
+\end_inset
+
+[1]
+\begin_inset Quotes erd
+\end_inset
+
+, instead of the default 
+\begin_inset Quotes eld
+\end_inset
+
+[A]
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--hoverfoot
+\family default
+: show footnotes as hovering text (default).
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--marginfoot
+\family default
+: show footnotes with numbers instead of letters.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--endfoot
+\family default
+: show footnotes at the end of the page.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--footnotes
+\begin_inset space ~
+\end_inset
+
+"options"
+\family default
+: specify several footnotes options at the same time, separated with commas.
+ Available options are: "number", "hover", "margin", "end".
+ See section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Footnotes"
+
+\end_inset
+
+: Footnotes.
+\end_layout
+
+\begin_layout Subsubsection*
 Advanced Options to Control HTML output
 \end_layout
 
@@ -2735,6 +2808,171 @@ Publishers should carefully consider pros and cons before deciding what
  to use.
 \end_layout
 
+\begin_layout Subsection
+Footnotes
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Footnotes"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Footnote generation is surprisingly hard to get right in an HTML document.
+ eLyXer has a fairly complete set of command line options to customize how
+ footnotes are generated.
+ Here we will use the aggregated option 
+\family typewriter
+--footnotes "options"
+\family default
+ which can be used to specify any combination, but they can be turned on
+ independently using 
+\family typewriter
+--\SpecialChar \ldots{}
+foot
+\family default
+.
+ For instance: 
+\family typewriter
+--footnotes number,margin
+\family default
+ is equivalent to 
+\family typewriter
+--numberfoot --marginfoot
+\family default
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Markers
+\end_layout
+
+\begin_layout Standard
+The footnote is attached to a point of the text (the 
+\emph on
+referring
+\emph default
+ text) which is usually marked by a bit of text.
+ The default behavior for the marker is to use a superscript letter surrounded
+ by square brackets, in blue: 
+\color blue
+
+\begin_inset Formula $^{\text{{\color{blue}[A]}}}$
+\end_inset
+
+
+\color inherit
+.
+ The text can be changed to inlined text with 
+\family typewriter
+--footnotes inline
+\family default
+: 
+\color blue
+[A]
+\color inherit
+, so markers are not mistaken with other superscript constructs such as
+ exponents: 
+\begin_inset Formula $e^{a}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Markers can also be converted to numbers using 
+\family typewriter
+--footnotes number
+\family default
+: 
+\color blue
+
+\begin_inset Formula $^{\text{{\color{blue}[1]}}}$
+\end_inset
+
+
+\color inherit
+.
+ Or, they can be switched over to symbols using 
+\family typewriter
+--footnotes symbol
+\family default
+: 
+\color blue
+
+\begin_inset Formula $^{\text{{\color{blue}*}}}$
+\end_inset
+
+
+\color inherit
+.
+ Available symbols are rotated from this sequence: * ** † †† § §§ ¶ ¶¶.
+ All options can be combined: 
+\family typewriter
+--footnotes inline number
+\family default
+ will show inline numeric markers such as 
+\color blue
+[1]
+\color inherit
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Position
+\end_layout
+
+\begin_layout Standard
+Footnotes are supposed to appear at the foot of the page, but that is not
+ always possible or practical in web pages.
+ Huge pages make scrolling up and down quite uncomfortable, and remove the
+ immediacy of having the note in the same page as the referring text.
+\end_layout
+
+\begin_layout Standard
+There are a few alternatives: use the margin, show hovering text, or link
+ to the note at the bottom of the page.
+ eLyXer can use all three.
+ 
+\family typewriter
+--footnotes margin
+\family default
+ will place the notes at the margin, just as margin notes but with the addition
+ of the footnote marker.
+ While 
+\family typewriter
+--footnotes hover
+\family default
+ will show hovering text when the mouse is placed on the marker; this is
+ the default behavior.
+ Note that hovering notes are converted into margin notes when printing.
+\end_layout
+
+\begin_layout Standard
+When footnotes are shown at the end of the page with 
+\family typewriter
+--footnotes end
+\family default
+, footnote markers turn into links.
+ The actual footnote at the end then contains a link back to the marker.
+\end_layout
+
+\begin_layout Standard
+The most interesting part is that these three options can be combined at
+ will: 
+\family typewriter
+--footnotes margin,hover,end
+\family default
+ will show footnotes at the three possible locations.
+ The most practical combination is probably 
+\family typewriter
+--footnotes hover,end
+\family default
+, which will show notes as hovering text and also at the end of the page.
+\end_layout
+
 \begin_layout Section
 Work in Progress
 \end_layout
@@ -3113,7 +3351,7 @@ A
 \begin_inset Text
 
 \begin_layout Plain Layout
-Queued
+1.1.0
 \end_layout
 
 \end_inset
