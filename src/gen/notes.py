@@ -57,25 +57,26 @@ class Footnote(Container):
     notecontents = [marker] + list(self.contents)
     self.contents = [marker]
     if Options.hoverfoot:
-      self.contents.append(self.createnote(notecontents, 'HoverFoot'))
+      self.contents.append(self.createnote(notecontents, 'span class="HoverFoot"'))
     if Options.marginfoot:
-      self.contents.append(self.createnote(notecontents, 'MarginFoot'))
+      self.contents.append(self.createnote(notecontents, 'span class="MarginFoot"'))
     if Options.endfoot:
-      EndFootnotes.footnotes.append(self.createnote(notecontents, 'EndFoot'))
+      EndFootnotes.footnotes.append(self.createnote(notecontents, 'div class="EndFoot"'))
 
-  def createnote(self, contents, spanclass):
-    "Create a note with the given contents and span class."
-    return TaggedText().complete(contents, 'span class="' + spanclass + '"', True)
+  def createnote(self, contents, tag):
+    "Create a note with the given contents and HTML tag."
+    return TaggedText().complete(contents, tag, True)
 
 class EndFootnotes(Container):
   "The collection of footnotes at the document end."
 
   footnotes = []
 
-  def process(self):
+  def __init__(self):
     "Generate all footnotes and a proper header for them all."
-    header = TaggedText().constant(Translator.translate('footnotes'), 'h1 class="footnotes"')
-    self.contents = [header]
+    self.output = ContentsOutput()
+    header = TaggedText().constant(Translator.translate('footnotes'), 'h1 class="index"')
+    self.contents = [header] + self.footnotes
 
 class Note(Container):
   "A LyX note of several types"

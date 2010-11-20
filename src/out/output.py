@@ -140,3 +140,4 @@ class StringOutput(ContainerOutput):
   def gethtml(self, container):
     "Return a bare string"
     return [container.string]
+

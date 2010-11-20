@@ -31,6 +31,7 @@ from gen.container import *
 from ref.partkey import *
 from maths.command import *
 from maths.macro import *
+from gen.notes import *
 
 
 class LyXHeader(Container):
@@ -122,6 +123,12 @@ class LyXFooter(Container):
     self.parser = BoundedDummy()
     self.output = FooterOutput()
     self.partkey = PartKey().createheader('footer')
+
+  def process(self):
+    "Include any footnotes at the end."
+    if EndFootnotes.footnotes:
+      endnotes = EndFootnotes()
+      self.contents = [endnotes]
 
 class PreambleFunction(ParameterFunction):
   "A function which is used in the preamble to perform some operation."

@@ -290,10 +290,11 @@ class HeaderOutput(ContainerOutput):
     "Return a constant header"
     return HTMLTemplate.get().convertheader()
 
-class FooterOutput(ContainerOutput):
+class FooterOutput(ContentsOutput):
   "Return the HTML code for the footer"
 
   def gethtml(self, container):
     "Footer HTML"
-    return HTMLTemplate.get().convertfooter()
+    contents = ContentsOutput.gethtml(self, container)
+    return contents + HTMLTemplate.get().convertfooter()
 
