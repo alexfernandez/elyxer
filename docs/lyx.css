@@ -359,6 +359,15 @@ span.FootOuter:hover .Foot {
 	display: inline;
 	float: none;
 }
+span.SupFootMarker {
+	color: #0030c0;
+	font-size: 0.75em;
+	line-height: 0.5em;
+	vertical-align: text-top;
+}
+span.InlineFootMarker {
+	color: #0030c0;
+}
 div.EndFoot {
 	margin: 0.2ex;
 	background: #ffffff;
@@ -856,6 +865,21 @@ body {
 	line-height: 1.5em;
 }
 span.FootOuter .Foot {
+	display: block;
+	position: relative;
+	float: right;
+	clear: right;
+	margin: 0.2ex;
+	border: thin solid #c0c0c0;
+	background: #ffffff;
+	width: 30%;
+	padding: 0.5ex;
+	font-size: small;
+	font-weight: normal;
+	line-height: 1.5em;
+	text-align: left;
+}
+span.FootOuter .HoverFoot {
 	display: block;
 	position: relative;
 	float: right;

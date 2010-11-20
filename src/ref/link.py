@@ -77,6 +77,15 @@ class Link(Container):
     self.destination = destination
     destination.destination = self
 
+  def __unicode__(self):
+    "Return a printable representation."
+    result = 'Link'
+    if self.anchor:
+      result += ' #' + self.anchor
+    if self.url:
+      result += ' to ' + self.url
+    return result
+
 class URL(Link):
   "A clickable URL"
 

@@ -73,21 +73,29 @@ class Footnote(Container):
     order = NumberGenerator.generator.generate('Footnote')
     text = '[' + order + ']'
     if Options.endfoot:
-      contents = [Link().complete(text, 'footnote-' + order)]
+      contents = [Link().complete(text, 'footmarker-' + order)]
     else:
       contents = [Constant(text)]
-    marker = TaggedText().complete(contents, 'span class="FootMarker"')
-    marker.order = order
-    return marker
+    return self.tagmarker(contents, order)
 
   def createanchor(self, marker):
     "Create the anchor for a footnote marker. Adds a link for end footnotes."
     if not Options.endfoot:
       return marker
     original = marker.contents[0]
-    link = Link().complete('[' + marker.order + ']', 'endfootnote-' + marker.order)
+    link = Link().complete('[' + marker.order + ']', 'footnote-' + marker.order)
     link.setmutualdestination(original)
-    return TaggedText().complete([link], 'span class="FootMarker"')
+    return self.tagmarker([link])
+
+  def tagmarker(self, contents, order=None):
+    "Create a footnote marker based on its contents."
+    span = 'span class="SupFootMarker"'
+    if Options.inlinefoot:
+      span = 'span class="InlineFootMarker"'
+    tagged = TaggedText().complete(contents, span)
+    if order:
+      tagged.order = order
+    return tagged
 
 class EndFootnotes(Container):
   "The collection of footnotes at the document end."

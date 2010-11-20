@@ -72,16 +72,11 @@ class Options(object):
   hoverfoot = True
   marginfoot = False
   endfoot = False
+  supfoot = True
+  inlinefoot = False
   footnotes = None
 
   branches = dict()
-
-  footnotesoptions = {
-      'number': 'numberfoot',
-      'margin': 'marginfoot',
-      'hover': 'hoverfoot',
-      'end': 'endfoot',
-      }
 
   def parseoptions(self, args):
     "Parse command line options"
@@ -134,8 +129,9 @@ class Options(object):
     Options.marginfoot = False
     options = Options.footnotes.split(',')
     for option in options:
-      if option in self.footnotesoptions:
-        setattr(Options, self.footnotesoptions[option], True)
+      footoption = option + 'foot'
+      if hasattr(Options, footoption):
+        setattr(Options, footoption, True)
       else:
         Trace.error('Unknown footnotes option: ' + option)
     if not Options.endfoot and not Options.marginfoot and not Options.hoverfoot:
@@ -168,9 +164,12 @@ class Options(object):
     Trace.error('    --numberfoot:           label footnotes with numbers instead of letters')
     Trace.error('    --hoverfoot:            show footnotes as hovering text (default)')
     Trace.error('    --marginfoot:           show footnotes with numbers instead of letters')
-    Trace.error('    --endfoot:             show footnotes at the end of the page')
-    Trace.error('    --footnotes "options":  specify several footnotes options')
-    Trace.error('      Available options are: "number", "hover", "margin", "end"')
+    Trace.error('    --endfoot:              show footnotes at the end of the page')
+    Trace.error('    --supfoot:              use superscript for footnote markers (default)')
+    Trace.error('    --inlinefoot:           use inline text for footnote markers')
+    Trace.error('    --footnotes "options":  specify several comma-separated footnotes options')
+    Trace.error('      Available options are: "number", "hover", "margin", "end", "sup",')
+    Trace.error('        "inline"')
     Trace.error('  Advanced output options:')
     Trace.error('    --splitpart "depth":    split the resulting webpage at the given depth')
     Trace.error('    --toc:                  create a table of contents')
