@@ -27,6 +27,7 @@ from util.numbering import *
 from parse.parser import *
 from out.output import *
 from gen.container import *
+from ref.link import *
 
 
 class SideNote(Container):
@@ -52,9 +53,9 @@ class Footnote(Container):
   def process(self):
     "Add a counter for the footnote."
     "Can be numeric or a letter depending on runtime options."
-    order = NumberGenerator.generator.generate('Footnote')
-    marker = TaggedText().constant('[' + order + ']', 'span class="FootMarker"')
-    notecontents = [marker] + list(self.contents)
+    marker = self.createmarker()
+    anchor = self.createanchor(marker)
+    notecontents = [anchor] + list(self.contents)
     self.contents = [marker]
     if Options.hoverfoot:
       self.contents.append(self.createnote(notecontents, 'span class="HoverFoot"'))
@@ -66,6 +67,27 @@ class Footnote(Container):
   def createnote(self, contents, tag):
     "Create a note with the given contents and HTML tag."
     return TaggedText().complete(contents, tag, True)
+
+  def createmarker(self):
+    "Create the marker for a footnote."
+    order = NumberGenerator.generator.generate('Footnote')
+    text = '[' + order + ']'
+    if Options.endfoot:
+      contents = [Link().complete(text, 'footnote-' + order)]
+    else:
+      contents = [Constant(text)]
+    marker = TaggedText().complete(contents, 'span class="FootMarker"')
+    marker.order = order
+    return marker
+
+  def createanchor(self, marker):
+    "Create the anchor for a footnote marker. Adds a link for end footnotes."
+    if not Options.endfoot:
+      return marker
+    original = marker.contents[0]
+    link = Link().complete('[' + marker.order + ']', 'endfootnote-' + marker.order)
+    link.setmutualdestination(original)
+    return TaggedText().complete([link], 'span class="FootMarker"')
 
 class EndFootnotes(Container):
   "The collection of footnotes at the document end."
