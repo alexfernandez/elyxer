@@ -419,7 +419,11 @@ Container
 \family typewriter
 gen
 \family default
- package.
+ package (file 
+\family typewriter
+src/gen/Container.py
+\family default
+).
  Its responsibility is to take a bit of LyX code and generate working HTML
  code.
  This includes (with the aid of some helper classes): reading from file
@@ -2073,7 +2077,7 @@ Container
  The actual code is a bit different but follows the same principles; it
  can be found in 
 \family typewriter
-src/link.py
+src/bib/biblio.py
 \family default
 : in the classes 
 \family typewriter
