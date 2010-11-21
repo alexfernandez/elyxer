@@ -47,8 +47,12 @@ class Footnote(Container):
   def __init__(self):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('span class="FootOuter"', False)
-    if not Options.numberfoot:
-      NumberGenerator.generator.getcounter('Footnote').setmode('A')
+    mode = 'A'
+    if Options.numberfoot:
+      mode = '1'
+    if Options.symbolfoot:
+      mode = '*'
+    NumberGenerator.generator.getcounter('Footnote').setmode(mode)
 
   def process(self):
     "Add a counter for the footnote."

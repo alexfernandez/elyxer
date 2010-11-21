@@ -175,7 +175,10 @@ target "userguide.html#sub:Footnotes"
 
 \end_inset
 
-, and a generic 
+ (align markers instead of using superscript, place markers at the bottom
+ of the page, use symbols for markers\SpecialChar \ldots{}
+).
+ Also added a generic 
 \family typewriter
 --footnotes
 \family default

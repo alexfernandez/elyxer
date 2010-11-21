@@ -2908,8 +2908,8 @@ Markers can also be converted to numbers using
 
 \color inherit
 .
- Available symbols are rotated from this sequence: * † ‡ § ¶ # * †† ‡‡ §§
- ¶¶ ##.
+ Available symbols are rotated from this sequence: * ** † ‡ § §§ ¶ ¶¶ #
+ ##.
  All options can be combined: 
 \family typewriter
 --footnotes inline number

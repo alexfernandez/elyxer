@@ -61,7 +61,6 @@ class Options(object):
   lowmem = False
   nobib = False
   converter = 'imagemagick'
-  numberfoot = False
   raw = False
   jsmath = None
   mathjax = None
@@ -69,6 +68,9 @@ class Options(object):
   template = None
   noconvert = False
   notoclabels = False
+  letterfoot = True
+  numberfoot = False
+  symbolfoot = False
   hoverfoot = True
   marginfoot = False
   endfoot = False
@@ -127,6 +129,7 @@ class Options(object):
     if not Options.footnotes:
       return
     Options.marginfoot = False
+    Options.letterfoot = False
     options = Options.footnotes.split(',')
     for option in options:
       footoption = option + 'foot'
@@ -136,6 +139,8 @@ class Options(object):
         Trace.error('Unknown footnotes option: ' + option)
     if not Options.endfoot and not Options.marginfoot and not Options.hoverfoot:
       Options.hoverfoot = True
+    if not Options.numberfoot and not Options.symbolfoot:
+      Options.letterfoot = True
 
   def showoptions(self):
     "Show all possible options"
@@ -161,15 +166,16 @@ class Options(object):
     Trace.error('    --converter "inkscape": use an alternative program to convert images')
     Trace.error('    --noconvert:            do not convert images, use in their original format')
     Trace.error('  Options for footnote display:')
-    Trace.error('    --numberfoot:           label footnotes with numbers instead of letters')
+    Trace.error('    --numberfoot:           mark footnotes with numbers instead of letters')
+    Trace.error('    --symbolfoot:           mark footnotes with symbols (* ** † ‡...)')
     Trace.error('    --hoverfoot:            show footnotes as hovering text (default)')
     Trace.error('    --marginfoot:           show footnotes with numbers instead of letters')
     Trace.error('    --endfoot:              show footnotes at the end of the page')
     Trace.error('    --supfoot:              use superscript for footnote markers (default)')
     Trace.error('    --inlinefoot:           use inline text for footnote markers')
     Trace.error('    --footnotes "options":  specify several comma-separated footnotes options')
-    Trace.error('      Available options are: "number", "hover", "margin", "end", "sup",')
-    Trace.error('        "inline"')
+    Trace.error('      Available options are: "number", "symbol", "hover", "margin", "end",')
+    Trace.error('        "sup", "inline"')
     Trace.error('  Advanced output options:')
     Trace.error('    --splitpart "depth":    split the resulting webpage at the given depth')
     Trace.error('    --toc:                  create a table of contents')

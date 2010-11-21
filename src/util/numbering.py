@@ -38,6 +38,7 @@ class NumberCounter(object):
   master = None
 
   letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  symbols = NumberingConfig.sequence['symbols']
   romannumerals = [
       ('M', 1000), ('CM', 900), ('D', 500), ('CD', 400), ('C', 100),
       ('XC', 90), ('L', 50), ('XL', 40), ('X', 10), ('IX', 9), ('V', 5),
@@ -70,7 +71,15 @@ class NumberCounter(object):
 
   def getletter(self):
     "Get the next value as a letter."
-    return self.letters[(self.value - 1) % len(self.letters)]
+    return self.getsequence(self.letters)
+
+  def getsymbol(self):
+    "Get the next value as a symbol."
+    return self.getsequence(self.symbols)
+
+  def getsequence(self, sequence):
+    "Get the next value from a sequence."
+    return sequence[(self.value - 1) % len(sequence)]
 
   def getroman(self):
     "Get the next value as a roman number."
@@ -92,6 +101,8 @@ class NumberCounter(object):
       return self.getletter().lower()
     if self.mode == 'I':
       return self.getroman()
+    if self.mode == '*':
+      return self.getsymbol()
     Trace.error('Unknown counter mode ' + self.mode)
     return self.gettext()
 
