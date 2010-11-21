@@ -50,7 +50,7 @@ class FootnoteMarker(Container):
     span = 'span class="SupFootMarker"'
     if Options.alignfoot:
       span = 'span class="AlignFootMarker"'
-    self.output = TaggedOutput().settag(span)
+    self.output = TaggedOutput().settag(span, False)
     mode = 'A'
     if Options.numberfoot:
       mode = '1'
@@ -114,7 +114,7 @@ class Footnote(Container):
 
   def createnote(self, contents, tag):
     "Create a note with the given contents and HTML tag."
-    return TaggedText().complete(contents, tag, True)
+    return TaggedText().complete(contents, tag, False)
 
 class EndFootnotes(Container):
   "The collection of footnotes at the document end."
