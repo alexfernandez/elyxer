@@ -81,6 +81,8 @@ class FootnoteMarker(Container):
       self.contents = [self.link]
     else:
       self.contents = [Constant(self.getmark())]
+    space = Constant(u' ')
+    self.contents = [space] + self.contents + [space]
 
   def getmark(self):
     "Get the mark to be displayed in the marker based on the order."
