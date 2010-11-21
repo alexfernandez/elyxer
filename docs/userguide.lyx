@@ -2937,13 +2937,18 @@ Markers can also be converted to numbers using
 .
  Available symbols are rotated from this sequence: * ** † ‡ § §§ ¶ ¶¶ #
  ##.
- All options can be combined: 
+ All options can be combined.
+ For instance, symbol markers look best when shown aligned; 
 \family typewriter
---footnotes align number
+--footnotes align,symbol
 \family default
- will show aligned numeric markers such as 
+ will show aligned symbolic markers such as 
 \color blue
-[1]
+*
+\color inherit
+ or 
+\color blue
+†
 \color inherit
 .
 \end_layout
