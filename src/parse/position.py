@@ -70,6 +70,9 @@ class Position(object):
 
   def checkforlower(self, string):
     "Check for a string in lower case."
+    extracted = self.extract(len(string))
+    if not extracted:
+      return False
     return string.lower() == self.extract(len(string)).lower()
 
   def finished(self):
