@@ -167,7 +167,7 @@ class Options(object):
     Trace.error('    --noconvert:            do not convert images, use in their original format')
     Trace.error('  Options for footnote display:')
     Trace.error('    --numberfoot:           mark footnotes with numbers instead of letters')
-    Trace.error('    --symbolfoot:           mark footnotes with symbols (* ** † ‡...)')
+    Trace.error('    --symbolfoot:           mark footnotes with symbols (*, **...)')
     Trace.error('    --hoverfoot:            show footnotes as hovering text (default)')
     Trace.error('    --marginfoot:           show footnotes with numbers instead of letters')
     Trace.error('    --endfoot:              show footnotes at the end of the page')

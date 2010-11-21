@@ -1139,9 +1139,19 @@ Options to Control footnote output
 \begin_layout Description
 
 \family typewriter
+--symbolfoot
+\family default
+: mark footnotes with symbols (*, **, †, ‡\SpecialChar \ldots{}
+).
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
 --hoverfoot
 \family default
-: show footnotes as hovering text (default).
+: show footnotes as hovering text.
+ This is the default position.
 \end_layout
 
 \begin_layout Description
@@ -1158,6 +1168,23 @@ Options to Control footnote output
 --endfoot
 \family default
 : show footnotes at the end of the page.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--supfoot
+\family default
+: use superscript for footnote markers.
+ This is the default style.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--alignfoot
+\family default
+: use aligned text for footnote markers, instead of superscript.
 \end_layout
 
 \begin_layout Description
@@ -2865,9 +2892,9 @@ referring
 
 \color inherit
 .
- The text can be changed to inlined text with 
+ The text can be changed to aligned text with 
 \family typewriter
---footnotes inline
+--footnotes align
 \family default
 : 
 \color blue
@@ -2912,9 +2939,9 @@ Markers can also be converted to numbers using
  ##.
  All options can be combined: 
 \family typewriter
---footnotes inline number
+--footnotes align number
 \family default
- will show inline numeric markers such as 
+ will show aligned numeric markers such as 
 \color blue
 [1]
 \color inherit
