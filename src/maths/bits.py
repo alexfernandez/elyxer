@@ -227,6 +227,7 @@ class Bracket(FormulaBit):
     "Parse some text inside the bracket, following textual rules."
     specialchars = FormulaConfig.symbolfunctions.keys()
     specialchars.append(FormulaConfig.starts['command'])
+    specialchars.append(FormulaConfig.starts['bracket'])
     specialchars.append(Comment.start)
     while not pos.finished():
       if pos.current() in specialchars:
