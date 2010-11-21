@@ -63,20 +63,24 @@ class FootnoteMarker(Container):
     self.order = NumberGenerator.generator.generate('Footnote')
     if Options.endfoot:
       self.link = Link().complete(self.getmark(), 'footmarker-' + self.order)
-      self.contents = [self.link]
-    else:
-      self.contents = [Constant(self.getmark())]
+    self.createcontents()
     return self
 
   def createanchor(self, marker):
     "Create the anchor for a footnote. Adds a link for end footnotes."
-    if not Options.endfoot:
-      return marker
     self.order = marker.order
-    self.link = Link().complete(self.getmark(), 'footnote-' + self.order)
-    self.link.setmutualdestination(marker.link)
-    self.contents = [self.link]
+    if Options.endfoot:
+      self.link = Link().complete(self.getmark(), 'footnote-' + self.order)
+      self.link.setmutualdestination(marker.link)
+    self.createcontents()
     return self
+
+  def createcontents(self):
+    "Create the contents of the marker."
+    if Options.endfoot:
+      self.contents = [self.link]
+    else:
+      self.contents = [Constant(self.getmark())]
 
   def getmark(self):
     "Get the mark to be displayed in the marker based on the order."
