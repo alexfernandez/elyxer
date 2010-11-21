@@ -2859,7 +2859,7 @@ referring
  by square brackets, in blue: 
 \color blue
 
-\begin_inset Formula $^{\text{{\color{blue}[A]}}}$
+\begin_inset Formula $^{\text{[A]}}$
 \end_inset
 
 
@@ -2889,12 +2889,12 @@ Markers can also be converted to numbers using
 : 
 \color blue
 
-\begin_inset Formula $^{\text{{\color{blue}[1]}}}$
+\begin_inset Formula $^{\text{[1]}}$
 \end_inset
 
+.
 
 \color inherit
-.
  Or, they can be switched over to symbols using 
 \family typewriter
 --footnotes symbol
@@ -2902,13 +2902,14 @@ Markers can also be converted to numbers using
 : 
 \color blue
 
-\begin_inset Formula $^{\text{{\color{blue}*}}}$
+\begin_inset Formula $^{\text{⁎}}$
 \end_inset
 
 
 \color inherit
 .
- Available symbols are rotated from this sequence: * ** † †† § §§ ¶ ¶¶.
+ Available symbols are rotated from this sequence: * † ‡ § ¶ # * †† ‡‡ §§
+ ¶¶ ##.
  All options can be combined: 
 \family typewriter
 --footnotes inline number
