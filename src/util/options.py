@@ -75,7 +75,7 @@ class Options(object):
   marginfoot = False
   endfoot = False
   supfoot = True
-  inlinefoot = False
+  alignfoot = False
   footnotes = None
 
   branches = dict()
@@ -172,10 +172,10 @@ class Options(object):
     Trace.error('    --marginfoot:           show footnotes with numbers instead of letters')
     Trace.error('    --endfoot:              show footnotes at the end of the page')
     Trace.error('    --supfoot:              use superscript for footnote markers (default)')
-    Trace.error('    --inlinefoot:           use inline text for footnote markers')
+    Trace.error('    --alignfoot:            use aligned text for footnote markers')
     Trace.error('    --footnotes "options":  specify several comma-separated footnotes options')
     Trace.error('      Available options are: "number", "symbol", "hover", "margin", "end",')
-    Trace.error('        "sup", "inline"')
+    Trace.error('        "sup", "align"')
     Trace.error('  Advanced output options:')
     Trace.error('    --splitpart "depth":    split the resulting webpage at the given depth')
     Trace.error('    --toc:                  create a table of contents')

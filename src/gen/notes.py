@@ -94,8 +94,8 @@ class Footnote(Container):
   def tagmarker(self, contents, order=None):
     "Create a footnote marker based on its contents."
     span = 'span class="SupFootMarker"'
-    if Options.inlinefoot:
-      span = 'span class="InlineFootMarker"'
+    if Options.alignfoot:
+      span = 'span class="AlignFootMarker"'
     tagged = TaggedText().complete(contents, span)
     if order:
       tagged.order = order
