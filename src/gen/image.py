@@ -35,8 +35,6 @@ from io.path import *
 class Image(Container):
   "An embedded image"
 
-  vectorformats = ImageConfig.formats['vector']
-  rasterformats = ImageConfig.formats['raster']
   defaultformat = ImageConfig.formats['default']
   size = None
 
@@ -103,6 +101,9 @@ class Image(Container):
 class ImageConverter(object):
   "A converter from one image file to another."
 
+  vectorformats = ImageConfig.formats['vector']
+  cropboxformats = ImageConfig.cropboxformats
+
   active = True
   instance = None
 
@@ -163,15 +164,15 @@ class ImageConverter(object):
     params = dict()
     params['input'] = image.origin
     params['output'] = image.destination
-    if image.origin.hasexts(Image.vectorformats):
+    if image.origin.hasexts(self.vectorformats):
       scale = 100
       if image.size.scale:
         scale = image.size.scale
         # descale
         image.size.scale = None
       params['scale'] = scale
-    # elif image.origin.hasext('.pdf'):
-      # params['define'] = 'pdf:use-cropbox=true'
+    if image.origin.getext() in self.cropboxformats:
+      params['format'] = self.cropboxformats[image.origin.getext()]
     return params
 
 ImageConverter.instance = ImageConverter()

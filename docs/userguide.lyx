@@ -3563,7 +3563,7 @@ WE
 \begin_inset Text
 
 \begin_layout Plain Layout
-Queued
+1.1.0
 \end_layout
 
 \end_inset
@@ -4036,6 +4036,16 @@ eLyXer uses ImageMagick to convert images.
  come in varied sizes.
  It would be nice to remove blank borders and have some kind of unified
  resolution in the conversion, which would be passed to ImageMagick.
+\end_layout
+
+\begin_layout Standard
+As of 1.1.0, the improvements include using 
+\family typewriter
+ps:use-cropbox=true
+\family default
+ in ImageMagick for PostScript and EPS images.
+ Unified resolution has not been added as it might collide with picture
+ density, but suggestions are welcome.
 \end_layout
 
 \begin_layout Subsection

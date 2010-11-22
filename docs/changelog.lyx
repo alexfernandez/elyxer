@@ -185,6 +185,14 @@ target "userguide.html#sub:Footnotes"
  option to aggregate them all.
 \end_layout
 
+\begin_layout Itemize
+Wish list: use 
+\family typewriter
+ps:use-cropbox=true
+\family default
+ in ImageMagick for PostScript and EPS images.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.4 (2010-10-29):

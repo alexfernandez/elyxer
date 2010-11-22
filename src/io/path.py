@@ -53,8 +53,12 @@ class Path(object):
 
   def hasext(self, ext):
     "Check if the file has the given extension"
-    base, oldext = os.path.splitext(self.path)
-    return oldext == ext
+    return self.getext() == ext
+
+  def getext(self):
+    "Get the current extension of the file."
+    base, ext = os.path.splitext(self.path)
+    return ext
 
   def __unicode__(self):
     "Return a unicode string representation"
