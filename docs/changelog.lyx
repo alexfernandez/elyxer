@@ -193,6 +193,18 @@ ps:use-cropbox=true
  in ImageMagick for PostScript and EPS images.
 \end_layout
 
+\begin_layout Itemize
+Support for dotless i and j: 
+\begin_inset Formula $\text{\i}$
+\end_inset
+
+, 
+\begin_inset Formula $\text{\j}$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.0.4 (2010-10-29):
