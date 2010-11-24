@@ -90,7 +90,23 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
-1.1.0 (unreleased):
+1.1.1 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Wish list: understand 
+\family typewriter
+
+\backslash
+url{}
+\family default
+ in BibLaTeX files.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+1.1.0 (2010-11-23):
 \end_layout
 
 \begin_deeper
@@ -195,11 +211,11 @@ ps:use-cropbox=true
 
 \begin_layout Itemize
 Support for dotless i and j: 
-\begin_inset Formula $\text{\i}$
+\begin_inset Formula $\text{ı}$
 \end_inset
 
 , 
-\begin_inset Formula $\text{\j}$
+\begin_inset Formula $\text{ȷ}$
 \end_inset
 
 .
