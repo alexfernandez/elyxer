@@ -108,6 +108,30 @@ url{}
 Wish list: parse formulas in BibLaTeX files.
 \end_layout
 
+\begin_layout Itemize
+Improved support for dotless i and j as 
+\family typewriter
+
+\backslash
+imath
+\family default
+ and 
+\family typewriter
+
+\backslash
+jmath
+\family default
+: 
+\begin_inset Formula $\imath$
+\end_inset
+
+, 
+\begin_inset Formula $\jmath$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.0 (2010-11-23):
