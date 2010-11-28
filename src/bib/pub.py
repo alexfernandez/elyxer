@@ -56,7 +56,7 @@ class PubEntry(BibEntry):
   def process(self):
     "Process the entry."
     self.index = NumberGenerator.generator.generate('pubentry')
-    self.parser.tags['index'] = self.index
+    self.parser.tags['index'] = Constant(self.index)
     biblio = BiblioEntry()
     biblio.citeref = self.createref()
     biblio.processcites(self.parser.key)
@@ -85,9 +85,9 @@ class PubEntry(BibEntry):
     "Return a string representation"
     string = ''
     if 'author' in self.parser.tags:
-      string += self.parser.tags['author'] + ': '
+      string += self.parser.gettagtext('author') + ': '
     if 'title' in self.parser.tags:
-      string += '"' + self.parser.tags['title'] + '"'
+      string += '"' + self.parser.gettagtext('title') + '"'
     return string
 
 class BibPart(Container):
@@ -192,8 +192,8 @@ class BibVariable(Container):
     "Find the tag with the appropriate key in the list of tags."
     if not self.key in self.tags:
       return
-    result = self.tags[self.key].strip()
-    self.contents = [Constant(result)]
+    result = self.tags[self.key]
+    self.contents = [result]
 
   def empty(self):
     "Find out if the variable is empty."

@@ -104,6 +104,10 @@ url{}
  in BibLaTeX files.
 \end_layout
 
+\begin_layout Itemize
+Wish list: parse formulas in BibLaTeX files.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.0 (2010-11-23):

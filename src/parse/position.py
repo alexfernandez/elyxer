@@ -156,6 +156,10 @@ class Position(object):
     self.skip(ending)
     return ending
 
+  def error(self, message):
+    "Show an error message and the position identifier."
+    Trace.error(message + ': ' + self.identifier())
+
 class TextPosition(Position):
   "A parse position based on a raw text."
 

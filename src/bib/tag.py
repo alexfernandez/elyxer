@@ -26,27 +26,24 @@ from util.trace import Trace
 from util.clone import *
 from conf.config import *
 from parse.position import *
+from gen.container import *
 
 
 class BibTagParser(object):
   "A parser for BibTeX tags."
 
   nameseparators = ['{', '=', '"', '#']
-  valueseparators = ['{', '"', '#', '\\', '}']
-  escaped = BibTeXConfig.escaped
-  replaced = BibTeXConfig.replaced
-  replacedinitials = [x[0] for x in BibTeXConfig.replaced]
-  stringdefs = dict()
 
   def __init__(self):
     self.key = None
-    self.tags = dict(BibStylesConfig.defaulttags)
+    tags = BibStylesConfig.defaulttags
+    self.tags = dict((x, BibTag().constant(tags[x])) for x in tags)
 
   def parse(self, pos):
     "Parse the entry between {}."
-    self.type = self.parseexcluding(pos, self.nameseparators).strip()
+    self.type = BibTag.readexcluding(pos, self.nameseparators).strip()
     if not pos.checkskip('{'):
-      self.lineerror('Entry should start with {', pos)
+      pos.error('Entry should start with {')
       return
     pos.pushending('}')
     self.parsetags(pos)
@@ -58,7 +55,7 @@ class BibTagParser(object):
     pos.skipspace()
     while not pos.finished():
       if pos.checkskip('{'):
-        self.lineerror('Unmatched {', pos)
+        pos.error('Unmatched {')
         return
       pos.pushending(',', True)
       self.parsetag(pos)
@@ -75,156 +72,35 @@ class BibTagParser(object):
     self.tags[name] = value
     if hasattr(self, 'dissect' + name):
       dissector = getattr(self, 'dissect' + name)
-      dissector(value)
+      dissector(value.extracttext())
     if not pos.finished():
       remainder = pos.globexcluding(',')
-      self.lineerror('Ignored ' + remainder + ' before comma', pos)
+      pos.error('Ignored ' + remainder + ' before comma')
 
   def getkeyvalue(self, pos):
     "Parse a string of the form key=value."
-    piece = self.parseexcluding(pos, self.nameseparators).strip()
+    piece = BibTag.readexcluding(pos, self.nameseparators).strip()
     if pos.finished():
       return (piece, None)
     if not pos.checkskip('='):
-      self.lineerror('Undesired character in tag name ' + piece, pos)
+      pos.error('Undesired character in tag name ' + piece)
       pos.skipcurrent()
       return (piece, None)
     key = piece.lower()
     pos.skipspace()
     value = self.parsevalue(pos)
+    Trace.debug('Value: ' + unicode(value))
     return (key, value)
 
   def parsevalue(self, pos):
     "Parse the value for a tag."
+    tag = BibTag()
     pos.skipspace()
     if pos.checkfor(','):
-      self.lineerror('Unexpected ,', pos)
-      return ''
-    return self.parserecursive(pos, True)
-
-  def parserecursive(self, pos, initial=False):
-    "Parse brackets or quotes recursively."
-    contents = ''
-    while not pos.finished():
-      contents += self.parsetext(pos, initial)
-      if pos.finished():
-        return contents
-      elif pos.checkfor('{'):
-        contents += self.parsebracket(pos, initial)
-      elif pos.checkfor('"'):
-        contents += self.parsequoted(pos, initial)
-      elif pos.checkfor('\\'):
-        Trace.error('Escaped string should not be here.')
-        return contents
-      elif pos.checkfor('#'):
-        contents += self.parsehash(pos, initial)
-      else:
-        self.lineerror('Unexpected character ' + pos.current(), pos)
-        pos.skipcurrent()
-    return contents
-
-  def parsetext(self, pos, initial):
-    "Parse a bit of text."
-    "If on the initial level, try to substitute strings with string defs."
-    text = self.parsetoseparator(pos)
-    key = text.strip()
-    if key == '':
-      return ''
-    if initial and key in self.stringdefs:
-      return self.stringdefs[key]
-    return text
-
-  def parsetoseparator(self, pos):
-    "Parse some text up to the next separator (excluding the escape string \\)."
-    text = ''
-    while not pos.finished():
-      text += self.parseexcluding(pos, self.valueseparators)
-      if pos.checkskip('\\'):
-        text += self.parseescaped(pos)
-      else:
-        return text
-    return text
-
-  def parseescaped(self, pos):
-    "Parse an escaped string \\*."
-    escaped = '\\'
-    if pos.checkskip('{'):
-      escaped += pos.skipcurrent()
-      if not pos.checkskip('}'):
-        self.lineerror('Weird escaped but unclosed brackets \\{*', pos)
-      if not escaped in BibTagParser.escaped:
-        self.lineerror('Unknown escaped character ' + escaped, pos)
-        return escaped[1:]
-      return BibTagParser.escaped[escaped]
-    for key in BibTagParser.escaped:
-      if pos.checkskip(key[1:]):
-        return BibTagParser.escaped[key]
-    if pos.current().isalpha():
-      alpha = '\\' + pos.globalpha()
-      if alpha in FormulaConfig.commands:
-        return FormulaConfig.commands[alpha]
-      self.lineerror('Unknown escaped command \\' + alpha, pos)
-      return ''
-    self.lineerror('Unknown escaped string \\' + pos.current(), pos)
-    return pos.skipcurrent()
-
-  def parsebracket(self, pos, initial):
-    "Parse a {} bracket"
-    if not pos.checkskip('{'):
-      self.lineerror('Missing opening { in bracket', pos)
-      return ''
-    pos.pushending('}')
-    bracket = self.parserecursive(pos, initial)
-    pos.popending('}')
-    return bracket
-
-  def parsequoted(self, pos, initial):
-    "Parse a piece of quoted text"
-    if not pos.checkskip('"'):
-      self.lineerror('Missing opening " in quote', pos)
-      return ''
-    if not initial:
-      return '"'
-    pos.pushending('"', True)
-    quoted = self.parserecursive(pos)
-    pos.popending('"')
-    pos.skipspace()
-    return quoted
-
-  def parsehash(self, pos, initial):
-    "Parse a hash mark #."
-    if not pos.checkskip('#'):
-      self.lineerror('Missing # in hash', pos)
-      return ''
-    if not initial:
-      return '#'
-    return ''
-
-  def parseexcluding(self, pos, undesired):
-    "Parse a piece not structure (including spaces)."
-    result = ''
-    while not pos.finished():
-      if pos.current() in undesired:
-        return result
-      if pos.current().isspace():
-        result += ' '
-        pos.skipspace()
-      else:
-        replaced = self.parsereplaced(pos)
-        if replaced:
-          result += replaced
-        else:
-          result += pos.skipcurrent()
-    return result
-
-  def parsereplaced(self, pos):
-    "Check for one of the replaced strings."
-    if not pos.current() in BibTagParser.replacedinitials:
-      return None
-    for key in BibTagParser.replaced:
-      if pos.checkskip(key):
-        return BibTagParser.replaced[key]
-    return None
+      pos.error('Unexpected ,')
+      return tag.error()
+    tag.parse(pos)
+    return tag
 
   def dissectauthor(self, authortag):
     "Dissect the author tag into pieces."
@@ -245,9 +121,9 @@ class BibTagParser(object):
         initials += author.surname[0:1]
         authors += unicode(author) + ', '
       authors = authors[:-2]
-    self.tags['surname'] = authorlist[0].surname
-    self.tags['Sur'] = initials
-    self.tags['authors'] = authors
+    self.tags['surname'] = BibTag().constant(authorlist[0].surname)
+    self.tags['Sur'] = BibTag().constant(initials)
+    self.tags['authors'] = BibTag().constant(authors)
 
   def dissectyear(self, yeartag):
     "Dissect the year tag into pieces, looking for 4 digits in a row."
@@ -256,7 +132,7 @@ class BibTagParser(object):
       if pos.current().isdigit():
         number = pos.globnumber()
         if len(number) == 4:
-          self.tags['YY'] = number[2:]
+          self.tags['YY'] = BibTag().constant(number[2:])
           return
       else:
         pos.skipcurrent()
@@ -268,12 +144,175 @@ class BibTagParser(object):
     bits = filetag.split(':')
     if len(bits) != 3:
       return
-    self.tags['filename'] = bits[1]
-    self.tags['format'] = bits[2]
+    self.tags['filename'] = BibTag().constant(bits[1])
+    self.tags['format'] = BibTag().constant(bits[2])
+
+  def gettag(self, key):
+    "Get the tag for a given key."
+    if not key in self.tags:
+      return None
+    return self.tags[key]
+
+  def gettagtext(self, key):
+    "Get the tag for a key as raw text."
+    return self.gettag(key).extracttext()
 
   def lineerror(self, message, pos):
     "Show an error message for a line."
     Trace.error(message + ': ' + pos.identifier())
+
+class BibTag(Container):
+  "A tag in a BibTeX file."
+
+  valueseparators = ['{', '"', '#', '\\', '}']
+  stringdefs = dict()
+  escaped = BibTeXConfig.escaped
+  replaced = BibTeXConfig.replaced
+  replacedinitials = [x[0] for x in BibTeXConfig.replaced]
+
+  def __init__(self):
+    self.contents = []
+    self.output = ContentsOutput()
+
+  def constant(self, text):
+    "Initialize for a single constant."
+    self.contents = [Constant(text)]
+    return self
+
+  def error(self):
+    "To use when parsing resulted in an error."
+    return self.constant('')
+
+  def add(self, piece):
+    "Add a new piece to the group."
+    if isinstance(piece, basestring):
+      self.contents.append(Constant(piece))
+    else:
+      self.contents.append(piece)
+
+  def parse(self, pos):
+    "Parse a BibTeX tag."
+    self.parserecursive(pos, True)
+
+  def parserecursive(self, pos, initial=False):
+    "Parse brackets or quotes recursively."
+    while not pos.finished():
+      self.parsetext(pos, initial)
+      if pos.finished():
+        return
+      elif pos.checkfor('{'):
+        self.parsebracket(pos, initial)
+      elif pos.checkfor('"'):
+        self.parsequoted(pos, initial)
+      elif pos.checkfor('\\'):
+        self.parseescaped(pos)
+      elif pos.checkfor('#'):
+        self.parsehash(pos, initial)
+      else:
+        pos.error('Unexpected character ' + pos.current())
+        pos.skipcurrent()
+
+  def parsetext(self, pos, initial):
+    "Parse a bit of text."
+    "If on the initial level, try to substitute strings with string defs."
+    text = BibTag.readexcluding(pos, self.valueseparators)
+    key = text.strip()
+    if key == '':
+      return Constant('')
+    if initial and key in self.stringdefs:
+      self.add(self.stringdefs[key])
+      return
+    self.add(text)
+
+  def parseescaped(self, pos):
+    "Parse an escaped string \\*."
+    escaped = '\\'
+    if pos.checkskip('{'):
+      escaped += pos.skipcurrent()
+      if not pos.checkskip('}'):
+        pos.error('Weird escaped but unclosed brackets \\{*')
+      if not escaped in BibTag.escaped:
+        pos.error('Unknown escaped character ' + escaped)
+        self.add(escaped[1:])
+        return
+      self.add(BibTag.escaped[escaped])
+      return
+    for key in BibTag.escaped:
+      if pos.checkskip(key[1:]):
+        self.add(BibTag.escaped[key])
+        return
+    if pos.current().isalpha():
+      alpha = '\\' + pos.globalpha()
+      if alpha in FormulaConfig.commands:
+        self.add(FormulaConfig.commands[alpha])
+        return
+      pos.error('Unknown escaped command \\' + alpha)
+      return
+    pos.error('Unknown escaped string \\' + pos.current())
+    self.add(pos.skipcurrent())
+
+  def parsebracket(self, pos, initial):
+    "Parse a {} bracket"
+    if not pos.checkskip('{'):
+      pos.error('Missing opening { in bracket')
+      return
+    pos.pushending('}')
+    self.parserecursive(pos, initial)
+    pos.popending('}')
+
+  def parsequoted(self, pos, initial):
+    "Parse a piece of quoted text"
+    if not pos.checkskip('"'):
+      pos.error('Missing opening " in quote')
+      return
+    if not initial:
+      self.add('"')
+      return
+    pos.pushending('"', True)
+    self.parserecursive(pos)
+    pos.popending('"')
+    pos.skipspace()
+
+  def parsehash(self, pos, initial):
+    "Parse a hash mark #."
+    if not pos.checkskip('#'):
+      pos.error('Missing # in hash')
+      return
+    if not initial:
+      self.add('#')
+
+  def readexcluding(cls, pos, undesired):
+    "Parse a piece not structure (including spaces)."
+    result = ''
+    while not pos.finished():
+      if pos.current() in undesired:
+        return result
+      if pos.current().isspace():
+        result += ' '
+        pos.skipspace()
+      else:
+        replaced = cls.readreplaced(pos)
+        if replaced:
+          result += replaced
+        else:
+          result += pos.skipcurrent()
+    return result
+
+  def readreplaced(cls, pos):
+    "Check for one of the replaced strings."
+    if not pos.current() in BibTag.replacedinitials:
+      return None
+    for key in BibTag.replaced:
+      if pos.checkskip(key):
+        return BibTag.replaced[key]
+    return None
+
+  readexcluding = classmethod(readexcluding)
+  readreplaced = classmethod(readreplaced)
+
+  def __unicode__(self):
+    "Return a printable representation."
+    return 'BibTag: ' + self.extracttext()
 
 class BibAuthor(object):
   "A BibTeX individual author."
@@ -301,6 +340,9 @@ class BibAuthor(object):
   def parsewithoutcomma(self, tag):
     "Parse an author without a comma: M. Python."
     bits = tag.rsplit(None, 1)
+    if len(bits) == 0:
+      Trace.error('Empty author')
+      return
     self.surname = bits[-1].strip()
     if len(bits) == 1:
       return

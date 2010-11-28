@@ -238,7 +238,7 @@ class StringEntry(SpecialEntry):
       return
     pos.pushending('}')
     (self.key, value) = self.parser.getkeyvalue(pos)
-    self.parser.stringdefs[self.key] = value
+    BibTag.stringdefs[self.key] = value
     pos.popending('}')
 
   def checkstart(self, pos):
