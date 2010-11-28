@@ -27,6 +27,7 @@ cd src
 ./coalesce.py maths/math2html.py > ../math2html.py
 cd ..
 chmod 755 elyxer.py
+chmod 755 math2html.py
 
 # internationalize
 cd src
