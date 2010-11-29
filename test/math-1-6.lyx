@@ -702,6 +702,24 @@ Some special fonts are supported:
 .
 \end_layout
 
+\begin_layout Standard
+There has been some trouble over some commands like Greek letters; some
+ of them should be italicized, as in: 
+\begin_inset Formula $\mu$
+\end_inset
+
+ or 
+\begin_inset Formula $\AA$
+\end_inset
+
+.
+ Others should not, as in 
+\begin_inset Formula $\Omega$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Section
 Macros
 \end_layout

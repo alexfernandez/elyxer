@@ -242,7 +242,7 @@ class DecoratingFunction(OneParamFunction):
 
 FormulaFactory.types += [FormulaCommand, SymbolFunction]
 FormulaCommand.types = [
-    EmptyCommand, AlphaCommand, OneParamFunction, DecoratingFunction,
+    AlphaCommand, EmptyCommand, OneParamFunction, DecoratingFunction,
     FontFunction, LabelFunction, TextFunction, CombiningFunction,
     ]
 
