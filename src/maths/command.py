@@ -221,7 +221,7 @@ class CombiningFunction(OneParamFunction):
     combining = self.translated
     parameter = self.parseparameter(pos)
     if len(parameter.extracttext()) != 1:
-      Trace.error('Applying combining function to invalid string ' + parameter.extracttext())
+      Trace.error('Applying combining function ' + self.command + ' to invalid string "' + parameter.extracttext() + '"')
     self.contents.append(Constant(combining))
 
 class DecoratingFunction(OneParamFunction):
