@@ -89,7 +89,7 @@ class BibTagParser(object):
     key = piece.lower()
     pos.skipspace()
     value = self.parsevalue(pos)
-    Trace.debug('Value: ' + unicode(value))
+    Trace.debug('Tag ' + key + ': *' + unicode(value) + '*')
     return (key, value)
 
   def parsevalue(self, pos):
@@ -184,15 +184,39 @@ class BibTag(Container):
     return self.constant('')
 
   def add(self, piece):
-    "Add a new piece to the group."
+    "Add a new piece to the tag."
     if isinstance(piece, basestring):
-      self.contents.append(Constant(piece))
+      self.addtext(piece)
     else:
       self.contents.append(piece)
+
+  def addtext(self, piece):
+    "Add a text string to the tag."
+    last = self.findlaststring()
+    if last:
+      last.string += piece
+      return
+    self.contents.append(Constant(piece))
+
+  def findlaststring(self):
+    "Find the last string in the contents."
+    if len(self.contents) == 0:
+      return None
+    string = self.contents[-1]
+    if not isinstance(string, StringContainer):
+      return None
+    return string
 
   def parse(self, pos):
     "Parse a BibTeX tag."
     self.parserecursive(pos, True)
+    # strip ending blank characters
+    last = self.findlaststring()
+    if last:
+      before = last.string
+      last.string = last.string.rstrip()
+      if before != last.string:
+        Trace.debug('Rstrip()ped ' + last.string)
 
   def parserecursive(self, pos, initial=False):
     "Parse brackets or quotes recursively."
@@ -218,7 +242,7 @@ class BibTag(Container):
     text = BibTag.readexcluding(pos, self.valueseparators)
     key = text.strip()
     if key == '':
-      return Constant('')
+      return
     if initial and key in self.stringdefs:
       self.add(self.stringdefs[key])
       return
@@ -227,6 +251,9 @@ class BibTag(Container):
   def parseescaped(self, pos):
     "Parse an escaped string \\*."
     escaped = '\\'
+    if not pos.checkskip(escaped):
+      pos.error('Not an escape sequence')
+      return
     if pos.checkskip('{'):
       escaped += pos.skipcurrent()
       if not pos.checkskip('}'):
@@ -246,7 +273,7 @@ class BibTag(Container):
       if alpha in FormulaConfig.commands:
         self.add(FormulaConfig.commands[alpha])
         return
-      pos.error('Unknown escaped command \\' + alpha)
+      pos.error('Unknown escaped command ' + alpha)
       return
     pos.error('Unknown escaped string \\' + pos.current())
     self.add(pos.skipcurrent())
