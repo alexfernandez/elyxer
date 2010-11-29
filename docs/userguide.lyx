@@ -3928,6 +3928,13 @@ Queued
 
 \begin_layout Plain Layout
 Option to embed the CSS in the HTML file
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:CSS-controls"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3945,7 +3952,7 @@ Option to embed the CSS in the HTML file
 \begin_inset Text
 
 \begin_layout Plain Layout
-GM
+GM, JA
 \end_layout
 
 \end_inset
@@ -4122,6 +4129,91 @@ ps:use-cropbox=true
  in ImageMagick for PostScript and EPS images.
  Unified resolution has not been added as it might collide with picture
  density, but suggestions are welcome.
+\end_layout
+
+\begin_layout Subsubsection*
+CSS controls
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:CSS-controls"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Proposed by JRAS on the elyxer-users mailing list, the following is a direct
+ quote of 
+\begin_inset CommandInset href
+LatexCommand href
+name "his message"
+target "http://www.mail-archive.com/elyxer-users@nongnu.org/msg00194.html"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+[\SpecialChar \ldots{}
+]A mixed solution for CSS styles:
+\end_layout
+
+\begin_layout Enumerate
+The essential minimum css for math formatting (a compacted version of a
+ 
+\family typewriter
+math.css
+\family default
+ subset) included directly inside HTML head.
+\end_layout
+
+\begin_layout Enumerate
+Then a call to download the on-line full CSS, that can repeat the minimum
+ already included 
+\family typewriter
+math.css
+\family default
+ (from item 1) plus some other styles.
+ The default can be changed by 
+\family typewriter
+--css
+\family default
+ command line option.
+\end_layout
+
+\begin_layout Enumerate
+A new option (
+\family typewriter
+--addcss
+\family default
+) to add another CSS defined by the user.
+ For example, to only redefine some styles from the default, etc.
+\end_layout
+
+\begin_layout Standard
+The styles should be included in that order (using the "cascading" property).
+ Item 1 is fixed in every HTML file.
+ Item 2 is always added and by default pointing to the eLyXer on-line css,
+ but it can be changed by option 
+\family typewriter
+--css
+\family default
+ to another url or file.
+ Item 3 is optional and its url would be added after the other two items,
+ only if the 
+\family typewriter
+--addcss
+\family default
+ option was used in conversion.
+\begin_inset Quotes erd
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
