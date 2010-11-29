@@ -295,7 +295,7 @@ class BibTag(Container):
     if not initial:
       self.add('"')
       return
-    pos.pushending('"', True)
+    pos.pushending('"')
     self.parserecursive(pos)
     pos.popending('"')
     pos.skipspace()
