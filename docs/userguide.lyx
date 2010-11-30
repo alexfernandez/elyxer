@@ -3693,7 +3693,7 @@ Pending
 \begin_inset Text
 
 \begin_layout Plain Layout
-BibTeX: parse equations inside BibTeX files
+BibTeX: parse math formulas inside BibTeX files
 \end_layout
 
 \end_inset
