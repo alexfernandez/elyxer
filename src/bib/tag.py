@@ -27,6 +27,8 @@ from util.clone import *
 from conf.config import *
 from parse.position import *
 from gen.container import *
+from maths.formula import *
+from maths.command import *
 
 
 class BibTagParser(object):
@@ -89,7 +91,6 @@ class BibTagParser(object):
     key = piece.lower()
     pos.skipspace()
     value = self.parsevalue(pos)
-    Trace.debug('Tag ' + key + ': *' + unicode(value) + '*')
     return (key, value)
 
   def parsevalue(self, pos):
@@ -166,9 +167,9 @@ class BibTag(Container):
 
   valueseparators = ['{', '"', '#', '\\', '}']
   stringdefs = dict()
-  escaped = BibTeXConfig.escaped
   replaced = BibTeXConfig.replaced
   replacedinitials = [x[0] for x in BibTeXConfig.replaced]
+  factory = FormulaFactory()
 
   def __init__(self):
     self.contents = []
@@ -215,8 +216,6 @@ class BibTag(Container):
     if last:
       before = last.string
       last.string = last.string.rstrip()
-      if before != last.string:
-        Trace.debug('Rstrip()ped ' + last.string)
 
   def parserecursive(self, pos, initial=False):
     "Parse brackets or quotes recursively."
@@ -250,33 +249,10 @@ class BibTag(Container):
 
   def parseescaped(self, pos):
     "Parse an escaped string \\*."
-    escaped = '\\'
-    if not pos.checkskip(escaped):
+    if not self.factory.detecttype(FormulaCommand, pos):
       pos.error('Not an escape sequence')
       return
-    if pos.checkskip('{'):
-      escaped += pos.skipcurrent()
-      if not pos.checkskip('}'):
-        pos.error('Weird escaped but unclosed brackets \\{*')
-      if not escaped in BibTag.escaped:
-        pos.error('Unknown escaped character ' + escaped)
-        self.add(escaped[1:])
-        return
-      self.add(BibTag.escaped[escaped])
-      return
-    for key in BibTag.escaped:
-      if pos.checkskip(key[1:]):
-        self.add(BibTag.escaped[key])
-        return
-    if pos.current().isalpha():
-      alpha = '\\' + pos.globalpha()
-      if alpha in FormulaConfig.commands:
-        self.add(FormulaConfig.commands[alpha])
-        return
-      pos.error('Unknown escaped command ' + alpha)
-      return
-    pos.error('Unknown escaped string \\' + pos.current())
-    self.add(pos.skipcurrent())
+    self.add(self.factory.parsetype(FormulaCommand, pos))
 
   def parsebracket(self, pos, initial):
     "Parse a {} bracket"
