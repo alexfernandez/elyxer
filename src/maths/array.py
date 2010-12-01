@@ -127,6 +127,18 @@ class FormulaArray(MultiRowFormula):
     for l in literal:
       self.alignments.append(l)
 
+class FormulaMatrix(MultiRowFormula):
+  "A matrix (array with center alignment)."
+
+  piece = 'matrix'
+
+  def parsebit(self, pos):
+    "Parse the matrix, set alignments to 'c'."
+    self.output = TaggedOutput().settag('table class="formula"', True)
+    self.valign = 'c'
+    self.alignments = ['c']
+    self.parserows(pos)
+
 class FormulaCases(MultiRowFormula):
   "A cases statement"
 
@@ -157,7 +169,7 @@ class BeginCommand(CommandBit):
 
   commandmap = {FormulaConfig.array['begin']:''}
 
-  types = [FormulaEquation, FormulaArray, FormulaCases]
+  types = [FormulaEquation, FormulaArray, FormulaCases, FormulaMatrix]
 
   def parsebit(self, pos):
     "Parse the begin command"
@@ -172,7 +184,7 @@ class BeginCommand(CommandBit):
   def findbit(self, piece):
     "Find the command bit corresponding to the \\begin{piece}"
     for type in BeginCommand.types:
-      if type.piece == piece:
+      if piece.replace('*', '') == type.piece:
         return self.factory.create(type)
     bit = self.factory.create(EquationEnvironment)
     bit.piece = piece

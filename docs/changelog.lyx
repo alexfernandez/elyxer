@@ -137,6 +137,18 @@ Solved bug when parsing a quoted string inside a BibTeX file containing
  a comma.
 \end_layout
 
+\begin_layout Itemize
+Added math environments 
+\family typewriter
+equation*
+\family default
+ and 
+\family typewriter
+matrix
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.0 (2010-11-23):
