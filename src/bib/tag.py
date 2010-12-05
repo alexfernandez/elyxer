@@ -239,9 +239,9 @@ class BibTag(Container):
     "Parse a bit of text."
     "If on the initial level, try to substitute strings with string defs."
     text = BibTag.readexcluding(pos, self.valueseparators)
-    key = text.strip()
-    if key == '':
+    if text == '':
       return
+    key = text.strip()
     if initial and key in self.stringdefs:
       self.add(self.stringdefs[key])
       return
