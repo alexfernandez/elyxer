@@ -1,6 +1,26 @@
-/* --end--
-* Global CSS file for lyx documents.
+/*
+*   eLyXer -- convert LyX source files to HTML output.
+*
+*   Copyright (C) 2009-2010 Alex Fernández
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+/* --end--
+* Global CSS file for LyX documents.
+*/
+
 body {
 	font: 90% sans-serif;
 	background: #f9f9f9;
@@ -190,151 +210,7 @@ span.versalitas {
 span.sans {
 	font-family: sans-serif;
 }
-span.mathsf {
-	font-family: sans-serif;
-	font-style: normal;
-}
-span.red {
-	color: #c00000;
-}
-span.blue {
-	color: #0000c0;
-}
-span.green {
-	color: #00c000;
-}
-span.magenta {
-	color: #c000c0;
-}
-span.cyan {
-	color: #00c0c0;
-}
-span.yellow {
-	color: #c0c000;
-}
-span.white {
-	color: #ffffff;
-}
-.formula {
-	text-align: center;
-	font-family: serif;
-	margin: 1.2em 0;
-}
-span.formula {
-	white-space: nowrap;
-}
-div.formula {
-	padding: 0.5ex;
-	margin-left: auto;
-	margin-right: auto;
-}
-span.overline {
-	text-decoration: overline;
-}
-span.bar {
-	text-decoration: overline;
-}
-.fraction {
-	display: inline-block;
-	vertical-align: middle;
-	text-align: center;
-}
-.fraction .fraction {
-	font-size: 80%;
-	line-height: 100%;
-}
-.fullfraction {
-	display: inline-block;
-	vertical-align: middle;
-	text-align: center;
-}
-span.numerator {
-	display: block;
-}
-span.numerator-l {
-	display: block;
-	text-align: left;
-}
-span.numerator-r {
-	display: block;
-	text-align: right;
-}
-span.numeratorl {
-	display: block;
-	text-align: left;
-}
-span.numeratorr {
-	display: block;
-	text-align: right;
-}
-span.denominator {
-	display: block;
-	padding: 0;
-	border-top: thin solid;
-}
-span.sqrt {
-	display: inline-block;
-	vertical-align: middle;
-}
-span.radical {
-	display: inline-block;
-	padding: 0;
-	font-size: 150%;
-	vertical-align: top;
-}
-span.root {
-	display: inline-block;
-	border-top: thin solid;
-	padding: 0;
-	vertical-align: middle;
-}
-span.symbol {
-	font-size: 125%;
-}
-span.bigsymbol {
-	font-size: 150%;
-}
-span.largesymbol {
-	font-size: 175%;
-}
-span.hugesymbol {
-	font-size: 200%;
-}
-span.limits {
-	display: inline-table;
-	vertical-align: middle;
-}
-sub.bigsymbol {
-	display: table-row;
-	text-align: left;
-	line-height: 150%;
-}
-sup.bigsymbol {
-	display: table-row;
-	text-align: left;
-	line-height: 150%;
-}
-span.symbolover {
-	display: inline-block;
-	text-align: center;
-	position: relative;
-	float: right;
-	right: 100%;
-	bottom: 0.5em;
-	width: 0px;
-}
-span.withsymbol {
-	display: inline-block;
-}
-span.symbolunder {
-	display: inline-block;
-	text-align: center;
-	position: relative;
-	float: right;
-	right: 80%;
-	top: 0.3em;
-	width: 0px;
-}
+@import "math.css";
 span.dotted {
 	border-top: thin dotted;
 }
@@ -446,29 +322,6 @@ h2.author {
 h2.Date {
 	text-align: center;
 }
-span.mathrm {
-	font-family: serif;
-}
-span.mathsf {
-	font-family: sans-serif;
-}
-span.text {
-	font-style: normal;
-}
-span.textnormal {
-	font-style: normal;
-}
-span.textipa {
-	color: #008080;
-}
-span.textrm {
-	font-style: normal;
-	font-family: serif;
-}
-span.textsf {
-	font-style: normal;
-	font-family: sans-serif;
-}
 span.Description-entry {
 	font-weight: bold;
 }
@@ -485,65 +338,10 @@ span.List-contents {
 div.Space {
 	display: none;
 }
-span.fraktur {
-	font-family: "Lucida Blackletter", eufm10, blackletter;
-}
-span.blackboard {
-	font-family: Blackboard, msbm10, serif;
-}
-span.script {
-	font-family: "Monotype Corsiva", "Apple Chancery", "URW Chancery L", cursive;
-}
-span.arraydef {
-	display: none;
-}
 span.appendix {
 	display: none;
 }
 h1.biblio {
-}
-table.formula {
-	display: inline-block;
-	text-align: center;
-	border-collapse: collapse;
-	margin: 0em;
-	vertical-align: middle;
-}
-td.formula-l {
-	text-align: left;
-	padding: 0.2ex;
-	border: 0ex;
-}
-td.formula-c {
-	text-align: center;
-	padding: 0.2ex;
-	border: 0ex;
-}
-td.formula-r {
-	text-align: right;
-	padding: 0.2ex;
-	border: 0ex;
-}
-table.cases {
-	display: inline-block;
-	text-align: center;
-	border-collapse: collapse;
-	margin: 0.2em;
-	border-left: thin solid;
-	vertical-align: middle;
-}
-table.cases tr td {
-	padding-left: 1ex;
-	padding-right: 1em;
-}
-table.environment {
-	display: inline-block;
-	text-align: right;
-	margin: 0;
-	vertical-align: middle;
-}
-table.environment tr td {
-	padding: 0 1em;
 }
 span.greyedout {
 	color: #808080;
@@ -642,15 +440,6 @@ span.number-right {
 	text-align: right;
 	margin-left: 1em;
 }
-a.eqnumber {
-	display: inline-block;
-	float: right;
-	clear: right;
-	font-weight: bold;
-}
-span.unknown {
-	color: #800000;
-}
 span.phantom {
 	color: #ffffff;
 }
@@ -686,25 +475,6 @@ span.hfill {
 	margin-right: auto;
 	min-width: 20mm;
 	background: #fff0f0;
-}
-span.binom {
-	display: inline-block;
-	vertical-align: middle;
-	text-align: center;
-	font-size: 80%;
-}
-span.fullbinom {
-	display: inline-block;
-	vertical-align: middle;
-	text-align: center;
-}
-span.upbinom {
-	display: block;
-	padding: 0em;
-}
-span.downbinom {
-	display: block;
-	padding: 0em;
 }
 div.defskip {
 	display: block;
@@ -748,12 +518,6 @@ span.chunkref {
 span.normal {
 	font-style: normal;
 }
-span.overbrace {
-	border-top: 2pt solid;
-}
-span.underbrace {
-	border-bottom: 2pt solid;
-}
 div.warning {
 	font-size: 120%;
 	color:#cc0000;
@@ -792,56 +556,6 @@ div.Institute {
 }
 div.indexgroup {
 	margin-left: 2em;
-}
-span.stackrel {
-	display: inline-block;
-	text-align: center;
-}
-span.upstackrel {
-	display: block;
-	padding: 0em;
-	font-size: 80%;
-	line-height: 64%;
-	position: relative;
-	top: 0.15em;
-
-}
-span.downstackrel {
-	display: block;
-	vertical-align: bottom;
-	padding: 0em;
-}
-span.colorbox {
-	display: inline-block;
-	padding: 5px;
-}
-span.fbox {
-	display: inline-block;
-	border: thin solid black;
-	padding: 2px;
-}
-span.boxed {
-	display: inline-block;
-	border: thin solid black;
-	padding: 5px;
-}
-span.framebox- {
-	display: inline-block;
-	border: thin solid black;
-	text-align: center;
-	padding: 5px;
-}
-span.framebox-l {
-	display: inline-block;
-	border: thin solid black;
-	text-align: left;
-	padding: 5px;
-}
-span.framebox-r {
-	display: inline-block;
-	border: thin solid black;
-	text-align: right;
-	padding: 5px;
 }
 /* change tracking */
 span.inserted {

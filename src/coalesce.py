@@ -20,7 +20,7 @@
 
 # --end--
 # Alex 20090309
-# Coalesces (unifies) all into one file to generate an executable
+# Coalesces (unifies) all into one file to generate a distributable file.
 
 import sys
 import os.path
@@ -29,14 +29,16 @@ from util.trace import Trace
 
 
 class Coalescer(object):
-  "Coalesce a set of Python files into a single Python file,"
-  "so that it can be distributed and directly executed."
+  "Coalesce a set of files into a single file,"
+  "so that it can be distributed."
+  "Currently works for Python (.py) and CSS (.css) files."
 
   def __init__(self):
     self.comments = True
     self.files = []
     self.directory = ''
     self.writer = None
+    self.python = False
   
   def convert(self, filename, directory = ''):
     "Convert the filename adding the appropriate directories."
@@ -89,28 +91,44 @@ class Coalescer(object):
     self.writer.close()
 
   def coalesce(self, filename):
-    "Coalesce all Python files used in filein to fileout"
+    "Coalesce all files used in filein to fileout"
+    if filename.endswith('.py'):
+      self.python = True
     reader = self.getreader(filename)
     if not reader:
       return
     while not reader.finished():
       line = reader.currentline()
-      if line.startswith('from'):
+      included = self.getincluded(line)
+      if included:
         self.comments = False
-        nextname = line.split()[1].replace('.', '/') + '.py'
-        newname = self.convert(nextname, os.path.dirname(filename))
+        newname = self.convert(included, os.path.dirname(filename))
         if newname:
           self.coalesce(newname)
         else:
-          # make things like "from socket import gaierror" work
+          # make imports with no target file work
           self.writer.writeline(line)
-      elif line.startswith('#'):
+      elif self.iscomment(line):
         if self.comments:
           self.writer.writeline(line)
       else:
         self.writer.writeline(line)
       reader.nextline()
     reader.close()
+
+  def getincluded(self, line):
+    "Get the name of the included file, or None."
+    if line.startswith('from'):
+      return line.split()[1].replace('.', '/') + '.py'
+    if line.startswith('@import'):
+      return line.split()[1].replace('"', '').rstrip(';')
+    return None
+
+  def iscomment(self, line):
+    "Find out if the line is a comment. Only removes Python comments."
+    if self.python and line.startswith('#'):
+      return True
+    return False
 
 coalescer = Coalescer()
 coalescer.readargs(sys.argv)

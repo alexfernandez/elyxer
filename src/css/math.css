@@ -1,0 +1,311 @@
+/* --end--
+* CSS file for LaTeX formulas.
+*/
+
+.formula {
+	text-align: center;
+	font-family: serif;
+	margin: 1.2em 0;
+}
+span.formula {
+	white-space: nowrap;
+}
+div.formula {
+	padding: 0.5ex;
+	margin-left: auto;
+	margin-right: auto;
+}
+/* Structures */
+span.overline {
+	text-decoration: overline;
+}
+span.bar {
+	text-decoration: overline;
+}
+.fraction {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+}
+.fraction .fraction {
+	font-size: 80%;
+	line-height: 100%;
+}
+.fullfraction {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+}
+span.numerator {
+	display: block;
+}
+span.numerator-l {
+	display: block;
+	text-align: left;
+}
+span.numerator-r {
+	display: block;
+	text-align: right;
+}
+span.numeratorl {
+	display: block;
+	text-align: left;
+}
+span.numeratorr {
+	display: block;
+	text-align: right;
+}
+span.denominator {
+	display: block;
+	padding: 0;
+	border-top: thin solid;
+}
+span.sqrt {
+	display: inline-block;
+	vertical-align: middle;
+}
+span.radical {
+	display: inline-block;
+	padding: 0;
+	font-size: 150%;
+	vertical-align: top;
+}
+span.root {
+	display: inline-block;
+	border-top: thin solid;
+	padding: 0;
+	vertical-align: middle;
+}
+span.symbol {
+	font-size: 125%;
+}
+span.bigsymbol {
+	font-size: 150%;
+}
+span.largesymbol {
+	font-size: 175%;
+}
+span.hugesymbol {
+	font-size: 200%;
+}
+span.limits {
+	display: inline-table;
+	vertical-align: middle;
+}
+sub.bigsymbol {
+	display: table-row;
+	text-align: left;
+	line-height: 150%;
+}
+sup.bigsymbol {
+	display: table-row;
+	text-align: left;
+	line-height: 150%;
+}
+span.symbolover {
+	display: inline-block;
+	text-align: center;
+	position: relative;
+	float: right;
+	right: 100%;
+	bottom: 0.5em;
+	width: 0px;
+}
+span.withsymbol {
+	display: inline-block;
+}
+span.symbolunder {
+	display: inline-block;
+	text-align: center;
+	position: relative;
+	float: right;
+	right: 80%;
+	top: 0.3em;
+	width: 0px;
+}
+span.arraydef {
+	display: none;
+}
+table.formula {
+	display: inline-block;
+	text-align: center;
+	border-collapse: collapse;
+	margin: 0em;
+	vertical-align: middle;
+}
+td.formula-l {
+	text-align: left;
+	padding: 0.2ex;
+	border: 0ex;
+}
+td.formula-c {
+	text-align: center;
+	padding: 0.2ex;
+	border: 0ex;
+}
+td.formula-r {
+	text-align: right;
+	padding: 0.2ex;
+	border: 0ex;
+}
+table.cases {
+	display: inline-block;
+	text-align: center;
+	border-collapse: collapse;
+	margin: 0.2em;
+	border-left: thin solid;
+	vertical-align: middle;
+}
+table.cases tr td {
+	padding-left: 1ex;
+	padding-right: 1em;
+}
+table.environment {
+	display: inline-block;
+	text-align: right;
+	margin: 0;
+	vertical-align: middle;
+}
+table.environment tr td {
+	padding: 0 1em;
+}
+span.binom {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 80%;
+}
+span.fullbinom {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+}
+span.upbinom {
+	display: block;
+	padding: 0em;
+}
+span.downbinom {
+	display: block;
+	padding: 0em;
+}
+span.overbrace {
+	border-top: 2pt solid;
+}
+span.underbrace {
+	border-bottom: 2pt solid;
+}
+span.stackrel {
+	display: inline-block;
+	text-align: center;
+}
+span.upstackrel {
+	display: block;
+	padding: 0em;
+	font-size: 80%;
+	line-height: 64%;
+	position: relative;
+	top: 0.15em;
+
+}
+span.downstackrel {
+	display: block;
+	vertical-align: bottom;
+	padding: 0em;
+}
+a.eqnumber {
+	display: inline-block;
+	float: right;
+	clear: right;
+	font-weight: bold;
+}
+span.unknown {
+	color: #800000;
+}
+/* Fonts */
+span.mathsf {
+	font-family: sans-serif;
+	font-style: normal;
+}
+span.mathrm {
+	font-family: serif;
+}
+span.text {
+	font-style: normal;
+}
+span.textnormal {
+	font-style: normal;
+}
+span.textipa {
+	color: #008080;
+}
+span.textrm {
+	font-style: normal;
+	font-family: serif;
+}
+span.textsf {
+	font-style: normal;
+	font-family: sans-serif;
+}
+span.fraktur {
+	font-family: "Lucida Blackletter", eufm10, blackletter;
+}
+span.blackboard {
+	font-family: Blackboard, msbm10, serif;
+}
+span.script {
+	font-family: "Monotype Corsiva", "Apple Chancery", "URW Chancery L", cursive;
+}
+/* Colors */
+span.red {
+	color: #c00000;
+}
+span.blue {
+	color: #0000c0;
+}
+span.green {
+	color: #00c000;
+}
+span.magenta {
+	color: #c000c0;
+}
+span.cyan {
+	color: #00c0c0;
+}
+span.yellow {
+	color: #c0c000;
+}
+span.white {
+	color: #ffffff;
+}
+span.colorbox {
+	display: inline-block;
+	padding: 5px;
+}
+span.fbox {
+	display: inline-block;
+	border: thin solid black;
+	padding: 2px;
+}
+span.boxed {
+	display: inline-block;
+	border: thin solid black;
+	padding: 5px;
+}
+span.framebox- {
+	display: inline-block;
+	border: thin solid black;
+	text-align: center;
+	padding: 5px;
+}
+span.framebox-l {
+	display: inline-block;
+	border: thin solid black;
+	text-align: left;
+	padding: 5px;
+}
+span.framebox-r {
+	display: inline-block;
+	border: thin solid black;
+	text-align: right;
+	padding: 5px;
+}
