@@ -25,6 +25,7 @@ cd src
 ./coalesce.py principal.py > ../elyxer.py
 ./coalesce.py loremipsumize.py > ../loremipsumize.py
 ./coalesce.py maths/math2html.py > ../math2html.py
+./licensify.py apache-license ../math2html.py
 cd ..
 chmod 755 elyxer.py
 chmod 755 math2html.py
