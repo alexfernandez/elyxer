@@ -211,9 +211,7 @@ span.sans {
 	font-family: sans-serif;
 }
 @import "math.css";
-span.dotted {
-	border-top: thin dotted;
-}
+/* Footnotes */
 span.FootMarker {
 	color: #0030c0;
 	font-size: 0.75em;
@@ -394,6 +392,9 @@ div.listing {
 	margin-right: auto;
 	padding: 0.5ex;
 	border: thin solid #c0c0c0;
+}
+span.dotted {
+	border-top: thin dotted;
 }
 div.framed {
 	outline-style: solid;
