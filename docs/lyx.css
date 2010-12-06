@@ -219,6 +219,8 @@ span.white {
 	text-align: center;
 	font-family: serif;
 	margin: 1.2em 0;
+}
+span.formula {
 	white-space: nowrap;
 }
 div.formula {
