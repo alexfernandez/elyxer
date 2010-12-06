@@ -219,6 +219,7 @@ span.white {
 	text-align: center;
 	font-family: serif;
 	margin: 1.2em 0;
+	white-space: nowrap;
 }
 div.formula {
 	padding: 0.5ex;
