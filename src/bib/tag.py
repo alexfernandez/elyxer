@@ -165,7 +165,7 @@ class BibTagParser(object):
 class BibTag(Container):
   "A tag in a BibTeX file."
 
-  valueseparators = ['{', '"', '#', '\\', '}']
+  valueseparators = ['{', '"', '#', '\\', '}', '$']
   stringdefs = dict()
   replaced = BibTeXConfig.replaced
   replacedinitials = [x[0] for x in BibTeXConfig.replaced]
@@ -231,6 +231,8 @@ class BibTag(Container):
         self.parseescaped(pos)
       elif pos.checkfor('#'):
         self.parsehash(pos, initial)
+      elif pos.checkfor('$'):
+        self.parseformula(pos)
       else:
         pos.error('Unexpected character ' + pos.current())
         pos.skipcurrent()
@@ -283,6 +285,20 @@ class BibTag(Container):
       return
     if not initial:
       self.add('#')
+
+  def parseformula(self, pos):
+    "Parse a whole formula."
+    if not pos.checkskip('$'):
+      pos.error('Missing $ in formula')
+      return
+    formula = Formula()
+    formula.header = ['inline']
+    formula.parsed = pos.globexcluding('$')
+    if not pos.checkskip('$'):
+      pos.error('Missing $ in formula')
+      return
+    formula.process()
+    self.add(formula)
 
   def readexcluding(cls, pos, undesired):
     "Parse a piece not structure (including spaces)."
