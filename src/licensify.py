@@ -28,13 +28,13 @@ from io.bulk import *
 from util.trace import Trace
 
 
-mark = '# --end--'
+mark = '--end--'
 
 def process(reader, writer, license):
   "Conflate all Python files used in filein to fileout"
   for line in license:
     writer.writestring(line)
-  while not reader.currentline().startswith(mark):
+  while not mark in reader.currentline():
     reader.nextline()
   while not reader.finished():
     line = reader.currentline()
