@@ -3720,7 +3720,7 @@ JA
 \begin_inset Text
 
 \begin_layout Plain Layout
-Queued
+1.1.1
 \end_layout
 
 \end_inset
@@ -3732,8 +3732,12 @@ Queued
 
 \begin_layout Plain Layout
 BibTeX: display 
+\family typewriter
+
 \backslash
-url{} as an URL
+url{}
+\family default
+ as an URL
 \end_layout
 
 \end_inset
@@ -3760,7 +3764,7 @@ JA
 \begin_inset Text
 
 \begin_layout Plain Layout
-Queued
+1.1.1
 \end_layout
 
 \end_inset
