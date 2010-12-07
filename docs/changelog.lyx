@@ -165,6 +165,19 @@ math2html.py
 .
 \end_layout
 
+\begin_layout Itemize
+Ignore hyphens in option names, so e.g.
+ 
+\family typewriter
+--split-part
+\family default
+ is equivalent to 
+\family typewriter
+--splitpart
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.0 (2010-11-23):

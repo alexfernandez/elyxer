@@ -50,7 +50,7 @@ class CommandLineParser(object):
     del args[0]
     if '=' in arg:
       return self.readequals(arg, args)
-    key = arg
+    key = arg.replace('-', '')
     if not hasattr(self.options, key):
       return None, key
     current = getattr(self.options, key)
