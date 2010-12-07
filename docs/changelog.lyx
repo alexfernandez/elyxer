@@ -153,6 +153,18 @@ matrix
 Do not break inline formulas at whitespace (thanks, José Ramón!).
 \end_layout
 
+\begin_layout Itemize
+Break up the CSS into pieces, and generate an independent 
+\family typewriter
+math.css
+\family default
+ for use within 
+\family typewriter
+math2html.py
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.0 (2010-11-23):
