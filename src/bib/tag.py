@@ -293,10 +293,9 @@ class BibTag(Container):
       return
     formula = Formula()
     formula.header = ['inline']
+    pos.pushending('$')
     formula.parsed = pos.globexcluding('$')
-    if not pos.checkskip('$'):
-      pos.error('Missing $ in formula')
-      return
+    pos.popending('$')
     formula.process()
     self.add(formula)
 
