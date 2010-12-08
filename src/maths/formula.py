@@ -60,6 +60,22 @@ class Formula(Container):
     whole.parent = self
     self.contents = [whole]
 
+  def parse(self, pos):
+    "Parse using a parse position instead of self.parser."
+    if pos.checkskip('$'):
+      self.parseinline(pos)
+    else:
+      pos.error('Unparseable formula')
+    self.process()
+    return self
+
+  def parseinline(self, pos):
+    "Parse a $...$ formula."
+    self.header = ['inline']
+    pos.pushending('$')
+    self.parsed = pos.globexcluding('$')
+    pos.popending('$')
+
   def __unicode__(self):
     "Return a printable representation."
     if self.partkey and self.partkey.number:

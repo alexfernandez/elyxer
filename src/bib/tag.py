@@ -288,15 +288,7 @@ class BibTag(Container):
 
   def parseformula(self, pos):
     "Parse a whole formula."
-    if not pos.checkskip('$'):
-      pos.error('Missing $ in formula')
-      return
-    formula = Formula()
-    formula.header = ['inline']
-    pos.pushending('$')
-    formula.parsed = pos.globexcluding('$')
-    pos.popending('$')
-    formula.process()
+    formula = Formula().parse(pos)
     self.add(formula)
 
   def readexcluding(cls, pos, undesired):
