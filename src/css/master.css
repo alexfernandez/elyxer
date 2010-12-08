@@ -210,6 +210,28 @@ span.sans {
 	font-family: sans-serif;
 }
 @import "math.css";
+/* Raw colors */
+span.red {
+	color: #c00000;
+}
+span.blue {
+	color: #0000c0;
+}
+span.green {
+	color: #00c000;
+}
+span.magenta {
+	color: #c000c0;
+}
+span.cyan {
+	color: #00c0c0;
+}
+span.yellow {
+	color: #c0c000;
+}
+span.white {
+	color: #ffffff;
+}
 /* Footnotes */
 span.FootMarker {
 	color: #0030c0;

@@ -256,27 +256,6 @@ span.script {
 	font-family: "Monotype Corsiva", "Apple Chancery", "URW Chancery L", cursive;
 }
 /* Colors */
-span.red {
-	color: #c00000;
-}
-span.blue {
-	color: #0000c0;
-}
-span.green {
-	color: #00c000;
-}
-span.magenta {
-	color: #c000c0;
-}
-span.cyan {
-	color: #00c0c0;
-}
-span.yellow {
-	color: #c0c000;
-}
-span.white {
-	color: #ffffff;
-}
 span.colorbox {
 	display: inline-block;
 	padding: 5px;
