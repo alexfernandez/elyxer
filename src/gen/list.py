@@ -55,6 +55,7 @@ class DeeperList(Container):
     "Create a nested list element."
     self.parser = BoundedParser()
     self.output = ContentsOutput()
+    self.contents = []
 
   def process(self):
     "Create the deeper list"
