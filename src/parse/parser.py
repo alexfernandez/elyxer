@@ -78,7 +78,7 @@ class Parser(object):
     attrs = dict()
     for attr in split:
       if not '=' in attr:
-        Trace.error('Erroneous attribute ' + attr)
+        Trace.error('Erroneous attribute for ' + key + ': ' + attr)
         attr += '="0"'
       parts = attr.split('=')
       attrkey = parts[0]

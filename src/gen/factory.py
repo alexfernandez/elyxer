@@ -131,15 +131,21 @@ class ParseTree(object):
 
   def find(self, reader):
     "Find the current sentence in the tree"
+    branches = self.matchline(reader.currentline())
+    while not ParseTree.default in branches[-1]:
+      branches.pop()
+    last = branches[-1]
+    return last[ParseTree.default]
+
+  def matchline(self, line):
+    "Match a given line against the tree, as deep as possible."
     branches = [self.root]
-    for piece in reader.currentline().split():
+    for piece in line.split(' '):
       current = branches[-1]
       piece = piece.rstrip('>')
       if piece in current:
         branches.append(current[piece])
-    while not ParseTree.default in branches[-1]:
-      Trace.error('Line ' + reader.currentline().strip() + ' not found')
-      branches.pop()
-    last = branches[-1]
-    return last[ParseTree.default]
+      else:
+        return branches
+    return branches
 
