@@ -62,19 +62,52 @@ class Formula(Container):
 
   def parse(self, pos):
     "Parse using a parse position instead of self.parser."
-    if pos.checkskip('$'):
-      self.parseinline(pos)
+    if pos.checkskip('$$'):
+      self.parsedollarblock(pos)
+    elif pos.checkskip('$'):
+      self.parsedollarinline(pos)
+    elif pos.checkskip('\\('):
+      self.parseinlineto(pos, '\\)')
+    elif pos.checkskip('\\['):
+      self.parseblockto(pos, '\\]')
     else:
       pos.error('Unparseable formula')
     self.process()
     return self
 
-  def parseinline(self, pos):
+  def parsedollarinline(self, pos):
     "Parse a $...$ formula."
     self.header = ['inline']
+    self.parsedollar(pos)
+
+  def parsedollarblock(self, pos):
+    "Parse a $$...$$ formula."
+    self.header = ['block']
+    self.parsedollar(pos)
+    if not pos.checkskip('$'):
+      pos.error('Formula should be $$...$$, but last $ is missing.')
+
+  def parsedollar(self, pos):
+    "Parse to the next $."
     pos.pushending('$')
     self.parsed = pos.globexcluding('$')
     pos.popending('$')
+
+  def parseinlineto(self, pos, limit):
+    "Parse a \\(...\\) formula."
+    self.header = ['inline']
+    self.parseupto(pos, limit)
+
+  def parseblockto(self, pos, limit):
+    "Parse a \\[...\\] formula."
+    self.header = ['block']
+    self.parseupto(pos, limit)
+
+  def parseupto(self, pos, limit):
+    "Parse a formula that ends with the given command."
+    pos.pushending(limit)
+    self.parsed = pos.glob(lambda current: True)
+    pos.popending(limit)
 
   def __unicode__(self):
     "Return a printable representation."

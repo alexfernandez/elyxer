@@ -251,6 +251,10 @@ class BibTag(Container):
 
   def parseescaped(self, pos):
     "Parse an escaped string \\*."
+    if pos.checkfor('\\(') or pos.checkfor('\\['):
+      # start of formula commands
+      self.parseformula(pos)
+      return
     if not self.factory.detecttype(FormulaCommand, pos):
       pos.error('Not an escape sequence')
       return
