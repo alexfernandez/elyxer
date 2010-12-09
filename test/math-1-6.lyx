@@ -721,6 +721,35 @@ There has been some trouble over some commands like Greek letters; some
 \end_layout
 
 \begin_layout Section
+Colors and Boxes
+\end_layout
+
+\begin_layout Standard
+A colored box: 
+\begin_inset Formula $\colorbox{red}{aaa}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A framed box: 
+\begin_inset Formula $\framebox[2cm][c]{box}$
+\end_inset
+
+.
+ It can be aligned left: 
+\begin_inset Formula $\framebox[2cm][l]{box}$
+\end_inset
+
+ or right: 
+\begin_inset Formula $\framebox[2cm][r]{box}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
 Macros
 \end_layout
 

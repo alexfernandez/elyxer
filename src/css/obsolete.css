@@ -26,3 +26,52 @@ span.FootOuter:hover .Foot {
 span.dotted {
 	border-top: thin dotted;
 }
+span.numerator-l {
+	display: block;
+	text-align: left;
+}
+span.numerator-r {
+	display: block;
+	text-align: right;
+}
+span.numeratorl {
+	display: block;
+	text-align: left;
+}
+span.numeratorr {
+	display: block;
+	text-align: right;
+}
+span.framebox- {
+	display: inline-block;
+	border: thin solid black;
+	text-align: center;
+	padding: 5px;
+}
+span.framebox-l {
+	display: inline-block;
+	border: thin solid black;
+	text-align: left;
+	padding: 5px;
+}
+span.framebox-r {
+	display: inline-block;
+	border: thin solid black;
+	text-align: right;
+	padding: 5px;
+}
+td.formula-l {
+	text-align: left;
+	padding: 0.2ex;
+	border: 0ex;
+}
+td.formula-c {
+	text-align: center;
+	padding: 0.2ex;
+	border: 0ex;
+}
+td.formula-r {
+	text-align: right;
+	padding: 0.2ex;
+	border: 0ex;
+}

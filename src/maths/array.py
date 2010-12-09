@@ -45,7 +45,7 @@ class FormulaCell(FormulaCommand):
 
   def setalignment(self, alignment):
     self.alignment = alignment
-    self.output = TaggedOutput().settag('td class="formula-' + alignment +'"', True)
+    self.output = TaggedOutput().settag('td class="formula align-' + alignment +'"', True)
     return self
 
   def parsebit(self, pos):

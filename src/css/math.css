@@ -16,13 +16,10 @@ div.formula {
 	margin-right: auto;
 }
 /* Structures */
-span.overline {
+span.overline, span.bar {
 	text-decoration: overline;
 }
-span.bar {
-	text-decoration: overline;
-}
-.fraction {
+.fraction, .fullfraction {
 	display: inline-block;
 	vertical-align: middle;
 	text-align: center;
@@ -31,29 +28,17 @@ span.bar {
 	font-size: 80%;
 	line-height: 100%;
 }
-.fullfraction {
-	display: inline-block;
-	vertical-align: middle;
+.align-left, .align-l {
+	text-align: left;
+}
+.align-right, .align-r {
+	text-align: right;
+}
+.align-center, .align-c {
 	text-align: center;
 }
 span.numerator {
 	display: block;
-}
-span.numerator-l {
-	display: block;
-	text-align: left;
-}
-span.numerator-r {
-	display: block;
-	text-align: right;
-}
-span.numeratorl {
-	display: block;
-	text-align: left;
-}
-span.numeratorr {
-	display: block;
-	text-align: right;
 }
 span.denominator {
 	display: block;
@@ -133,18 +118,7 @@ table.formula {
 	margin: 0em;
 	vertical-align: middle;
 }
-td.formula-l {
-	text-align: left;
-	padding: 0.2ex;
-	border: 0ex;
-}
-td.formula-c {
-	text-align: center;
-	padding: 0.2ex;
-	border: 0ex;
-}
-td.formula-r {
-	text-align: right;
+td.formula {
 	padding: 0.2ex;
 	border: 0ex;
 }
@@ -265,26 +239,8 @@ span.fbox {
 	border: thin solid black;
 	padding: 2px;
 }
-span.boxed {
+span.boxed, span.framebox {
 	display: inline-block;
 	border: thin solid black;
-	padding: 5px;
-}
-span.framebox- {
-	display: inline-block;
-	border: thin solid black;
-	text-align: center;
-	padding: 5px;
-}
-span.framebox-l {
-	display: inline-block;
-	border: thin solid black;
-	text-align: left;
-	padding: 5px;
-}
-span.framebox-r {
-	display: inline-block;
-	border: thin solid black;
-	text-align: right;
 	padding: 5px;
 }
