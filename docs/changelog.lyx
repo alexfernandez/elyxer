@@ -178,6 +178,26 @@ Ignore hyphens in option names, so e.g.
 .
 \end_layout
 
+\begin_layout Itemize
+Changed 
+\family typewriter
+--forceformat
+\family default
+ to 
+\family typewriter
+--imageformat
+\family default
+ (kept the old option for backwards compatibility).
+\end_layout
+
+\begin_layout Itemize
+Wish list: added 
+\family typewriter
+--imageformat "copy"
+\family default
+ to just copy images instead of converting them.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.0 (2010-11-23):

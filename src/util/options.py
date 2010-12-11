@@ -77,6 +77,8 @@ class Options(object):
   supfoot = True
   alignfoot = False
   footnotes = None
+  imageformat = None
+  copyimages = False
 
   branches = dict()
 
@@ -111,6 +113,10 @@ class Options(object):
     if Options.lowmem or Options.toc:
       Options.memory = False
     self.parsefootnotes()
+    if Options.forceformat and not Options.imageformat:
+      Options.imageformat = Options.forceformat
+    if Options.imageformat == 'copy':
+      Options.copyimages = True
     # set in Trace if necessary
     for param in dir(Options):
       if hasattr(Trace, param + 'mode'):
@@ -162,9 +168,9 @@ class Options(object):
     Trace.error('  Options for image output:')
     Trace.error('    --directory "img_dir":  look for images in the specified directory')
     Trace.error('    --destdirectory "dest": put converted images into this directory')
-    Trace.error('    --forceformat ".ext":   force image output format')
+    Trace.error('    --imageformat ".ext":   image output format, or "copy" to copy images')
+    Trace.error('    --noconvert:            do not convert images, use in original locations')
     Trace.error('    --converter "inkscape": use an alternative program to convert images')
-    Trace.error('    --noconvert:            do not convert images, use in their original format')
     Trace.error('  Options for footnote display:')
     Trace.error('    --numberfoot:           mark footnotes with numbers instead of letters')
     Trace.error('    --symbolfoot:           mark footnotes with symbols (*, **...)')

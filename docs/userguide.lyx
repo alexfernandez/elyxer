@@ -1048,7 +1048,7 @@ Options to Control image output
 \begin_layout Description
 
 \family typewriter
---forceformat
+--imageformat
 \begin_inset space ~
 \end_inset
 
@@ -1060,6 +1060,11 @@ Options to Control image output
 ".jpg"
 \family default
  for JPEG) for output images.
+ Use 
+\family typewriter
+--imageformat "copy"
+\family default
+ to make images be copied over instead of converted.
 \end_layout
 
 \begin_layout Description
@@ -1103,9 +1108,8 @@ inkscape
 \family typewriter
 --noconvert
 \family default
-: Use all images in their original format, do not convert anything.
- Useful e.g.
- for SVG figures.
+: Use all images in their original location and do not convert anything.
+ Useful when using images which do not convert well, such as SVG files.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -3891,7 +3895,7 @@ Pending
 \begin_layout Plain Layout
 Option 
 \family typewriter
---format copy
+--imageformat copy
 \family default
  to avoid converting images
 \end_layout
@@ -3920,7 +3924,7 @@ JD
 \begin_inset Text
 
 \begin_layout Plain Layout
-Queued
+1.1.1
 \end_layout
 
 \end_inset

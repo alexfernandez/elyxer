@@ -25,6 +25,7 @@
 import struct
 import sys
 import os
+import shutil
 from util.trace import Trace
 from util.translate import *
 from gen.container import *
@@ -37,6 +38,7 @@ class Image(Container):
 
   defaultformat = ImageConfig.formats['default']
   size = None
+  copy = None
 
   def __init__(self):
     self.parser = InsetParser()
@@ -61,15 +63,21 @@ class Image(Container):
     destination = OutputPath(origin)
     if Options.noconvert:
       return destination
-    forceformat = '.jpg'
-    forcedest = Image.defaultformat
-    if Options.forceformat:
-      forceformat = Options.forceformat
-      forcedest = Options.forceformat
-    if not destination.hasext(forceformat):
-      destination.changeext(forcedest)
+    self.convertformat(destination)
     destination.removebackdirs()
     return destination
+
+  def convertformat(self, destination):
+    "Convert the format of the destination image."
+    if Options.copyimages:
+      return
+    imageformat = '.jpg'
+    forcedest = Image.defaultformat
+    if Options.imageformat:
+      imageformat = Options.imageformat
+      forcedest = Options.imageformat
+    if not destination.hasext(imageformat):
+      destination.changeext(forcedest)
 
   def setsize(self):
     "Set the size attributes width and height."
@@ -118,6 +126,10 @@ class ImageConverter(object):
         # file has not changed; do not convert
         return
     image.destination.createdirs()
+    if Options.copyimages:
+      Trace.debug('Copying ' + image.origin.path + ' to ' + image.destination.path)
+      shutil.copy2(image.origin.path, image.destination.path)
+      return
     converter, command = self.buildcommand(image)
     try:
       Trace.debug(converter + ' command: "' + command + '"')
