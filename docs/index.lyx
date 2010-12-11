@@ -118,24 +118,6 @@ export to HTML
 \end_layout
 
 \begin_layout Standard
-eLyXer (including this page and all accompanying materials) is licensed
- under the 
-\begin_inset CommandInset href
-LatexCommand href
-name "GPL version 3"
-target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
-
-\end_inset
-
- or, at your option, any later version.
- See the 
-\family typewriter
-LICENSE
-\family default
- file for details.
-\end_layout
-
-\begin_layout Standard
 The 
 \begin_inset CommandInset href
 LatexCommand href
@@ -325,26 +307,42 @@ target "changelog.html"
 \end_inset
 
  for information about past versions.
- 
-\begin_inset Note Greyedout
-status open
+\end_layout
 
-\begin_layout Plain Layout
-Note: if this latest version hasn't yet hit the mirrors and you are impatient
- to try it out, please visit the 
+\begin_layout Standard
+eLyXer (including this page and all accompanying materials) is free software:
+ you can redistribute it and/or modify it under the terms of the 
 \begin_inset CommandInset href
 LatexCommand href
-name "Savannah direct download page"
-target "http://download.savannah.gnu.org/releases-noredirect/elyxer/"
+name "GNU General Public License"
+target "http://www.gnu.org/licenses/gpl-3.0-standalone.html"
+
+\end_inset
+
+ as published by the Free Software Foundation, either version 3 of the License,
+ or (at your option) any later version.
+ See the 
+\family typewriter
+LICENSE
+\family default
+ file for details.
+\end_layout
+
+\begin_layout Standard
+math2html (and 
+\family typewriter
+math.css
+\family default
+) is released without warranties or conditions of any kind under the terms
+ of the 
+\begin_inset CommandInset href
+LatexCommand href
+name "Apache License, version 2.0"
+target "http://www.apache.org/licenses/LICENSE-2.0"
 
 \end_inset
 
 .
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection*
