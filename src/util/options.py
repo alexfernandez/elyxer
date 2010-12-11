@@ -47,7 +47,7 @@ class Options(object):
   showlines = True
   unicode = False
   iso885915 = False
-  css = 'http://www.nongnu.org/elyxer/lyx.css'
+  css = 'http://elyxer.nongnu.org/lyx.css'
   title = None
   directory = None
   destdirectory = None
@@ -79,6 +79,7 @@ class Options(object):
   footnotes = None
   imageformat = None
   copyimages = False
+  embedcss = None
 
   branches = dict()
 
@@ -161,6 +162,7 @@ class Options(object):
     Trace.error('  Options for HTML output:')
     Trace.error('    --title "title":        set the generated page title')
     Trace.error('    --css "file.css":       use a custom CSS file')
+    Trace.error('    --embedcss "file.css":  embed styles from a CSS file into the output')
     Trace.error('    --html:                 output HTML 4.0 instead of the default XHTML')
     Trace.error('    --unicode:              full Unicode output')
     Trace.error('    --iso885915:            output a document with ISO-8859-15 encoding')

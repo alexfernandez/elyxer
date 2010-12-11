@@ -954,6 +954,37 @@ reference "sub:CSS"
 \begin_layout Description
 
 \family typewriter
+--embedcss
+\begin_inset space ~
+\end_inset
+
+
+\series bold
+"
+\series default
+file.css
+\series bold
+"
+\family default
+\series default
+: Embed the styles in 
+\family typewriter
+file.css
+\family default
+ into the resulting HTML document.
+ See section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:CSS"
+
+\end_inset
+
+: CSS.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
 --html
 \family default
 : Generate HTML 4.0 (instead of XHTML).
@@ -1769,14 +1800,14 @@ name "sub:CSS"
 \end_layout
 
 \begin_layout Standard
-HTML output, as generated, can be a bit crude.
- Some CSS wizardry can go a long way to make eLyXer output look nicer.
+HTML output, as generated, can fall short in certain situations.
+ Some CSS wizardry can go a long way to customize eLyXer.
 \end_layout
 
 \begin_layout Standard
 eLyXer tags most elements with the type so you can later modify them using
  a CSS.
- The HTML header reads like listing 
+ The default HTML header is similar to listing 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:CSS"
@@ -1801,15 +1832,21 @@ status open
 \begin_layout Quotation
 
 \family typewriter
-<title>Your title here</title>
+[...]
 \end_layout
 
 \begin_layout Quotation
 
 \family typewriter
 \series bold
-<link rel="stylesheet" href="http://www.nongnu.org/elyxer/lyx.css" type="text/css"
- media="screen"/>
+<link rel="stylesheet" href="http://elyxer.nongnu.org/lyx.css" type="text/css"
+ media="all"/>
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+<title>Your title here</title>
 \end_layout
 
 \begin_layout Quotation
@@ -1848,14 +1885,15 @@ This sample CSS file is published on nongnu.org and distributed along with
 docs/lyx.css
 \family default
 .
- (You may have found that your document changes its appearance with time
- -- this is the reason.
+ (You may have found that your document shows minor changes in its appearance
+ with time -- this is the reason.
  The main author regularly publishes a new, updated version of 
 \family typewriter
 lyx.css
 \family default
  on nongnu.org, and all documents using it automatically appear with the
- changes.)
+ changes.
+ Backwards compatibility is maintained as much as possible.)
 \end_layout
 
 \begin_layout Standard
@@ -1902,6 +1940,187 @@ custom.css
 `--css'
 \family default
  and the name of the CSS file is optional.
+\end_layout
+
+\begin_layout Standard
+Sometimes the styles in a CSS are needed in the HTML document (for offline
+ viewing, or to distribute as stand-alone pages).
+ For these uses there is the option 
+\family typewriter
+--embedcss
+\family default
+: the styles contained in the CSS file passed as an argument will be embedded
+ in the resulting HTML document.
+ For instance:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --embedcss custom.css document.lyx page.html
+\end_layout
+
+\begin_layout Standard
+This command generates a document 
+\family typewriter
+page.html
+\family default
+ where the styles in 
+\family typewriter
+custom.css
+\family default
+ are embedded.
+ The CSS to embed must be a file, not a remote URL.
+ Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:embed-CSS"
+
+\end_inset
+
+ shows the resulting HTML header for a test CSS with just one style, 
+\family typewriter
+div.Standard
+\family default
+.
+ Note that the remote CSS is still added by default; to avoid it just add
+ an option with an empty CSS file, 
+\family typewriter
+--css=""
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Quotation
+
+\family typewriter
+<head>
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+[...]
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+<head>
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+<link rel="stylesheet" href="http://elyxer.nongnu.org/lyx.css" type="text/css"
+ media="all"/>
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\series bold
+<style type="text/css">
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\series bold
+<!--
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\series bold
+/* Embedded CSS */
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\series bold
+div.Standard {
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\series bold
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+background: #909090;
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\series bold
+}
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\series bold
+-->
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+\series bold
+</style> 
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+<title>Your title here</title>
+\end_layout
+
+\begin_layout Quotation
+
+\family typewriter
+</head>
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:embed-CSS"
+
+\end_inset
+
+CSS embedded into the HTML
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection

@@ -198,6 +198,18 @@ Wish list: added
  to just copy images instead of converting them.
 \end_layout
 
+\begin_layout Itemize
+Wish list: added option 
+\family typewriter
+--embedcss "file.css"
+\family default
+ to embed the CSS styles in 
+\family typewriter
+file.css
+\family default
+ into the resulting HTML.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.0 (2010-11-23):

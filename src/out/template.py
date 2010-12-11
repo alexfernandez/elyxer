@@ -145,7 +145,14 @@ class DefaultTemplate(HTMLTemplate):
     html.append(u'<meta http-equiv="Content-Type" content="text/html; charset=<!--$encoding-->"/>\n')
     html.append(u'<meta name="generator" content="http://www.nongnu.org/elyxer/"/>\n')
     html.append(u'<meta name="create-date" content="<!--$date-->"/>\n')
-    html.append(u'<link rel="stylesheet" href="<!--$css-->" type="text/css" media="all"/>\n')
+    if Options.css and Options.css != '':
+      html.append(u'<link rel="stylesheet" href="<!--$css-->" type="text/css" media="all"/>\n')
+    if Options.embedcss:
+      html.append(u'<style type="text/css">\n')
+      html.append(u'<!--\n')
+      html += self.readcss()
+      html.append(u' -->\n')
+      html.append(u'</style>\n')
     html.append(u'<title><!--$title--></title>\n')
     if Options.jsmath:
       html.append(u'<script type="text/javascript" src="<!--$jsmath-->/plugins/noImageFonts.js"></script>\n')
@@ -179,6 +186,10 @@ class DefaultTemplate(HTMLTemplate):
       html.append(u'</div><hr/>\n')
       html.append(u'</noscript>\n')
     return html
+
+  def readcss(self):
+    "Read the CSS file and return it as a string."
+    return BulkFile(Options.embedcss).readall()
 
   def getfooter(self):
     "Get the default footer (after content)."
