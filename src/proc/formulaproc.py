@@ -77,7 +77,6 @@ class FormulaProcessor(object):
   def getscript(self, contents, index):
     "Get the sub- or superscript."
     bit = contents[index]
-    Trace.debug('Scripting ' + unicode(bit))
     bit.output.tag += ' class="script"'
     del contents[index]
     return bit
@@ -89,7 +88,6 @@ class FormulaProcessor(object):
       if bit.type == 'alpha':
         self.italicize(bit, contents)
       elif bit.type == 'font' and last and last.type == 'number':
-        Trace.debug('Spacing after ' + unicode(last) + ' and before ' + unicode(bit))
         bit.contents.insert(0, FormulaConstant(u' '))
       last = bit
 
