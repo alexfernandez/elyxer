@@ -218,6 +218,10 @@ Wish list: more than one
  options can be added to use several CSS files.
 \end_layout
 
+\begin_layout Itemize
+Wish list: display sub- and superscript aligned vertically (as in integrals).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.0 (2010-11-23):

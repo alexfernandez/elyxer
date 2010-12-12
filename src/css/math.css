@@ -73,16 +73,16 @@ span.largesymbol {
 span.hugesymbol {
 	font-size: 200%;
 }
-span.limits {
+span.scripts {
 	display: inline-table;
 	vertical-align: middle;
 }
-sub.bigsymbol {
+sub.script {
 	display: table-row;
 	text-align: left;
 	line-height: 150%;
 }
-sup.bigsymbol {
+sup.script {
 	display: table-row;
 	text-align: left;
 	line-height: 150%;

@@ -33,7 +33,7 @@ class FormulaProcessor(object):
   def process(self, bit):
     "Process the contents of every formula bit, recursively."
     self.processcontents(bit)
-    self.processlimits(bit)
+    self.processscripts(bit)
     self.traversewhole(bit)
 
   def processcontents(self, bit):
@@ -44,47 +44,43 @@ class FormulaProcessor(object):
     for element in bit.contents:
       self.processcontents(element)
 
-  def processlimits(self, bit):
-    "Process any limits in a formula bit."
+  def processscripts(self, bit):
+    "Process any scripts in a formula bit."
     if not isinstance(bit, FormulaBit):
       return
     for index, element in enumerate(bit.contents):
-      self.checklimited(bit.contents, index)
-      self.processlimits(element)
+      self.checkscripts(bit.contents, index)
+      self.processscripts(element)
 
-  def checklimited(self, contents, index):
-    "Check for a command with limits"
-    bit = contents[index]
-    if not hasattr(bit, 'command'):
+  def checkscripts(self, contents, index):
+    "Check for sub- and superscript, process."
+    if not self.checkscript(contents, index) \
+        or not self.checkscript(contents, index + 1):
       return
-    if not bit.command in FormulaConfig.limits['commands']:
-      return
-    limits = self.findlimits(contents, index + 1)
-    limits.reverse()
-    if len(limits) == 0:
-      return
-    tagged = TaggedBit().complete(limits, 'span class="limits"')
-    contents.insert(index + 1, tagged)
+    subscript = self.getscript(contents, index)
+    # subscript removed so instead of index + 1 we get index again
+    superscript = self.getscript(contents, index)
+    scripts = TaggedBit().complete([superscript, subscript], 'span class="scripts"')
+    contents.insert(index, scripts)
 
-  def findlimits(self, contents, index):
-    "Find the limits for the command"
-    limits = []
-    while index < len(contents):
-      if not self.checklimits(contents, index):
-        return limits
-      limits.append(contents[index])
-      del contents[index]
-    return limits
-
-  def checklimits(self, contents, index):
-    "Check for a command making the limits"
-    bit = contents[index]
-    if not hasattr(bit, 'command'):
-      return
-    if not bit.command in FormulaConfig.limits['operands']:
+  def checkscript(self, contents, index):
+    "Check if the current element is a sub- or superscript."
+    if len(contents) <= index:
       return False
-    bit.output.tag += ' class="bigsymbol"'
+    bit = contents[index]
+    if not hasattr(bit, 'command'):
+      return False
+    if not bit.command in FormulaConfig.symbolfunctions:
+      return False
     return True
+
+  def getscript(self, contents, index):
+    "Get the sub- or superscript."
+    bit = contents[index]
+    Trace.debug('Scripting ' + unicode(bit))
+    bit.output.tag += ' class="script"'
+    del contents[index]
+    return bit
 
   def traversewhole(self, formula):
     "Traverse over the contents to alter variables and space units."
@@ -93,6 +89,7 @@ class FormulaProcessor(object):
       if bit.type == 'alpha':
         self.italicize(bit, contents)
       elif bit.type == 'font' and last and last.type == 'number':
+        Trace.debug('Spacing after ' + unicode(last) + ' and before ' + unicode(bit))
         bit.contents.insert(0, FormulaConstant(u' '))
       last = bit
 
