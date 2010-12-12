@@ -1,4 +1,7 @@
-/* Obsolete definitions, kept for backwards compatibility */
+/*
+* Obsolete definitions, kept for backwards compatibility.
+*/
+/* Footnotes */
 span.FootMarker {
 	color: #0030c0;
 	font-size: 0.75em;
@@ -23,9 +26,11 @@ span.FootOuter:hover .Foot {
 	display: inline;
 	float: none;
 }
+/* Dotted box */
 span.dotted {
 	border-top: thin dotted;
 }
+/* Obsolete aligned structures */
 span.numerator-l {
 	display: block;
 	text-align: left;
@@ -75,6 +80,7 @@ td.formula-r {
 	padding: 0.2ex;
 	border: 0ex;
 }
+/* Obsolete limits */
 span.limits {
 	display: inline-table;
 	vertical-align: middle;

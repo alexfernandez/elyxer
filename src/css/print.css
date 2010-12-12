@@ -1,4 +1,6 @@
-/* CSS section for print */
+/*
+* CSS section for print.
+*/
 @media print {
 body {
 	font: 90% serif;

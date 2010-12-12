@@ -1,0 +1,99 @@
+/*
+* CSS file for LaTeX formulas, extra stuff:
+* binomials, vertical braces, stackrel, fonts and colors.
+*/
+/* Binomials */
+span.binom {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 80%;
+}
+span.fullbinom {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+}
+span.upbinom {
+	display: block;
+	padding: 0em;
+}
+span.downbinom {
+	display: block;
+	padding: 0em;
+}
+/* Over- and underbraces */
+span.overbrace {
+	border-top: 2pt solid;
+}
+span.underbrace {
+	border-bottom: 2pt solid;
+}
+/* Stackrel */
+span.stackrel {
+	display: inline-block;
+	text-align: center;
+}
+span.upstackrel {
+	display: block;
+	padding: 0em;
+	font-size: 80%;
+	line-height: 64%;
+	position: relative;
+	top: 0.15em;
+
+}
+span.downstackrel {
+	display: block;
+	vertical-align: bottom;
+	padding: 0em;
+}
+/* Fonts */
+span.mathsf {
+	font-family: sans-serif;
+	font-style: normal;
+}
+span.mathrm {
+	font-family: serif;
+}
+span.text {
+	font-style: normal;
+}
+span.textnormal {
+	font-style: normal;
+}
+span.textipa {
+	color: #008080;
+}
+span.textrm {
+	font-style: normal;
+	font-family: serif;
+}
+span.textsf {
+	font-style: normal;
+	font-family: sans-serif;
+}
+span.fraktur {
+	font-family: "Lucida Blackletter", eufm10, blackletter;
+}
+span.blackboard {
+	font-family: Blackboard, msbm10, serif;
+}
+span.script {
+	font-family: "Monotype Corsiva", "Apple Chancery", "URW Chancery L", cursive;
+}
+/* Colors */
+span.colorbox {
+	display: inline-block;
+	padding: 5px;
+}
+span.fbox {
+	display: inline-block;
+	border: thin solid black;
+	padding: 2px;
+}
+span.boxed, span.framebox {
+	display: inline-block;
+	border: thin solid black;
+	padding: 5px;
+}

@@ -209,7 +209,6 @@ span.versalitas {
 span.sans {
 	font-family: sans-serif;
 }
-@import "math.css";
 /* Raw colors */
 span.red {
 	color: #c00000;
@@ -560,5 +559,7 @@ span.deleted {
 	color: #ff0000;
 	text-decoration: line-through;
 }
+@import "math.css";
+@import "math-extras.css";
 @import "obsolete.css";
 @import "print.css";
