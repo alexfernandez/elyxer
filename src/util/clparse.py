@@ -54,7 +54,7 @@ class CommandLineParser(object):
     if not hasattr(self.options, key):
       return None, key
     current = getattr(self.options, key)
-    if current.__class__ == bool:
+    if isinstance(current, bool):
       return key, True
     # read value
     if len(args) == 0:
@@ -65,6 +65,9 @@ class CommandLineParser(object):
       return key, self.readquoted(args, initial)
     value = args[0]
     del args[0]
+    if isinstance(current, list):
+      current.append(value)
+      return key, current
     return key, value
 
   def readquoted(self, args, initial):

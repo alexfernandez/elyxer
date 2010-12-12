@@ -1940,6 +1940,11 @@ custom.css
 `--css'
 \family default
  and the name of the CSS file is optional.
+ More than one 
+\family typewriter
+--css
+\family default
+ option can be added if you want several CSS files to be used in the header.
 \end_layout
 
 \begin_layout Standard
@@ -2121,6 +2126,18 @@ CSS embedded into the HTML
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+As with the 
+\family typewriter
+--css
+\family default
+ option, several 
+\family typewriter
+--embedcss
+\family default
+ options can be added to embed more than one file.
 \end_layout
 
 \begin_layout Subsection
@@ -4188,7 +4205,7 @@ GM, JA
 \begin_inset Text
 
 \begin_layout Plain Layout
-Queued
+1.1.1
 \end_layout
 
 \end_inset
@@ -4441,6 +4458,20 @@ The styles should be included in that order (using the "cascading" property).
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+As of 1.1.1, an option 
+\family typewriter
+--embedcss
+\family default
+ has been added which allows embedding one or more custom CSS files into
+ the resulting HTML document.
+ Also, 
+\family typewriter
+--css
+\family default
+ can be repeated as many times as desired to use several CSS files.
 \end_layout
 
 \begin_layout Subsection

@@ -145,14 +145,7 @@ class DefaultTemplate(HTMLTemplate):
     html.append(u'<meta http-equiv="Content-Type" content="text/html; charset=<!--$encoding-->"/>\n')
     html.append(u'<meta name="generator" content="http://www.nongnu.org/elyxer/"/>\n')
     html.append(u'<meta name="create-date" content="<!--$date-->"/>\n')
-    if Options.css and Options.css != '':
-      html.append(u'<link rel="stylesheet" href="<!--$css-->" type="text/css" media="all"/>\n')
-    if Options.embedcss:
-      html.append(u'<style type="text/css">\n')
-      html.append(u'<!--\n')
-      html += self.readcss()
-      html.append(u' -->\n')
-      html.append(u'</style>\n')
+    html += self.getcss()
     html.append(u'<title><!--$title--></title>\n')
     if Options.jsmath:
       html.append(u'<script type="text/javascript" src="<!--$jsmath-->/plugins/noImageFonts.js"></script>\n')
@@ -187,9 +180,17 @@ class DefaultTemplate(HTMLTemplate):
       html.append(u'</noscript>\n')
     return html
 
-  def readcss(self):
-    "Read the CSS file and return it as a string."
-    return BulkFile(Options.embedcss).readall()
+  def getcss(self):
+    "Get the CSS headers, both linked and embedded."
+    html = []
+    for cssdoc in Options.css:
+      if cssdoc != '':
+        html.append(u'<link rel="stylesheet" href="' + cssdoc + '" type="text/css" media="all"/>\n')
+    for cssfile in Options.embedcss:
+      html.append(u'<style type="text/css">\n')
+      html += BulkFile(cssfile).readall()
+      html.append(u'</style>\n')
+    return html
 
   def getfooter(self):
     "Get the default footer (after content)."
@@ -231,7 +232,7 @@ class VariableMap(object):
     self.variables['year'] = unicode(datetime.date.today().year)
     self.variables['date'] = datetime.date.today().isoformat()
     self.variables['datetime'] = datetime.datetime.now().isoformat()
-    self.variables['css'] = Options.css
+    self.variables['css'] = Options.css[0]
     if Options.iso885915:
       self.variables['encoding'] = 'ISO-8859-1'
     else:

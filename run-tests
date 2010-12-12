@@ -77,9 +77,10 @@ name="helloworld"
 ../elyxer.py --quiet --raw "$name.lyx" "$name-raw-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-raw-good.html" "$name-raw-test.html"
 
-# test --embedcss
+# test --css and --embedcss
 name="helloworld"
-../elyxer.py --quiet --embedcss test.css "$name.lyx" "$name-embedcss-test.html"
+../elyxer.py --quiet --css "http://elyxer.nongnu.org/lyx.css" --css ../docs/math.css \
+       --embedcss test.css "$name.lyx" "$name-embedcss-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-embedcss-good.html" "$name-embedcss-test.html"
 
 # test lowmem generation

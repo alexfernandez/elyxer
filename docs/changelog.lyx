@@ -208,6 +208,15 @@ Wish list: added option
 file.css
 \family default
  into the resulting HTML.
+ It can be used several times.
+\end_layout
+
+\begin_layout Itemize
+Wish list: more than one 
+\family typewriter
+--css
+\family default
+ options can be added to use several CSS files.
 \end_layout
 
 \end_deeper

@@ -47,7 +47,7 @@ class Options(object):
   showlines = True
   unicode = False
   iso885915 = False
-  css = 'http://elyxer.nongnu.org/lyx.css'
+  css = []
   title = None
   directory = None
   destdirectory = None
@@ -79,7 +79,7 @@ class Options(object):
   footnotes = None
   imageformat = None
   copyimages = False
-  embedcss = None
+  embedcss = []
 
   branches = dict()
 
@@ -118,6 +118,8 @@ class Options(object):
       Options.imageformat = Options.forceformat
     if Options.imageformat == 'copy':
       Options.copyimages = True
+    if Options.css == []:
+      Options.css = ['http://elyxer.nongnu.org/lyx.css']
     # set in Trace if necessary
     for param in dir(Options):
       if hasattr(Trace, param + 'mode'):
