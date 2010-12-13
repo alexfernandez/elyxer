@@ -98,10 +98,12 @@ span.limits {
 	display: inline-table;
 	vertical-align: middle;
 }
-span.limit {
+.limit {
 	display: table-row;
-	text-align: left;
 	line-height: 100%;
+}
+sup.limit, sub.limit {
+	line-height: 150%;
 }
 span.symbolover {
 	display: inline-block;
