@@ -358,6 +358,12 @@ div.Institute {
 div.indexgroup {
 	margin-left: 2em;
 }
+span.noun {
+	font-style: italic;
+}
+span.strong {
+	font-weight: bold;
+}
 /* Raw colors */
 span.red {
 	color: #c00000;

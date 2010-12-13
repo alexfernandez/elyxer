@@ -97,8 +97,15 @@ target "index.html"
 \begin_layout Itemize
 Wish list: display large Unicode symbols for sums and integrals in display
  mode.
- Also in display mode, place limits for commands that take them above or
+\end_layout
+
+\begin_layout Itemize
+Also in display mode, place limits for commands that take them above or
  below the symbol, instead of to the right.
+\end_layout
+
+\begin_layout Itemize
+Support for new Flex insets: Code, MenuItem, Noun, Strong; Argument inset.
 \end_layout
 
 \end_deeper
