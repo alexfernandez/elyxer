@@ -34,6 +34,7 @@ body {
 	background: #ffffff;
 	line-height: 1.5em;
 }
+/* Basic styles */
 a {
 	text-decoration: none;
 	background: none;
@@ -209,94 +210,6 @@ span.versalitas {
 span.sans {
 	font-family: sans-serif;
 }
-/* Raw colors */
-span.red {
-	color: #c00000;
-}
-span.blue {
-	color: #0000c0;
-}
-span.green {
-	color: #00c000;
-}
-span.magenta {
-	color: #c000c0;
-}
-span.cyan {
-	color: #00c0c0;
-}
-span.yellow {
-	color: #c0c000;
-}
-span.white {
-	color: #ffffff;
-}
-/* Footnotes */
-span.SupFootMarker {
-	color: #0030c0;
-	font-size: 0.75em;
-	line-height: 0.5em;
-	vertical-align: text-top;
-}
-span.AlignFootMarker {
-	color: #0030c0;
-}
-div.EndFoot {
-	margin: 0.2ex;
-	background: #ffffff;
-	padding: 0.5ex;
-	font-size: small;
-	font-weight: normal;
-	line-height: 1.5em;
-	text-align: left;
-}
-span.MarginFoot {
-	float: right;
-	clear: right;
-	margin: 0.2ex;
-	border: thin solid #c0c0c0;
-	background: #ffffff;
-	width: 30%;
-	padding: 0.5ex;
-	font-size: small;
-	font-weight: normal;
-	line-height: 1.5em;
-	text-align: left;
-}
-span.HoverFoot {
-	margin: 0.2ex;
-	border: thin solid #c0c0c0;
-	background: #ffffff;
-	padding: 0.5ex;
-	font-size: small;
-	font-weight: normal;
-	line-height: 1.5em;
-	text-align: left;
-}
-span.FootOuter .HoverFoot {
-	display: none;
-	position: absolute;
-}
-span.FootOuter:hover .HoverFoot {
-	display: inline;
-	float: none;
-}
-span.Marginal {
-	float: right;
-	clear: right;
-	margin: 0.2ex;
-	border: thin solid #c0c0c0;
-	background: #ffffff;
-	width: 30%;
-	padding: 0.5ex;
-	font-size: small;
-	font-weight: normal;
-	line-height: 1.5em;
-	text-align: left;
-}
-span.Note {
-	display: none;
-}
 span.code {
 	font-family: monospace;
 }
@@ -389,37 +302,6 @@ div.listing {
 	padding: 0.5ex;
 	border: thin solid #c0c0c0;
 }
-div.framed {
-	outline-style: solid;
-}
-div.frameless {
-}
-div.Frameless {
-}
-div.Boxed {
-	outline-width: thin;
-	outline-style: solid;
-}
-div.Framed {
-	outline-width: thin;
-	outline-style: solid;
-	line-height: 200%;
-}
-div.Doublebox {
-	outline-style: double;
-}
-div.Shadowbox {
-	outline-style: outset;
-}
-div.Shaded {
-	outline-style: inset;
-}
-div.ovalbox {
-	outline-style: groove;
-}
-div.Ovalbox {
-	outline-style: ridge;
-}
 span.number-left {
 	float: left;
 	background: #f0f0f0;
@@ -457,6 +339,146 @@ div.toc {
 div.fulltoc {
 	padding: 1em;
 }
+span.menuitem {
+	font-size: 105%;
+}
+span.normal {
+	font-style: normal;
+}
+div.warning {
+	font-size: 120%;
+	color:#cc0000;
+}
+div.PlainVisible {
+	width: auto;
+}
+div.Institute {
+	text-align: center;
+}
+div.indexgroup {
+	margin-left: 2em;
+}
+/* Raw colors */
+span.red {
+	color: #c00000;
+}
+span.blue {
+	color: #0000c0;
+}
+span.green {
+	color: #00c000;
+}
+span.magenta {
+	color: #c000c0;
+}
+span.cyan {
+	color: #00c0c0;
+}
+span.yellow {
+	color: #c0c000;
+}
+span.white {
+	color: #ffffff;
+}
+/* Footnotes */
+span.SupFootMarker {
+	color: #0030c0;
+	font-size: 0.75em;
+	line-height: 0.5em;
+	vertical-align: text-top;
+}
+span.AlignFootMarker {
+	color: #0030c0;
+}
+div.EndFoot {
+	margin: 0.2ex;
+	background: #ffffff;
+	padding: 0.5ex;
+	font-size: small;
+	font-weight: normal;
+	line-height: 1.5em;
+	text-align: left;
+}
+span.MarginFoot {
+	float: right;
+	clear: right;
+	margin: 0.2ex;
+	border: thin solid #c0c0c0;
+	background: #ffffff;
+	width: 30%;
+	padding: 0.5ex;
+	font-size: small;
+	font-weight: normal;
+	line-height: 1.5em;
+	text-align: left;
+}
+span.HoverFoot {
+	margin: 0.2ex;
+	border: thin solid #c0c0c0;
+	background: #ffffff;
+	padding: 0.5ex;
+	font-size: small;
+	font-weight: normal;
+	line-height: 1.5em;
+	text-align: left;
+}
+span.FootOuter .HoverFoot {
+	display: none;
+	position: absolute;
+}
+span.FootOuter:hover .HoverFoot {
+	display: inline;
+	float: none;
+}
+span.Marginal {
+	float: right;
+	clear: right;
+	margin: 0.2ex;
+	border: thin solid #c0c0c0;
+	background: #ffffff;
+	width: 30%;
+	padding: 0.5ex;
+	font-size: small;
+	font-weight: normal;
+	line-height: 1.5em;
+	text-align: left;
+}
+span.Note {
+	display: none;
+}
+/* Boxes */
+div.framed {
+	outline-style: solid;
+}
+div.frameless {
+}
+div.Frameless {
+}
+div.Boxed {
+	outline-width: thin;
+	outline-style: solid;
+}
+div.Framed {
+	outline-width: thin;
+	outline-style: solid;
+	line-height: 200%;
+}
+div.Doublebox {
+	outline-style: double;
+}
+div.Shadowbox {
+	outline-style: outset;
+}
+div.Shaded {
+	outline-style: inset;
+}
+div.ovalbox {
+	outline-style: groove;
+}
+div.Ovalbox {
+	outline-style: ridge;
+}
+/* Spaces */
 span.hspace {
 	display: inline-block;
 }
@@ -490,16 +512,11 @@ div.vfill {
 	display: block;
 	height: 30em;
 }
-span.menuitem {
-	font-size: 105%;
-}
+/* Chunks */
 div.chunk {
 	width: auto;
 }
-span.chunkleft {
-	font-style: normal;
-}
-span.chunkright {
+span.chunkleft span.chunkright {
 	font-style: normal;
 }
 span.chunkdecl {
@@ -509,16 +526,7 @@ span.chunkdecl {
 span.chunkref {
 	font-style: italic;
 }
-span.normal {
-	font-style: normal;
-}
-div.warning {
-	font-size: 120%;
-	color:#cc0000;
-}
-div.PlainVisible {
-	width: auto;
-}
+/* Split Part Navigation */
 div.splitheader {
 	margin: 0em;
 	text-align: center;
@@ -544,12 +552,6 @@ hr.footer {
 div.footer {
 	font-size: 0.90em;
 	margin: 1em 0;
-}
-div.Institute {
-	text-align: center;
-}
-div.indexgroup {
-	margin-left: 2em;
 }
 /* change tracking */
 span.inserted {
