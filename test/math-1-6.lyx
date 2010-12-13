@@ -187,6 +187,12 @@ where the sum's limits should appear below (
 \begin_inset Formula $\intop_{i=1}^{\infty}x.$
 \end_inset
 
+ Display mode:
+\begin_inset Formula \[
+\intop_{i=1}^{\infty}x.\]
+
+\end_inset
+
 
 \end_layout
 

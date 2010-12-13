@@ -95,7 +95,8 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Wish list: display large Unicode symbols for sums and integrals in display
+ mode.
 \end_layout
 
 \end_deeper

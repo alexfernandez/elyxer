@@ -94,6 +94,15 @@ span.scripts {
 	text-align: left;
 	line-height: 150%;
 }
+span.limits {
+	display: inline-table;
+	vertical-align: middle;
+}
+span.limit {
+	display: table-row;
+	text-align: left;
+	line-height: 100%;
+}
 span.symbolover {
 	display: inline-block;
 	text-align: center;

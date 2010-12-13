@@ -33,13 +33,18 @@ from proc.formulaproc import *
 class Formula(Container):
   "A LaTeX formula"
 
+  displaymode = False
+
   def __init__(self):
     self.parser = FormulaParser()
     self.output = TaggedOutput().settag('span class="formula"')
 
   def process(self):
     "Convert the formula to tags"
-    if self.header[0] != 'inline':
+    if self.header[0] == 'inline':
+      Formula.displaymode = False
+    else:
+      Formula.displaymode = True
       self.output.settag('div class="formula"', True)
     if Options.jsmath:
       if self.header[0] != 'inline':

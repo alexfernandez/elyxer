@@ -240,9 +240,23 @@ class DecoratingFunction(OneParamFunction):
     self.parameter.output = TaggedOutput().settag('span class="undersymbol"')
     self.simplifyifpossible()
 
+class LimitCommand(EmptyCommand):
+  "A command which accepts limits above and below, in display mode."
+
+  commandmap = FormulaConfig.limitcommands
+
+  def parsebit(self, pos):
+    "Parse a limit command."
+    if not Formula.displaymode or len(self.translated) == 1:
+      self.add(TaggedBit().constant(self.translated[0], 'span class="limits"'))
+      return
+    self.output = TaggedOutput().settag('span class="limits"')
+    for piece in self.translated[1:]:
+      self.add(TaggedBit().constant(piece, 'span class="limit"'))
+
 FormulaFactory.types += [FormulaCommand, SymbolFunction]
 FormulaCommand.types = [
     AlphaCommand, EmptyCommand, OneParamFunction, DecoratingFunction,
-    FontFunction, LabelFunction, TextFunction, CombiningFunction,
+    FontFunction, LabelFunction, TextFunction, CombiningFunction, LimitCommand,
     ]
 
