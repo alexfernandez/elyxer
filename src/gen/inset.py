@@ -145,6 +145,13 @@ class PhantomText(Container):
     self.parser = InsetParser()
     self.output = TaggedOutput().settag('span class="phantom"', False)
 
+class LineInset(LyXLine):
+  "A LaTeX ruler, but parsed as an inset."
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = FixedOutput()
+
 class IncludeInset(Container):
   "A child document included within another."
 

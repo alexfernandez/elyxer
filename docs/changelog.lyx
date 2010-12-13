@@ -105,8 +105,8 @@ Also in display mode, place limits for commands that take them above or
 \end_layout
 
 \begin_layout Itemize
-Support for new Flex insets: Code, MenuItem, Noun, Strong; new Argument
- and Phantom insets.
+Support for new Flex insets: Code, MenuItem, Noun, Strong; new Argument,
+ Phantom and line (ruler) insets.
 \end_layout
 
 \end_deeper
