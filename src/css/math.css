@@ -89,12 +89,7 @@ span.scripts {
 	display: inline-table;
 	vertical-align: middle;
 }
-sub.script {
-	display: table-row;
-	text-align: left;
-	line-height: 150%;
-}
-sup.script {
+.script {
 	display: table-row;
 	text-align: left;
 	line-height: 150%;
