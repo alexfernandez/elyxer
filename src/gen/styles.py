@@ -218,6 +218,13 @@ class Separator(Container):
     self.contents = []
     self.html = [constant]
 
+class StrikeOut(TaggedText):
+  "Striken out text."
+
+  def process(self):
+    "Set the output tag to strike."
+    self.output.tag = 'strike'
+
 class StartAppendix(BlackBox):
   "Mark to start an appendix here."
   "From this point on, all chapters become appendices."
