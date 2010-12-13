@@ -90,7 +90,7 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
-1.1.1 (unreleased):
+1.1.1 (2010-12-13):
 \end_layout
 
 \begin_deeper
@@ -101,11 +101,11 @@ Wish list: understand
 \backslash
 url{}
 \family default
- in BibLaTeX files.
+ in BibTeX files.
 \end_layout
 
 \begin_layout Itemize
-Wish list: parse math formulas in BibLaTeX files.
+Wish list: parse math formulas in BibTeX files.
 \end_layout
 
 \begin_layout Itemize
