@@ -18,16 +18,16 @@ Math Test
 </h1>
 <div class="Unindented">
 A limit: <div class="formula">
-lim<sub><i>x</i> → ∞</sub><i>f</i>(<i>x</i>), 
+<span class="limits"><sup class="limit"> </sup><span class="limit">lim</span><sub class="limit"><i>x</i> → ∞</sub></span><i>f</i>(<i>x</i>), 
 </div>
-which should appear as <span class="formula"><i>x</i> → ∞</span> in italics, and «lim» in plain style. Inlined: <span class="formula">lim<sub><i>x</i> → ∞</sub><i>f</i>(<i>x</i>)</span>.
+which should appear as <span class="formula"><i>x</i> → ∞</span> in italics, and «lim» in plain style. Inlined: <span class="formula"><span class="limits"><span class="limit">lim</span></span><sub><i>x</i> → ∞</sub><i>f</i>(<i>x</i>)</span>.
 </div>
 <div class="Indented">
 And why not, a sum: <div class="formula">
-<span class="limits"><span class="limit">⎲</span><span class="limit">⎳</span></span><span class="scripts"><sup class="script">∞</sup><sub class="script"><i>i</i> = 1</sub></span><i>a</i><sub><i>i</i></sub>, 
+<span class="limits"><sup class="limit">∞</sup><span class="limit">⎲</span><span class="limit">⎳</span><sub class="limit"><i>i</i> = 1</sub></span><i>a</i><sub><i>i</i></sub>, 
 </div>
-where the sum’s limits should appear below (<span class="formula"><i>i</i> = 1</span>) and above (<span class="formula">∞</span>) the <span class="formula"><span class="limits"><span class="limit">⎲</span><span class="limit">⎳</span></span></span> but to the right. Inlined: <span class="formula"><span class="limits"><span class="limit">⎲</span><span class="limit">⎳</span></span><span class="scripts"><sup class="script">∞</sup><sub class="script"><i>i</i> = 1</sub></span><i>a</i><sub><i>i</i></sub>.</span> Integral: <span class="formula"><span class="limits"><span class="limit">⌠</span><span class="limit">⌡</span></span><span class="scripts"><sup class="script">∞</sup><sub class="script"><i>x</i> = <i>a</i></sub></span><i>x</i> <span class="text">d</span><i>x</i>.</span> Display mode:<div class="formula">
-<span class="limits"><span class="limit">⌠</span><span class="limit">⌡</span></span><span class="scripts"><sup class="script">∞</sup><sub class="script"><i>x</i> = <i>a</i></sub></span><i>x</i> <span class="text">d</span><i>x</i>.
+where the sum’s limits should appear below (<span class="formula"><i>i</i> = 1</span>) and above (<span class="formula">∞</span>) the <span class="formula"><span class="limits"><span class="limit"><span class="bigsymbol">∑</span></span></span></span> but to the right. Inlined: <span class="formula"><span class="limits"><span class="limit"><span class="bigsymbol">∑</span></span></span><span class="scripts"><sup class="script">∞</sup><sub class="script"><i>i</i> = 1</sub></span><i>a</i><sub><i>i</i></sub>.</span> Integral: <span class="formula"><span class="limits"><span class="limit"><span class="bigsymbol">∫</span></span></span><span class="scripts"><sup class="script">∞</sup><sub class="script"><i>x</i> = <i>a</i></sub></span><i>x</i> <span class="text">d</span><i>x</i>.</span> Display mode:<div class="formula">
+<span class="limits"><sup class="limit">∞</sup><span class="limit">⌠</span><span class="limit">⌡</span><sub class="limit"><i>x</i> = <i>a</i></sub></span><i>x</i> <span class="text">d</span><i>x</i>.
 </div>
 
 </div>
@@ -36,7 +36,7 @@ A sum inside another element (red color):
 </div>
 <div class="Indented">
 <div class="formula">
-<span style="color: red;"><span class="limits"><span class="limit">⎲</span><span class="limit">⎳</span></span><span class="scripts"><sup class="script">∞</sup><sub class="script"><i>i</i> = 1</sub></span><i>a</i><sub><i>i</i></sub></span>.
+<span style="color: red;"><span class="limits"><sup class="limit">∞</sup><span class="limit">⎲</span><span class="limit">⎳</span><sub class="limit"><i>i</i> = 1</sub></span><i>a</i><sub><i>i</i></sub></span>.
 </div>
 
 </div>
@@ -45,7 +45,7 @@ When any element has both super- and subscript, they should appear like inlined 
 </div>
 <div class="Indented">
 <div class="formula">
-<span class="limits"><span class="limit">⎲</span><span class="limit">⎳</span></span><sub><i>i</i>, <i>j</i></sub><i>a</i><span class="scripts"><sup class="script"><i>i</i></sup><sub class="script"><i>j</i></sub></span> + <span class="limits"><span class="limit">⎲</span><span class="limit">⎳</span></span><sub><i>i</i>, <i>j</i></sub><i>a</i><span class="scripts"><sup class="script"><i>j</i></sup><sub class="script"><i>i</i></sub></span> = <span class="limits"><span class="limit">⎲</span><span class="limit">⎳</span></span><sub><i>i</i></sub><i>a</i><span class="scripts"><sup class="script"><i>i</i></sup><sub class="script"><i>i</i></sub></span>, 
+<span class="limits"><sup class="limit"> </sup><span class="limit">⎲</span><span class="limit">⎳</span><sub class="limit"><i>i</i>, <i>j</i></sub></span><i>a</i><span class="scripts"><sup class="script"><i>i</i></sup><sub class="script"><i>j</i></sub></span> + <span class="limits"><sup class="limit"> </sup><span class="limit">⎲</span><span class="limit">⎳</span><sub class="limit"><i>i</i>, <i>j</i></sub></span><i>a</i><span class="scripts"><sup class="script"><i>j</i></sup><sub class="script"><i>i</i></sub></span> = <span class="limits"><sup class="limit"> </sup><span class="limit">⎲</span><span class="limit">⎳</span><sub class="limit"><i>i</i></sub></span><i>a</i><span class="scripts"><sup class="script"><i>i</i></sup><sub class="script"><i>i</i></sub></span>, 
 </div>
 <div class="formula">
 <span class="scripts"><sup class="script">2</sup><sub class="script">1</sub></span><span class="text"> H</span> + <span class="scripts"><sup class="script">2</sup><sub class="script">1</sub></span><span class="text"> H</span> → <span class="scripts"><sup class="script">3</sup><sub class="script">2</sub></span><span class="text"> He</span> + <span class="scripts"><sup class="script">1</sup><sub class="script">0</sub></span><span class="text"> n</span>.
@@ -382,7 +382,7 @@ That’s all folks!
 
 <hr class="footer"/>
 <div class="footer" id="generated-by">
-Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.1.2 (2010-12-13)</a> on <span class="create-date">2010-12-13T13:08:03.526161</span>
+Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.1.2 (2010-12-13)</a> on <span class="create-date">2010-12-13T13:12:30.850044</span>
 </div>
 </div>
 </body>
