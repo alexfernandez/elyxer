@@ -138,6 +138,13 @@ class BoxInset(Container):
     self.output.settag('div class="' + self.type + '"', True)
     ContainerSize().readparameters(self).addstyle(self)
 
+class PhantomText(Container):
+  "A line of invisible text (white over white)."
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = TaggedOutput().settag('span class="phantom"', False)
+
 class IncludeInset(Container):
   "A child document included within another."
 
