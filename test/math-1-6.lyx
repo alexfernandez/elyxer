@@ -197,6 +197,14 @@ where the sum's limits should appear below (
 \end_layout
 
 \begin_layout Standard
+We can also integrate without limits: 
+\begin_inset Formula $\int A\,\text{d}x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 A sum inside another element (red color):
 \end_layout
 
