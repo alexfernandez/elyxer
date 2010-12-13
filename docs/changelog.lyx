@@ -90,6 +90,16 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
+1.1.2 (unreleased):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 1.1.1 (2010-12-13):
 \end_layout
 
