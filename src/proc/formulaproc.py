@@ -75,7 +75,7 @@ class FormulaProcessor(object):
     if self.checkscript(contents, index + 1):
       superscript = self.getlimit(contents, index  + 1)
     else:
-      superscript = TaggedBit().constant('.', 'span class="limit"')
+      superscript = TaggedBit().constant(u' ', 'sup class="limit"')
     limited.contents.insert(0, superscript)
 
   def getlimit(self, contents, index):

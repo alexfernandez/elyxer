@@ -162,7 +162,7 @@ lim
 \begin_layout Standard
 And why not, a sum: 
 \begin_inset Formula \[
-\sum_{i=1}^{\infty}x,\]
+\sum_{i=1}^{\infty}a_{i},\]
 
 \end_inset
 
@@ -180,16 +180,16 @@ where the sum's limits should appear below (
 
  but to the right.
  Inlined: 
-\begin_inset Formula $\sum_{i=1}^{\infty}x.$
+\begin_inset Formula $\sum_{i=1}^{\infty}a_{i}.$
 \end_inset
 
  Integral: 
-\begin_inset Formula $\intop_{i=1}^{\infty}x.$
+\begin_inset Formula $\intop_{x=a}^{\infty}x\,\text{d}x.$
 \end_inset
 
  Display mode:
 \begin_inset Formula \[
-\intop_{i=1}^{\infty}x.\]
+\intop_{x=a}^{\infty}x\,\text{d}x.\]
 
 \end_inset
 
@@ -202,7 +202,7 @@ A sum inside another element (red color):
 
 \begin_layout Standard
 \begin_inset Formula \[
-\textcolor{red}{\sum_{i=1}^{\infty}x}.\]
+\textcolor{red}{\sum_{i=1}^{\infty}a_{i}}.\]
 
 \end_inset
 
