@@ -36,4 +36,5 @@ class DocumentParameters(object):
   language = None
   bibliography = None
   outputchanges = False
+  displaymode = False
 

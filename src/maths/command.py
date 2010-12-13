@@ -247,11 +247,11 @@ class LimitCommand(EmptyCommand):
 
   def parsebit(self, pos):
     "Parse a limit command."
-    if not Formula.displaymode or len(self.translated) == 1:
-      self.add(TaggedBit().constant(self.translated[0], 'span class="limits"'))
-      return
+    pieces = self.translated[1:]
+    if not DocumentParameters.displaymode or len(self.translated) == 1:
+      pieces = self.translated[0:1]
     self.output = TaggedOutput().settag('span class="limits"')
-    for piece in self.translated[1:]:
+    for piece in pieces:
       self.add(TaggedBit().constant(piece, 'span class="limit"'))
 
 FormulaFactory.types += [FormulaCommand, SymbolFunction]

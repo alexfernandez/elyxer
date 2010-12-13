@@ -54,9 +54,38 @@ class FormulaProcessor(object):
 
   def checkscripts(self, contents, index):
     "Check for sub- and superscript, process."
-    if not self.checkscript(contents, index) \
-        or not self.checkscript(contents, index + 1):
-      return
+    if self.checklimits(contents, index):
+      self.modifylimits(contents, index)
+    if self.checkscript(contents, index) and self.checkscript(contents, index + 1):
+      self.modifyscripts(contents, index)
+
+  def checklimits(self, contents, index):
+    "Check if the current position has a limits command."
+    if not DocumentParameters.displaymode:
+      return False
+    if not self.checkcommand(contents[index], FormulaConfig.limitcommands):
+      return False
+    return self.checkscript(contents, index + 1)
+
+  def modifylimits(self, contents, index):
+    "Modify a limits commands so that the limits appear above and below."
+    limited = contents[index]
+    subscript = self.getlimit(contents, index + 1)
+    limited.contents.append(subscript)
+    if self.checkscript(contents, index + 1):
+      superscript = self.getlimit(contents, index  + 1)
+    else:
+      superscript = TaggedBit().constant('.', 'span class="limit"')
+    limited.contents.insert(0, superscript)
+
+  def getlimit(self, contents, index):
+    "Get the limit for a limits command."
+    limit = self.getscript(contents, index)
+    limit.output.tag = limit.output.tag.replace('script', 'limit')
+    return limit
+
+  def modifyscripts(self, contents, index):
+    "Modify the super- and subscript to appear vertically aligned."
     subscript = self.getscript(contents, index)
     # subscript removed so instead of index + 1 we get index again
     superscript = self.getscript(contents, index)
@@ -67,10 +96,13 @@ class FormulaProcessor(object):
     "Check if the current element is a sub- or superscript."
     if len(contents) <= index:
       return False
-    bit = contents[index]
+    return self.checkcommand(contents[index], FormulaConfig.symbolfunctions)
+
+  def checkcommand(self, bit, commandmap):
+    "Check if the command is in the given map."
     if not hasattr(bit, 'command'):
       return False
-    if not bit.command in FormulaConfig.symbolfunctions:
+    if not bit.command in commandmap:
       return False
     return True
 

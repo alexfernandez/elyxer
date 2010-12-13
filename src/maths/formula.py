@@ -25,6 +25,7 @@
 from gen.container import *
 from util.trace import Trace
 from util.clone import *
+from util.docparams import *
 from conf.config import *
 from parse.formulaparse import *
 from proc.formulaproc import *
@@ -33,8 +34,6 @@ from proc.formulaproc import *
 class Formula(Container):
   "A LaTeX formula"
 
-  displaymode = False
-
   def __init__(self):
     self.parser = FormulaParser()
     self.output = TaggedOutput().settag('span class="formula"')
@@ -42,9 +41,9 @@ class Formula(Container):
   def process(self):
     "Convert the formula to tags"
     if self.header[0] == 'inline':
-      Formula.displaymode = False
+      DocumentParameters.displaymode = False
     else:
-      Formula.displaymode = True
+      DocumentParameters.displaymode = True
       self.output.settag('div class="formula"', True)
     if Options.jsmath:
       if self.header[0] != 'inline':
