@@ -219,10 +219,18 @@ class CombiningFunction(OneParamFunction):
     "Parse a combining function."
     self.type = 'alpha'
     combining = self.translated
-    parameter = self.parseparameter(pos)
+    parameter = self.parsesingleparameter(pos)
     if len(parameter.extracttext()) != 1:
       Trace.error('Applying combining function ' + self.command + ' to invalid string "' + parameter.extracttext() + '"')
     self.contents.append(Constant(combining))
+
+  def parsesingleparameter(self, pos):
+    "Parse a parameter, or a single letter."
+    if self.factory.detecttype(Bracket, pos):
+      return self.parseparameter(pos)
+    letter = FormulaConstant(pos.skipcurrent())
+    self.add(letter)
+    return letter
 
 class DecoratingFunction(OneParamFunction):
   "A function that decorates some bit of text"
