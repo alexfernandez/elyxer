@@ -34,6 +34,7 @@ body {
 	background: #ffffff;
 	line-height: 1.5em;
 }
+
 /* Basic styles */
 a {
 	text-decoration: none;
@@ -93,6 +94,140 @@ p.printindex {
 a.printindex {
 	color: black;
 }
+table {
+	display: inline-table;
+	text-align: center;
+	border-collapse: collapse;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+tr.header {
+	border-bottom: thin solid #c0c0c0;
+	background: #ffffff;
+	font-weight: bold;
+}
+td {
+	padding: 1ex;
+	border: thin solid #f0f0f0;
+}
+td div.Standard {
+	margin: 0ex;
+	padding: 0ex;
+}
+div.caption div.Standard, div.table div.Standard {
+	margin: 0ex;
+	padding: 0ex;
+}
+td.numeric {
+	text-align: right;
+}
+td.empty {
+	text-align: center;
+}
+div.right {
+	text-align: right;
+}
+div.center {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+p.biblio {
+}
+div.Paragraph, div.Paragraph- {
+	font-weight: bold;
+	font-size: 103%;
+}
+span.versalitas {
+	font-variant: small-caps;
+}
+span.sans {
+	font-family: sans-serif;
+}
+span.code {
+	font-family: monospace;
+}
+div.Plain {
+	display: inline;
+	width: auto;
+}
+h2 {
+	line-height: 1.4em;
+}
+span.Description-entry {
+	font-weight: bold;
+}
+span.List-entry {
+	display: inline-block;
+	width: 25%;
+	vertical-align: text-top;
+}
+span.List-contents {
+	display: inline-block;
+	width: 75%;
+	vertical-align: text-top;
+}
+div.Space {
+	display: none;
+}
+span.appendix {
+	display: none;
+}
+h1.biblio {
+}
+span.greyedout {
+	color: #808080;
+}
+div.Description, div.List, li {
+	margin: 1em 0;
+}
+li.nested {
+	list-style-type: none;
+}
+span.Info {
+	background: #f0f0f0;
+	border: thin solid #c0c0c0;
+}
+pre {
+	padding: 0em;
+	margin: 0em;
+	width: auto;
+	font-family: monospace;
+	line-height: 1.5em;
+}
+pre.LyX-Code {
+	margin: 0.5em 3em;
+}
+a.Label {
+	text-decoration: none;
+	color: #000000;
+}
+span.phantom {
+	color: #ffffff;
+}
+a.biblioentry {
+	color: black;
+}
+span.menuitem {
+	font-size: 105%;
+}
+span.normal {
+	font-style: normal;
+}
+div.PlainVisible {
+	width: auto;
+}
+div.indexgroup {
+	margin-left: 2em;
+}
+span.noun {
+	font-style: italic;
+}
+span.strong {
+	font-weight: bold;
+}
+
+/* Figures and Tables */
 img.embedded {
 	width: 100%;
 	_width: auto;
@@ -160,123 +295,6 @@ div.multialgorithm {
 	margin-right: auto;
 	border: thin solid #c0c0c0;
 }
-table {
-	display: inline-table;
-	text-align: center;
-	border-collapse: collapse;
-	margin-top: 1em;
-	margin-bottom: 1em;
-}
-tr.header {
-	border-bottom: thin solid #c0c0c0;
-	background: #ffffff;
-	font-weight: bold;
-}
-td {
-	padding: 1ex;
-	border: thin solid #f0f0f0;
-}
-td div.Standard {
-	margin: 0ex;
-	padding: 0ex;
-}
-div.caption div.Standard, div.table div.Standard {
-	margin: 0ex;
-	padding: 0ex;
-}
-td.numeric {
-	text-align: right;
-}
-td.empty {
-	text-align: center;
-}
-div.right {
-	text-align: right;
-}
-div.center {
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-}
-p.biblio {
-}
-div.Paragraph, div.Paragraph- {
-	font-weight: bold;
-	font-size: 103%;
-}
-span.versalitas {
-	font-variant: small-caps;
-}
-span.sans {
-	font-family: sans-serif;
-}
-span.code {
-	font-family: monospace;
-}
-div.Plain {
-	display: inline;
-	width: auto;
-}
-h1.title {
-	text-align: center;
-}
-h2 {
-	line-height: 1.4em;
-}
-h2.author {
-	text-align: center;
-}
-h2.Date {
-	text-align: center;
-}
-span.Description-entry {
-	font-weight: bold;
-}
-span.List-entry {
-	display: inline-block;
-	width: 25%;
-	vertical-align: text-top;
-}
-span.List-contents {
-	display: inline-block;
-	width: 75%;
-	vertical-align: text-top;
-}
-div.Space {
-	display: none;
-}
-span.appendix {
-	display: none;
-}
-h1.biblio {
-}
-span.greyedout {
-	color: #808080;
-}
-div.Description, div.List, li {
-	margin: 1em 0;
-}
-li.nested {
-	list-style-type: none;
-}
-span.Info {
-	background: #f0f0f0;
-	border: thin solid #c0c0c0;
-}
-pre {
-	padding: 0em;
-	margin: 0em;
-	width: auto;
-	font-family: monospace;
-	line-height: 1.5em;
-}
-pre.LyX-Code {
-	margin: 0.5em 3em;
-}
-a.Label {
-	text-decoration: none;
-	color: #000000;
-}
 div.wrap-l, div.wrap-o, div.wrap-i {
 	margin: 2ex;
 	float: left;
@@ -284,15 +302,6 @@ div.wrap-l, div.wrap-o, div.wrap-i {
 div.wrap-r {
 	margin: 2ex;
 	float: right;
-}
-div.abstract {
-	margin: 1em 3em;
-	text-align: left;
-	font-size: 0.95em;
-}
-p.abstract-message {
-	text-align: center;
-	font-weight: bold;
 }
 div.listing {
 	display: inline-block;
@@ -316,17 +325,31 @@ span.number-right {
 	text-align: right;
 	margin-left: 1em;
 }
-span.phantom {
-	color: #ffffff;
+
+/* Header */
+h1.title {
+	text-align: center;
+}
+h2.author {
+	text-align: center;
+}
+h2.Date {
+	text-align: center;
+}
+div.abstract {
+	margin: 1em 3em;
+	text-align: left;
+	font-size: 0.95em;
+}
+p.abstract-message {
+	text-align: center;
+	font-weight: bold;
 }
 div.tocheader {
 	margin: 1em 0;
 	font-size: large;
 }
 a.toc {
-	color: black;
-}
-a.biblioentry {
 	color: black;
 }
 div.tocindent {
@@ -339,31 +362,14 @@ div.toc {
 div.fulltoc {
 	padding: 1em;
 }
-span.menuitem {
-	font-size: 105%;
-}
-span.normal {
-	font-style: normal;
-}
 div.warning {
 	font-size: 120%;
 	color:#cc0000;
 }
-div.PlainVisible {
-	width: auto;
-}
 div.Institute {
 	text-align: center;
 }
-div.indexgroup {
-	margin-left: 2em;
-}
-span.noun {
-	font-style: italic;
-}
-span.strong {
-	font-weight: bold;
-}
+
 /* Raw colors */
 span.red {
 	color: #c00000;
@@ -386,6 +392,7 @@ span.yellow {
 span.white {
 	color: #ffffff;
 }
+
 /* Footnotes */
 span.SupFootMarker {
 	color: #0030c0;
@@ -452,6 +459,7 @@ span.Marginal {
 span.Note {
 	display: none;
 }
+
 /* Boxes */
 div.framed {
 	outline-style: solid;
@@ -484,6 +492,7 @@ div.ovalbox {
 div.Ovalbox {
 	outline-style: ridge;
 }
+
 /* Spaces */
 span.hspace {
 	display: inline-block;
@@ -518,6 +527,7 @@ div.vfill {
 	display: block;
 	height: 30em;
 }
+
 /* Chunks */
 div.chunk {
 	width: auto;
@@ -532,6 +542,7 @@ span.chunkdecl {
 span.chunkref {
 	font-style: italic;
 }
+
 /* Split Part Navigation */
 div.splitheader {
 	margin: 0em;
@@ -559,7 +570,8 @@ div.footer {
 	font-size: 0.90em;
 	margin: 1em 0;
 }
-/* change tracking */
+
+/* Change Tracking */
 span.inserted {
 	color: #0000ff;
 }
