@@ -75,7 +75,6 @@ class DefiningFunction(ParameterFunction):
     else:
       Trace.error('Unknown formula bit in defining function at ' + pos.identifier())
       return
-    Trace.debug('New command: ' + newcommand)
     template = self.translated
     self.factory.defining = True
     self.readparams(template, pos)
@@ -84,6 +83,8 @@ class DefiningFunction(ParameterFunction):
     macro = MathMacro()
     macro.newcommand = newcommand
     macro.parameternumber = self.getintvalue('$n')
+    Trace.debug('New command ' + newcommand + ' (' + \
+        unicode(macro.parameternumber) + ' parameters)')
     macro.definition = self.getvalue('$d')
     self.extractdefaults(macro)
     MathMacro.macros[newcommand] = macro
@@ -115,8 +116,7 @@ class MacroFunction(CommandBit):
     "Parse a number of input parameters."
     self.values = []
     macro = self.translated
-    while self.factory.detecttype(Bracket, pos):
-      self.values.append(self.parseparameter(pos))
+    self.parseparameters(pos)
     defaults = list(macro.defaults)
     remaining = macro.parameternumber - len(self.values) - len(defaults)
     if remaining > 0:
@@ -126,6 +126,13 @@ class MacroFunction(CommandBit):
     if len(self.values) < macro.parameternumber:
       Trace.error('Missing parameters in macro ' + unicode(self))
     self.completemacro(macro)
+
+  def parseparameters(self, pos):
+    "Parse as many parameters as are needed."
+    while self.factory.detecttype(SquareBracket, pos):
+      self.values.append(self.parsesquare(pos))
+    while self.factory.detecttype(Bracket, pos):
+      self.values.append(self.parseparameter(pos))
 
   def parsenumbers(self, remaining, pos):
     "Parse the remaining parameters as a running number."
