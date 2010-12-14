@@ -61,7 +61,6 @@ class FormulaCommand(FormulaBit):
     bit.parsebit(pos)
     # clear ignored in case there is a space
     for ignored in self.factory.clearignored(pos):
-      Trace.debug('Ignored: ' + unicode(ignored))
       bit.add(ignored)
     return bit
 
