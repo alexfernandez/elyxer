@@ -112,11 +112,17 @@ Support for new Flex insets: Code, MenuItem, Noun, Strong; new Argument,
 \backslash
 strikeout
 \family default
-; new LaTeX command 
+; new LaTeX commands 
 \family typewriter
 
 \backslash
 href
+\family default
+, 
+\family typewriter
+
+\backslash
+newline
 \family default
 .
 \end_layout
