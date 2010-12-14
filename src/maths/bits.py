@@ -173,6 +173,10 @@ class WhiteSpace(FormulaBit):
     "Parse all whitespace."
     self.original += pos.skipspace()
 
+  def __unicode__(self):
+    "Return a printable representation."
+    return 'Whitespace: *' + self.original + '*'
+
 class Bracket(FormulaBit):
   "A {} bracket inside a formula"
 
@@ -217,6 +221,8 @@ class Bracket(FormulaBit):
     "Parse a whole formula inside the bracket"
     while self.factory.detectany(pos):
       self.add(self.factory.parseany(pos))
+      for ignored in self.factory.clearignored(pos):
+        self.add(ignored)
     if pos.finished():
       return
     if pos.current() != self.ending:

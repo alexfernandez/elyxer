@@ -130,8 +130,9 @@ class WholeFormula(FormulaBit):
     "Parse with any formula bit"
     while self.factory.detectany(pos):
       bit = self.factory.parseany(pos)
-      #Trace.debug(bit.original + ' -> ' + unicode(bit.gethtml()))
       self.add(bit)
+      for ignored in self.factory.clearignored(pos):
+        self.add(ignored)
 
 class FormulaFactory(object):
   "Construct bits of formula"
