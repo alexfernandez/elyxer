@@ -84,10 +84,6 @@ class Reference(Link):
   "A reference to a label."
 
   references = dict()
-  formats = {
-      'ref':u'@↕', 'eqref':u'(@↕)', 'pageref':u'#↕',
-      'vref':u'@on-page#↕'
-      }
   key = 'none'
 
   def process(self):
@@ -107,18 +103,21 @@ class Reference(Link):
 
   def format(self):
     "Format the reference contents."
+    formats = StyleConfig.referenceformats
     formatkey = self.getparameter('LatexCommand')
     if not formatkey:
       formatkey = 'ref'
-    if not formatkey in self.formats:
+    if not formatkey in formats:
       Trace.error('Unknown reference format ' + formatkey)
       formatstring = u'↕'
     else:
-      formatstring = self.formats[formatkey]
+      formatstring = formats[formatkey]
     formatstring = formatstring.replace(u'↕', self.direction)
-    formatstring = formatstring.replace('@', self.destination.labelnumber())
+    if '@' in formatstring:
+      formatstring = formatstring.replace('@', self.destination.labelnumber())
     formatstring = formatstring.replace('#', '1')
-    formatstring = formatstring.replace('on-page', Translator.translate('on-page'))
+    if 'on-page' in formatstring:
+      formatstring = formatstring.replace('on-page', Translator.translate('on-page'))
     self.contents = [Constant(formatstring)]
 
   def __unicode__(self):
