@@ -59,9 +59,6 @@ class FormulaCommand(FormulaBit):
     bit = self.factory.create(type)
     bit.setcommand(command)
     bit.parsebit(pos)
-    # clear ignored in case there is a space
-    for ignored in self.factory.clearignored(pos):
-      bit.add(ignored)
     return bit
 
   def extractcommand(self, pos):
