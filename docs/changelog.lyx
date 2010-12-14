@@ -132,6 +132,22 @@ BibTeX: apply a combining function only to the following character, not
  to the next word.
 \end_layout
 
+\begin_layout Itemize
+Added reference format for 
+\family typewriter
+vpageref
+\family default
+ (
+\begin_inset Quotes eld
+\end_inset
+
+on page #
+\begin_inset Quotes erd
+\end_inset
+
+).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.1 (2010-12-13):
