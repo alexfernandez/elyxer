@@ -261,7 +261,7 @@ class LimitCommand(EmptyCommand):
       pieces = self.translated[0:1]
     self.output = TaggedOutput().settag('span class="limits"')
     for piece in pieces:
-      self.add(TaggedBit().constant(piece, 'span class="limit"'))
+      self.contents.append(TaggedBit().constant(piece, 'span class="limit"'))
 
 FormulaFactory.types += [FormulaCommand, SymbolFunction]
 FormulaCommand.types = [
