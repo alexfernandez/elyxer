@@ -47,16 +47,23 @@ class FormulaCommand(FormulaBit):
     command = self.extractcommand(pos)
     for type in FormulaCommand.types:
       if command in type.commandmap:
-        newbit = self.factory.create(type)
-        newbit.setcommand(command)
-        newbit.parsebit(pos)
-        self.add(newbit)
-        return newbit
+        return self.parsecommandtype(command, type, pos)
     if not self.factory.defining:
       Trace.error('Unknown command ' + command)
     self.output = TaggedOutput().settag('span class="unknown"')
     self.add(FormulaConstant(command))
     return None
+
+  def parsecommandtype(self, command, type, pos):
+    "Parse a given command type."
+    bit = self.factory.create(type)
+    bit.setcommand(command)
+    bit.parsebit(pos)
+    # clear ignored in case there is a space
+    for ignored in self.factory.clearignored(pos):
+      Trace.debug('Ignored: ' + unicode(ignored))
+      bit.add(ignored)
+    return bit
 
   def extractcommand(self, pos):
     "Extract the command from the current position"

@@ -233,7 +233,8 @@ class Bracket(FormulaBit):
       if pos.current() in specialchars:
         if self.factory.detectany(pos):
           self.add(self.factory.parseany(pos))
-          pos.checkskip(' ')
+          if pos.checkskip(' '):
+            self.original += ' '
       else:
         self.add(FormulaConstant(pos.skipcurrent()))
 
