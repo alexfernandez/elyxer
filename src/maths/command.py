@@ -226,7 +226,8 @@ class CombiningFunction(OneParamFunction):
 
   def parsesingleparameter(self, pos):
     "Parse a parameter, or a single letter."
-    if self.factory.detecttype(Bracket, pos):
+    if self.factory.detecttype(Bracket, pos) \
+        or self.factory.detecttype(FormulaCommand, pos):
       return self.parseparameter(pos)
     letter = FormulaConstant(pos.skipcurrent())
     self.add(letter)
