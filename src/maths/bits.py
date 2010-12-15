@@ -245,8 +245,12 @@ class Bracket(FormulaBit):
         self.add(FormulaConstant(pos.skipcurrent()))
 
   def innerliteral(self, pos):
-    "Parse a literal inside the bracket, which cannot generate html"
+    "Parse a literal inside the bracket, which does not generate HTML."
     self.literal = ''
+    if pos.current() == '#':
+      # provision for macro parameter
+      self.add(self.factory.parseany(pos))
+      return
     while not pos.current() == self.ending:
       if pos.current() == self.start:
         self.parseliteral(pos)
@@ -260,4 +264,9 @@ class SquareBracket(Bracket):
   start = FormulaConfig.starts['squarebracket']
   ending = FormulaConfig.endings['squarebracket']
 
+  def clone(self):
+    "Return a new square bracket with the same contents."
+    bracket = SquareBracket()
+    bracket.contents = self.contents
+    return bracket
 

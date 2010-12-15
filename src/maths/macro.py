@@ -116,23 +116,34 @@ class MacroFunction(CommandBit):
     "Parse a number of input parameters."
     self.values = []
     macro = self.translated
-    self.parseparameters(pos)
-    defaults = list(macro.defaults)
-    remaining = macro.parameternumber - len(self.values) - len(defaults)
-    if remaining > 0:
-      self.parsenumbers(remaining, pos)
-    while len(self.values) < macro.parameternumber and len(defaults) > 0:
-      self.values.insert(0, defaults.pop())
-    if len(self.values) < macro.parameternumber:
-      Trace.error('Missing parameters in macro ' + unicode(self))
+    self.parseparameters(pos, macro)
     self.completemacro(macro)
 
-  def parseparameters(self, pos):
+  def parseparameters(self, pos, macro):
     "Parse as many parameters as are needed."
-    while self.factory.detecttype(SquareBracket, pos):
-      self.values.append(self.parsesquare(pos))
+    self.parseoptional(pos, list(macro.defaults))
     while self.factory.detecttype(Bracket, pos):
       self.values.append(self.parseparameter(pos))
+    remaining = macro.parameternumber - len(self.values)
+    if remaining > 0:
+      self.parsenumbers(remaining, pos)
+    if len(self.values) < macro.parameternumber:
+      Trace.error('Missing parameters in macro ' + unicode(self))
+
+  def parseoptional(self, pos, defaults):
+    "Parse optional parameters."
+    optional = []
+    while self.factory.detecttype(SquareBracket, pos):
+      optional.append(self.parsesquare(pos))
+      if len(optional) > len(defaults):
+        break
+    for value in optional:
+      default = defaults.pop()
+      if len(value.contents) > 0:
+        self.values.append(value)
+      else:
+        self.values.append(default)
+    self.values += defaults
 
   def parsenumbers(self, remaining, pos):
     "Parse the remaining parameters as a running number."
@@ -157,6 +168,7 @@ class MacroFunction(CommandBit):
     for parameter in self.searchall(MacroParameter):
       index = parameter.number - 1
       if index >= len(self.values):
+        Trace.error('Macro parameter index out of bounds: ' + unicode(index))
         return
       parameter.contents = [self.values[index].clone()]
 

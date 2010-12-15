@@ -810,15 +810,23 @@ Definitions can be added as macros
 \end_inset
 
 .
- They can accept default parameters
+\end_layout
+
+\begin_layout Standard
+Macro definitions can accept default parameters
 \begin_inset FormulaMacro
-\newcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
+\renewcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
 {#1\sqrt{#2}}
 \end_inset
 
 .
  Again, useful in formulae: 
 \begin_inset Formula $\defaultroot$
+\end_inset
+
+.
+ Default parameters can then be overriden: 
+\begin_inset Formula $\defaultroot[][y]+\defaultroot[x]$
 \end_inset
 
 .
@@ -839,6 +847,21 @@ Definitions on the fly are also possible:
 
 , and used with different values: 
 \begin_inset Formula $\ontheflyroot{a}{b}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Macros may contain a literal parameter
+\begin_inset FormulaMacro
+\newcommand{\urla}[1]{\url{#1}}
+{\url{#1}}
+\end_inset
+
+.
+ It should parse correctly: 
+\begin_inset Formula $\urla{url}$
 \end_inset
 
 .
