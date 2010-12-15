@@ -247,10 +247,6 @@ class Bracket(FormulaBit):
   def innerliteral(self, pos):
     "Parse a literal inside the bracket, which does not generate HTML."
     self.literal = ''
-    if pos.current() == '#':
-      # provision for macro parameter
-      self.add(self.factory.parseany(pos))
-      return
     while not pos.current() == self.ending:
       if pos.current() == self.start:
         self.parseliteral(pos)
