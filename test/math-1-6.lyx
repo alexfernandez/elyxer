@@ -867,6 +867,20 @@ Macros may contain a literal parameter
 .
 \end_layout
 
+\begin_layout Standard
+A macro with four parameters from the LyX detailed math guide
+\begin_inset FormulaMacro
+\renewcommand{\qG}[4][1,\,2]{#2_{#1}=-\frac{#3}{2}\pm\sqrt{\frac{#3^{2}}{4}-#4}}
+\end_inset
+
+.
+ Now in use: 
+\begin_inset Formula $1+\qG x{(1-x)}5-B$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Section
 Pathological Cases
 \end_layout

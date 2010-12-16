@@ -123,6 +123,7 @@ class MacroFunction(CommandBit):
   def parseparameters(self, pos, macro):
     "Parse as many parameters as are needed."
     self.parseoptional(pos, list(macro.defaults))
+    self.parsemandatory(pos, macro.parameternumber - len(macro.defaults))
     while self.factory.detecttype(Bracket, pos):
       self.values.append(self.parseparameter(pos))
     remaining = macro.parameternumber - len(self.values)
@@ -146,22 +147,36 @@ class MacroFunction(CommandBit):
         self.values.append(default)
     self.values += defaults
 
-  def parsenumbers(self, remaining, pos):
+  def parsemandatory(self, pos, number):
+    "Parse a number of mandatory parameters."
+    for index in range(number):
+      parameter = self.parsemacroparameter(pos, number - index)
+      if not parameter:
+        return
+      self.values.append(parameter)
+
+  def parsemacroparameter(self, pos, remaining):
+    "Parse a macro parameter. Could be a bracket or a single letter."
+    "If there are just two values remaining and there is a running number,"
+    "parse as two separater numbers."
+    if pos.finished():
+      return None
+    if self.factory.detecttype(FormulaNumber, pos):
+      return self.parsenumbers(pos, remaining)
+    return self.parseparameter(pos)
+
+  def parsenumbers(self, pos, remaining):
     "Parse the remaining parameters as a running number."
     "For example, 12 would be {1}{2}."
-    if pos.finished():
-      return
-    if not self.factory.detecttype(FormulaNumber, pos):
-      return
     number = self.factory.parsetype(FormulaNumber, pos)
     if not len(number.original) == remaining:
-      self.values.append(number)
-      return
+      return number
     for digit in number.original:
       value = self.factory.create(FormulaNumber)
       value.add(FormulaConstant(digit))
       value.type = number
       self.values.append(value)
+    return None
 
   def completemacro(self, macro):
     "Complete the macro with the parameters read."
