@@ -93,10 +93,9 @@ class DefiningFunction(ParameterFunction):
     "Extract the default values for existing parameters."
     for index in range(9):
       value = self.extractdefault(index + 1)
-      if value:
-        macro.defaults.append(value)
-      else:
+      if not value:
         return
+      macro.defaults.append(value)
 
   def extractdefault(self, index):
     "Extract the default value for parameter index."
