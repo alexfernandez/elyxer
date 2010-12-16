@@ -150,7 +150,7 @@ on page #
 
 \begin_layout Itemize
 Improved math macro parsing: optional parameters, literal parameters, single-let
-ter parameters.
+ter parameters, parameter defaults with operations.
 \end_layout
 
 \end_deeper

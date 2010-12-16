@@ -105,7 +105,7 @@ class DefiningFunction(ParameterFunction):
       return None
     if len(value.contents) == 0:
       return FormulaConstant('')
-    return value.contents[0]
+    return value
 
 class MacroFunction(CommandBit):
   "A function that was defined using a macro."
