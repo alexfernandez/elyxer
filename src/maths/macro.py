@@ -114,6 +114,7 @@ class MacroFunction(CommandBit):
 
   def parsebit(self, pos):
     "Parse a number of input parameters."
+    self.output = FilteredOutput()
     self.values = []
     macro = self.translated
     self.parseparameters(pos, macro)
@@ -165,12 +166,23 @@ class MacroFunction(CommandBit):
   def completemacro(self, macro):
     "Complete the macro with the parameters read."
     self.contents = [macro.instantiate()]
+    replaced = [False] * len(self.values)
     for parameter in self.searchall(MacroParameter):
       index = parameter.number - 1
       if index >= len(self.values):
         Trace.error('Macro parameter index out of bounds: ' + unicode(index))
         return
+      replaced[index] = True
       parameter.contents = [self.values[index].clone()]
+    for index in range(len(self.values)):
+      if not replaced[index]:
+        self.addfilter(index, self.values[index])
+
+  def addfilter(self, index, value):
+    "Add a filter for the given parameter number and parameter value."
+    original = '#' + unicode(index + 1)
+    value = ''.join(self.values[0].gethtml())
+    self.output.addfilter(original, value)
 
 class FormulaMacro(Formula):
   "A math macro defined in an inset."

@@ -149,7 +149,7 @@ on page #
 \end_layout
 
 \begin_layout Itemize
-Improved math macro parsing: parse optional parameters.
+Improved math macro parsing: for optional parameters, and for literal parameters.
 \end_layout
 
 \end_deeper

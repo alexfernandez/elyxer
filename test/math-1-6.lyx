@@ -800,7 +800,7 @@ Macros
 \begin_layout Standard
 Definitions can be added as macros
 \begin_inset FormulaMacro
-\newcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
+\renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
 {\sqrt[#1]{#2}}
 \end_inset
 
@@ -855,13 +855,13 @@ Definitions on the fly are also possible:
 \begin_layout Standard
 Macros may contain a literal parameter
 \begin_inset FormulaMacro
-\newcommand{\urla}[1]{\url{#1}}
-{\url{#1}}
+\renewcommand{\colort}[1]{\colorbox{#1}{t}}
+{\colorbox{#1}{t}}
 \end_inset
 
 .
  It should parse correctly: 
-\begin_inset Formula $\urla{url}$
+\begin_inset Formula $\colort{red}$
 \end_inset
 
 .
