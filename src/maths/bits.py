@@ -30,10 +30,11 @@ from maths.formula import *
 class FormulaBit(Container):
   "A bit of a formula"
 
+  type = None
+  original = ''
+
   def __init__(self):
-    # type can be 'alpha', 'number', 'font'
-    self.type = None
-    self.original = ''
+    "The formula bit type can be 'alpha', 'number', 'font'."
     self.contents = []
     self.output = ContentsOutput()
 
