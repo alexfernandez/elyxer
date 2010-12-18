@@ -172,18 +172,6 @@ class SymbolFunction(CommandBit):
     self.output = TaggedOutput().settag(self.translated)
     self.parseparameter(pos)
 
-class BracketCommand(OneParamFunction):
-  "A command which defines a bracket."
-
-  commandmap = FormulaConfig.bracketcommands
-
-  def parsebit(self, pos):
-    "Parse the bracket."
-    OneParamFunction.parsebit(self, pos)
-    Trace.debug('Parameter: ' + unicode(self.contents[0]))
-    if self.simplified:
-      Trace.debug('Simplified')
-
 class TextFunction(CommandBit):
   "A function where parameters are read as text."
 
@@ -279,6 +267,28 @@ class LimitCommand(EmptyCommand):
     self.output = TaggedOutput().settag('span class="limits"')
     for piece in pieces:
       self.contents.append(TaggedBit().constant(piece, 'span class="limit"'))
+
+class BracketCommand(OneParamFunction):
+  "A command which defines a bracket."
+
+  commandmap = FormulaConfig.bracketcommands
+
+  def parsebit(self, pos):
+    "Parse the bracket."
+    OneParamFunction.parsebit(self, pos)
+    Trace.debug('Parameter: ' + unicode(self.contents[0]))
+    if self.simplified:
+      Trace.debug('Simplified')
+      return
+    if len(self.contents) != 1:
+      return
+    element = self.contents[0]
+    return
+    maxsize = 0
+    for item in self.contents:
+      maxsize = max(maxsize, item.size)
+    if maxsize == 1:
+      return
 
 FormulaFactory.types += [FormulaCommand, SymbolFunction]
 FormulaCommand.types = [
