@@ -31,7 +31,8 @@ class ConfigReader(object):
   "Read a configuration file"
 
   escapes = [
-      ('\n', '&10;'), (':', '&58;'), ('#', '&35;')
+      ('\n', '&10;'), (':', '&58;'), ('#', '&35;'),
+      ('[', '&91;'), (']', '&93;'),
       ]
 
   def __init__(self, filename):
