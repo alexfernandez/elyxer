@@ -46,6 +46,7 @@ from bib.tex import *
 from bib.pub import *
 from xtra.newfangle import *
 from maths.macro import *
+from maths.extracommand import *
 
 
 class ContainerFactory(object):
