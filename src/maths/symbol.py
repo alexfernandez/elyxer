@@ -29,7 +29,28 @@ from conf.config import *
 class BigSymbol(object):
   "A big symbol generator."
 
-class CasesBrace(BigSymbol):
+class BigBracket(BigSymbol):
+  "A big bracket generator."
+
+  def __init__(self, size, bracket):
+    "Set the size and symbol for the bracket."
+    self.size = size
+    if bracket in FormulaConfig.bigbrackets:
+      self.pieces = FormulaConfig.bigbrackets[bracket]
+    else:
+      self.pieces = [bracket, bracket]
+
+  def getpiece(self, index):
+    "Return the nth piece for the bracket."
+    if len(self.pieces) == 1:
+      return self.pieces[0]
+    if index == 0:
+      return self.pieces[0]
+    if index == self.size - 1:
+      return self.pieces[-1]
+    return self.pieces[1]
+
+class CasesBrace(BigBracket):
   "A big brace used for a case statement."
 
   def __init__(self, size):
@@ -37,7 +58,7 @@ class CasesBrace(BigSymbol):
     self.size = size
 
   def getpiece(self, index):
-    "Get the nth piece from the brace."
+    "Get the nth piece for the brace."
     if index == 0:
       return u'⎧'
     if index == self.size - 1:

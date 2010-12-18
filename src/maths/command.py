@@ -180,6 +180,7 @@ class BracketCommand(OneParamFunction):
   def parsebit(self, pos):
     "Parse the bracket."
     OneParamFunction.parsebit(self, pos)
+    Trace.debug('Parameter: ' + unicode(self.contents[0]))
     if self.simplified:
       Trace.debug('Simplified')
 
