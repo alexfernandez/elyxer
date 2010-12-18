@@ -28,6 +28,7 @@ from util.clone import *
 from conf.config import *
 from maths.formula import *
 from maths.command import *
+from maths.symbol import *
 
 
 class FormulaEquation(CommandBit):
@@ -146,9 +147,22 @@ class FormulaCases(MultiRowFormula):
 
   def parsebit(self, pos):
     "Parse the cases"
-    self.output = TaggedOutput().settag('table class="cases"', True)
+    self.output = TaggedOutput().settag('table class="bracketcases"', True)
     self.alignments = ['l', 'l']
     self.parserows(pos)
+    for row in self.contents:
+      for cell in row.contents:
+        cell.output.settag('td class="case align-l"', True)
+    size = len(self.contents) * 2 - 1
+    brace = CasesBrace(size)
+    for index in range(size):
+      if index % 2 == 0:
+        self.contents.insert(index + 1, FormulaRow())
+      row = self.contents[index]
+      cell = FormulaCell()
+      cell.output = TaggedOutput().settag('td class="bracket align-l"', True)
+      cell.contents.append(FormulaConstant(brace.getpiece(index)))
+      row.contents.insert(0, cell)
 
 class EquationEnvironment(MultiRowFormula):
   "A \\begin{}...\\end equation environment with rows and cells."

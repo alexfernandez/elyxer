@@ -153,6 +153,10 @@ Improved math macro parsing: optional parameters, literal parameters, single-let
 ter parameters, parameter defaults with operations.
 \end_layout
 
+\begin_layout Itemize
+Generate math cases using Unicode brace pieces.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.1 (2010-12-13):

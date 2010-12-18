@@ -91,3 +91,16 @@ sup.bigsymbol {
 	text-align: left;
 	line-height: 150%;
 }
+/* Obsolete cases */
+table.cases {
+	display: inline-block;
+	text-align: center;
+	border-collapse: collapse;
+	margin: 0.2em;
+	border-left: thin solid;
+	vertical-align: middle;
+}
+table.cases tr td {
+	padding-left: 1ex;
+	padding-right: 1em;
+}

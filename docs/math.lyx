@@ -968,9 +968,27 @@ Used to switch between several values.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $y=\begin{cases}
+\begin_inset Formula \[
+y=\begin{cases}
 x & i=0,\\
-x+1 & i<3\end{cases}$
+x+1 & i<3\end{cases}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cases may have more than two rows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+f(x)=\begin{cases}
+0 & x<0,\\
+\infty & x=0\\
+0 & x>0\end{cases}\]
+
 \end_inset
 
 
@@ -1010,7 +1028,7 @@ macros
 \begin_layout Standard
 Definitions can be added as macros
 \begin_inset FormulaMacro
-\newcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
+\renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
 {\sqrt[#1]{#2}}
 \end_inset
 
@@ -1022,7 +1040,7 @@ Definitions can be added as macros
 .
  They can accept default parameters
 \begin_inset FormulaMacro
-\newcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
+\renewcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
 {#1\sqrt{#2}}
 \end_inset
 
