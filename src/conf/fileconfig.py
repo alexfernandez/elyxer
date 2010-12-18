@@ -245,7 +245,7 @@ class ConfigSerializer(object):
 
   def unescape(self, string):
     "Remove the escaping from a string."
-    if string.startswith('\'\\u') and string.endswith('\''):
+    if string.startswith('&#x') and string.endswith(';'):
       # single unicode character
       return unichr(int('0x' + string[3:-1], 16))
     for escape, value in self.escapes:
