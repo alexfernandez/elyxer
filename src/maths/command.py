@@ -141,6 +141,7 @@ class OneParamFunction(CommandBit):
   "A function of one parameter"
 
   commandmap = FormulaConfig.onefunctions
+  simplified = False
 
   def parsebit(self, pos):
     "Parse a function with one parameter"
@@ -153,6 +154,7 @@ class OneParamFunction(CommandBit):
     if self.original in self.commandmap:
       self.output = FixedOutput()
       self.html = [self.commandmap[self.original]]
+      self.simplified = True
 
 class SymbolFunction(CommandBit):
   "Find a function which is represented by a symbol (like _ or ^)"
@@ -169,6 +171,17 @@ class SymbolFunction(CommandBit):
     pos.skip(self.command)
     self.output = TaggedOutput().settag(self.translated)
     self.parseparameter(pos)
+
+class BracketCommand(OneParamFunction):
+  "A command which defines a bracket."
+
+  commandmap = FormulaConfig.bracketcommands
+
+  def parsebit(self, pos):
+    "Parse the bracket."
+    OneParamFunction.parsebit(self, pos)
+    if self.simplified:
+      Trace.debug('Simplified')
 
 class TextFunction(CommandBit):
   "A function where parameters are read as text."
@@ -270,5 +283,6 @@ FormulaFactory.types += [FormulaCommand, SymbolFunction]
 FormulaCommand.types = [
     AlphaCommand, EmptyCommand, OneParamFunction, DecoratingFunction,
     FontFunction, LabelFunction, TextFunction, CombiningFunction, LimitCommand,
+    BracketCommand,
     ]
 
