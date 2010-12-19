@@ -93,68 +93,68 @@ Other equations that contain * should not numbered, but perhaps aligned:
 </div>
 <div class="Indented">
 <div class="formula">
-<table class="environment">
-<tr>
-<td class="formula align-r">
+<span class="environment">
+<span class="arrayrow">
+<span class="arraycell align-r">
 <i>left</i>
-</td>
-<td class="formula align-l">
+</span>
+<span class="arraycell align-l">
 
-</td>
-<td class="formula align-r">
+</span>
+<span class="arraycell align-r">
 <i>right</i>
-</td>
+</span>
 
-</tr>
+</span>
 
-</table>
+</span>
 
 </div>
 
 </div>
 <div class="Indented">
 Some environments allow for multiple labels: <div class="formula">
-<table class="environment">
-<tr>
-<a class="eqnumber" name="eq:third">(4) </a><td class="formula align-r">
+<span class="environment">
+<span class="arrayrow">
+<a class="eqnumber" name="eq:third">(4) </a><span class="arraycell align-r">
 <i>a</i>
-</td>
-<td class="formula align-c">
+</span>
+<span class="arraycell align-c">
  = 
-</td>
-<td class="formula align-l">
+</span>
+<span class="arraycell align-l">
 <i>b</i> × <i>c</i>
-</td>
+</span>
 
-</tr>
-<tr>
-<a class="eqnumber" name="eq:fourth">(5) </a><td class="formula align-r">
+</span>
+<span class="arrayrow">
+<a class="eqnumber" name="eq:fourth">(5) </a><span class="arraycell align-r">
 <i>c</i> × <i>d</i> × <i>e</i>
-</td>
-<td class="formula align-c">
+</span>
+<span class="arraycell align-c">
  = 
-</td>
-<td class="formula align-l">
+</span>
+<span class="arraycell align-l">
 <i>i</i>.
-</td>
+</span>
 
-</tr>
+</span>
 
-</table>
+</span>
 
 </div>
 
 </div>
 <div class="Indented">
-Now a random environment:<span class="formula"><table class="environment">
-<tr>
-<td class="formula align-l">
+Now a random environment:<span class="formula"><span class="environment">
+<span class="arrayrow">
+<span class="arraycell align-l">
 <i>x</i>
-</td>
+</span>
 
-</tr>
+</span>
 
-</table>
+</span>
 <i>y</i></span>.
 </div>
 <h1 class="Section">
@@ -162,50 +162,50 @@ Now a random environment:<span class="formula"><table class="environment">
 </h1>
 <div class="Unindented">
 Some delimiters also taken from the Spanish Lyx User’s Guide. An array: <div class="formula">
-<span class="symbol">[</span><table class="formula">
-<tr>
-<td class="formula align-l">
+<span class="symbol">[</span><span class="array">
+<span class="arrayrow">
+<span class="arraycell align-l">
 12
-</td>
-<td class="formula align-c">
+</span>
+<span class="arraycell align-c">
 2
-</td>
+</span>
 
-</tr>
-<tr>
-<td class="formula align-l">
+</span>
+<span class="arrayrow">
+<span class="arraycell align-l">
 3
-</td>
-<td class="formula align-c">
+</span>
+<span class="arraycell align-c">
 4 × <i>y</i><sup><i>x</i></sup>
-</td>
+</span>
 
-</tr>
+</span>
 
-</table>
+</span>
 <span class="symbol">]</span>
 </div>
-And an inline array <span class="formula"><span class="symbol">[</span><table class="formula">
-<tr>
-<td class="formula align-c">
+And an inline array <span class="formula"><span class="symbol">[</span><span class="array">
+<span class="arrayrow">
+<span class="arraycell align-c">
 <i>a</i>
-</td>
-<td class="formula align-c">
+</span>
+<span class="arraycell align-c">
 <i>b</i>
-</td>
+</span>
 
-</tr>
-<tr>
-<td class="formula align-c">
+</span>
+<span class="arrayrow">
+<span class="arraycell align-c">
 <i>c</i>
-</td>
-<td class="formula align-c">
+</span>
+<span class="arraycell align-c">
 <i>dio</i>
-</td>
+</span>
 
-</tr>
+</span>
 
-</table>
+</span>
 <span class="symbol">]</span></span>.
 </div>
 <div class="Indented">
@@ -288,36 +288,36 @@ Used to switch several values.
 </div>
 <div class="Indented">
 <div class="formula">
-<i>y</i> = <table class="bracketcases">
-<tr>
-<td class="bracket align-l">
+<i>y</i> = <span class="bracketcases">
+<span class="arrayrow">
+<span class="bracket align-l">
 ⎧
-</td>
-<td class="case align-l">
+</span>
+<span class="case align-l">
 <i>x</i>
-</td>
-<td class="case align-l">
+</span>
+<span class="case align-l">
 <i>i</i> = 0, 
-</td>
+</span>
 
-</tr>
-<td class="bracket align-l">
+</span>
+<span class="bracket align-l">
 ⎨
-</td>
-<tr>
-<td class="bracket align-l">
+</span>
+<span class="arrayrow">
+<span class="bracket align-l">
 ⎩
-</td>
-<td class="case align-l">
+</span>
+<span class="case align-l">
 <i>x</i> + 1
-</td>
-<td class="case align-l">
+</span>
+<span class="case align-l">
 <i>i</i> &lt; 3
-</td>
+</span>
 
-</tr>
+</span>
 
-</table>
+</span>
 
 </div>
 
@@ -327,51 +327,51 @@ Cases may have more than two rows:
 </div>
 <div class="Indented">
 <div class="formula">
-<i>f</i>(<i>x</i>) = <table class="bracketcases">
-<tr>
-<td class="bracket align-l">
+<i>f</i>(<i>x</i>) = <span class="bracketcases">
+<span class="arrayrow">
+<span class="bracket align-l">
 ⎧
-</td>
-<td class="case align-l">
+</span>
+<span class="case align-l">
 0
-</td>
-<td class="case align-l">
+</span>
+<span class="case align-l">
 <i>x</i> &lt; 0, 
-</td>
+</span>
 
-</tr>
-<td class="bracket align-l">
+</span>
+<span class="bracket align-l">
 ⎪
-</td>
-<tr>
-<td class="bracket align-l">
+</span>
+<span class="arrayrow">
+<span class="bracket align-l">
 ⎨
-</td>
-<td class="case align-l">
+</span>
+<span class="case align-l">
 ∞
-</td>
-<td class="case align-l">
+</span>
+<span class="case align-l">
 <i>x</i> = 0
-</td>
+</span>
 
-</tr>
-<td class="bracket align-l">
+</span>
+<span class="bracket align-l">
 ⎪
-</td>
-<tr>
-<td class="bracket align-l">
+</span>
+<span class="arrayrow">
+<span class="bracket align-l">
 ⎩
-</td>
-<td class="case align-l">
+</span>
+<span class="case align-l">
 0
-</td>
-<td class="case align-l">
+</span>
+<span class="case align-l">
 <i>x</i> &gt; 0
-</td>
+</span>
 
-</tr>
+</span>
 
-</table>
+</span>
 
 </div>
 
@@ -481,7 +481,7 @@ That’s all folks!
 
 <hr class="footer"/>
 <div class="footer" id="generated-by">
-Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.1.2 (2010-12-19)</a> on <span class="create-date">2010-12-19T01:23:21.943218</span>
+Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.1.2 (2010-12-19)</a> on <span class="create-date">2010-12-19T13:07:00.548132</span>
 </div>
 </div>
 </body>
