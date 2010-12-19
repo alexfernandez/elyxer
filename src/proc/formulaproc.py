@@ -27,8 +27,21 @@ from conf.config import *
 from maths.bits import *
 
 
+class MathsProcessor(object):
+  "A processor for a maths construction inside the FormulaProcessor."
+
+  def process(self, contents, index):
+    "Process an element inside a formula."
+    Trace.error('Unimplemented process() in ' + unicode(self))
+
+  def __unicode__(self):
+    "Return a printable description."
+    return 'Maths processor ' + self.__class__.__name__
+
 class FormulaProcessor(object):
   "A processor specifically for formulas."
+
+  processors = []
 
   def process(self, bit):
     "Process the contents of every formula bit, recursively."
@@ -49,70 +62,10 @@ class FormulaProcessor(object):
     if not isinstance(bit, FormulaBit):
       return
     for index, element in enumerate(bit.contents):
-      self.checkscripts(bit.contents, index)
+      for processor in self.processors:
+        processor.process(bit.contents, index)
       # continue with recursive processing
       self.processinsides(element)
-
-  def checkscripts(self, contents, index):
-    "Check for sub- and superscript, process."
-    if self.checklimits(contents, index):
-      self.modifylimits(contents, index)
-    if self.checkscript(contents, index) and self.checkscript(contents, index + 1):
-      self.modifyscripts(contents, index)
-
-  def checklimits(self, contents, index):
-    "Check if the current position has a limits command."
-    if not DocumentParameters.displaymode:
-      return False
-    if not self.checkcommand(contents[index], FormulaConfig.limitcommands):
-      return False
-    return self.checkscript(contents, index + 1)
-
-  def modifylimits(self, contents, index):
-    "Modify a limits commands so that the limits appear above and below."
-    limited = contents[index]
-    subscript = self.getlimit(contents, index + 1)
-    limited.contents.append(subscript)
-    if self.checkscript(contents, index + 1):
-      superscript = self.getlimit(contents, index  + 1)
-    else:
-      superscript = TaggedBit().constant(u' ', 'sup class="limit"')
-    limited.contents.insert(0, superscript)
-
-  def getlimit(self, contents, index):
-    "Get the limit for a limits command."
-    limit = self.getscript(contents, index)
-    limit.output.tag = limit.output.tag.replace('script', 'limit')
-    return limit
-
-  def modifyscripts(self, contents, index):
-    "Modify the super- and subscript to appear vertically aligned."
-    subscript = self.getscript(contents, index)
-    # subscript removed so instead of index + 1 we get index again
-    superscript = self.getscript(contents, index)
-    scripts = TaggedBit().complete([superscript, subscript], 'span class="scripts"')
-    contents.insert(index, scripts)
-
-  def checkscript(self, contents, index):
-    "Check if the current element is a sub- or superscript."
-    if len(contents) <= index:
-      return False
-    return self.checkcommand(contents[index], FormulaConfig.symbolfunctions)
-
-  def checkcommand(self, bit, commandmap):
-    "Check if the command is in the given map."
-    if not hasattr(bit, 'command'):
-      return False
-    if not bit.command in commandmap:
-      return False
-    return True
-
-  def getscript(self, contents, index):
-    "Get the sub- or superscript."
-    bit = contents[index]
-    bit.output.tag += ' class="script"'
-    del contents[index]
-    return bit
 
   def traversewhole(self, formula):
     "Traverse over the contents to alter variables and space units."
