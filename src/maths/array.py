@@ -116,6 +116,7 @@ class MultiRowFormula(CommandBit):
     row = FormulaRow().setalignments(self.alignments)
     for alignment in self.alignments:
       cell = self.factory.create(FormulaCell).setalignment(alignment)
+      cell.add(FormulaConstant(u' '))
       row.add(cell)
     self.addrow(row)
 
