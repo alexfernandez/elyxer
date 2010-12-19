@@ -26,6 +26,7 @@ from util.trace import Trace
 from util.clone import *
 from conf.config import *
 from maths.command import *
+from maths.symbol import *
 
 
 class CombiningFunction(OneParamFunction):
@@ -88,9 +89,7 @@ class BracketCommand(OneParamFunction):
   def parsebit(self, pos):
     "Parse the bracket."
     OneParamFunction.parsebit(self, pos)
-    Trace.debug('Parameter: ' + unicode(self.contents[0]))
     if self.simplified:
-      Trace.debug('Simplified')
       return
     if len(self.contents) != 1:
       return
@@ -102,8 +101,60 @@ class BracketCommand(OneParamFunction):
     if maxsize == 1:
       return
 
+class BinomialCell(CommandBit):
+  "A cell in a binomial function."
+
+  def setfactory(self, factory):
+    "Set the factory."
+    self.output = TaggedOutput().settag('span class="binomcell"', True)
+    return CommandBit.setfactory(self, factory)
+
+  def parsebit(self, pos):
+    "Parse a parameter and make it into a binomial cell."
+    self.parseparameter(pos)
+
+  def constant(self, constant):
+    "Set a constant as only contents."
+    self.contents = [FormulaConstant(constant)]
+
+class BinomialRow(CommandBit):
+  "A row for a binomial function."
+
+  def create(self, left, middle, right):
+    "Set the row contents."
+    self.output = TaggedOutput().settag('span class="binomrow"', True)
+    self.contents = [left, middle, right]
+    return self
+
+class BinomialFunction(CommandBit):
+  "A binomial function which needs pretty decorating."
+
+  commandmap = FormulaConfig.binomialfunctions
+
+  def parsebit(self, pos):
+    "Parse two parameters and decorate them."
+    self.output = TaggedOutput().settag('span class="binomial"', True)
+    Trace.debug('Binomial: ')
+    leftbracket = BigBracket(3, self.translated[0])
+    rightbracket = BigBracket(3, self.translated[1])
+    for index in range(3):
+      left = self.getpiece(leftbracket, index, 'left')
+      right = self.getpiece(rightbracket, index, 'right')
+      cell = BinomialCell().setfactory(self.factory)
+      if index == 1:
+        cell.constant(u' ')
+      else:
+        cell.parsebit(pos)
+      self.add(BinomialRow().create(left, cell, right))
+
+  def getpiece(self, bracket, index, align):
+    "Get a piece of a bracket, already formatted."
+    piece = bracket.getpiece(index)
+    return TaggedBit().constant(piece, 'span class="binombracket align-' + align + '"')
+
 
 FormulaCommand.types += [
     DecoratingFunction, CombiningFunction, LimitCommand, BracketCommand,
+    BinomialFunction,
     ]
 

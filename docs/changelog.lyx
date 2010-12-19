@@ -157,6 +157,16 @@ ter parameters, parameter defaults with operations.
 Generate math cases using Unicode brace pieces.
 \end_layout
 
+\begin_layout Itemize
+Display full-sized binomials (
+\family typewriter
+
+\backslash
+dbinom
+\family default
+) using Unicode bracket pieces.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.1 (2010-12-13):
