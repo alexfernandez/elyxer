@@ -180,7 +180,7 @@ class BracketProcessor(MathsProcessor):
     "Process a bracket command with an array next to it."
     character = command.extracttext()
     command.output = EmptyOutput()
-    bracket = BigBracket(len(array.contents) - 1, character)
+    bracket = BigBracket(len(array.rows), character)
     for index, row in enumerate(array.rows):
       cell = bracket.getcell(index, direction)
       if self.directions[direction] == 1:
