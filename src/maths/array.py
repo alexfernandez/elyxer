@@ -173,16 +173,10 @@ class FormulaCases(MultiRowFormula):
     for row in self.contents:
       for cell in row.contents:
         cell.output.settag('span class="case align-l"', True)
-    size = len(self.contents) * 2 - 1
-    brace = CasesBrace(size)
-    for index in range(size):
-      if index % 2 == 0:
-        self.contents.insert(index + 1, FormulaRow())
-      row = self.contents[index]
-      cell = FormulaCell()
-      cell.output = TaggedOutput().settag('span class="bracket align-l"', True)
-      cell.contents.append(FormulaConstant(brace.getpiece(index)))
-      row.contents.insert(0, cell)
+        cell.contents.append(FormulaConstant(u' '))
+    brace = CasesBrace(len(self.contents))
+    for index, row in enumerate(self.rows):
+      row.contents.insert(0, brace.getcell(index, 'l'))
 
 class EquationEnvironment(MultiRowFormula):
   "A \\begin{}...\\end equation environment with rows and cells."

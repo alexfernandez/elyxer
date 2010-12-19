@@ -24,6 +24,7 @@
 
 from util.trace import Trace
 from conf.config import *
+from maths.bits import *
 
 
 class BigSymbol(object):

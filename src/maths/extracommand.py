@@ -180,21 +180,13 @@ class BracketProcessor(MathsProcessor):
     "Process a bracket command with an array next to it."
     character = command.extracttext()
     command.output = EmptyOutput()
-    Trace.debug('Character: ' + character)
     bracket = BigBracket(len(array.contents) - 1, character)
     for index, row in enumerate(array.rows):
-      Trace.debug('Row: ' + unicode(row))
-      cell = self.getbracketcell(bracket, index, direction)
+      cell = bracket.getcell(index, direction)
       if self.directions[direction] == 1:
         row.contents.insert(0, cell)
       else:
         row.contents.append(cell)
-      Trace.debug('Inserted ' + unicode(cell))
-
-  def getbracketcell(self, bracket, index, align):
-    "Get a piece of a bracket, already formatted."
-    piece = bracket.getpiece(index)
-    return TaggedBit().constant(piece, 'span class="bracket align-' + align + '"')
 
 class BinomialCell(CommandBit):
   "A cell in a binomial function."
@@ -232,19 +224,14 @@ class BinomialFunction(CommandBit):
     leftbracket = BigBracket(3, self.translated[0])
     rightbracket = BigBracket(3, self.translated[1])
     for index in range(3):
-      left = self.getpiece(leftbracket, index, 'left')
-      right = self.getpiece(rightbracket, index, 'right')
+      left = leftbracket.getcell(index, 'l')
+      right = rightbracket.getcell(index, 'r')
       cell = BinomialCell().setfactory(self.factory)
       if index == 1:
         cell.constant(u' ')
       else:
         cell.parsebit(pos)
       self.add(BinomialRow().create(left, cell, right))
-
-  def getpiece(self, bracket, index, align):
-    "Get a piece of a bracket, already formatted."
-    piece = bracket.getpiece(index)
-    return TaggedBit().constant(piece, 'span class="bracket align-' + align + '"')
 
 
 FormulaCommand.types += [
