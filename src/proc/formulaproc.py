@@ -33,7 +33,7 @@ class FormulaProcessor(object):
   def process(self, bit):
     "Process the contents of every formula bit, recursively."
     self.processcontents(bit)
-    self.processscripts(bit)
+    self.processinsides(bit)
     self.traversewhole(bit)
 
   def processcontents(self, bit):
@@ -44,13 +44,14 @@ class FormulaProcessor(object):
     for element in bit.contents:
       self.processcontents(element)
 
-  def processscripts(self, bit):
-    "Process any scripts in a formula bit."
+  def processinsides(self, bit):
+    "Process the insides (limits, brackets) in a formula bit."
     if not isinstance(bit, FormulaBit):
       return
     for index, element in enumerate(bit.contents):
       self.checkscripts(bit.contents, index)
-      self.processscripts(element)
+      # continue with recursive processing
+      self.processinsides(element)
 
   def checkscripts(self, contents, index):
     "Check for sub- and superscript, process."
