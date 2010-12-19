@@ -134,7 +134,7 @@ span.symbolunder {
 span.arraydef {
 	display: none;
 }
-span.array, span.bracketcases, span.binomial {
+span.array, span.bracketcases, span.binomial, span.environment {
 	display: inline-table;
 	text-align: center;
 	border-collapse: collapse;
@@ -146,19 +146,9 @@ span.arrayrow, span.binomrow {
 	padding: 0ex;
 	border: 0ex;
 }
-span.arraycell, span.bracket, span.case, span.binomcell {
+span.arraycell, span.bracket, span.case, span.binomcell, span.environmentcell {
 	display: table-cell;
 	padding: 0ex 0.2ex;
 	line-height: 95%;
 	border: 0ex;
-}
-span.environment {
-	display: inline-table;
-	text-align: right;
-	margin: 0;
-	vertical-align: middle;
-}
-span.environmentcell {
-	display: table-cell;
-	padding: 0 1em;
 }
