@@ -134,39 +134,21 @@ span.symbolunder {
 span.arraydef {
 	display: none;
 }
-span.array {
-	display: inline-table;
-	text-align: center;
-	border-collapse: collapse;
-	margin: 0em;
-	vertical-align: middle;
-}
-span.arrayrow {
-	display: table-row;
-	padding: 0.2ex;
-	border: 0ex;
-}
-span.arraycell {
-	display: table-cell;
-	padding: 0.2ex;
-	border: 0ex;
-}
-span.bracketcases {
+span.array, span.bracketcases, span.binomial {
 	display: inline-table;
 	text-align: center;
 	border-collapse: collapse;
 	margin: 0.2em;
 	vertical-align: middle;
 }
-span.case {
-	display: table-cell;
-	padding: 0em 2em 0em 0.2ex;
-	line-height: 95%;
+span.arrayrow, span.binomrow {
+	display: table-row;
+	padding: 0ex;
 	border: 0ex;
 }
-span.bracket {
+span.arraycell, span.bracket, span.case, span.binomcell {
 	display: table-cell;
-	padding: 0em 0.2ex;
+	padding: 0ex 0.2ex;
 	line-height: 95%;
 	border: 0ex;
 }

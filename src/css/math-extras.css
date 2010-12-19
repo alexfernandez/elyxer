@@ -3,7 +3,7 @@
 * binomials, vertical braces, stackrel, fonts and colors.
 */
 
-/* Binomials */
+/* Inline binomials */
 span.binom {
 	display: inline-block;
 	vertical-align: middle;
@@ -13,20 +13,6 @@ span.binom {
 span.binomstack {
 	display: block;
 	padding: 0em;
-}
-span.binomial {
-	display: inline-table;
-	vertical-align: middle;
-	text-align: center;
-}
-span.binomrow {
-	display: table-row;
-	padding: 0em;
-}
-span.binombracket, span.binomcell {
-	display: table-cell;
-	padding: 0em 0.1em;
-	line-height: 90%;
 }
 
 /* Over- and underbraces */
