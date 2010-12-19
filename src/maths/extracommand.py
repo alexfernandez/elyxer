@@ -89,17 +89,6 @@ class BracketCommand(OneParamFunction):
   def parsebit(self, pos):
     "Parse the bracket."
     OneParamFunction.parsebit(self, pos)
-    if self.simplified:
-      return
-    if len(self.contents) != 1:
-      return
-    element = self.contents[0]
-    return
-    maxsize = 0
-    for item in self.contents:
-      maxsize = max(maxsize, item.size)
-    if maxsize == 1:
-      return
 
 class BinomialCell(CommandBit):
   "A cell in a binomial function."
