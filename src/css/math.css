@@ -16,6 +16,7 @@ div.formula {
 	margin-left: auto;
 	margin-right: auto;
 }
+
 /* Basic features */
 a.eqnumber {
 	display: inline-block;
@@ -26,6 +27,7 @@ a.eqnumber {
 span.unknown {
 	color: #800000;
 }
+
 /* Alignment */
 .align-left, .align-l {
 	text-align: left;
@@ -36,6 +38,7 @@ span.unknown {
 .align-center, .align-c {
 	text-align: center;
 }
+
 /* Structures */
 span.overline, span.bar {
 	text-decoration: overline;
@@ -126,6 +129,7 @@ span.symbolunder {
 	top: 0.3em;
 	width: 0px;
 }
+
 /* Environments */
 span.arraydef {
 	display: none;

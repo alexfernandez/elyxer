@@ -2,6 +2,7 @@
 * CSS file for LaTeX formulas, extra stuff:
 * binomials, vertical braces, stackrel, fonts and colors.
 */
+
 /* Binomials */
 span.binom {
 	display: inline-block;
@@ -27,6 +28,7 @@ span.binombracket, span.binomcell {
 	padding: 0em 0.1em;
 	line-height: 90%;
 }
+
 /* Over- and underbraces */
 span.overbrace {
 	border-top: 2pt solid;
@@ -34,6 +36,7 @@ span.overbrace {
 span.underbrace {
 	border-bottom: 2pt solid;
 }
+
 /* Stackrel */
 span.stackrel {
 	display: inline-block;
@@ -53,6 +56,7 @@ span.downstackrel {
 	vertical-align: bottom;
 	padding: 0em;
 }
+
 /* Fonts */
 span.mathsf {
 	font-family: sans-serif;
@@ -87,6 +91,7 @@ span.blackboard {
 span.script {
 	font-family: "Monotype Corsiva", "Apple Chancery", "URW Chancery L", cursive;
 }
+
 /* Colors */
 span.colorbox {
 	display: inline-block;
