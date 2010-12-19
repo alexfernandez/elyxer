@@ -50,6 +50,11 @@ class BigBracket(BigSymbol):
       return self.pieces[-1]
     return self.pieces[1]
 
+  def getcell(self, index, align):
+    "Get the bracket piece as an array cell."
+    piece = self.getpiece(index)
+    return TaggedBit().constant(piece, 'span class="bracket align-' + align + '"')
+
 class CasesBrace(BigBracket):
   "A big brace used for a case statement."
 

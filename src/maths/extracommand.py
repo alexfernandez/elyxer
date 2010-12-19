@@ -27,6 +27,7 @@ from util.clone import *
 from conf.config import *
 from maths.command import *
 from maths.symbol import *
+from maths.array import *
 
 
 class CombiningFunction(OneParamFunction):
@@ -146,6 +147,59 @@ class BracketCommand(OneParamFunction):
     "Parse the bracket."
     OneParamFunction.parsebit(self, pos)
 
+class BracketProcessor(MathsProcessor):
+  "A processor for bracket commands."
+
+  directions = {'left': 1, 'right': -1}
+
+  def process(self, contents, index):
+    "Convert the bracket using Unicode pieces, if possible."
+    if not isinstance(contents[index], BracketCommand):
+      return
+    self.checkarray(contents, index, 'left')
+    self.checkarray(contents, index, 'right')
+
+  def checkarray(self, contents, index, direction):
+    "Check for the right command, and an array in the given direction."
+    command = contents[index]
+    if command.command != '\\' + direction:
+      return
+    newindex = index + self.directions[direction]
+    if newindex < 0 or newindex >= len(contents):
+      return
+    begin = contents[newindex]
+    if not isinstance(begin, BeginCommand):
+      return
+    array = begin.array
+    if not isinstance(array, MultiRowFormula):
+      Trace.error('BeginCommand does not contain a MultiRowFormula')
+      return False
+    self.processarray(command, array, direction)
+
+  def processarray(self, command, array, direction):
+    "Process a bracket command with an array next to it."
+    character = command.extracttext()
+    Trace.debug('Character: ' + character)
+    bracket = BigBracket(len(array.contents), character)
+    index = 0
+    for row in enumerate(array.contents):
+      Trace.debug('Row: ' + unicode(row))
+      if not isinstance(row, FormulaRow):
+        continue
+      Trace.debug('Row: ' + unicode(row))
+      cell = self.getbracketcell(bracket, index, direction)
+      if self.directions[direction] == 1:
+        row.insert(0, cell)
+      else:
+        row.append(cell)
+      Trace.debug('Inserted ' + unicode(cell))
+      index += 1
+
+  def getbracketcell(self, bracket, index, align):
+    "Get a piece of a bracket, already formatted."
+    piece = bracket.getpiece(index)
+    return TaggedBit().constant(piece, 'span class="bracket align-' + align + '"')
+
 class BinomialCell(CommandBit):
   "A cell in a binomial function."
 
@@ -194,7 +248,7 @@ class BinomialFunction(CommandBit):
   def getpiece(self, bracket, index, align):
     "Get a piece of a bracket, already formatted."
     piece = bracket.getpiece(index)
-    return TaggedBit().constant(piece, 'span class="binombracket align-' + align + '"')
+    return TaggedBit().constant(piece, 'span class="bracket align-' + align + '"')
 
 
 FormulaCommand.types += [
@@ -203,6 +257,6 @@ FormulaCommand.types += [
     ]
 
 FormulaProcessor.processors += [
-    LimitsProcessor(),
+    LimitsProcessor(), BracketProcessor(),
     ]
 
