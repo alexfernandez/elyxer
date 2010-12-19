@@ -167,6 +167,11 @@ dbinom
 ) using Unicode bracket pieces.
 \end_layout
 
+\begin_layout Itemize
+Change all table-type elements in formulas to spans and do the formatting
+ in the CSS, to generate valid XHTML.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.1 (2010-12-13):

@@ -134,7 +134,6 @@ class BinomialFunction(CommandBit):
   def parsebit(self, pos):
     "Parse two parameters and decorate them."
     self.output = TaggedOutput().settag('span class="binomial"', True)
-    Trace.debug('Binomial: ')
     leftbracket = BigBracket(3, self.translated[0])
     rightbracket = BigBracket(3, self.translated[1])
     for index in range(3):

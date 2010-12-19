@@ -103,7 +103,7 @@ span.limits {
 }
 .limit {
 	display: table-row;
-	line-height: 100%;
+	line-height: 95%;
 }
 sup.limit, sub.limit {
 	line-height: 150%;
@@ -134,40 +134,49 @@ span.symbolunder {
 span.arraydef {
 	display: none;
 }
-table.formula {
-	display: inline-block;
+span.array {
+	display: inline-table;
 	text-align: center;
 	border-collapse: collapse;
 	margin: 0em;
 	vertical-align: middle;
 }
-td.formula {
+span.arrayrow {
+	display: table-row;
 	padding: 0.2ex;
 	border: 0ex;
 }
-table.bracketcases {
-	display: inline-block;
+span.arraycell {
+	display: table-cell;
+	padding: 0.2ex;
+	border: 0ex;
+}
+span.bracketcases {
+	display: inline-table;
 	text-align: center;
 	border-collapse: collapse;
 	margin: 0.2em;
 	vertical-align: middle;
 }
-td.case {
+span.case {
+	display: table-cell;
 	padding: 0em 2em 0em 0.2ex;
-	line-height: 100%;
+	line-height: 95%;
 	border: 0ex;
 }
-td.bracket {
+span.bracket {
+	display: table-cell;
 	padding: 0em 0.2ex;
-	line-height: 100%;
+	line-height: 95%;
 	border: 0ex;
 }
-table.environment {
-	display: inline-block;
+span.environment {
+	display: inline-table;
 	text-align: right;
 	margin: 0;
 	vertical-align: middle;
 }
-table.environment tr td {
+span.environmentcell {
+	display: table-cell;
 	padding: 0 1em;
 }

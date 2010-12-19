@@ -46,7 +46,7 @@ class FormulaCell(FormulaCommand):
 
   def setalignment(self, alignment):
     self.alignment = alignment
-    self.output = TaggedOutput().settag('td class="formula align-' + alignment +'"', True)
+    self.output = TaggedOutput().settag('span class="arraycell align-' + alignment +'"', True)
     return self
 
   def parsebit(self, pos):
@@ -66,7 +66,7 @@ class FormulaRow(FormulaCommand):
 
   def setalignments(self, alignments):
     self.alignments = alignments
-    self.output = TaggedOutput().settag('tr', True)
+    self.output = TaggedOutput().settag('span class="arrayrow"', True)
     return self
 
   def parsebit(self, pos):
@@ -111,7 +111,7 @@ class FormulaArray(MultiRowFormula):
 
   def parsebit(self, pos):
     "Parse the array"
-    self.output = TaggedOutput().settag('table class="formula"', True)
+    self.output = TaggedOutput().settag('span class="array"', True)
     self.parsealignments(pos)
     self.parserows(pos)
 
@@ -135,7 +135,7 @@ class FormulaMatrix(MultiRowFormula):
 
   def parsebit(self, pos):
     "Parse the matrix, set alignments to 'c'."
-    self.output = TaggedOutput().settag('table class="formula"', True)
+    self.output = TaggedOutput().settag('span class="array"', True)
     self.valign = 'c'
     self.alignments = ['c']
     self.parserows(pos)
@@ -147,12 +147,12 @@ class FormulaCases(MultiRowFormula):
 
   def parsebit(self, pos):
     "Parse the cases"
-    self.output = TaggedOutput().settag('table class="bracketcases"', True)
+    self.output = TaggedOutput().settag('span class="bracketcases"', True)
     self.alignments = ['l', 'l']
     self.parserows(pos)
     for row in self.contents:
       for cell in row.contents:
-        cell.output.settag('td class="case align-l"', True)
+        cell.output.settag('span class="case align-l"', True)
     size = len(self.contents) * 2 - 1
     brace = CasesBrace(size)
     for index in range(size):
@@ -160,7 +160,7 @@ class FormulaCases(MultiRowFormula):
         self.contents.insert(index + 1, FormulaRow())
       row = self.contents[index]
       cell = FormulaCell()
-      cell.output = TaggedOutput().settag('td class="bracket align-l"', True)
+      cell.output = TaggedOutput().settag('span class="bracket align-l"', True)
       cell.contents.append(FormulaConstant(brace.getpiece(index)))
       row.contents.insert(0, cell)
 
@@ -169,7 +169,7 @@ class EquationEnvironment(MultiRowFormula):
 
   def parsebit(self, pos):
     "Parse the whole environment."
-    self.output = TaggedOutput().settag('table class="environment"', True)
+    self.output = TaggedOutput().settag('span class="environment"', True)
     environment = self.piece.replace('*', '')
     if environment in FormulaConfig.environments:
       self.alignments = FormulaConfig.environments[environment]

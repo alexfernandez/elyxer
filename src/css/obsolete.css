@@ -118,3 +118,24 @@ span.downbinom {
 	display: block;
 	padding: 0em;
 }
+/* Obsolete environments */
+table.formula {
+	display: inline-block;
+	text-align: center;
+	border-collapse: collapse;
+	margin: 0em;
+	vertical-align: middle;
+}
+td.formula {
+	padding: 0.2ex;
+	border: 0ex;
+}
+table.environment {
+	display: inline-block;
+	text-align: right;
+	margin: 0;
+	vertical-align: middle;
+}
+table.environment tr td {
+	padding: 0 1em;
+}
