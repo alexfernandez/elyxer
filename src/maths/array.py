@@ -88,9 +88,16 @@ class MultiRowFormula(CommandBit):
 
   def parserows(self, pos):
     "Parse all rows, finish when no more row ends"
+    self.rows = []
+    first = True
     for row in self.iteraterows(pos):
+      if first:
+        first = False
+      else:
+        # intersparse empty rows
+        self.addempty()
       row.parsebit(pos)
-      self.add(row)
+      self.addrow(row)
 
   def iteraterows(self, pos):
     "Iterate over all rows, end when no more row ends"
@@ -103,6 +110,19 @@ class MultiRowFormula(CommandBit):
         self.original += pos.popending(rowseparator)
       else:
         return
+
+  def addempty(self):
+    "Add an empty row."
+    row = FormulaRow().setalignments(self.alignments)
+    for alignment in self.alignments:
+      cell = self.factory.create(FormulaCell).setalignment(alignment)
+      row.add(cell)
+    self.addrow(row)
+
+  def addrow(self, row):
+    "Add a row to the contents and to the list of rows."
+    self.rows.append(row)
+    self.add(row)
 
 class FormulaArray(MultiRowFormula):
   "An array within a formula"

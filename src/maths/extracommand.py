@@ -179,21 +179,17 @@ class BracketProcessor(MathsProcessor):
   def processarray(self, command, array, direction):
     "Process a bracket command with an array next to it."
     character = command.extracttext()
+    command.output = EmptyOutput()
     Trace.debug('Character: ' + character)
-    bracket = BigBracket(len(array.contents), character)
-    index = 0
-    for row in enumerate(array.contents):
-      Trace.debug('Row: ' + unicode(row))
-      if not isinstance(row, FormulaRow):
-        continue
+    bracket = BigBracket(len(array.contents) - 1, character)
+    for index, row in enumerate(array.rows):
       Trace.debug('Row: ' + unicode(row))
       cell = self.getbracketcell(bracket, index, direction)
       if self.directions[direction] == 1:
-        row.insert(0, cell)
+        row.contents.insert(0, cell)
       else:
-        row.append(cell)
+        row.contents.append(cell)
       Trace.debug('Inserted ' + unicode(cell))
-      index += 1
 
   def getbracketcell(self, bracket, index, align):
     "Get a piece of a bracket, already formatted."
