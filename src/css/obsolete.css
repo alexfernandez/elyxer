@@ -1,6 +1,7 @@
 /*
 * Obsolete definitions, kept for backwards compatibility.
 */
+
 /* Footnotes */
 span.FootMarker {
 	color: #0030c0;
@@ -26,10 +27,12 @@ span.FootOuter:hover .Foot {
 	display: inline;
 	float: none;
 }
+
 /* Dotted box */
 span.dotted {
 	border-top: thin dotted;
 }
+
 /* Obsolete aligned structures */
 span.numerator-l {
 	display: block;
@@ -80,6 +83,7 @@ td.formula-r {
 	padding: 0.2ex;
 	border: 0ex;
 }
+
 /* Obsolete limits */
 sub.bigsymbol {
 	display: table-row;
@@ -91,6 +95,7 @@ sup.bigsymbol {
 	text-align: left;
 	line-height: 150%;
 }
+
 /* Obsolete cases */
 table.cases {
 	display: inline-block;
@@ -104,6 +109,7 @@ table.cases tr td {
 	padding-left: 1ex;
 	padding-right: 1em;
 }
+
 /* Obsolete binomials */
 span.fullbinom {
 	display: inline-block;
@@ -118,6 +124,7 @@ span.downbinom {
 	display: block;
 	padding: 0em;
 }
+
 /* Obsolete environments */
 table.formula {
 	display: inline-block;
