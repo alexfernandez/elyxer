@@ -68,6 +68,11 @@ span.sqrt {
 	vertical-align: middle;
 	padding: 0.1ex;
 }
+sup.root {
+	font-size: 70%;
+	position: relative;
+	left: 1.4ex;
+}
 span.radical {
 	display: inline-block;
 	padding: 0ex;
