@@ -249,7 +249,7 @@ Aligned brackets can be present: <span class="formula"><span class="symbol">(</s
 </h1>
 <div class="Unindented">
 A big recursive fraction: <div class="formula">
-<span class="fraction"><span class="numerator">1</span><span class="denominator"><span class="symbol">(</span>1 + <span class="symbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + <span class="symbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + 2<i>x</i></span></span><span class="symbol">)</span></span></span><span class="symbol">)</span><span class="symbol">)</span></span></span>
+<span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator"><span class="symbol">(</span>1 + <span class="symbol">(</span><span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator">1 + <span class="symbol">(</span><span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator">1 + 2<i>x</i></span><span class="ignored">)</span></span><span class="symbol">)</span></span><span class="ignored">)</span></span><span class="symbol">)</span><span class="symbol">)</span></span><span class="ignored">)</span></span>
 </div>
 
 </div>
@@ -258,7 +258,7 @@ A nice fraction: <span class="formula"><span class="fraction"><sup class="numera
 </div>
 <div class="Indented">
 A non-diminishing fraction containing alignments:<div class="formula">
-<span class="fullfraction"><span class="numerator align-">1</span><span class="denominator">1 + <span class="symbol">(</span><span class="fullfraction"><span class="numerator align-l">1</span><span class="denominator">1 + <i>x</i></span></span> × <span class="fullfraction"><span class="numerator align-r">1</span><span class="denominator">1 + <i>x</i></span></span><span class="symbol">)</span></span></span>.
+<span class="fullfraction"><span class="ignored">(</span><span class="numerator align-">1</span><span class="ignored">)/(</span><span class="denominator">1 + <span class="symbol">(</span><span class="fullfraction"><span class="ignored">(</span><span class="numerator align-l">1</span><span class="ignored">)/(</span><span class="denominator">1 + <i>x</i></span><span class="ignored">)</span></span> × <span class="fullfraction"><span class="ignored">(</span><span class="numerator align-r">1</span><span class="ignored">)/(</span><span class="denominator">1 + <i>x</i></span><span class="ignored">)</span></span><span class="symbol">)</span></span><span class="ignored">)</span></span>.
 </div>
 
 </div>
@@ -296,14 +296,14 @@ A symbol can be stacked over another using <tt>\stackrel</tt>: <span class="form
 <a class="toc" name="toc-Section-5">5</a> Roots
 </h1>
 <div class="Unindented">
-A square root: <span class="formula"><span class="sqrt"><span class="radical">√</span><span class="root">3</span></span>.</span> A more complex square root in a fraction:<div class="formula">
-<span class="fraction"><span class="numerator">1</span><span class="denominator"><span class="symbol">(</span>1 + <span class="sqrt"><span class="radical">√</span><span class="root">2</span></span><span class="symbol">(</span><span class="fraction"><span class="numerator">1</span><span class="denominator">1 + <span class="sqrt"><span class="radical">√</span><span class="root">2</span></span></span></span><span class="symbol">)</span> + <span class="sqrt"><span class="radical">√</span><span class="root"><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span></span><span class="symbol">)</span></span></span>.
+A square root: <span class="formula"><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">3</span><span class="ignored">)</span></span>.</span> A more complex square root in a fraction:<div class="formula">
+<span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator"><span class="symbol">(</span>1 + <span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">2</span><span class="ignored">)</span></span><span class="symbol">(</span><span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator">1 + <span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">2</span><span class="ignored">)</span></span></span><span class="ignored">)</span></span><span class="symbol">)</span> + <span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root"><span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator">2</span><span class="ignored">)</span></span></span><span class="ignored">)</span></span><span class="symbol">)</span></span><span class="ignored">)</span></span>.
 </div>
 
 </div>
 <div class="Indented">
-Higher order roots: <span class="formula"><sup>3</sup><span class="sqrt"><span class="radical">√</span><span class="root"><i>x</i> + <i>y</i></span></span></span>, <span class="formula"><sup><i>x</i> + 1</sup><span class="sqrt"><span class="radical">√</span><span class="root"><i>Weight</i></span></span></span>. In a fraction:<div class="formula">
-<span class="fraction"><span class="numerator"><sup><span class="fraction"><sup class="numerator">7</sup>⁄<sub class="denominator">8</sub></span></sup><span class="sqrt"><span class="radical">√</span><span class="root"><span class="fraction"><span class="numerator">8</span><span class="denominator">4</span></span><i>x</i></span></span></span><span class="denominator"><sup><i>s</i> + 5</sup><span class="sqrt"><span class="radical">√</span><span class="root"><span class="fraction"><span class="numerator">(78<i>x</i> + 45<i>y</i>) × <span class="sqrt"><span class="radical">√</span><span class="root"><i>Height</i></span></span></span><span class="denominator">sin(<i>x</i> + 1)</span></span> + 5</span></span></span></span>.
+Higher order roots: <span class="formula"><sup>3</sup><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root"><i>x</i> + <i>y</i></span><span class="ignored">)</span></span></span>, <span class="formula"><sup><i>x</i> + 1</sup><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root"><i>Weight</i></span><span class="ignored">)</span></span></span>. In a fraction:<div class="formula">
+<span class="fraction"><span class="ignored">(</span><span class="numerator"><sup><span class="fraction"><sup class="numerator">7</sup>⁄<sub class="denominator">8</sub></span></sup><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root"><span class="fraction"><span class="ignored">(</span><span class="numerator">8</span><span class="ignored">)/(</span><span class="denominator">4</span><span class="ignored">)</span></span><i>x</i></span><span class="ignored">)</span></span></span><span class="ignored">)/(</span><span class="denominator"><sup><i>s</i> + 5</sup><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root"><span class="fraction"><span class="ignored">(</span><span class="numerator">(78<i>x</i> + 45<i>y</i>) × <span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root"><i>Height</i></span><span class="ignored">)</span></span></span><span class="ignored">)/(</span><span class="denominator">sin(<i>x</i> + 1)</span><span class="ignored">)</span></span> + 5</span><span class="ignored">)</span></span></span><span class="ignored">)</span></span>.
 </div>
 
 </div>
@@ -458,7 +458,7 @@ Some font styles. Roman: <span class="formula">1<span class="mathrm"> mathrm</
 Regular text. Normal text: <span class="formula">5<span class="textrm"> textfm</span></span>. Literal text: <span class="formula">6<span class="mbox"> mbox text</span></span>. Phonetic alphabet: <span class="formula">7<span class="text"> <span class="textipa">abcde</span></span></span>. Regular text can be embedded into formulae: <span class="formula"><span class="textrm">regular text \command \another command \\no spaces allowed</span></span>.
 </div>
 <div class="Indented">
-Units can be shown with or without a magnitude. Without: <span class="formula"><span class="unit">km</span></span>. With: <span class="formula">57<span class="unit"> km</span></span>. Fractional units: <span class="formula">20<span class="fraction"><sup class="unit"> km</sup>⁄<sub class="unit">h</sub></span></span>. With a fraction before the units: <span class="formula"><span class="fraction"><sup class="numerator">3</sup>⁄<sub class="denominator">2</sub></span><span class="unit"> km</span></span>, <span class="formula"><span class="fraction"><span class="numerator">7</span><span class="denominator">16</span></span><span class="unit"> s</span></span>.
+Units can be shown with or without a magnitude. Without: <span class="formula"><span class="unit">km</span></span>. With: <span class="formula">57<span class="unit"> km</span></span>. Fractional units: <span class="formula">20<span class="fraction"><sup class="unit"> km</sup>⁄<sub class="unit">h</sub></span></span>. With a fraction before the units: <span class="formula"><span class="fraction"><sup class="numerator">3</sup>⁄<sub class="denominator">2</sub></span><span class="unit"> km</span></span>, <span class="formula"><span class="fraction"><span class="ignored">(</span><span class="numerator">7</span><span class="ignored">)/(</span><span class="denominator">16</span><span class="ignored">)</span></span><span class="unit"> s</span></span>.
 </div>
 <div class="Indented">
 Some special fonts are supported: <span class="formula">ℱ</span>, <span class="formula"><span class="script">F</span></span>, <span class="formula">𝔽</span>, <span class="formula">𝔉</span>.
@@ -479,22 +479,22 @@ A framed box: <span class="formula"><span class="framebox align-c" style="width:
 <a class="toc" name="toc-Section-10">10</a> Macros
 </h1>
 <div class="Unindented">
-Definitions can be added as macros. Then they can be used in formulae: <span class="formula"><sup></sup><span class="sqrt"><span class="radical">√</span><span class="root">12</span></span> + <sup>1</sup><span class="sqrt"><span class="radical">√</span><span class="root">2</span></span></span>.
+Definitions can be added as macros. Then they can be used in formulae: <span class="formula"><sup></sup><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">12</span><span class="ignored">)</span></span> + <sup>1</sup><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">2</span><span class="ignored">)</span></span></span>.
 </div>
 <div class="Indented">
-Macro definitions can accept default parameters. Again, useful in formulae: <span class="formula"><sup>4</sup><span class="sqrt"><span class="radical">√</span><span class="root">5</span></span></span>. Default parameters can then be overriden: <span class="formula"><sup>5</sup><span class="sqrt"><span class="radical">√</span><span class="root"><i>y</i></span></span> + <sup><i>x</i></sup><span class="sqrt"><span class="radical">√</span><span class="root">4</span></span></span>.
+Macro definitions can accept default parameters. Again, useful in formulae: <span class="formula"><sup>4</sup><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">5</span><span class="ignored">)</span></span></span>. Default parameters can then be overriden: <span class="formula"><sup>5</sup><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root"><i>y</i></span><span class="ignored">)</span></span> + <sup><i>x</i></sup><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">4</span><span class="ignored">)</span></span></span>.
 </div>
 <div class="Indented">
-Other definitions from the preamble can be used: <span class="formula"><sup>3</sup><span class="sqrt"><span class="radical">√</span><span class="root">4</span></span></span>.
+Other definitions from the preamble can be used: <span class="formula"><sup>3</sup><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">4</span><span class="ignored">)</span></span></span>.
 </div>
 <div class="Indented">
-Definitions on the fly are also possible: <span class="formula"><sup>7</sup><span class="sqrt"><span class="radical">√</span><span class="root">8</span></span></span>, and used with different values: <span class="formula"><sup><i>a</i></sup><span class="sqrt"><span class="radical">√</span><span class="root"><i>b</i></span></span></span>.
+Definitions on the fly are also possible: <span class="formula"><sup>7</sup><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">8</span><span class="ignored">)</span></span></span>, and used with different values: <span class="formula"><sup><i>a</i></sup><span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root"><i>b</i></span><span class="ignored">)</span></span></span>.
 </div>
 <div class="Indented">
 Macros may contain a literal parameter. It should parse correctly: <span class="formula"><span class="colorbox" style="background: red;"><i>t</i></span></span>.
 </div>
 <div class="Indented">
-A macro with four parameters from the LyX detailed math guide. Now in use: <span class="formula">1 + <i>x</i><sub>1,  2</sub> =  − <span class="fraction"><span class="numerator">(1 − <i>x</i>)</span><span class="denominator">2</span></span>±<span class="sqrt"><span class="radical">√</span><span class="root"><span class="fraction"><span class="numerator">(1 − <i>x</i>)<sup>2</sup></span><span class="denominator">4</span></span> − 5</span></span> − <i>B</i></span>.
+A macro with four parameters from the LyX detailed math guide. Now in use: <span class="formula">1 + <i>x</i><sub>1,  2</sub> =  − <span class="fraction"><span class="ignored">(</span><span class="numerator">(1 − <i>x</i>)</span><span class="ignored">)/(</span><span class="denominator">2</span><span class="ignored">)</span></span>±<span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root"><span class="fraction"><span class="ignored">(</span><span class="numerator">(1 − <i>x</i>)<sup>2</sup></span><span class="ignored">)/(</span><span class="denominator">4</span><span class="ignored">)</span></span> − 5</span><span class="ignored">)</span></span> − <i>B</i></span>.
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-11">11</a> Pathological Cases
@@ -514,7 +514,7 @@ That’s all folks!
 
 <hr class="footer"/>
 <div class="footer" id="generated-by">
-Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.1.2 (2010-12-20)</a> on <span class="create-date">2010-12-20T00:57:26.031869</span>
+Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.1.2 (2010-12-20)</a> on <span class="create-date">2010-12-20T07:59:45.200993</span>
 </div>
 </div>
 </body>

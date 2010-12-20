@@ -168,6 +168,11 @@ Change all table-type elements in formulas to spans and do the formatting
  in the CSS, to generate valid XHTML.
 \end_layout
 
+\begin_layout Itemize
+Support graceful degradation of fractions and roots when the CSS is not
+ present.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.1 (2010-12-13):
