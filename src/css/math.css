@@ -63,6 +63,14 @@ span.denominator {
 	padding: 0ex;
 	border-top: thin solid;
 }
+sup.numerator, sup.unit {
+	font-size: 70%;
+	vertical-align: 80%;
+}
+sub.denominator, sub.unit {
+	font-size: 70%;
+	vertical-align: -20%;
+}
 span.sqrt {
 	display: inline-block;
 	vertical-align: middle;

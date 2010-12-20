@@ -177,6 +177,14 @@ Support graceful degradation of fractions and roots when the CSS is not
 Adjusted roots to insert the root power inside the radical symbol.
 \end_layout
 
+\begin_layout Itemize
+Adjusted nice fractions (
+\begin_inset Formula $\nicefrac{3}{4}$
+\end_inset
+
+) to improve their appearance.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.1 (2010-12-13):
