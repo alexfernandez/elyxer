@@ -495,7 +495,15 @@ A square root:
 \begin_inset Formula $\sqrt{3}.$
 \end_inset
 
- A more complex square root in a fraction:
+ A root in a fraction: 
+\begin_inset Formula $\sqrt[]{\frac{(78x+45y)\times\sqrt{Height}}{\sin(x+1)}+5}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A more complex square root in a fraction:
 \begin_inset Formula \[
 \frac{1}{\left(1+\sqrt{2}\left(\frac{1}{1+\sqrt{2}}\lyxlock\right)+\sqrt{\frac{1}{2}}\right)}\lyxlock.\]
 

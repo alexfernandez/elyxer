@@ -66,7 +66,7 @@ span.denominator {
 span.sqrt {
 	display: inline-block;
 	vertical-align: middle;
-	padding: 0ex;
+	padding: 0.1ex;
 }
 span.radical {
 	display: inline-block;
