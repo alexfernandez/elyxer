@@ -153,6 +153,15 @@ class EmptyCommand(CommandBit):
     "Parse a command without parameters"
     self.contents = [FormulaConstant(self.translated)]
 
+class SpacedCommand(CommandBit):
+  "An empty command which should have math spacing in formulas."
+
+  commandmap = FormulaConfig.spacedcommands
+
+  def parsebit(self, pos):
+    "Place as contents the command translated and spaced."
+    self.contents = [FormulaConstant(u' ' + self.translated + u' ')]
+
 class AlphaCommand(EmptyCommand):
   "A command without paramters whose result is alphabetical"
 
@@ -245,6 +254,6 @@ class FontFunction(OneParamFunction):
 FormulaFactory.types += [FormulaCommand, SymbolFunction]
 FormulaCommand.types = [
     AlphaCommand, EmptyCommand, OneParamFunction, FontFunction, LabelFunction,
-    TextFunction,
+    TextFunction, SpacedCommand,
     ]
 
