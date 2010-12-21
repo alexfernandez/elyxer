@@ -25,6 +25,7 @@
 \renewcommand{\varOmega}{\Omega}
 \usepackage{color}
 \usepackage[gennarrow]{eurosym}
+\usepackage{upgreek}
 \end_preamble
 \use_default_options false
 \language english
@@ -183,6 +184,18 @@ Adjusted nice fractions (
 \end_inset
 
 ) to improve their appearance.
+\end_layout
+
+\begin_layout Itemize
+Support for all upright Greek letters: 
+\begin_inset Formula $\upmu$
+\end_inset
+
+, 
+\begin_inset Formula $\uptau$
+\end_inset
+
+.
 \end_layout
 
 \end_deeper

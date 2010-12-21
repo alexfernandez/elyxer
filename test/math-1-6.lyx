@@ -69,6 +69,7 @@
 % redefine the greyed out note
 
 \usepackage{mathrsfs}
+\usepackage{upgreek}
 \end_preamble
 \options intoc,bibtotoc,idxtotoc,BCOR7mm,tablecaptionabove
 \use_default_options false
@@ -496,7 +497,7 @@ A square root:
 \end_inset
 
  A root in a fraction: 
-\begin_inset Formula $\sqrt[]{\frac{(78x+45y)\times\sqrt{Height}}{\sin(x+1)}+5}.$
+\begin_inset Formula $\sqrt{\frac{(78x+45y)\times\sqrt{Height}}{\sin(x+1)}+5}.$
 \end_inset
 
 
@@ -788,6 +789,18 @@ There has been some trouble over some commands like Greek letters; some
 \end_inset
 
 .
+ Upright Greek letters are also available: 
+\begin_inset Formula $\upmu\neq\mu$
+\end_inset
+
+.
+ An example from the LyX math guide: 
+\begin_inset Formula \[
+\uppi^{+}\to\upmu^{+}+\upnu_{\upmu}.\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section

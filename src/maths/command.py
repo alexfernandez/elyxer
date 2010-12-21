@@ -39,19 +39,30 @@ class FormulaCommand(FormulaBit):
   start = FormulaConfig.starts['command']
 
   def detect(self, pos):
-    "Find the current command"
+    "Find the current command."
     return pos.checkfor(FormulaCommand.start)
 
   def parsebit(self, pos):
-    "Parse the command"
+    "Parse the command."
     command = self.extractcommand(pos)
-    for type in FormulaCommand.types:
-      if command in type.commandmap:
-        return self.parsecommandtype(command, type, pos)
+    bit = self.parsewithcommand(command, pos)
+    if bit:
+      return bit
+    if command.startswith('\\up') or command.startswith('\\Up'):
+      upgreek = self.parseupgreek(command, pos)
+      if upgreek:
+        return upgreek
     if not self.factory.defining:
       Trace.error('Unknown command ' + command)
     self.output = TaggedOutput().settag('span class="unknown"')
     self.add(FormulaConstant(command))
+    return None
+
+  def parsewithcommand(self, command, pos):
+    "Parse the command type once we have the command."
+    for type in FormulaCommand.types:
+      if command in type.commandmap:
+        return self.parsecommandtype(command, type, pos)
     return None
 
   def parsecommandtype(self, command, type, pos):
@@ -62,7 +73,7 @@ class FormulaCommand(FormulaBit):
     return bit
 
   def extractcommand(self, pos):
-    "Extract the command from the current position"
+    "Extract the command from the current position."
     if not pos.checkskip(FormulaCommand.start):
       Trace.error('Missing command start ' + start)
       return
@@ -74,6 +85,21 @@ class FormulaCommand(FormulaBit):
       return command
     # symbol command
     return FormulaCommand.start + pos.skipcurrent()
+
+  def parseupgreek(self, command, pos):
+    "Parse the Greek \\up command.."
+    if len(command) < 4:
+      return None
+    if command.startswith('\\up'):
+      upcommand = '\\' + command[3:]
+    elif pos.checkskip('\\Up'):
+      upcommand = '\\' + command[3:4].upper() + command[4:]
+    else:
+      Trace.error('Impossible upgreek command: ' + command)
+      return
+    upgreek = self.parsewithcommand(upcommand, pos)
+    upgreek.type = 'font'
+    return upgreek
 
 class CommandBit(FormulaCommand):
   "A formula bit that includes a command"
