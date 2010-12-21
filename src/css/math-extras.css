@@ -44,29 +44,19 @@ span.downstackrel {
 }
 
 /* Fonts */
-span.mathsf {
-	font-family: sans-serif;
+span.mathsf, span.textsf {
 	font-style: normal;
+	font-family: sans-serif;
 }
-span.mathrm {
+span.mathrm, span.textrm {
+	font-style: normal;
 	font-family: serif;
 }
-span.text {
-	font-style: normal;
-}
-span.textnormal {
+span.text, span.textnormal {
 	font-style: normal;
 }
 span.textipa {
 	color: #008080;
-}
-span.textrm {
-	font-style: normal;
-	font-family: serif;
-}
-span.textsf {
-	font-style: normal;
-	font-family: sans-serif;
 }
 span.fraktur {
 	font-family: "Lucida Blackletter", eufm10, blackletter;
