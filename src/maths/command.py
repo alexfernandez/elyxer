@@ -98,7 +98,8 @@ class FormulaCommand(FormulaBit):
       Trace.error('Impossible upgreek command: ' + command)
       return
     upgreek = self.parsewithcommand(upcommand, pos)
-    upgreek.type = 'font'
+    if upgreek:
+      upgreek.type = 'font'
     return upgreek
 
 class CommandBit(FormulaCommand):
