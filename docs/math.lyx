@@ -271,6 +271,18 @@ All of them are generated from the same
  best.
 \end_layout
 
+\begin_layout Standard
+Also available online is the eLyXer translation of the latest 
+\begin_inset CommandInset href
+LatexCommand href
+name "LyX’s detailed Math manual"
+target "http://elyxer.nongnu.org/lyx/Math.html"
+
+\end_inset
+
+, which contains a lot more examples of LyX maths.
+\end_layout
+
 \begin_layout Section
 Typography
 \end_layout
@@ -1028,7 +1040,7 @@ macros
 \begin_layout Standard
 Definitions can be added as macros
 \begin_inset FormulaMacro
-\renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
+\newcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
 {\sqrt[#1]{#2}}
 \end_inset
 
@@ -1040,7 +1052,7 @@ Definitions can be added as macros
 .
  They can accept default parameters
 \begin_inset FormulaMacro
-\renewcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
+\newcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
 {#1\sqrt{#2}}
 \end_inset
 
