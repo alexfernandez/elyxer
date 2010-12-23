@@ -179,7 +179,7 @@ class Options(object):
     Trace.error('    --numberfoot:           mark footnotes with numbers instead of letters')
     Trace.error('    --symbolfoot:           mark footnotes with symbols (*, **...)')
     Trace.error('    --hoverfoot:            show footnotes as hovering text (default)')
-    Trace.error('    --marginfoot:           show footnotes with numbers instead of letters')
+    Trace.error('    --marginfoot:           show footnotes on the page margin')
     Trace.error('    --endfoot:              show footnotes at the end of the page')
     Trace.error('    --supfoot:              use superscript for footnote markers (default)')
     Trace.error('    --alignfoot:            use aligned text for footnote markers')
