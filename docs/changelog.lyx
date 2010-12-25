@@ -99,6 +99,11 @@ target "index.html"
 Bumped LyX version support to 410.
 \end_layout
 
+\begin_layout Itemize
+Correctly create big brackets for environments with odd alignments such
+ as matrix (thanks, Günther!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.2 (2010-12-23):

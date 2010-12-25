@@ -74,14 +74,18 @@ class FormulaRow(FormulaCommand):
     index = 0
     pos.pushending(self.cellseparator, optional=True)
     while not pos.finished():
-      alignment = self.alignments[index % len(self.alignments)]
-      cell = self.factory.create(FormulaCell).setalignment(alignment)
+      cell = self.createcell(index)
       cell.parsebit(pos)
       self.add(cell)
       index += 1
       pos.checkskip(self.cellseparator)
     if len(self.contents) == 0:
       self.output = EmptyOutput()
+
+  def createcell(self, index):
+    "Create the cell that corresponds to the given index."
+    alignment = self.alignments[index % len(self.alignments)]
+    return self.factory.create(FormulaCell).setalignment(alignment)
 
 class MultiRowFormula(CommandBit):
   "A formula with multiple rows."
@@ -113,9 +117,9 @@ class MultiRowFormula(CommandBit):
 
   def addempty(self):
     "Add an empty row."
-    row = FormulaRow().setalignments(self.alignments)
-    for alignment in self.alignments:
-      cell = self.factory.create(FormulaCell).setalignment(alignment)
+    row = self.factory.create(FormulaRow).setalignments(self.alignments)
+    for index, originalcell in enumerate(self.rows[-1].contents):
+      cell = row.createcell(index)
       cell.add(FormulaConstant(u' '))
       row.add(cell)
     self.addrow(row)
