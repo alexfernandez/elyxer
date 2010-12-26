@@ -150,23 +150,47 @@ class BracketCommand(OneParamFunction):
 class BracketProcessor(MathsProcessor):
   "A processor for bracket commands."
 
-  directions = {'left': 1, 'right': -1}
-
   def process(self, contents, index):
     "Convert the bracket using Unicode pieces, if possible."
-    if not isinstance(contents[index], BracketCommand):
+    if self.checkleft(contents, index):
+      return self.processleft(contents, index)
+    if self.checkright(contents, index):
+      return self.processright(contents, index)
+
+  def processleft(self, contents, index):
+    "Process a left bracket."
+    if self.checkarray(contents, index, 1):
       return
-    if self.checkarray(contents, index, 'left'):
+    rightindex = self.findright(contents, index + 1)
+    if not rightindex:
       return
-    if self.checkarray(contents, index, 'right'):
+    size = self.findmax(contents, index, rightindex)
+    self.resize(contents, index, size)
+    self.resize(contents, rightindex, size)
+
+  def processright(self, contents, index):
+    "Process a right bracket."
+    if self.checkarray(contents, index, -1):
       return
 
-  def checkarray(self, contents, index, direction):
-    "Check for the right command, and an array in the given direction."
-    command = contents[index]
-    if command.command != '\\' + direction:
+  def checkleft(self, contents, index):
+    "Check if the command at the given index is left."
+    return self.checkdirection(contents[index], '\\left')
+  
+  def checkright(self, contents, index):
+    "Check if the command at the given index is right."
+    return self.checkdirection(contents[index], '\\right')
+
+  def checkdirection(self, bit, command):
+    "Check if the given bit is the desired bracket command."
+    if not isinstance(bit, BracketCommand):
       return False
-    newindex = index + self.directions[direction]
+    return bit.command == command
+
+  def checkarray(self, contents, index, direction):
+    "Check for an array in the given direction, process it."
+    command = contents[index]
+    newindex = index + direction
     if newindex < 0 or newindex >= len(contents):
       return False
     begin = contents[newindex]
@@ -184,12 +208,17 @@ class BracketProcessor(MathsProcessor):
     character = command.extracttext()
     command.output = EmptyOutput()
     bracket = BigBracket(len(array.rows), character)
+    alignment = command.command.replace('\\', '')
     for index, row in enumerate(array.rows):
-      cell = bracket.getcell(index, direction)
-      if self.directions[direction] == 1:
+      cell = bracket.getcell(index, alignment)
+      if direction == 1:
         row.contents.insert(0, cell)
       else:
         row.contents.append(cell)
+
+  def findright(self, contents, index):
+    "Find the right bracket starting at the given index, or 0."
+    return None
 
 class BinomialCell(CommandBit):
   "A cell in a binomial function."
