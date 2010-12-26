@@ -156,25 +156,28 @@ class BracketProcessor(MathsProcessor):
     "Convert the bracket using Unicode pieces, if possible."
     if not isinstance(contents[index], BracketCommand):
       return
-    self.checkarray(contents, index, 'left')
-    self.checkarray(contents, index, 'right')
+    if self.checkarray(contents, index, 'left'):
+      return
+    if self.checkarray(contents, index, 'right'):
+      return
 
   def checkarray(self, contents, index, direction):
     "Check for the right command, and an array in the given direction."
     command = contents[index]
     if command.command != '\\' + direction:
-      return
+      return False
     newindex = index + self.directions[direction]
     if newindex < 0 or newindex >= len(contents):
-      return
+      return False
     begin = contents[newindex]
     if not isinstance(begin, BeginCommand):
-      return
+      return False
     array = begin.array
     if not isinstance(array, MultiRowFormula):
       Trace.error('BeginCommand does not contain a MultiRowFormula')
       return False
     self.processarray(command, array, direction)
+    return True
 
   def processarray(self, command, array, direction):
     "Process a bracket command with an array next to it."
