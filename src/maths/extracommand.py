@@ -165,8 +165,8 @@ class BracketProcessor(MathsProcessor):
     if not rightindex:
       return
     size = self.findmax(contents, index, rightindex)
-    self.resize(contents, index, size)
-    self.resize(contents, rightindex, size)
+    self.resize(contents[index], size)
+    self.resize(contents[rightindex], size)
 
   def processright(self, contents, index):
     "Process a right bracket."
@@ -218,7 +218,28 @@ class BracketProcessor(MathsProcessor):
 
   def findright(self, contents, index):
     "Find the right bracket starting at the given index, or 0."
+    depth = 1
+    while index < len(contents):
+      if self.checkleft(contents, index):
+        depth += 1
+      if self.checkright(contents, index):
+        depth -= 1
+      if depth == 0:
+        return index
+      index += 1
     return None
+
+  def findmax(self, contents, leftindex, rightindex):
+    "Find the max size of the contents between the two given indices."
+    return 1
+
+  def resize(self, command, size):
+    "Resize a bracket command to the given size."
+    character = command.extracttext()
+    bracket = BigBracket(size, character)
+    alignment = command.command.replace('\\', '')
+    command.output = ContentsOutput()
+    command.contents = [bracket.getarray(alignment)]
 
 class BinomialCell(CommandBit):
   "A cell in a binomial function."
