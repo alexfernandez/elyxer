@@ -60,12 +60,18 @@ class BigBracket(BigSymbol):
   def getarray(self, align):
     "Get the bracket as an array."
     if self.size == 1:
-      return TaggedBit().constant(self.bracket, 'span class="symbol"')
+      return self.getsinglebracket(align)
     rows = []
     for index in range(self.size):
       cell = self.getcell(index, align)
       rows.append(TaggedBit().complete([cell], 'span class="arrayrow"'))
     return TaggedBit().complete(rows, 'span class="array"')
+
+  def getsinglebracket(self, align):
+    "Return the bracket as a single sign."
+    if self.bracket == '.':
+      return TaggedBit().constant('', 'span class="' + align + 'dot"')
+    return TaggedBit().constant(self.bracket, 'span class="symbol"')
 
 class CasesBrace(BigBracket):
   "A big brace used for a case statement."
