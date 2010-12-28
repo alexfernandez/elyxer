@@ -56,6 +56,12 @@ class FormulaBit(Container):
     if not pos.checkskip(string):
       Trace.error('String ' + string + ' not at ' + pos.identifier())
 
+  def computesize(self):
+    "Compute the size of the bit as the max of the sizes of all contents."
+    if len(self.contents) == 0:
+      return 1
+    return max([element.size for element in self.contents])
+
   def clone(self):
     "Return a copy of itself."
     return self.factory.parseformula(self.original)
@@ -86,6 +92,7 @@ class FormulaConstant(Constant):
     "Set the constant string"
     Constant.__init__(self, string)
     self.original = string
+    self.size = 1
     self.type = None
 
   def clone(self):
@@ -218,6 +225,7 @@ class Bracket(FormulaBit):
     pos.pushending(self.ending)
     innerparser(pos)
     self.original += pos.popending(self.ending)
+    self.computesize()
 
   def innerformula(self, pos):
     "Parse a whole formula inside the bracket"
