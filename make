@@ -63,6 +63,7 @@ rm -f test/subdir/*.lyx~
 ./elyxer.py --title="eLyxer Math Showcase (non-Unicode edition)" --css "lyx.css" docs/math.lyx docs/math.html
 ./elyxer.py --title="eLyxer Math Showcase (Unicode edition)" --unicode --css "lyx.css" docs/math.lyx docs/math-unicode.html
 ./elyxer.py --title="eLyxer Math Showcase (ISO-8859-15 edition)" --iso885915 --css "lyx.css" docs/math.lyx docs/math-iso885915.html
+./elyxer.py --title="eLyxer Math Showcase (HTML edition)" --html --css "lyx.css" docs/math.lyx docs/math-html.html
 ./elyxer.py --title="eLyxer Math Showcase (jsMath edition)" --jsmath "./jsMath" --css "lyx.css" docs/math.lyx docs/math-jsmath.html
 ./elyxer.py --title="eLyxer Math Showcase (MathJax edition)" --mathjax "./MathJax" --css "lyx.css" docs/math.lyx docs/math-mathjax.html
 

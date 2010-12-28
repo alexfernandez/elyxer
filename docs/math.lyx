@@ -215,6 +215,22 @@ target "math-iso885915.html"
 \end_layout
 
 \begin_layout Itemize
+An 
+\begin_inset CommandInset href
+LatexCommand href
+name "HTML version"
+target "math-html.html"
+
+\end_inset
+
+ (generated with 
+\family typewriter
+--html
+\family default
+).
+\end_layout
+
+\begin_layout Itemize
 A 
 \begin_inset CommandInset href
 LatexCommand href
