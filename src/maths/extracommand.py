@@ -272,10 +272,10 @@ class BinomialCell(CommandBit):
 class BinomialRow(CommandBit):
   "A row for a binomial function."
 
-  def create(self, left, middle, right):
+  def complete(self, contents):
     "Set the row contents."
     self.output = TaggedOutput().settag('span class="binomrow"', True)
-    self.contents = [left, middle, right]
+    self.contents = contents
     return self
 
 class BinomialFunction(CommandBit):
@@ -285,18 +285,33 @@ class BinomialFunction(CommandBit):
 
   def parsebit(self, pos):
     "Parse two parameters and decorate them."
-    self.output = TaggedOutput().settag('span class="binomial"', True)
-    leftbracket = BigBracket(3, self.translated[0])
-    rightbracket = BigBracket(3, self.translated[1])
+    self.add(BigBracket(1, self.translated[0]).getsinglebracket())
+    rows = []
     for index in range(3):
-      left = leftbracket.getcell(index, 'l')
-      right = rightbracket.getcell(index, 'r')
-      cell = BinomialCell().setfactory(self.factory)
+      cell = self.factory.create(BinomialCell)
       if index == 1:
         cell.constant(u' ')
       else:
         cell.parsebit(pos)
-      self.add(BinomialRow().create(left, cell, right))
+      rows.append(self.factory.create(BinomialRow).complete([cell]))
+    self.add(TaggedBit().complete(rows, 'span class="binomial"', True))
+    self.add(BigBracket(1, self.translated[1]).getsinglebracket())
+
+class BinomialProcessor(MathsProcessor):
+  "A processor for binomial functions."
+
+  def process(self, contents, index):
+    "Convert the binomial using Unicode brackets."
+    if Options.simplemath:
+      return
+    binom = contents[index]
+    if not isinstance(binom, BinomialFunction):
+      return
+    leftbracket = BigBracket(3, binom.translated[0])
+    rightbracket = BigBracket(3, binom.translated[1])
+    for index in range(3):
+      left = leftbracket.getcell(index, 'l')
+      right = rightbracket.getcell(index, 'r')
 
 
 FormulaCommand.types += [
@@ -305,6 +320,6 @@ FormulaCommand.types += [
     ]
 
 FormulaProcessor.processors += [
-    LimitsProcessor(), BracketProcessor(),
+    LimitsProcessor(), BracketProcessor(), BinomialProcessor(),
     ]
 

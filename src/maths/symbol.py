@@ -36,7 +36,7 @@ class BigBracket(BigSymbol):
   def __init__(self, size, bracket):
     "Set the size and symbol for the bracket."
     self.size = size
-    self.bracket = bracket
+    self.original = bracket
     if bracket in FormulaConfig.bigbrackets:
       self.pieces = FormulaConfig.bigbrackets[bracket]
     else:
@@ -60,18 +60,18 @@ class BigBracket(BigSymbol):
   def getarray(self, align):
     "Get the bracket as an array."
     if self.size == 1:
-      return self.getsinglebracket(align)
+      return self.getsinglebracket()
     rows = []
     for index in range(self.size):
       cell = self.getcell(index, align)
       rows.append(TaggedBit().complete([cell], 'span class="arrayrow"'))
     return TaggedBit().complete(rows, 'span class="array"')
 
-  def getsinglebracket(self, align):
+  def getsinglebracket(self):
     "Return the bracket as a single sign."
-    if self.bracket == '.':
-      return TaggedBit().constant('', 'span class="' + align + 'dot"')
-    return TaggedBit().constant(self.bracket, 'span class="symbol"')
+    if self.original == '.':
+      return TaggedBit().constant('', 'span class="emptydot"')
+    return TaggedBit().constant(self.original, 'span class="symbol"')
 
 class CasesBrace(BigBracket):
   "A big brace used for a case statement."

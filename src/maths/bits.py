@@ -72,10 +72,10 @@ class TaggedBit(FormulaBit):
     self.add(FormulaConstant(constant))
     return self
 
-  def complete(self, contents, tag):
+  def complete(self, contents, tag, breaklines = False):
     "Set the constant and the tag"
     self.contents = contents
-    self.output = TaggedOutput().settag(tag)
+    self.output = TaggedOutput().settag(tag, breaklines)
     return self
 
 class FormulaConstant(Constant):
