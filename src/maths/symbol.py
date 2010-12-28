@@ -23,12 +23,35 @@
 # eLyXer big symbol generation.
 
 from util.trace import Trace
+from util.docparams import *
 from conf.config import *
 from maths.bits import *
 
 
 class BigSymbol(object):
   "A big symbol generator."
+
+  symbols = FormulaConfig.bigsymbols
+
+  def __init__(self, symbol):
+    "Create the big symbol."
+    self.symbol = symbol
+
+  def getpieces(self):
+    "Get an array with all pieces."
+    if not self.symbol in self.symbols:
+      return [self.symbol]
+    if self.smalllimit():
+      return ['<span class="bigsymbol">' + self.symbol + '</span>']
+    return self.symbols[self.symbol]
+
+  def smalllimit(self):
+    "Decide if the limit should be a small, one-line symbol."
+    if not DocumentParameters.displaymode:
+      return True
+    if len(self.symbols[self.symbol]) == 1:
+      return True
+    return Options.simplemath
 
 class BigBracket(BigSymbol):
   "A big bracket generator."

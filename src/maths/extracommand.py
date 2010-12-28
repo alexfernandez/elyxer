@@ -75,20 +75,10 @@ class LimitCommand(EmptyCommand):
 
   def parsebit(self, pos):
     "Parse a limit command."
-    pieces = self.translated[1:]
-    if self.smalllimit():
-      pieces = self.translated[0:1]
+    pieces = BigSymbol(self.translated).getpieces()
     self.output = TaggedOutput().settag('span class="limits"')
     for piece in pieces:
       self.contents.append(TaggedBit().constant(piece, 'span class="limit"'))
-
-  def smalllimit(self):
-    "Decide if the limit should be a small, one-line symbol."
-    if not DocumentParameters.displaymode:
-      return True
-    if len(self.translated) == 1:
-      return True
-    return Options.simplemath
 
 class LimitsProcessor(MathsProcessor):
   "A processor for limits inside an element."
