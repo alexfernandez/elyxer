@@ -76,17 +76,27 @@ class LimitCommand(EmptyCommand):
   def parsebit(self, pos):
     "Parse a limit command."
     pieces = self.translated[1:]
-    if not DocumentParameters.displaymode or len(self.translated) == 1:
+    if self.smalllimit():
       pieces = self.translated[0:1]
     self.output = TaggedOutput().settag('span class="limits"')
     for piece in pieces:
       self.contents.append(TaggedBit().constant(piece, 'span class="limit"'))
+
+  def smalllimit(self):
+    "Decide if the limit should be a small, one-line symbol."
+    if not DocumentParameters.displaymode:
+      return True
+    if len(self.translated) == 1:
+      return True
+    return Options.simplemath
 
 class LimitsProcessor(MathsProcessor):
   "A processor for limits inside an element."
 
   def process(self, contents, index):
     "Process the limits for an element."
+    if Options.simplemath:
+      return
     if self.checklimits(contents, index):
       self.modifylimits(contents, index)
     if self.checkscript(contents, index) and self.checkscript(contents, index + 1):
@@ -152,6 +162,8 @@ class BracketProcessor(MathsProcessor):
 
   def process(self, contents, index):
     "Convert the bracket using Unicode pieces, if possible."
+    if Options.simplemath:
+      return
     if self.checkleft(contents, index):
       return self.processleft(contents, index)
     if self.checkright(contents, index):

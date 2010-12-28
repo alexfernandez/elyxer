@@ -104,6 +104,18 @@ Correctly create big brackets for environments with odd alignments such
  as matrix (thanks, Günther!).
 \end_layout
 
+\begin_layout Itemize
+Added option 
+\family typewriter
+--simplemath
+\family default
+ to avoid fancy math structures: do not
+\emph on
+ 
+\emph default
+generate multi-line Unicode brackets or stacked limits.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.2 (2010-12-23):
