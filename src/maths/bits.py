@@ -31,6 +31,7 @@ class FormulaBit(Container):
   "A bit of a formula"
 
   type = None
+  size = 1
   original = ''
 
   def __init__(self):

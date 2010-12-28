@@ -233,7 +233,10 @@ class BracketProcessor(MathsProcessor):
 
   def findmax(self, contents, leftindex, rightindex):
     "Find the max size of the contents between the two given indices."
-    return 1
+    size = 0
+    for element in contents[leftindex:rightindex]:
+      size = max(size, element.size)
+    return size
 
   def resize(self, command, size):
     "Resize a bracket command to the given size."
