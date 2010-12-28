@@ -286,15 +286,15 @@ class BinomialFunction(CommandBit):
   def parsebit(self, pos):
     "Parse two parameters and decorate them."
     self.add(BigBracket(1, self.translated[0]).getsinglebracket())
-    rows = []
+    self.rows = []
     for index in range(3):
       cell = self.factory.create(BinomialCell)
       if index == 1:
         cell.constant(u' ')
       else:
         cell.parsebit(pos)
-      rows.append(self.factory.create(BinomialRow).complete([cell]))
-    self.add(TaggedBit().complete(rows, 'span class="binomial"', True))
+      self.rows.append(self.factory.create(BinomialRow).complete([cell]))
+    self.add(TaggedBit().complete(self.rows, 'span class="binomial"', True))
     self.add(BigBracket(1, self.translated[1]).getsinglebracket())
 
 class BinomialProcessor(MathsProcessor):
@@ -309,9 +309,12 @@ class BinomialProcessor(MathsProcessor):
       return
     leftbracket = BigBracket(3, binom.translated[0])
     rightbracket = BigBracket(3, binom.translated[1])
-    for index in range(3):
+    for index, row in enumerate(binom.rows):
       left = leftbracket.getcell(index, 'l')
       right = rightbracket.getcell(index, 'r')
+      row.contents.insert(0, left)
+      row.contents.append(right)
+    binom.contents = binom.contents[1:-1]
 
 
 FormulaCommand.types += [
