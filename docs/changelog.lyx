@@ -105,6 +105,10 @@ Correctly create big brackets for environments with odd alignments such
 \end_layout
 
 \begin_layout Itemize
+Create and use big brackets for fractions and other structures, if needed.
+\end_layout
+
+\begin_layout Itemize
 Added option 
 \family typewriter
 --simplemath

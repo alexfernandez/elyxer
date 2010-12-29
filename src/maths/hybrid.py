@@ -131,11 +131,16 @@ class ParameterFunction(CommandBit):
 class HybridFunction(ParameterFunction):
   """
   A parameter function where the output is also defined using a template.
-  The template can use a number of functions; each function has an associated tag.
-  Example: [f0{$1},span class="fbox"] defines a function f0 which corresponds to
-  a span of class fbox, yielding <span class="fbox">$1</span>.
-  Literal parameters can be used in tags definitions: [f0{$1},span style="color: $p;"]
+  The template can use a number of functions; each function has an associated
+  tag.
+  Example: [f0{$1},span class="fbox"] defines a function f0 which corresponds
+  to a span of class fbox, yielding <span class="fbox">$1</span>.
+  Literal parameters can be used in tags definitions:
+    [f0{$1},span style="color: $p;"]
   yields <span style="color: $p;">$1</span>, where $p is a literal parameter.
+  Sizes can be specified in hybridsizes, e.g. adding parameter sizes. By
+  default the resulting size is the max of all arguments. Sizes are used
+  to generate the right parameters.
   """
 
   commandmap = FormulaConfig.hybridfunctions
@@ -146,6 +151,7 @@ class HybridFunction(ParameterFunction):
     writetemplate = self.translated[1]
     self.readparams(readtemplate, pos)
     self.contents = self.writeparams(writetemplate)
+    self.computehybridsize()
 
   def writeparams(self, writetemplate):
     "Write all params according to the template"
@@ -220,6 +226,31 @@ class HybridFunction(ParameterFunction):
           value = ''
         tag = tag.replace(variable, value)
     return tag
+  
+  def computehybridsize(self):
+    "Compute the size of the hybrid function."
+    if not self.command in HybridSize.configsizes:
+      self.computesize()
+      return
+    self.size = HybridSize().getsize(self)    
+
+class HybridSize(object):
+  "The size associated with a hybrid function."
+
+  configsizes = FormulaConfig.hybridsizes
+
+  def getsize(self, function):
+    "Read the size for a function and parse it."
+    sizestring = self.configsizes[function.command]
+    for name in function.params:
+      if name in sizestring:
+        size = function.params[name].value.computesize()
+        sizestring = sizestring.replace(name, unicode(size))
+    if '$' in sizestring:
+      Trace.error('Unconverted variable in hybrid size: ' + sizestring)
+      return 1
+    return eval(sizestring)
+
 
 FormulaCommand.types += [HybridFunction]
 

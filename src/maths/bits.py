@@ -60,7 +60,8 @@ class FormulaBit(Container):
     "Compute the size of the bit as the max of the sizes of all contents."
     if len(self.contents) == 0:
       return 1
-    return max([element.size for element in self.contents])
+    self.size = max([element.size for element in self.contents])
+    return self.size
 
   def clone(self):
     "Return a copy of itself."
