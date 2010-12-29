@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="generator" content="http://www.nongnu.org/elyxer/"/>
-<meta name="create-date" content="2010-12-28"/>
+<meta name="create-date" content="2010-12-30"/>
 <link rel="stylesheet" href="../docs/lyx.css" type="text/css" media="all"/>
 <title>Math Test</title>
 </head>
@@ -170,7 +170,7 @@ Now a random environment:<span class="formula"><span class="environment">
 <i>y</i></span>.
 </div>
 <h1 class="Section">
-<a class="toc" name="toc-Section-3">3</a> Parentheses
+<a class="toc" name="toc-Section-3">3</a> Brackets
 </h1>
 <div class="Unindented">
 Some delimiters also taken from the Spanish Lyx User’s Guide. An array: <div class="formula">
@@ -244,12 +244,141 @@ There are also big brackets: <span class="formula"><span class="symbol">(</span>
 <div class="Indented">
 Aligned brackets can be present: <span class="formula"><span class="symbol">(</span><i>toText</i><span class="symbol">)</span></span>. One of them may be omitted: <span class="formula"><span class="emptydot"></span><i>toText</i><span class="symbol">)</span></span>.
 </div>
+<div class="Indented">
+Aligned brackets can be applied to complex items:<div class="formula">
+<i>s</i> × <span class="array"><span class="arrayrow"><span class="bracket align-left">⎛</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎝</span></span></span>1 + <span class="array">
+<span class="arrayrow">
+<span class="bracket align-left">⎛</span><span class="arraycell align-c">
+<i>a</i><sub>11</sub>
+</span>
+<span class="arraycell align-c">
+<i>a</i><sub>21</sub>
+</span>
+<span class="bracket align-right">⎞</span>
+</span>
+<span class="arrayrow">
+<span class="bracket align-left">⎜</span><span class="arraycell align-c">
+ 
+</span>
+<span class="arraycell align-c">
+ 
+</span>
+<span class="bracket align-right">⎟</span>
+</span>
+<span class="arrayrow">
+<span class="bracket align-left">⎝</span><span class="arraycell align-c">
+<i>a</i><sub>12</sub>
+</span>
+<span class="arraycell align-c">
+<i>a</i><sub>22</sub>
+</span>
+<span class="bracket align-right">⎠</span>
+</span>
+
+</span>
+ × <span class="array">
+<span class="arrayrow">
+<span class="bracket align-left">⎛</span><span class="arraycell align-c">
+1
+</span>
+<span class="arraycell align-c">
+ − 1
+</span>
+<span class="bracket align-right">⎞</span>
+</span>
+<span class="arrayrow">
+<span class="bracket align-left">⎜</span><span class="arraycell align-c">
+ 
+</span>
+<span class="arraycell align-c">
+ 
+</span>
+<span class="bracket align-right">⎟</span>
+</span>
+<span class="arrayrow">
+<span class="bracket align-left">⎝</span><span class="arraycell align-c">
+ − 1
+</span>
+<span class="arraycell align-c">
+ − 1
+</span>
+<span class="bracket align-right">⎠</span>
+</span>
+
+</span>
+ + <span class="array"><span class="arrayrow"><span class="bracket align-left">∥</span></span><span class="arrayrow"><span class="bracket align-left">∥</span></span><span class="arrayrow"><span class="bracket align-left">∥</span></span><span class="arrayrow"><span class="bracket align-left">∥</span></span><span class="arrayrow"><span class="bracket align-left">∥</span></span></span><span class="array">
+<span class="arrayrow">
+<span class="arraycell align-c">
+1
+</span>
+<span class="arraycell align-c">
+ − 1
+</span>
+<span class="arraycell align-c">
+0
+</span>
+<span class="bracket align-right"></span>
+</span>
+<span class="arrayrow">
+<span class="arraycell align-c">
+ 
+</span>
+<span class="arraycell align-c">
+ 
+</span>
+<span class="arraycell align-c">
+ 
+</span>
+<span class="bracket align-right"></span>
+</span>
+<span class="arrayrow">
+<span class="arraycell align-c">
+ − 1
+</span>
+<span class="arraycell align-c">
+1
+</span>
+<span class="arraycell align-c">
+0
+</span>
+<span class="bracket align-right"></span>
+</span>
+<span class="arrayrow">
+<span class="arraycell align-c">
+ 
+</span>
+<span class="arraycell align-c">
+ 
+</span>
+<span class="arraycell align-c">
+ 
+</span>
+<span class="bracket align-right"></span>
+</span>
+<span class="arrayrow">
+<span class="arraycell align-c">
+0
+</span>
+<span class="arraycell align-c">
+0
+</span>
+<span class="arraycell align-c">
+<i>r</i>
+</span>
+<span class="bracket align-right"></span>
+</span>
+
+</span>
+<span class="array"><span class="arrayrow"><span class="bracket align-right">⎞</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎠</span></span></span>.
+</div>
+
+</div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-4">4</a> Fraction
 </h1>
 <div class="Unindented">
 A big recursive fraction: <div class="formula">
-<span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator"><span class="symbol">(</span>1 + <span class="symbol">(</span><span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator">1 + <span class="symbol">(</span><span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator">1 + 2<i>x</i></span><span class="ignored">)</span></span><span class="symbol">)</span></span><span class="ignored">)</span></span><span class="symbol">)</span><span class="symbol">)</span></span><span class="ignored">)</span></span>
+<span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator"><span class="array"><span class="arrayrow"><span class="bracket align-left">⎛</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎝</span></span></span>1 + <span class="array"><span class="arrayrow"><span class="bracket align-left">⎛</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎝</span></span></span><span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator">1 + <span class="array"><span class="arrayrow"><span class="bracket align-left">⎛</span></span><span class="arrayrow"><span class="bracket align-left">⎝</span></span></span><span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator">1 + 2<i>x</i></span><span class="ignored">)</span></span><span class="array"><span class="arrayrow"><span class="bracket align-right">⎞</span></span><span class="arrayrow"><span class="bracket align-right">⎠</span></span></span></span><span class="ignored">)</span></span><span class="array"><span class="arrayrow"><span class="bracket align-right">⎞</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎠</span></span></span><span class="array"><span class="arrayrow"><span class="bracket align-right">⎞</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎠</span></span></span></span><span class="ignored">)</span></span>
 </div>
 
 </div>
@@ -258,7 +387,7 @@ A nice fraction: <span class="formula"><span class="fraction"><sup class="numera
 </div>
 <div class="Indented">
 A non-diminishing fraction containing alignments:<div class="formula">
-<span class="fullfraction"><span class="ignored">(</span><span class="numerator align-">1</span><span class="ignored">)/(</span><span class="denominator">1 + <span class="symbol">(</span><span class="fullfraction"><span class="ignored">(</span><span class="numerator align-l">1</span><span class="ignored">)/(</span><span class="denominator">1 + <i>x</i></span><span class="ignored">)</span></span> × <span class="fullfraction"><span class="ignored">(</span><span class="numerator align-r">1</span><span class="ignored">)/(</span><span class="denominator">1 + <i>x</i></span><span class="ignored">)</span></span><span class="symbol">)</span></span><span class="ignored">)</span></span>.
+<span class="fullfraction"><span class="ignored">(</span><span class="numerator align-">1</span><span class="ignored">)/(</span><span class="denominator">1 + <span class="array"><span class="arrayrow"><span class="bracket align-left">⎛</span></span><span class="arrayrow"><span class="bracket align-left">⎝</span></span></span><span class="fullfraction"><span class="ignored">(</span><span class="numerator align-l">1</span><span class="ignored">)/(</span><span class="denominator">1 + <i>x</i></span><span class="ignored">)</span></span> × <span class="fullfraction"><span class="ignored">(</span><span class="numerator align-r">1</span><span class="ignored">)/(</span><span class="denominator">1 + <i>x</i></span><span class="ignored">)</span></span><span class="array"><span class="arrayrow"><span class="bracket align-right">⎞</span></span><span class="arrayrow"><span class="bracket align-right">⎠</span></span></span></span><span class="ignored">)</span></span>.
 </div>
 
 </div>
@@ -300,7 +429,7 @@ A square root: <span class="formula"><span class="sqrt"><span class="radical">�
 </div>
 <div class="Indented">
 A more complex square root in a fraction:<div class="formula">
-<span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator"><span class="symbol">(</span>1 + <span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">2</span><span class="ignored">)</span></span><span class="symbol">(</span><span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator">1 + <span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">2</span><span class="ignored">)</span></span></span><span class="ignored">)</span></span><span class="symbol">)</span> + <span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root"><span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator">2</span><span class="ignored">)</span></span></span><span class="ignored">)</span></span><span class="symbol">)</span></span><span class="ignored">)</span></span>.
+<span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator"><span class="array"><span class="arrayrow"><span class="bracket align-left">⎛</span></span><span class="arrayrow"><span class="bracket align-left">⎝</span></span></span>1 + <span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">2</span><span class="ignored">)</span></span><span class="array"><span class="arrayrow"><span class="bracket align-left">⎛</span></span><span class="arrayrow"><span class="bracket align-left">⎝</span></span></span><span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator">1 + <span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root">2</span><span class="ignored">)</span></span></span><span class="ignored">)</span></span><span class="array"><span class="arrayrow"><span class="bracket align-right">⎞</span></span><span class="arrayrow"><span class="bracket align-right">⎠</span></span></span> + <span class="sqrt"><span class="radical">√</span><span class="ignored">(</span><span class="root"><span class="fraction"><span class="ignored">(</span><span class="numerator">1</span><span class="ignored">)/(</span><span class="denominator">2</span><span class="ignored">)</span></span></span><span class="ignored">)</span></span><span class="array"><span class="arrayrow"><span class="bracket align-right">⎞</span></span><span class="arrayrow"><span class="bracket align-right">⎠</span></span></span></span><span class="ignored">)</span></span>.
 </div>
 
 </div>
@@ -384,7 +513,7 @@ Cases may have more than two rows:
 ∞ 
 </span>
 <span class="case align-l">
-<i>x</i> = 0 
+<i>x</i> = 0,  
 </span>
 
 </span>
@@ -520,7 +649,7 @@ That’s all folks!
 
 <hr class="footer"/>
 <div class="footer" id="generated-by">
-Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.2.0 (2010-12-28)</a> on <span class="create-date">2010-12-28T18:15:55.128244</span>
+Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.2.0 (2010-12-30)</a> on <span class="create-date">2010-12-30T00:40:50.223836</span>
 </div>
 </div>
 </body>

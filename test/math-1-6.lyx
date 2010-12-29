@@ -580,7 +580,7 @@ Cases may have more than two rows:
 \begin_inset Formula \[
 f(x)=\begin{cases}
 0 & x<0,\\
-\infty & x=0\\
+\infty & x=0,\\
 0 & x>0\end{cases}\]
 
 \end_inset
