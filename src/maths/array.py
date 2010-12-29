@@ -102,6 +102,7 @@ class MultiRowFormula(CommandBit):
         self.addempty()
       row.parsebit(pos)
       self.addrow(row)
+    self.size = len(self.rows)
 
   def iteraterows(self, pos):
     "Iterate over all rows, end when no more row ends"
@@ -214,6 +215,7 @@ class BeginCommand(CommandBit):
     self.add(bit)
     self.array = bit
     self.original += pos.popending(ending)
+    self.size = bit.size
 
   def findbit(self, piece):
     "Find the command bit corresponding to the \\begin{piece}"

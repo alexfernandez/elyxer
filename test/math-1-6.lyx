@@ -359,7 +359,7 @@ y$
 \end_layout
 
 \begin_layout Section
-Parentheses
+Brackets
 \end_layout
 
 \begin_layout Standard
@@ -420,6 +420,23 @@ Aligned brackets can be present:
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+Aligned brackets can be applied to complex items:
+\begin_inset Formula \[
+s\times\left(1+\left(\begin{array}{cc}
+a_{11} & a_{21}\\
+a_{12} & a_{22}\end{array}\right)\times\left(\begin{array}{cc}
+1 & -1\\
+-1 & -1\end{array}\right)+\left\Vert \begin{array}{ccc}
+1 & -1 & 0\\
+-1 & 1 & 0\\
+0 & 0 & r\end{array}\right\Vert \right).\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
