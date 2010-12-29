@@ -163,6 +163,6 @@ span.arrayrow, span.binomrow {
 span.arraycell, span.bracket, span.case, span.binomcell, span.environmentcell {
 	display: table-cell;
 	padding: 0ex 0.2ex;
-	line-height: 95%;
+	line-height: 99%;
 	border: 0ex;
 }
