@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="generator" content="http://www.nongnu.org/elyxer/"/>
-<meta name="create-date" content="2010-12-30"/>
+<meta name="create-date" content="2010-12-31"/>
 <link rel="stylesheet" href="../docs/lyx.css" type="text/css" media="all"/>
 <title>Math Test</title>
 </head>
@@ -93,8 +93,7 @@ Other equations that contain * should not numbered, but perhaps aligned:
 </div>
 <div class="Indented">
 <div class="formula">
-<span class="environment">
-<span class="arrayrow">
+<span class="environment"><span class="arrayrow">
 <span class="arraycell align-r">
 <i>left</i>
 </span>
@@ -106,16 +105,13 @@ Other equations that contain * should not numbered, but perhaps aligned:
 </span>
 
 </span>
-
 </span>
-
 </div>
 
 </div>
 <div class="Indented">
 Some environments allow for multiple labels: <div class="formula">
-<span class="environment">
-<span class="arrayrow">
+<span class="environment"><span class="arrayrow">
 <a class="eqnumber" name="eq:third">(4) </a><span class="arraycell align-r">
 <i>a</i>
 </span>
@@ -151,92 +147,81 @@ Some environments allow for multiple labels: <div class="formula">
 </span>
 
 </span>
-
 </span>
-
 </div>
 
 </div>
 <div class="Indented">
-Now a random environment:<span class="formula"><span class="environment">
-<span class="arrayrow">
+Now a random environment:<span class="formula"><span class="environment"><span class="arrayrow">
 <span class="arraycell align-l">
 <i>x</i>
 </span>
 
 </span>
-
-</span>
-<i>y</i></span>.
+</span><i>y</i></span>.
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-3">3</a> Brackets
 </h1>
 <div class="Unindented">
 Some delimiters also taken from the Spanish Lyx User’s Guide. An array: <div class="formula">
-<span class="array">
-<span class="arrayrow">
-<span class="bracket align-left">⎡</span><span class="arraycell align-l">
+<span class="array"><span class="arrayrow"><span class="bracket align-left">⎡</span></span><span class="arrayrow"><span class="bracket align-left">⎢</span></span><span class="arrayrow"><span class="bracket align-left">⎣</span></span></span><span class="array"><span class="arrayrow">
+<span class="arraycell align-l">
 12
 </span>
 <span class="arraycell align-c">
 2
 </span>
-<span class="bracket align-right">⎤</span>
+
 </span>
 <span class="arrayrow">
-<span class="bracket align-left">⎢</span><span class="arraycell align-l">
+<span class="arraycell align-l">
  
 </span>
 <span class="arraycell align-c">
  
 </span>
-<span class="bracket align-right">⎥</span>
+
 </span>
 <span class="arrayrow">
-<span class="bracket align-left">⎣</span><span class="arraycell align-l">
+<span class="arraycell align-l">
 3
 </span>
 <span class="arraycell align-c">
 4 × <i>y</i><sup><i>x</i></sup>
 </span>
-<span class="bracket align-right">⎦</span>
-</span>
 
 </span>
-
+</span><span class="array"><span class="arrayrow"><span class="bracket align-right">⎤</span></span><span class="arrayrow"><span class="bracket align-right">⎥</span></span><span class="arrayrow"><span class="bracket align-right">⎦</span></span></span>
 </div>
-And an inline array <span class="formula"><span class="array">
-<span class="arrayrow">
-<span class="bracket align-left">⎡</span><span class="arraycell align-c">
+And an inline array <span class="formula"><span class="array"><span class="arrayrow"><span class="bracket align-left">⎡</span></span><span class="arrayrow"><span class="bracket align-left">⎢</span></span><span class="arrayrow"><span class="bracket align-left">⎣</span></span></span><span class="array"><span class="arrayrow">
+<span class="arraycell align-c">
 <i>a</i>
 </span>
 <span class="arraycell align-c">
 <i>b</i>
 </span>
-<span class="bracket align-right">⎤</span>
+
 </span>
 <span class="arrayrow">
-<span class="bracket align-left">⎢</span><span class="arraycell align-c">
+<span class="arraycell align-c">
  
 </span>
 <span class="arraycell align-c">
  
 </span>
-<span class="bracket align-right">⎥</span>
+
 </span>
 <span class="arrayrow">
-<span class="bracket align-left">⎣</span><span class="arraycell align-c">
+<span class="arraycell align-c">
 <i>c</i>
 </span>
 <span class="arraycell align-c">
 <i>dio</i>
 </span>
-<span class="bracket align-right">⎦</span>
-</span>
 
 </span>
-</span>.
+</span><span class="array"><span class="arrayrow"><span class="bracket align-right">⎤</span></span><span class="arrayrow"><span class="bracket align-right">⎥</span></span><span class="arrayrow"><span class="bracket align-right">⎦</span></span></span></span>.
 </div>
 <div class="Indented">
 There are also big brackets: <span class="formula"><span class="symbol">(</span><i>a</i><span class="symbol">)</span></span> <span class="formula"><span class="symbol">[</span><i>b</i><span class="symbol">]</span></span> <span class="formula"><span class="symbol">{</span><i>c</i><span class="symbol">}</span></span> <span class="formula"><span class="symbol">⟨</span><i>d</i><span class="symbol">⟩</span></span> <span class="formula"><span class="symbol">|</span><i>e</i><span class="symbol">|</span></span> <span class="formula"><span class="bigsymbol">⟨</span><i>f</i><span class="bigsymbol">⟩</span></span>.
@@ -246,68 +231,61 @@ Aligned brackets can be present: <span class="formula"><span class="symbol">(</s
 </div>
 <div class="Indented">
 Aligned brackets can be applied to complex items:<div class="formula">
-<i>s</i> × <span class="array"><span class="arrayrow"><span class="bracket align-left">⎛</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎝</span></span></span>1 + <span class="array">
-<span class="arrayrow">
-<span class="bracket align-left">⎛</span><span class="arraycell align-c">
+<i>s</i> × <span class="array"><span class="arrayrow"><span class="bracket align-left">⎛</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎝</span></span></span>1 + <span class="array"><span class="arrayrow"><span class="bracket align-left">⎛</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎝</span></span></span><span class="array"><span class="arrayrow">
+<span class="arraycell align-c">
 <i>a</i><sub>11</sub>
 </span>
 <span class="arraycell align-c">
 <i>a</i><sub>21</sub>
 </span>
-<span class="bracket align-right">⎞</span>
+
 </span>
 <span class="arrayrow">
-<span class="bracket align-left">⎜</span><span class="arraycell align-c">
+<span class="arraycell align-c">
  
 </span>
 <span class="arraycell align-c">
  
 </span>
-<span class="bracket align-right">⎟</span>
+
 </span>
 <span class="arrayrow">
-<span class="bracket align-left">⎝</span><span class="arraycell align-c">
+<span class="arraycell align-c">
 <i>a</i><sub>12</sub>
 </span>
 <span class="arraycell align-c">
 <i>a</i><sub>22</sub>
 </span>
-<span class="bracket align-right">⎠</span>
-</span>
 
 </span>
- × <span class="array">
-<span class="arrayrow">
-<span class="bracket align-left">⎛</span><span class="arraycell align-c">
+</span><span class="array"><span class="arrayrow"><span class="bracket align-right">⎞</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎠</span></span></span> × <span class="array"><span class="arrayrow"><span class="bracket align-left">⎛</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎝</span></span></span><span class="array"><span class="arrayrow">
+<span class="arraycell align-c">
 1
 </span>
 <span class="arraycell align-c">
  − 1
 </span>
-<span class="bracket align-right">⎞</span>
+
 </span>
 <span class="arrayrow">
-<span class="bracket align-left">⎜</span><span class="arraycell align-c">
+<span class="arraycell align-c">
  
 </span>
 <span class="arraycell align-c">
  
-</span>
-<span class="bracket align-right">⎟</span>
-</span>
-<span class="arrayrow">
-<span class="bracket align-left">⎝</span><span class="arraycell align-c">
- − 1
-</span>
-<span class="arraycell align-c">
- − 1
-</span>
-<span class="bracket align-right">⎠</span>
 </span>
 
 </span>
- + <span class="array"><span class="arrayrow"><span class="bracket align-left">∥</span></span><span class="arrayrow"><span class="bracket align-left">∥</span></span><span class="arrayrow"><span class="bracket align-left">∥</span></span><span class="arrayrow"><span class="bracket align-left">∥</span></span><span class="arrayrow"><span class="bracket align-left">∥</span></span></span><span class="array">
 <span class="arrayrow">
+<span class="arraycell align-c">
+ − 1
+</span>
+<span class="arraycell align-c">
+ − 1
+</span>
+
+</span>
+</span><span class="array"><span class="arrayrow"><span class="bracket align-right">⎞</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎠</span></span></span> + <span class="array"><span class="arrayrow"><span class="bracket align-left">∥</span></span><span class="arrayrow"><span class="bracket align-left">∥</span></span><span class="arrayrow"><span class="bracket align-left">∥</span></span><span class="arrayrow"><span class="bracket align-left">∥</span></span><span class="arrayrow"><span class="bracket align-left">∥</span></span></span><span class="array"><span class="arrayrow">
 <span class="arraycell align-c">
 1
 </span>
@@ -317,7 +295,7 @@ Aligned brackets can be applied to complex items:<div class="formula">
 <span class="arraycell align-c">
 0
 </span>
-<span class="bracket align-right"></span>
+
 </span>
 <span class="arrayrow">
 <span class="arraycell align-c">
@@ -329,7 +307,7 @@ Aligned brackets can be applied to complex items:<div class="formula">
 <span class="arraycell align-c">
  
 </span>
-<span class="bracket align-right"></span>
+
 </span>
 <span class="arrayrow">
 <span class="arraycell align-c">
@@ -341,7 +319,7 @@ Aligned brackets can be applied to complex items:<div class="formula">
 <span class="arraycell align-c">
 0
 </span>
-<span class="bracket align-right"></span>
+
 </span>
 <span class="arrayrow">
 <span class="arraycell align-c">
@@ -353,7 +331,7 @@ Aligned brackets can be applied to complex items:<div class="formula">
 <span class="arraycell align-c">
  
 </span>
-<span class="bracket align-right"></span>
+
 </span>
 <span class="arrayrow">
 <span class="arraycell align-c">
@@ -365,11 +343,9 @@ Aligned brackets can be applied to complex items:<div class="formula">
 <span class="arraycell align-c">
 <i>r</i>
 </span>
-<span class="bracket align-right"></span>
-</span>
 
 </span>
-<span class="array"><span class="arrayrow"><span class="bracket align-right">⎞</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎠</span></span></span>.
+</span><span class="array"><span class="arrayrow"><span class="bracket align-right">∥</span></span><span class="arrayrow"><span class="bracket align-right">∥</span></span><span class="arrayrow"><span class="bracket align-right">∥</span></span><span class="arrayrow"><span class="bracket align-right">∥</span></span><span class="arrayrow"><span class="bracket align-right">∥</span></span></span><span class="array"><span class="arrayrow"><span class="bracket align-right">⎞</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎠</span></span></span>.
 </div>
 
 </div>
@@ -393,28 +369,7 @@ A non-diminishing fraction containing alignments:<div class="formula">
 </div>
 <div class="Indented">
 A similar concept is a binomial coefficient: <span class="formula"><span class="bigsymbol">(</span><span class="binom"><span class="binomstack"><i>A</i> + 1</span><span class="binomstack"><i>B</i></span></span><span class="bigsymbol">)</span>.</span> It can be prettily presented: <div class="formula">
-<span class="binomial">
-<span class="binomrow">
-<span class="bracket align-l">⎛</span><span class="binomcell">
-<i>A</i>
-</span>
-<span class="bracket align-r">⎞</span>
-</span>
-<span class="binomrow">
-<span class="bracket align-l">⎜</span><span class="binomcell">
- 
-</span>
-<span class="bracket align-r">⎟</span>
-</span>
-<span class="binomrow">
-<span class="bracket align-l">⎝</span><span class="binomcell">
-<i>B</i> + 1
-</span>
-<span class="bracket align-r">⎠</span>
-</span>
-
-</span>
-.
+<span class="array"><span class="arrayrow"><span class="bracket align-left">⎛</span></span><span class="arrayrow"><span class="bracket align-left">⎜</span></span><span class="arrayrow"><span class="bracket align-left">⎝</span></span></span><span class="binomial"><span class="binomrow"><span class="binomcell"><i>A</i></span></span><span class="binomrow"><span class="binomcell"> </span></span><span class="binomrow"><span class="binomcell"><i>B</i> + 1</span></span></span><span class="array"><span class="arrayrow"><span class="bracket align-right">⎞</span></span><span class="arrayrow"><span class="bracket align-right">⎟</span></span><span class="arrayrow"><span class="bracket align-right">⎠</span></span></span>.
 </div>
 
 </div>
@@ -649,7 +604,7 @@ That’s all folks!
 
 <hr class="footer"/>
 <div class="footer" id="generated-by">
-Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.2.0 (2010-12-30)</a> on <span class="create-date">2010-12-30T00:40:50.223836</span>
+Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.2.0 (2010-12-31)</a> on <span class="create-date">2010-12-31T01:33:20.654399</span>
 </div>
 </div>
 </body>
