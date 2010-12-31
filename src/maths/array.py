@@ -137,7 +137,7 @@ class FormulaArray(MultiRowFormula):
 
   def parsebit(self, pos):
     "Parse the array"
-    self.output = TaggedOutput().settag('span class="array"', True)
+    self.output = TaggedOutput().settag('span class="array"', False)
     self.parsealignments(pos)
     self.parserows(pos)
 
@@ -161,7 +161,7 @@ class FormulaMatrix(MultiRowFormula):
 
   def parsebit(self, pos):
     "Parse the matrix, set alignments to 'c'."
-    self.output = TaggedOutput().settag('span class="array"', True)
+    self.output = TaggedOutput().settag('span class="array"', False)
     self.valign = 'c'
     self.alignments = ['c']
     self.parserows(pos)
@@ -189,7 +189,7 @@ class EquationEnvironment(MultiRowFormula):
 
   def parsebit(self, pos):
     "Parse the whole environment."
-    self.output = TaggedOutput().settag('span class="environment"', True)
+    self.output = TaggedOutput().settag('span class="environment"', False)
     environment = self.piece.replace('*', '')
     if environment in FormulaConfig.environments:
       self.alignments = FormulaConfig.environments[environment]
