@@ -152,7 +152,7 @@ span.array, span.bracketcases, span.binomial, span.environment {
 	display: inline-table;
 	text-align: center;
 	border-collapse: collapse;
-	margin: 0.2em;
+	margin: 0em;
 	vertical-align: middle;
 }
 span.arrayrow, span.binomrow {
