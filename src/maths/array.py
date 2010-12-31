@@ -213,7 +213,6 @@ class BeginCommand(CommandBit):
     pos.pushending(ending)
     bit.parsebit(pos)
     self.add(bit)
-    self.array = bit
     self.original += pos.popending(ending)
     self.size = bit.size
 

@@ -163,24 +163,15 @@ class BracketProcessor(MathsProcessor):
       return
     if self.checkleft(contents, index):
       return self.processleft(contents, index)
-    if self.checkright(contents, index):
-      return self.processright(contents, index)
 
   def processleft(self, contents, index):
     "Process a left bracket."
-    if self.checkarray(contents, index, 1):
-      return
     rightindex = self.findright(contents, index + 1)
     if not rightindex:
       return
     size = self.findmax(contents, index, rightindex)
     self.resize(contents[index], size)
     self.resize(contents[rightindex], size)
-
-  def processright(self, contents, index):
-    "Process a right bracket."
-    if self.checkarray(contents, index, -1):
-      return
 
   def checkleft(self, contents, index):
     "Check if the command at the given index is left."
@@ -195,35 +186,6 @@ class BracketProcessor(MathsProcessor):
     if not isinstance(bit, BracketCommand):
       return False
     return bit.command == command
-
-  def checkarray(self, contents, index, direction):
-    "Check for an array in the given direction, process it."
-    command = contents[index]
-    newindex = index + direction
-    if newindex < 0 or newindex >= len(contents):
-      return False
-    begin = contents[newindex]
-    if not isinstance(begin, BeginCommand):
-      return False
-    array = begin.array
-    if not isinstance(array, MultiRowFormula):
-      Trace.error('BeginCommand does not contain a MultiRowFormula')
-      return False
-    self.processarray(command, array, direction)
-    return True
-
-  def processarray(self, command, array, direction):
-    "Process a bracket command with an array next to it."
-    character = command.extracttext()
-    command.output = EmptyOutput()
-    bracket = BigBracket(len(array.rows), character)
-    alignment = command.command.replace('\\', '')
-    for index, row in enumerate(array.rows):
-      cell = bracket.getcell(index, alignment)
-      if direction == 1:
-        row.contents.insert(0, cell)
-      else:
-        row.contents.append(cell)
 
   def findright(self, contents, index):
     "Find the right bracket starting at the given index, or 0."
