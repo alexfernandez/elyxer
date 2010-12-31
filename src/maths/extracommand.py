@@ -147,6 +147,13 @@ class BracketCommand(OneParamFunction):
     "Parse the bracket."
     OneParamFunction.parsebit(self, pos)
 
+  def create(self, direction, character):
+    "Create the bracket for the given character."
+    self.original = character
+    self.command = '\\' + direction
+    self.contents = [FormulaConstant(character)]
+    return self
+
 class BracketProcessor(MathsProcessor):
   "A processor for bracket commands."
 
@@ -244,76 +251,12 @@ class BracketProcessor(MathsProcessor):
     command.output = ContentsOutput()
     command.contents = [bracket.getarray(alignment)]
 
-class BinomialCell(CommandBit):
-  "A cell in a binomial function."
-
-  def setfactory(self, factory):
-    "Set the factory."
-    self.output = TaggedOutput().settag('span class="binomcell"', True)
-    return CommandBit.setfactory(self, factory)
-
-  def parsebit(self, pos):
-    "Parse a parameter and make it into a binomial cell."
-    self.parseparameter(pos)
-
-  def constant(self, constant):
-    "Set a constant as only contents."
-    self.contents = [FormulaConstant(constant)]
-
-class BinomialRow(CommandBit):
-  "A row for a binomial function."
-
-  def complete(self, contents):
-    "Set the row contents."
-    self.output = TaggedOutput().settag('span class="binomrow"', True)
-    self.contents = contents
-    return self
-
-class BinomialFunction(CommandBit):
-  "A binomial function which needs pretty decorating."
-
-  commandmap = FormulaConfig.binomialfunctions
-
-  def parsebit(self, pos):
-    "Parse two parameters and decorate them."
-    self.add(BigBracket(1, self.translated[0]).getsinglebracket())
-    self.rows = []
-    for index in range(3):
-      cell = self.factory.create(BinomialCell)
-      if index == 1:
-        cell.constant(u' ')
-      else:
-        cell.parsebit(pos)
-      self.rows.append(self.factory.create(BinomialRow).complete([cell]))
-    self.add(TaggedBit().complete(self.rows, 'span class="binomial"', True))
-    self.add(BigBracket(1, self.translated[1]).getsinglebracket())
-
-class BinomialProcessor(MathsProcessor):
-  "A processor for binomial functions."
-
-  def process(self, contents, index):
-    "Convert the binomial using Unicode brackets."
-    if Options.simplemath:
-      return
-    binom = contents[index]
-    if not isinstance(binom, BinomialFunction):
-      return
-    leftbracket = BigBracket(3, binom.translated[0])
-    rightbracket = BigBracket(3, binom.translated[1])
-    for index, row in enumerate(binom.rows):
-      left = leftbracket.getcell(index, 'l')
-      right = rightbracket.getcell(index, 'r')
-      row.contents.insert(0, left)
-      row.contents.append(right)
-    binom.contents = binom.contents[1:-1]
-
 
 FormulaCommand.types += [
     DecoratingFunction, CombiningFunction, LimitCommand, BracketCommand,
-    BinomialFunction,
     ]
 
 FormulaProcessor.processors += [
-    LimitsProcessor(), BracketProcessor(), BinomialProcessor(),
+    LimitsProcessor(), BracketProcessor(),
     ]
 

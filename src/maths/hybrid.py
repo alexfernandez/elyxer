@@ -25,6 +25,7 @@
 from util.trace import Trace
 from conf.config import *
 from maths.command import *
+from maths.extracommand import *
 
 
 class ParameterDefinition(object):
@@ -169,6 +170,10 @@ class HybridFunction(ParameterFunction):
         function = self.writefunction(pos)
         if function:
           result.append(function)
+      elif pos.checkskip('('):
+        result.append(self.writebracket('left', '('))
+      elif pos.checkskip(')'):
+        result.append(self.writebracket('right', ')'))
       else:
         result.append(FormulaConstant(pos.skipcurrent()))
     return result
@@ -226,13 +231,20 @@ class HybridFunction(ParameterFunction):
           value = ''
         tag = tag.replace(variable, value)
     return tag
+
+  def writebracket(self, direction, character):
+    "Return a new bracket looking at the given direction."
+    return self.factory.create(BracketCommand).create(direction, character)
   
   def computehybridsize(self):
     "Compute the size of the hybrid function."
     if not self.command in HybridSize.configsizes:
       self.computesize()
       return
-    self.size = HybridSize().getsize(self)    
+    self.size = HybridSize().getsize(self)
+    # set the size in all elements at first level
+    for element in self.contents:
+      element.size = self.size
 
 class HybridSize(object):
   "The size associated with a hybrid function."
