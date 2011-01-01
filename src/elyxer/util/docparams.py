@@ -19,26 +19,22 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # --end--
-# Alex 20090308
-# eLyXer main script
-# http://www.nongnu.org/elyxer/
+# Alex 20100713
+# eLyXer: LyX document parameters
+
+from elyxer.util.trace import Trace
 
 
-import sys
-from elyxer.main.convert import *
+class DocumentParameters(object):
+  "Global parameters for the document."
 
-
-def convertdoc(args):
-  "Read a whole document and write it"
-  Options().parseoptions(args)
-  ioparser = InOutParser().parse(args)
-  converter = eLyXerConverter().setio(ioparser)
-  converter.convert()
-
-def main():
-  "Main function, called if invoked from the command line"
-  convertdoc(list(sys.argv))
-
-if __name__ == '__main__':
-  main()
+  pdftitle = None
+  indentstandard = False
+  tocdepth = 10
+  startinglevel = 0
+  maxdepth = 10
+  language = None
+  bibliography = None
+  outputchanges = False
+  displaymode = False
 

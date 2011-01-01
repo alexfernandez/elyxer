@@ -22,10 +22,10 @@
 # Alex 20100311
 # Read a generic grammar.
 
-from util.trace import Trace
-from util.clone import *
-from conf.javatopyconf import *
-from parse.position import *
+from elyxer.util.trace import Trace
+from elyxer.util.clone import *
+from elyxer.conf.javatopyconf import *
+from elyxer.parse.position import *
 
 
 class Piece(object):

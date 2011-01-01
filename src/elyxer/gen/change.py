@@ -19,26 +19,31 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # --end--
-# Alex 20090308
-# eLyXer main script
-# http://www.nongnu.org/elyxer/
+# Alex 20100829
+# Change tracking
+
+from elyxer.util.trace import Trace
+from elyxer.util.docparams import *
+from elyxer.gen.container import *
 
 
-import sys
-from elyxer.main.convert import *
+class ChangeInserted(Container):
+  "A change which consists of an insertion."
 
+  def __init__(self):
+    self.parser = TextParser(self)
+    if DocumentParameters.outputchanges:
+      self.output = TaggedOutput().settag('span class="inserted"')
+    else:
+      self.output = ContentsOutput()
 
-def convertdoc(args):
-  "Read a whole document and write it"
-  Options().parseoptions(args)
-  ioparser = InOutParser().parse(args)
-  converter = eLyXerConverter().setio(ioparser)
-  converter.convert()
+class ChangeDeleted(TaggedText):
+  "A change which consists of a deletion."
 
-def main():
-  "Main function, called if invoked from the command line"
-  convertdoc(list(sys.argv))
-
-if __name__ == '__main__':
-  main()
+  def __init__(self):
+    self.parser = TextParser(self)
+    if DocumentParameters.outputchanges:
+      self.output = TaggedOutput().settag('span class="deleted"')
+    else:
+      self.output = EmptyOutput()
 

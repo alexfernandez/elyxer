@@ -23,9 +23,9 @@
 # Modifies the license of a Python source file
 
 import sys
-from io.fileline import *
-from io.bulk import *
-from util.trace import Trace
+from elyxer.io.fileline import *
+from elyxer.io.bulk import *
+from elyxer.util.trace import Trace
 
 
 mark = '--end--'

@@ -24,17 +24,17 @@
 
 import sys
 import datetime
-from util.trace import Trace
-from util.clparse import *
-from conf.fileconfig import *
-from conf.importconfig import *
+from elyxer.util.trace import Trace
+from elyxer.util.clparse import *
+from elyxer.conf.fileconfig import *
+from elyxer.conf.importconfig import *
 
 
 class Config(object):
   "A configuration file"
 
   cfg = 'conf/base.cfg'
-  py = 'conf/config.py'
+  py = 'elyxer/conf/config.py'
   po = 'conf/elyxer.pot'
   addcfg = None
   importcfg = None

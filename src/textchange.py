@@ -23,10 +23,10 @@
 # Change text in some files at once
 
 import sys
-from io.fileline import *
-from io.bulk import *
-from util.trace import Trace
-from util.clparse import *
+from elyxer.io.fileline import *
+from elyxer.io.bulk import *
+from elyxer.util.trace import Trace
+from elyxer.util.clparse import *
 
 
 class TextChange(object):

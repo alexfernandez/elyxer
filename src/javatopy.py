@@ -24,9 +24,9 @@
 
 import sys
 import os.path
-from io.fileline import *
-from parse.position import *
-from util.trace import Trace
+from elyxer.io.fileline import *
+from elyxer.parse.position import *
+from elyxer.util.trace import Trace
 from jtp.porter import *
 
 

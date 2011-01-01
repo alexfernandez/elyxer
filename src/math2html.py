@@ -19,25 +19,34 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # --end--
-# Alex 20090308
-# eLyXer main script
-# http://www.nongnu.org/elyxer/
+# Alex 20101110
+# eLyXer standalone formula conversion to HTML.
+
+from elyxer.util.trace import Trace
+from elyxer.maths.formula import *
+from elyxer.maths.bits import *
+from elyxer.maths.command import *
+from elyxer.maths.hybrid import *
+from elyxer.maths.array import *
+from elyxer.maths.macro import *
+from elyxer.proc.formulaproc import *
 
 
-import sys
-from elyxer.main.convert import *
-
-
-def convertdoc(args):
-  "Read a whole document and write it"
-  Options().parseoptions(args)
-  ioparser = InOutParser().parse(args)
-  converter = eLyXerConverter().setio(ioparser)
-  converter.convert()
+def math2html(formula):
+  "Convert some TeX math to HTML."
+  factory = FormulaFactory()
+  whole = factory.parseformula(formula)
+  FormulaProcessor().process(whole)
+  whole.process()
+  return ''.join(whole.gethtml())
 
 def main():
-  "Main function, called if invoked from the command line"
-  convertdoc(list(sys.argv))
+  "Main function, called if invoked from elyxer.the command line"
+  if len(sys.argv) <= 1:
+    Trace.error('Usage: math2html.py escaped_string')
+    exit()
+  result = math2html(sys.argv[1])
+  Trace.message(result)
 
 if __name__ == '__main__':
   main()

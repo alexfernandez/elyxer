@@ -22,7 +22,7 @@
 # Alex 20091226
 # Port a Java program to a Python equivalent. Used to port MathToWeb.
 
-from util.trace import Trace
+from elyxer.util.trace import Trace
 
 
 class StatementParser(object):

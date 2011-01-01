@@ -22,9 +22,9 @@
 # Alex 20091226
 # Port a Java program to a Python equivalent. Used to port MathToWeb.
 
-from jtp.parser import *
-from jtp.grammar import *
-from util.trace import Trace
+from elyxer.jtp.parser import *
+from elyxer.jtp.grammar import *
+from elyxer.util.trace import Trace
 
 
 class JavaPorter(object):
@@ -101,7 +101,7 @@ class StatementChooser(object):
     return function(tok)
 
   def pendingstatement(self, tok):
-    "Return any pending statement from before."
+    "Return any pending statement from elyxer.before."
     if tok.infor != 0:
       tok.next()
       function = getattr(self, 'forparens' + unicode(tok.infor))
