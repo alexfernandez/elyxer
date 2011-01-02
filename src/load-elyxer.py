@@ -20,12 +20,12 @@
 
 # --end--
 # Alex 20090308
-# eLyXer module that invokes the main package.
+# eLyXer main script
 # http://www.nongnu.org/elyxer/
 
 
 import sys
-import elyxer
+from elyxer.main.convert import *
 
 
 if __name__ == '__main__':

@@ -31,7 +31,7 @@ setup(name = 'eLyXer',
     author = 'Alex Fernandez',
     author_email = 'elyxer@gmail.com',
     url = 'http://www.nongnu.org/elyxer/',
-    py_modules = ['elyxer-module'],
+    py_modules = ['load-elyxer'],
     packages = [
       'elyxer', 'elyxer.bib', 'elyxer.conf', 'elyxer.gen', 'elyxer.io',
       'elyxer.main', 'elyxer.maths', 'elyxer.out', 'elyxer.parse',

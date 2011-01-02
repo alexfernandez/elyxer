@@ -182,3 +182,14 @@ class ConverterFactory(object):
 
 IncludeInset.converterfactory = ConverterFactory()
 
+def convertdoc(args):
+  "Read a whole document from the command line and write it."
+  Options().parseoptions(args)
+  ioparser = InOutParser().parse(args)
+  converter = eLyXerConverter().setio(ioparser)
+  converter.convert()
+
+def main():
+  "Main function, called if invoked from the command line"
+  convertdoc(list(sys.argv))
+
