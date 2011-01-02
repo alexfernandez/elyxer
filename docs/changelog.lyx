@@ -120,6 +120,15 @@ Added option
 generate multi-line Unicode brackets or stacked limits.
 \end_layout
 
+\begin_layout Itemize
+eLyXer is now a proper Python module (with packages), instead of just a
+ coalesced file 
+\family typewriter
+elyxer.py
+\family default
+ containing everything.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.2 (2010-12-23):

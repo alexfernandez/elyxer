@@ -20,24 +20,13 @@
 
 # --end--
 # Alex 20090308
-# eLyXer main script
+# eLyXer module that invokes the main package.
 # http://www.nongnu.org/elyxer/
 
 
 import sys
-from elyxer.main.convert import *
+import elyxer
 
-
-def convertdoc(args):
-  "Read a whole document and write it"
-  Options().parseoptions(args)
-  ioparser = InOutParser().parse(args)
-  converter = eLyXerConverter().setio(ioparser)
-  converter.convert()
-
-def main():
-  "Main function, called if invoked from the command line"
-  convertdoc(list(sys.argv))
 
 if __name__ == '__main__':
   main()
