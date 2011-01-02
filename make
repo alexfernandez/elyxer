@@ -22,7 +22,7 @@
 # create executable files
 cd src
 ./exportconfig.py py
-./coalesce.py principal.py ../elyxer.py
+./coalesce.py load-elyxer.py ../elyxer.py
 ./coalesce.py loremipsumize.py ../loremipsumize.py
 ./coalesce.py math2html.py ../math2html.py
 ./licensify.py apache-license ../math2html.py
