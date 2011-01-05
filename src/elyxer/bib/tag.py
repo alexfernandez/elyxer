@@ -158,10 +158,6 @@ class BibTagParser(object):
     "Get the tag for a key as raw text."
     return self.gettag(key).extracttext()
 
-  def lineerror(self, message, pos):
-    "Show an error message for a line."
-    Trace.error(message + ': ' + pos.identifier())
-
 class BibTag(Container):
   "A tag in a BibTeX file."
 
