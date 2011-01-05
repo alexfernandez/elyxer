@@ -31,12 +31,12 @@ setup(name = 'eLyXer',
     author = 'Alex Fernandez',
     author_email = 'elyxer@gmail.com',
     url = 'http://www.nongnu.org/elyxer/',
-    py_modules = ['load-elyxer'],
     packages = [
       'elyxer', 'elyxer.bib', 'elyxer.conf', 'elyxer.gen', 'elyxer.io',
       'elyxer.main', 'elyxer.maths', 'elyxer.out', 'elyxer.parse',
       'elyxer.proc', 'elyxer.ref', 'elyxer.util', 'elyxer.xtra'
       ],
+    scripts = ['elyxer.py', 'math2html.py', 'loremipsumize.py'],
     classifiers = [
       'License :: OSI Approved :: GNU General Public License (GPL)',
       'Development Status :: 5 - Production/Stable', 'Environment :: Console',
