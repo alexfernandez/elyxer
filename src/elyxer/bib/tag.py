@@ -43,7 +43,7 @@ class BibTagParser(object):
 
   def parse(self, pos):
     "Parse the entry between {}."
-    self.type = BibTag.readexcluding(pos, self.nameseparators).strip()
+    self.type = pos.globexcluding(self.nameseparators).strip()
     if not pos.checkskip('{'):
       pos.error('Entry should start with {')
       return
@@ -81,7 +81,7 @@ class BibTagParser(object):
 
   def getkeyvalue(self, pos):
     "Parse a string of the form key=value."
-    piece = BibTag.readexcluding(pos, self.nameseparators).strip()
+    piece = pos.globexcluding(self.nameseparators).strip()
     if pos.finished():
       return (piece, None)
     if not pos.checkskip('='):
@@ -164,7 +164,6 @@ class BibTag(Container):
   valueseparators = ['{', '"', '#', '\\', '}', '$']
   stringdefs = dict()
   replaced = BibTeXConfig.replaced
-  replacedinitials = [x[0] for x in BibTeXConfig.replaced]
   factory = FormulaFactory()
 
   def __init__(self):
@@ -236,14 +235,37 @@ class BibTag(Container):
   def parsetext(self, pos, initial):
     "Parse a bit of text."
     "If on the initial level, try to substitute strings with string defs."
-    text = BibTag.readexcluding(pos, self.valueseparators)
+    text = self.parsenotspace(pos)
     if text == '':
       return
     key = text.strip()
     if initial and key in self.stringdefs:
       self.add(self.stringdefs[key])
       return
+    for key in self.replaced:
+      if key in text:
+        text = text.replace(key, self.replaced[key])
     self.add(text)
+
+  def parsenotspace(self, pos):
+    "Parse some text excluding value separators and spaces."
+    parsed = ''
+    while not pos.finished():
+      parsed += pos.glob(self.excludespaces)
+      if pos.current().isspace():
+        parsed += ' '
+        pos.skipspace()
+      else:
+        return parsed
+    return parsed
+
+  def excludespaces(self, current):
+    "Exclude value separators and spaces."
+    if current in self.valueseparators:
+      return False
+    if current.isspace():
+      return False
+    return True
 
   def parseescaped(self, pos):
     "Parse an escaped string \\*."
@@ -290,35 +312,6 @@ class BibTag(Container):
     "Parse a whole formula."
     formula = Formula().parse(pos)
     self.add(formula)
-
-  def readexcluding(cls, pos, undesired):
-    "Parse a piece not structure (including spaces)."
-    result = ''
-    while not pos.finished():
-      if pos.current() in undesired:
-        return result
-      if pos.current().isspace():
-        result += ' '
-        pos.skipspace()
-      else:
-        replaced = cls.readreplaced(pos)
-        if replaced:
-          result += replaced
-        else:
-          result += pos.skipcurrent()
-    return result
-
-  def readreplaced(cls, pos):
-    "Check for one of the replaced strings."
-    if not pos.current() in BibTag.replacedinitials:
-      return None
-    for key in BibTag.replaced:
-      if pos.checkskip(key):
-        return BibTag.replaced[key]
-    return None
-
-  readexcluding = classmethod(readexcluding)
-  readreplaced = classmethod(readreplaced)
 
   def __unicode__(self):
     "Return a printable representation."

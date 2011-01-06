@@ -140,9 +140,9 @@ class Position(object):
     self.skip(magicchar)
     return glob
 
-  def globexcluding(self, magicchar):
-    "Glob a bit of text up until (excluding) the magic char."
-    return self.glob(lambda current: current != magicchar)
+  def globexcluding(self, excluded):
+    "Glob a bit of text up until (excluding) any excluded character."
+    return self.glob(lambda current: current not in excluded)
 
   def pushending(self, ending, optional = False):
     "Push a new ending to the bottom"
