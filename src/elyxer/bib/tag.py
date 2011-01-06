@@ -29,6 +29,7 @@ from elyxer.parse.position import *
 from elyxer.gen.container import *
 from elyxer.maths.formula import *
 from elyxer.maths.command import *
+from elyxer.tex.texcode import *
 
 
 class BibTagParser(object):
@@ -161,7 +162,7 @@ class BibTagParser(object):
 class BibTag(Container):
   "A tag in a BibTeX file."
 
-  valueseparators = ['{', '"', '#', '\\', '}', '$']
+  valueseparators = ['{', '"', '#', '}']
   stringdefs = dict()
   replaced = BibTeXConfig.replaced
   factory = FormulaFactory()
@@ -180,138 +181,66 @@ class BibTag(Container):
     return self.constant('')
 
   def parse(self, pos):
-    "Parse a BibTeX tag."
-    self.parserecursive(pos, True)
-    # strip ending blank characters
-    last = self.findlaststring()
-    if last:
-      before = last.string
-      last.string = last.string.rstrip()
-
-  def add(self, piece):
-    "Add a new piece to the tag."
-    if isinstance(piece, basestring):
-      self.addtext(piece)
-    else:
-      self.contents.append(piece)
-
-  def addtext(self, piece):
-    "Add a text string to the tag."
-    last = self.findlaststring()
-    if last:
-      last.string += piece
-      return
-    self.contents.append(Constant(piece))
-
-  def findlaststring(self):
-    "Find the last string in the contents."
-    if len(self.contents) == 0:
-      return None
-    string = self.contents[-1]
-    if not isinstance(string, StringContainer):
-      return None
-    return string
-
-  def parserecursive(self, pos, initial=False):
-    "Parse brackets or quotes recursively."
+    "Parse brackets or quotes at the first level."
     while not pos.finished():
-      self.parsetext(pos, initial)
+      self.parsetext(pos)
       if pos.finished():
         return
       elif pos.checkfor('{'):
-        self.parsebracket(pos, initial)
+        self.parsebracket(pos)
       elif pos.checkfor('"'):
-        self.parsequoted(pos, initial)
-      elif pos.checkfor('\\'):
-        self.parseescaped(pos)
+        self.parsequoted(pos)
       elif pos.checkfor('#'):
-        self.parsehash(pos, initial)
-      elif pos.checkfor('$'):
-        self.parseformula(pos)
+        self.parsehash(pos)
       else:
         pos.error('Unexpected character ' + pos.current())
         pos.skipcurrent()
 
-  def parsetext(self, pos, initial):
-    "Parse a bit of text."
-    "If on the initial level, try to substitute strings with string defs."
-    text = self.parsenotspace(pos)
-    if text == '':
-      return
+  def parsetext(self, pos):
+    "Parse a bit of text, try to substitute strings with string defs."
+    text = pos.globexcluding(self.valueseparators)
     key = text.strip()
-    if initial and key in self.stringdefs:
+    if key == '':
+      return
+    if key in self.stringdefs:
       self.add(self.stringdefs[key])
       return
-    for key in self.replaced:
-      if key in text:
-        text = text.replace(key, self.replaced[key])
-    self.add(text)
+    Trace.error('Unbound tag string "' + key + '"')
 
-  def parsenotspace(self, pos):
-    "Parse some text excluding value separators and spaces."
-    parsed = ''
-    while not pos.finished():
-      parsed += pos.glob(self.excludespaces)
-      if pos.current().isspace():
-        parsed += ' '
-        pos.skipspace()
-      else:
-        return parsed
-    return parsed
+  def add(self, piece):
+    "Add a new piece to the tag."
+    self.contents.append(piece)
 
-  def excludespaces(self, current):
-    "Exclude value separators and spaces."
-    if current in self.valueseparators:
-      return False
-    if current.isspace():
-      return False
-    return True
+  def parsetex(self, pos):
+    "Parse some TeX code."
+    tex = TeXCode()
+    tex.parse(pos)
+    self.add(tex)
 
-  def parseescaped(self, pos):
-    "Parse an escaped string \\*."
-    if pos.checkfor('\\(') or pos.checkfor('\\['):
-      # start of formula commands
-      self.parseformula(pos)
-      return
-    if not self.factory.detecttype(FormulaCommand, pos):
-      pos.error('Not an escape sequence')
-      return
-    self.add(self.factory.parsetype(FormulaCommand, pos))
-
-  def parsebracket(self, pos, initial):
+  def parsebracket(self, pos):
     "Parse a {} bracket"
     if not pos.checkskip('{'):
       pos.error('Missing opening { in bracket')
       return
     pos.pushending('}')
-    self.parserecursive(pos, initial)
+    self.parsetex(pos)
     pos.popending('}')
 
-  def parsequoted(self, pos, initial):
+  def parsequoted(self, pos):
     "Parse a piece of quoted text"
     if not pos.checkskip('"'):
       pos.error('Missing opening " in quote')
       return
-    if not initial:
-      self.add('"')
-      return
     pos.pushending('"')
-    self.parserecursive(pos)
+    self.parsetex(pos)
     pos.popending('"')
     pos.skipspace()
 
-  def parsehash(self, pos, initial):
+  def parsehash(self, pos):
     "Parse a hash mark #."
     if not pos.checkskip('#'):
       pos.error('Missing # in hash')
       return
-    if not initial:
-      self.add('#')
-
-  def parseformula(self, pos):
-    "Parse a whole formula."
-    formula = Formula().parse(pos)
-    self.add(formula)
 
   def __unicode__(self):
     "Return a printable representation."
@@ -345,6 +274,7 @@ class BibAuthor(object):
     bits = tag.rsplit(None, 1)
     if len(bits) == 0:
       Trace.error('Empty author')
+      ppp()
       return
     self.surname = bits[-1].strip()
     if len(bits) == 1:
