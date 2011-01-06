@@ -179,6 +179,15 @@ class BibTag(Container):
     "To use when parsing resulted in an error."
     return self.constant('')
 
+  def parse(self, pos):
+    "Parse a BibTeX tag."
+    self.parserecursive(pos, True)
+    # strip ending blank characters
+    last = self.findlaststring()
+    if last:
+      before = last.string
+      last.string = last.string.rstrip()
+
   def add(self, piece):
     "Add a new piece to the tag."
     if isinstance(piece, basestring):
@@ -202,15 +211,6 @@ class BibTag(Container):
     if not isinstance(string, StringContainer):
       return None
     return string
-
-  def parse(self, pos):
-    "Parse a BibTeX tag."
-    self.parserecursive(pos, True)
-    # strip ending blank characters
-    last = self.findlaststring()
-    if last:
-      before = last.string
-      last.string = last.string.rstrip()
 
   def parserecursive(self, pos, initial=False):
     "Parse brackets or quotes recursively."
