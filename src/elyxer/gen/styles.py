@@ -240,3 +240,7 @@ class ERT(Container):
     self.parser = InsetParser()
     self.output = EmptyOutput()
 
+  def process(self):
+    "Process any TeX commands or formulas."
+    Trace.debug('Contents: ' + self.extracttext())
+
