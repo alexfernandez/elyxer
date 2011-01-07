@@ -102,6 +102,7 @@ class CasesBrace(BigBracket):
   def __init__(self, size):
     "Set the size for the brace."
     self.size = size
+    self.original = '{'
 
   def getpiece(self, index):
     "Get the nth piece for the brace."
