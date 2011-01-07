@@ -30,6 +30,22 @@ from elyxer.maths.formula import *
 from elyxer.maths.command import *
 
 
+class ERT(Container):
+  "Evil Red Text: embedded TeX code."
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = ContentsOutput()
+
+  def process(self):
+    "Process all TeX code, formulas, commands."
+    text = self.extracttext()
+    Trace.debug('TeX: ' + text)
+    pos = TextPosition(text)
+    code = TeXCode()
+    code.parse(pos)
+    self.contents = [code]
+
 class TeXCode(Container):
   "A parser and processor for TeX code."
 
@@ -40,12 +56,6 @@ class TeXCode(Container):
   def __init__(self):
     self.contents = []
     self.output = ContentsOutput()
-
-  def process(self):
-    "Process all TeX code, formulas, commands."
-    text = self.extracttext()
-    pos = TextPosition(text)
-    self.parse(pos)
 
   def parse(self, pos):
     "Parse some TeX code."

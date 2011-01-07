@@ -47,6 +47,7 @@ from elyxer.bib.pub import *
 from elyxer.xtra.newfangle import *
 from elyxer.maths.macro import *
 from elyxer.maths.extracommand import *
+from elyxer.tex.texcode import *
 
 
 class ContainerFactory(object):

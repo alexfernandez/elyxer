@@ -233,14 +233,3 @@ class StartAppendix(BlackBox):
     "Activate the special numbering scheme for appendices, using letters."
     NumberGenerator.generator.startappendix()
 
-class ERT(Container):
-  "Evil Red Text"
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = EmptyOutput()
-
-  def process(self):
-    "Process any TeX commands or formulas."
-    Trace.debug('Contents: ' + self.extracttext())
-
