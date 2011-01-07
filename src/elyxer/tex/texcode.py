@@ -116,7 +116,7 @@ class TeXCode(Container):
     parsed = ''
     while not pos.finished():
       parsed += pos.glob(self.excludespaces)
-      if pos.current().isspace():
+      if not pos.finished() and pos.current().isspace():
         parsed += ' '
         pos.skipspace()
       else:
