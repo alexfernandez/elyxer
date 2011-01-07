@@ -50,11 +50,6 @@ class TeXCode(Container):
   def parse(self, pos):
     "Parse some TeX code."
     self.parserecursive(pos)
-    # strip ending blank characters
-    last = self.findlaststring()
-    if last:
-      before = last.string
-      last.string = last.string.rstrip()
 
   def findlaststring(self):
     "Find the last string in the contents."

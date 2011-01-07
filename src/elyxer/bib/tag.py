@@ -205,7 +205,7 @@ class BibTag(Container):
     if key in self.stringdefs:
       self.add(self.stringdefs[key])
       return
-    Trace.error('Unbound tag string "' + key + '"')
+    self.add(Constant(key))
 
   def add(self, piece):
     "Add a new piece to the tag."
