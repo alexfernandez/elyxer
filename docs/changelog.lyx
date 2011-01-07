@@ -134,6 +134,29 @@ Interpret TeXCode (previously known as Evil Red Text) as TeX commands and
  formulas.
 \end_layout
 
+\begin_layout Itemize
+Support for 
+\family typewriter
+
+\backslash
+textvisiblespace
+\family default
+: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textvisiblespace
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.2 (2010-12-23):
