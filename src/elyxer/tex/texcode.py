@@ -40,7 +40,6 @@ class ERT(Container):
   def process(self):
     "Process all TeX code, formulas, commands."
     text = self.extracttext()
-    Trace.debug('TeX: ' + text)
     pos = TextPosition(text)
     code = TeXCode()
     code.parse(pos)
