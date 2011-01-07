@@ -173,16 +173,16 @@ class FormulaCases(MultiRowFormula):
 
   def parsebit(self, pos):
     "Parse the cases"
-    self.output = TaggedOutput().settag('span class="bracketcases"', True)
+    self.output = ContentsOutput()
     self.alignments = ['l', 'l']
     self.parserows(pos)
     for row in self.contents:
       for cell in row.contents:
         cell.output.settag('span class="case align-l"', True)
         cell.contents.append(FormulaConstant(u' '))
+    array = TaggedBit().complete(self.contents, 'span class="bracketcases"', True)
     brace = CasesBrace(len(self.contents))
-    for index, row in enumerate(self.rows):
-      row.contents.insert(0, brace.getcell(index, 'l'))
+    self.contents = [brace.getarray('l'), array]
 
 class EquationEnvironment(MultiRowFormula):
   "A \\begin{}...\\end equation environment with rows and cells."
