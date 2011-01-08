@@ -147,7 +147,13 @@ textvisiblespace
 \backslash
 AmS
 \family default
-: 
+, 
+\family typewriter
+
+\backslash
+parbox
+\family default
+ and more: 
 \begin_inset ERT
 status open
 
