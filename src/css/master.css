@@ -138,7 +138,7 @@ div.Paragraph, div.Paragraph- {
 	font-weight: bold;
 	font-size: 103%;
 }
-span.versalitas span.noun {
+span.versalitas, span.noun {
 	font-variant: small-caps;
 }
 span.sans {
