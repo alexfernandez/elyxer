@@ -32,6 +32,8 @@ class Position(object):
 
   def __init__(self):
     self.endinglist = EndingList()
+    self.leavepending = False
+    self.pendingendings = []
 
   def checkbytemark(self):
     "Check for a Unicode byte mark and skip it."
@@ -75,10 +77,20 @@ class Position(object):
       return False
     return string.lower() == self.extract(len(string)).lower()
 
+  def setpendingendings(self, endings):
+    "Set any pending endings left over from a previous parsed position."
+    "Also sets the flag that allows pending endings (to be closed later)."
+    self.leavepending = True
+    self.endinglist.endings = endings
+    return self
+
   def finished(self):
     "Find out if the current formula has finished"
     if self.isout():
-      self.endinglist.checkpending()
+      if self.leavepending:
+        self.pendingendings = self.endinglist.endings
+      else:
+        self.endinglist.checkpending()
       return True
     return self.endinglist.checkin(self)
 
@@ -150,6 +162,8 @@ class Position(object):
 
   def popending(self, expected = None):
     "Pop the ending found at the current position"
+    if self.isout() and self.leavepending:
+      return expected
     ending = self.endinglist.pop(self)
     if expected and expected != ending:
       Trace.error('Expected ending ' + expected + ', got ' + ending)

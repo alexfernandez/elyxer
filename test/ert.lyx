@@ -101,5 +101,56 @@ url{http://elyxer.nongnu.org/}
 .
 \end_layout
 
+\begin_layout Standard
+ERTs can be left open 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+ and be closed afterwards 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+.
+ This allows us to apply commands to arbitrary text: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{red}{
+\end_layout
+
+\end_inset
+
+this text should be red
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
 \end_body
 \end_document
