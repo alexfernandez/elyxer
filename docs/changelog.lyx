@@ -135,11 +135,17 @@ Interpret TeXCode (previously known as Evil Red Text) as TeX commands and
 \end_layout
 
 \begin_layout Itemize
-Support for 
+Support for TeX commands 
 \family typewriter
 
 \backslash
 textvisiblespace
+\family default
+, 
+\family typewriter
+
+\backslash
+AmS
 \family default
 : 
 \begin_inset ERT
@@ -150,6 +156,19 @@ status open
 
 \backslash
 textvisiblespace
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+AmS
 \end_layout
 
 \end_inset
