@@ -176,6 +176,29 @@ AmS
 .
 \end_layout
 
+\begin_layout Itemize
+Support for 
+\family typewriter
+
+\backslash
+Game
+\family default
+: 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+
+\begin_inset Formula $\Game$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.2 (2010-12-23):
@@ -3602,7 +3625,7 @@ Equation numbering is working.
 
 \begin_layout Itemize
 Unknown commands are shown in red: 
-\begin_inset Formula $\Game$
+\begin_inset Formula $\unknown$
 \end_inset
 
 .
