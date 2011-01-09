@@ -33,8 +33,6 @@ from elyxer.maths.hybrid import *
 class MacroDefinition(CommandBit):
   "A function that defines a new command (a macro)."
 
-  commandmap = FormulaConfig.definingfunctions
-
   macros = dict()
 
   def parsebit(self, pos):
@@ -200,6 +198,6 @@ class FormulaMacro(Formula):
 FormulaFactory.types += [ MacroParameter ]
 
 FormulaCommand.types += [
-    MacroDefinition, MacroFunction,
+    MacroFunction,
     ]
 

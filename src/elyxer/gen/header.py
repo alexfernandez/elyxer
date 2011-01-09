@@ -101,19 +101,14 @@ class LyXPreamble(Container):
 
   def detectfunction(self, pos):
     "Detect a macro definition or a preamble function."
-    for function in FormulaConfig.definingfunctions:
-      if pos.checkfor(function):
-        return True
-    for function in FormulaConfig.setcounterfunctions:
+    for function in FormulaConfig.misccommands:
       if pos.checkfor(function):
         return True
     return False
 
   def parsefunction(self, pos):
-    "Parse a macro definition or a preamble function."
-    command = FormulaFactory().parsetype(FormulaCommand, pos)
-    if not isinstance(command, MacroDefinition) and not isinstance(command, SetCounterFunction):
-      Trace.error('Command type not allowed in preamble: ' + unicode(command))
+    "Parse a single command."
+    FormulaFactory().parsetype(FormulaCommand, pos)
 
 class LyXFooter(Container):
   "Reads the footer, outputs the HTML footer"
@@ -129,22 +124,4 @@ class LyXFooter(Container):
     if EndFootnotes.footnotes:
       endnotes = EndFootnotes()
       self.contents = [endnotes]
-
-class SetCounterFunction(CommandBit):
-  "A function which is used in the preamble to set a counter."
-
-  commandmap = FormulaConfig.setcounterfunctions
-
-  def parsebit(self, pos):
-    "Parse a function with [] and {} parameters."
-    counter = self.parseliteral(pos)
-    value = self.parseliteral(pos)
-    self.setcounter(counter, int(value))
-
-  def setcounter(self, counter, value):
-    "Set a global counter."
-    Trace.debug('Setting counter ' + unicode(counter) + ' to ' + unicode(value))
-    NumberGenerator.generator.getcounter(counter).init(value)
-
-FormulaCommand.types += [SetCounterFunction]
 

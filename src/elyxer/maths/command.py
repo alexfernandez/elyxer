@@ -75,7 +75,7 @@ class FormulaCommand(FormulaBit):
   def extractcommand(self, pos):
     "Extract the command from elyxer.the current position."
     if not pos.checkskip(FormulaCommand.start):
-      Trace.error('Missing command start ' + start)
+      pos.error('Missing command start ' + FormulaCommand.start)
       return
     if pos.current().isalpha():
       # alpha command
@@ -109,7 +109,8 @@ class CommandBit(FormulaCommand):
     "Set the command in the bit"
     self.command = command
     self.original += command
-    self.translated = self.commandmap[self.command]
+    if hasattr(self, 'commandmap'):
+      self.translated = self.commandmap[self.command]
  
   def parseparameter(self, pos):
     "Parse a parameter at the current position"
@@ -251,17 +252,6 @@ class FontFunction(OneParamFunction):
     "Simplify if possible using a single character."
     self.type = 'font'
     self.simplifyifpossible()
-
-class MiscCommand(CommandBit):
-  "A generic command which maps to a command class."
-
-  commandmap = FormulaConfig.misccommands
-  factory = FormulaCommand()
-
-  def process(self):
-    "Generate the right command and process it."
-    commandtype = globals()[self.translated]
-    self.factory.parsecommandtype(commandtype)
 
 FormulaFactory.types += [FormulaCommand, SymbolFunction]
 FormulaCommand.types = [
