@@ -22,13 +22,14 @@
 # Alex 20090422
 # eLyXer postprocessor for formulae
 
+from elyxer.util.numbering import *
 from elyxer.maths.command import *
 from elyxer.maths.array import *
+from elyxer.maths.misc import *
 from elyxer.proc.postprocess import *
 from elyxer.ref.link import *
 from elyxer.ref.label import *
 from elyxer.ref.partkey import *
-from elyxer.util.numbering import *
 
 
 class PostFormula(object):
@@ -65,17 +66,26 @@ class PostFormula(object):
   def createlabel(self, formula, function = None):
     "Create a new label for a formula."
     "Add a label to a formula."
-    number = NumberGenerator.chaptered.generate('formula')
-    partkey = PartKey().createformula(number)
+    tag = self.createtag(formula)
+    partkey = PartKey().createformula(tag)
     if not formula.partkey:
       formula.partkey = partkey
     if not function:
       label = Label()
-      label.create(partkey.tocentry + ' ', 'eq-' + number, type="eqnumber")
+      label.create(partkey.tocentry + ' ', 'eq-' + tag, type="eqnumber")
     else:
       label = function.label
       label.complete(partkey.tocentry + ' ')
     return label
+
+  def createtag(self, formula):
+    "Create the label tag."
+    tags = formula.searchall(FormulaTag)
+    if len(tags) == 0:
+      return NumberGenerator.chaptered.generate('formula')
+    if len(tags) > 1:
+      Trace.error('More than one tag in formula: ' + unicode(formula))
+    return tags[0].tag
 
   def searchrow(self, function):
     "Search for the row that contains the label function."

@@ -3,6 +3,10 @@
 \begin_document
 \begin_header
 \textclass article
+\begin_preamble
+\usepackage{url}
+\usepackage{color}
+\end_preamble
 \use_default_options true
 \begin_modules
 theorems-ams
@@ -150,6 +154,19 @@ status open
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+ERTs can also be inserted in formulas:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+a=b\tag{{unnumbered}}.\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \end_body

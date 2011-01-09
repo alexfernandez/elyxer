@@ -153,7 +153,13 @@ AmS
 \backslash
 parbox
 \family default
- and more: 
+, 
+\family typewriter
+
+\backslash
+tag
+\family default
+, and more: 
 \begin_inset ERT
 status open
 

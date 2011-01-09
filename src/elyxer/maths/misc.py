@@ -41,6 +41,14 @@ class SetCounterFunction(CommandBit):
     Trace.debug('Setting counter ' + unicode(counter) + ' to ' + unicode(value))
     NumberGenerator.generator.getcounter(counter).init(value)
 
+class FormulaTag(CommandBit):
+  "A \\tag command."
+
+  def parsebit(self, pos):
+    "Parse the tag and apply it."
+    self.output = EmptyOutput()
+    self.tag = self.parseliteral(pos)
+
 class MiscCommand(CommandBit):
   "A generic command which maps to a command class."
 
