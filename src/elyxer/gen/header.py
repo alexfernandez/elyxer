@@ -112,7 +112,7 @@ class LyXPreamble(Container):
   def parsefunction(self, pos):
     "Parse a macro definition or a preamble function."
     command = FormulaFactory().parsetype(FormulaCommand, pos)
-    if not isinstance(command, DefiningFunction) and not isinstance(command, SetCounterFunction):
+    if not isinstance(command, MacroDefinition) and not isinstance(command, SetCounterFunction):
       Trace.error('Command type not allowed in preamble: ' + unicode(command))
 
 class LyXFooter(Container):

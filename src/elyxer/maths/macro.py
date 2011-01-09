@@ -30,26 +30,53 @@ from elyxer.maths.formula import *
 from elyxer.maths.hybrid import *
 
 
-class MathMacro(object):
-  "A math macro: command, parameters, default values, definition."
+class MacroDefinition(CommandBit):
+  "A function that defines a new command (a macro)."
+
+  commandmap = FormulaConfig.definingfunctions
 
   macros = dict()
 
-  def __init__(self):
-    self.newcommand = None
+  def parsebit(self, pos):
+    "Parse the function that defines the macro."
+    self.output = EmptyOutput()
     self.parameternumber = 0
     self.defaults = []
-    self.definition = None
+    self.factory.defining = True
+    self.parseparameters(pos)
+    self.factory.defining = False
+    Trace.debug('New command ' + self.newcommand + ' (' + \
+        unicode(self.parameternumber) + ' parameters)')
+    self.macros[self.newcommand] = self
+
+  def parseparameters(self, pos):
+    "Parse all optional parameters (number of parameters, default values)"
+    "and the mandatory definition."
+    self.newcommand = self.parsenewcommand(pos)
+    # parse number of parameters
+    literal = self.parsesquareliteral(pos)
+    if literal:
+      self.parameternumber = int(literal)
+    # parse all default values
+    bracket = self.parsesquare(pos)
+    while bracket:
+      self.defaults.append(bracket)
+      bracket = self.parsesquare(pos)
+    # parse mandatory definition
+    self.definition = self.parseparameter(pos)
+
+  def parsenewcommand(self, pos):
+    "Parse the name of the new command."
+    if self.factory.detecttype(Bracket, pos):
+      return self.parseliteral(pos)
+    if self.factory.detecttype(FormulaCommand, pos):
+      return self.factory.create(FormulaCommand).extractcommand(pos)
+    Trace.error('Unknown formula bit in defining function at ' + pos.identifier())
+    return 'unknown'
 
   def instantiate(self):
     "Return an instance of the macro."
     return self.definition.clone()
-
-  def store(self):
-    "Store the macro into the global list of macros."
-    Trace.debug('New command ' + self.newcommand + ' (' + \
-        unicode(self.parameternumber) + ' parameters)')
-    MathMacro.macros[self.newcommand] = self
 
 class MacroParameter(FormulaBit):
   "A parameter from elyxer.a macro."
@@ -67,50 +94,10 @@ class MacroParameter(FormulaBit):
     self.original = '#' + unicode(self.number)
     self.contents = [TaggedBit().constant('#' + unicode(self.number), 'span class="unknown"')]
 
-class DefiningFunction(CommandBit):
-  "Read a function that defines a new command (a macro)."
-
-  commandmap = FormulaConfig.definingfunctions
-
-  def parsebit(self, pos):
-    "Parse a function with [] and {} parameters."
-    self.factory.defining = True
-    self.parsemacro(pos)
-    self.factory.defining = False
-    self.contents = []
-
-  def parsemacro(self, pos):
-    "Parse all optional parameters (number of parameters, default values)"
-    "and the mandatory definition."
-    macro = MathMacro()
-    macro.newcommand = self.parsenewcommand(pos)
-    # parse number of parameters
-    literal = self.parsesquareliteral(pos)
-    if literal:
-      macro.parameternumber = int(literal)
-    # parse all default values
-    bracket = self.parsesquare(pos)
-    while bracket:
-      macro.defaults.append(bracket)
-      bracket = self.parsesquare(pos)
-    # parse mandatory definition
-    macro.definition = self.parseparameter(pos)
-    macro.store()
-    return macro
-
-  def parsenewcommand(self, pos):
-    "Parse the name of the new command."
-    if self.factory.detecttype(Bracket, pos):
-      return self.parseliteral(pos)
-    if self.factory.detecttype(FormulaCommand, pos):
-      return self.factory.create(FormulaCommand).extractcommand(pos)
-    Trace.error('Unknown formula bit in defining function at ' + pos.identifier())
-    return
-
 class MacroFunction(CommandBit):
   "A function that was defined using a macro."
 
-  commandmap = MathMacro.macros
+  commandmap = MacroDefinition.macros
 
   def parsebit(self, pos):
     "Parse a number of input parameters."
@@ -213,6 +200,6 @@ class FormulaMacro(Formula):
 FormulaFactory.types += [ MacroParameter ]
 
 FormulaCommand.types += [
-    DefiningFunction, MacroFunction,
+    MacroDefinition, MacroFunction,
     ]
 
