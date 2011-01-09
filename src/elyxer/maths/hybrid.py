@@ -122,13 +122,6 @@ class ParameterFunction(CommandBit):
       return None
     return param.literalvalue
 
-  def getintvalue(self, name):
-    "Get the value of a literal parameter as an int."
-    value = self.getliteralvalue(name)
-    if not value:
-      return 0
-    return int(value)
-
 class HybridFunction(ParameterFunction):
   """
   A parameter function where the output is also defined using a template.

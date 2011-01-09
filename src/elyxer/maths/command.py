@@ -252,6 +252,17 @@ class FontFunction(OneParamFunction):
     self.type = 'font'
     self.simplifyifpossible()
 
+class MiscCommand(CommandBit):
+  "A generic command which maps to a command class."
+
+  commandmap = FormulaConfig.misccommands
+  factory = FormulaCommand()
+
+  def process(self):
+    "Generate the right command and process it."
+    commandtype = globals()[self.translated]
+    self.factory.parsecommandtype(commandtype)
+
 FormulaFactory.types += [FormulaCommand, SymbolFunction]
 FormulaCommand.types = [
     AlphaCommand, EmptyCommand, OneParamFunction, FontFunction, LabelFunction,

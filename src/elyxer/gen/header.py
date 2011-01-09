@@ -104,7 +104,7 @@ class LyXPreamble(Container):
     for function in FormulaConfig.definingfunctions:
       if pos.checkfor(function):
         return True
-    for function in FormulaConfig.preamblefunctions:
+    for function in FormulaConfig.setcounterfunctions:
       if pos.checkfor(function):
         return True
     return False
@@ -112,8 +112,8 @@ class LyXPreamble(Container):
   def parsefunction(self, pos):
     "Parse a macro definition or a preamble function."
     command = FormulaFactory().parsetype(FormulaCommand, pos)
-    if not isinstance(command, DefiningFunction) and not isinstance(command, PreambleFunction):
-      Trace.error('Did not define a macro with ' + unicode(command))
+    if not isinstance(command, DefiningFunction) and not isinstance(command, SetCounterFunction):
+      Trace.error('Command type not allowed in preamble: ' + unicode(command))
 
 class LyXFooter(Container):
   "Reads the footer, outputs the HTML footer"
@@ -130,25 +130,21 @@ class LyXFooter(Container):
       endnotes = EndFootnotes()
       self.contents = [endnotes]
 
-class PreambleFunction(ParameterFunction):
-  "A function which is used in the preamble to perform some operation."
+class SetCounterFunction(CommandBit):
+  "A function which is used in the preamble to set a counter."
 
-  commandmap = FormulaConfig.preamblefunctions
+  commandmap = FormulaConfig.setcounterfunctions
 
   def parsebit(self, pos):
     "Parse a function with [] and {} parameters."
-    template = self.translated[0]
-    self.readparams(template, pos)
-    operation = self.translated[1]
-    operate = getattr(self, operation)
-    operate()
+    counter = self.parseliteral(pos)
+    value = self.parseliteral(pos)
+    self.setcounter(counter, int(value))
 
-  def setcounter(self):
+  def setcounter(self, counter, value):
     "Set a global counter."
-    counter = self.getliteralvalue('$p')
-    value = self.getintvalue('$n')
     Trace.debug('Setting counter ' + unicode(counter) + ' to ' + unicode(value))
     NumberGenerator.generator.getcounter(counter).init(value)
 
-FormulaCommand.types += [PreambleFunction]
+FormulaCommand.types += [SetCounterFunction]
 

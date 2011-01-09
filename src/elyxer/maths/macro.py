@@ -45,6 +45,12 @@ class MathMacro(object):
     "Return an instance of the macro."
     return self.definition.clone()
 
+  def store(self):
+    "Store the macro into the global list of macros."
+    Trace.debug('New command ' + self.newcommand + ' (' + \
+        unicode(self.parameternumber) + ' parameters)')
+    MathMacro.macros[self.newcommand] = self
+
 class MacroParameter(FormulaBit):
   "A parameter from elyxer.a macro."
 
@@ -61,50 +67,45 @@ class MacroParameter(FormulaBit):
     self.original = '#' + unicode(self.number)
     self.contents = [TaggedBit().constant('#' + unicode(self.number), 'span class="unknown"')]
 
-class DefiningFunction(ParameterFunction):
+class DefiningFunction(CommandBit):
   "Read a function that defines a new command (a macro)."
 
   commandmap = FormulaConfig.definingfunctions
 
   def parsebit(self, pos):
     "Parse a function with [] and {} parameters."
-    if self.factory.detecttype(Bracket, pos):
-      newcommand = self.parseliteral(pos)
-    elif self.factory.detecttype(FormulaCommand, pos):
-      newcommand = self.factory.create(FormulaCommand).extractcommand(pos)
-    else:
-      Trace.error('Unknown formula bit in defining function at ' + pos.identifier())
-      return
-    template = self.translated
     self.factory.defining = True
-    self.readparams(template, pos)
+    self.parsemacro(pos)
     self.factory.defining = False
     self.contents = []
+
+  def parsemacro(self, pos):
+    "Parse all optional parameters (number of parameters, default values)"
+    "and the mandatory definition."
     macro = MathMacro()
-    macro.newcommand = newcommand
-    macro.parameternumber = self.getintvalue('$n')
-    Trace.debug('New command ' + newcommand + ' (' + \
-        unicode(macro.parameternumber) + ' parameters)')
-    macro.definition = self.getvalue('$d')
-    self.extractdefaults(macro)
-    MathMacro.macros[newcommand] = macro
+    macro.newcommand = self.parsenewcommand(pos)
+    # parse number of parameters
+    literal = self.parsesquareliteral(pos)
+    if literal:
+      macro.parameternumber = int(literal)
+    # parse all default values
+    bracket = self.parsesquare(pos)
+    while bracket:
+      macro.defaults.append(bracket)
+      bracket = self.parsesquare(pos)
+    # parse mandatory definition
+    macro.definition = self.parseparameter(pos)
+    macro.store()
+    return macro
 
-  def extractdefaults(self, macro):
-    "Extract the default values for existing parameters."
-    for index in range(9):
-      value = self.extractdefault(index + 1)
-      if not value:
-        return
-      macro.defaults.append(value)
-
-  def extractdefault(self, index):
-    "Extract the default value for parameter index."
-    value = self.getvalue('$' + unicode(index))
-    if not value:
-      return None
-    if len(value.contents) == 0:
-      return FormulaConstant('')
-    return value
+  def parsenewcommand(self, pos):
+    "Parse the name of the new command."
+    if self.factory.detecttype(Bracket, pos):
+      return self.parseliteral(pos)
+    if self.factory.detecttype(FormulaCommand, pos):
+      return self.factory.create(FormulaCommand).extractcommand(pos)
+    Trace.error('Unknown formula bit in defining function at ' + pos.identifier())
+    return
 
 class MacroFunction(CommandBit):
   "A function that was defined using a macro."
