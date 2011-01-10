@@ -51,7 +51,7 @@ class ParameterDefinition(object):
         if opening == '[':
           self.optional = True
         if not pos.checkskip('$'):
-          Trace.error('Wrong parameter name ' + pos.current())
+          Trace.error('Wrong parameter name, did you mean $' + pos.current() + '?')
           return None
         self.name = pos.skipcurrent()
         if pos.checkskip('!'):
