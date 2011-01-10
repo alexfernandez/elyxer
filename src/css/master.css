@@ -489,6 +489,9 @@ div.ovalbox {
 div.Ovalbox {
 	outline-style: ridge;
 }
+hr.line {
+	display: inline-block;
+}
 
 /* Spaces */
 span.hspace {

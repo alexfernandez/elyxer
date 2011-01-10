@@ -86,6 +86,11 @@ class TaggedBit(FormulaBit):
     self.output = TaggedOutput().settag(tag, breaklines)
     return self
 
+  def selfcomplete(self, tag):
+    "Set the self-closing tag, no contents (as in <hr/>)."
+    self.output = TaggedOutput().settag(tag, empty = True)
+    return self
+
 class FormulaConstant(Constant):
   "A constant string in a formula"
 

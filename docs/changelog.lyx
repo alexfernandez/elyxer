@@ -159,6 +159,12 @@ parbox
 \backslash
 tag
 \family default
+, 
+\family typewriter
+
+\backslash
+rule
+\family default
 , and more: 
 \begin_inset ERT
 status open

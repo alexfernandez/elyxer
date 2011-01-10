@@ -135,6 +135,9 @@ class HybridFunction(ParameterFunction):
   Sizes can be specified in hybridsizes, e.g. adding parameter sizes. By
   default the resulting size is the max of all arguments. Sizes are used
   to generate the right parameters.
+  A function followed by a single / is output as a self-closing XHTML tag:
+    [f0/,hr]
+  will generate <hr/>.
   """
 
   commandmap = FormulaConfig.hybridfunctions
@@ -162,6 +165,7 @@ class HybridFunction(ParameterFunction):
       elif pos.checkskip('f'):
         function = self.writefunction(pos)
         if function:
+          function.type = None
           result.append(function)
       elif pos.checkskip('('):
         result.append(self.writebracket('left', '('))
@@ -188,6 +192,9 @@ class HybridFunction(ParameterFunction):
     tag = self.readtag(pos)
     if not tag:
       return None
+    if pos.checkskip('/'):
+      # self-closing XHTML tag, such as <hr/>
+      return TaggedBit().selfcomplete(tag)
     if not pos.checkskip('{'):
       Trace.error('Function should be defined in {}')
       return None
@@ -196,9 +203,7 @@ class HybridFunction(ParameterFunction):
     pos.popending()
     if len(contents) == 0:
       return None
-    function = TaggedBit().complete(contents, tag)
-    function.type = None
-    return function
+    return TaggedBit().complete(contents, tag)
 
   def readtag(self, pos):
     "Get the tag corresponding to the given index. Does parameter substitution."

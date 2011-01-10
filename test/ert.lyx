@@ -193,5 +193,22 @@ a=b\tag{{unnumbered}}.\end{equation}
 
 \end_layout
 
+\begin_layout Standard
+A rule in an ERT: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+rule{3cm}{2pt}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
 \end_body
 \end_document
