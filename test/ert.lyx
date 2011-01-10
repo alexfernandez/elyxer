@@ -219,7 +219,9 @@ status open
 
 
 \backslash
-fboxrule 3mm
+fboxrule 3mm 
+\backslash
+fboxsep 0.4mm
 \end_layout
 
 \end_inset

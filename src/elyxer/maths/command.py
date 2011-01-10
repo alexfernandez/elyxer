@@ -132,10 +132,10 @@ class CommandBit(FormulaCommand):
   def parseliteral(self, pos):
     "Parse a literal bracket."
     if not self.factory.detecttype(Bracket, pos):
-      if not pos.checkidentifier():
+      if not pos.checkvalue():
         Trace.error('No literal parameter found at: ' + pos.identifier())
         return None
-      return pos.globidentifier()
+      return pos.globvalue()
     bracket = Bracket().setfactory(self.factory)
     self.add(bracket.parseliteral(pos))
     return bracket.literal

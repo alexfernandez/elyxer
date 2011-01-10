@@ -142,6 +142,23 @@ class Position(object):
     "Glob alphanumeric and _ symbols."
     return self.glob(lambda current: self.isidentifier(current))
 
+  def isvalue(self, char):
+    "Return if the given character is a value character:"
+    "not a bracket or a space."
+    if char.isspace():
+      return False
+    if char in '{}()':
+      return False
+    return True
+
+  def checkvalue(self):
+    "Return if the current character belongs to a single value."
+    return self.isvalue(self.current())
+
+  def globvalue(self):
+    "Glob a value: any symbols but brackets."
+    return self.glob(lambda current: self.isvalue(current))
+
   def skipspace(self):
     "Skip all whitespace at current position"
     return self.glob(lambda current: current.isspace())
