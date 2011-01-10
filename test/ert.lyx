@@ -148,6 +148,30 @@ status open
 
 \begin_layout Plain Layout
 
+} but won't go back on its own
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+url{
+\end_layout
+
+\end_inset
+
+http://should.be.an.url/
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
 }
 \end_layout
 
