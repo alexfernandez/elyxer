@@ -230,10 +230,9 @@ class FilePosition(Position):
   "A parse position based on an underlying file."
 
   def __init__(self, filename):
-    "Create the position from elyxer.a file."
+    "Create the position from a file."
     Position.__init__(self)
     self.reader = LineReader(filename)
-    self.number = 1
     self.pos = 0
     self.checkbytemark()
 
@@ -245,17 +244,24 @@ class FilePosition(Position):
       self.nextline()
     self.pos += length
 
+  def currentline(self):
+    "Get the current line of the underlying file."
+    return self.reader.currentline()
+
   def nextline(self):
     "Go to the next line."
     self.reader.nextline()
-    self.number += 1
     self.pos = 0
+
+  def linenumber(self):
+    "Return the line number of the file."
+    return self.reader.linenumber + 1
 
   def identifier(self):
     "Return the current line and line number in the file."
     before = self.reader.currentline()[:self.pos - 1]
     after = self.reader.currentline()[self.pos:]
-    return 'line ' + unicode(self.number) + ': ' + before + '*' + after
+    return 'line ' + unicode(self.getlinenumber()) + ': ' + before + '*' + after
 
   def isout(self):
     "Find out if we are out of the text yet."
