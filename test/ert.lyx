@@ -210,5 +210,22 @@ rule{3cm}{2pt}
 .
 \end_layout
 
+\begin_layout Standard
+Other commands can be ignored: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+fboxrule 3mm
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
 \end_body
 \end_document
