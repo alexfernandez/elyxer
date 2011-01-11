@@ -25,22 +25,16 @@
 from elyxer.io.fileline import *
 from elyxer.util.trace import Trace
 from elyxer.conf.config import *
+from elyxer.parse.glob import *
 
 
-class Position(object):
-  "A position in a text to parse"
+class Position(Globable):
+  """A position in a text to parse.
+  Including those in Globable, functions to implement by subclasses are:
+  skip(), identifier(), extract(), isout() and current()."""
 
   def __init__(self):
-    self.endinglist = EndingList()
-    self.leavepending = False
-    self.pendingendings = []
-
-  def checkbytemark(self):
-    "Check for a Unicode byte mark and skip it."
-    if self.finished():
-      return
-    if ord(self.current()) == 0xfeff:
-      self.skipcurrent()
+    Globable.__init__(self)
 
   def skip(self, string):
     "Skip a string"
@@ -51,18 +45,9 @@ class Position(object):
     Trace.error('Unimplemented identifier()')
     return 'Error'
 
-  def isout(self):
-    "Find out if we are out of the position yet."
-    Trace.error('Unimplemented isout()')
-    return True
-
-  def current(self):
-    "Return the current character"
-    Trace.error('Unimplemented current()')
-    return ''
-
   def extract(self, length):
-    "Extract the next string of the given length, or None if not enough text."
+    "Extract the next string of the given length, or None if not enough text,"
+    "without advancing the parse position."
     Trace.error('Unimplemented extract()')
     return None
 
@@ -76,23 +61,6 @@ class Position(object):
     if not extracted:
       return False
     return string.lower() == self.extract(len(string)).lower()
-
-  def setpendingendings(self, endings):
-    "Set any pending endings left over from a previous parsed position."
-    "Also sets the flag that allows pending endings (to be closed later)."
-    self.leavepending = True
-    self.endinglist.endings = endings
-    return self
-
-  def finished(self):
-    "Find out if the current formula has finished"
-    if self.isout():
-      if self.leavepending:
-        self.pendingendings = self.endinglist.endings
-      else:
-        self.endinglist.checkpending()
-      return True
-    return self.endinglist.checkin(self)
 
   def skipcurrent(self):
     "Return the current character and skip it."
@@ -111,81 +79,6 @@ class Position(object):
       return False
     self.skip(string)
     return True
-
-  def glob(self, currentcheck):
-    "Glob a bit of text that satisfies a check"
-    glob = ''
-    while not self.finished() and currentcheck(self.current()):
-      glob += self.current()
-      self.skip(self.current())
-    return glob
-
-  def globalpha(self):
-    "Glob a bit of alpha text"
-    return self.glob(lambda current: current.isalpha())
-
-  def globnumber(self):
-    "Glob a row of digits."
-    return self.glob(lambda current: current.isdigit())
-
-  def checkidentifier(self):
-    "Check if the current character belongs to an identifier."
-    return self.isidentifier(self.current())
-
-  def isidentifier(self, char):
-    "Return if the given character is alphanumeric or _."
-    if char.isalnum() or char == '_':
-      return True
-    return False
-
-  def globidentifier(self):
-    "Glob alphanumeric and _ symbols."
-    return self.glob(lambda current: self.isidentifier(current))
-
-  def isvalue(self, char):
-    "Return if the given character is a value character:"
-    "not a bracket or a space."
-    if char.isspace():
-      return False
-    if char in '{}()':
-      return False
-    return True
-
-  def checkvalue(self):
-    "Return if the current character belongs to a single value."
-    return self.isvalue(self.current())
-
-  def globvalue(self):
-    "Glob a value: any symbols but brackets."
-    return self.glob(lambda current: self.isvalue(current))
-
-  def skipspace(self):
-    "Skip all whitespace at current position"
-    return self.glob(lambda current: current.isspace())
-
-  def globincluding(self, magicchar):
-    "Glob a bit of text up to (including) the magic char."
-    glob = self.glob(lambda current: current != magicchar) + magicchar
-    self.skip(magicchar)
-    return glob
-
-  def globexcluding(self, excluded):
-    "Glob a bit of text up until (excluding) any excluded character."
-    return self.glob(lambda current: current not in excluded)
-
-  def pushending(self, ending, optional = False):
-    "Push a new ending to the bottom"
-    self.endinglist.add(ending, optional)
-
-  def popending(self, expected = None):
-    "Pop the ending found at the current position"
-    if self.isout() and self.leavepending:
-      return expected
-    ending = self.endinglist.pop(self)
-    if expected and expected != ending:
-      Trace.error('Expected ending ' + expected + ', got ' + ending)
-    self.skip(ending)
-    return ending
 
   def error(self, message):
     "Show an error message and the position identifier."
@@ -285,81 +178,4 @@ class FilePosition(Position):
     if self.pos + length > len(self.reader.currentline()):
       return None
     return self.reader.currentline()[self.pos : self.pos + length]
-
-class EndingList(object):
-  "A list of position endings"
-
-  def __init__(self):
-    self.endings = []
-
-  def add(self, ending, optional):
-    "Add a new ending to the list"
-    self.endings.append(PositionEnding(ending, optional))
-
-  def checkin(self, pos):
-    "Search for an ending"
-    if self.findending(pos):
-      return True
-    return False
-
-  def pop(self, pos):
-    "Remove the ending at the current position"
-    if pos.isout():
-      Trace.error('No ending out of bounds')
-      return ''
-    ending = self.findending(pos)
-    if not ending:
-      Trace.error('No ending at ' + pos.current())
-      return ''
-    for each in reversed(self.endings):
-      self.endings.remove(each)
-      if each == ending:
-        return each.ending
-      elif not each.optional:
-        Trace.error('Removed non-optional ending ' + each)
-    Trace.error('No endings left')
-    return ''
-
-  def findending(self, pos):
-    "Find the ending at the current position"
-    if len(self.endings) == 0:
-      return None
-    for index, ending in enumerate(reversed(self.endings)):
-      if ending.checkin(pos):
-        return ending
-      if not ending.optional:
-        return None
-    return None
-
-  def checkpending(self):
-    "Check if there are any pending endings"
-    if len(self.endings) != 0:
-      Trace.error('Pending ' + unicode(self) + ' left open')
-
-  def __unicode__(self):
-    "Printable representation"
-    string = 'endings ['
-    for ending in self.endings:
-      string += unicode(ending) + ','
-    if len(self.endings) > 0:
-      string = string[:-1]
-    return string + ']'
-
-class PositionEnding(object):
-  "An ending for a parsing position"
-
-  def __init__(self, ending, optional):
-    self.ending = ending
-    self.optional = optional
-
-  def checkin(self, pos):
-    "Check for the ending"
-    return pos.checkfor(self.ending)
-
-  def __unicode__(self):
-    "Printable representation"
-    string = 'Ending ' + self.ending
-    if self.optional:
-      string += ' (optional)'
-    return string
 

@@ -160,7 +160,7 @@ class FormulaNumber(FormulaBit):
 
   def parsebit(self, pos):
     "Parse a bunch of digits"
-    digits = pos.glob(lambda current: current.isdigit())
+    digits = pos.glob(lambda: pos.current().isdigit())
     self.add(FormulaConstant(digits))
     self.type = 'number'
 

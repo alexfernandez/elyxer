@@ -117,7 +117,7 @@ class TeXCode(Container):
     "Parse some text excluding value separators and compressing spaces."
     parsed = ''
     while not pos.finished():
-      parsed += pos.glob(self.excludespaces)
+      parsed += pos.glob(lambda: self.excludespaces(pos))
       if not pos.finished() and pos.current().isspace():
         parsed += ' '
         pos.skipspace()
@@ -125,8 +125,9 @@ class TeXCode(Container):
         return parsed
     return parsed
 
-  def excludespaces(self, current):
+  def excludespaces(self, pos):
     "Exclude value separators and spaces."
+    current = pos.current()
     if current in self.texseparators:
       return False
     if current.isspace():

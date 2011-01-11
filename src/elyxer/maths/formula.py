@@ -110,7 +110,7 @@ class Formula(Container):
   def parseupto(self, pos, limit):
     "Parse a formula that ends with the given command."
     pos.pushending(limit)
-    self.parsed = pos.glob(lambda current: True)
+    self.parsed = pos.glob(lambda: True)
     pos.popending(limit)
 
   def __unicode__(self):
