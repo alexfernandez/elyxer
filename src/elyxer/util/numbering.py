@@ -58,13 +58,6 @@ class NumberCounter(object):
     "Set an initial value."
     self.value = value
 
-  def increase(self):
-    "Increase the counter value and return the counter."
-    if not self.value:
-      self.value = 0
-    self.value += 1
-    return self
-
   def gettext(self):
     "Get the next value as a text string."
     return unicode(self.value)
@@ -107,8 +100,11 @@ class NumberCounter(object):
     return self.gettext()
 
   def getnext(self):
-    "Get the next value as configured: increase() and getvalue()."
-    return self.increase().getvalue()
+    "Increase the current value and get the next value as configured."
+    if not self.value:
+      self.value = 0
+    self.value += 1
+    return self.getvalue()
 
   def reset(self):
     "Reset the counter."
@@ -130,13 +126,13 @@ class DependentCounter(NumberCounter):
     self.last = self.master.getvalue()
     return self
 
-  def increase(self):
+  def getnext(self):
     "Increase or, if the master counter has changed, restart."
     if self.last != self.master.getvalue():
       self.reset()
-    NumberCounter.increase(self)
+    value = NumberCounter.getnext(self)
     self.last = self.master.getvalue()
-    return self
+    return value
 
   def getvalue(self):
     "Get the value of the combined counter: master.dependent."

@@ -85,8 +85,7 @@ class Float(Container):
     for subfloat in floats:
       subfloat.output.tag = subfloat.output.tag.replace('div', 'span')
       # number the float
-      counter.increase()
-      number = counter.getvalue()
+      number = counter.getnext()
       entry = '(' + number + ')'
       subfloat.partkey = PartKey().createsubfloat(self.type, number)
 
