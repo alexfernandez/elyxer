@@ -253,7 +253,7 @@ class PostFloat(object):
   def postlabels(self, float, caption):
     "Search for labels and move them to the top"
     labels = caption.searchremove(Label)
-    if len(labels) == 0:
+    if len(labels) == 0 and float.partkey.tocentry:
       labels = [Label().create(' ', float.partkey.partkey.replace(' ', '-'))]
     float.contents = labels + float.contents
 
