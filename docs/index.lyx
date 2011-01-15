@@ -468,25 +468,8 @@ target "http://www.fileformat.info/"
  for their complete tables of Unicode characters.
  More thanks go to Christian Ridderström for helping me out right at the
  start; to Ignacio García for relentless encouragement; to Abdelrazak Younes,
- Pavel Sanda, Günther Milde, Olivier Ripoll, José Matos, Iain Mac Donald,
- Uwe Stöhr for their interesting suggestions; to Nikos Alexandris, Joachim
- Kreimer-de Fries (Osnabryg), Richard Talley, Wolfgang Keller, Murray Eisenberg,
- Robert Orr, a Linux guy in Singapore, Anders Ekberg, Pavel Sanda, Steve
- Hastings, Sven Hoexter, Xie Chao, Uwe Stöhr, Jürgen Spitzmüller, Olivier
- Ripoll, Konrad Hofbauer, Eduardo Grosclaude, Ken, Jens Nöckel, 
-\begin_inset CommandInset href
-LatexCommand href
-name "Dr Eberhard W Lisse"
-target "el@lisse.na"
-type "mailto:"
-
-\end_inset
-
-, William Crocker, Sara Teinturier, Hans Bezemer, Jack Desert, Hartmut Haase,
- Rainer Dorsch, Wolfgang Engelmann, Rodrigo Benenson, Stefano Franchi, Steve
- Litt, Paul Johnson, Yan Wong, Yaron Goland, Francis Girard, Rene de Zwart,
- Jose Ramón Álvarez Sánchez, Günter Milde, Axel Jacobs for their testing
- and bug reporting.
+ Pavel Sanda, Günter Milde, Olivier Ripoll, José Matos, Iain Mac Donald,
+ Uwe Stöhr for their interesting suggestions.
  Thanks to Uwe Stöhr, Hans Bezemer, Sara Teinturier for their translations.
  Packagers Sven Hoexter (for Debian) and Uwe Stöhr (on Windows) have helped
  with their work to make it easy to try it out.
@@ -513,6 +496,27 @@ target "http://www.mathtoweb.com/"
 
  (which unfortunately has not been fruitful yet, due to my lack of skill
  and certainly not to his lack of interest).
+\end_layout
+
+\begin_layout Standard
+Thanks to Nikos Alexandris, Joachim Kreimer-de Fries (Osnabryg), Richard
+ Talley, Wolfgang Keller, Murray Eisenberg, Robert Orr, a Linux guy in Singapore
+, Anders Ekberg, Pavel Sanda, Steve Hastings, Sven Hoexter, Xie Chao, Uwe
+ Stöhr, Jürgen Spitzmüller, Olivier Ripoll, Konrad Hofbauer, Eduardo Grosclaude,
+ Ken, Jens Nöckel, 
+\begin_inset CommandInset href
+LatexCommand href
+name "Dr Eberhard W Lisse"
+target "el@lisse.na"
+type "mailto:"
+
+\end_inset
+
+, William Crocker, Sara Teinturier, Hans Bezemer, Jack Desert, Hartmut Haase,
+ Rainer Dorsch, Wolfgang Engelmann, Rodrigo Benenson, Stefano Franchi, Steve
+ Litt, Paul Johnson, Yan Wong, Yaron Goland, Francis Girard, Rene de Zwart,
+ Jose Ramón Álvarez Sánchez, Günter Milde, Axel Jacobs for their testing
+ and bug reporting.
 \end_layout
 
 \begin_layout Standard
