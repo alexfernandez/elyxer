@@ -546,21 +546,24 @@ span.chunkref {
 /* Split Part Navigation */
 div.splitheader {
 	margin: 0em;
+	padding: 0.1em;
 	text-align: center;
 	background: #f9f9f9;
+	overflow: auto;
 }
 span.next {
 	float: right;
-	width: 15em;
+	width: 30%;
 	text-align: right;
 }
 span.up {
 	display: inline-block;
+	width: 30%;
 	text-align: center;
 }
 span.prev {
 	float: left;
-	width: 15em;
+	width: 30%;
 	text-align: left;
 }
 hr.footer {

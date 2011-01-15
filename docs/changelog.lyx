@@ -217,6 +217,14 @@ Game
 .
 \end_layout
 
+\begin_layout Itemize
+Changed the navigation header for 
+\family typewriter
+--splitpart
+\family default
+ so that the left and right spans overflow (thanks, Axel!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.2 (2010-12-23):
