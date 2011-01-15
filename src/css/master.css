@@ -580,6 +580,5 @@ span.deleted {
 	text-decoration: line-through;
 }
 @import "math.css";
-@import "math-extras.css";
 @import "obsolete.css";
 @import "print.css";

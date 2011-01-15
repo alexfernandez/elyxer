@@ -166,3 +166,5 @@ span.arraycell, span.bracket, span.case, span.binomcell, span.environmentcell {
 	line-height: 99%;
 	border: 0ex;
 }
+@import "math-extras.css";
+
