@@ -64,10 +64,7 @@ class Float(Container):
       # do nothing; parent will take care of numbering
       return
     number = NumberGenerator.chaptered.generate(self.type)
-    entry = number
-    if not Options.notoclabels:
-      entry = Translator.translate('float-' + self.type) + entry
-    self.partkey = PartKey().createfloat(entry, number)
+    self.partkey = PartKey().createfloat(self.type, number)
 
   def processtags(self):
     "Process the HTML tags."
@@ -91,7 +88,7 @@ class Float(Container):
       counter.increase()
       number = counter.getvalue()
       entry = '(' + number + ')'
-      subfloat.partkey = PartKey().createfloat(entry, number)
+      subfloat.partkey = PartKey().createsubfloat(self.type, number)
 
   def getembeddedtag(self):
     "Get the tag for the embedded object."
@@ -238,7 +235,7 @@ class FloatNumber(Container):
 
   def create(self, float):
     "Create the float number."
-    self.contents = [Constant(float.partkey.tocentry)]
+    self.contents = [Constant(float.partkey.partkey)]
     return self
 
 class PostFloat(object):
@@ -251,15 +248,14 @@ class PostFloat(object):
     number = FloatNumber().create(float)
     for caption in float.searchinside(Caption):
       self.postlabels(float, caption)
-      caption.contents.insert(0, Separator(u' '))
-      caption.contents.insert(0, number)
+      caption.contents = [number, Separator(u' ')] + caption.contents
     return float
 
   def postlabels(self, float, caption):
     "Search for labels and move them to the top"
     labels = caption.searchremove(Label)
     if len(labels) == 0:
-      labels = [Label().create(' ', float.partkey.tocentry.replace(' ', '-'))]
+      labels = [Label().create(' ', float.partkey.partkey.replace(' ', '-'))]
     float.contents = labels + float.contents
 
 class PostWrap(PostFloat):

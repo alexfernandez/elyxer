@@ -51,11 +51,22 @@ class PartKey(object):
     self.filename = partkey
     return self
 
-  def createfloat(self, partkey, number):
+  def createfloat(self, type, number):
     "Create a part key for a float."
-    self.partkey = partkey
+    self.partkey = Translator.translate('float-' + type) + number
     self.number = number
-    self.tocentry = partkey
+    # self.number = type + '-' + number
+    if Options.notoclabels:
+      self.tocentry = number
+    else:
+      self.tocentry = self.partkey
+    self.showtitle = True
+    return self
+
+  def createsubfloat(self, type, number):
+    "Create the part key for a subfloat."
+    self.partkey = '(' + number + ')'
+    self.number = number
     self.showtitle = True
     return self
 

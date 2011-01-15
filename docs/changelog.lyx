@@ -225,6 +225,22 @@ Changed the navigation header for
  so that the left and right spans overflow (thanks, Axel!).
 \end_layout
 
+\begin_layout Itemize
+Bug in 
+\family typewriter
+--notoclabels
+\family default
+: labels such as 
+\begin_inset Quotes eld
+\end_inset
+
+Figure
+\begin_inset Quotes erd
+\end_inset
+
+ should not be omitted in captions, but only in the TOC (thanks again, Axel!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.2 (2010-12-23):
