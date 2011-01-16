@@ -238,7 +238,7 @@ Figure
 \begin_inset Quotes erd
 \end_inset
 
- should not be omitted in captions, but only in the TOC (thanks again, Axel!).
+ should be omitted in the TOC, but not in captions (thanks again, Axel!).
 \end_layout
 
 \end_deeper
