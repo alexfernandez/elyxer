@@ -88,12 +88,12 @@ class SplitPartNavigation(object):
 
   def createnavigation(self, container):
     "Create the navigation bar with all links."
-    prevlink = Link().complete(' ', 'prev', type='prev')
+    prevlink = Link().complete(u' ', 'prev', type='prev')
     if self.nextlink:
       self.setlinkname(prevlink, Translator.translate('prev'), self.lastcontainer)
       self.setlinkname(self.nextlink, Translator.translate('next'), container)
       prevlink.setmutualdestination(self.nextlink)
-    self.nextlink = Link().complete(' ', Translator.translate('next'), type='next')
+    self.nextlink = Link().complete(u' ', Translator.translate('next'), type='next')
     uplink = Link().complete(Translator.translate('up'), url='', type='up')
     self.setlinkname(uplink, Translator.translate('up'), self.getupdestination(container))
     uplink.destination = self.getupdestination(container)

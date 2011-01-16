@@ -241,6 +241,15 @@ Figure
  should be omitted in the TOC, but not in captions (thanks again, Axel!).
 \end_layout
 
+\begin_layout Itemize
+Bug in 
+\family typewriter
+--splitpart
+\family default
+: empty navigation links caused the header to look unbalanced, fixed with
+ a non-breaking space (more thanks, Axel!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.2 (2010-12-23):
