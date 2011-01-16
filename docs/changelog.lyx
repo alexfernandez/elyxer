@@ -246,8 +246,10 @@ Bug in
 \family typewriter
 --splitpart
 \family default
-: empty navigation links caused the header to look unbalanced, fixed with
- a non-breaking space (more thanks, Axel!).
+: empty navigation links caused the header to look unbalanced, fixed now
+ with a non-breaking space.
+ Also, up link in the main page used to point to itself; now it's an empty
+ link (more thanks, Axel!).
 \end_layout
 
 \end_deeper
