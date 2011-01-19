@@ -780,7 +780,7 @@ By default, letters denote variables and are taken from the
 \backslash
 mathnormal
 \family default
- font, which is italic, 
+ font, which is italic: 
 \begin_inset Formula $\alpha x+\alpha y=\alpha(x+y)$
 \end_inset
 
@@ -789,6 +789,12 @@ mathnormal
 \end_inset
 
 .
+ Letters run together represent different variables: 
+\begin_inset Formula $abcd=a\times b\times c\times d$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
