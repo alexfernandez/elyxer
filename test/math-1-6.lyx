@@ -130,7 +130,7 @@ Math Test
 \end_layout
 
 \begin_layout Section
-Limit
+Limits
 \end_layout
 
 \begin_layout Standard
@@ -216,6 +216,32 @@ A sum inside another element (red color):
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The placing of limits can be cofigured with the 
+\family typewriter
+
+\backslash
+limits
+\family default
+ and 
+\family typewriter
+
+\backslash
+nolimits
+\family default
+ macros: 
+\begin_inset Formula \[
+\lim\nolimits _{x\rightarrow\infty}\lyxlock f(x),\;\sum\nolimits _{i=1}^{\infty}x,\;\int\limits _{0}^{\infty}f(x)\,\mathrm{d}x\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Super- and Subscript
 \end_layout
 
 \begin_layout Standard
@@ -363,8 +389,7 @@ Brackets
 \end_layout
 
 \begin_layout Standard
-Some delimiters also taken from the Spanish Lyx User's Guide.
- An array: 
+An array: 
 \begin_inset Formula \[
 \left[\begin{array}{lc}
 12 & 2\\
@@ -382,7 +407,56 @@ c & dio\end{array}\right]$
 \end_layout
 
 \begin_layout Standard
-There are also big brackets: 
+Arrays are separated by variable-size brackets: 
+\begin_inset Formula $\left(\begin{array}{cc}
+a & b\\
+c & d\end{array}\right)$
+\end_inset
+
+ 
+\begin_inset Formula $\left[\begin{array}{cc}
+a & b\\
+c & d\end{array}\right]$
+\end_inset
+
+ 
+\begin_inset Formula $\left\{ \begin{array}{cc}
+a & b\\
+c & d\end{array}\right\} $
+\end_inset
+
+ 
+\begin_inset Formula $\left\langle \begin{array}{cc}
+a & b\\
+c & d\end{array}\right\rangle $
+\end_inset
+
+ 
+\begin_inset Formula $\left|\begin{array}{cc}
+a & b\\
+c & d\end{array}\right|$
+\end_inset
+
+which might also differ on right and left 
+\begin_inset Formula $\left(\begin{array}{cc}
+a & b\\
+c & d\end{array}\right)$
+\end_inset
+
+ or use the empty opening 
+\begin_inset Formula $\left\{ \begin{array}{cc}
+a & b\\
+c & d\end{array}\right.$
+\end_inset
+
+ or closing: 
+\begin_inset Formula $\left.\begin{array}{cc}
+a & b\\
+c & d\end{array}\right|$
+\end_inset
+
+.
+ There are also fixed-size big brackets: 
 \begin_inset Formula $\left(a\right)$
 \end_inset
 
@@ -627,21 +701,24 @@ The command
 \backslash
 raisebox
 \family default
- is useful to, surprisingly, raise a little box.
-\end_layout
+ is useful to, surprisingly, raise a little box, 
+\begin_inset Formula \[
+\raisebox{2mm}{raised}over\raisebox{-2mm}{lowered}\textrm{and back}.\]
 
-\begin_layout Standard
-\begin_inset Formula $\raisebox{2mm}{raised}over\raisebox{-2mm}{lowered}\textrm{and back}.$
 \end_inset
 
+Like 
+\family typewriter
 
-\end_layout
+\backslash
+mbox
+\family default
+, it puts its content in a text box.
+ It can also be used just for spacing:
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
-It can also be used just for spacing.
-\end_layout
-
-\begin_layout Standard
+ 
 \begin_inset Formula $\raisebox{5mm}{}B^{V}$
 \end_inset
 
@@ -649,32 +726,47 @@ It can also be used just for spacing.
 \end_layout
 
 \begin_layout Standard
-There are other spacing commands, like 
+There are other spacing commands: 
 \family typewriter
 
 \backslash
 hspace
 \family default
-: 
-\begin_inset Formula $"\hspace{4mm}"$
+ 
+\begin_inset Formula $a\hspace{4mm}b$
 \end_inset
 
-, and 
-\family typewriter
+, protected space 
+\begin_inset Formula $a\ b$
+\end_inset
 
+, and at 
+\begin_inset Quotes eld
+\end_inset
+
+block level
+\begin_inset Quotes erd
+\end_inset
+
+
+\family typewriter
+ 
 \backslash
 vspace
 \family default
 : 
-\begin_inset Formula $"\vspace{1cm}"$
+\begin_inset Formula $a\vspace{1cm}b$
 \end_inset
 
 .
- Protected space can be used: 
-\begin_inset Formula $a\ b$
+\end_layout
+
+\begin_layout Standard
+There should be 1
+\begin_inset space ~
 \end_inset
 
-.
+cm of vertical space above this paragraph.
 \end_layout
 
 \begin_layout Section
@@ -682,101 +774,119 @@ Fonts
 \end_layout
 
 \begin_layout Standard
-Fonts can be switched on and off.
-\end_layout
+By default, letters denote variables and are taken from the 
+\family typewriter
 
-\begin_layout Standard
-By default, text in formulae is shown italicized.
- Variable: 
-\begin_inset Formula $meters$
+\backslash
+mathnormal
+\family default
+ font, which is italic, 
+\begin_inset Formula $\alpha x+\alpha y=\alpha(x+y)$
+\end_inset
+
+, with the exception of upright capital Greek letters, 
+\begin_inset Formula $G\ne\Gamma$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
-Some font styles.
- Roman: 
-\begin_inset Formula $1\mathrm{mathrm}$
-\end_inset
-
-.
- Sans serif: 
-\begin_inset Formula $2\mathsf{mathsf}$
-\end_inset
-
-.
- Typewriter: 
-\begin_inset Formula $3\mathtt{mathtt}$
-\end_inset
-
-.
- Bold: 
-\begin_inset Formula $4\mathbf{mathbf}$
+Functions names should be upright: 
+\begin_inset Formula $\sin(2\pi),\log(x),\tan\delta$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
-Regular text.
- Normal text: 
-\begin_inset Formula $5\textrm{textfm}$
+Mathematical fonts used in equations include 
+\begin_inset Formula $\mathrm{Roman}$
 \end_inset
 
-.
- Literal text: 
-\begin_inset Formula $6\mbox{mbox text}$
+ (
+\family typewriter
+
+\backslash
+mathrm
+\family default
+), 
+\begin_inset Formula $\mathsf{Sans\: Serif}$
 \end_inset
 
-.
- Phonetic alphabet: 
-\begin_inset Formula $7\text{\textipa{abcde}}$
+ (
+\family typewriter
+
+\backslash
+mathsf
+\family default
+), 
+\begin_inset Formula $\mathtt{Typewriter}$
 \end_inset
 
-.
- Regular text can be embedded into formulae: 
-\begin_inset Formula $\textrm{regular text \backslash command \backslash another command \backslash\backslash no spaces allowed}$
+ (
+\family typewriter
+
+\backslash
+mathtt
+\family default
+), 
+\begin_inset Formula $\mathbf{Bold}$
 \end_inset
 
-.
-\end_layout
+ (
+\family typewriter
 
-\begin_layout Standard
-Units can be shown with or without a magnitude.
- Without: 
-\begin_inset Formula $\unit{km}$
+\backslash
+mathbf
+\family default
+), 
+\begin_inset Formula $\mathscr{SCRIPT}$
 \end_inset
 
-.
- With: 
-\begin_inset Formula $\unit[57]{km}$
+ (
+\family typewriter
+
+\backslash
+mathscr
+\family default
+), 
+\begin_inset Formula $\mathcal{CALLIGRAPHIC}$
 \end_inset
 
-.
- Fractional units: 
-\begin_inset Formula $\unitfrac[20]{km}{h}$
+ (
+\family typewriter
+
+\backslash
+mathcal
+\family default
+), 
+\begin_inset Formula $\mathbb{BLACKBOARD\: BOLD}$
 \end_inset
 
-.
- With a fraction before the units: 
-\begin_inset Formula $\unit[\nicefrac{3}{2}]{km}$
+ (
+\family typewriter
+\noun on
+
+\backslash
+
+\noun default
+mathbb
+\family default
+), and 
+\begin_inset Formula $\mathfrak{Fraktur}$
 \end_inset
 
-, 
-\begin_inset Formula $\unit[\frac{7}{16}]{s}$
-\end_inset
+ (
+\family typewriter
 
-.
-\end_layout
-
-\begin_layout Standard
-Some special fonts are supported: 
+\backslash
+mathfrak
+\family default
+).
+ For the latter, some single characters are translated to their Unicode
+ equivalents: 
 \begin_inset Formula $\mathscr{F}$
-\end_inset
-
-, 
-\begin_inset Formula $\mathcal{F}$
 \end_inset
 
 , 
@@ -785,6 +895,86 @@ Some special fonts are supported:
 
 , 
 \begin_inset Formula $\mathfrak{F}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Regular text in a formula can be achieved via text font commands like 
+\family typewriter
+
+\backslash
+textrm
+\family default
+: 
+\begin_inset Formula $5\:\textrm{to}\:10$
+\end_inset
+
+, via boxes like 
+\backslash
+mbox (prevents line breaks): 
+\begin_inset Formula $6\mbox{ is more than }5$
+\end_inset
+
+, or the AMSmath 
+\family typewriter
+
+\backslash
+text
+\family default
+ macro (scales like math symbols) 
+\begin_inset Formula $\text{base}_{\text{sub}}^{\text{super}}$
+\end_inset
+
+.
+ The content of an mbox is processed in LaTeX text mode.
+ This allows text font commands, e.g.
+ a switch to 
+\family sans
+\series bold
+\shape italic
+sans-serif-bold-italic
+\family default
+\series default
+\shape default
+, or the phonetic alphabet: 
+\begin_inset Formula $\mbox{\textbf{\textsf{\textbf{\textit{sfbfit}}}}, \textipa{tipa}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Units should be written upright, either with 
+\family typewriter
+
+\backslash
+mathrm
+\family default
+ or with macros from the 
+\family typewriter
+units
+\family default
+ package, e.g.
+ as simple unit, 
+\begin_inset Formula $\unit{km}$
+\end_inset
+
+, with magnitude, 
+\begin_inset Formula $\unit[57]{km}$
+\end_inset
+
+, with fractional unit, 
+\begin_inset Formula $\unitfrac[200]{km}{h}$
+\end_inset
+
+, or with a fraction before the units, 
+\begin_inset Formula $\unit[\nicefrac{3}{2}]{km}$
+\end_inset
+
+, 
+\begin_inset Formula $\unit[\frac{7}{16}]{s}$
 \end_inset
 
 .
