@@ -208,10 +208,10 @@ class BracketProcessor(MathsProcessor):
   def resize(self, command, size):
     "Resize a bracket command to the given size."
     character = command.extracttext()
-    bracket = BigBracket(size, character)
     alignment = command.command.replace('\\', '')
+    bracket = BigBracket(size, character, alignment)
     command.output = ContentsOutput()
-    command.contents = [bracket.getarray(alignment)]
+    command.contents = bracket.getcontents()
 
 
 FormulaCommand.types += [

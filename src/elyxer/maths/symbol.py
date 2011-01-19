@@ -56,10 +56,11 @@ class BigSymbol(object):
 class BigBracket(BigSymbol):
   "A big bracket generator."
 
-  def __init__(self, size, bracket):
+  def __init__(self, size, bracket, alignment='l'):
     "Set the size and symbol for the bracket."
     self.size = size
     self.original = bracket
+    self.alignment = alignment
     self.pieces = None
     if bracket in FormulaConfig.bigbrackets:
       self.pieces = FormulaConfig.bigbrackets[bracket]
@@ -74,34 +75,36 @@ class BigBracket(BigSymbol):
       return self.pieces[-1]
     return self.pieces[1]
 
-  def getcell(self, index, align):
+  def getcell(self, index):
     "Get the bracket piece as an array cell."
     piece = self.getpiece(index)
-    return TaggedBit().constant(piece, 'span class="bracket align-' + align + '"')
+    span = 'span class="bracket align-' + self.alignment + '"'
+    return TaggedBit().constant(piece, span)
 
-  def getarray(self, align):
-    "Get the bracket as an array."
+  def getcontents(self):
+    "Get the bracket as an array or as a single bracket."
     if self.size == 1 or not self.pieces:
       return self.getsinglebracket()
     rows = []
     for index in range(self.size):
-      cell = self.getcell(index, align)
+      cell = self.getcell(index)
       rows.append(TaggedBit().complete([cell], 'span class="arrayrow"'))
-    return TaggedBit().complete(rows, 'span class="array"')
+    return [TaggedBit().complete(rows, 'span class="array"')]
 
   def getsinglebracket(self):
     "Return the bracket as a single sign."
     if self.original == '.':
-      return TaggedBit().constant('', 'span class="emptydot"')
-    return TaggedBit().constant(self.original, 'span class="symbol"')
+      return [TaggedBit().constant('', 'span class="emptydot"')]
+    return [TaggedBit().constant(self.original, 'span class="symbol"')]
 
 class CasesBrace(BigBracket):
   "A big brace used for a case statement."
 
-  def __init__(self, size):
+  def __init__(self, size, alignment):
     "Set the size for the brace."
     self.size = size
     self.original = '{'
+    self.alignment = alignment
     self.pieces = [u'⎧',u'⎪',u'⎨',u'⎩']
 
   def getpiece(self, index):
