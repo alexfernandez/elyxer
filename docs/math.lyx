@@ -575,7 +575,7 @@ mathnormal
 \end_layout
 
 \begin_layout Standard
-Functions names should be upright: 
+Function names should be upright: 
 \begin_inset Formula $\sin(2\pi),\log(x),\tan\delta$
 \end_inset
 
@@ -684,7 +684,7 @@ mathfrak
 \end_layout
 
 \begin_layout Standard
-Regular text in a formalua can be achieved via text font commands like 
+Regular text in a formula can be achieved via text font commands like 
 \family typewriter
 
 \backslash
@@ -957,8 +957,8 @@ where the sum's limits should appear below (
 \end_inset
 
 .
- The placement of the integral limits depends on the document class (the
- LaTeX standard classes place them right to the 
+ The placement of the integral limits depends on the document class: LaTeX
+ standard classes place them right to the 
 \begin_inset Formula $\int$
 \end_inset
 
@@ -975,7 +975,7 @@ where the sum's limits should appear below (
 \end_layout
 
 \begin_layout Standard
-The placing of limits can be cofigured with the 
+The placing of limits can be configured with the 
 \family typewriter
 
 \backslash
@@ -1191,7 +1191,7 @@ macros
 \begin_layout Standard
 Definitions can be added as macros
 \begin_inset FormulaMacro
-\renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
+\newcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
 {\sqrt[#1]{#2}}
 \end_inset
 
@@ -1203,7 +1203,7 @@ Definitions can be added as macros
 .
  They can accept default parameters
 \begin_inset FormulaMacro
-\renewcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
+\newcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
 {#1\sqrt{#2}}
 \end_inset
 
