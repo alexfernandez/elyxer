@@ -60,10 +60,9 @@ class BigBracket(BigSymbol):
     "Set the size and symbol for the bracket."
     self.size = size
     self.original = bracket
+    self.pieces = None
     if bracket in FormulaConfig.bigbrackets:
       self.pieces = FormulaConfig.bigbrackets[bracket]
-    else:
-      self.pieces = [bracket, bracket]
 
   def getpiece(self, index):
     "Return the nth piece for the bracket."
@@ -82,7 +81,7 @@ class BigBracket(BigSymbol):
 
   def getarray(self, align):
     "Get the bracket as an array."
-    if self.size == 1:
+    if self.size == 1 or not self.pieces:
       return self.getsinglebracket()
     rows = []
     for index in range(self.size):
@@ -103,14 +102,15 @@ class CasesBrace(BigBracket):
     "Set the size for the brace."
     self.size = size
     self.original = '{'
+    self.pieces = [u'⎧',u'⎪',u'⎨',u'⎩']
 
   def getpiece(self, index):
     "Get the nth piece for the brace."
     if index == 0:
-      return u'⎧'
+      return self.pieces[0]
     if index == self.size - 1:
-      return u'⎩'
+      return self.pieces[3]
     if index == (self.size - 1)/2:
-      return u'⎨'
-    return u'⎪'
+      return self.pieces[2]
+    return self.pieces[1]
 
