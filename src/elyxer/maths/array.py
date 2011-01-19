@@ -181,7 +181,7 @@ class FormulaCases(MultiRowFormula):
         cell.output.settag('span class="case align-l"', True)
         cell.contents.append(FormulaConstant(u' '))
     array = TaggedBit().complete(self.contents, 'span class="bracketcases"', True)
-    brace = CasesBrace(len(self.contents), 'l')
+    brace = BigBracket(len(self.contents), '{', 'l')
     self.contents = brace.getcontents() + [array]
 
 class EquationEnvironment(MultiRowFormula):

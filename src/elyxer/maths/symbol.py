@@ -67,12 +67,29 @@ class BigBracket(BigSymbol):
 
   def getpiece(self, index):
     "Return the nth piece for the bracket."
-    if len(self.pieces) == 1:
-      return self.pieces[0]
+    function = getattr(self, 'getpiece' + unicode(len(self.pieces)))
+    return function(index)
+
+  def getpiece1(self, index):
+    "Return the only piece for a single-piece bracket."
+    return self.pieces[0]
+
+  def getpiece3(self, index):
+    "Get the nth piece for a 3-piece bracket: parenthesis or square bracket."
     if index == 0:
       return self.pieces[0]
     if index == self.size - 1:
       return self.pieces[-1]
+    return self.pieces[1]
+
+  def getpiece4(self, index):
+    "Get the nth piece for a 4-piece bracket: curly bracket."
+    if index == 0:
+      return self.pieces[0]
+    if index == self.size - 1:
+      return self.pieces[3]
+    if index == (self.size - 1)/2:
+      return self.pieces[2]
     return self.pieces[1]
 
   def getcell(self, index):
@@ -96,24 +113,4 @@ class BigBracket(BigSymbol):
     if self.original == '.':
       return [TaggedBit().constant('', 'span class="emptydot"')]
     return [TaggedBit().constant(self.original, 'span class="symbol"')]
-
-class CasesBrace(BigBracket):
-  "A big brace used for a case statement."
-
-  def __init__(self, size, alignment):
-    "Set the size for the brace."
-    self.size = size
-    self.original = '{'
-    self.alignment = alignment
-    self.pieces = [u'⎧',u'⎪',u'⎨',u'⎩']
-
-  def getpiece(self, index):
-    "Get the nth piece for the brace."
-    if index == 0:
-      return self.pieces[0]
-    if index == self.size - 1:
-      return self.pieces[3]
-    if index == (self.size - 1)/2:
-      return self.pieces[2]
-    return self.pieces[1]
 
