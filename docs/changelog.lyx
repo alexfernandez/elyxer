@@ -252,6 +252,23 @@ Bug in
  link (more thanks, Axel!).
 \end_layout
 
+\begin_layout Itemize
+Support for 
+\family typewriter
+
+\backslash
+limits
+\family default
+ and 
+\family typewriter
+
+\backslash
+nolimits
+\family default
+: control if the last symbol should show limits above or below the symbol
+ or not.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.2 (2010-12-23):

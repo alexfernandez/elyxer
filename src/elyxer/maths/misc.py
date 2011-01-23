@@ -24,6 +24,7 @@
 
 from elyxer.util.numbering import *
 from elyxer.maths.command import *
+from elyxer.maths.extracommand import *
 from elyxer.maths.macro import *
 
 
@@ -57,8 +58,7 @@ class MiscCommand(CommandBit):
   def parsebit(self, pos):
     "Find the right command to parse and parse it."
     commandtype = globals()[self.translated]
-    result = self.parsecommandtype(self.translated, commandtype, pos)
-    self.contents = [result]
+    return self.parsecommandtype(self.translated, commandtype, pos)
 
 FormulaCommand.types += [MiscCommand]
 

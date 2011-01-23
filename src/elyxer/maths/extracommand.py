@@ -80,6 +80,16 @@ class LimitCommand(EmptyCommand):
     for piece in pieces:
       self.contents.append(TaggedBit().constant(piece, 'span class="limit"'))
 
+class LimitPreviousCommand(LimitCommand):
+  "A command to limit the previous command."
+
+  commandmap = None
+
+  def parsebit(self, pos):
+    "Do nothing."
+    self.output = TaggedOutput().settag('span class="limits"')
+    self.add(FormulaConstant('perico'))
+
 class LimitsProcessor(MathsProcessor):
   "A processor for limits inside an element."
 
@@ -96,9 +106,16 @@ class LimitsProcessor(MathsProcessor):
     "Check if the current position has a limits command."
     if not DocumentParameters.displaymode:
       return False
+    if self.checkcommand(contents, index + 1, LimitPreviousCommand):
+      self.limitsahead(contents, index)
     if not isinstance(contents[index], LimitCommand):
       return False
     return self.checkscript(contents, index + 1)
+
+  def limitsahead(self, contents, index):
+    "Limit the current element based on the next."
+    contents[index + 1].add(contents[index])
+    del contents[index]
 
   def modifylimits(self, contents, index):
     "Modify a limits commands so that the limits appear above and below."
@@ -127,9 +144,13 @@ class LimitsProcessor(MathsProcessor):
 
   def checkscript(self, contents, index):
     "Check if the current element is a sub- or superscript."
+    return self.checkcommand(contents, index, SymbolFunction)
+
+  def checkcommand(self, contents, index, type):
+    "Check for the given type as the current element."
     if len(contents) <= index:
       return False
-    return isinstance(contents[index], SymbolFunction)
+    return isinstance(contents[index], type)
 
   def getscript(self, contents, index):
     "Get the sub- or superscript."

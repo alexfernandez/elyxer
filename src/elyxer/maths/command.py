@@ -37,6 +37,7 @@ class FormulaCommand(FormulaBit):
 
   types = []
   start = FormulaConfig.starts['command']
+  commandmap = None
 
   def detect(self, pos):
     "Find the current command."
@@ -69,7 +70,9 @@ class FormulaCommand(FormulaBit):
     "Parse a given command type."
     bit = self.factory.create(type)
     bit.setcommand(command)
-    bit.parsebit(pos)
+    returned = bit.parsebit(pos)
+    if returned:
+      return returned
     return bit
 
   def extractcommand(self, pos):
@@ -108,8 +111,8 @@ class CommandBit(FormulaCommand):
   def setcommand(self, command):
     "Set the command in the bit"
     self.command = command
-    self.original += command
-    if hasattr(self, 'commandmap'):
+    if self.commandmap:
+      self.original += command
       self.translated = self.commandmap[self.command]
  
   def parseparameter(self, pos):
