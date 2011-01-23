@@ -164,8 +164,6 @@ class BibTag(Container):
 
   valueseparators = ['{', '"', '#', '}']
   stringdefs = dict()
-  replaced = BibTeXConfig.replaced
-  factory = FormulaFactory()
 
   def __init__(self):
     self.contents = []
