@@ -46,6 +46,7 @@ class FormulaCommand(FormulaBit):
   def parsebit(self, pos):
     "Parse the command."
     command = self.extractcommand(pos)
+    self.factory.clearignored(pos)
     bit = self.parsewithcommand(command, pos)
     if bit:
       return bit

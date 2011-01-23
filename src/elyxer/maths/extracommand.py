@@ -88,7 +88,10 @@ class LimitPreviousCommand(LimitCommand):
   def parsebit(self, pos):
     "Do nothing."
     self.output = TaggedOutput().settag('span class="limits"')
-    self.add(FormulaConstant('perico'))
+
+  def __unicode__(self):
+    "Return a printable representation."
+    return 'Limit previous command'
 
 class LimitsProcessor(MathsProcessor):
   "A processor for limits inside an element."
@@ -108,14 +111,15 @@ class LimitsProcessor(MathsProcessor):
       return False
     if self.checkcommand(contents, index + 1, LimitPreviousCommand):
       self.limitsahead(contents, index)
+      return False
     if not isinstance(contents[index], LimitCommand):
       return False
     return self.checkscript(contents, index + 1)
 
   def limitsahead(self, contents, index):
     "Limit the current element based on the next."
-    contents[index + 1].add(contents[index])
-    del contents[index]
+    contents[index + 1].add(contents[index].clone())
+    contents[index].output = EmptyOutput()
 
   def modifylimits(self, contents, index):
     "Modify a limits commands so that the limits appear above and below."
