@@ -86,6 +86,7 @@ class LyXPreamble(Container):
   def __init__(self):
     self.parser = PreambleParser()
     self.output = EmptyOutput()
+    self.factory = FormulaFactory()
 
   def process(self):
     "Parse the LyX preamble, if needed."
@@ -108,7 +109,7 @@ class LyXPreamble(Container):
 
   def parsefunction(self, pos):
     "Parse a single command."
-    FormulaFactory().parsetype(FormulaCommand, pos)
+    self.factory.parsetype(FormulaCommand, pos)
 
 class LyXFooter(Container):
   "Reads the footer, outputs the HTML footer"
