@@ -140,13 +140,13 @@ An accent that looks like a hat:
 \backslash
 hat
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
 
 \backslash
-spce 
+spce
 \end_layout
 
 \end_inset
