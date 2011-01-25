@@ -45,6 +45,7 @@ class CombiningFunction(OneParamFunction):
 
   def parsesingleparameter(self, pos):
     "Parse a parameter, or a single letter."
+    self.factory.clearskipped(pos)
     if self.factory.detecttype(Bracket, pos) \
         or self.factory.detecttype(FormulaCommand, pos):
       return self.parseparameter(pos)
