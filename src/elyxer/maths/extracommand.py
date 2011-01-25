@@ -88,6 +88,7 @@ class LimitPreviousCommand(LimitCommand):
   def parsebit(self, pos):
     "Do nothing."
     self.output = TaggedOutput().settag('span class="limits"')
+    self.factory.clearskipped(pos)
 
   def __unicode__(self):
     "Return a printable representation."
