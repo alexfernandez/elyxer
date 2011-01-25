@@ -499,6 +499,7 @@ span.hspace {
 }
 span.vspace {
 	display: inline-block;
+	vertical-align: text-top;
 }
 span.hfill {
 	display: inline-block;

@@ -269,6 +269,17 @@ nolimits
  or not.
 \end_layout
 
+\begin_layout Itemize
+Bug in 
+\family typewriter
+
+\backslash
+vspace
+\family default
+: add the vertical space after the command, not before; or at least try
+ to.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.2 (2010-12-23):
