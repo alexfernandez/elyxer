@@ -248,10 +248,9 @@ class Bracket(FormulaBit):
     specialchars.append(Comment.start)
     while not pos.finished():
       if pos.current() in specialchars:
-        if self.factory.detectany(pos):
-          self.add(self.factory.parseany(pos))
-          if pos.checkskip(' '):
-            self.original += ' '
+        self.add(self.factory.parseany(pos))
+        if pos.checkskip(' '):
+          self.original += ' '
       else:
         self.add(FormulaConstant(pos.skipcurrent()))
 

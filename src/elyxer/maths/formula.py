@@ -123,8 +123,8 @@ class WholeFormula(FormulaBit):
   "Parse a whole formula"
 
   def detect(self, pos):
-    "Check in the factory"
-    return self.factory.detectany(pos)
+    "Not outside the formula is enough."
+    return not pos.finished()
 
   def parsebit(self, pos):
     "Parse with any formula bit"
@@ -142,15 +142,6 @@ class FormulaFactory(object):
   def __init__(self):
     "Initialize the map of instances."
     self.instances = dict()
-
-  def detectany(self, pos):
-    "Detect if there is a next bit"
-    if pos.finished():
-      return False
-    for type in self.types:
-      if self.detecttype(type, pos):
-        return True
-    return False
 
   def detecttype(self, type, pos):
     "Detect a bit of a given type."

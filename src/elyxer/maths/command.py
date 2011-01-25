@@ -117,8 +117,9 @@ class CommandBit(FormulaCommand):
  
   def parseparameter(self, pos):
     "Parse a parameter at the current position"
-    if not self.factory.detectany(pos):
-      Trace.error('No parameter found at: ' + pos.identifier())
+    self.factory.clearskipped(pos)
+    if pos.finished():
+      Trace.error('End of formula when parsing for ' + self.command)
       return None
     parameter = self.factory.parseany(pos)
     self.add(parameter)
@@ -134,6 +135,7 @@ class CommandBit(FormulaCommand):
 
   def parseliteral(self, pos):
     "Parse a literal bracket."
+    self.factory.clearskipped(pos)
     if not self.factory.detecttype(Bracket, pos):
       if not pos.isvalue():
         Trace.error('No literal parameter found at: ' + pos.identifier())
