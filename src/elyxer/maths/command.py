@@ -119,7 +119,7 @@ class CommandBit(FormulaCommand):
     "Parse a parameter at the current position"
     self.factory.clearskipped(pos)
     if pos.finished():
-      Trace.error('End of formula when parsing for ' + self.command)
+      Trace.error('End of formula when parsing parameter in ' + self.command)
       return None
     parameter = self.factory.parseany(pos)
     self.add(parameter)
@@ -127,6 +127,7 @@ class CommandBit(FormulaCommand):
 
   def parsesquare(self, pos):
     "Parse a square bracket"
+    self.factory.clearskipped(pos)
     if not self.factory.detecttype(SquareBracket, pos):
       return None
     bracket = self.factory.parsetype(SquareBracket, pos)

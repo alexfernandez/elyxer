@@ -110,11 +110,6 @@ class MacroFunction(CommandBit):
     "Parse as many parameters as are needed."
     self.parseoptional(pos, list(macro.defaults))
     self.parsemandatory(pos, macro.parameternumber - len(macro.defaults))
-    while self.factory.detecttype(Bracket, pos):
-      self.values.append(self.parseparameter(pos))
-    remaining = macro.parameternumber - len(self.values)
-    if remaining > 0:
-      self.parsenumbers(remaining, pos)
     if len(self.values) < macro.parameternumber:
       Trace.error('Missing parameters in macro ' + unicode(self))
 
@@ -145,6 +140,7 @@ class MacroFunction(CommandBit):
     "Parse a macro parameter. Could be a bracket or a single letter."
     "If there are just two values remaining and there is a running number,"
     "parse as two separater numbers."
+    self.factory.clearskipped(pos)
     if pos.finished():
       return None
     if self.factory.detecttype(FormulaNumber, pos):
