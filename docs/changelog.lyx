@@ -280,6 +280,16 @@ vspace
  to.
 \end_layout
 
+\begin_layout Itemize
+Bug in 
+\family typewriter
+
+\backslash
+raisebox
+\family default
+: parse and display the contents as text mode.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.2 (2010-12-23):

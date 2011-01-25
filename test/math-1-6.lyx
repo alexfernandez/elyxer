@@ -703,7 +703,7 @@ raisebox
 \family default
  is useful to, surprisingly, raise a little box, 
 \begin_inset Formula \[
-\raisebox{2mm}{raised}over\raisebox{-2mm}{lowered}\textrm{and back}.\]
+\raisebox{2mm}{raised}over\raisebox{-2mm}{lowered}\textrm{ and back}.\]
 
 \end_inset
 
