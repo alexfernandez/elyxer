@@ -128,18 +128,15 @@ class WholeFormula(FormulaBit):
 
   def parsebit(self, pos):
     "Parse with any formula bit"
-    while self.factory.detectany(pos):
-      bit = self.factory.parseany(pos)
-      self.add(bit)
-      for ignored in self.factory.clearignored(pos):
-        self.add(ignored)
+    while not pos.finished():
+      self.add(self.factory.parseany(pos))
 
 class FormulaFactory(object):
   "Construct bits of formula"
 
   # bit types will be appended later
-  types = [FormulaSymbol, RawText, FormulaNumber, Bracket]
-  ignoredtypes = [Comment, WhiteSpace]
+  types = [FormulaSymbol, RawText, FormulaNumber, Bracket, Comment, WhiteSpace]
+  skippedtypes = [Comment, WhiteSpace]
   defining = False
 
   def __init__(self):
@@ -150,14 +147,13 @@ class FormulaFactory(object):
     "Detect if there is a next bit"
     if pos.finished():
       return False
-    for type in FormulaFactory.types:
+    for type in self.types:
       if self.detecttype(type, pos):
         return True
     return False
 
   def detecttype(self, type, pos):
     "Detect a bit of a given type."
-    self.clearignored(pos)
     if pos.finished():
       return False
     return self.instance(type).detect(pos)
@@ -172,26 +168,23 @@ class FormulaFactory(object):
     "Create a new formula bit of the given type."
     return Cloner.create(type).setfactory(self)
 
-  def clearignored(self, pos):
-    "Clear all ignored types."
-    ignored = []
+  def clearskipped(self, pos):
+    "Clear any skipped types."
     while not pos.finished():
-      cleared = self.clearany(pos)
-      if not cleared:
-        return ignored
-      ignored.append(cleared)
-    return ignored
+      if not self.skipany(pos):
+        return
+    return
 
-  def clearany(self, pos):
-    "Cleary any ignored type."
-    for type in self.ignoredtypes:
+  def skipany(self, pos):
+    "Skip any skipped types."
+    for type in self.skippedtypes:
       if self.instance(type).detect(pos):
         return self.parsetype(type, pos)
     return None
 
   def parseany(self, pos):
     "Parse any formula bit at the current location."
-    for type in FormulaFactory.types:
+    for type in self.types + self.skippedtypes:
       if self.detecttype(type, pos):
         return self.parsetype(type, pos)
     Trace.error('Unrecognized formula at ' + pos.identifier())

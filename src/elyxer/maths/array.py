@@ -50,12 +50,8 @@ class FormulaCell(FormulaCommand):
     return self
 
   def parsebit(self, pos):
-    self.factory.clearignored(pos)
+    self.factory.clearskipped(pos)
     if pos.finished():
-      return
-    if not self.factory.detecttype(WholeFormula, pos):
-      Trace.error('Unexpected end of array cell at ' + pos.identifier())
-      pos.skip(pos.current())
       return
     self.add(self.factory.parsetype(WholeFormula, pos))
 

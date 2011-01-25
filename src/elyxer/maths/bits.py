@@ -235,15 +235,10 @@ class Bracket(FormulaBit):
 
   def innerformula(self, pos):
     "Parse a whole formula inside the bracket"
-    while self.factory.detectany(pos):
+    while not pos.finished():
       self.add(self.factory.parseany(pos))
-      for ignored in self.factory.clearignored(pos):
-        self.add(ignored)
-    if pos.finished():
-      return
-    if pos.current() != self.ending:
-      Trace.error('No formula in bracket at ' + pos.identifier())
-    return
+    if pos.isout():
+      Trace.error('Out of the formula when looking for ' + self.ending)
 
   def innertext(self, pos):
     "Parse some text inside the bracket, following textual rules."

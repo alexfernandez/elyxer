@@ -65,6 +65,7 @@ class MacroDefinition(CommandBit):
 
   def parsenewcommand(self, pos):
     "Parse the name of the new command."
+    self.factory.clearskipped(pos)
     if self.factory.detecttype(Bracket, pos):
       return self.parseliteral(pos)
     if self.factory.detecttype(FormulaCommand, pos):
