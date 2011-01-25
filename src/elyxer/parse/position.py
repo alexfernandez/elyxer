@@ -102,8 +102,8 @@ class TextPosition(Position):
     "Return a sample of the remaining text."
     length = 30
     if self.pos + length > len(self.text):
-      length = len(self.text) - self.pos - 1
-    return '*' + self.text[self.pos:self.pos + length]
+      length = len(self.text) - self.pos
+    return '*' + self.text[self.pos:self.pos + length] + '*'
 
   def isout(self):
     "Find out if we are out of the text yet."
