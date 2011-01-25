@@ -148,6 +148,7 @@ class CommandBit(FormulaCommand):
 
   def parsesquareliteral(self, pos):
     "Parse a square bracket literally."
+    self.factory.clearskipped(pos)
     if not self.factory.detecttype(SquareBracket, pos):
       return None
     bracket = SquareBracket().setfactory(self.factory)
@@ -225,10 +226,7 @@ class TextFunction(CommandBit):
   def parsebit(self, pos):
     "Parse a text parameter"
     self.output = TaggedOutput().settag(self.translated)
-    if not self.factory.detecttype(Bracket, pos):
-      Trace.error('No parameter for ' + unicode(self))
-    bracket = Bracket().setfactory(self.factory).parsetext(pos)
-    self.add(bracket)
+    self.parseparameter(pos)
 
   def process(self):
     "Set the type to font"
