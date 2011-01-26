@@ -135,9 +135,9 @@ status open
 
 \begin_layout Plain Layout
 
-
+{
 \backslash
-color{red}{
+color{red}
 \end_layout
 
 \end_inset
@@ -148,7 +148,7 @@ status open
 
 \begin_layout Plain Layout
 
-} but won't go back on its own
+}
 \end_layout
 
 \end_inset
