@@ -35,7 +35,10 @@ class SetCounterFunction(CommandBit):
     "Parse a function with [] and {} parameters."
     counter = self.parseliteral(pos)
     value = self.parseliteral(pos)
-    self.setcounter(counter, int(value))
+    try:
+      self.setcounter(counter, int(value))
+    except:
+      Trace.error('Counter ' + counter + ' cannot be set to ' + value)
 
   def setcounter(self, counter, value):
     "Set a global counter."
