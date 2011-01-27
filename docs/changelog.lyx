@@ -290,6 +290,10 @@ raisebox
 : parse and display the contents as text mode.
 \end_layout
 
+\begin_layout Itemize
+Wish list: do not number captions in code listings.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.2 (2010-12-23):

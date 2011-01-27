@@ -696,6 +696,64 @@ Each line has its own number.
 \end_layout
 
 \begin_layout Standard
+A numbered listing with a caption.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "numbers=left,stepnumber=1"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+This listing has a caption.
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+First caption which should not be numbered.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+It should not be numbered.
+\end_layout
+
+\begin_layout Plain Layout
+
+These lines, on the other hand, should.
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+This second caption should not be numbered either.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 As soon as we can get to it: a LyX-Code.
 \end_layout
 

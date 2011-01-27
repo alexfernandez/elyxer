@@ -175,22 +175,44 @@ class Listing(Container):
     self.processparams()
     if Listing.processor:
       Listing.processor.preprocess(self)
-    newcontents = []
-    for container in self.contents:
-      newcontents += self.extract(container)
-    tagged = TaggedText().complete(newcontents, 'pre class="listing"', False)
-    self.contents = [tagged]
+    for container in self.extractcontents():
+      if container:
+        self.contents.append(container)
     if 'caption' in self.lstparams:
       text = self.lstparams['caption'][1:-1]
       self.contents.insert(0, Caption().create(text))
     if Listing.processor:
       Listing.processor.postprocess(self)
 
+  def extractcontents(self):
+    "Extract all contents one container at a time."
+    oldcontents = self.contents
+    self.contents = []
+    inpre = []
+    for container in oldcontents:
+      if self.iscaption(container):
+        yield self.completepre(inpre)
+        inpre = []
+        yield container
+      else:
+        inpre += self.extract(container)
+    yield self.completepre(inpre)
+
   def processparams(self):
     "Process listing parameteres."
     LstParser().parsecontainer(self)
     if 'numbers' in self.lstparams:
       self.numbered = self.lstparams['numbers']
+
+  def iscaption(self, container):
+    "Find out if the container has a caption (which should not be in <pre>)."
+    return (len(container.searchall(Caption)) > 0)
+
+  def completepre(self, listinpre):
+    "Complete the <pre> tag with whatever has already been added."
+    if len(listinpre) == 0:
+      return None
+    return TaggedText().complete(listinpre, 'pre class="listing"', False)
 
   def extract(self, container):
     "Extract the container's contents and return them"
