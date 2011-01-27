@@ -119,7 +119,6 @@ class CommandBit(FormulaCommand):
     "Parse a parameter at the current position"
     self.factory.clearskipped(pos)
     if pos.finished():
-      Trace.error('End of formula when parsing parameter in ' + self.command)
       return None
     parameter = self.factory.parseany(pos)
     self.add(parameter)
