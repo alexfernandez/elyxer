@@ -80,6 +80,8 @@ class FormulaCommand(FormulaBit):
     if not pos.checkskip(FormulaCommand.start):
       pos.error('Missing command start ' + FormulaCommand.start)
       return
+    if pos.finished():
+      return FormulaCommand.start
     if pos.current().isalpha():
       # alpha command
       command = FormulaCommand.start + pos.globalpha()
