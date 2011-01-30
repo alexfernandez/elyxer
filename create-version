@@ -40,7 +40,7 @@ rm -rf dist/elyxer-$VERSION
 mkdir -p dist/elyxer-$VERSION
 rsync -a --exclude "build" --exclude "dist" \
        --exclude ".git" --exclude "samples" \
-       --exclude "docs/cvs" \
+       --exclude "docs/cvs" --exclude "patch" \
        --exclude "docs/jsMath" --exclude "docs/MathJax" \
        --exclude "extras" --exclude "open-env" \
        --exclude "test/*test.html" --exclude "test/subdir/*test.html" \
