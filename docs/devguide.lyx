@@ -6,7 +6,7 @@
 \begin_preamble
 %   eLyXer -- convert LyX source files to HTML output.
 %
-%   Copyright (C) 2009-2010 Alex Fernández
+%   Copyright (C) 2009-2011 Alex Fernández
 %
 %   This program is free software: you can redistribute it and/or modify
 %   it under the terms of the GNU General Public License as published by
@@ -3253,12 +3253,23 @@ target "userguide.html#sub:Wish-List"
 \end_layout
 
 \begin_layout Standard
-After the release of eLyXer 1.0, full LyX document support is the goal until
- the end of 2010.
- Any deviation from the output of LyX on e.g.
+After the release of eLyXer 1.0, the goal is full LyX document support; any
+ deviation from the output of LyX on e.g.
  PDF will be considered as bugs.
  (Keep in mind that some deviations arise in an inherent limitation in the
  design of eLyXer, and these will logically not be considered as bugs.)
+\end_layout
+
+\begin_layout Standard
+For eLyXer 1.3.0 there are plans to convert it into a proper Python package
+ so it can be installed using full source code (and not a coalesced script
+ 
+\family typewriter
+elyxer.py
+\family default
+ that contains everything).
+ Also, once ERTs are parsed, eLyXer might be extended for 1.3.0 to translate
+ generic LaTeX documents.
 \end_layout
 
 \begin_layout Standard

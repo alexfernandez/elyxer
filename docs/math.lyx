@@ -6,7 +6,7 @@
 \begin_preamble
 %   eLyXer -- convert LyX source files to HTML output.
 %
-%   Copyright (C) 2009-2010 Alex Fernández
+%   Copyright (C) 2009-2011 Alex Fernández
 %
 %   This program is free software: you can redistribute it and/or modify
 %   it under the terms of the GNU General Public License as published by
@@ -1191,7 +1191,7 @@ macros
 \begin_layout Standard
 Definitions can be added as macros
 \begin_inset FormulaMacro
-\newcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
+\renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
 {\sqrt[#1]{#2}}
 \end_inset
 
@@ -1203,7 +1203,7 @@ Definitions can be added as macros
 .
  They can accept default parameters
 \begin_inset FormulaMacro
-\newcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
+\renewcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
 {#1\sqrt{#2}}
 \end_inset
 
