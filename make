@@ -26,7 +26,6 @@ cd src
 ./coalesce.py loremipsumize.py ../loremipsumize.py
 ./coalesce.py math2html.py ../math2html.py
 ./licensify.py apache-license ../math2html.py
-cp setup.py ../
 cd ..
 chmod 755 elyxer.py
 chmod 755 loremipsumize.py
@@ -73,7 +72,6 @@ VERSION=$(./elyxer.py --hardversion)
 DATE=$(./elyxer.py --versiondate)
 cd src
 ./textchange.py "the latest version" "the latest version $VERSION, created on $DATE," ../docs/index.html
-./textchange.py "unknown" "$VERSION" ../setup.py
 cd ..
 
 # run the test suite
