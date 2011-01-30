@@ -24,18 +24,22 @@
 
 from distutils.core import setup
 
+
+packages = [
+    'elyxer', 'elyxer.bib', 'elyxer.conf', 'elyxer.gen', 'elyxer.io',
+    'elyxer.main', 'elyxer.maths', 'elyxer.out', 'elyxer.parse',
+    'elyxer.proc', 'elyxer.ref', 'elyxer.util', 'elyxer.xtra'
+    ]
+packages = []
+
 setup(name = 'eLyXer',
     version = 'unknown',
     description = 'LyX to HTML converter',
     long_description = 'eLyXer is a LyX to HTML converter, with a focus on flexibility and elegant output.',
     author = 'Alex Fernandez',
     author_email = 'elyxer@gmail.com',
-    url = 'http://www.nongnu.org/elyxer/',
-    packages = [
-      'elyxer', 'elyxer.bib', 'elyxer.conf', 'elyxer.gen', 'elyxer.io',
-      'elyxer.main', 'elyxer.maths', 'elyxer.out', 'elyxer.parse',
-      'elyxer.proc', 'elyxer.ref', 'elyxer.util', 'elyxer.xtra'
-      ],
+    url = 'http://elyxer.nongnu.org/',
+    packages = packages,
     scripts = ['elyxer.py', 'math2html.py', 'loremipsumize.py'],
     classifiers = [
       'License :: OSI Approved :: GNU General Public License (GPL)',

@@ -93,6 +93,7 @@ class Installer(object):
 
   def installmodule(self):
     "Install eLyXer as a module."
+    return
     if not self.checkpermissions('install as a Python module'):
       return
     sys.argv.append('install')

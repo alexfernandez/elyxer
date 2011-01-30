@@ -294,6 +294,18 @@ raisebox
 Wish list: do not number captions in code listings.
 \end_layout
 
+\begin_layout Itemize
+Do not install as a module (to run as 
+\family typewriter
+python -m elyxer
+\family default
+) but only as a script (to run as 
+\family typewriter
+elyxer.py
+\family default
+).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.1.2 (2010-12-23):
