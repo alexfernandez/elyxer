@@ -39,13 +39,18 @@ class CombiningFunction(OneParamFunction):
     self.type = 'alpha'
     combining = self.translated
     parameter = self.parsesingleparameter(pos)
-    if len(parameter.extracttext()) != 1:
+    if not parameter:
+      Trace.error('Empty parameter for combining function ' + self.command)
+    elif len(parameter.extracttext()) != 1:
       Trace.error('Applying combining function ' + self.command + ' to invalid string "' + parameter.extracttext() + '"')
     self.contents.append(Constant(combining))
 
   def parsesingleparameter(self, pos):
     "Parse a parameter, or a single letter."
     self.factory.clearskipped(pos)
+    if pos.finished():
+      Trace.error('Error while parsing single parameter at ' + pos.identifier())
+      return None
     if self.factory.detecttype(Bracket, pos) \
         or self.factory.detecttype(FormulaCommand, pos):
       return self.parseparameter(pos)
