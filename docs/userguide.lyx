@@ -835,8 +835,8 @@ elyxer.py
 \end_layout
 
 \begin_layout Standard
-LyX (starting with version 2.0.0) has been patched to recognize only the script
- and disregard the module.
+LyX (starting with versions 2.0.0 and 1.6.9) has been patched to recognize only
+ the script and disregard the module.
 \end_layout
 
 \begin_layout Section
