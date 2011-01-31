@@ -51,6 +51,7 @@ cd dist/elyxer-$VERSION
 find . -name "*.pyc" | xargs rm -f
 find . -name "*.swp" | xargs rm -f
 find . -name "*.lyx~" | xargs rm -f
+find . -name "#*#" | xargs rm -f
 cd ..
 tar -czf elyxer-$VERSION.tar.gz elyxer-$VERSION
 rm -f elyxer-$VERSION.zip
