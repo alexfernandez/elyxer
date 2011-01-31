@@ -109,16 +109,17 @@ class Reference(Link):
       formatkey = 'ref'
     if not formatkey in formats:
       Trace.error('Unknown reference format ' + formatkey)
-      formatstring = u'↕'
+      formatted = u'↕'
     else:
-      formatstring = formats[formatkey]
-    formatstring = formatstring.replace(u'↕', self.direction)
-    if '@' in formatstring:
-      formatstring = formatstring.replace('@', self.destination.labelnumber())
-    formatstring = formatstring.replace('#', '1')
-    if 'on-page' in formatstring:
-      formatstring = formatstring.replace('on-page', Translator.translate('on-page'))
-    self.contents = [Constant(formatstring)]
+      formatted = formats[formatkey]
+    formatted = formatted.replace(u'↕', self.direction)
+    if '@' in formatted:
+      formatted = formatted.replace('@', self.destination.labelnumber())
+    formatted = formatted.replace('#', '1')
+    if 'on-page' in formatted:
+      formatted = formatted.replace('on-page', Translator.translate('on-page'))
+    Trace.debug('Formatted: ' + formatted)
+    self.contents = [Constant(formatted)]
 
   def __unicode__(self):
     "Return a printable representation."
