@@ -57,11 +57,11 @@ class Label(Link):
         reference.destination = self
     return self
 
-  def labelnumber(self):
-    "Get the number for the latest numbered container seen."
+  def findpartkey(self):
+    "Get the part key for the latest numbered container seen."
     numbered = self.numbered(self)
-    if numbered and numbered.partkey and numbered.partkey.number:
-      return numbered.partkey.number
+    if numbered and numbered.partkey:
+      return numbered.partkey
     return ''
 
   def numbered(self, container):
@@ -116,11 +116,14 @@ class Reference(Link):
     else:
       formatted = StyleConfig.referenceformats[formatkey]
     formatted = formatted.replace(u'↕', self.direction)
-    if '@' in formatted:
-      formatted = formatted.replace('@', self.destination.labelnumber())
     formatted = formatted.replace('#', '1')
     if 'on-page' in formatted:
       formatted = formatted.replace('on-page', Translator.translate('on-page'))
+    partkey = self.destination.findpartkey()
+    if not partkey:
+      return formatted.replace('@', '')
+    if '@' in formatted:
+      formatted = formatted.replace('@', partkey.number)
     Trace.debug('Formatted: ' + formatted)
     return formatted
 

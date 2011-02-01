@@ -127,10 +127,7 @@ class IntegralReference(IntegralProcessor):
 
   def processeach(self, reference):
     "Extract the text of the original label."
-    text = reference.destination.labelnumber
-    if text:
-      reference.labelnumber = text
-      reference.formatcontents()
+    reference.formatcontents()
 
 class MemoryBasket(KeeperBasket):
   "A basket which stores everything in memory, processes it and writes it."
