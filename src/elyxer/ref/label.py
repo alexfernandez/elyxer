@@ -103,31 +103,27 @@ class Reference(Link):
 
   def formatcontents(self):
     "Format the reference contents."
-    self.contents = [Constant(self.getformatted())]
-
-  def getformatted(self):
-    "Format the reference contents."
     formatkey = self.getparameter('LatexCommand')
     if not formatkey:
       formatkey = 'ref'
+    self.formatted = u'↕'
     if not formatkey in StyleConfig.referenceformats:
       Trace.error('Unknown reference format ' + formatkey)
-      formatted = u'↕'
     else:
-      formatted = StyleConfig.referenceformats[formatkey]
-    formatted = formatted.replace(u'↕', self.direction)
-    formatted = formatted.replace('#', '1')
-    if 'on-page' in formatted:
-      formatted = formatted.replace('on-page', Translator.translate('on-page'))
+      self.formatted = StyleConfig.referenceformats[formatkey]
+    self.formatted = self.formatted.replace(u'↕', self.direction)
+    self.formatted = self.formatted.replace('#', '1')
+    if 'on-page' in self.formatted:
+      self.formatted = self.formatted.replace('on-page', Translator.translate('on-page'))
     partkey = self.destination.findpartkey()
     if not partkey:
-      return formatted.replace('@', '')
-    if '@' in formatted and partkey.number:
-      formatted = formatted.replace('@', partkey.number)
-    if u'¶' in formatted and partkey.tocentry:
-      formatted = formatted.replace(u'¶', partkey.tocentry)
-    Trace.debug('Formatted: ' + formatted)
-    return formatted
+      return self.formatted.replace('@', '')
+    if '@' in self.formatted and partkey.number:
+      self.formatted = self.formatted.replace('@', partkey.number)
+    if u'¶' in self.formatted and partkey.tocentry:
+      self.formatted = self.formatted.replace(u'¶', partkey.tocentry)
+    Trace.debug('Formatted: ' + self.formatted)
+    self.contents = [Constant(self.formatted)]
 
   def __unicode__(self):
     "Return a printable representation."
