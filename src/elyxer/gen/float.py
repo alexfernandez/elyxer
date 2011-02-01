@@ -63,8 +63,7 @@ class Float(Container):
     if not self.isparent():
       # do nothing; parent will take care of numbering
       return
-    number = NumberGenerator.chaptered.generate(self.type)
-    self.partkey = PartKey().createfloat(self.type, number)
+    self.partkey = PartKey().createfloat(self)
 
   def processtags(self):
     "Process the HTML tags."
@@ -84,10 +83,7 @@ class Float(Container):
     counter = NumberCounter('subfloat').setmode('a')
     for subfloat in floats:
       subfloat.output.tag = subfloat.output.tag.replace('div', 'span')
-      # number the float
-      number = counter.getnext()
-      entry = '(' + number + ')'
-      subfloat.partkey = PartKey().createsubfloat(self.type, number)
+      subfloat.partkey = PartKey().createsubfloat(counter.getnext())
 
   def getembeddedtag(self):
     "Get the tag for the embedded object."

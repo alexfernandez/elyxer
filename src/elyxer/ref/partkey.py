@@ -52,19 +52,18 @@ class PartKey(object):
     self.filename = partkey
     return self
 
-  def createfloat(self, type, number):
+  def createfloat(self, float):
     "Create a part key for a float."
-    self.partkey = Translator.translate('float-' + type) + number
-    self.number = number
-    # self.number = type + '-' + number
+    self.number = NumberGenerator.chaptered.generate(float.type)
+    self.partkey = Translator.translate('float-' + float.type) + self.number
     if Options.notoclabels:
-      self.tocentry = number
+      self.tocentry = self.number
     else:
       self.tocentry = self.partkey
-    #self.readtitle(container)
+    self.readtitle(float)
     return self
 
-  def createsubfloat(self, type, number):
+  def createsubfloat(self, number):
     "Create the part key for a subfloat."
     self.partkey = '(' + number + ')'
     self.number = number
@@ -104,9 +103,9 @@ class PartKey(object):
     "Read the title of the TOC entry."
     shorttitles = container.searchall(ShortTitle)
     if len(shorttitles) > 0:
-      self.contents = []
+      self.titlecontents = []
       for shorttitle in shorttitles:
-        self.contents += shorttitle.contents
+        self.titlecontents += shorttitle.contents
       return
     extractor = ContainerExtractor(TOCConfig.extracttitle)
     captions = container.searchall(Caption)
