@@ -96,7 +96,14 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Wish list: support for formatted references (showing the part name and number)
+ and named references (showing the part title, equivalent to 
+\family typewriter
+
+\backslash
+nameref
+\family default
+).
 \end_layout
 
 \end_deeper

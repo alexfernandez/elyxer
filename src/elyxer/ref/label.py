@@ -124,7 +124,7 @@ class Reference(Link):
       return
     pieces = self.formatted.split('$')
     self.contents = [Constant(pieces[0])]
-    for piece in pieces:
+    for piece in pieces[1:]:
       self.contents += partkey.titlecontents
       self.contents.append(Constant(piece))
 
