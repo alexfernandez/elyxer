@@ -96,22 +96,25 @@ class Reference(Link):
       self.direction = u'↓'
       label = Label().complete(' ', self.key, 'preref')
     self.destination = label
-    self.format()
+    self.formatcontents()
     if not self.key in Reference.references:
       Reference.references[self.key] = []
     Reference.references[self.key].append(self)
 
-  def format(self):
+  def formatcontents(self):
     "Format the reference contents."
-    formats = StyleConfig.referenceformats
+    self.contents = [Constant(self.getformatted())]
+
+  def getformatted(self):
+    "Format the reference contents."
     formatkey = self.getparameter('LatexCommand')
     if not formatkey:
       formatkey = 'ref'
-    if not formatkey in formats:
+    if not formatkey in StyleConfig.referenceformats:
       Trace.error('Unknown reference format ' + formatkey)
       formatted = u'↕'
     else:
-      formatted = formats[formatkey]
+      formatted = StyleConfig.referenceformats[formatkey]
     formatted = formatted.replace(u'↕', self.direction)
     if '@' in formatted:
       formatted = formatted.replace('@', self.destination.labelnumber())
@@ -119,7 +122,7 @@ class Reference(Link):
     if 'on-page' in formatted:
       formatted = formatted.replace('on-page', Translator.translate('on-page'))
     Trace.debug('Formatted: ' + formatted)
-    self.contents = [Constant(formatted)]
+    return formatted
 
   def __unicode__(self):
     "Return a printable representation."
