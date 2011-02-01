@@ -146,18 +146,6 @@ class Wrap(Float):
     self.output.tag = 'div class="wrap-' + placement + '"'
     self.applywideningtag(self)
 
-class Caption(Container):
-  "A caption for a figure or a table"
-
-  def __init__(self):
-    self.parser = InsetParser()
-    self.output = TaggedOutput().settag('div class="caption"', True)
-
-  def create(self, message):
-    "Create a caption with a given message."
-    self.contents = [Constant(message)]
-    return self
-
 class Listing(Container):
   "A code listing"
 

@@ -30,7 +30,6 @@ from elyxer.io.bulk import *
 from elyxer.gen.container import *
 from elyxer.gen.styles import *
 from elyxer.gen.layout import *
-from elyxer.gen.float import *
 
 
 class InsetText(Container):
@@ -152,79 +151,15 @@ class LineInset(LyXLine):
     self.parser = InsetParser()
     self.output = FixedOutput()
 
-class IncludeInset(Container):
-  "A child document included within another."
-
-  # the converter factory will be set in converter.py
-  converterfactory = None
-  filename = None
+class Caption(Container):
+  "A caption for a figure or a table"
 
   def __init__(self):
     self.parser = InsetParser()
-    self.output = ContentsOutput()
-
-  def process(self):
-    "Include the provided child document"
-    self.filename = os.path.join(Options.directory, self.getparameter('filename'))
-    Trace.debug('Child document: ' + self.filename)
-    LstParser().parsecontainer(self)
-    command = self.getparameter('LatexCommand')
-    if command == 'verbatiminput':
-      self.readverbatim()
-      return
-    elif command == 'lstinputlisting':
-      self.readlisting()
-      return
-    self.processinclude()
-
-  def processinclude(self):
-    "Process a regular include: standard child document."
-    self.contents = []
-    olddir = Options.directory
-    newdir = os.path.dirname(self.getparameter('filename'))
-    if newdir != '':
-      Trace.debug('Child dir: ' + newdir)
-      Options.directory = os.path.join(Options.directory, newdir)
-    try:
-      self.convertinclude()
-    finally:
-      Options.directory = olddir
-
-  def convertinclude(self):
-    "Convert an included document."
-    try:
-      converter = IncludeInset.converterfactory.create(self)
-    except:
-      Trace.error('Could not read ' + self.filename + ', please check that the file exists and has read permissions.')
-      return
-    if self.hasemptyoutput():
-      return
-    converter.convert()
-    self.contents = converter.getcontents()
-
-  def readverbatim(self):
-    "Read a verbatim document."
-    self.contents = [TaggedText().complete(self.readcontents(), 'pre', True)]
-
-  def readlisting(self):
-    "Read a document as a listing."
-    listing = Listing()
-    listing.contents = self.readcontents()
-    listing.parameters = self.parameters
-    listing.process()
-    self.contents = [listing]
-
-  def readcontents(self):
-    "Read the contents of a complete file."
-    contents = list()
-    lines = BulkFile(self.filename).readall()
-    for line in lines:
-      contents.append(Constant(line))
-    return contents
-
-  def __unicode__(self):
-    "Return a printable description."
-    if not self.filename:
-      return 'Included unnamed file'
-    return 'Included "' + self.filename + '"'
+    self.output = TaggedOutput().settag('div class="caption"', True)
+    
+  def create(self, message):
+    "Create a caption with a given message."
+    self.contents = [Constant(message)]
+    return self
 

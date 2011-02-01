@@ -37,6 +37,7 @@ from elyxer.gen.image import *
 from elyxer.gen.layout import *
 from elyxer.gen.list import *
 from elyxer.gen.inset import *
+from elyxer.gen.include import *
 from elyxer.gen.notes import *
 from elyxer.gen.float import *
 from elyxer.gen.header import *

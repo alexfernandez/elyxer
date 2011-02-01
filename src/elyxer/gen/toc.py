@@ -25,7 +25,6 @@
 
 
 from elyxer.gen.header import *
-from elyxer.gen.inset import *
 from elyxer.ref.label import *
 from elyxer.util.docparams import *
 
@@ -72,22 +71,6 @@ class TOCEntry(Container):
         link.contents.append(Constant(separator))
       link.contents += container.partkey.titlecontents
     return link
-
-  def gettitlecontents(self, container):
-    "Get the title of the container."
-    if not container.partkey.showtitle:
-      return None
-    shorttitles = container.searchall(ShortTitle)
-    if len(shorttitles) > 0:
-      contents = []
-      for shorttitle in shorttitles:
-        contents += shorttitle.contents
-      return contents
-    extractor = ContainerExtractor(TOCConfig.extracttitle)
-    captions = container.searchall(Caption)
-    if len(captions) == 1:
-      return extractor.extract(captions[0])
-    return extractor.extract(container)
 
   def __unicode__(self):
     "Return a printable representation."
