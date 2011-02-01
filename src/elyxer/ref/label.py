@@ -122,8 +122,10 @@ class Reference(Link):
     partkey = self.destination.findpartkey()
     if not partkey:
       return formatted.replace('@', '')
-    if '@' in formatted:
+    if '@' in formatted and partkey.number:
       formatted = formatted.replace('@', partkey.number)
+    if u'¶' in formatted and partkey.tocentry:
+      formatted = formatted.replace(u'¶', partkey.tocentry)
     Trace.debug('Formatted: ' + formatted)
     return formatted
 
