@@ -107,23 +107,26 @@ class Reference(Link):
     if not formatkey:
       formatkey = 'ref'
     self.formatted = u'↕'
-    if not formatkey in StyleConfig.referenceformats:
-      Trace.error('Unknown reference format ' + formatkey)
-    else:
+    if formatkey in StyleConfig.referenceformats:
       self.formatted = StyleConfig.referenceformats[formatkey]
-    self.formatted = self.formatted.replace(u'↕', self.direction)
-    self.formatted = self.formatted.replace('#', '1')
-    if 'on-page' in self.formatted:
-      self.formatted = self.formatted.replace('on-page', Translator.translate('on-page'))
+    else:
+      Trace.error('Unknown reference format ' + formatkey)
+    self.replace(u'↕', self.direction)
+    self.replace('#', '1')
+    self.replace('on-page', Translator.translate('on-page'))
     partkey = self.destination.findpartkey()
-    if not partkey:
-      return self.formatted.replace('@', '')
-    if '@' in self.formatted and partkey.number:
-      self.formatted = self.formatted.replace('@', partkey.number)
-    if u'¶' in self.formatted and partkey.tocentry:
-      self.formatted = self.formatted.replace(u'¶', partkey.tocentry)
+    self.replace('@', partkey and partkey.number)
+    self.replace(u'¶', partkey and partkey.tocentry)
     Trace.debug('Formatted: ' + self.formatted)
     self.contents = [Constant(self.formatted)]
+
+  def replace(self, key, value):
+    "Replace a key in the format template with a value."
+    if not key in self.formatted:
+      return
+    if not value:
+      value = ''
+    self.formatted = self.formatted.replace(key, value)
 
   def __unicode__(self):
     "Return a printable representation."
