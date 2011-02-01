@@ -28,6 +28,7 @@ from elyxer.util.translate import *
 from elyxer.util.numbering import *
 from elyxer.util.docparams import *
 from elyxer.ref.label import *
+from elyxer.gen.inset import *
 
 
 class PartKey(object):
@@ -39,7 +40,6 @@ class PartKey(object):
   number = None
   filename = None
   titlecontents = None
-  showtitle = False
   header = False
 
   def __init__(self):
@@ -61,14 +61,13 @@ class PartKey(object):
       self.tocentry = number
     else:
       self.tocentry = self.partkey
-    self.showtitle = True
+    #self.readtitle(container)
     return self
 
   def createsubfloat(self, type, number):
     "Create the part key for a subfloat."
     self.partkey = '(' + number + ')'
     self.number = number
-    self.showtitle = True
     return self
 
   def createformula(self, number):
@@ -101,6 +100,21 @@ class PartKey(object):
     label = Label().create(labeltext, self.partkey, type='toc')
     container.contents.insert(0, label)
 
+  def readtitle(self, container):
+    "Read the title of the TOC entry."
+    shorttitles = container.searchall(ShortTitle)
+    if len(shorttitles) > 0:
+      self.contents = []
+      for shorttitle in shorttitles:
+        self.contents += shorttitle.contents
+      return
+    extractor = ContainerExtractor(TOCConfig.extracttitle)
+    captions = container.searchall(Caption)
+    if len(captions) == 1:
+      self.titlecontents = extractor.extract(captions[0])
+      return
+    self.titlecontents = extractor.extract(container)
+
   def __unicode__(self):
     "Return a printable representation."
     return 'Part key for ' + self.partkey
@@ -113,6 +127,7 @@ class LayoutPartKey(PartKey):
   def create(self, layout):
     "Set the layout for which we are creating the part key."
     self.processtype(layout.type)
+    self.readtitle(layout)
     return self
 
   def processtype(self, type):
@@ -122,7 +137,6 @@ class LayoutPartKey(PartKey):
     anchortype = self.getanchortype(type)
     self.partkey = 'toc-' + anchortype + '-' + self.number
     self.tocentry = self.gettocentry(type)
-    self.showtitle = True
     self.filename = self.getfilename(type)
     if self.generator.isnumbered(type):
       if not self.tocentry:
