@@ -38,6 +38,7 @@ class PartKey(object):
   anchortext = None
   number = None
   filename = None
+  titlecontents = None
   showtitle = False
   header = False
 

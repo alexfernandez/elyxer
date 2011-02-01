@@ -115,10 +115,18 @@ class Reference(Link):
     self.replace('#', '1')
     self.replace('on-page', Translator.translate('on-page'))
     partkey = self.destination.findpartkey()
+    # only if partkey and partkey.number are not null, send partkey.number
     self.replace('@', partkey and partkey.number)
     self.replace(u'¶', partkey and partkey.tocentry)
     Trace.debug('Formatted: ' + self.formatted)
-    self.contents = [Constant(self.formatted)]
+    if not '$' in self.formatted or not partkey or not partkey.titlecontents:
+      self.contents = [Constant(self.formatted)]
+      return
+    pieces = self.formatted.split('$')
+    self.contents = [Constant(pieces[0])]
+    for piece in pieces:
+      self.contents += partkey.titlecontents
+      self.contents.append(Constant(piece))
 
   def replace(self, key, value):
     "Replace a key in the format template with a value."
