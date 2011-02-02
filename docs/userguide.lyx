@@ -4539,7 +4539,7 @@ Include part names in
 \family typewriter
 --splitpart
 \family default
- navigation header.
+ navigation header
 \end_layout
 
 \end_inset
@@ -4566,7 +4566,7 @@ AJ
 \begin_inset Text
 
 \begin_layout Plain Layout
-Queued
+1.2.1
 \end_layout
 
 \end_inset
