@@ -86,7 +86,7 @@ msgid "Table of Contents"
 msgstr "Índice general"
 
 #: prev
-msgid  "Previous"
+msgid  "Prev"
 msgstr "Anterior"
 
 #: Section

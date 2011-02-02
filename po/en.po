@@ -90,8 +90,8 @@ msgid "Table of Contents"
 msgstr "Table of Contents"
 
 #: prev
-msgid "Previous"
-msgstr "Previous"
+msgid "Prev"
+msgstr "Prev"
 
 #: Section
 msgid "Section"

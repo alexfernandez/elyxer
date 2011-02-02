@@ -89,7 +89,7 @@ msgid "Table of Contents"
 msgstr "Inhaltsverzeichnis"
 
 #: prev
-msgid  "Previous"
+msgid  "Prev"
 msgstr "Zurück"
 
 #: Section
