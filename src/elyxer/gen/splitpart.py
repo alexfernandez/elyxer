@@ -38,6 +38,37 @@ class SplitPartLink(IntegralProcessor):
     "Process each link and add the current page."
     link.page = self.page
 
+class NavigationLink(Container):
+  "A link in the navigation header."
+
+  def __init__(self, name):
+    "Create the link for a given name (prev, next...)."
+    self.name = name
+    self.link = Link().complete(u' ', name, type=name)
+    self.contents = [self.link]
+    self.output = TaggedOutput().settag('span class="' + name + '"')
+
+  def complete(self, container):
+    "Complete the navigation link with destination container."
+    translated = Translator.translate(self.name)
+    if not container.partkey:
+      Trace.error('No part key for link name ' + unicode(container))
+      return
+    if not container.partkey.titlecontents:
+      self.link.contents = [Constant(translated + ': ' + container.partkey.tocentry)]
+      return
+    self.link.contents = [Constant(translated + ' ' + container.partkey.tocentry)]
+    self.link.contents.append(Constant(': '))
+    self.link.contents += container.partkey.titlecontents
+
+  def setdestination(self, destination):
+    "Set the destination for this link."
+    self.link.destination = destination
+
+  def setmutualdestination(self, destination):
+    "Set the destination for this link, and vice versa."
+    self.link.setmutualdestination(destination.link)
+
 class UpAnchor(Link):
   "An anchor to the top of the page for the up links."
 
@@ -90,19 +121,16 @@ class SplitPartNavigation(object):
 
   def createnavigation(self, container):
     "Create the navigation bar with all links."
-    prevlink = Link().complete(u' ', 'prev', type='prev')
-    uplink = Link().complete(u' ', type='up')
+    prevlink = NavigationLink('prev')
+    uplink = NavigationLink('up')
     if self.nextlink:
-      self.setlinkname(prevlink, Translator.translate('prev'), self.lastcontainer)
-      self.setlinkname(self.nextlink, Translator.translate('next'), container)
+      prevlink.complete(self.lastcontainer)
+      self.nextlink.complete(container)
       prevlink.setmutualdestination(self.nextlink)
-      self.setlinkname(uplink, Translator.translate('up'), self.getupdestination(container))
-      uplink.destination = self.getupdestination(container)
-    self.nextlink = Link().complete(u' ', Translator.translate('next'), type='next')
-    prevcontainer = TaggedText().complete([prevlink], 'span class="prev"')
-    nextcontainer = TaggedText().complete([self.nextlink], 'span class="next"')
-    upcontainer = TaggedText().complete([uplink], 'span class="up"')
-    contents = [prevcontainer, Constant('\n'), upcontainer, Constant('\n'), nextcontainer]
+      uplink.complete(self.getupdestination(container))
+      uplink.setdestination(self.getupdestination(container))
+    self.nextlink = NavigationLink('next')
+    contents = [prevlink, Constant('\n'), uplink, Constant('\n'), self.nextlink]
     header = TaggedText().complete(contents, 'div class="splitheader"', True)
     self.lastcontainer = container
     self.lastnavigation = header
@@ -140,18 +168,6 @@ class SplitPartNavigation(object):
       return 1
     else:
       return container.partkey.level + 1
-
-  def setlinkname(self, link, type, container):
-    "Set the name on the link."
-    if not container.partkey:
-      Trace.error('No part key for link name ' + unicode(container))
-      return
-    if not container.partkey.titlecontents:
-      link.contents = [Constant(type + ': ' + container.partkey.tocentry)]
-      return
-    link.contents = [Constant(type + ' ' + container.partkey.tocentry)]
-    link.contents.append(Constant(': '))
-    link.contents += container.partkey.titlecontents
 
 class SplitTOCBasket(MemoryBasket):
   "A memory basket which contains a split table of contents."
