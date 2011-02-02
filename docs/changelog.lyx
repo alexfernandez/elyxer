@@ -114,6 +114,47 @@ Wish list: include part titles in
  navigation header.
 \end_layout
 
+\begin_layout Itemize
+Bug in 
+\family typewriter
+--notoclabels
+\family default
+: removed the 
+\begin_inset Quotes eld
+\end_inset
+
+.
+\begin_inset Quotes erd
+\end_inset
+
+ after the part number but before the title shown in the TOC.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+5.
+\begin_inset space \quad{}
+\end_inset
+
+How to Make Friends
+\begin_inset Quotes erd
+\end_inset
+
+ is now 
+\begin_inset Quotes eld
+\end_inset
+
+5
+\begin_inset space \quad{}
+\end_inset
+
+How to Make Friends
+\begin_inset Quotes erd
+\end_inset
+
+ (thanks, José Ramón!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.0 (2011-01-30):

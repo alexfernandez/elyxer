@@ -64,7 +64,7 @@ class TOCEntry(Container):
       link.complete(container.partkey.tocentry)
     if container.partkey.titlecontents:
       if Options.notoclabels:
-        separator = u'. '
+        separator = u' '
       else:
         separator = u': '
       if container.partkey.tocentry:
