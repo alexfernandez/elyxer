@@ -45,19 +45,29 @@ class NavigationLink(Container):
     "Create the link for a given name (prev, next...)."
     self.name = name
     self.link = Link().complete(u' ', name, type=name)
-    self.contents = [self.link]
     self.output = TaggedOutput().settag('span class="' + name + '"')
+    self.contents = [self.link]
 
-  def complete(self, container):
+  def complete(self, container, after = False):
     "Complete the navigation link with destination container."
+    "The 'after' parameter decides if the link goes after the part title."
     if not container.partkey:
       Trace.error('No part key for link name ' + unicode(container))
       return
     self.link.contents = [Constant(Translator.translate(self.name))]
-    self.contents.append(Constant(u' ' + container.partkey.tocentry))
+    partname = self.getpartname(container)
+    separator = Constant(u' ')
+    if after:
+      self.contents = partname + [separator, self.link]
+    else:
+      self.contents = [self.link, separator] + partname
+
+  def getpartname(self, container):
+    "Get the part name for a container, title optional."
+    partname = [Constant(container.partkey.tocentry)]
     if not container.partkey.titlecontents:
-      return
-    self.contents += [Constant(': ')] + container.partkey.titlecontents
+      return partname
+    return partname + [Constant(': ')] + container.partkey.titlecontents
 
   def setdestination(self, destination):
     "Set the destination for this link."
@@ -123,7 +133,7 @@ class SplitPartNavigation(object):
     uplink = NavigationLink('up')
     if self.nextlink:
       prevlink.complete(self.lastcontainer)
-      self.nextlink.complete(container)
+      self.nextlink.complete(container, after=True)
       prevlink.setmutualdestination(self.nextlink)
       uplink.complete(self.getupdestination(container))
       uplink.setdestination(self.getupdestination(container))
