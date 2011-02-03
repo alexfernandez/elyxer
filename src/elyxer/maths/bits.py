@@ -101,6 +101,10 @@ class FormulaConstant(Constant):
     self.size = 1
     self.type = None
 
+  def computesize(self):
+    "Compute the size of the constant: always 1."
+    return self.size
+
   def clone(self):
     "Return a copy of itself."
     return FormulaConstant(self.original)
