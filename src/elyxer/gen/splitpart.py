@@ -50,16 +50,14 @@ class NavigationLink(Container):
 
   def complete(self, container):
     "Complete the navigation link with destination container."
-    translated = Translator.translate(self.name)
     if not container.partkey:
       Trace.error('No part key for link name ' + unicode(container))
       return
+    self.link.contents = [Constant(Translator.translate(self.name))]
+    self.contents.append(Constant(u' ' + container.partkey.tocentry))
     if not container.partkey.titlecontents:
-      self.link.contents = [Constant(translated + ': ' + container.partkey.tocentry)]
       return
-    self.link.contents = [Constant(translated + ' ' + container.partkey.tocentry)]
-    self.link.contents.append(Constant(': '))
-    self.link.contents += container.partkey.titlecontents
+    self.contents += [Constant(': ')] + container.partkey.titlecontents
 
   def setdestination(self, destination):
     "Set the destination for this link."
