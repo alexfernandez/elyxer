@@ -23,6 +23,7 @@
 # eLyXer standalone formula conversion to HTML.
 
 from elyxer.util.trace import Trace
+from elyxer.util.options import *
 from elyxer.maths.formula import *
 from elyxer.maths.bits import *
 from elyxer.maths.command import *
@@ -42,10 +43,12 @@ def math2html(formula):
 
 def main():
   "Main function, called if invoked from elyxer.the command line"
-  if len(sys.argv) <= 1:
+  args = sys.argv
+  Options().parseoptions(args)
+  if len(args) != 1:
     Trace.error('Usage: math2html.py escaped_string')
     exit()
-  result = math2html(sys.argv[1])
+  result = math2html(args[0])
   Trace.message(result)
 
 if __name__ == '__main__':
