@@ -515,8 +515,8 @@ type "mailto:"
 , William Crocker, Sara Teinturier, Hans Bezemer, Jack Desert, Hartmut Haase,
  Rainer Dorsch, Wolfgang Engelmann, Rodrigo Benenson, Stefano Franchi, Steve
  Litt, Paul Johnson, Yan Wong, Yaron Goland, Francis Girard, Rene de Zwart,
- Jose Ramón Álvarez Sánchez, Günter Milde, Axel Jacobs for their testing
- and bug reporting.
+ Jose Ramón Álvarez Sánchez, Günter Milde, Axel Jacobs, Tiago Pedro Alves-Ferrei
+ra for their testing and bug reporting.
 \end_layout
 
 \begin_layout Standard
