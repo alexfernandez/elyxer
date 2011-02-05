@@ -3250,11 +3250,7 @@ Markers can also be converted to numbers using
 \family default
 : 
 \color blue
-
-\begin_inset Formula $^{\text{⁎}}$
-\end_inset
-
-
+*
 \color inherit
 .
  Available symbols are rotated from this sequence: * ** † ‡ § §§ ¶ ¶¶ #
