@@ -513,6 +513,14 @@ a_{12} & a_{22}\end{array}\right)\times\left(\begin{array}{cc}
 
 \end_layout
 
+\begin_layout Standard
+Math brackets should not be mistaken for TeX brackets: 
+\begin_inset Formula $\frac{\mathcal{F}\left\{ s(x)\right\} }{2}$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Section
 Fraction
 \end_layout
@@ -1052,7 +1060,7 @@ Macros
 \begin_layout Standard
 Definitions can be added as macros
 \begin_inset FormulaMacro
-\newcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
+\renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
 {\sqrt[#1]{#2}}
 \end_inset
 
@@ -1067,7 +1075,7 @@ Definitions can be added as macros
 \begin_layout Standard
 Macro definitions can accept default parameters
 \begin_inset FormulaMacro
-\newcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
+\renewcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
 {#1\sqrt{#2}}
 \end_inset
 

@@ -212,6 +212,43 @@ Bug in TeX parsing: the parser was being thrown off by escaped brackets
 , added test.
 \end_layout
 
+\begin_layout Itemize
+Solved conflict in CSS between 
+\family typewriter
+.script
+\family default
+ (used to properly layout super- and subscripts) and 
+\family typewriter
+span.script
+\family default
+ (used for the script-type 
+\family typewriter
+
+\backslash
+mathscr
+\family default
+ and 
+\family typewriter
+
+\backslash
+mathcal
+\family default
+ fonts).
+ Changed the latter to 
+\family typewriter
+span.scriptfont
+\family default
+, forcing an incompatible but unavoidable change in the CSS.
+\end_layout
+
+\begin_layout Itemize
+Forced 
+\family typewriter
+span.scriptfont
+\family default
+ to be shown as italic so it's properly displayed on Firefox.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.0 (2011-01-30):

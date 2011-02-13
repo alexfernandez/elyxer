@@ -64,8 +64,9 @@ span.fraktur {
 span.blackboard {
 	font-family: Blackboard, msbm10, serif;
 }
-span.script {
+span.scriptfont {
 	font-family: "Monotype Corsiva", "Apple Chancery", "URW Chancery L", cursive;
+	font-style: italic;
 }
 
 /* Colors */
