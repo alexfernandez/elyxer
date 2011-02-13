@@ -191,6 +191,10 @@ math2html
 ).
 \end_layout
 
+\begin_layout Itemize
+Bug in ERT parsing: pending brackets are not parsed correctly.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.0 (2011-01-30):

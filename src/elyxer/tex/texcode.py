@@ -61,8 +61,8 @@ class TeXCode(Container):
   def parse(self, pos):
     "Parse some TeX code."
     self.parserecursive(pos)
-    self.endinglist.pickpending(pos)
-    Trace.debug('Pending endings: ' + unicode(self.endinglist))
+    if pos.leavepending:
+      self.endinglist.pickpending(pos)
 
   def findlaststring(self):
     "Find the last string in the contents."
@@ -153,8 +153,9 @@ class TeXCode(Container):
     if not pos.checkskip('{'):
       pos.error('Missing opening { bracket')
       return
-    self.endinglist.add('}')
+    pos.pushending('}')
     self.parserecursive(pos)
+    pos.popending('}')
 
   def parseclosebracket(self, pos):
     "Parse a } bracket."
