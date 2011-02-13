@@ -33,8 +33,6 @@ from elyxer.maths.command import *
 class ERT(Container):
   "Evil Red Text: embedded TeX code."
 
-  pendingendings = []
-
   def __init__(self):
     self.parser = InsetParser()
     self.output = ContentsOutput()
@@ -42,10 +40,9 @@ class ERT(Container):
   def process(self):
     "Process all TeX code, formulas, commands."
     text = self.extracttext()
-    pos = TextPosition(text).setpendingendings(self.pendingendings)
+    pos = TextPosition(text)
     code = TeXCode()
     code.parse(pos)
-    self.pendingendings = pos.pendingendings
     self.contents = [code]
 
 class TeXCode(Container):

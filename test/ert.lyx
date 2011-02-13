@@ -97,7 +97,9 @@ status open
 \backslash
 $ 
 \backslash
-url{http://elyxer.nongnu.org/}
+url{http://elyxer.nongnu.org/} 
+\backslash
+Circle
 \end_layout
 
 \end_inset
@@ -117,13 +119,13 @@ status open
 
 \end_inset
 
- and be closed afterwards 
+ and be closed afterwards
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-}
+} with text
 \end_layout
 
 \end_inset
@@ -191,6 +193,30 @@ a=b\tag{{unnumbered}}.\end{equation}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Curly brackets can be inserted escaping them: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+{ like this 
+\backslash
+}
+\end_layout
+
+\end_inset
+
+.
+ Also in a formula: 
+\begin_inset Formula $\{h\}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard

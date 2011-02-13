@@ -32,8 +32,6 @@ class Globable(object):
 
   def __init__(self):
     self.endinglist = EndingList()
-    self.leavepending = False
-    self.pendingendings = []
 
   def checkbytemark(self):
     "Check for a Unicode byte mark and skip it."
@@ -57,20 +55,10 @@ class Globable(object):
     Trace.error('Unimplemented checkfor()')
     return False
 
-  def setpendingendings(self, endings):
-    "Set any pending endings left over from a previous parsed position."
-    "Also sets the flag that allows pending endings (to be closed later)."
-    self.leavepending = True
-    self.endinglist.endings = endings
-    return self
-
   def finished(self):
     "Find out if the current text has finished."
     if self.isout():
-      if self.leavepending:
-        self.pendingendings = self.endinglist.endings
-      else:
-        self.endinglist.checkpending()
+      self.endinglist.checkpending()
       return True
     return self.endinglist.checkin(self)
 
@@ -137,8 +125,6 @@ class Globable(object):
 
   def popending(self, expected = None):
     "Pop the ending found at the current position"
-    if self.isout() and self.leavepending:
-      return expected
     ending = self.endinglist.pop(self)
     if expected and expected != ending:
       Trace.error('Expected ending ' + expected + ', got ' + ending)
