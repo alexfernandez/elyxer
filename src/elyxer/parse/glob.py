@@ -30,6 +30,8 @@ class Globable(object):
   Methods current(), skipcurrent(), checkfor() and isout() have to be
   implemented by subclasses."""
 
+  leavepending = False
+
   def __init__(self):
     self.endinglist = EndingList()
 
@@ -58,7 +60,8 @@ class Globable(object):
   def finished(self):
     "Find out if the current text has finished."
     if self.isout():
-      self.endinglist.checkpending()
+      if not self.leavepending:
+        self.endinglist.checkpending()
       return True
     return self.endinglist.checkin(self)
 
@@ -125,6 +128,8 @@ class Globable(object):
 
   def popending(self, expected = None):
     "Pop the ending found at the current position"
+    if self.isout() and self.leavepending:
+      return expected
     ending = self.endinglist.pop(self)
     if expected and expected != ending:
       Trace.error('Expected ending ' + expected + ', got ' + ending)
@@ -137,9 +142,13 @@ class EndingList(object):
   def __init__(self):
     self.endings = []
 
-  def add(self, ending, optional):
+  def add(self, ending, optional = False):
     "Add a new ending to the list"
     self.endings.append(PositionEnding(ending, optional))
+
+  def pickpending(self, pos):
+    "Pick any pending endings from a parse position."
+    self.endings += pos.endinglist.endings
 
   def checkin(self, pos):
     "Search for an ending"

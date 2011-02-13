@@ -41,6 +41,7 @@ class ERT(Container):
     "Process all TeX code, formulas, commands."
     text = self.extracttext()
     pos = TextPosition(text)
+    pos.leavepending = True
     code = TeXCode()
     code.parse(pos)
     self.contents = [code]
@@ -51,6 +52,7 @@ class TeXCode(Container):
   texseparators = ['{', '\\', '}', '$']
   replaced = BibTeXConfig.replaced
   factory = FormulaFactory()
+  endinglist = EndingList()
 
   def __init__(self):
     self.contents = []
@@ -59,6 +61,8 @@ class TeXCode(Container):
   def parse(self, pos):
     "Parse some TeX code."
     self.parserecursive(pos)
+    self.endinglist.pickpending(pos)
+    Trace.debug('Pending endings: ' + unicode(self.endinglist))
 
   def findlaststring(self):
     "Find the last string in the contents."
@@ -91,7 +95,9 @@ class TeXCode(Container):
       if pos.finished():
         return
       elif pos.checkfor('{'):
-        self.parsebracket(pos)
+        self.parseopenbracket(pos)
+      elif pos.checkfor('}'):
+        self.parseclosebracket(pos)
       elif pos.checkfor('\\'):
         self.parseescaped(pos)
       elif pos.checkfor('$'):
@@ -142,14 +148,24 @@ class TeXCode(Container):
       return
     self.add(self.factory.parsetype(FormulaCommand, pos))
 
-  def parsebracket(self, pos):
-    "Parse a {} bracket"
+  def parseopenbracket(self, pos):
+    "Parse a { bracket."
     if not pos.checkskip('{'):
-      pos.error('Missing opening { in bracket')
+      pos.error('Missing opening { bracket')
       return
-    pos.pushending('}')
+    self.endinglist.add('}')
     self.parserecursive(pos)
-    pos.popending('}')
+
+  def parseclosebracket(self, pos):
+    "Parse a } bracket."
+    ending = self.endinglist.findending(pos)
+    if not ending:
+      Trace.error('Unexpected closing } bracket')
+    else:
+      self.endinglist.pop(pos)
+    if not pos.checkskip('}'):
+      pos.error('Missing closing } bracket')
+      return
 
   def parseformula(self, pos):
     "Parse a whole formula."
