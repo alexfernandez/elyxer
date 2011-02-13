@@ -192,7 +192,24 @@ math2html
 \end_layout
 
 \begin_layout Itemize
-Bug in ERT parsing: pending brackets are not parsed correctly.
+Bug in ERT parsing: brackets 
+\family typewriter
+{}
+\family default
+ are not parsed correctly across different ERTs.
+\end_layout
+
+\begin_layout Itemize
+Bug in TeX parsing: the parser was being thrown off by escaped brackets
+ as in 
+\family typewriter
+{
+\backslash
+{
+\backslash
+}}
+\family default
+, added test.
 \end_layout
 
 \end_deeper

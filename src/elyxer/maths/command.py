@@ -81,7 +81,7 @@ class FormulaCommand(FormulaBit):
       pos.error('Missing command start ' + FormulaCommand.start)
       return
     if pos.finished():
-      return FormulaCommand.start
+      return self.emptycommand(pos)
     if pos.current().isalpha():
       # alpha command
       command = FormulaCommand.start + pos.globalpha()
@@ -90,6 +90,16 @@ class FormulaCommand(FormulaBit):
       return command
     # symbol command
     return FormulaCommand.start + pos.skipcurrent()
+
+  def emptycommand(self, pos):
+    """Check for an empty command: look for command disguised as ending.
+    Special case against '{ \{ \} }' situation."""
+    command = ''
+    if not pos.isout():
+      ending = pos.nextending()
+      if ending and pos.checkskip(ending):
+        command = ending
+    return FormulaCommand.start + command
 
   def parseupgreek(self, command, pos):
     "Parse the Greek \\up command.."

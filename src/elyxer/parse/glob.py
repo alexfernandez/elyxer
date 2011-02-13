@@ -136,6 +136,13 @@ class Globable(object):
     self.skip(ending)
     return ending
 
+  def nextending(self):
+    "Return the next ending in the queue."
+    nextending = self.endinglist.findending(self)
+    if not nextending:
+      return None
+    return nextending.ending
+
 class EndingList(object):
   "A list of position endings"
 
