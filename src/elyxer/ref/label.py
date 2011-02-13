@@ -118,7 +118,6 @@ class Reference(Link):
     # only if partkey and partkey.number are not null, send partkey.number
     self.replace('@', partkey and partkey.number)
     self.replace(u'¶', partkey and partkey.tocentry)
-    Trace.debug('Formatted: ' + self.formatted)
     if not '$' in self.formatted or not partkey or not partkey.titlecontents:
       self.contents = [Constant(self.formatted)]
       return
