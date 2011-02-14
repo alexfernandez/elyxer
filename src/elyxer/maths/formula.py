@@ -22,6 +22,7 @@
 # Alex 20090207
 # eLyXer formula processing
 
+import urllib
 from elyxer.gen.container import *
 from elyxer.util.trace import Trace
 from elyxer.util.clone import *
@@ -72,7 +73,9 @@ class Formula(Container):
 
   def googlecharts(self):
     "Make the contents using Google Charts http://code.google.com/apis/chart/."
-    self.contents = [Constant(FormulaConfig.urls['chart'] + self.parsed)]
+    url = FormulaConfig.urls['chart'] + urllib.quote_plus(self.parsed)
+    img = '<img class="chart" src="' + url + '" alt="' + self.parsed + '"/>'
+    self.contents = [Constant(img)]
 
   def classic(self):
     "Make the contents using classic output generation with XHTML and CSS."

@@ -218,3 +218,8 @@ span.deleted {
 	color: #ff0000;
 	text-decoration: line-through;
 }
+
+/* Google Charts */
+img.chart {
+	vertical-align: middle;
+}
