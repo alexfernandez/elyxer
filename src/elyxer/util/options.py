@@ -80,6 +80,7 @@ class Options(object):
   footnotes = None
   imageformat = None
   copyimages = False
+  chart = False
   embedcss = []
 
   branches = dict()
@@ -202,6 +203,7 @@ class Options(object):
     Trace.error('    --mathjax "URL":        use MathJax from elyxer.the given URL to display equations')
     Trace.error('    --template "file":      use a template, put everything in <!--$content-->')
     Trace.error('    --copyright:            add a copyright notice at the bottom')
+    Trace.error('    --chart:                use Google Charts to generate formula images')
     Trace.error('    --nocopy (deprecated):  no effect, maintained for backwards compatibility')
     sys.exit()
 

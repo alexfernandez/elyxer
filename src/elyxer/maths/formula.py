@@ -46,19 +46,36 @@ class Formula(Container):
       DocumentParameters.displaymode = True
       self.output.settag('div class="formula"', True)
     if Options.jsmath:
-      if self.header[0] != 'inline':
-        self.output = TaggedOutput().settag('div class="math"')
-      else:
-        self.output = TaggedOutput().settag('span class="math"')
-      self.contents = [Constant(self.parsed)]
-      return
-    if Options.mathjax:
-      self.output.tag = 'span class="MathJax_Preview"'
-      tag = 'script type="math/tex'
-      if self.header[0] != 'inline':
-        tag += ';mode=display'
-      self.contents = [TaggedText().constant(self.parsed, tag + '"', True)]
-      return
+      self.jsmath()
+    elif Options.mathjax:
+      self.mathjax()
+    elif Options.chart:
+      self.googlecharts()
+    else:
+      self.classic()
+
+  def jsmath(self):
+    "Make the contents for jsMath."
+    if self.header[0] != 'inline':
+      self.output = TaggedOutput().settag('div class="math"')
+    else:
+      self.output = TaggedOutput().settag('span class="math"')
+    self.contents = [Constant(self.parsed)]
+
+  def mathjax(self):
+    "Make the contents for MathJax."
+    self.output.tag = 'span class="MathJax_Preview"'
+    tag = 'script type="math/tex'
+    if self.header[0] != 'inline':
+      tag += ';mode=display'
+    self.contents = [TaggedText().constant(self.parsed, tag + '"', True)]
+
+  def googlecharts(self):
+    "Make the contents using Google Charts http://code.google.com/apis/chart/."
+    self.contents = [Constant(FormulaConfig.urls['chart'] + self.parsed)]
+
+  def classic(self):
+    "Make the contents using classic output generation with XHTML and CSS."
     whole = FormulaFactory().parseformula(self.parsed)
     FormulaProcessor().process(whole)
     whole.parent = self
