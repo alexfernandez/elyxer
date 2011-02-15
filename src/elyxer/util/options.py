@@ -95,6 +95,10 @@ class Options(object):
     if result:
       Trace.error(result)
       self.usage()
+    self.processoptions()
+
+  def processoptions(self):
+    "Process all options parsed."
     if Options.help:
       self.usage()
     if Options.version:
@@ -131,9 +135,9 @@ class Options(object):
     if Options.nocopy:
       Trace.error('Option --nocopy is deprecated; it is no longer needed')
     # set in Trace if necessary
-    for param in dir(Options):
-      if hasattr(Trace, param + 'mode'):
-        setattr(Trace, param + 'mode', getattr(self, param))
+    for param in dir(Trace):
+      if param.endswith('mode'):
+        setattr(Trace, param, getattr(self, param[:-4]))
 
   def usage(self):
     "Show correct usage"
