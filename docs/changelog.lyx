@@ -249,6 +249,14 @@ span.scriptfont
  to be shown as italic so it's properly displayed on Firefox.
 \end_layout
 
+\begin_layout Itemize
+Wish list: new option 
+\family typewriter
+--googlecharts
+\family default
+ adds support for formula images generated using Google Charts.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.0 (2011-01-30):

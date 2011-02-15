@@ -50,7 +50,7 @@ class Formula(Container):
       self.jsmath()
     elif Options.mathjax:
       self.mathjax()
-    elif Options.chart:
+    elif Options.googlecharts:
       self.googlecharts()
     else:
       self.classic()
@@ -73,7 +73,7 @@ class Formula(Container):
 
   def googlecharts(self):
     "Make the contents using Google Charts http://code.google.com/apis/chart/."
-    url = FormulaConfig.urls['chart'] + urllib.quote_plus(self.parsed)
+    url = FormulaConfig.urls['googlecharts'] + urllib.quote_plus(self.parsed)
     img = '<img class="chart" src="' + url + '" alt="' + self.parsed + '"/>'
     self.contents = [Constant(img)]
 
