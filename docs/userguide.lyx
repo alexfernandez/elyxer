@@ -1528,6 +1528,30 @@ reference "sub:Math"
 \begin_layout Description
 
 \family typewriter
+--googlecharts
+\family default
+: Use 
+\begin_inset CommandInset href
+LatexCommand href
+name "Google Charts"
+target "http://code.google.com/apis/chart/index.html"
+
+\end_inset
+
+ to generate images for every formula.
+ Again, see 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Math"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
 --simplemath
 \family default
 : Do not generate fancy math structures such as multi-line Unicode brackets
@@ -3122,6 +3146,47 @@ And of course it takes some time to render everything on the client, which
 \begin_layout Standard
 Publishers should carefully consider pros and cons before deciding what
  to use.
+\end_layout
+
+\begin_layout Subsubsection*
+Google Charts
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Google Charts"
+target "http://code.google.com/apis/chart/index.html"
+
+\end_inset
+
+ is an online service which generates images that contain charts and other
+ stuff; it can also generate TeX formulas.
+ eLyXer can use it using the option 
+\family typewriter
+--googlecharts
+\family default
+:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --googlecharts math.lyx math-googlecharts.html
+\end_layout
+
+\begin_layout Standard
+There are some limitations to Google Charts: no macros, formulas cannot
+ exceed 200 characters, and the supported command set is limited (commands
+ in text mode, for instance, are out of bounds).
+ Also, generated images can be hard to align vertically -- by default they
+ are middle-aligned, but some small characters or superscripted formulas
+ can look weird.
+ But this option can be a quick&dirty way of showing math for older or unsupport
+ed browsers.
 \end_layout
 
 \begin_layout Subsubsection*

@@ -273,6 +273,30 @@ target "http://www.mathjax.org/"
 ).
 \end_layout
 
+\begin_layout Itemize
+A 
+\begin_inset CommandInset href
+LatexCommand href
+name "Google Charts version"
+target "math-googlecharts.html"
+
+\end_inset
+
+ with 
+\begin_inset CommandInset href
+LatexCommand href
+name "Google Charts"
+target "http://code.google.com/apis/chart/index.html"
+
+\end_inset
+
+ (generated with 
+\family typewriter
+--googlecharts
+\family default
+).
+\end_layout
+
 \begin_layout Standard
 All of them are generated from the same 
 \family typewriter
@@ -1191,7 +1215,7 @@ macros
 \begin_layout Standard
 Definitions can be added as macros
 \begin_inset FormulaMacro
-\renewcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
+\newcommand{\stupidroot}[2]{\sqrt[#1]{#2}}
 {\sqrt[#1]{#2}}
 \end_inset
 
@@ -1203,7 +1227,7 @@ Definitions can be added as macros
 .
  They can accept default parameters
 \begin_inset FormulaMacro
-\renewcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
+\newcommand{\defaultroot}[2][4][5]{\sqrt[#1]{#2}}
 {#1\sqrt{#2}}
 \end_inset
 
