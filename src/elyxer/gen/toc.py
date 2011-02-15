@@ -55,8 +55,10 @@ class TOCEntry(Container):
     "Create the link that will make the whole TOC entry."
     labels = container.searchall(Label)
     link = Link()
-    if len(labels) == 0 or Options.toc:
-      link.url = Options.toctarget + '#' + container.partkey.partkey
+    if len(labels) == 0 or Options.tocfor:
+      link.url = '#' + container.partkey.partkey
+      if Options.tocfor:
+        link.url = Options.tocfor + link.url
     else:
       label = labels[0]
       link.destination = label

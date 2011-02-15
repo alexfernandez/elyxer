@@ -257,6 +257,22 @@ Wish list: new option
  adds support for formula images generated using Google Charts.
 \end_layout
 
+\begin_layout Itemize
+Wish list: merged options 
+\family typewriter
+--toc
+\family default
+ and 
+\family typewriter
+--toctarget
+\family default
+ into 
+\family typewriter
+--tocfor
+\family default
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.0 (2011-01-30):

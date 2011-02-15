@@ -53,6 +53,7 @@ class Options(object):
   destdirectory = None
   toc = False
   toctarget = ''
+  tocfor = None
   forceformat = None
   lyxformat = False
   target = None
@@ -113,7 +114,7 @@ class Options(object):
       except:
         Trace.error('--splitpart needs a numeric argument, not ' + Options.splitpart)
         self.usage()
-    if Options.lowmem or Options.toc:
+    if Options.lowmem or Options.toc or Options.tocfor:
       Options.memory = False
     self.parsefootnotes()
     if Options.forceformat and not Options.imageformat:
@@ -124,6 +125,11 @@ class Options(object):
       Options.css = ['http://elyxer.nongnu.org/lyx.css']
     if Options.html:
       Options.simplemath = True
+    if Options.toc and not Options.tocfor:
+      Trace.error('Option --toc is deprecated; use --tocfor "page" instead')
+      Options.tocfor = Options.toctarget
+    if Options.nocopy:
+      Trace.error('Option --nocopy is deprecated; it is no longer needed')
     # set in Trace if necessary
     for param in dir(Options):
       if hasattr(Trace, param + 'mode'):
@@ -193,9 +199,8 @@ class Options(object):
     Trace.error('        "sup", "align"')
     Trace.error('  Advanced output options:')
     Trace.error('    --splitpart "depth":    split the resulting webpage at the given depth')
-    Trace.error('    --toc:                  create a table of contents')
+    Trace.error('    --tocfor "page":        generate a TOC that points to the given page')
     Trace.error('    --target "frame":       make all links point to the given frame')
-    Trace.error('    --toctarget "page":     generate a TOC that points to the given page')
     Trace.error('    --notoclabels:          omit the part labels in the TOC, such as Chapter')
     Trace.error('    --lowmem:               do the conversion on the fly (conserve memory)')
     Trace.error('    --raw:                  generate HTML without header or footer.')
@@ -204,7 +209,10 @@ class Options(object):
     Trace.error('    --googlecharts:         use Google Charts to generate formula images')
     Trace.error('    --template "file":      use a template, put everything in <!--$content-->')
     Trace.error('    --copyright:            add a copyright notice at the bottom')
-    Trace.error('    --nocopy (deprecated):  no effect, maintained for backwards compatibility')
+    Trace.error('  Deprecated options:')
+    Trace.error('    --toc:                  (deprecated) create a table of contents')
+    Trace.error('    --toctarget "page":     (deprecated) generate a TOC for the given page')
+    Trace.error('    --nocopy:               (deprecated) maintained for backwards compatibility')
     sys.exit()
 
   def showversion(self):

@@ -1299,9 +1299,20 @@ reference "sub:Segmenting-Pages"
 \begin_layout Description
 
 \family typewriter
---toc
+--tocfor
+\begin_inset space ~
+\end_inset
+
+
+\series bold
+"
+\series default
+original.html
+\series bold
+"
 \family default
-: Generate just a table of contents.
+\series default
+: Generate just a table of contents with links to the original HTML file.
  See section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1335,33 +1346,6 @@ target
  attribute to every link in the generated HTML, making all links point to
  the provided frame.
  Again, see section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sub:TOC"
-
-\end_inset
-
-: TOC.
-\end_layout
-
-\begin_layout Description
-
-\family typewriter
---toctarget
-\begin_inset space ~
-\end_inset
-
-
-\series bold
-"
-\series default
-original.html
-\series bold
-"
-\family default
-\series default
-: Generate a table of contents with links to the original HTML file.
- See section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sub:TOC"
@@ -1655,17 +1639,54 @@ file
 : Include a copyright notice at the bottom.
 \end_layout
 
+\begin_layout Subsubsection*
+Deprecated Options
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--toc
+\family default
+: Generate just a table of contents.
+ Use 
+\family typewriter
+--tocfor
+\family default
+ instead.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+--toctarget
+\begin_inset space ~
+\end_inset
+
+
+\series bold
+"
+\series default
+original.html
+\series bold
+"
+\family default
+\series default
+: Generate a table of contents with links to the original HTML file.
+ Use 
+\family typewriter
+--tocfor
+\family default
+ instead.
+\end_layout
+
 \begin_layout Description
 
 \family typewriter
 --nocopy
 \family default
-
-\begin_inset space ~
-\end_inset
-
-(deprecated): No effect since the copyright notice is now optional, maintained
- for backwards compatibility.
+: No effect since the copyright notice is now optional, maintained for backwards
+ compatibility.
 \end_layout
 
 \begin_layout Standard
@@ -2312,7 +2333,7 @@ contents
 \color blue
 $
 \color inherit
- elyxer.py --toc --toctarget page.html --target contents document.lyx page-toc.html
+ elyxer.py --tocfor page.html --target contents document.lyx page-toc.html
 \end_layout
 
 \begin_layout Standard
@@ -2455,8 +2476,8 @@ docs/toc.css
 \color blue
 $
 \color inherit
- elyxer.py --toc --toctarget page.html --css docs/toc.css --target contents
- document.lyx page-toc.html
+ elyxer.py --tocfor page.html --css docs/toc.css --target contents document.lyx
+ page-toc.html
 \end_layout
 
 \begin_layout Standard
@@ -4675,7 +4696,7 @@ JA
 \begin_inset Text
 
 \begin_layout Plain Layout
-Queued
+1.2.1
 \end_layout
 
 \end_inset
@@ -4692,7 +4713,7 @@ Make
 \family default
  and 
 \family typewriter
---toc
+--tocfor
 \family default
  work together
 \end_layout

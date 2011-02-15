@@ -52,7 +52,7 @@ class eLyXerConverter(object):
 
   def getbasket(self):
     "Get the appropriate basket for the current options."
-    if Options.toc:
+    if Options.tocfor:
       return TOCBasket()
     if Options.splitpart:
       return SplitPartBasket()

@@ -64,7 +64,7 @@ cd ..
 
 # test TOC generation
 name="appendix-1-6"
-../elyxer.py --quiet --toc --toctarget "$name-test.html" --css ../docs/toc.css --target contents "$name.lyx" "$name-toc-test.html"
+../elyxer.py --quiet --tocfor "$name-test.html" --css ../docs/toc.css --target contents "$name.lyx" "$name-toc-test.html"
 diff -u --ignore-matching-lines="create-date" "$name-toc-good.html" "$name-toc-test.html"
 
 # test --notoclabels
