@@ -238,8 +238,8 @@ class SplitPartBasket(Basket):
     "Write a container, possibly splitting the file."
     self.basket.write(container)
 
-  def finish(self):
-    "Process the whole basket, create page baskets and flush all of them."
+  def splitbaskets(self):
+    "Process the whole basket and create all baskets for split part pages."
     self.basket.process()
     basket = self.firstbasket()
     navigation = SplitPartNavigation()
@@ -256,6 +256,10 @@ class SplitPartBasket(Basket):
         navigation.writefirstheader(basket)
     for basket in self.baskets:
       basket.process()
+
+  def finish(self):
+    "Process the whole basket, split into page baskets and flush all of them."
+    self.splitbaskets()
     for basket in self.baskets:
       basket.flush()
 

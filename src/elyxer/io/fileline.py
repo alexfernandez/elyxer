@@ -98,12 +98,13 @@ class LineReader(object):
 class LineWriter(object):
   "Writes a file as a series of lists"
 
+  file = False
+
   def __init__(self, filename):
     if isinstance(filename, file):
       self.file = filename
       self.filename = None
     else:
-      self.file = codecs.open(filename, 'w', "utf-8")
       self.filename = filename
 
   def write(self, strings):
@@ -116,6 +117,8 @@ class LineWriter(object):
 
   def writestring(self, string):
     "Write a string"
+    if not self.file:
+      self.file = codecs.open(self.filename, 'w', "utf-8")
     if self.file == sys.stdout:
       string = string.encode('utf-8')
     self.file.write(string)

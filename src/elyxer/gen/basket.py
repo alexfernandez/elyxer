@@ -65,6 +65,7 @@ class KeeperBasket(Basket):
     "Flush the contents to the writer."
     for container in self.contents:
       self.writer.write(container.gethtml())
+    self.writer.close()
 
 class TOCBasket(Basket):
   "A basket to place the TOC of a document."
