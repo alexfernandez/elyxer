@@ -113,6 +113,11 @@ for file in $testfiles; do
 	diff -u --ignore-matching-lines="create-date" "$goodname" "$file"
 done
 
+# test TOC generation for --splitpart
+name="index-1-6"
+../elyxer.py --quiet --tocfor "$name-part-test.html" --target "contents" --splitpart 1 --css ../../docs/toc.css "$name.lyx" "parts/$name-toc-test.html"
+diff -u --ignore-matching-lines="create-date" "parts/$name-toc-good.html" "parts/$name-toc-test.html"
+
 # test template generation
 name="helloworld"
 ../elyxer.py --quiet --template template.html "$name.lyx" "$name-template-test.html"
