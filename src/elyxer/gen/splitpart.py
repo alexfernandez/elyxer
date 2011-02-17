@@ -299,3 +299,14 @@ class SplitPartBasket(Basket):
     base, extension = os.path.splitext(self.filename)
     return base + '-' + partname + extension
 
+class SplitTOCBasket(SplitPartBasket):
+  "A basket which contains the TOC for a split part document."
+
+  def finish(self):
+    "Process the whole basket, split into page baskets and flush all of them."
+    self.splitbaskets()
+    tocbasket = TOCBasket().setwriter(self.writer)
+    for container in self.basket.contents:
+      tocbasket.write(container)
+    tocbasket.finish()
+
