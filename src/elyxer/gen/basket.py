@@ -87,4 +87,5 @@ class TOCBasket(Basket):
   def finish(self):
     "Mark as finished."
     self.writer.write(LyXFooter().gethtml())
+    self.writer.close()
 
