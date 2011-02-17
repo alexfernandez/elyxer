@@ -177,8 +177,8 @@ class SplitPartNavigation(object):
     else:
       return container.partkey.level + 1
 
-class SplitTOCBasket(MemoryBasket):
-  "A memory basket which contains a split table of contents."
+class SplitFileBasket(MemoryBasket):
+  "A memory basket which contains a part split into a file, possibly with a TOC."
 
   def __init__(self):
     MemoryBasket.__init__(self)
@@ -275,7 +275,7 @@ class SplitPartBasket(Basket):
     "Add a new basket."
     if not writer:
       writer = LineWriter(filename)
-    basket = SplitTOCBasket()
+    basket = SplitFileBasket()
     basket.setwriter(writer)
     self.baskets.append(basket)
     # set the page name everywhere
