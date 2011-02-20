@@ -55,7 +55,7 @@ class TOCEntry(Container):
     "Create the link that will make the whole TOC entry."
     labels = container.searchall(Label)
     link = Link()
-    if len(labels) == 0 or Options.tocfor:
+    if self.isanchor(labels):
       link.url = '#' + container.partkey.partkey
       if Options.tocfor:
         link.url = Options.tocfor + link.url
@@ -73,6 +73,16 @@ class TOCEntry(Container):
         link.contents.append(Constant(separator))
       link.contents += container.partkey.titlecontents
     return link
+
+  def isanchor(self, labels):
+    "Decide if the link is an anchor based on a set of labels."
+    if len(labels) == 0:
+      return True
+    if not Options.tocfor:
+      return False
+    if Options.splitpart:
+      return False
+    return True
 
   def __unicode__(self):
     "Return a printable representation."
@@ -117,8 +127,13 @@ class IndentedEntry(Container):
 
   def create(self, indent, entry):
     "Create the indented entry."
+    self.entry = entry
     self.contents = [indent, entry]
     return self
+
+  def __unicode__(self):
+    "Return a printable documentation."
+    return 'Indented ' + unicode(self.entry)
 
 class TOCTree(object):
   "A tree that contains the full TOC."
