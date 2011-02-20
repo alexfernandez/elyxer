@@ -273,6 +273,22 @@ Wish list: merged options
 .
 \end_layout
 
+\begin_layout Itemize
+Wish list: options 
+\family typewriter
+--splitpart
+\family default
+ and 
+\family typewriter
+--tocfor
+\family default
+ (previously 
+\family typewriter
+--toc
+\family default
+) now work together.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.0 (2011-01-30):
