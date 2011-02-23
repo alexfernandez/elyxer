@@ -117,7 +117,7 @@ class SplitPartNavigation(object):
 
   def writeheader(self, basket, container):
     "Write the header to the basket."
-    basket.write(LyXHeader().process())
+    basket.write(LyXHeader())
     basket.write(self.currentupanchor(container))
     basket.write(self.createnavigation(container))
 
