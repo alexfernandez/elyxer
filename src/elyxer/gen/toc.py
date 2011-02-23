@@ -176,7 +176,7 @@ class TOCConverter(object):
     "Convert a container into an indented TOC entry."
     entry = self.convert(container)
     if not entry:
-      return BlackBox()
+      return None
     return self.indent(entry)
 
   def indent(self, entry):

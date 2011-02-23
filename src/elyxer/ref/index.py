@@ -73,7 +73,8 @@ class TableOfContents(ListInset):
 
   def add(self, entry):
     "Add a new entry to the TOC."
-    self.contents.append(entry)
+    if entry:
+      self.contents.append(entry)
 
 class IndexReference(Link):
   "A reference to an entry in the alphabetical index."
