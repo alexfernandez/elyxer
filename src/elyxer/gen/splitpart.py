@@ -67,6 +67,8 @@ class NavigationLink(Container):
     partname = [Constant(container.partkey.tocentry)]
     if not container.partkey.titlecontents:
       return partname
+    if Options.notoclabels:
+      return container.partkey.titlecontents
     return partname + [Constant(': ')] + container.partkey.titlecontents
 
   def setdestination(self, destination):

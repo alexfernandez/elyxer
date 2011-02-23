@@ -289,6 +289,26 @@ Wish list: options
 ) now work together.
 \end_layout
 
+\begin_layout Itemize
+Bug in 
+\family typewriter
+--splitpart
+\family default
+ combined with 
+\family typewriter
+--notoclabels
+\family default
+: unnumbered parts displayed an ugly colon as in 
+\begin_inset Quotes eld
+\end_inset
+
+Next : Section
+\begin_inset Quotes erd
+\end_inset
+
+, now removed (thanks, José Ramón!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.0 (2011-01-30):
