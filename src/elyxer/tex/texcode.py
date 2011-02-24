@@ -39,7 +39,11 @@ class ERT(Container):
 
   def process(self):
     "Process all TeX code, formulas, commands."
-    text = self.extracttext()
+    text = ''
+    separator = ''
+    for container in self.contents:
+      text += separator + container.extracttext()
+      separator = '\n'
     pos = TextPosition(text)
     pos.leavepending = True
     code = TeXCode()
@@ -49,7 +53,7 @@ class ERT(Container):
 class TeXCode(Container):
   "A parser and processor for TeX code."
 
-  texseparators = ['{', '\\', '}', '$']
+  texseparators = ['{', '\\', '}', '$', '%']
   replaced = BibTeXConfig.replaced
   factory = FormulaFactory()
   endinglist = EndingList()
@@ -102,6 +106,8 @@ class TeXCode(Container):
         self.parseescaped(pos)
       elif pos.checkfor('$'):
         self.parseformula(pos)
+      elif pos.checkfor('%'):
+        self.parsecomment(pos)
       else:
         pos.error('Unexpected character ' + pos.current())
         pos.skipcurrent()
@@ -172,6 +178,10 @@ class TeXCode(Container):
     "Parse a whole formula."
     formula = Formula().parse(pos)
     self.add(formula)
+
+  def parsecomment(self, pos):
+    "Parse a TeX comment: % to the end of the line."
+    pos.globexcluding('\n')
 
   def __unicode__(self):
     "Return a printable representation."

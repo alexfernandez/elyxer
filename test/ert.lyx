@@ -270,6 +270,28 @@ fboxsep 0.4mm
 \end_inset
 
 .
+ TeX comments should also be ignored: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%comment
+\end_layout
+
+\begin_layout Plain Layout
+
+but not text between comments.
+\end_layout
+
+\begin_layout Plain Layout
+
+% another comment
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

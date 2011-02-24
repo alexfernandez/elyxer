@@ -192,16 +192,12 @@ math2html
 \end_layout
 
 \begin_layout Itemize
-Bug in ERT parsing: brackets 
+Bugs in ERT parsing: brackets 
 \family typewriter
 {}
 \family default
  are not parsed correctly across different ERTs.
-\end_layout
-
-\begin_layout Itemize
-Bug in TeX parsing: the parser was being thrown off by escaped brackets
- as in 
+ The TeX parser was being thrown off by escaped brackets as in 
 \family typewriter
 {
 \backslash
@@ -210,6 +206,7 @@ Bug in TeX parsing: the parser was being thrown off by escaped brackets
 }}
 \family default
 , added test.
+ Comments are ignored now.
 \end_layout
 
 \begin_layout Itemize
