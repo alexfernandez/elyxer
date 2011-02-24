@@ -256,6 +256,7 @@ class SplitPartBasket(Basket):
       basket.write(container)
       if self.afterheader(container):
         navigation.writefirstheader(basket)
+        self.mainanchor = navigation.upanchors[0]
     for basket in self.baskets:
       basket.process()
 
@@ -311,6 +312,8 @@ class SplitTOCBasket(SplitPartBasket):
     "Process the whole basket, split into page baskets and flush all of them."
     self.splitbaskets()
     tocbasket = TOCBasket().setwriter(self.writer)
+    self.mainanchor.partkey = PartKey().createmain()
+    tocbasket.write(self.mainanchor)
     for container in self.basket.contents:
       tocbasket.write(container)
     tocbasket.finish()

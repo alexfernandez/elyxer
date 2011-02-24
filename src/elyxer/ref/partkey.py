@@ -29,6 +29,7 @@ from elyxer.util.numbering import *
 from elyxer.util.docparams import *
 from elyxer.ref.label import *
 from elyxer.gen.inset import *
+from elyxer.out.template import *
 
 
 class PartKey(object):
@@ -88,6 +89,12 @@ class PartKey(object):
     self.partkey = partkey
     self.tocentry = partkey
     self.header = True
+    return self
+
+  def createmain(self):
+    "Create the part key for the main page."
+    self.partkey = ''
+    self.tocentry = DocumentTitle().getvalue()
     return self
 
   def addtoclabel(self, container):
