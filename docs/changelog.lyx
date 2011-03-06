@@ -312,6 +312,18 @@ Modified the spacing in formulas so that words in the mathnormal font now
  appear separated, as a product of variables.
 \end_layout
 
+\begin_layout Itemize
+Do not show limit symbols such as 
+\begin_inset Formula $\sum$
+\end_inset
+
+ or 
+\begin_inset Formula $\int$
+\end_inset
+
+ in a larger font than the rest for inline formulas.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.0 (2011-01-30):

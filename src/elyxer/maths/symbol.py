@@ -42,7 +42,7 @@ class BigSymbol(object):
     if not self.symbol in self.symbols:
       return [self.symbol]
     if self.smalllimit():
-      return ['<span class="bigsymbol">' + self.symbol + '</span>']
+      return [self.symbol]
     return self.symbols[self.symbol]
 
   def smalllimit(self):
