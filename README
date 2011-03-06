@@ -51,11 +51,6 @@ or, on Windows:
   > elyxer.py --help
 Usage and options should then be shown.
 
-Unless your Python version is as ancient as 2.3, the script will also install
-Python as a module, which can be handier to use. In this case eLyXer is run
-like this:
-  $ python -m elyxer [input file] [output file]
-
 LyX Integration
 ===============
 
@@ -63,14 +58,12 @@ To integrate eLyXer with LyX you just have to reconfigure LyX, selecting
 Tools -> Reconfigure from within LyX. For rather old versions of LyX (< 1.6.2)
 you may have to copy elyxer.py into the LyX directory, and reconfigure it.
 Later versions will recognize eLyXer automatically, either if you install it
-using distutils (as a module) or as a binary.
+using distutils or as a binary.
 
 Usage
 =====
 eLyXer can be invoked from the command line as:
   $ elyxer.py [source file] [destination file]
-or, if it was installed as a module:
-  $ python -m elyxer [source file] [destination file]
 
 If the source file is omitted then STDIN is used; likewise, if no destination
 file is specified eLyXer will output to STDOUT. This allows its use in pipes
