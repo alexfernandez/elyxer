@@ -307,6 +307,11 @@ Next : Section
 , now removed (thanks, José Ramón!).
 \end_layout
 
+\begin_layout Itemize
+Modified the spacing in formulas so that words in the mathnormal font now
+ appear separated, as a product of variables.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.0 (2011-01-30):

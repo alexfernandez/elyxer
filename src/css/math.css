@@ -30,6 +30,9 @@ span.unknown {
 span.ignored, span.arraydef {
 	display: none;
 }
+.formula i {
+	letter-spacing: 0.1ex;
+}
 
 /* Alignment */
 .align-left, .align-l {
