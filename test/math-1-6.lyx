@@ -782,6 +782,14 @@ Fonts
 \end_layout
 
 \begin_layout Standard
+This section tests font support.
+\end_layout
+
+\begin_layout Subsection
+Variables and Functions
+\end_layout
+
+\begin_layout Standard
 By default, letters denote variables and are taken from the 
 \family typewriter
 
@@ -806,11 +814,45 @@ mathnormal
 \end_layout
 
 \begin_layout Standard
+There has been some trouble over some commands like Greek letters; some
+ of them should be italicized, as in: 
+\begin_inset Formula $\mu$
+\end_inset
+
+ or 
+\begin_inset Formula $\AA$
+\end_inset
+
+.
+ Others should not, as in 
+\begin_inset Formula $\Omega$
+\end_inset
+
+.
+ Upright Greek letters are also available: 
+\begin_inset Formula $\upmu\neq\mu$
+\end_inset
+
+.
+ An example from the LyX math guide: 
+\begin_inset Formula \[
+\uppi^{+}\to\upmu^{+}+\upnu_{\upmu}.\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Functions names should be upright: 
 \begin_inset Formula $\sin(2\pi),\log(x),\tan\delta$
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Subsection
+Mathematical Fonts
 \end_layout
 
 \begin_layout Standard
@@ -959,6 +1001,10 @@ sans-serif-bold-italic
 .
 \end_layout
 
+\begin_layout Subsection
+Units
+\end_layout
+
 \begin_layout Standard
 Units should be written upright, either with 
 \family typewriter
@@ -992,36 +1038,6 @@ units
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-There has been some trouble over some commands like Greek letters; some
- of them should be italicized, as in: 
-\begin_inset Formula $\mu$
-\end_inset
-
- or 
-\begin_inset Formula $\AA$
-\end_inset
-
-.
- Others should not, as in 
-\begin_inset Formula $\Omega$
-\end_inset
-
-.
- Upright Greek letters are also available: 
-\begin_inset Formula $\upmu\neq\mu$
-\end_inset
-
-.
- An example from the LyX math guide: 
-\begin_inset Formula \[
-\uppi^{+}\to\upmu^{+}+\upnu_{\upmu}.\]
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
