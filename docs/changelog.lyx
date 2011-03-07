@@ -324,6 +324,16 @@ Do not show limit symbols such as
  in a larger font than the rest for inline formulas.
 \end_layout
 
+\begin_layout Itemize
+Added support for 
+\backslash
+textcircled: 
+\begin_inset Formula $\textcircled w$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.0 (2011-01-30):
