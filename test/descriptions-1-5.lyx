@@ -165,6 +165,20 @@ ERT precedes this description, it should be kept.
 \end_layout
 
 \begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+ERT is the description
+\end_layout
+
+\end_inset
+
+ and not only the first word.
+\end_layout
+
+\begin_layout Description
 \begin_inset LatexCommand index
 name "Word"
 

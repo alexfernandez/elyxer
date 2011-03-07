@@ -26,12 +26,14 @@ from elyxer.util.trace import Trace
 from elyxer.util.clone import *
 from elyxer.conf.config import *
 from elyxer.parse.position import *
+from elyxer.gen.layout import *
 from elyxer.maths.formula import *
 from elyxer.maths.command import *
 
 
-class ERT(Container):
+class ERT(FirstWord):
   "Evil Red Text: embedded TeX code."
+  "Considered as a first word for descriptions."
 
   def __init__(self):
     self.parser = InsetParser()
@@ -49,6 +51,16 @@ class ERT(Container):
     code = TeXCode()
     code.parse(pos)
     self.contents = [code]
+
+  def isempty(self):
+    "Find out if the ERT is empty or not."
+    if len(self.contents) == 0:
+      return True
+    if len(self.contents) > 1:
+      Trace.error('Unknown ERT length 2')
+      return False
+    texcode = self.contents[0]
+    return len(texcode.contents) == 0
 
 class TeXCode(Container):
   "A parser and processor for TeX code."

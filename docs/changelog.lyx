@@ -96,7 +96,8 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Bug in description: when a (non-empty) ERT is the first element of a description
+, use it as first word and make it bold.
 \end_layout
 
 \end_deeper

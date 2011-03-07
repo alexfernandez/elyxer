@@ -125,30 +125,34 @@ class FirstWorder(Layout):
 
   def extractfirstword(self):
     "Extract the first word as a list"
-    return self.clonecontents(self.contents)
+    return self.extractfromcontents(self.contents)
 
-  def clonecontents(self, contents):
+  def extractfromcontents(self, contents):
     "Extract the first word in contents."
     firstcontents = []
     while len(contents) > 0:
+      if self.isfirstword(contents[0]):
+        firstcontents.append(contents[0])
+        del contents[0]
+        return firstcontents
       if self.spaceincontainer(contents[0]):
-        cloned = self.clonecontainer(contents[0])
-        firstcontents.append(cloned)
+        extracted = self.extractfromcontainer(contents[0])
+        firstcontents.append(extracted)
         return firstcontents
       firstcontents.append(contents[0])
       del contents[0]
     return firstcontents
 
-  def clonecontainer(self, container):
-    "Clone a container including the output."
+  def extractfromcontainer(self, container):
+    "Extract the first word from a container cloning it including its output."
     if isinstance(container, StringContainer):
-      return self.clonestring(container)
+      return self.extractfromstring(container)
     result = Cloner.clone(container)
     result.output = container.output
-    result.contents = self.clonecontents(container.contents)
+    result.contents = self.extractfromcontents(container.contents)
     return result
 
-  def clonestring(self, container):
+  def extractfromstring(self, container):
     "Extract the first word from elyxer.a string container."
     if not ' ' in container.string:
       Trace.error('No space in string ' + container.string)
@@ -160,6 +164,21 @@ class FirstWorder(Layout):
   def spaceincontainer(self, container):
     "Find out if the container contains a space somewhere."
     return ' ' in container.extracttext()
+
+  def isfirstword(self, container):
+    "Find out if the container is valid as a first word."
+    if not isinstance(container, FirstWord):
+      return False
+    return not container.isempty()
+
+class FirstWord(Container):
+  "A container which is in itself a first word, unless it's empty."
+  "Should be inherited by other containers, e.g. ERT."
+
+  def isempty(self):
+    "Find out if the first word is empty."
+    Trace.error('Unimplemented isempty()')
+    return True
 
 class Description(FirstWorder):
   "A description layout"
