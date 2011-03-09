@@ -1040,6 +1040,18 @@ units
 .
 \end_layout
 
+\begin_layout Subsection
+Sizes
+\end_layout
+
+\begin_layout Standard
+Sizes can be specified in formulas: 
+\begin_inset Formula ${\displaystyle \text{display}},{\textstyle \text{text}},{\scriptstyle \text{script}},{\scriptscriptstyle \text{scriptscript}}$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Section
 Colors and Boxes
 \end_layout
@@ -1131,7 +1143,7 @@ Definitions on the fly are also possible:
 \begin_layout Standard
 Macros may contain a literal parameter
 \begin_inset FormulaMacro
-\newcommand{\colort}[1]{\colorbox{#1}{t}}
+\renewcommand{\colort}[1]{\colorbox{#1}{t}}
 {\colorbox{#1}{t}}
 \end_inset
 
@@ -1146,7 +1158,7 @@ Macros may contain a literal parameter
 \begin_layout Standard
 A macro with four parameters from the LyX detailed math guide
 \begin_inset FormulaMacro
-\newcommand{\qG}[4][1,\,2]{#2_{#1}=-\frac{#3}{2}\pm\sqrt{\frac{#3^{2}}{4}-#4}}
+\renewcommand{\qG}[4][1,\,2]{#2_{#1}=-\frac{#3}{2}\pm\sqrt{\frac{#3^{2}}{4}-#4}}
 \end_inset
 
 .

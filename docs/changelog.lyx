@@ -100,6 +100,18 @@ Bug in description: when a (non-empty) ERT is the first element of a description
 , use it as first word and make it bold.
 \end_layout
 
+\begin_layout Itemize
+Proper support for 
+\backslash
+scriptstyle and 
+\backslash
+scriptscriptstyle: 
+\begin_inset Formula ${\scriptstyle \text{script}},{\scriptscriptstyle \text{scriptscript}}$
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.1 (2011-03-07):

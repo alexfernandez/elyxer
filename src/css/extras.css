@@ -164,6 +164,14 @@ div.vfill {
 	height: 30em;
 }
 
+/* Sizes */
+span.scriptstyle {
+	font-size: 0.75em;
+}
+span.scriptscriptstyle {
+	font-size: 0.60em;
+}
+
 /* Chunks */
 div.chunk {
 	width: auto;
