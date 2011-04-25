@@ -49,8 +49,9 @@ class CommandLineParser(object):
     arg = args[0][2:]
     del args[0]
     if '=' in arg:
-      return self.readequals(arg, args)
-    key = arg.replace('-', '')
+      key = self.readequalskey(arg, args)
+    else:
+      key = arg.replace('-', '')
     if not hasattr(self.options, key):
       return None, key
     current = getattr(self.options, key)
@@ -81,14 +82,11 @@ class CommandLineParser(object):
     value += ' ' + args[0:-1]
     return value
 
-  def readequals(self, arg, args):
-    "Read a value with equals"
+  def readequalskey(self, arg, args):
+    "Read a key using equals"
     split = arg.split('=', 1)
     key = split[0]
-    if not hasattr(self.options, key):
-      return None, key
     value = split[1]
-    if not value.startswith('"'):
-      return key, value
-    return key, self.readquoted(args, value)
+    args.insert(0, value)
+    return key
 

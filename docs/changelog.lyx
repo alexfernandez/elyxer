@@ -112,6 +112,21 @@ scriptscriptstyle:
 .
 \end_layout
 
+\begin_layout Itemize
+\begin_inset CommandInset href
+LatexCommand href
+name "Bug #33156"
+target "https://savannah.nongnu.org/bugs/index.php?33156"
+
+\end_inset
+
+: CSS specification as in 
+\family typewriter
+--css=lyx.css
+\family default
+ was not working, solved now.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.1 (2011-03-07):
