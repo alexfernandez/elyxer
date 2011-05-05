@@ -127,6 +127,22 @@ target "https://savannah.nongnu.org/bugs/index.php?33156"
  was not working, solved now.
 \end_layout
 
+\begin_layout Itemize
+Support for 
+\family typewriter
+
+\backslash
+noindent
+\family default
+ and 
+\family typewriter
+
+\backslash
+centering
+\family default
+ in ERTs.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.1 (2011-03-07):
