@@ -148,6 +148,16 @@ Ignore BibTeX entries which are not publication entries.
  Show a debug message for non-referenced entries.
 \end_layout
 
+\begin_layout Itemize
+Understand command 
+\family typewriter
+
+\backslash
+&
+\family default
+ in BibTeX files.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.1 (2011-03-07):
