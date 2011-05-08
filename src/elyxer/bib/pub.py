@@ -47,6 +47,10 @@ class PubEntry(BibEntry):
     self.parser.parse(pos)
     self.type = self.parser.type
 
+  def isvisible(self):
+    "A publication entry is always visible."
+    return True
+
   def isreferenced(self):
     "Check if the entry is referenced."
     if not self.parser.key:

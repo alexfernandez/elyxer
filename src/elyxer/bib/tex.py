@@ -123,10 +123,13 @@ class BibFile(object):
       if entry.detect(pos):
         newentry = Cloner.clone(entry)
         newentry.parse(pos)
+        if not newentry.isvisible():
+          return
         if self.showall or newentry.isreferenced():
           self.entries.append(newentry)
           self.added += 1
         else:
+          Trace.debug('Ignored entry ' + unicode(newentry))
           self.ignored += 1
         return
     # Skip the whole line since it's a comment outside an entry
@@ -151,8 +154,12 @@ class BibEntry(Container):
     "Throw an error."
     Trace.error('Tried to parse() in ' + unicode(self))
 
+  def isvisible(self):
+    "Return if the entry should be visible. Throws an error."
+    Trace.error('Function isvisible() not implemented for ' + unicode(self))
+
   def isreferenced(self):
-    "Throw an error."
+    "Return if the entry is referenced. Throws an error."
     Trace.error('Function isreferenced() not implemented for ' + unicode(self))
 
   def __unicode__(self):
@@ -171,8 +178,8 @@ class CommentEntry(BibEntry):
     while pos.checkfor('%'):
       pos.globincluding('\n')
 
-  def isreferenced(self):
-    "A comment entry is never referenced"
+  def isvisible(self):
+    "A comment entry is never visible."
     return False
 
   def __unicode__(self):
@@ -207,8 +214,8 @@ class SpecialEntry(BibEntry):
         pos.skipcurrent()
     pos.popending()
 
-  def isreferenced(self):
-    "A special entry is never referenced"
+  def isvisible(self):
+    "A special entry is never visible."
     return False
 
   def __unicode__(self):
