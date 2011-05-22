@@ -34,13 +34,26 @@ class FormulaParser(Parser):
   def parseheader(self, reader):
     "See if the formula is inlined"
     self.begin = reader.linenumber + 1
-    if reader.currentline().find(FormulaConfig.starts['simple']) > 0:
-      return ['inline']
-    if reader.currentline().find(FormulaConfig.starts['complex']) > 0:
-      return ['block']
-    if reader.currentline().find(FormulaConfig.starts['unnumbered']) > 0:
-      return ['block']
-    return ['numbered']
+    type = self.parsetype(reader)
+    if not type:
+      reader.nextline()
+      type = self.parsetype(reader)
+      if not type:
+        Trace.error('Unknown formula type in ' + reader.currentline().strip())
+        return ['unknown']
+    return [type]
+
+  def parsetype(self, reader):
+    "Get the formula type from the first line."
+    if reader.currentline().find(FormulaConfig.starts['simple']) >= 0:
+      return 'inline'
+    if reader.currentline().find(FormulaConfig.starts['complex']) >= 0:
+      return 'block'
+    if reader.currentline().find(FormulaConfig.starts['unnumbered']) >= 0:
+      return 'block'
+    if reader.currentline().find(FormulaConfig.starts['beginbefore']) >= 0:
+      return 'numbered'
+    return None
   
   def parse(self, reader):
     "Parse the formula until the end"

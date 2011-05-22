@@ -163,7 +163,18 @@ Bumped Lyx format supported (
 \family typewriter
 --lyxformat
 \family default
-) to 413 (2.0.0).
+) to 413 (LyX 2.0.0).
+\end_layout
+
+\begin_layout Itemize
+Solved error when parsing display formulas generated with LyX 2.0: 
+\family typewriter
+"Formula beginning 
+\backslash
+begin_inset Formula is unknown"
+\family default
+ (thanks, Pascal!).
+ Added test case.
 \end_layout
 
 \end_deeper
