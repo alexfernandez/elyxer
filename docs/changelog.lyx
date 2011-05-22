@@ -158,6 +158,14 @@ Understand command
  in BibTeX files.
 \end_layout
 
+\begin_layout Itemize
+Bumped Lyx format supported (
+\family typewriter
+--lyxformat
+\family default
+) to 413 (2.0.0).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.1 (2011-03-07):
