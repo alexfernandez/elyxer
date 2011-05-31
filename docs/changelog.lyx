@@ -238,6 +238,19 @@ v{z}
  (thanks again, Pascal!).
 \end_layout
 
+\begin_layout Itemize
+Changed output characters for English quotes, from Unicode “ and ‘ to HTML
+ entities 
+\family typewriter
+&ldquo;
+\family default
+ and 
+\family typewriter
+&lsquo;
+\family default
+ (thanks, Marco!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.1 (2011-03-07):
