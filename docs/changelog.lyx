@@ -177,6 +177,67 @@ begin_inset Formula is unknown"
  Added test case.
 \end_layout
 
+\begin_layout Itemize
+Added a bunch of new symbols, including 
+\family typewriter
+
+\backslash
+textsection
+\family default
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsection
+\end_layout
+
+\end_inset
+
+, 
+\family typewriter
+
+\backslash
+textemdash
+\family default
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textemdash
+\end_layout
+
+\end_inset
+
+ or 
+\family typewriter
+
+\backslash
+v{z}
+\family default
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+v{z}
+\end_layout
+
+\end_inset
+
+ (thanks again, Pascal!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.1 (2011-03-07):
