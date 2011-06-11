@@ -251,6 +251,10 @@ Changed output characters for English quotes, from Unicode “ and ‘ to HTML
  (thanks, Marco!).
 \end_layout
 
+\begin_layout Itemize
+Make Flex styles in titles work (thanks, Tiago!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.1 (2011-03-07):
