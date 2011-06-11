@@ -255,6 +255,11 @@ Changed output characters for English quotes, from Unicode “ and ‘ to HTML
 Make Flex styles in titles work (thanks, Tiago!).
 \end_layout
 
+\begin_layout Itemize
+Make custom Flex CharStyles work: generate HTML spans of the same class
+ as the Flex type (thanks again, Marco!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.1 (2011-03-07):

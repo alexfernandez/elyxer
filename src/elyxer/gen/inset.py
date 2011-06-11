@@ -107,10 +107,10 @@ class FlexInset(Container):
   def process(self):
     "Set the correct flex tag."
     self.type = self.header[2]
-    if not self.type in TagConfig.flex:
-      Trace.error('Unknown Flex inset ' + self.type)
-      return
-    self.output.settag(TagConfig.flex[self.type], False)
+    if self.type in TagConfig.flex:
+      self.output.settag(TagConfig.flex[self.type], False)
+    else:
+      self.output.settag('span class="' + self.type + '"', False)
 
 class InfoInset(Container):
   "A LyX Info inset"
