@@ -164,7 +164,7 @@ Requirements
 eLyXer is a standalone tool: it does not require that LyX is installed to
  run.
  It can convert documents generated with versions of LyX from 1.5.5 through
- 1.6.2 (and probably earlier versions).
+ 2.0 (and probably earlier versions).
  It requires Python 2.3.4, and should work with versions up to 2.6.1.
  It has been tested to run on Linux, Mac OS X and Windows.
 \end_layout
