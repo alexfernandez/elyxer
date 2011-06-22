@@ -91,12 +91,13 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
-1.2.2 (unreleased):
+1.2.3 (unreleased):
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-.
+Changed the license for math2html from Apache v2 to FreeBSD 2-clause license,
+ to better suit integration with DocUtils.
 \end_layout
 
 \end_deeper

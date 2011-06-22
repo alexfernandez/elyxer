@@ -25,7 +25,7 @@ cd src
 ./coalesce.py load-elyxer.py ../elyxer.py
 ./coalesce.py loremipsumize.py ../loremipsumize.py
 ./coalesce.py math2html.py ../math2html.py
-./licensify.py apache-license ../math2html.py
+./licensify.py freebsd-license ../math2html.py
 cd ..
 chmod 755 elyxer.py
 chmod 755 loremipsumize.py
@@ -35,7 +35,7 @@ chmod 755 math2html.py
 cd src
 ./coalesce.py css/master.css ../docs/lyx.css
 ./coalesce.py css/math.css ../docs/math.css
-./licensify.py css/apache-license.css ../docs/math.css
+./licensify.py css/freebsd-license.css ../docs/math.css
 cd ..
 
 # internationalize
