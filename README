@@ -107,9 +107,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 math2html (a subset of eLyXer) Copyright (C) 2009-2011 Alex Fernández
-Released  without warranties or conditions of any kind
-under the terms of the Apache License, Version 2.0
-http://www.apache.org/licenses/LICENSE-2.0
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+This file is offered as-is, without any warranty.
+.. _2-Clause BSD license: http://www.spdx.org/licenses/BSD-2-Clause
 
 Enjoy!
 
