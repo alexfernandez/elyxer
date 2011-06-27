@@ -100,6 +100,10 @@ Changed the license for math2html from Apache v2 to FreeBSD 2-clause license,
  to better suit integration with DocUtils.
 \end_layout
 
+\begin_layout Itemize
+Removed a false positive error which appeared during the tests.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.2 (2011-06-12):

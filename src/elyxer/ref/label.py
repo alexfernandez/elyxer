@@ -119,8 +119,7 @@ class Reference(Link):
     self.replace('@', partkey and partkey.number)
     self.replace(u'¶', partkey and partkey.tocentry)
     if not '$' in self.formatted or not partkey or not partkey.titlecontents:
-      if '$' in self.formatted:
-        Trace.error('No title in ' + unicode(partkey))
+      # there is a $ left, but it should go away on preprocessing
       self.contents = [Constant(self.formatted)]
       return
     pieces = self.formatted.split('$')
