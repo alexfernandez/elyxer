@@ -41,6 +41,7 @@ class ImportFile(object):
     self.existing = dict()
     self.existing.update(FormulaConfig.commands)
     self.existing.update(FormulaConfig.alphacommands)
+    self.existing.update(FormulaConfig.spacedcommands)
 
   def parsewhole(self, parseline):
     "Parse the whole file line by line."
@@ -70,7 +71,6 @@ class ImportFile(object):
       return
     if command in self.existing:
       return
-    Trace.message(command + ':' + unicodesymbol)
     self.sectionobject[command] = unicodesymbol
 
 class ImportCommands(ImportFile):
@@ -140,53 +140,50 @@ class ImportUnimath(ImportFile):
       Trace.error('Weird line: ' + line)
       return
     symbol = pieces[1]
+    command = pieces[2]
+    if command == '' or not command.startswith('\\'):
+      return
     mathclass = pieces[4]
-    if mathclass == 'N':
+    if mathclass in ['N', 'B', 'P', 'S', 'U', 'V', 'C', 'F', 'O', '']:
       # :N: Normal- includes all digits and symbols requiring only one form
-      pass
-    elif mathclass == 'A':
-      # :A: Alphabetic
-      pass
-    elif mathclass == 'B':
       # :B: Binary
-      pass
-    elif mathclass == 'A':
-      # :C: Closing – usually paired with opening delimiter
-      pass
-    elif mathclass == 'A':
-      # :D: Diacritic
-      pass
-    elif mathclass == 'A':
-      # :F: Fence - unpaired delimiter (often used as opening or closing)
-      pass
-    elif mathclass == 'A':
-      # :G: Glyph_Part- piece of large operator
-      pass
-    elif mathclass == 'A':
-      # :L: Large -n-ary or Large operator, often takes limits
-      pass
-    elif mathclass == 'A':
-      # :O: Opening – usually paired with closing delimiter
-      pass
-    elif mathclass == 'A':
       # :P: Punctuation
-      pass
-    elif mathclass == 'A':
-      # :R: Relation- includes arrows
-      pass
-    elif mathclass == 'A':
       # :S: Space
-      pass
-    elif mathclass == 'A':
       # :U: Unary – operators that are only unary
-      pass
-    elif mathclass == 'A':
       # :V: Vary – operators that can be unary or binary depending on context
-      pass
-    elif mathclass == 'A':
+      # :O: Opening – usually paired with closing delimiter
+      # :C: Closing – usually paired with opening delimiter
+      # :F: Fence - unpaired delimiter (often used as opening or closing)
+      # Empty: ?
+      self.add(symbol, command, 'FormulaConfig.commands')
+    elif mathclass in ['A']:
+      # :A: Alphabetic
+      self.add(symbol, command, 'FormulaConfig.alphacommands')
+    elif mathclass in ['D', 'G', 'X']:
+      # :D: Diacritic
+      # :G: Glyph_Part- piece of large operator
       # :X: Special –characters not covered by other classes
-      pass
+      Trace.error('Ignoring ' + symbol + ' with category ' + mathclass)
+    elif mathclass in ['L']:
+      # :L: Large -n-ary or Large operator, often takes limits
+      self.add(symbol, command, 'FormulaConfig.limitcommands')
+    elif mathclass in ['R', 'R?']:
+      # :R: Relation- includes arrows
+      self.add(symbol, command, 'FormulaConfig.spacedcommands')
     elif mathclass == '':
       # Empty math class -- error
       Trace.error('Empty class for ' + symbol)
+    else:
+      Trace.error('Unknown math class ' + mathclass + ' for ' + symbol)
+
+  def add(self, symbol, command, category):
+    "Add a symbol to a category."
+    if not category in self.objects:
+      self.objects[category] = dict()
+    self.sectionobject = self.objects[category]
+    if command == '':
+      return
+    if '{' in command or '}' in command or '[' in command or ']' in command:
+      return
+    self.setsymbol(command, symbol)
 
