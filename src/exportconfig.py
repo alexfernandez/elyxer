@@ -28,6 +28,7 @@ from elyxer.util.trace import Trace
 from elyxer.util.clparse import *
 from elyxer.conf.fileconfig import *
 from elyxer.conf.importconfig import *
+import elyxer.conf.config
 
 
 class Config(object):
@@ -105,7 +106,7 @@ class Config(object):
     "Export configuration to a cfg file"
     linewriter = LineWriter(Config.cfg)
     writer = ConfigWriter(linewriter)
-    configs = [globals()[x] for x in dir(conf.config) if x.endswith('Config')]
+    configs = [globals()[x] for x in dir(elyxer.conf.config) if x.endswith('Config')]
     writer.writeall(configs)
 
   def exportpy(self):
@@ -132,12 +133,14 @@ class Config(object):
 
   def mix(self, reader, addreader):
     "Mix two configuration files"
+    Trace.message('--- new content follows ---')
     for name, object in addreader.objects.iteritems():
+      Trace.message('[' + name + ']')
       equiv = reader.objects[name]
       for key, value in object.iteritems():
         if not key in equiv:
           equiv[key] = value
-          Trace.message('Key ' + key + ' not in base: ' + unicode(value))
+          Trace.message(key + ':' + unicode(value))
 
 class TranslationExport(object):
   "Export the translation to a file."
