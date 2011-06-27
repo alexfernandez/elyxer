@@ -25,6 +25,7 @@
 from elyxer.util.trace import Trace
 from elyxer.io.fileline import *
 from elyxer.conf.fileconfig import *
+from elyxer.conf.config import *
 
 
 class ImportFile(object):
@@ -119,4 +120,73 @@ class ImportCsv(ImportFile):
     if len(pieces) != 2:
       return
     self.setsymbol(pieces[0],pieces[1])
+
+class ImportUnimath(ImportFile):
+  "Import a file in unimath format."
+  "See http://milde.users.sourceforge.net/LUCR/Math/"
+
+  def parse(self):
+    "Parse the whole CSV file."
+    self.parsewhole(self.parseunimath)
+    return self
+
+  def parseunimath(self, line):
+    "Parse a line \command,unicode."
+    line = line.strip()
+    if len(line) == 0:
+      return
+    pieces = line.split('^')
+    if len(pieces) != 8:
+      Trace.error('Weird line: ' + line)
+      return
+    symbol = pieces[1]
+    mathclass = pieces[4]
+    if mathclass == 'N':
+      # :N: Normal- includes all digits and symbols requiring only one form
+      pass
+    elif mathclass == 'A':
+      # :A: Alphabetic
+      pass
+    elif mathclass == 'B':
+      # :B: Binary
+      pass
+    elif mathclass == 'A':
+      # :C: Closing – usually paired with opening delimiter
+      pass
+    elif mathclass == 'A':
+      # :D: Diacritic
+      pass
+    elif mathclass == 'A':
+      # :F: Fence - unpaired delimiter (often used as opening or closing)
+      pass
+    elif mathclass == 'A':
+      # :G: Glyph_Part- piece of large operator
+      pass
+    elif mathclass == 'A':
+      # :L: Large -n-ary or Large operator, often takes limits
+      pass
+    elif mathclass == 'A':
+      # :O: Opening – usually paired with closing delimiter
+      pass
+    elif mathclass == 'A':
+      # :P: Punctuation
+      pass
+    elif mathclass == 'A':
+      # :R: Relation- includes arrows
+      pass
+    elif mathclass == 'A':
+      # :S: Space
+      pass
+    elif mathclass == 'A':
+      # :U: Unary – operators that are only unary
+      pass
+    elif mathclass == 'A':
+      # :V: Vary – operators that can be unary or binary depending on context
+      pass
+    elif mathclass == 'A':
+      # :X: Special –characters not covered by other classes
+      pass
+    elif mathclass == '':
+      # Empty math class -- error
+      Trace.error('Empty class for ' + symbol)
 

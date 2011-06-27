@@ -39,6 +39,7 @@ class Config(object):
   addcfg = None
   importcfg = None
   importcsv = None
+  importunimath = None
   help = False
 
   def run(self, args):
@@ -78,6 +79,8 @@ class Config(object):
     Trace.error('    --py config.py: choose Python config file')
     Trace.error('    --importcfg unicodesymbols: import LyX unicode symbols file')
     Trace.error('    --importcsv unicodecsv: import a file of "\command,unicode" pairs')
+    Trace.error('    --importunimath unimath.txt: import a file in unimath format')
+    Trace.error('      (See http://milde.users.sourceforge.net/LUCR/Math/)')
     exit()
 
   def read(self):
@@ -91,6 +94,9 @@ class Config(object):
       self.mix(reader, addreader)
     if Config.importcsv:
       addreader = ImportCsv(Config.importcsv).parse()
+      self.mix(reader, addreader)
+    if Config.importunimath:
+      addreader = ImportUnimath(Config.importunimath).parse()
       self.mix(reader, addreader)
     reader.objects['GeneralConfig.version']['date'] = datetime.date.today().isoformat()
     return reader
