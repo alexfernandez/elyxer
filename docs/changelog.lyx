@@ -101,7 +101,15 @@ Changed the license for math2html from Apache v2 to FreeBSD 2-clause license,
 \end_layout
 
 \begin_layout Itemize
-Removed a false positive error which appeared during the tests.
+Removed a false positive error which appeared during the tests: 
+\begin_inset Quotes eld
+\end_inset
+
+* No title in
+\begin_inset Quotes erd
+\end_inset
+
+.
 \end_layout
 
 \end_deeper
