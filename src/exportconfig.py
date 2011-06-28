@@ -135,6 +135,7 @@ class Config(object):
     "Mix two configuration files"
     Trace.message('--- new content follows ---')
     for name, object in addreader.objects.iteritems():
+      Trace.message('')
       Trace.message('[' + name + ']')
       equiv = reader.objects[name]
       for key, value in object.iteritems():

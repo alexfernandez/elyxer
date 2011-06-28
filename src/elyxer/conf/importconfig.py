@@ -126,7 +126,7 @@ class ImportUnimath(ImportFile):
   "See http://milde.users.sourceforge.net/LUCR/Math/"
 
   def parse(self):
-    "Parse the whole CSV file."
+    "Parse the whole unimath file."
     self.parsewhole(self.parseunimath)
     return self
 
@@ -144,37 +144,22 @@ class ImportUnimath(ImportFile):
     if command == '' or not command.startswith('\\'):
       return
     mathclass = pieces[4]
-    if mathclass in ['N', 'B', 'P', 'S', 'U', 'V', 'C', 'F', 'O', '']:
-      # :N: Normal- includes all digits and symbols requiring only one form
-      # :B: Binary
-      # :P: Punctuation
-      # :S: Space
-      # :U: Unary – operators that are only unary
-      # :V: Vary – operators that can be unary or binary depending on context
-      # :O: Opening – usually paired with closing delimiter
-      # :C: Closing – usually paired with opening delimiter
-      # :F: Fence - unpaired delimiter (often used as opening or closing)
-      # Empty: ?
+    mathcategory = pieces[5]
+    if mathcategory in ['mathord', 'mathbin', 'mathopen', 'mathclose']:
+      # plain old command
       self.add(symbol, command, 'FormulaConfig.commands')
-    elif mathclass in ['A']:
-      # :A: Alphabetic
+    elif mathcategory in ['mathalpha']:
+      # alpha command
       self.add(symbol, command, 'FormulaConfig.alphacommands')
-    elif mathclass in ['D', 'G', 'X']:
-      # :D: Diacritic
-      # :G: Glyph_Part- piece of large operator
-      # :X: Special –characters not covered by other classes
-      Trace.error('Ignoring ' + symbol + ' with category ' + mathclass)
-    elif mathclass in ['L']:
-      # :L: Large -n-ary or Large operator, often takes limits
+    elif mathcategory in ['mathaccent', 'mathfence', 'mathradical', 'mathover', 'mathunder', '']:
+      # ignore
+      Trace.error('Ignoring ' + symbol + ' with category ' + mathcategory)
+    elif mathcategory in ['mathop']:
       self.add(symbol, command, 'FormulaConfig.limitcommands')
-    elif mathclass in ['R', 'R?']:
-      # :R: Relation- includes arrows
+    elif mathcategory in ['mathrel']:
       self.add(symbol, command, 'FormulaConfig.spacedcommands')
-    elif mathclass == '':
-      # Empty math class -- error
-      Trace.error('Empty class for ' + symbol)
     else:
-      Trace.error('Unknown math class ' + mathclass + ' for ' + symbol)
+      Trace.error('Unknown math category ' + mathcategory + ' for ' + symbol)
 
   def add(self, symbol, command, category):
     "Add a symbol to a category."
