@@ -21,6 +21,7 @@
 %   You should have received a copy of the GNU General Public License
 %   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 \usepackage{mathrsfs}
+\usepackage{mathabx}
 \renewcommand{\varGamma}{\Gamma}
 \renewcommand{\varOmega}{\Omega}
 \usepackage{color}
@@ -107,6 +108,40 @@ Removed a false positive error which appeared during the tests:
 
 * No title in
 \begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Added most commands in Günter Milde's excellent 
+\begin_inset CommandInset href
+LatexCommand href
+name "list"
+target "http://milde.users.sourceforge.net/LUCR/Math/"
+
+\end_inset
+
+ of Unicode to LaTeX commands, except categories mathaccent, mathfence,
+ mathradical, mathover and mathunder.
+ Examples: 
+\family typewriter
+
+\backslash
+hash as
+\family default
+ 
+\family typewriter
+
+\begin_inset Formula $\hash$
+\end_inset
+
+, 
+\backslash
+smalltriangleleft
+\family default
+ as 
+\begin_inset Formula $\smalltriangleleft$
 \end_inset
 
 .
