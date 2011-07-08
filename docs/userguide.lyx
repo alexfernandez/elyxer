@@ -5373,8 +5373,8 @@ Q: What versions of LyX are supported?
 \end_layout
 
 \begin_layout Description
-A: The tool is slowly improving; it now should work with LyX versions 1.5.5
- to 1.6.5.
+A: The tool should work with all LyX versions from 1.5.5 to the latest and
+ greatest.
  It has been tested on Linux, Mac OS X and Windows.
 \end_layout
 
@@ -5389,7 +5389,7 @@ a ton
 
 \begin_layout Description
 A: The four tools supported by LyX (tex4ht, hevea, tth and latex2html) gave
- inferior results a couple of years ago, and were quite inflexible.
+ inferior results in 2009, and were quite inflexible.
  The author found the need for a good converter, while at the same time
  acknowledging the difficulty of the problem.
 \end_layout
