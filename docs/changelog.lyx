@@ -147,6 +147,18 @@ smalltriangleleft
 .
 \end_layout
 
+\begin_layout Itemize
+Deprecated option 
+\family typewriter
+--jsmath
+\family default
+, users are encouraged to use 
+\family typewriter
+--mathjax
+\family default
+ instead.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.2 (2011-06-12):

@@ -134,6 +134,8 @@ class Options(object):
       Options.tocfor = Options.toctarget
     if Options.nocopy:
       Trace.error('Option --nocopy is deprecated; it is no longer needed')
+    if Options.jsmath:
+      Trace.error('Option --jsmath is deprecated; use --mathjax instead')
     # set in Trace if necessary
     for param in dir(Trace):
       if param.endswith('mode'):
@@ -208,7 +210,6 @@ class Options(object):
     Trace.error('    --notoclabels:          omit the part labels in the TOC, such as Chapter')
     Trace.error('    --lowmem:               do the conversion on the fly (conserve memory)')
     Trace.error('    --raw:                  generate HTML without header or footer.')
-    Trace.error('    --jsmath "URL":         use jsMath from the given URL to display equations')
     Trace.error('    --mathjax "URL":        use MathJax from the given URL to display equations')
     Trace.error('    --googlecharts:         use Google Charts to generate formula images')
     Trace.error('    --template "file":      use a template, put everything in <!--$content-->')
@@ -217,6 +218,7 @@ class Options(object):
     Trace.error('    --toc:                  (deprecated) create a table of contents')
     Trace.error('    --toctarget "page":     (deprecated) generate a TOC for the given page')
     Trace.error('    --nocopy:               (deprecated) maintained for backwards compatibility')
+    Trace.error('    --jsmath "URL":         use jsMath from the given URL to display equations')
     sys.exit()
 
   def showversion(self):
