@@ -1438,28 +1438,24 @@ Label footnotes using numbers, instead of letters.
 \begin_layout Description
 
 \family typewriter
---jsmath
+--mathjax
 \begin_inset space ~
 \end_inset
 
 
 \series bold
-"
-\series default
-URL
-\series bold
-"
+remote
 \family default
 \series default
 : Use the excellent JavaScript library 
 \begin_inset CommandInset href
 LatexCommand href
-name "jsMath"
-target "http://www.math.union.edu/locate/jsMath"
+name "MathJax"
+target "http://www.mathjax.org/"
 
 \end_inset
 
- at the given URL to pretty-print mathematical equations.
+ remotely to pretty-print mathematical equations.
  See section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1467,7 +1463,7 @@ reference "sub:Math"
 
 \end_inset
 
-: Math.
+.
 \end_layout
 
 \begin_layout Description
@@ -1486,7 +1482,7 @@ URL
 "
 \family default
 \series default
-: Use the promising JavaScript library 
+: Use the excellent JavaScript library 
 \begin_inset CommandInset href
 LatexCommand href
 name "MathJax"
@@ -1494,7 +1490,7 @@ target "http://www.mathjax.org/"
 
 \end_inset
 
- at the given URL to pretty-print mathematical equations.
+ at the given URL (usually a local URL is used).
  See also section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1619,10 +1615,6 @@ file
 , 
 \family typewriter
 <!--$mathjax-->
-\family default
-, 
-\family typewriter
-<!--$jsmath-->
 \family default
 .
 \end_layout
@@ -2998,60 +2990,11 @@ For more sophisticated math equations there are a couple of advanced features.
 \end_layout
 
 \begin_layout Subsubsection*
-jsMath
-\end_layout
-
-\begin_layout Standard
-The first is to use 
-\begin_inset CommandInset href
-LatexCommand href
-name "jsMath"
-target "http://www.math.union.edu/~dpvc/jsMath/welcome.html"
-
-\end_inset
-
-, for which you have to run eLyXer with the option 
-\family typewriter
---jsmath
-\family default
-:
-\end_layout
-
-\begin_layout LyX-Code
-
-\family typewriter
-\color blue
-$
-\color inherit
- elyxer.py --jsmath jsMath/ math.lyx math-jsmath.html
-\end_layout
-
-\begin_layout Standard
-It uses the given URL (in this case the relative URL 
-\family typewriter
-jsMath/
-\family default
-) to load the required JavaScript files and start rendering.
- Unfortunately, all JavaScript code has to be loaded from the same domain
- as the main document, so if you wish to use this method you will have to
- host jsMath on your site.
- See the 
-\begin_inset CommandInset href
-LatexCommand href
-name "Math showcase (jsMath edition)"
-target "math-jsmath.html"
-
-\end_inset
-
- to see how jsMath improves (or deteriorates) the picture for you.
-\end_layout
-
-\begin_layout Subsubsection*
 MathJax
 \end_layout
 
 \begin_layout Standard
-Another possibility is to use 
+The first option is to use 
 \begin_inset CommandInset href
 LatexCommand href
 name "MathJax"
@@ -3059,7 +3002,7 @@ target "http://www.mathjax.org/"
 
 \end_inset
 
-, which is just as simple with the option 
+, which is as simple as using the option 
 \family typewriter
 --mathjax
 \family default
@@ -3072,11 +3015,72 @@ target "http://www.mathjax.org/"
 \color blue
 $
 \color inherit
- elyxer.py --mathjax MathJax/ math.lyx math-jsmath.html
+ elyxer.py --mathjax 
+\family default
+\series bold
+remote
+\family typewriter
+\series default
+ math.lyx math-
+\family default
+mathjax-remote
+\family typewriter
+.html
 \end_layout
 
 \begin_layout Standard
-This option also uses the given URL (now 
+The 
+\family typewriter
+\series bold
+remote
+\family default
+\series default
+ argument tells MathJax to access the MathJax library remotely on the MathJax
+ CDN.
+ (You should always comply with their 
+\begin_inset CommandInset href
+LatexCommand href
+name "terms of service"
+target "http://www.mathjax.org/download/mathjax-cdn-terms-of-service/"
+
+\end_inset
+
+.) See the 
+\begin_inset CommandInset href
+LatexCommand href
+name "Math showcase (MathJax remote edition)"
+target "math-mathjax-remote.html"
+
+\end_inset
+
+ to check the results.
+\end_layout
+
+\begin_layout Standard
+In case you need to go outside the terms of service, or you want the content
+ to be accessible offline, you can always use a local copy of MathJax.
+ Just use the URL of the repository as an argument to the 
+\family typewriter
+--mathjax
+\family default
+ option:
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --mathjax MathJax/ math.lyx math-
+\family default
+mathjax-local
+\family typewriter
+.html
+\end_layout
+
+\begin_layout Standard
+This way eLyXer uses the given URL (in the example 
 \family typewriter
 MathJax/
 \family default
@@ -3093,17 +3097,11 @@ target "math-mathjax.html"
 \end_inset
 
  to see how MathJax fares with eLyXer.
- Keep in mind that MathJax is still prerelease quality; it should improve
- greatly during 2010.
-\end_layout
-
-\begin_layout Subsubsection*
-Client-side Rendering
 \end_layout
 
 \begin_layout Standard
-Something to note is that both jsMath and MathJax are JavaScript libraries;
- all rendering is done client-side by the user's browser.
+Something to note is that MathJax is a JavaScript library; all rendering
+ is done client-side by the user's browser.
  This has quite a few advantages:
 \end_layout
 
@@ -3118,8 +3116,7 @@ For developers: integration of these libraries is very easy.
 \end_layout
 
 \begin_layout Itemize
-Both libraries (especially MathJax) are improving all the time thanks to
- the efforts of Davide P.
+MathJax is improving all the time thanks to the efforts of Davide P.
  Cervone and the rest of the developer team; eLyXer and its users reap the
  benefits readily.
 \end_layout
@@ -3139,17 +3136,23 @@ It also brings some disadvantages:
 \end_layout
 
 \begin_layout Itemize
-JavaScript code can only be loaded from the server originating the page.
- This means that you cannot host your pages e.g.
- at www.myserver.com and MathJax at www.mymathjaxserver.com.
+With the 
+\family typewriter
+remote
+\family default
+ argument, JavaScript code resides at 
+\begin_inset CommandInset href
+LatexCommand href
+name "a remote server"
+target "http://cdn.mathjax.org/"
+
+\end_inset
+
+ and your users will need online access to view the maths.
 \end_layout
 
 \begin_layout Itemize
-As a consequence, everyone publishing eLyXer pages converted with 
-\family typewriter
---mathjax
-\family default
- needs to also host the code for MathJax, and the same for jsMath.
+If MathJax is accessed locally you need to also host the code for MathJax.
  (Web fonts used in MathJax can at least be hosted elsewhere, so publishers
  do not need to also host the fonts package, but this hasn't still been
  used in eLyXer.)
@@ -5472,13 +5475,13 @@ n; local CSS files are more flexible but can also be confusing to novice
 \end_layout
 
 \begin_layout Description
-Q: My jsMath (MathJax) pages are not rendering correctly; equations are
- silently ignored.
+Q: My MathJax pages are not rendering correctly; equations are silently
+ ignored.
 \end_layout
 
 \begin_layout Description
-A: Check that jsMath (MathJax) is installed on the same server as your pages;
- for security reasons the browser's 
+A: Check that MathJax is installed on the same server as your pages; for
+ security reasons the browser's 
 \begin_inset Quotes eld
 \end_inset
 

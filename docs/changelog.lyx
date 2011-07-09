@@ -159,6 +159,23 @@ Deprecated option
  instead.
 \end_layout
 
+\begin_layout Itemize
+Added argument 
+\family typewriter
+--mathjax remote
+\family default
+ to access the MathJax CDN instead of hit a local copy.
+ Changed the Math showcase to work 
+\begin_inset CommandInset href
+LatexCommand href
+name "remotely"
+target "math-mathjax.html"
+
+\end_inset
+
+ by default.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.2 (2011-06-12):

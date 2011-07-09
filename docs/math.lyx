@@ -229,22 +229,22 @@ target "math-html.html"
 A 
 \begin_inset CommandInset href
 LatexCommand href
-name "jsMath version"
-target "math-jsmath.html"
+name "MathJax remote version"
+target "math-mathjax.html"
 
 \end_inset
 
- that uses 
+ with 
 \begin_inset CommandInset href
 LatexCommand href
-name "jsMath"
-target "http://www.math.union.edu/~dpvc/jsMath/welcome.html"
+name "MathJax"
+target "http://www.mathjax.org/"
 
 \end_inset
 
  (generated with 
 \family typewriter
---jsmath
+--mathjax remote
 \family default
 ).
 \end_layout
@@ -253,8 +253,8 @@ target "http://www.math.union.edu/~dpvc/jsMath/welcome.html"
 A 
 \begin_inset CommandInset href
 LatexCommand href
-name "MathJax version"
-target "math-mathjax.html"
+name "MathJax local version"
+target "math-mathjax-local.html"
 
 \end_inset
 
@@ -270,7 +270,7 @@ target "http://www.mathjax.org/"
 \family typewriter
 --mathjax
 \family default
-).
+ and a local URL).
 \end_layout
 
 \begin_layout Itemize

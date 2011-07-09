@@ -210,6 +210,7 @@ class Options(object):
     Trace.error('    --notoclabels:          omit the part labels in the TOC, such as Chapter')
     Trace.error('    --lowmem:               do the conversion on the fly (conserve memory)')
     Trace.error('    --raw:                  generate HTML without header or footer.')
+    Trace.error('    --mathjax remote:       use MathJax remotely to display equations')
     Trace.error('    --mathjax "URL":        use MathJax from the given URL to display equations')
     Trace.error('    --googlecharts:         use Google Charts to generate formula images')
     Trace.error('    --template "file":      use a template, put everything in <!--$content-->')

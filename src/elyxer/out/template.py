@@ -151,14 +151,19 @@ class DefaultTemplate(HTMLTemplate):
       html.append(u'<script type="text/javascript" src="<!--$jsmath-->/plugins/noImageFonts.js"></script>\n')
       html.append(u'<script type="text/javascript" src="<!--$jsmath-->/easy/load.js"></script>\n')
     if Options.mathjax:
-      html.append(u'<script type="text/javascript" src="<!--$mathjax-->/MathJax.js">\n')
-      html.append(u'  //  Load MathJax and get it running\n')
-      html.append(u'  MathJax.Hub.Config({ jax: ["input/TeX"],\n') # output/HTML-CSS
-      html.append(u'  config: ["MMLorHTML.js"],\n')
-      html.append(u'  extensions: ["TeX/AMSmath.js","TeX/AMSsymbols.js"],\n')
-      html.append(u'  "HTML-CSS": { imageFont: null }\n')
-      html.append(u'  });\n')
-      html.append(u'</script>\n')
+      if Options.mathjax == 'remote':
+        html.append(u'<script type="text/javascript"\n')
+        html.append(u'  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">\n')
+        html.append(u'</script>\n')
+      else:
+        html.append(u'<script type="text/javascript" src="<!--$mathjax-->/MathJax.js">\n')
+        html.append(u'  //  Load MathJax and get it running\n')
+        html.append(u'  MathJax.Hub.Config({ jax: ["input/TeX"],\n') # output/HTML-CSS
+        html.append(u'  config: ["MMLorHTML.js"],\n')
+        html.append(u'  extensions: ["TeX/AMSmath.js","TeX/AMSsymbols.js"],\n')
+        html.append(u'  "HTML-CSS": { imageFont: null }\n')
+        html.append(u'  });\n')
+        html.append(u'</script>\n')
     html.append('</head>\n')
     html.append('<body>\n')
     html.append('<div id="globalWrapper">\n')
