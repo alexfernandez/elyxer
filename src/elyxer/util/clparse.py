@@ -64,7 +64,7 @@ class CommandLineParser(object):
       initial = args[0]
       del args[0]
       return key, self.readquoted(args, initial)
-    value = args[0]
+    value = args[0].decode('utf-8')
     del args[0]
     if isinstance(current, list):
       current.append(value)
@@ -73,8 +73,10 @@ class CommandLineParser(object):
 
   def readquoted(self, args, initial):
     "Read a value between quotes"
+    Trace.error('Oops')
     value = initial[1:]
     while len(args) > 0 and not args[0].endswith('"') and not args[0].startswith('--'):
+      Trace.error('Appending ' + args[0])
       value += ' ' + args[0]
       del args[0]
     if len(args) == 0 or args[0].startswith('--'):

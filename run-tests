@@ -130,3 +130,9 @@ if [ "$result" != "$good" ] ; then
 	echo "Error in math2html: $result != $good"
 fi
 
+# test title with non-ASCII characters, Debian bug 639712
+# http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=639712
+name="helloworld"
+../elyxer.py --quiet --css ../docs/lyx.css --title "By Fernández" "$name.lyx" "$name-test.html"
+diff -u --ignore-matching-lines="create-date" --ignore-matching-lines="<title>" "$name-good.html" "$name-test.html"
+

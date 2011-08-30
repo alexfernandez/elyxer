@@ -176,6 +176,22 @@ target "math-mathjax.html"
  by default.
 \end_layout
 
+\begin_layout Itemize
+Solved 
+\begin_inset CommandInset href
+LatexCommand href
+name "Debian bug 639712"
+target "http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=639712"
+
+\end_inset
+
+: eLyXer didn't accept Unicode characters in 
+\family typewriter
+--title
+\family default
+ option, added test.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.2 (2011-06-12):
