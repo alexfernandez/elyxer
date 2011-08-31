@@ -163,3 +163,18 @@ class Caption(Container):
     self.contents = [Constant(message)]
     return self
 
+class ScriptInset(Container):
+  "Sub- or super-script in an inset."
+
+  def __init__(self):
+    self.parser = InsetParser()
+    self.output = TaggedOutput().settag('span', False)
+
+  def process(self):
+    "Set the correct script tag."
+    self.type = self.header[2]
+    if not self.type in TagConfig.script:
+      Trace.error('Unknown script type ' + self.type)
+      return
+    self.output.settag(TagConfig.script[self.type], False)
+

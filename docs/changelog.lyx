@@ -192,6 +192,19 @@ target "http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=639712"
  option, added test.
 \end_layout
 
+\begin_layout Itemize
+Solved 
+\begin_inset CommandInset href
+LatexCommand href
+name "Savannah bug 33961"
+target "https://savannah.nongnu.org/bugs/index.php?33961"
+
+\end_inset
+
+: eLyXer didn't support sub- or superscript insets as used in LyX 2.0, added
+ test.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.2 (2011-06-12):
