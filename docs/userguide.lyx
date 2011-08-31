@@ -5495,6 +5495,23 @@ same-origin
 \end_layout
 
 \begin_layout Description
+Q: How can I disable hovering notes? Isn't there a 
+\family typewriter
+--nohover
+\family default
+ option?
+\end_layout
+
+\begin_layout Description
+A: It can be done using 
+\family typewriter
+--footnotes margin
+\family default
+.
+ This will disable hovering text but keep footnotes in the margin.
+\end_layout
+
+\begin_layout Description
 Q: I found a bug, what should I do?
 \end_layout
 
