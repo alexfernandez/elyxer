@@ -81,7 +81,7 @@ class Installer(object):
       elif self.ispreferred(path):
         preferred.append(path)
       elif path != '.':
-        rest.append(path)
+        rest.append(path + '/')
     return withpython + preferred + rest
 
   def ispreferred(self, path):

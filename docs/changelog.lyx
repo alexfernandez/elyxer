@@ -205,6 +205,21 @@ target "https://savannah.nongnu.org/bugs/index.php?33961"
  test.
 \end_layout
 
+\begin_layout Itemize
+Solved installation problem when 
+\family typewriter
+$PATH
+\family default
+ contains a directory which does not exist; the eLyXer binary was created
+ with the same name as said directory.
+ Now 
+\family typewriter
+install.py
+\family default
+ should just ignore the directory.
+ (Thanks, Jack!)
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.2 (2011-06-12):
