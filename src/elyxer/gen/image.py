@@ -146,11 +146,10 @@ class ImageConverter(object):
 
   def buildcommand(self, image):
     "Build the command to convert the image."
-    if not Options.converter in ImageConfig.converters:
-      Trace.error('Converter ' + Options.converter + ' not configured.')
-      ImageConverter.active = False
-      return ''
-    command = ImageConfig.converters[Options.converter]
+    if Options.converter in ImageConfig.converters:
+      command = ImageConfig.converters[Options.converter]
+    else:
+      command = Options.converter;
     params = self.getparams(image)
     for param in params:
       command = command.replace('$' + param, unicode(params[param]))
@@ -266,7 +265,7 @@ class ImageFile(object):
   def readformat(self, file, format, bytes):
     "Read any format from elyxer.file"
     read = file.read(bytes)
-    if read == '':
+    if read == '' or len(read) < bytes:
       Trace.error('EOF reached')
       return 0
     tuple = struct.unpack(format, read)

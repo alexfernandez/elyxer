@@ -97,7 +97,11 @@ target "index.html"
 
 \begin_deeper
 \begin_layout Itemize
-.
+Implemented generic converters, and 
+\family typewriter
+lyx -C
+\family default
+ as an image converter (thanks, Tommaso!).
 \end_layout
 
 \end_deeper

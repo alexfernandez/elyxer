@@ -1133,23 +1133,58 @@ Options to Control image output
  
 \family default
 Use the given program to convert images.
- Right now only two converters are supported: 
+ Right now the supported converters are: 
 \family typewriter
 \series bold
 imagemagick
 \family default
 \series default
- (default) and 
+ (default), 
 \family typewriter
 \series bold
 inkscape
 \family default
 \series default
-.
- The latter chooses Inkscape as the image converter, instead of the default
- ImageMagick.
- Inkscape uses some non-standard extensions so it might be needed to convert
- SVG images to PNG.
+ and 
+\family typewriter
+\series bold
+lyx
+\family default
+\series default
+ itself.
+ With 
+\family typewriter
+--converter inkscape
+\family default
+ eLyXer picks Inkscape as the image converter (Inkscape uses some non-standard
+ extensions so it might be needed to convert SVG images to PNG); with 
+\family typewriter
+--converter lyx
+\family default
+ the new LyX option 
+\family typewriter
+lyx -C
+\family default
+ is used.
+ You can also supply your own converter command line, using 
+\family typewriter
+$input
+\family default
+ and 
+\family typewriter
+$output
+\family default
+ as variables (note the single quotes):
+\end_layout
+
+\begin_layout LyX-Code
+
+\family typewriter
+\color blue
+$
+\color inherit
+ elyxer.py --converter 'lyx -C $input $output' [source file] [destination
+ file]
 \end_layout
 
 \begin_layout Description
