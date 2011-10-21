@@ -104,6 +104,29 @@ lyx -C
  as an image converter (thanks, Tommaso!).
 \end_layout
 
+\begin_layout Itemize
+implemented command 
+\family typewriter
+
+\backslash
+today
+\family default
+: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+today
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.3 (2011-08-31):

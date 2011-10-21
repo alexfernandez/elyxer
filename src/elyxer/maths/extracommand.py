@@ -29,6 +29,8 @@ from elyxer.maths.command import *
 from elyxer.maths.symbol import *
 from elyxer.maths.array import *
 
+import datetime
+
 
 class CombiningFunction(OneParamFunction):
 
@@ -244,6 +246,16 @@ class BracketProcessor(MathsProcessor):
     bracket = BigBracket(size, character, alignment)
     command.output = ContentsOutput()
     command.contents = bracket.getcontents()
+
+class TodayCommand(EmptyCommand):
+  "Shows today's date."
+
+  commandmap = None
+
+  def parsebit(self, pos):
+    "Parse a command without parameters"
+    self.output = FixedOutput()
+    self.html = [datetime.date.today().strftime('%h %d, %Y')]
 
 
 FormulaCommand.types += [
