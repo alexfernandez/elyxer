@@ -255,7 +255,7 @@ class TodayCommand(EmptyCommand):
   def parsebit(self, pos):
     "Parse a command without parameters"
     self.output = FixedOutput()
-    self.html = [datetime.date.today().strftime('%h %d, %Y')]
+    self.html = [datetime.date.today().strftime('%b %d, %Y')]
 
 
 FormulaCommand.types += [
