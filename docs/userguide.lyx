@@ -5182,6 +5182,14 @@ This is a complex feature request; calibre does minimal formatting in its
  Lots of help would be needed to get this working.
 \end_layout
 
+\begin_layout Standard
+That said, EPUB readers are often much less strict than the official format
+ and they readily accept eLyXer output.
+ Just convert your LyX document to HTML using eLyXer, and then import the
+ resulting HTML document into your EPUB reader.
+ Let us know how it goes for you.
+\end_layout
+
 \begin_layout Subsubsection*
 Output SVG as 
 \family typewriter
