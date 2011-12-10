@@ -128,6 +128,10 @@ today
 \end_layout
 
 \begin_layout Itemize
+Added a Russian translation (thanks, Vladimir!).
+\end_layout
+
+\begin_layout Itemize
 Solved a bug when parsing a BibTeX entry with a trailing comma (thanks,
  Bob!).
 \end_layout
