@@ -62,6 +62,14 @@
 
 \begin_layout Standard
 
+\lang english
+This is some English text.
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Esto es texto en español.
 \end_layout
 
 \end_body

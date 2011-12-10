@@ -129,11 +129,17 @@ class BarredText(TaggedText):
       return
     self.output.tag = TagConfig.barred[self.type]
 
-class LangLine(BlackBox):
+class LangLine(TaggedText):
   "A line with language information"
 
   def process(self):
-    self.lang = self.header[1]
+    "Only generate a span with lang info when the language is recognized."
+    lang = self.header[1]
+    if not lang in TranslationConfig.languages:
+      self.output = ContentsOutput()
+      return
+    isolang = TranslationConfig.languages[lang]
+    self.output = TaggedOutput().settag('span lang="' + isolang + '"', False)
 
 class InsetLength(BlackBox):
   "A length measure inside an inset."

@@ -136,6 +136,14 @@ Solved a bug when parsing a BibTeX entry with a trailing comma (thanks,
  Bob!).
 \end_layout
 
+\begin_layout Itemize
+Expose language information as additional markup (using the 
+\family typewriter
+lang
+\family default
+ attribute in HTML).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.3 (2011-08-31):
