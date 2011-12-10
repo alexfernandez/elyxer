@@ -137,6 +137,14 @@ Solved a bug when parsing a BibTeX entry with a trailing comma (thanks,
 \end_layout
 
 \begin_layout Itemize
+BibTeX: correctly use booktitle instead of journal in an 
+\family typewriter
+@inproceedings
+\family default
+ entry (thanks, Pascal!).
+\end_layout
+
+\begin_layout Itemize
 Expose language information as additional markup (using the 
 \family typewriter
 lang
