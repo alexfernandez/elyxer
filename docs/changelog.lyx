@@ -127,6 +127,11 @@ today
 .
 \end_layout
 
+\begin_layout Itemize
+Solved a bug when parsing a BibTeX entry with a trailing comma (thanks,
+ Bob!).
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.3 (2011-08-31):

@@ -68,6 +68,8 @@ class BibTagParser(object):
   def parsetag(self, pos):
     "Parse a single tag."
     (key, value) = self.getkeyvalue(pos)
+    if not key:
+      return
     if not value:
       self.key = key
       return
