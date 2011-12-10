@@ -478,7 +478,8 @@ target "http://www.fileformat.info/"
  start; to Ignacio García for relentless encouragement; to Abdelrazak Younes,
  Pavel Sanda, Günter Milde, Olivier Ripoll, José Matos, Iain Mac Donald,
  Uwe Stöhr for their interesting suggestions.
- Thanks to Uwe Stöhr, Hans Bezemer, Sara Teinturier for their translations.
+ Thanks to Uwe Stöhr, Hans Bezemer, Sara Teinturier, Vladimir Ermakov for
+ their translations.
  Packagers Sven Hoexter (for Debian) and Uwe Stöhr (on Windows) have helped
  with their work to make it easy to try it out.
  Olivier Ripoll, Geremy Condra, Simon South, Jack Desert, 
