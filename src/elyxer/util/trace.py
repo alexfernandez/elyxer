@@ -61,7 +61,8 @@ class Trace(object):
 
   def show(cls, message, channel):
     "Show a message out of a channel"
-    message = message.encode('utf-8')
+    if sys.version_info < (3,0):
+      message = message.encode('utf-8')
     channel.write(message + '\n')
 
   debug = classmethod(debug)

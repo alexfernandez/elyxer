@@ -152,6 +152,14 @@ lang
  attribute in HTML).
 \end_layout
 
+\begin_layout Itemize
+Fix by Guenter Milde for 
+\family typewriter
+math2html
+\family default
+ under Python 3.0.
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 1.2.3 (2011-08-31):
