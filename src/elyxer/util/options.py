@@ -155,6 +155,7 @@ class Options(object):
       return
     Options.marginfoot = False
     Options.letterfoot = False
+    Options.hoverfoot = False
     options = Options.footnotes.split(',')
     for option in options:
       footoption = option + 'foot'
