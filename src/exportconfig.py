@@ -28,7 +28,6 @@ from elyxer.util.trace import Trace
 from elyxer.util.clparse import *
 from elyxer.conf.fileconfig import *
 from elyxer.conf.importconfig import *
-import elyxer.conf.config
 
 
 class Config(object):
