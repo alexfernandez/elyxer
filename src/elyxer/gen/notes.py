@@ -75,6 +75,14 @@ class FootnoteMarker(Container):
     self.createcontents()
     return self
 
+  def createlabel(self, marker):
+    "Create the label for a footnote. Used in hoverfoot and marginfoot."
+    self.order = marker.order
+    self.contents = [Constant(self.getmark())]
+    space = Constant(u' ')
+    self.contents = [space] + self.contents + [space]
+    return self
+
   def createcontents(self):
     "Create the contents of the marker."
     if Options.endfoot:
@@ -103,14 +111,15 @@ class Footnote(Container):
     "Can be numeric or a letter depending on runtime options."
     marker = FootnoteMarker().create()
     anchor = FootnoteMarker().createanchor(marker)
-    notecontents = [anchor] + list(self.contents)
+    label = FootnoteMarker().createlabel(marker)
+    notecontents = list(self.contents)
     self.contents = [marker]
     if Options.hoverfoot:
-      self.contents.append(self.createnote(notecontents, 'span class="HoverFoot"'))
+      self.contents.append(self.createnote([label] + notecontents, 'span class="HoverFoot"'))
     if Options.marginfoot:
-      self.contents.append(self.createnote(notecontents, 'span class="MarginFoot"'))
+      self.contents.append(self.createnote([label] + notecontents, 'span class="MarginFoot"'))
     if Options.endfoot:
-      EndFootnotes.footnotes.append(self.createnote(notecontents, 'div class="EndFoot"'))
+      EndFootnotes.footnotes.append(self.createnote([anchor] + notecontents, 'div class="EndFoot"'))
 
   def createnote(self, contents, tag):
     "Create a note with the given contents and HTML tag."
