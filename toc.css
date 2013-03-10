@@ -1,0 +1,40 @@
+/*
+* Styles for lyx TOC.
+*/
+body {
+	font: small sans-serif;
+	background: #f9f9f9;
+	color: black;
+	margin: 0;
+	padding: 0;
+}
+
+#globalWrapper {
+	font-size: 115%;
+	margin: 5px 20px 5px 20px;
+	padding: 0px;
+	background: #ffffff;
+	line-height: 1.5em;
+	overflow: hidden;
+}
+a {
+	text-decoration: none;
+	color: #0030c0;
+	background: none;
+}
+a:visited {
+	color: #603090;
+}
+a:active {
+	color: #ffa000;
+}
+a:hover {
+	text-decoration: underline;
+}
+div.tocindent {
+	padding: 0 0 0 2em;
+}
+div.toc {
+	margin: 0.5em 0;
+	font-size: 0.95em;
+}

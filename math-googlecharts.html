@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="generator" content="http://www.nongnu.org/elyxer/"/>
+<meta name="create-date" content="2013-01-11"/>
+<link rel="stylesheet" href="lyx.css" type="text/css" media="all"/>
+<title>eLyxer Math Showcase (Google Charts edition)</title>
+</head>
+<body>
+<div id="globalWrapper">
+<h1 class="title">
+<img class="embedded" src="elyxer.png" alt="figure elyxer.png" style="max-width: 160px; max-height: 160px;"/>
+eLyXer Math Showcase
+</h1>
+<h2 class="author">
+Alex Fernández (elyxer@gmail.com)
+</h2>
+<div class="fulltoc">
+<div class="tocheader">
+Table of Contents
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Section-1">Section 1: Introduction</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-1.1">Subsection 1.1: Versions</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-2">Section 2: Typography</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.1">Subsection 2.1: Greek Symbols</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.2">Subsection 2.2: Math Symbols</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.3">Subsection 2.3: Other Symbols</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.4">Subsection 2.4: Spacing</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.5">Subsection 2.5: Fonts</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-3">Section 3: Numeration</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-4">Section 4: Simple Structures</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-4.1">Subsection 4.1: Fractions</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-4.2">Subsection 4.2: Limits</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-4.3">Subsection 4.3: Roots</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-5">Section 5: Complex Structures</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-5.1">Subsection 5.1: Arrays</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-5.2">Subsection 5.2: Brackets</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-5.3">Subsection 5.3: Cases</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-5.4">Subsection 5.4: Braces</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-6">Section 6: Macros</a>
+</div>
+</div>
+
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-1">1</a> Introduction
+</h1>
+<div class="Unindented">
+This document is intended as a showcase of the mathematical abilities of eLyXer; for more information be sure to visit the <a class="URL" href="index.html">main page</a>.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-1.1">1.1</a> Versions
+</h2>
+<div class="Unindented">
+There are several versions of this page:
+</div>
+<ul>
+<li>
+A <a class="URL" href="math.html">non-Unicode version</a> of this page with midspaces.
+</li>
+<li>
+A <a class="URL" href="math-unicode.html">Unicode version</a> with mathematical spaces (generated with <tt>--unicode</tt>).
+</li>
+<li>
+An <a class="URL" href="math-iso885915.html">ISO-8859-15 version</a> (generated with <tt>--iso885915</tt>).
+</li>
+<li>
+An <a class="URL" href="math-html.html">HTML version</a> (generated with <tt>--html</tt>).
+</li>
+<li>
+A <a class="URL" href="math-mathjax.html">MathJax remote version</a> with <a class="URL" href="http://www.mathjax.org/">MathJax</a> (generated with <tt>--mathjax remote</tt>).
+</li>
+<li>
+A <a class="URL" href="math-mathjax-local.html">MathJax local version</a> with <a class="URL" href="http://www.mathjax.org/">MathJax</a> (generated with <tt>--mathjax</tt> and a local URL).
+</li>
+<li>
+A <a class="URL" href="math-googlecharts.html">Google Charts version</a> with <a class="URL" href="http://code.google.com/apis/chart/index.html">Google Charts</a> (generated with <tt>--googlecharts</tt>).
+</li>
+
+</ul>
+<div class="Unindented">
+All of them are generated from the same <tt>.lyx</tt> source file; they should help you decide which rendering options suit you best.
+</div>
+<div class="Indented">
+Also available online is the eLyXer translation of the latest <a class="URL" href="http://elyxer.nongnu.org/lyx/Math.html">LyX’s detailed Math manual</a>, which contains a lot more examples of LyX maths.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-2">2</a> Typography
+</h1>
+<div class="Unindented">
+Math formulae use a lot of different symbols and fonts.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.1">2.1</a> Greek Symbols
+</h2>
+<div class="Unindented">
+Greek symbols are very important in equations: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cphi" alt="\phi"/></span>, <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cpi" alt="\pi"/></span>, <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5CXi" alt="\Xi"/></span>. eLyXer offers a complete set in both upper case: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5CGamma%5Cldots%5COmega" alt="\Gamma\ldots\Omega"/></span> and lower case: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Calpha%5Cldots%5Comega" alt="\alpha\ldots\omega"/></span>. Also the AMS italicized upper case: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5CvarGamma%5Cldots%5CvarOmega" alt="\varGamma\ldots\varOmega"/></span>.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.2">2.2</a> Math Symbols
+</h2>
+<div class="Unindented">
+eLyXer supports the whole set of math symbols in <a class="URL" href="http://www.johndcook.com/math_symbols.html">John D. Cook's list</a>: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cexists%5Cpartial%5Cnabla%5Cgeq" alt="\exists\partial\nabla\geq"/></span>. It can also render a few more: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cpropto%5Ctimes" alt="\propto\times"/></span>. You also get all symbols from <a class="URL" href="http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt">Markus Kuhn's list</a>: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cbigodot%5Camalg" alt="\bigodot\amalg"/></span>.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.3">2.3</a> Other Symbols
+</h2>
+<div class="Unindented">
+There are other symbols like arrows: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cleftarrow%5Crightarrow" alt="\leftarrow\rightarrow"/></span>, or geometrical shapes: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Ccirc" alt="\circ"/></span>, <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Csquare" alt="\square"/></span>. eLyXer offers limited support for them. You might also want to use financial symbols in formulae: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cyen%5Ceuro%5C%24" alt="\yen\euro\$"/></span>.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.4">2.4</a> Spacing
+</h2>
+<div class="Unindented">
+Equations look good when items are properly separated. The main separation is the Medium Mathematical Space: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=x%3D3" alt="x=3"/></span>. <span class="greyedout">
+Note: if you are viewing the non-Unicode version <a class="FlexURL" href="math.html">math.html</a> of this page then you are in fact seeing midspaces, which are very similar but not exactly the same: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cfrac%7B4%7D%7B18%7D%5Cmathrm%7Bem%7D" alt="\frac{4}{18}\mathrm{em}"/></span> for medium mathematical spaces versus <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cfrac%7B1%7D%7B2%7D%5Cmathrm%7Ben%7D" alt="\frac{1}{2}\mathrm{en}"/></span>, where <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=1%5Cmathrm%7Bem%7D%3D2%5Cmathrm%7Ben%7D" alt="1\mathrm{em}=2\mathrm{en}"/></span>. Try out the Unicode version <a class="FlexURL" href="math-unicode.html">math-unicode.html</a> — and viceversa. You can check out what version this page is in the page title.
+</span>
+
+</div>
+<div class="Indented">
+The command <tt>\raisebox</tt> is useful to, surprisingly, raise a little box, <div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0A%5Craisebox%7B2mm%7D%7Braised%7Dover%5Craisebox%7B-2mm%7D%7Blowered%7D%5Ctextrm%7Band+back%7D." alt="
+\raisebox{2mm}{raised}over\raisebox{-2mm}{lowered}\textrm{and back}."/>
+</div>
+Like <tt>\mbox</tt>, it puts its content in a text box. It can also be used just for spacing:<br/>
+ <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Craisebox%7B5mm%7D%7B%7DB%5E%7BV%7D" alt="\raisebox{5mm}{}B^{V}"/></span>.
+</div>
+<div class="Indented">
+There are other spacing commands: <tt>\hspace</tt>: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=a%5Chspace%7B4mm%7Db" alt="a\hspace{4mm}b"/></span>, protected space: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=a%5C+b" alt="a\ b"/></span>, and (at &ldquo;block level&rdquo;)<tt> \vspace</tt>: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=a%5Cvspace%7B1cm%7Db" alt="a\vspace{1cm}b"/></span>.
+</div>
+<div class="Indented">
+There should be 1 cm of vertical space above this paragraph.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.5">2.5</a> Fonts
+</h2>
+<div class="Unindented">
+By default, letters denote variables and are taken from the <tt>\mathnormal</tt> font, which is italic, <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Calpha+x%2B%5Calpha+y%3D%5Calpha%28x%2By%29" alt="\alpha x+\alpha y=\alpha(x+y)"/></span>, with the exception of upright capital Greek letters, <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=G%5Cne%5CGamma" alt="G\ne\Gamma"/></span>.
+</div>
+<div class="Indented">
+Function names should be upright: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Csin%282%5Cpi%29%2C%5Clog%28x%29%2C%5Ctan%5Cdelta" alt="\sin(2\pi),\log(x),\tan\delta"/></span>.
+</div>
+<div class="Indented">
+Mathematical fonts used in equations include <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cmathrm%7BRoman%7D" alt="\mathrm{Roman}"/></span> (<tt>\mathrm</tt>), <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cmathsf%7BSans%5C%3A+Serif%7D" alt="\mathsf{Sans\: Serif}"/></span> (<tt>\mathsf</tt>), <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cmathtt%7BTypewriter%7D" alt="\mathtt{Typewriter}"/></span> (<tt>\mathtt</tt>), <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cmathbf%7BBold%7D" alt="\mathbf{Bold}"/></span> (<tt>\mathbf</tt>), <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cmathscr%7BSCRIPT%7D" alt="\mathscr{SCRIPT}"/></span> (<tt>\mathscr</tt>), <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cmathcal%7BCALLIGRAPHIC%7D" alt="\mathcal{CALLIGRAPHIC}"/></span> (<tt>\mathcal</tt>), <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cmathbb%7BBLACKBOARD%5C%3A+BOLD%7D" alt="\mathbb{BLACKBOARD\: BOLD}"/></span> (<tt><span class="versalitas">\</span>mathbb</tt>), and <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cmathfrak%7BFraktur%7D" alt="\mathfrak{Fraktur}"/></span> (<tt>\mathfrak</tt>). For the latter, some single characters are translated to their Unicode equivalents: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cmathscr%7BF%7D" alt="\mathscr{F}"/></span>, <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cmathbb%7BF%7D" alt="\mathbb{F}"/></span>, <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cmathfrak%7BF%7D" alt="\mathfrak{F}"/></span>.
+</div>
+<div class="Indented">
+Regular text in a formula can be achieved via text font commands like <tt>\textrm</tt>: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=5%5C%3A%5Ctextrm%7Bto%7D%5C%3A10" alt="5\:\textrm{to}\:10"/></span>, via boxes like \mbox (prevents line breaks): <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=6%5Cmbox%7B+is+more+than+%7D5" alt="6\mbox{ is more than }5"/></span>, or the AMSmath <tt>\text</tt> macro (scales like math symbols) <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Ctext%7Bbase%7D_%7B%5Ctext%7Bsub%7D%7D%5E%7B%5Ctext%7Bsuper%7D%7D" alt="\text{base}_{\text{sub}}^{\text{super}}"/></span>. The content of an mbox is processed in LaTeX text mode. This allows text font commands, e.g. a switch to <span class="sans"><b><i>sans-serif-bold-italic</i></b></span>, or the phonetic alphabet: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cmbox%7B%5Ctextbf%7B%5Ctextsf%7B%5Ctextbf%7B%5Ctextit%7Bsfbfit%7D%7D%7D%7D%2C+%5Ctextipa%7Btipa%7D%7D" alt="\mbox{\textbf{\textsf{\textbf{\textit{sfbfit}}}}, \textipa{tipa}}"/></span>.
+</div>
+<div class="Indented">
+Units should be written upright, either with <tt>\mathrm</tt> or with macros from the <tt>units</tt> package, e.g. as simple unit, <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cunit%7Bkm%7D" alt="\unit{km}"/></span>, with magnitude, <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cunit%5B57%5D%7Bkm%7D" alt="\unit[57]{km}"/></span>, with fractional unit, <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cunitfrac%5B200%5D%7Bkm%7D%7Bh%7D" alt="\unitfrac[200]{km}{h}"/></span>, or with a fraction before the units, <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cunit%5B%5Cnicefrac%7B3%7D%7B2%7D%5D%7Bkm%7D" alt="\unit[\nicefrac{3}{2}]{km}"/></span>, <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cunit%5B%5Cfrac%7B7%7D%7B16%7D%5D%7Bs%7D" alt="\unit[\frac{7}{16}]{s}"/></span>.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-3">3</a> Numeration
+</h1>
+<div class="Unindented">
+Equations can be numbered, like (<a class="Reference" href="#eq:first">↓</a>) <div class="formula">
+<a class="eqnumber" name="eq-1">(1) </a><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cbegin%7Bequation%7D%0Ay%3Dx%5Clabel%7Beq%3Afirst%7D%5Cend%7Bequation%7D" alt="\begin{equation}
+y=x\label{eq:first}\end{equation}"/>
+</div>
+ And also like <a class="Reference" href="#eq:second">(↓)</a>. <div class="formula">
+<a class="eqnumber" name="eq-2">(2) </a><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cbegin%7Bequation%7D%0Ax%3D3%5Clabel%7Beq%3Asecond%7D%5Cend%7Bequation%7D" alt="\begin{equation}
+x=3\label{eq:second}\end{equation}"/>
+</div>
+ Some equations can be numbered even if they don’t have a label.
+</div>
+<div class="Indented">
+<div class="formula">
+<a class="eqnumber" name="eq-3">(3) </a><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cbegin%7Bequation%7D%0Ax%3D2y%5Cend%7Bequation%7D" alt="\begin{equation}
+x=2y\end{equation}"/>
+</div>
+ Notice that equation (<a class="Reference" href="#eq:second">↓</a>) comes after (<a class="Reference" href="#eq:first">↓</a>).
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-4">4</a> Simple Structures
+</h1>
+<div class="Unindented">
+Let’s now see a few of the simpler structures that eLyXer can output.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-4.1">4.1</a> Fractions
+</h2>
+<div class="Unindented">
+A simple fraction: <div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0A%5Cfrac%7B1%7D%7B2%7D." alt="
+\frac{1}{2}."/>
+</div>
+Inlined: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cfrac%7B2%7D%7B3%7D." alt="\frac{2}{3}."/></span>
+</div>
+<div class="Indented">
+A big recursive fraction: <div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0A%5Cfrac%7B1%7D%7B%5Cleft%281%2B%5Cleft%28%5Cfrac%7B1%7D%7B1%2B%5Cleft%28%5Cfrac%7B1%7D%7B1%2B2x%7D%5Clyxlock%5Cright%29%7D%5Clyxlock%5Cright%29%5Cright%29%7D%5Clyxlock" alt="
+\frac{1}{\left(1+\left(\frac{1}{1+\left(\frac{1}{1+2x}\lyxlock\right)}\lyxlock\right)\right)}\lyxlock"/>
+</div>
+
+</div>
+<div class="Indented">
+A nice fraction: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cnicefrac%7B5%7D%7B6%7D" alt="\nicefrac{5}{6}"/></span>. A non-diminishing fraction containing alignments:<div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0A%5Ccfrac%7B1%7D%7B1%2B%5Cleft%28%5Ccfrac%5Bl%5D%7B1%7D%7B1%2Bx%7D%5Ctimes%5Ccfrac%5Br%5D%7B1%7D%7B1%2Bx%7D%5Cright%29%7D." alt="
+\cfrac{1}{1+\left(\cfrac[l]{1}{1+x}\times\cfrac[r]{1}{1+x}\right)}."/>
+</div>
+
+</div>
+<div class="Indented">
+A similar concept is a binomial coefficient: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cbinom%7BA%2B1%7D%7BB%7D." alt="\binom{A+1}{B}."/></span> It can be prettily presented: <div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0A%5Cdbinom%7BA%7D%7BB%2B1%7D." alt="
+\dbinom{A}{B+1}."/>
+</div>
+
+</div>
+<div class="Indented">
+A symbol can be stacked over another using <tt>\stackrel</tt>: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=x%5Cstackrel%7BR%7D%7B%5Crightarrow%7Dy" alt="x\stackrel{R}{\rightarrow}y"/></span>. Anything can be stacked: <div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0Ad%5Cstackrel%7Bx%3E3%7D%7B%5Clim%7Dx%2C%5Cquad%5Cstackrel%7B%5Cmathrm%7Bhead%7D%7D%7B%5Cmathrm%7Bheels%7D%7D." alt="
+d\stackrel{x>3}{\lim}x,\quad\stackrel{\mathrm{head}}{\mathrm{heels}}."/>
+</div>
+
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-4.2">4.2</a> Limits
+</h2>
+<div class="Unindented">
+<span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Clim_%7Bx%5Crightarrow%5Cinfty%7Df%28x%29" alt="\lim_{x\rightarrow\infty}f(x)"/></span> should appear as <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=x%5Crightarrow%5Cinfty" alt="x\rightarrow\infty"/></span> in italics, and «lim» in plain style. In display mode, a limit must appear below the main symbol: <div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0A%5Clim_%7Bx%5Crightarrow%5Cinfty%7D%5Clyxlock+f%28x%29." alt="
+\lim_{x\rightarrow\infty}\lyxlock f(x)."/>
+</div>
+
+</div>
+<div class="Indented">
+Limits are also used in sums and integrals: <div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0A%5Csum_%7Bi%3D1%7D%5E%7B%5Cinfty%7Dx%2C%5C%3B%5Cint_%7B0%7D%5E%7B%5Cinfty%7Df%28x%29%5C%2C%5Cmathrm%7Bd%7Dx" alt="
+\sum_{i=1}^{\infty}x,\;\int_{0}^{\infty}f(x)\,\mathrm{d}x"/>
+</div>
+where the sum’s limits should appear below (<span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=i%3D1" alt="i=1"/></span>) and above (<span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cinfty" alt="\infty"/></span>) the <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Csum" alt="\sum"/></span>. The placement of the integral limits depends on the document class: LaTeX standard classes place them right to the <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cint" alt="\int"/></span>. Limits are shown to the right in inline formulae: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Csum_%7Bi%3D1%7D%5E%7B%5Cinfty%7Dx" alt="\sum_{i=1}^{\infty}x"/></span> and <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cintop_%7Bi%3D1%7D%5E%7B%5Cinfty%7Dx." alt="\intop_{i=1}^{\infty}x."/></span>
+</div>
+<div class="Indented">
+The placing of limits can be configured with the <tt>\limits</tt> and <tt>\nolimits</tt> macros: <div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0A%5Clim%5Cnolimits+_%7Bx%5Crightarrow%5Cinfty%7D%5Clyxlock+f%28x%29%2C%5C%3B%5Csum%5Cnolimits+_%7Bi%3D1%7D%5E%7B%5Cinfty%7Dx%2C%5C%3B%5Cint%5Climits+_%7B0%7D%5E%7B%5Cinfty%7Df%28x%29%5C%2C%5Cmathrm%7Bd%7Dx" alt="
+\lim\nolimits _{x\rightarrow\infty}\lyxlock f(x),\;\sum\nolimits _{i=1}^{\infty}x,\;\int\limits _{0}^{\infty}f(x)\,\mathrm{d}x"/>
+</div>
+
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-4.3">4.3</a> Roots
+</h2>
+<div class="Unindented">
+A square root: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Csqrt%7B3%7D." alt="\sqrt{3}."/></span> A more complex root in a fraction:<div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0A%5Cfrac%7B1%7D%7B%5Cleft%281%2B%5Csqrt%7B2%7D%5Cleft%28%5Cfrac%7B1%7D%7B1%2B%5Csqrt%7B2%7D%7D%5Clyxlock%5Cright%29%2B%5Csqrt%7B%5Cfrac%7B1%7D%7B2%7D%7D%5Cright%29%7D%5Clyxlock." alt="
+\frac{1}{\left(1+\sqrt{2}\left(\frac{1}{1+\sqrt{2}}\lyxlock\right)+\sqrt{\frac{1}{2}}\right)}\lyxlock."/>
+</div>
+
+</div>
+<div class="Indented">
+eLyXer can also do higher-order roots: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Csqrt%5B3%5D%7Bx%2By%7D" alt="\sqrt[3]{x+y}"/></span>. A devilish case mixing everything we have seen so far:<div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0A%5Cfrac%7B%5Csqrt%5B%5Cnicefrac%7B7%7D%7B8%7D%5D%7B%5Cfrac%7B8%7D%7B4%7Dx%7D%2B%5Csum_%7Bi%3D1%7D%5E%7B%5Cinfty%7Dx%7D%7B%5Csqrt%5Bs%2B5%5D%7B%5Cfrac%7B%2878x%2B45y%29%5Ctimes%5Csqrt%7B%5COmega%7D%7D%7B%5Csin%28x%2B1%29%7D%2B%5Cunit%5B38%5D%7Bkm%7D%7D%7D%5Clyxlock." alt="
+\frac{\sqrt[\nicefrac{7}{8}]{\frac{8}{4}x}+\sum_{i=1}^{\infty}x}{\sqrt[s+5]{\frac{(78x+45y)\times\sqrt{\Omega}}{\sin(x+1)}+\unit[38]{km}}}\lyxlock."/>
+</div>
+
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-5">5</a> Complex Structures
+</h1>
+<div class="Unindented">
+In this section we will explore arrays and related constructs.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-5.1">5.1</a> Arrays
+</h2>
+<div class="Unindented">
+An inline array <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cleft%5B%5Cbegin%7Barray%7D%7Bcc%7D%0Aa+%26+b%5C%5C%0Ac+%26+d%5Cend%7Barray%7D%5Cright%5D" alt="\left[\begin{array}{cc}
+a & b\\
+c & d\end{array}\right]"/></span> is always shown in the same line. In display mode, the array is shown on its own line: <div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0A%5Cleft%5B%5Cbegin%7Barray%7D%7Blc%7D%0A12+%26+2%5C%5C%0A3+%26+4%5Ctimes+y%5E%7Bx%7D%5Cend%7Barray%7D%5Cright%5D" alt="
+\left[\begin{array}{lc}
+12 & 2\\
+3 & 4\times y^{x}\end{array}\right]"/>
+</div>
+Apart from that the appearance should be the same.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-5.2">5.2</a> Brackets
+</h2>
+<div class="Unindented">
+Arrays are separated by variable-size brackets: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cleft%28%5Cbegin%7Barray%7D%7Bcc%7D%0Aa+%26+b%5C%5C%0Ac+%26+d%5Cend%7Barray%7D%5Cright%29" alt="\left(\begin{array}{cc}
+a & b\\
+c & d\end{array}\right)"/></span> <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cleft%5B%5Cbegin%7Barray%7D%7Bcc%7D%0Aa+%26+b%5C%5C%0Ac+%26+d%5Cend%7Barray%7D%5Cright%5D" alt="\left[\begin{array}{cc}
+a & b\\
+c & d\end{array}\right]"/></span> <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cleft%5C%7B+%5Cbegin%7Barray%7D%7Bcc%7D%0Aa+%26+b%5C%5C%0Ac+%26+d%5Cend%7Barray%7D%5Cright%5C%7D+" alt="\left\{ \begin{array}{cc}
+a & b\\
+c & d\end{array}\right\} "/></span> <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cleft%5Clangle+%5Cbegin%7Barray%7D%7Bcc%7D%0Aa+%26+b%5C%5C%0Ac+%26+d%5Cend%7Barray%7D%5Cright%5Crangle+" alt="\left\langle \begin{array}{cc}
+a & b\\
+c & d\end{array}\right\rangle "/></span> <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cleft%7C%5Cbegin%7Barray%7D%7Bcc%7D%0Aa+%26+b%5C%5C%0Ac+%26+d%5Cend%7Barray%7D%5Cright%7C" alt="\left|\begin{array}{cc}
+a & b\\
+c & d\end{array}\right|"/></span>which might also differ on right and left <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cleft%28%5Cbegin%7Barray%7D%7Bcc%7D%0Aa+%26+b%5C%5C%0Ac+%26+d%5Cend%7Barray%7D%5Cright%29" alt="\left(\begin{array}{cc}
+a & b\\
+c & d\end{array}\right)"/></span> or use the empty opening <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cleft%5C%7B+%5Cbegin%7Barray%7D%7Bcc%7D%0Aa+%26+b%5C%5C%0Ac+%26+d%5Cend%7Barray%7D%5Cright." alt="\left\{ \begin{array}{cc}
+a & b\\
+c & d\end{array}\right."/></span> or closing: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cleft.%5Cbegin%7Barray%7D%7Bcc%7D%0Aa+%26+b%5C%5C%0Ac+%26+d%5Cend%7Barray%7D%5Cright%7C" alt="\left.\begin{array}{cc}
+a & b\\
+c & d\end{array}\right|"/></span>. There are also fixed-size big brackets, e.g. <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cbigl%5Clangle+f%5Cbigr%5Crangle" alt="\bigl\langle f\bigr\rangle"/></span>.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-5.3">5.3</a> Cases
+</h2>
+<div class="Unindented">
+Used to switch between several values.
+</div>
+<div class="Indented">
+<div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0Ay%3D%5Cbegin%7Bcases%7D%0Ax+%26+i%3D0%2C%5C%5C%0Ax%2B1+%26+i%3C3%5Cend%7Bcases%7D" alt="
+y=\begin{cases}
+x & i=0,\\
+x+1 & i<3\end{cases}"/>
+</div>
+
+</div>
+<div class="Indented">
+Cases may have more than two rows:
+</div>
+<div class="Indented">
+<div class="formula">
+<img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%0Af%28x%29%3D%5Cbegin%7Bcases%7D%0A0+%26+x%3C0%2C%5C%5C%0A%5Cinfty+%26+x%3D0%5C%5C%0A0+%26+x%3E0%5Cend%7Bcases%7D" alt="
+f(x)=\begin{cases}
+0 & x<0,\\
+\infty & x=0\\
+0 & x>0\end{cases}"/>
+</div>
+
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-5.4">5.4</a> Braces
+</h2>
+<div class="Unindented">
+Values can be underbraced or overbraced.
+</div>
+<div class="Indented">
+<span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cunderbrace%7Ba-b%7D%3D%5Coverbrace%7Bb%2Bc%2Bd%2Be%7D" alt="\underbrace{a-b}=\overbrace{b+c+d+e}"/></span>.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-6">6</a> Macros
+</h1>
+<div class="Unindented">
+Now it’s time for user-defined commands (sometimes called &ldquo;macros&rdquo;).
+</div>
+<div class="Indented">
+Definitions can be added as macros. Then they can be used in formulae: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cstupidroot+12" alt="\stupidroot 12"/></span>. They can accept default parameters. Again, useful in formulae: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cdefaultroot" alt="\defaultroot"/></span>.
+</div>
+<div class="Indented">
+Other definitions from the preamble can be used: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cpreambleroot%7B3%7D%7B4%7D" alt="\preambleroot{3}{4}"/></span>.
+</div>
+<div class="Indented">
+Definitions on the fly are also possible: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cnewcommand%7B%5Contheflyroot%7D%5B2%5D%7B%5Csqrt%5B%231%5D%7B%232%7D%7D%5Contheflyroot%7B7%7D%7B8%7D" alt="\newcommand{\ontheflyroot}[2]{\sqrt[#1]{#2}}\ontheflyroot{7}{8}"/></span>, and used with different values: <span class="formula"><img class="chart" src="http://chart.googleapis.com/chart?cht=tx&chl=%5Contheflyroot%7Ba%7D%7Bb%7D" alt="\ontheflyroot{a}{b}"/></span>.
+</div>
+
+<hr class="footer"/>
+<div class="footer" id="generated-by">
+Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.2.4 (2013-01-11)</a> on <span class="create-date">2013-01-11T23:19:46.122028</span>
+</div>
+</div>
+</body>
+</html>

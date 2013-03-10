@@ -1,0 +1,1803 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="generator" content="http://www.nongnu.org/elyxer/"/>
+<meta name="create-date" content="2013-03-10"/>
+<link rel="stylesheet" href="lyx.css" type="text/css" media="all"/>
+<title>eLyXer changelog</title>
+</head>
+<body>
+<div id="globalWrapper">
+<h1 class="title">
+<img class="embedded" src="elyxer.png" alt="figure elyxer.png" style="max-width: 160px; max-height: 160px;"/>
+eLyXer Changelog
+</h1>
+<div class="Unindented">
+This document lists all public versions, the date they were released on and the changes they contain. For more information about eLyXer visit the <a class="URL" href="index.html">main page</a>.
+</div>
+<ul>
+<li>
+1.2.4 (2013-01-11):<ul>
+<li>
+Implemented generic converters, and <tt>lyx -C</tt> as an image converter (thanks, Tommaso!).
+</li>
+<li>
+Implemented command <tt>\today</tt>: Mar 10, 2013.
+</li>
+<li>
+Added a Russian translation (thanks, Vladimir!).
+</li>
+<li>
+Solved a bug when parsing a BibTeX entry with a trailing comma (thanks, Bob!).
+</li>
+<li>
+BibTeX: correctly use booktitle instead of journal in an <tt>@inproceedings</tt> entry (thanks, Pascal!).
+</li>
+<li>
+Expose language information as additional markup (using the <tt>lang</tt> attribute in HTML).
+</li>
+<li>
+Fix by Guenter Milde for <tt>math2html</tt> under Python 3.0.
+</li>
+<li>
+Convert em-dash only when surrounded by spaces (thanks, Robert).
+</li>
+<li>
+Fix by José Ramón Álvarez Sánchez of problem in simultaneous use of <tt>hover</tt> and <tt>end</tt> options for footnotes (thanks, Tim!).
+</li>
+
+</ul>
+
+</li>
+<li>
+1.2.3 (2011-08-31):<ul>
+<li>
+Changed the license for math2html from Apache v2 to FreeBSD 2-clause license, to better suit integration with DocUtils.
+</li>
+<li>
+Removed a false positive error which appeared during the tests: &ldquo;* No title in&rdquo;.
+</li>
+<li>
+Added most commands in Günter Milde’s excellent <a class="URL" href="http://milde.users.sourceforge.net/LUCR/Math/">list</a> of Unicode to LaTeX commands, except categories mathaccent, mathfence, mathradical, mathover and mathunder. Examples: <tt>\hash as</tt> <tt><span class="formula"> ⋕ </span>, \smalltriangleleft</tt> as <span class="formula">◃</span>.
+</li>
+<li>
+Deprecated option <tt>--jsmath</tt>, users are encouraged to use <tt>--mathjax</tt> instead.
+</li>
+<li>
+Added argument <tt>--mathjax remote</tt> to access the MathJax CDN instead of hit a local copy. Changed the Math showcase to work <a class="URL" href="math-mathjax.html">remotely</a> by default.
+</li>
+<li>
+Solved <a class="URL" href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=639712">Debian bug 639712</a>: eLyXer didn’t accept Unicode characters in <tt>--title</tt> option, added test.
+</li>
+<li>
+Solved <a class="URL" href="https://savannah.nongnu.org/bugs/index.php?33961">Savannah bug 33961</a>: eLyXer didn’t support sub- or superscript insets as used in LyX 2.0, added test.
+</li>
+<li>
+Solved installation problem when <tt>$PATH</tt> contains a directory which does not exist; the eLyXer binary was created with the same name as said directory. Now <tt>install.py</tt> should just ignore the directory. (Thanks, Jack!)
+</li>
+
+</ul>
+
+</li>
+<li>
+1.2.2 (2011-06-12):<ul>
+<li>
+Bug in description: when a (non-empty) ERT is the first element of a description, use it as first word and make it bold.
+</li>
+<li>
+Proper support for \scriptstyle and \scriptscriptstyle: <span class="formula"><span class="scriptstyle"><span class="text">script</span></span>, <span class="scriptscriptstyle"><span class="text">scriptscript</span></span></span>.
+</li>
+<li>
+<a class="URL" href="https://savannah.nongnu.org/bugs/index.php?33156">Bug #33156</a>: CSS specification as in <tt>--css=lyx.css</tt> was not working, solved now.
+</li>
+<li>
+Support for <tt>\noindent</tt> and <tt>\centering</tt> in ERTs.
+</li>
+<li>
+Ignore BibTeX entries which are not publication entries. Show a debug message for non-referenced entries.
+</li>
+<li>
+Understand command <tt>\&amp;</tt> in BibTeX files.
+</li>
+<li>
+Bumped Lyx format supported (<tt>--lyxformat</tt>) to 413 (LyX 2.0.0).
+</li>
+<li>
+Solved error when parsing display formulas generated with LyX 2.0: <tt>"Formula beginning \begin_inset Formula is unknown"</tt> (thanks, Pascal!). Added test case.
+</li>
+<li>
+Added a bunch of new symbols, including <tt>\textsection</tt> §, <tt>\textemdash</tt> — or <tt>\v{z}</tt> ž (thanks again, Pascal!).
+</li>
+<li>
+Changed output characters for English quotes, from Unicode “ and ‘ to HTML entities <tt>&amp;ldquo;</tt> and <tt>&amp;lsquo;</tt> (thanks, Marco!).
+</li>
+<li>
+Make Flex styles in titles work (thanks, Tiago!).
+</li>
+<li>
+Make custom Flex CharStyles work: generate HTML spans of the same class as the Flex type (thanks again, Marco!).
+</li>
+
+</ul>
+
+</li>
+<li>
+1.2.1 (2011-03-07):<ul>
+<li>
+Wish list: support for formatted references (showing the part name and number) and named references (showing the part title, equivalent to <tt>\nameref</tt>).
+</li>
+<li>
+Wish list: include part titles in <tt>--splitpart</tt> navigation header.
+</li>
+<li>
+Changed literal for previous page in <tt>--splitpart</tt>: now it’s &ldquo;Prev&rdquo; instead of &ldquo;Previous&rdquo;.
+</li>
+<li>
+Bug in <tt>--notoclabels</tt>: removed the &ldquo;.&rdquo; after the part number but before the title shown in the TOC. &ldquo;5. How to Make Friends&rdquo; is now &ldquo;5 How to Make Friends&rdquo; (thanks, José Ramón!).
+</li>
+<li>
+Allow <tt>math2html</tt> to be invoked using parameters (like <tt>--debug</tt>).
+</li>
+<li>
+Bugs in ERT parsing: brackets <tt>{}</tt> are not parsed correctly across different ERTs. The TeX parser was being thrown off by escaped brackets as in <tt>{\{\}}</tt>, added test. Comments are ignored now.
+</li>
+<li>
+Solved conflict in CSS between <tt>.script</tt> (used to properly layout super- and subscripts) and <tt>span.script</tt> (used for the script-type <tt>\mathscr</tt> and <tt>\mathcal</tt> fonts). Changed the latter to <tt>span.scriptfont</tt>, forcing an incompatible but unavoidable change in the CSS.
+</li>
+<li>
+Forced <tt>span.scriptfont</tt> to be shown as italic so it’s properly displayed on Firefox.
+</li>
+<li>
+Wish list: new option <tt>--googlecharts</tt> adds support for formula images generated using Google Charts.
+</li>
+<li>
+Wish list: merged options <tt>--toc</tt> and <tt>--toctarget</tt> into <tt>--tocfor</tt>.
+</li>
+<li>
+Wish list: options <tt>--splitpart</tt> and <tt>--tocfor</tt> (previously <tt>--toc</tt>) now work together. Also: the separate TOC has a link to the main page.
+</li>
+<li>
+Bug in <tt>--splitpart</tt> combined with <tt>--notoclabels</tt>: unnumbered parts displayed an ugly colon as in &ldquo;Next : Section&rdquo;, now removed (thanks, José Ramón!).
+</li>
+<li>
+Modified the spacing in formulas so that words in the mathnormal font now appear separated, as a product of variables.
+</li>
+<li>
+Do not show limit symbols such as <span class="formula"><span class="limits"><span class="limit">∑</span></span></span> or <span class="formula"><span class="limits"><span class="limit">∫</span></span></span> in a larger font than the rest for inline formulas.
+</li>
+<li>
+Added support for \textcircled: <span class="formula"><i>w⃝</i></span>.
+</li>
+
+</ul>
+
+</li>
+<li>
+1.2.0 (2011-01-30):<ul>
+<li>
+Bumped LyX version support to 410.
+</li>
+<li>
+Correctly create big brackets for environments with odd alignments such as matrix (thanks, Günther!).
+</li>
+<li>
+Create and use big brackets for fractions and other structures, if needed.
+</li>
+<li>
+Added option <tt>--simplemath</tt> to avoid fancy math structures: do not<i> </i>generate multi-line Unicode brackets or stacked limits.
+</li>
+<li>
+eLyXer is now a proper Python package, instead of just a coalesced script <tt>elyxer.py</tt> containing everything. However only the script is installed right now.
+</li>
+<li>
+Interpret TeXCode (previously known as Evil Red Text) as TeX commands and formulas.
+</li>
+<li>
+Support for TeX commands <tt>\textvisiblespace</tt>, <tt>\AmS</tt>, <tt>\parbox</tt>, <tt>\tag</tt>, <tt>\rule</tt>, and more:  , <span class="versalitas">AmS</span>.
+</li>
+<li>
+Support for <tt>\Game</tt>: <span class="formula">⅁</span>.
+</li>
+<li>
+Changed the navigation header for <tt>--splitpart</tt> so that the left and right spans overflow (thanks, Axel!).
+</li>
+<li>
+Bug in <tt>--notoclabels</tt>: labels such as &ldquo;Figure&rdquo; should be omitted in the TOC, but not in captions (thanks again, Axel!).
+</li>
+<li>
+Bug in <tt>--splitpart</tt>: empty navigation links caused the header to look unbalanced, fixed now with a non-breaking space. Also, up link in the main page used to point to itself; now it’s an empty link (more thanks, Axel!).
+</li>
+<li>
+Support for <tt>\limits</tt> and <tt>\nolimits</tt>: control if the last symbol should show limits above or below the symbol or not.
+</li>
+<li>
+Bug in <tt>\vspace</tt>: add the vertical space after the command, not before; or at least try to.
+</li>
+<li>
+Bug in <tt>\raisebox</tt>: parse and display the contents as text mode.
+</li>
+<li>
+Wish list: do not number captions in code listings.
+</li>
+<li>
+Do not install as a module (to run as <tt>python -m elyxer</tt>) but only as a script (to run as <tt>elyxer.py</tt>).
+</li>
+
+</ul>
+
+</li>
+<li>
+1.1.2 (2010-12-23):<ul>
+<li>
+Wish list: display large Unicode symbols for sums and integrals in display mode.
+</li>
+<li>
+Also in display mode, place limits for commands that take them above or below the symbol, instead of to the right.
+</li>
+<li>
+Support for new Flex insets: Code, MenuItem, Noun, Strong; new Argument, Phantom and line (ruler) insets; new style <tt>\strikeout</tt>; new LaTeX commands <tt>\href</tt>, <tt>\newline</tt>.
+</li>
+<li>
+BibTeX: apply a combining function only to the following character, not to the next word.
+</li>
+<li>
+Added reference format for <tt>vpageref</tt> (&ldquo;on page #&rdquo;).
+</li>
+<li>
+Improved math macro parsing: optional parameters, literal parameters, single-letter parameters, parameter defaults with operations.
+</li>
+<li>
+Display math cases, full-sized binomials (<tt>\dbinom</tt>) and array brackets using Unicode bracket pieces.
+</li>
+<li>
+Change all table-type elements in formulas to spans and do the formatting in the CSS, to generate valid XHTML.
+</li>
+<li>
+Support graceful degradation of fractions and roots when the CSS is not present.
+</li>
+<li>
+Adjusted roots to insert the root power inside the radical symbol.
+</li>
+<li>
+Adjusted nice fractions (<span class="formula"><span class="fraction"><sup class="numerator">3</sup>⁄<sub class="denominator">4</sub></span></span>) to improve their appearance.
+</li>
+<li>
+Support for all upright Greek letters: <span class="formula">μ</span>, <span class="formula">τ</span>.
+</li>
+
+</ul>
+
+</li>
+<li>
+1.1.1 (2010-12-13):<ul>
+<li>
+Wish list: understand <tt>\url{}</tt> in BibTeX files.
+</li>
+<li>
+Wish list: parse math formulas in BibTeX files.
+</li>
+<li>
+Improved support for dotless i and j as <tt>\imath</tt> and <tt>\jmath</tt>: <span class="formula"><i>ı</i></span>, <span class="formula"><i>ȷ</i></span>.
+</li>
+<li>
+Solved bug when parsing a quoted string inside a BibTeX file containing a comma.
+</li>
+<li>
+Added math environments <tt>equation*</tt> and <tt>matrix</tt>.
+</li>
+<li>
+Do not break inline formulas at whitespace (thanks, José Ramón!).
+</li>
+<li>
+Break up the CSS into pieces, and generate an independent <tt>math.css</tt> for use within <tt>math2html.py</tt>.
+</li>
+<li>
+Ignore hyphens in option names, so e.g. <tt>--split-part</tt> is equivalent to <tt>--splitpart</tt>.
+</li>
+<li>
+Changed <tt>--forceformat</tt> to <tt>--imageformat</tt> (kept the old option for backwards compatibility).
+</li>
+<li>
+Wish list: added <tt>--imageformat "copy"</tt> to just copy images instead of converting them.
+</li>
+<li>
+Wish list: added option <tt>--embedcss "file.css"</tt> to embed the CSS styles in <tt>file.css</tt> into the resulting HTML.
+</li>
+<li>
+Wish list: more than one <tt>--css</tt> options can be added to use several CSS files.
+</li>
+<li>
+Wish list: display sub- and superscript aligned vertically (as in integrals).
+</li>
+
+</ul>
+
+</li>
+<li>
+1.1.0 (2010-11-23):<ul>
+<li>
+Wish list: understand <tt>\setcounter</tt> in the preamble to set the number of the first Chapter or Section.
+</li>
+<li>
+Generate a new <tt>math2html.py</tt> file with an API to convert raw LaTeX code to HTML, and a command line utility.
+</li>
+<li>
+Wish list: new option <tt>--notoclabels</tt> to omit part labels in the TOC.
+</li>
+<li>
+Wish list: make &ldquo;show changes in the output&rdquo; work for change tracking.
+</li>
+<li>
+Solve an existing issue with Description and List layouts: correct splitting of first words when intermixing styles.
+</li>
+<li>
+Show decorations using Unicode combining characters, whenever possible.
+</li>
+<li>
+Support for <tt>\dddot</tt>: <span class="formula"><i>o⃛</i></span> (with combining character) and <tt>\widehat</tt>: <span class="formula"><i><span class="withsymbol"><span class="symbolover">^</span><span class="undersymbol">abc</span></span></i></span> (with character on top).
+</li>
+<li>
+Wish list: add several options for <a class="URL" href="userguide.html#sub:Footnotes">footnote generation</a> (align markers instead of using superscript, place markers at the bottom of the page, use symbols for markers…). Also added a generic <tt>--footnotes</tt> option to aggregate them all.
+</li>
+<li>
+Wish list: use <tt>ps:use-cropbox=true</tt> in ImageMagick for PostScript and EPS images.
+</li>
+<li>
+Support for dotless i and j: <span class="formula"><span class="text">ı</span></span>, <span class="formula"><span class="text">ȷ</span></span>.
+</li>
+
+</ul>
+
+</li>
+<li>
+1.0.4 (2010-10-29):<ul>
+<li>
+Solved <a class="URL" href="https://savannah.nongnu.org/bugs/index.php?31342">bug #31342</a>: detect appendices as they appear instead of looking at the containing layout.
+</li>
+<li>
+Also reported in <a class="URL" href="https://savannah.nongnu.org/bugs/index.php?31342">bug #31342</a>: set part name to &ldquo;Appendix A-Z&rdquo; in the TOC for appendices, instead of showing them as regular chapters or sections.
+</li>
+<li>
+Also reported in <a class="URL" href="https://savannah.nongnu.org/bugs/index.php?31342">bug #31342</a>: number parts and books using roman numerals, as in &ldquo;Part I&rdquo; or &ldquo;Book IV&rdquo;.
+</li>
+<li>
+Fixed bug due to wrapped float placement not being mandatory anymore, despite what <tt>EmbeddedObjects.lyx</tt> says (thanks, Hans!).
+</li>
+<li>
+Solved <a class="URL" href="https://savannah.nongnu.org/bugs/index.php?31351">bug #31351</a>: do not number (or add to the TOC) any document parts inside comments.
+</li>
+<li>
+Also in <a class="URL" href="https://savannah.nongnu.org/bugs/index.php?31351">bug #31351</a>: the bibliography should be added to the TOC if so configured (and not inside a comment), and split into its own page with <tt>--splitpart</tt>.
+</li>
+<li>
+Also in <a class="URL" href="https://savannah.nongnu.org/bugs/index.php?31351">bug #31351</a>: show the bibliography in regular size, not smaller than the main text as before.
+</li>
+<li>
+Changed header from &ldquo;Bibliography&rdquo; to &ldquo;References&rdquo; for document classes other than book and report.
+</li>
+<li>
+Solved <a class="URL" href="https://savannah.nongnu.org/bugs/index.php?31414">bug #31414</a>: bootstrap creation of <tt>conf/config.py</tt>.
+</li>
+<li>
+Also in <a class="URL" href="https://savannah.nongnu.org/bugs/index.php?31414">bug #31414</a>: remodeled unit tests to try out Python 2.4 only if present, and to remove test files from previous runs.
+</li>
+<li>
+Show the &ldquo;Abstract&rdquo; header only for the first Abstract layout (thanks, Yaron!).
+</li>
+<li>
+Do not separate consecutive Abstract paragraphs, and display the abstract in slightly smaller font size.
+</li>
+<li>
+Solved <a class="URL" href="https://savannah.nongnu.org/bugs/index.php?31345">bug #31345</a>: ignore preamble and comments in BibTeX files. Use string definitions (<tt>@string</tt>) in other entries.
+</li>
+<li>
+Also in <a class="URL" href="https://savannah.nongnu.org/bugs/index.php?31345">bug #31345</a>: avoid endless loops for undesired characters in BibTeX entries.
+</li>
+<li>
+Support for <tt>\fbox</tt>, <tt>\boxed</tt>, <tt>\framebox</tt> and <tt>\fcolorbox</tt>: <span class="formula"><span class="fbox"><span class="ensuremath"><i>fbox</i></span></span></span>, <span class="formula"><span class="boxed"><i>boxed</i></span></span>, <span class="formula"><span class="framebox align-l" style="width: 25mm;"><i>framebox</i></span></span>.
+</li>
+
+</ul>
+
+</li>
+<li>
+1.0.3 (2010-10-15):<ul>
+<li>
+Do not hide errors when parsing child documents.
+</li>
+<li>
+Correctly convert documents even when images are not found.
+</li>
+<li>
+Do not center the content in figure or table floats by default.
+</li>
+<li>
+Correctly convert child documents even when inserted in layouts.
+</li>
+<li>
+Generate navigation bars for first page created with <tt>--splitpart</tt>.
+</li>
+<li>
+Added wishlist to the user guide to keep track of requested features.
+</li>
+<li>
+Solved <a class="URL" href="https://savannah.nongnu.org/bugs/index.php?31243">bug #31243</a>: spaces and comments in formulas (command definitions, empty formulas…).
+</li>
+<li>
+Also reported in <a class="URL" href="https://savannah.nongnu.org/bugs/index.php?31243">bug #31243</a>: do not add numbering twice to child documents, and ignore child documents in comments.
+</li>
+<li>
+Added support for <tt>\stackrel</tt>: <span class="formula"><i>x</i><span class="stackrel"><span class="upstackrel"><i>R</i></span><span class="downstackrel"> → </span></span><i>y</i></span> (thanks, José Ramón!).
+</li>
+<li>
+Added a lot of escaped characters to BibTeX parsing: <tt>\~n</tt>, <tt>\’{\i}</tt>… Also added a field <tt>note</tt> to all BibTeX styles.
+</li>
+<li>
+Show all references (even those not cited) in the bibliography if configured to do so.
+</li>
+<li>
+Understand relative sizes (e.g. <tt>10col%</tt>) in spaces (thanks, Uwe!).
+</li>
+
+</ul>
+
+</li>
+<li>
+1.0.2 (2010-09-20):<ul>
+<li>
+Updated <a class="URL" href="http://www.mathjax.org/">MathJax</a> to version 1.0.1 — no changes to eLyXer documents are necessary.
+</li>
+<li>
+Added option <tt>--noconvert</tt> to use images in their original formats, and avoid converting images altogether.
+</li>
+<li>
+Output <tt>&lt;object&gt;</tt> tags for SVG images. Size information is not used as it causes problems on Firefox.
+</li>
+<li>
+BibTeX: include <tt>booktitle</tt> tag for the <tt>@incollection</tt> format.
+</li>
+<li>
+BibTex: added a tag <tt>&lt;span class="bibcites"&gt;</tt> around all bibliographical cites, so they can be e.g. superscripted.
+</li>
+<li>
+Show footnotes as hovering text instead of as marginal notes. Make the default footnote marker a bluish superscript letter in brackets: <span class="FootOuter"><span class="SupFootMarker"> [A] </span><span class="HoverFoot"><span class="SupFootMarker"> [A] </span>like this</span></span>.
+</li>
+<li>
+Updated <tt>--lyxformat</tt> to 398 (2.0alpha5); added warning if document version is bigger than that.
+</li>
+<li>
+Support for <tt>\textless</tt> and <tt>\textgreater</tt>: <span class="formula"><</span>, <span class="formula">></span>.
+</li>
+<li>
+Added adjustments for better printing to default CSS.
+</li>
+<li>
+Added languages &ldquo;british&rdquo; and &ldquo;american&rdquo; (which translate to plain English).
+</li>
+<li>
+Avoid extracting indexes out of the containing layout if there is anything else in there (thanks, Amy!). This bug caused some content to be lost (e.g. child documents) if they were inside the same layout as e.g. an alphabetical index.
+</li>
+
+</ul>
+
+</li>
+<li>
+1.0.1 (2010-09-01):<ul>
+<li>
+BibTeX: more robust parsing, specifically: correctly parse entries separated by commas. Support all TeX commands already available in math formulae.
+</li>
+<li>
+Support for <tt>\textasciitilde</tt>: <span class="formula">~</span>, <tt>\textasciicircum</tt>: <span class="formula">^</span> and a few other <tt>\text…</tt> symbols. Also, <tt>\textrm</tt>, <tt>\textsf</tt> and <tt>\textnormal</tt> should be working now in equations: <span class="formula"><i>a</i> + <span class="textrm">roman</span> + <span class="textsf">sans-serif</span> + <span class="textnormal">normal</span> + <i>b</i></span>.
+</li>
+<li>
+Improved support for custom horizontal and vertical spaces; absolute measures can now be used.
+</li>
+<li>
+Support for sizes in table columns, figures and boxes.
+</li>
+<li>
+Solved bug in <tt>--nofooter</tt> which required a dummy argument (thanks, Yan!).
+</li>
+<li>
+Corrected box styling: <tt>&lt;div class="Frameless"&gt;</tt> is now indeed frameless, while <tt>&lt;div class="Framed"&gt;</tt> no longer has a double border.
+</li>
+<li>
+Solved bug in text handling which separated consecutive centered lines with a space.
+</li>
+<li>
+Basic support for LyX change tracking.
+</li>
+
+</ul>
+
+</li>
+<li>
+1.0.0 (2010-07-21):<ul>
+<li>
+Replicate the navigation bar for <tt>--splitpart</tt> at the bottom of pages. Use translated strings for &ldquo;Previous&rdquo;, &ldquo;Up&rdquo; and &ldquo;Next&rdquo; links. Also added an explanatory text to the &ldquo;up&rdquo; link in the navigation bar, as in: &ldquo;Up: Chapter 1&rdquo;.
+</li>
+<li>
+Added partial table of contents to pages generated with <tt>--splitpart</tt>.
+</li>
+<li>
+Dependency cleanup between code modules.
+</li>
+<li>
+Child documents of type &ldquo;verbatim input&rdquo; are now correctly converted on versions of Python built without universal newline support.
+</li>
+<li>
+Include Index and Nomenclature in the Table of Contents.
+</li>
+<li>
+When an Index, TOC, List of Figures… and the like is embedded in another layout, do not follow the style of the layout (thanks, Yaron!).
+</li>
+<li>
+Solved a couple of XHTML validation errors: removed asterisks (*) in anchor names, avoid empty rows in arrays or case statements.
+</li>
+<li>
+Make index entries work in Descriptions. Also, mixed styles should work again within Descriptions.
+</li>
+<li>
+Group certain layouts together, such as Quote and Quotation.
+</li>
+<li>
+Improved output for algorithms: do not run lines together, and do not separate other lines with double space.
+</li>
+<li>
+List of algorithms does now correctly extract the text from the caption.
+</li>
+<li>
+Increased line height for h2 in the main CSS (thanks, Wolfgang!).
+</li>
+<li>
+Better color support in formulas: <tt>\color</tt>, <tt>\textcolor</tt>, <tt>\colorbox</tt>. <span class="formula"><span style="color: blue;"><i>blue</i></span></span>, <span class="formula"><span class="colorbox" style="background: yellow;"><span style="color: blue;"><i>blue</i></span></span></span>.
+</li>
+<li>
+Formulas and formula labels are not colored by default.
+</li>
+<li>
+Improved Index output: there is only one anchor for each entry, and entries are not shown in italics.
+</li>
+<li>
+Allow hierarchical index entries, of the form &ldquo;Main ! Secondary ! Final&rdquo;.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.99 (2010-06-24):<ul>
+<li>
+Added <tt>--splitpart</tt> to online help (thanks, Sven!).
+</li>
+<li>
+Restored compatibility with Python 2.4 (lost in 0.98 by mistake), added test to ensure it does not happen again.
+</li>
+<li>
+BibTeX: improved template definitions for Vancouver style.
+</li>
+<li>
+BibTeX: better parsing of braces (in templates) and quotes (in <tt>.bib</tt> files). Nested braces in templates are supported.
+</li>
+<li>
+BibTeX: variable citing styles. Enclose cites in brackets instead of using superscripts.
+</li>
+<li>
+BibTeX: export all BibTeX variables in <tt>bib-…</tt> spans.
+</li>
+<li>
+BibTeX: limited author parsing, support for surname abbreviations as in style <i>alpha</i>.
+</li>
+<li>
+BibTeX: use the <tt>file</tt> tag to show a link to the local file.
+</li>
+<li>
+Added <tt>\oint</tt> and friends as a bigsymbol: <span class="formula"><span class="bigsymbol">∮</span><i>x</i><span class="text">·</span><i>dx</i></span>.
+</li>
+<li>
+Support for <tt>\officialeuro</tt>: <span class="formula">€</span>.
+</li>
+<li>
+Fix captions in lists of figures which use standard layouts (thanks, Hans!).
+</li>
+<li>
+Added option <tt>--template</tt> to use an HTML template and substitute <tt>&lt;!--$content--&gt;</tt>, <tt>&lt;!--$title--&gt;</tt>…
+</li>
+<li>
+Added option <tt>--copyright</tt> to add a copyright notice at the bottom (no longer generated by default). Deprecated old option <tt>--nocopy</tt>.
+</li>
+<li>
+Added support for including files as a code listing.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.98 (2010-05-13):<ul>
+<li>
+MathJax: workaround bug in MSIE, that causes it to fail to render anything.
+</li>
+<li>
+Add a margin to LyX-Code. Also improve line break separation inside LyX-Code.
+</li>
+<li>
+Coalesce Python code: use relative paths when importing (thanks, Jack!).
+</li>
+<li>
+Experimental installation script.
+</li>
+<li>
+Avoid postprocessing child documents twice (thanks, Rainer!).
+</li>
+<li>
+Solved bug when loading images from child documents in subdirectories (thanks, Rainer!).
+</li>
+<li>
+Solved bug in image scaling when only one dimension is set (thanks, Wolfgang!).
+</li>
+<li>
+Corrected issue with one-liner <tt>\lstset</tt> (thanks again, Rainer!).
+</li>
+<li>
+Improved lists of figures, tables and algorithms: use short title, better labeling of floats.
+</li>
+<li>
+Solved weird bug in float numbering when a chapter has only one layout.
+</li>
+<li>
+Added <tt>\diagup</tt> and <tt>\diagdown</tt>: <span class="formula">╱</span>, <span class="formula">╲</span>.
+</li>
+<li>
+First public release of option <tt>--splitpart [level]</tt>: split resulting web page at the given level.
+</li>
+<li>
+Support for macros, both in LyX macro inset and as <tt>\newcommand</tt>.
+</li>
+<li>
+Added URLs to most BibTeX formats.
+</li>
+<li>
+Added BibTeX style &ldquo;vancouver&rdquo; for articles (thanks, John!).
+</li>
+<li>
+Added a footer detailing eLyXer version and conversion date; it can be turned off with <tt>--nofooter</tt>.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.43 (2010-04-10):<ul>
+<li>
+Many BibTeX improvements: new style <i>abbrvnat</i>, conditional formatting, look up types in lowercase, understand &ldquo;--&rdquo; as dash.
+</li>
+<li>
+Added options for mathematical equations: <tt>--jsmath</tt> to use <a class="URL" href="math-jsmath.html">jsMath</a> and <tt>--mathjax</tt> to use <a class="URL" href="math-jsmath.html">MathJax</a>.
+</li>
+<li>
+Added command help to <tt>loremipsumize.py</tt> so it can be used outside of eLyXer.
+</li>
+<li>
+Include internationalization files in <tt>.zip</tt> file.
+</li>
+<li>
+Solved bug in table parsing: separate different plain layouts (thanks, Sara!).
+</li>
+<li>
+eLyXer compressed files now contain a single directory called <tt>elyxer-$VERSION</tt>, instead of just <tt>elyxer</tt>.
+</li>
+<li>
+Added italicized uppercase Greek letters: <span class="formula"><i>Γ</i><i>Ω</i></span>. De-italicized regular uppercase Greek letters: <span class="formula">ΓΩ</span>.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.42 (2010-03-17):<ul>
+<li>
+Changed author everywhere to the real name, to avoid any copyleft uncertainties.
+</li>
+<li>
+Remove hook in the main text (<span class="green">[D→]</span>) from margin notes.
+</li>
+<li>
+Do not crash when BibTeX files are not found, just show an error.
+</li>
+<li>
+Added support for some IPA characters, including <span class="formula"><i>ħ</i></span>. Better parsing of <tt>\textipa</tt> text.
+</li>
+<li>
+Added option <tt>--numberfoot</tt> to label footnotes with numbers instead of letters.
+</li>
+<li>
+Solved bug in assignment of default formatting to references (thanks, Hans!).
+</li>
+<li>
+Added option <tt>--raw</tt> to output raw HTML without header or footer.
+</li>
+<li>
+Added French and Dutch translations.
+</li>
+<li>
+Solved indenting problem for lists: only the first line was being indented.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.41 (2010-02-11):<ul>
+<li>
+Select the translation based on document language.
+</li>
+<li>
+Added em-dash — such as in this sentence, <span class="formula">■</span>, <tt>\textup</tt>.
+</li>
+<li>
+Added option <tt>--converter inkscape</tt> to use Inkscape as SVG converter.
+</li>
+<li>
+Solved bug when numbering unordered unique parts such as Part* (thanks, Geremy!).
+</li>
+<li>
+Show error instead of crashing when included document does not exist.
+</li>
+<li>
+Support for all box styles. In CSS: switched to <tt>outline-style</tt> instead of <tt>border</tt> for boxes.
+</li>
+<li>
+Support for vertical space insets.
+</li>
+<li>
+Support for references inside paragraphs and formatted references.
+</li>
+<li>
+Listings are now converted using <tt>&lt;pre&gt;</tt> tags, instead of <tt>&lt;code&gt;</tt>. They are also justified left.
+</li>
+<li>
+Solved bug that prevented numbered listings to appear numbered (thanks, Sam!).
+</li>
+<li>
+Support for generic Flex insets, incuding <tt>Flex CharStyle:MenuItem</tt>.
+</li>
+<li>
+All <tt>&amp;nbsp;</tt> entities are now generated as the Unicode U+00A0 character.
+</li>
+<li>
+New option <tt>--iso885915</tt> to generate a document with ISO-8859-15 encoding.
+</li>
+<li>
+Support for Sam Liddicott’s <a class="URL" href="http://repo.or.cz/w/newfangle.git/blob_plain/master:/www/docs/newfangle.html">Newfangle module</a> for literate programming.
+</li>
+<li>
+Updated the developer guide for potential contributors; added link from the main page.
+</li>
+<li>
+Support for <tt>\underbrace</tt> and <tt>\overbrace</tt> (as bars and without sub/superscripts).
+</li>
+
+</ul>
+
+</li>
+<li>
+0.40 (2010-01-19):<ul>
+<li>
+Faster (about 25%) BibTeX file parsing.
+</li>
+<li>
+Show version number after a crash.
+</li>
+<li>
+Imported Jens Nöckel’s contributed list of LaTeX to Unicode mappings: <span class="formula">⋇</span>, <span class="formula">∍</span> and many more.
+</li>
+<li>
+Added support for compressed documents (Document ▷ Compressed).
+</li>
+<li>
+Added configurable alignment support for equation environments (thanks, Jens!). Multiple labels per formula are correctly processed.
+</li>
+<li>
+Added a couple of note insets for Tufte document classes, appearing as side notes without a reference (thanks, Joachim!).
+</li>
+<li>
+Support for escaped characters in BibTeX files, added German umlauts for starters.
+</li>
+<li>
+Support for internationalization using GNU gettext files. Added Spanish and German translations in the <tt>po/</tt> folder.
+</li>
+<li>
+Support for verbatim includes.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.39 (2009-12-20):<ul>
+<li>
+Avoid oversized images on IE6.
+</li>
+<li>
+Solved several crashes with the LyX documentation (thanks, Uwe!).
+</li>
+<li>
+Created script to lorem-ipsumize texts, found in <tt>src/loremipsumize.py</tt>.
+</li>
+<li>
+Solved some issues with BibTeX parsing; now it should work with most real-world files (thanks, Ken!). Also improved error reporting and implemented a new way of line-by-line parsing from file, activated with <tt>--lowmem</tt>.
+</li>
+<li>
+Support for binomial coefficients: <span class="formula"><span class="bigsymbol">(</span><span class="binom"><span class="binomstack"><i>A</i></span><span class="binomstack"><i>B</i></span></span><span class="bigsymbol">)</span></span>. Ignore commands <tt>\leftroot</tt>, <tt>\uproot</tt>. Generic support for variable commands in math mode.
+</li>
+<li>
+Support for omitted aligned brackets: <span class="formula"><span class="emptydot"></span><i>right</i><span class="symbol">)</span></span> (thanks, Jens!).
+</li>
+<li>
+Solved bug with image conversion from directories (thanks, Olivier!).
+</li>
+
+</ul>
+
+</li>
+<li>
+0.38 (2009-12-03):<ul>
+<li>
+Resized all logos in the documentation.
+</li>
+<li>
+Solved bug in paragraph indentation that indented all formula spans and elements.
+</li>
+<li>
+Solved a couple of bugs in image scaling: wraps with images, images in figures.
+</li>
+<li>
+Solved bug in TOC generation: article-class documents had their TOC depth off-by-one.
+</li>
+<li>
+Solved bug with listings inserted in documents using LyX 1.6, and improved their looks.
+</li>
+<li>
+Slight font size reduction on Firefox, and huge reduction on some other proprietary browsers. Now global font size specification is done using percents.
+</li>
+<li>
+New commands: <tt>\gtrless</tt>: <span class="formula">≷</span>, <tt>\complement</tt>: <span class="formula">∁</span>, <tt>\measuredangle</tt>: <span class="formula">∡</span>, <tt>\sphericalangle</tt>: <span class="formula">∢</span>, <tt>\nmid</tt>: <span class="formula">∤</span>, <tt>\circeq</tt>: <span class="formula">≗</span>, <tt>\lessgtr</tt>: <span class="formula">≶</span>, <tt>\nparallel</tt>: <span class="formula">∦</span>.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.37 (2009-11-30):<ul>
+<li>
+Further improvements in float manipulation: figures enclosing other figures have their own tweaked CSS class (thanks, Olivier).
+</li>
+<li>
+PNG and JPEG images are not rescaled anymore, and never shown above their maximum size. Width and height are set using CSS properties.
+</li>
+<li>
+TOC generation for unordered entries (like <tt>Section*</tt>) and entries inserted in other layouts. Max TOC depth and max numbering depth are honored. Also solved bug in tagging of unordered parts.
+</li>
+<li>
+Implemented indented paragraphs when specified in the document.
+</li>
+<li>
+Horizontal fill is now shown as a fixed-width space.
+</li>
+<li>
+Simplified postprocessing code. Inclusion of child documents is now done inside a Standard layout.
+</li>
+<li>
+Support for commands <tt>\varkappa</tt>: <span class="formula"><i>ϰ</i></span>, <tt>\varnothing</tt>: <span class="formula">∅</span>, <tt>\mathring</tt>: <span class="formula"><i>Å</i></span>, <tt>\backprime</tt>: <span class="formula">‵</span>, <tt>\notin</tt>: <span class="formula">∉</span>, <tt>\hfill</tt>: <span class="formula"><span class="hfill"> </span></span>, <tt>\circledR</tt>: <span class="formula">®</span>, <tt>\hslash</tt>: <span class="formula">ℏ</span>.
+</li>
+<li>
+New option <tt>--splitpart</tt> to split the output in multiple pages, one page per part; needs more tweaking.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.36 (2009-11-19):<ul>
+<li>
+New in-memory processing of a document before file output, activated by default. It includes: TOC generation (TOC entries admit typefaces, colors, weights, spaces, short titles but restrict most other content), sequential numbering to bibliography entries, lists of floats (figures, tables, algorithms), correct labeling of references and use of the embedded title as HTML title.
+</li>
+<li>
+New option <tt>--lowmem</tt> to do one-pass filtering only, to preserve memory (keeping the old behavior).
+</li>
+<li>
+Updated the <a class="URL" href="devguide.html">developer guide</a>.
+</li>
+<li>
+Change the postprocessing of equation labels so that only one anchor is used for the whole equation.
+</li>
+<li>
+Added <tt>\mathscr</tt> and a few script fonts: <span class="formula"><span class="scriptfont">hello</span></span>. Added several characters for math script (<tt>\mathscr</tt>), fraktur (<tt>\mathfrak</tt>) and blackboard (<tt>\mathbb</tt>) fonts, and implemented the translation to Unicode chars: <span class="formula">ℱ</span>, <span class="formula">𝔉</span>, <span class="formula">𝔽</span>.
+</li>
+<li>
+New math commands: <tt>\dfrac</tt>, implemented as <tt>\cfrac</tt>; <tt>\c</tt> for cedilla, already implemented as characters and now as decoration: <span class="formula"><i>Ģ</i></span>; thick space <tt>\;</tt> and quotes <tt>"</tt>: <span class="formula">" "</span>; <tt>\hspace</tt> for horizontal space and <tt>\vspace</tt> for vertical space; and a few size commands: <tt>\big</tt>, <tt>\Big</tt>, <tt>\bigg</tt>, <tt>\Bigg</tt>, <tt>\middle</tt>.
+</li>
+<li>
+Added a <tt>parent</tt> attribute to every <tt>Container</tt>, for easier processing.
+</li>
+<li>
+Image conversion and display: process width and height in an image if both are present; use % width of image within a float to scale the float; set max scaling of images to 100% with <tt>max-width</tt> CSS attribute. (Thanks, Olivier and Uwe.)
+</li>
+<li>
+Subfloats are numbered (a), (b) (instead of <span class="formula"><i>x</i>.<i>y</i></span>a, <span class="formula"><i>x</i>.<i>y</i></span>b).
+</li>
+<li>
+Convert all pathnames for image conversion using <tt>sys.getfilesystemencoding()</tt>.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.35 (2009-11-05):<ul>
+<li>
+Added new characters: <tt>\checkmark</tt> <span class="formula">✓</span>, <tt>\blacklozenge</tt> <span class="formula">⧫</span>, <tt>\nexists</tt> <span class="formula">∄</span>, <tt>\mathcircumflex</tt> <span class="formula">^</span>.
+</li>
+<li>
+Updated all documentation to LyX 1.6.
+</li>
+<li>
+Solved CSS validation error in <tt>table.align</tt> (thanks, Olivier).
+</li>
+<li>
+Solved XHTML validation error in greyed out note, removing useless <tt>div</tt>s.
+</li>
+<li>
+Add a space after a fraction and before the units: <span class="formula"><span class="fraction"><sup class="numerator">3</sup>⁄<sub class="denominator">2</sub></span><span class="unit"> km</span></span>, <span class="formula"><span class="fraction"><span class="ignored">(</span><span class="numerator">7</span><span class="ignored">)/(</span><span class="denominator">16</span><span class="ignored">)</span></span><span class="unit"> s</span></span>.
+</li>
+<li>
+Corrected display of float within a float (thanks again, Olivier!).
+</li>
+<li>
+Modified the meaning of <tt>--toc</tt> to be an on/off switch; the old behavior is now under <tt>--toctarget</tt>.
+</li>
+<li>
+Changed the 2009-11-05 option <tt>--cutpart</tt> to <tt>--splitpart</tt>: new option to split the output file in parts. Not yet working correctly (for instance, links are not redirected).
+</li>
+<li>
+eLyXer now understands and processes new Graphics options: <tt>width 50col%</tt>, <tt>height 50theight%</tt> and friends (thanks, Uwe).
+</li>
+<li>
+PDF images are cropped before conversion to PNG (thanks, Uwe).
+</li>
+<li>
+Included child documents can be inserted using firstline and lastline (as seen in <tt>EmbeddedObjects.lyx</tt>).
+</li>
+
+</ul>
+
+</li>
+<li>
+0.34 (2009-10-28):<ul>
+<li>
+Support for child document inclusion (Insert ▷ File ▷ Child Document…).
+</li>
+<li>
+Avoid generating images on different directories (relative paths starting with <tt>../</tt>).
+</li>
+<li>
+Added <tt>\maltese</tt> <span class="formula">✠</span> and financial symbols $, €, ¥.
+</li>
+<li>
+Removed annoying message &ldquo;Unexpected end of bracket&rdquo; when parsing empty brackets.
+</li>
+<li>
+Support for <tt>\raisebox</tt>.
+</li>
+<li>
+Created new structure of <tt>Writer</tt>s, preparing for document segmentation and TOC generation.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.33 (2009-10-19):<ul>
+<li>
+New TOC generation process based on an already-generated HTML document, not ready for prime time yet.
+</li>
+<li>
+Adapted <tt>--help</tt> option so that it shows the executable file as invoked (<tt>elyxer.py</tt>, <tt>elyxer</tt> or whatever). Expanded online help from this command.
+</li>
+<li>
+Support for new text commands <tt>\textsf</tt>, <tt>\texttt</tt>, <tt>\textit</tt>, <tt>\textbf</tt>, <tt>\textsl</tt>, <tt>\textsc</tt>.
+</li>
+<li>
+Properly parse all text commands <tt>\text…</tt>, including <tt>\textipa</tt>.
+</li>
+<li>
+Support for <tt>\cfrac</tt>. Now regular <tt>\frac</tt> shows embedded formulas smaller.
+</li>
+<li>
+Do not number equations containing <tt>*</tt>, like in <tt>\begin{align*}</tt>. (Once more, thanks Uwe.)
+</li>
+<li>
+Properly align equations for AMS align environment. Other environments are parsed but not necessarily honored.
+</li>
+<li>
+Correctly distinguish <tt>\epsilon</tt> <span class="formula"><i>ϵ</i></span> from <tt>\varepsilon</tt> <span class="formula"><i>ε</i></span>.
+</li>
+<li>
+Added TeX-to-Unicode mappings from <a class="URL" href="http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt">Markus Kuhn</a>.
+</li>
+<li>
+Support for <tt>\unitfrac</tt>.
+</li>
+<li>
+Added <tt>\dots</tt>: <span class="formula">…</span>.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.32 (2009-10-05):<ul>
+<li>
+Fixed unit processing. Now units appear separated by a space after the number.
+</li>
+<li>
+Repaired use of <tt>AlphaCommand</tt>s. Decorations so defined in the configuration file appear again as a single symbol: <span class="formula"><i>â</i></span>.
+</li>
+<li>
+Added option <tt>--lyxformat</tt> to return the highest LyX format that eLyXer understands. Should help when integrating with <tt>lyx2lyx</tt>.
+</li>
+<li>
+Improved TOC (table of contents) generation. Modified option <tt>--toc</tt> to accept an URL, and documented it.
+</li>
+<li>
+Added option <tt>--target</tt> to add a target frame to every link.
+</li>
+<li>
+Corrected equation numbering error: now all <tt>\begin{equation}…\end{equation}</tt> formulae are numbered. (Thanks once more, Uwe.)
+</li>
+
+</ul>
+
+</li>
+<li>
+0.31 (2009-09-27):<ul>
+<li>
+Modified image parsing code to remove dependency on Python 2.5, expurging <tt>os.SEEK_CUR</tt>.
+</li>
+<li>
+Removed the ill-fated <tt>elyxerconv.py</tt> library file (but kept <tt>io/convert.py</tt>), see <a class="URL" href="http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154647.html">lyx-devel thread</a>. Now the file <tt>elyxer.py</tt> itself can be installed as a library, and run as a module with <tt>python -m</tt>.; see also <a class="URL" href="http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg154749.html">lyx-devel thread</a>.
+</li>
+<li>
+eLyXer was added to the Python Package Index (<a class="URL" href="http://pypi.python.org/pypi">PyPI</a>) starting with 0.30. Now it should be automatically registered for each release.
+</li>
+<li>
+Updated documentation (<a class="URL" href="userguide.html">user guide</a>, <tt>README</tt> file) with details of distutils installation.
+</li>
+<li>
+Modified single string <tt>Container</tt>s (<tt>StringContainer</tt>, <tt>Constant</tt>) so that they appear as empty <tt>Container</tt>s — should speed up postprocessing.
+</li>
+<li>
+Solved bug when parsing BibTeX files with incorrect lines.
+</li>
+<li>
+Modified postprocessing to correctly process lists within tables.
+</li>
+<li>
+In the process refactored postprocessing completely: now instead of unconditional postprocessor stages, each stage can add a postprocessing hook. Should be faster — but is indeed a bit slower.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.30 (2009-09-13):<ul>
+<li>
+Removed most comments from the final distributed file <tt>elyxer.py</tt>.
+</li>
+<li>
+Added <a class="URL" href="http://docs.python.org/distutils/index.html">distutils</a> support for cross-platform distribution. The library <tt>elyxerconv</tt> is added to local Python libraries.
+</li>
+<li>
+Added command line option <tt>--forceformat</tt>: force eLyXer to convert all images to the given output format.
+</li>
+<li>
+Switched all options in command line help to quotes: <tt>--title <b>&lt;</b>title<b>&gt;</b></tt> is now <tt>--title <b>"</b>title<b>"</b></tt>.
+</li>
+<li>
+Solved bug reported by Uwe Stöhr when reading Windows BibTeX file generated by JabRef. Now eLyXer tries several encodings for each file, initially UTF-8 and Cp1252.
+</li>
+<li>
+Another bug, also reported by Uwe Stöhr, in branch selection. Added test <tt>branches.lyx</tt>.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.29 (2009-09-08):<ul>
+<li>
+Preliminary support for BibTeX. Configurable output styles (albeit cumbersome and quite primitive).
+</li>
+<li>
+Added new cite commands <tt>citep</tt>, <tt>citet</tt>, <tt>citealt</tt>; and reference command <tt>prettyref</tt>.
+</li>
+<li>
+A couple of new math commands: <tt>\ldots</tt>, <tt>\qquad</tt>.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.28 (2009-09-05):<ul>
+<li>
+Various fixes related to Windows integration.
+</li>
+<li>
+Documented integration with LyX in the user guide.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.27 (2009-06-17):<ul>
+<li>
+Units without the magnitude (the number) are working.
+</li>
+<li>
+Complex roots now working, added to the math showcase.
+</li>
+<li>
+Leave JPEG images untransformed instead of converting them to PNG (or at least transform them to JPEG). Read JPEG image sizes.
+</li>
+<li>
+More flexible configuration options for lists of values.
+</li>
+<li>
+Added <tt>--destdirectory</tt> option to convert images into.
+</li>
+<li>
+Image conversion from a different directory (or even with absolute paths) should work now.
+</li>
+<li>
+Changed the whole infrastructure for formulae parsing. More structured parsing should now be possible, e.g. square brackets are first-class citizens.
+</li>
+<li>
+Implemented nice fractions: <span class="formula"><span class="fraction"><sup class="numerator">7</sup>⁄<sub class="denominator">8</sub></span></span>.
+</li>
+<li>
+Redid basic typography: default font is now sans-serif, which looks better on your average browser. Formulae have a bit more space around.
+</li>
+<li>
+Imported the complete symbol list from the <tt>unicodesymbols</tt> file in LyX.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.26 (2009-06-10):<ul>
+<li>
+Added a lot of new LaTeX commands, both for Unicode symbols and for math functions.
+</li>
+<li>
+New mechanism to include new lists of &ldquo;command:Unicode&rdquo; equivalents.
+</li>
+<li>
+New decoration command <tt>\overrightarrow</tt>, to show a long arrow above some text.
+</li>
+<li>
+Solved bug: <tt>--directory</tt> option was not working. A new test for this option added.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.25 (2009-06-08):<ul>
+<li>
+Added new characters: German dash separator, a few arrows, horizontal ellipsis.
+</li>
+<li>
+Automatic insertion of release date in the changelog upon version release.
+</li>
+<li>
+New formula commands: phantom text (for spacing), mbox (literal text).
+</li>
+<li>
+Solved two bugs in URLs: make FlexURLs point to the link in their contents, and do not show &ldquo;mailto:&rdquo; in email links.
+</li>
+<li>
+Properly display Date layouts as <tt>&lt;h2&gt;</tt>.
+</li>
+<li>
+Display a FATAL error (and terminate) when trying to read beyond the end of the document.
+</li>
+<li>
+Cross-platform support for newlines. Besides the Unix <tt>\n</tt>, now supports Windows (<tt>\r\n</tt>) and Mac OS X (<tt>\r</tt>) newlines.
+</li>
+<li>
+Support for <tt>\unit</tt> command, showing units for a magnitude.
+</li>
+<li>
+New format for formulae (instead of <tt>$…$</tt> or <tt>\[…\]</tt>): <tt>\command{…}</tt>.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.24 (2009-06-02):<ul>
+<li>
+Show sum and integral limits correctly in Konqueror, Safari and Chrome.
+</li>
+<li>
+Also show roots and arrays correctly in those browsers. Larger radical symbol looks better.
+</li>
+<li>
+Added <a class="URL" href="math.html">Math Showcase</a> to test on <a class="URL" href="http://browsershots.org/">browsershots.org</a>.
+</li>
+<li>
+Substituted medium mathematical spaces with midspaces for better browser compatibility.
+</li>
+<li>
+Added <tt>--unicode</tt> option to switch on full Unicode output; right now only re-adds medium mathematical spaces.
+</li>
+<li>
+Included all Greek letters, upper and lower case; and common math symbols.
+</li>
+<li>
+Make title from command line option prevail over PDF title.
+</li>
+<li>
+Specified minimum browser versions in the user guide and in the requirements.
+</li>
+<li>
+Documented option <tt>--directory</tt> (it existed already but was not in the docs).
+</li>
+<li>
+Option <tt>--toc</tt> can generate a Table Of Contents. Not documented because it is only a start for bigger things.
+</li>
+<li>
+Repaired configuration export to <tt>base.cfg</tt>: now all objects in <tt>config.py</tt> are automatically exported.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.23 (2009-05-24):<ul>
+<li>
+Corrected numbering and appearance of subfloats.
+</li>
+<li>
+Plain layouts are not reflected in HTML output.
+</li>
+<li>
+Unified table parsing, moved table starts to configuration file.
+</li>
+<li>
+Use unicode output in debug and error messages.
+</li>
+<li>
+Automated testing now shows unified diff, to show the file that doesn’t pass the tests.
+</li>
+<li>
+Finally got UTF-8 output right (hopefully).
+</li>
+<li>
+Display floats with tables properly aligned, and on a white background. Listings are working too.
+</li>
+<li>
+Show warning when document is created with LyX 1.4.<span class="formula"><i>x</i></span>.
+</li>
+<li>
+Transform <tt>\newpage</tt> to an empty paragraph.
+</li>
+<li>
+Standard layouts can be <tt>&lt;div&gt;</tt> or nothing at all, generating valid XHTML.
+</li>
+<li>
+Added nomenclature commands for 1.5.<span class="formula"><i>x</i></span>.
+</li>
+<li>
+Got Index and nomenclature working again, added test file so they don’t break anymore.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.22 (2009-05-15):<ul>
+<li>
+Modified user guide to explain <tt>--html</tt> option.
+</li>
+<li>
+Solved a few bugs manifested when exporting to HTML 4.0 with <tt>--html</tt>.
+</li>
+<li>
+More configurable containers: quote types, barred text, boxes, info insets…
+</li>
+<li>
+Added note on the main page about slow mirrors and latest versions.
+</li>
+<li>
+Standard layouts can now be translated to <tt>&lt;div&gt;</tt> or to <tt>&lt;span&gt;</tt>, depending on the context.
+</li>
+<li>
+Command endings can be deduced from starts in configuration file.
+</li>
+<li>
+A bunch of new math symbols: nu, angle brackets.
+</li>
+<li>
+Generalized big brackets of several types. Consolidated parameter parsing in formulas.
+</li>
+<li>
+Equation numbering is working.
+</li>
+<li>
+Unknown commands are shown in red: <span class="formula"><span class="unknown">\unknown</span></span>.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.21 (2009-05-11):<ul>
+<li>
+Command line option <tt>--html</tt> to export to HTML 4.0.
+</li>
+<li>
+Container endings are now configurable from the main config file.
+</li>
+<li>
+Styles can be mixed and matched at will (like <tt>typewriter <b>bold <span class="blue">in blue</span></b></tt>).
+</li>
+<li>
+All constant strings (such as &ldquo;Table of contents&rdquo;) should now be configurable.
+</li>
+<li>
+Added a few more colors: <span class="green">green</span>, <span class="magenta">magenta</span>, <span class="cyan">cyan</span>, <span class="yellow">yellow</span>, <span class="white">white</span> (those two were yellow and white).
+</li>
+
+</ul>
+
+</li>
+<li>
+0.20 (2009-05-09):<ul>
+<li>
+Command line option <tt>--version</tt> to show the current version number and date.
+</li>
+<li>
+Release date is now automatically added to the configuration.
+</li>
+<li>
+Preliminary support for inset boxes.
+</li>
+<li>
+Support for numbered listings.
+</li>
+<li>
+Added <tt>&lt;meta&gt;</tt> tag for <tt>Content-Type</tt>, to ease importing into word processors.
+</li>
+<li>
+Automated version generation, taking version number and date from config, and updating current version in the main page.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.19 (2009-05-07):<ul>
+<li>
+More powerful configuration file manipulation: export to generic config and Python files.
+</li>
+<li>
+Start lines for every parsed structure can now be configured in the global <tt>base.cfg</tt> file.
+</li>
+<li>
+New Info types <tt>package</tt> and <tt>textclass</tt>.
+</li>
+<li>
+New formula symbols: up and down arrows, long double arrows, Gamma and Upsilon, mu, backslash.
+</li>
+<li>
+Show line number and current line for generic errors.
+</li>
+<li>
+Listings and document abstracts are displayed properly.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.18 (2009-05-04):<ul>
+<li>
+Wrap floats are separated by a bit of space (two exes, actually) from the text.
+</li>
+<li>
+Solved bug when running without any arguments.
+</li>
+<li>
+Main executable file is now changed from <tt>elyxer</tt> to <tt>elyxer.py</tt>, to prevent problems on platforms that require the extension; main source file has changed from <tt>elyxer.py</tt> to <tt>principal.py</tt>, to avoid confusion.
+</li>
+<li>
+Moved all parsing code to the new package <tt>parse</tt>, and configuration files to package <tt>conf</tt>.
+</li>
+<li>
+All configuration is now read from (and written to) plain text files.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.17 (2009-04-27):<ul>
+<li>
+Alignment of table cells is now respected, both horizontally and vertically.
+</li>
+<li>
+Wrap floats are actually floated left or right.
+</li>
+<li>
+Correctly interpret symbols in formulae: <span class="formula">!</span>, <span class="formula">;</span>, <span class="formula"> ≤ </span>, <span class="formula"> ≥ </span>, <span class="formula"> ≠ , </span> <span class="formula"> ∈ </span>, <span class="formula">⋱</span>, and a few spaces.
+</li>
+<li>
+In formulae, <tt>\displaystyle</tt> and friends are ignored.
+</li>
+<li>
+Square roots are again displayed correctly, and even better than before!
+</li>
+<li>
+Cases are working (not perfect: with a bar instead of a bracket, but working).
+</li>
+
+</ul>
+
+</li>
+<li>
+0.16 (2009-04-22):<ul>
+<li>
+Document date is shown centered.
+</li>
+<li>
+Special rows in a longtable are properly ignored.
+</li>
+<li>
+Multicolumn cells are properly interpreted.
+</li>
+<li>
+Sums and integral limits are properly displayed with respect to the symbol: <span class="formula"><span class="limits"><span class="limit">∑</span></span><span class="scripts"><sup class="script">∞</sup><sub class="script"><i>i</i> = 1</sub></span></span>.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.15 (2009-04-19):<ul>
+<li>
+Info insets (containing shortcuts) are now interpreted and shown.
+</li>
+<li>
+LyX-Code is interpreted as a <tt>&lt;pre&gt;</tt> tag.
+</li>
+<li>
+Reorganized code into a few packages.
+</li>
+<li>
+Line numbers are not shown for utility classes.
+</li>
+<li>
+Floats (figures, tables and algorithms) are now numbered.
+</li>
+<li>
+Float links point to the start of the table or figure, not to the caption.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.14 (2009-04-13):<ul>
+<li>
+Deeper layouts (of any kind, not just in lists) are now supported.
+</li>
+<li>
+Appendices are numbered correctly (as A, B, C…).
+</li>
+<li>
+Sections in deeper layouts are numbered correctly too.
+</li>
+<li>
+Double dash does not catch Unix-style options: --css is not converted -- while the version with spaces is.
+</li>
+<li>
+Corrected serious bug in formula parsing affecting inline arrays.
+</li>
+<li>
+Arrays with vertical alignment are correctly parsed.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.13 (2009-04-12):<ul>
+<li>
+Lists are correctly displayed, instead of one list per item.
+</li>
+<li>
+Lists can contain nested layouts.
+</li>
+<li>
+<tt>List</tt> layouts (not to mistake with <tt>Enumerate</tt> or <tt>Itemize</tt> lists) are processed correctly.
+</li>
+<li>
+Changelog moved to separate document.
+</li>
+<li>
+Read image sizes correctly on big-endian architectures (e.g. Mac OS X on PowerPC).
+</li>
+<li>
+Numeration of chapters, sections… is working.
+</li>
+<li>
+Error messages now show the line where they happen.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.12 (2009-04-05):<ul>
+<li>
+Arrays are parsed correctly and displayed acceptably.
+</li>
+<li>
+Numbers and units are correctly separated.
+</li>
+<li>
+Text decorations (such as <span class="formula"><i>â</i></span>) are shown in line.
+</li>
+<li>
+Variables are italicized.
+</li>
+<li>
+Notes and comments are not output at all, greyed-out notes are shown in grey.
+</li>
+<li>
+LyX guides parse completely.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.11 (2009-03-27):<ul>
+<li>
+Arrays are at least well parsed (but still show wrong).
+</li>
+<li>
+Integrals and sums appear as large characters.
+</li>
+<li>
+Appendices are separated from the main document.
+</li>
+<li>
+The bibliography appears separated with a title.
+</li>
+<li>
+Floats appear centered on-screen.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.10 (2009-03-23):<ul>
+<li>
+Better handling of footnotes and margin notes: not overlapping and with a reference in the text.
+</li>
+<li>
+Better parsing of first word in a Description.
+</li>
+<li>
+Short titles are ignored.
+</li>
+<li>
+Added a few font families for equations. Not that they display too well…
+</li>
+
+</ul>
+
+</li>
+<li>
+0.9 (2009-03-21):<ul>
+<li>
+Better formula parsing (including line breaks). Supports a few math fonts.
+</li>
+<li>
+Supports menu separator, text with bar, nomenclature and many more quote types.
+</li>
+<li>
+Single configuration file <tt>general.py</tt>.
+</li>
+<li>
+Layout of type Space is not shown.
+</li>
+<li>
+Supports branches. Inactive branches are not shown.
+</li>
+<li>
+New symbols: greek letters, shapes: bullet, right triangle.
+</li>
+<li>
+Added support for new style (1.6.<span class="formula"><i>x</i></span>) index entries.
+</li>
+<li>
+From LyX documentation: <tt>UserGuide.lyx</tt> is now working (except for some math functions).
+</li>
+
+</ul>
+
+</li>
+<li>
+0.8 (2009-03-20):<ul>
+<li>
+Can be run from other directories than the one with the document.
+</li>
+<li>
+Tables have light grey separations. Table spacing is now better adjusted.
+</li>
+<li>
+Descriptions appear with the first word in bold), but only within the first text style. Changing style in the middle of a word may distract the algorithm.
+</li>
+<li>
+Added support for Lyx notes (not rendered in the HTML), margin notes, pretty quotes ‘’, weird spaces.
+</li>
+<li>
+Added support for new style (1.6.<span class="formula"><i>x</i></span>) hyperlinks, labels and references, TOC, index.
+</li>
+<li>
+Uses PDF title if present.
+</li>
+<li>
+From LyX documentation: <tt>Intro.lyx</tt> is now working.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.7 (2009-03-16):<ul>
+<li>
+Images referenced by absolute path are converted to relative PNGs.
+</li>
+<li>
+Range of supported quotes is greater. Unknown quotes are now marked as errors but do not make the tool fail.
+</li>
+<li>
+Default CSS is always on <a class="URL" href="http://www.nongnu.org/elyxer/lyx.css">nongnu.org</a>, it can be changed via command line option <tt>--css</tt>.
+</li>
+<li>
+Reinstated layout classes for unknown types.
+</li>
+<li>
+Updated documentation to include how to run on Windows.
+</li>
+<li>
+Added meta generator tag to all pages.
+</li>
+<li>
+Added option <tt>--title</tt> to change the default page title.
+</li>
+<li>
+Phonetic symbols appear in dark cyan: <span class="formula"><span class="text"><span class="textipa">[sample]</span></span></span>.
+</li>
+<li>
+Lots of small fixes and improvements to correctly parse the official LyX guides (<tt>UserGuide.lyx</tt>, <tt>EmbeddedObjects.lyx</tt> and <tt>Math.lyx</tt>).
+</li>
+
+</ul>
+
+</li>
+<li>
+0.6 (2009-03-15):<ul>
+<li>
+Added Flex URLs, Flex code.
+</li>
+<li>
+Works with Python 2.3.5, but not yet Mac OS X terminal.
+</li>
+<li>
+Alignment now works right (and center and left).
+</li>
+<li>
+Modified license files to comply with Savannah policies.
+</li>
+<li>
+Added index page and logo.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.5 (2009-03-14):<ul>
+<li>
+Inset parameters are all parsed correctly (including spaces in image paths).
+</li>
+<li>
+Formulae and tables should work again (including complex formatting).
+</li>
+<li>
+Modified to (mostly) run under Python 2.3.5 (Mac OS X Tiger).
+</li>
+<li>
+Processes layouts ending in ‘*’ (like ‘Section*’).
+</li>
+<li>
+Runtime options for help and to disable the copyright notice, debug, quietness.
+</li>
+<li>
+Accepts scaling for images.
+</li>
+<li>
+Nested lists working.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.4 (2009-03-12):<ul>
+<li>
+When images do not exist warns but does not fail.
+</li>
+<li>
+Author and title containing tags are properly processed.
+</li>
+<li>
+Slanted text translated to italics.
+</li>
+<li>
+Title no longer necessary to have a working document.
+</li>
+<li>
+ERT is ignored. Status line (open/collapsed) is ignored.
+</li>
+<li>
+Supports footnotes, newlines, bibitem entries and citations.
+</li>
+<li>
+Dev guide includes a <tt>Container</tt> tutorial.
+</li>
+
+</ul>
+
+</li>
+<li>
+0.3 (2009-03-11): Now works with generic Insets.
+</li>
+<li>
+0.2 (2009-03-11): ImageMagick is not required anymore.
+</li>
+<li>
+0.1 (2009-03-10): first public version.
+</li>
+
+</ul>
+
+<hr class="footer"/>
+<div class="footer" id="generated-by">
+Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.2.4 (2013-01-11)</a> on <span class="create-date">2013-03-10T12:24:48.242048</span>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="generator" content="http://www.nongnu.org/elyxer/"/>
+<meta name="create-date" content="2013-01-11"/>
+<link rel="stylesheet" href="lyx.css" type="text/css" media="all"/>
+<title>eLyxer Math Showcase (MathJax local edition)</title>
+<script type="text/javascript" src="./MathJax/MathJax.js">
+  //  Load MathJax and get it running
+  MathJax.Hub.Config({ jax: ["input/TeX"],
+  config: ["MMLorHTML.js"],
+  extensions: ["TeX/AMSmath.js","TeX/AMSsymbols.js"],
+  "HTML-CSS": { imageFont: null }
+  });
+</script>
+</head>
+<body>
+<div id="globalWrapper">
+<script type="math/tex">
+\newcommand{\lyxlock}{}
+</script>
+<noscript>
+<div class="warning">
+Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
+</div><hr/>
+</noscript>
+<h1 class="title">
+<img class="embedded" src="elyxer.png" alt="figure elyxer.png" style="max-width: 160px; max-height: 160px;"/>
+eLyXer Math Showcase
+</h1>
+<h2 class="author">
+Alex Fernández (elyxer@gmail.com)
+</h2>
+<div class="fulltoc">
+<div class="tocheader">
+Table of Contents
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Section-1">Section 1: Introduction</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-1.1">Subsection 1.1: Versions</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-2">Section 2: Typography</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.1">Subsection 2.1: Greek Symbols</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.2">Subsection 2.2: Math Symbols</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.3">Subsection 2.3: Other Symbols</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.4">Subsection 2.4: Spacing</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.5">Subsection 2.5: Fonts</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-3">Section 3: Numeration</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-4">Section 4: Simple Structures</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-4.1">Subsection 4.1: Fractions</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-4.2">Subsection 4.2: Limits</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-4.3">Subsection 4.3: Roots</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-5">Section 5: Complex Structures</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-5.1">Subsection 5.1: Arrays</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-5.2">Subsection 5.2: Brackets</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-5.3">Subsection 5.3: Cases</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-5.4">Subsection 5.4: Braces</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-6">Section 6: Macros</a>
+</div>
+</div>
+
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-1">1</a> Introduction
+</h1>
+<div class="Unindented">
+This document is intended as a showcase of the mathematical abilities of eLyXer; for more information be sure to visit the <a class="URL" href="index.html">main page</a>.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-1.1">1.1</a> Versions
+</h2>
+<div class="Unindented">
+There are several versions of this page:
+</div>
+<ul>
+<li>
+A <a class="URL" href="math.html">non-Unicode version</a> of this page with midspaces.
+</li>
+<li>
+A <a class="URL" href="math-unicode.html">Unicode version</a> with mathematical spaces (generated with <tt>--unicode</tt>).
+</li>
+<li>
+An <a class="URL" href="math-iso885915.html">ISO-8859-15 version</a> (generated with <tt>--iso885915</tt>).
+</li>
+<li>
+An <a class="URL" href="math-html.html">HTML version</a> (generated with <tt>--html</tt>).
+</li>
+<li>
+A <a class="URL" href="math-mathjax.html">MathJax remote version</a> with <a class="URL" href="http://www.mathjax.org/">MathJax</a> (generated with <tt>--mathjax remote</tt>).
+</li>
+<li>
+A <a class="URL" href="math-mathjax-local.html">MathJax local version</a> with <a class="URL" href="http://www.mathjax.org/">MathJax</a> (generated with <tt>--mathjax</tt> and a local URL).
+</li>
+<li>
+A <a class="URL" href="math-googlecharts.html">Google Charts version</a> with <a class="URL" href="http://code.google.com/apis/chart/index.html">Google Charts</a> (generated with <tt>--googlecharts</tt>).
+</li>
+
+</ul>
+<div class="Unindented">
+All of them are generated from the same <tt>.lyx</tt> source file; they should help you decide which rendering options suit you best.
+</div>
+<div class="Indented">
+Also available online is the eLyXer translation of the latest <a class="URL" href="http://elyxer.nongnu.org/lyx/Math.html">LyX’s detailed Math manual</a>, which contains a lot more examples of LyX maths.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-2">2</a> Typography
+</h1>
+<div class="Unindented">
+Math formulae use a lot of different symbols and fonts.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.1">2.1</a> Greek Symbols
+</h2>
+<div class="Unindented">
+Greek symbols are very important in equations: <span class="MathJax_Preview"><script type="math/tex">
+\phi
+</script>
+</span>, <span class="MathJax_Preview"><script type="math/tex">
+\pi
+</script>
+</span>, <span class="MathJax_Preview"><script type="math/tex">
+\Xi
+</script>
+</span>. eLyXer offers a complete set in both upper case: <span class="MathJax_Preview"><script type="math/tex">
+\Gamma\ldots\Omega
+</script>
+</span> and lower case: <span class="MathJax_Preview"><script type="math/tex">
+\alpha\ldots\omega
+</script>
+</span>. Also the AMS italicized upper case: <span class="MathJax_Preview"><script type="math/tex">
+\varGamma\ldots\varOmega
+</script>
+</span>.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.2">2.2</a> Math Symbols
+</h2>
+<div class="Unindented">
+eLyXer supports the whole set of math symbols in <a class="URL" href="http://www.johndcook.com/math_symbols.html">John D. Cook's list</a>: <span class="MathJax_Preview"><script type="math/tex">
+\exists\partial\nabla\geq
+</script>
+</span>. It can also render a few more: <span class="MathJax_Preview"><script type="math/tex">
+\propto\times
+</script>
+</span>. You also get all symbols from <a class="URL" href="http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt">Markus Kuhn's list</a>: <span class="MathJax_Preview"><script type="math/tex">
+\bigodot\amalg
+</script>
+</span>.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.3">2.3</a> Other Symbols
+</h2>
+<div class="Unindented">
+There are other symbols like arrows: <span class="MathJax_Preview"><script type="math/tex">
+\leftarrow\rightarrow
+</script>
+</span>, or geometrical shapes: <span class="MathJax_Preview"><script type="math/tex">
+\circ
+</script>
+</span>, <span class="MathJax_Preview"><script type="math/tex">
+\square
+</script>
+</span>. eLyXer offers limited support for them. You might also want to use financial symbols in formulae: <span class="MathJax_Preview"><script type="math/tex">
+\yen\euro\$
+</script>
+</span>.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.4">2.4</a> Spacing
+</h2>
+<div class="Unindented">
+Equations look good when items are properly separated. The main separation is the Medium Mathematical Space: <span class="MathJax_Preview"><script type="math/tex">
+x=3
+</script>
+</span>. <span class="greyedout">
+Note: if you are viewing the non-Unicode version <a class="FlexURL" href="math.html">math.html</a> of this page then you are in fact seeing midspaces, which are very similar but not exactly the same: <span class="MathJax_Preview"><script type="math/tex">
+\frac{4}{18}\mathrm{em}
+</script>
+</span> for medium mathematical spaces versus <span class="MathJax_Preview"><script type="math/tex">
+\frac{1}{2}\mathrm{en}
+</script>
+</span>, where <span class="MathJax_Preview"><script type="math/tex">
+1\mathrm{em}=2\mathrm{en}
+</script>
+</span>. Try out the Unicode version <a class="FlexURL" href="math-unicode.html">math-unicode.html</a> — and viceversa. You can check out what version this page is in the page title.
+</span>
+
+</div>
+<div class="Indented">
+The command <tt>\raisebox</tt> is useful to, surprisingly, raise a little box, <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+\raisebox{2mm}{raised}over\raisebox{-2mm}{lowered}\textrm{and back}.
+</script>
+
+</span>
+Like <tt>\mbox</tt>, it puts its content in a text box. It can also be used just for spacing:<br/>
+ <span class="MathJax_Preview"><script type="math/tex">
+\raisebox{5mm}{}B^{V}
+</script>
+</span>.
+</div>
+<div class="Indented">
+There are other spacing commands: <tt>\hspace</tt>: <span class="MathJax_Preview"><script type="math/tex">
+a\hspace{4mm}b
+</script>
+</span>, protected space: <span class="MathJax_Preview"><script type="math/tex">
+a\ b
+</script>
+</span>, and (at &ldquo;block level&rdquo;)<tt> \vspace</tt>: <span class="MathJax_Preview"><script type="math/tex">
+a\vspace{1cm}b
+</script>
+</span>.
+</div>
+<div class="Indented">
+There should be 1 cm of vertical space above this paragraph.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.5">2.5</a> Fonts
+</h2>
+<div class="Unindented">
+By default, letters denote variables and are taken from the <tt>\mathnormal</tt> font, which is italic, <span class="MathJax_Preview"><script type="math/tex">
+\alpha x+\alpha y=\alpha(x+y)
+</script>
+</span>, with the exception of upright capital Greek letters, <span class="MathJax_Preview"><script type="math/tex">
+G\ne\Gamma
+</script>
+</span>.
+</div>
+<div class="Indented">
+Function names should be upright: <span class="MathJax_Preview"><script type="math/tex">
+\sin(2\pi),\log(x),\tan\delta
+</script>
+</span>.
+</div>
+<div class="Indented">
+Mathematical fonts used in equations include <span class="MathJax_Preview"><script type="math/tex">
+\mathrm{Roman}
+</script>
+</span> (<tt>\mathrm</tt>), <span class="MathJax_Preview"><script type="math/tex">
+\mathsf{Sans\: Serif}
+</script>
+</span> (<tt>\mathsf</tt>), <span class="MathJax_Preview"><script type="math/tex">
+\mathtt{Typewriter}
+</script>
+</span> (<tt>\mathtt</tt>), <span class="MathJax_Preview"><script type="math/tex">
+\mathbf{Bold}
+</script>
+</span> (<tt>\mathbf</tt>), <span class="MathJax_Preview"><script type="math/tex">
+\mathscr{SCRIPT}
+</script>
+</span> (<tt>\mathscr</tt>), <span class="MathJax_Preview"><script type="math/tex">
+\mathcal{CALLIGRAPHIC}
+</script>
+</span> (<tt>\mathcal</tt>), <span class="MathJax_Preview"><script type="math/tex">
+\mathbb{BLACKBOARD\: BOLD}
+</script>
+</span> (<tt><span class="versalitas">\</span>mathbb</tt>), and <span class="MathJax_Preview"><script type="math/tex">
+\mathfrak{Fraktur}
+</script>
+</span> (<tt>\mathfrak</tt>). For the latter, some single characters are translated to their Unicode equivalents: <span class="MathJax_Preview"><script type="math/tex">
+\mathscr{F}
+</script>
+</span>, <span class="MathJax_Preview"><script type="math/tex">
+\mathbb{F}
+</script>
+</span>, <span class="MathJax_Preview"><script type="math/tex">
+\mathfrak{F}
+</script>
+</span>.
+</div>
+<div class="Indented">
+Regular text in a formula can be achieved via text font commands like <tt>\textrm</tt>: <span class="MathJax_Preview"><script type="math/tex">
+5\:\textrm{to}\:10
+</script>
+</span>, via boxes like \mbox (prevents line breaks): <span class="MathJax_Preview"><script type="math/tex">
+6\mbox{ is more than }5
+</script>
+</span>, or the AMSmath <tt>\text</tt> macro (scales like math symbols) <span class="MathJax_Preview"><script type="math/tex">
+\text{base}_{\text{sub}}^{\text{super}}
+</script>
+</span>. The content of an mbox is processed in LaTeX text mode. This allows text font commands, e.g. a switch to <span class="sans"><b><i>sans-serif-bold-italic</i></b></span>, or the phonetic alphabet: <span class="MathJax_Preview"><script type="math/tex">
+\mbox{\textbf{\textsf{\textbf{\textit{sfbfit}}}}, \textipa{tipa}}
+</script>
+</span>.
+</div>
+<div class="Indented">
+Units should be written upright, either with <tt>\mathrm</tt> or with macros from the <tt>units</tt> package, e.g. as simple unit, <span class="MathJax_Preview"><script type="math/tex">
+\unit{km}
+</script>
+</span>, with magnitude, <span class="MathJax_Preview"><script type="math/tex">
+\unit[57]{km}
+</script>
+</span>, with fractional unit, <span class="MathJax_Preview"><script type="math/tex">
+\unitfrac[200]{km}{h}
+</script>
+</span>, or with a fraction before the units, <span class="MathJax_Preview"><script type="math/tex">
+\unit[\nicefrac{3}{2}]{km}
+</script>
+</span>, <span class="MathJax_Preview"><script type="math/tex">
+\unit[\frac{7}{16}]{s}
+</script>
+</span>.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-3">3</a> Numeration
+</h1>
+<div class="Unindented">
+Equations can be numbered, like (<a class="Reference" href="#eq:first">↓</a>) <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+\begin{equation}
+y=x\label{eq:first}\end{equation}
+</script>
+
+</span>
+ And also like <a class="Reference" href="#eq:second">(↓)</a>. <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+\begin{equation}
+x=3\label{eq:second}\end{equation}
+</script>
+
+</span>
+ Some equations can be numbered even if they don’t have a label.
+</div>
+<div class="Indented">
+<span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+\begin{equation}
+x=2y\end{equation}
+</script>
+
+</span>
+ Notice that equation (<a class="Reference" href="#eq:second">↓</a>) comes after (<a class="Reference" href="#eq:first">↓</a>).
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-4">4</a> Simple Structures
+</h1>
+<div class="Unindented">
+Let’s now see a few of the simpler structures that eLyXer can output.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-4.1">4.1</a> Fractions
+</h2>
+<div class="Unindented">
+A simple fraction: <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+\frac{1}{2}.
+</script>
+
+</span>
+Inlined: <span class="MathJax_Preview"><script type="math/tex">
+\frac{2}{3}.
+</script>
+</span>
+</div>
+<div class="Indented">
+A big recursive fraction: <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+\frac{1}{\left(1+\left(\frac{1}{1+\left(\frac{1}{1+2x}\lyxlock\right)}\lyxlock\right)\right)}\lyxlock
+</script>
+
+</span>
+
+</div>
+<div class="Indented">
+A nice fraction: <span class="MathJax_Preview"><script type="math/tex">
+\nicefrac{5}{6}
+</script>
+</span>. A non-diminishing fraction containing alignments:<span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+\cfrac{1}{1+\left(\cfrac[l]{1}{1+x}\times\cfrac[r]{1}{1+x}\right)}.
+</script>
+
+</span>
+
+</div>
+<div class="Indented">
+A similar concept is a binomial coefficient: <span class="MathJax_Preview"><script type="math/tex">
+\binom{A+1}{B}.
+</script>
+</span> It can be prettily presented: <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+\dbinom{A}{B+1}.
+</script>
+
+</span>
+
+</div>
+<div class="Indented">
+A symbol can be stacked over another using <tt>\stackrel</tt>: <span class="MathJax_Preview"><script type="math/tex">
+x\stackrel{R}{\rightarrow}y
+</script>
+</span>. Anything can be stacked: <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+d\stackrel{x>3}{\lim}x,\quad\stackrel{\mathrm{head}}{\mathrm{heels}}.
+</script>
+
+</span>
+
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-4.2">4.2</a> Limits
+</h2>
+<div class="Unindented">
+<span class="MathJax_Preview"><script type="math/tex">
+\lim_{x\rightarrow\infty}f(x)
+</script>
+</span> should appear as <span class="MathJax_Preview"><script type="math/tex">
+x\rightarrow\infty
+</script>
+</span> in italics, and «lim» in plain style. In display mode, a limit must appear below the main symbol: <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+\lim_{x\rightarrow\infty}\lyxlock f(x).
+</script>
+
+</span>
+
+</div>
+<div class="Indented">
+Limits are also used in sums and integrals: <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+\sum_{i=1}^{\infty}x,\;\int_{0}^{\infty}f(x)\,\mathrm{d}x
+</script>
+
+</span>
+where the sum’s limits should appear below (<span class="MathJax_Preview"><script type="math/tex">
+i=1
+</script>
+</span>) and above (<span class="MathJax_Preview"><script type="math/tex">
+\infty
+</script>
+</span>) the <span class="MathJax_Preview"><script type="math/tex">
+\sum
+</script>
+</span>. The placement of the integral limits depends on the document class: LaTeX standard classes place them right to the <span class="MathJax_Preview"><script type="math/tex">
+\int
+</script>
+</span>. Limits are shown to the right in inline formulae: <span class="MathJax_Preview"><script type="math/tex">
+\sum_{i=1}^{\infty}x
+</script>
+</span> and <span class="MathJax_Preview"><script type="math/tex">
+\intop_{i=1}^{\infty}x.
+</script>
+</span>
+</div>
+<div class="Indented">
+The placing of limits can be configured with the <tt>\limits</tt> and <tt>\nolimits</tt> macros: <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+\lim\nolimits _{x\rightarrow\infty}\lyxlock f(x),\;\sum\nolimits _{i=1}^{\infty}x,\;\int\limits _{0}^{\infty}f(x)\,\mathrm{d}x
+</script>
+
+</span>
+
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-4.3">4.3</a> Roots
+</h2>
+<div class="Unindented">
+A square root: <span class="MathJax_Preview"><script type="math/tex">
+\sqrt{3}.
+</script>
+</span> A more complex root in a fraction:<span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+\frac{1}{\left(1+\sqrt{2}\left(\frac{1}{1+\sqrt{2}}\lyxlock\right)+\sqrt{\frac{1}{2}}\right)}\lyxlock.
+</script>
+
+</span>
+
+</div>
+<div class="Indented">
+eLyXer can also do higher-order roots: <span class="MathJax_Preview"><script type="math/tex">
+\sqrt[3]{x+y}
+</script>
+</span>. A devilish case mixing everything we have seen so far:<span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+\frac{\sqrt[\nicefrac{7}{8}]{\frac{8}{4}x}+\sum_{i=1}^{\infty}x}{\sqrt[s+5]{\frac{(78x+45y)\times\sqrt{\Omega}}{\sin(x+1)}+\unit[38]{km}}}\lyxlock.
+</script>
+
+</span>
+
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-5">5</a> Complex Structures
+</h1>
+<div class="Unindented">
+In this section we will explore arrays and related constructs.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-5.1">5.1</a> Arrays
+</h2>
+<div class="Unindented">
+An inline array <span class="MathJax_Preview"><script type="math/tex">
+\left[\begin{array}{cc}
+a & b\\
+c & d\end{array}\right]
+</script>
+</span> is always shown in the same line. In display mode, the array is shown on its own line: <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+\left[\begin{array}{lc}
+12 & 2\\
+3 & 4\times y^{x}\end{array}\right]
+</script>
+
+</span>
+Apart from that the appearance should be the same.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-5.2">5.2</a> Brackets
+</h2>
+<div class="Unindented">
+Arrays are separated by variable-size brackets: <span class="MathJax_Preview"><script type="math/tex">
+\left(\begin{array}{cc}
+a & b\\
+c & d\end{array}\right)
+</script>
+</span> <span class="MathJax_Preview"><script type="math/tex">
+\left[\begin{array}{cc}
+a & b\\
+c & d\end{array}\right]
+</script>
+</span> <span class="MathJax_Preview"><script type="math/tex">
+\left\{ \begin{array}{cc}
+a & b\\
+c & d\end{array}\right\} 
+</script>
+</span> <span class="MathJax_Preview"><script type="math/tex">
+\left\langle \begin{array}{cc}
+a & b\\
+c & d\end{array}\right\rangle 
+</script>
+</span> <span class="MathJax_Preview"><script type="math/tex">
+\left|\begin{array}{cc}
+a & b\\
+c & d\end{array}\right|
+</script>
+</span>which might also differ on right and left <span class="MathJax_Preview"><script type="math/tex">
+\left(\begin{array}{cc}
+a & b\\
+c & d\end{array}\right)
+</script>
+</span> or use the empty opening <span class="MathJax_Preview"><script type="math/tex">
+\left\{ \begin{array}{cc}
+a & b\\
+c & d\end{array}\right.
+</script>
+</span> or closing: <span class="MathJax_Preview"><script type="math/tex">
+\left.\begin{array}{cc}
+a & b\\
+c & d\end{array}\right|
+</script>
+</span>. There are also fixed-size big brackets, e.g. <span class="MathJax_Preview"><script type="math/tex">
+\bigl\langle f\bigr\rangle
+</script>
+</span>.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-5.3">5.3</a> Cases
+</h2>
+<div class="Unindented">
+Used to switch between several values.
+</div>
+<div class="Indented">
+<span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+y=\begin{cases}
+x & i=0,\\
+x+1 & i<3\end{cases}
+</script>
+
+</span>
+
+</div>
+<div class="Indented">
+Cases may have more than two rows:
+</div>
+<div class="Indented">
+<span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+f(x)=\begin{cases}
+0 & x<0,\\
+\infty & x=0\\
+0 & x>0\end{cases}
+</script>
+
+</span>
+
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-5.4">5.4</a> Braces
+</h2>
+<div class="Unindented">
+Values can be underbraced or overbraced.
+</div>
+<div class="Indented">
+<span class="MathJax_Preview"><script type="math/tex">
+\underbrace{a-b}=\overbrace{b+c+d+e}
+</script>
+</span>.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-6">6</a> Macros
+</h1>
+<div class="Unindented">
+Now it’s time for user-defined commands (sometimes called &ldquo;macros&rdquo;).
+</div>
+<div class="Indented">
+Definitions can be added as macros. Then they can be used in formulae: <span class="MathJax_Preview"><script type="math/tex">
+\stupidroot 12
+</script>
+</span>. They can accept default parameters. Again, useful in formulae: <span class="MathJax_Preview"><script type="math/tex">
+\defaultroot
+</script>
+</span>.
+</div>
+<div class="Indented">
+Other definitions from the preamble can be used: <span class="MathJax_Preview"><script type="math/tex">
+\preambleroot{3}{4}
+</script>
+</span>.
+</div>
+<div class="Indented">
+Definitions on the fly are also possible: <span class="MathJax_Preview"><script type="math/tex">
+\newcommand{\ontheflyroot}[2]{\sqrt[#1]{#2}}\ontheflyroot{7}{8}
+</script>
+</span>, and used with different values: <span class="MathJax_Preview"><script type="math/tex">
+\ontheflyroot{a}{b}
+</script>
+</span>.
+</div>
+
+<hr class="footer"/>
+<div class="footer" id="generated-by">
+Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.2.4 (2013-01-11)</a> on <span class="create-date">2013-01-11T23:19:45.944169</span>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="generator" content="http://www.nongnu.org/elyxer/"/>
+<meta name="create-date" content="2013-01-11"/>
+<link rel="stylesheet" href="lyx.css" type="text/css" media="all"/>
+<title>eLyXer</title>
+</head>
+<body>
+<div id="globalWrapper">
+<h1 class="title">
+<img class="embedded" src="elyxer.png" alt="figure elyxer.png" style="max-width: 160px; max-height: 160px;"/>
+eLyXer
+</h1>
+<blockquote class="Quotation">
+<i><a class="URL" href="http://www.wordreference.com/definition/elixir">elixir</a>, n: a substance believed to cure all ills.</i>
+</blockquote>
+<div class="Unindented">
+eLyXer (pronounced <i>elixir</i>) is a LyX to HTML converter. While there are a ton of such projects all over the web, eLyXer has a clear focus on flexibility and elegant output.
+</div>
+<div class="Indented">
+<a class="URL" href="http://www.lyx.org/">LyX</a> is a wonderful text editor which produces beautiful PDF files. Internally it exports documents to LaTeX, and from there to PDF. Sadly there is not an equivalent &ldquo;export to HTML&rdquo; option… Until now! With eLyXer you can convert your master’s thesis, learned article, fascinating novel or love letter to a web page that you can then share, publish on the web or import into other text editors.
+</div>
+<div class="Indented">
+The <a class="URL" href="userguide.html">user guide</a> can be accessed online. The <a class="URL" href="devguide.html">developer guide</a> is recommended reading for people that want to contribute to the development, especially <a class="URL" href="devguide.html#toc-Section-3">section 3</a>. For the mathematically inclined: be sure to visit the <a class="URL" href="math.html">Math Showcase</a>.
+</div>
+<h2 class="Subsection-">
+<a class="toc" name="toc-Subsection--1"></a>Requirements
+</h2>
+<div class="Unindented">
+eLyXer is a standalone tool: it does not require that LyX is installed to run. It can convert documents generated with versions of LyX from 1.5.5 through 2.0 (and probably earlier versions). It requires Python 2.3.4, and should work with versions up to 2.6.1. It has been tested to run on Linux, Mac OS X and Windows.
+</div>
+<div class="Indented">
+Resource usage is minimum. Converting UserGuide.lyx (<span class="formula">154</span> pages, about <span class="formula">40000</span> words) takes less than 15 seconds on my Asus EeePC 1000H, which sports an Intel Atom processor at 1.60 GHz. Memory usage is also quite frugal, remaining at about 35 MB even with in-memory processing.
+</div>
+<div class="Indented">
+The output requires XHTML, CSS2 and Unicode; any CSS2-compatible browser should do. Minimum browser versions for some popular programs are: Microsoft Internet Explorer 7, Mozilla Firefox 3, Safari 3 and Chrome 1.
+</div>
+<h2 class="Subsection-">
+<a class="toc" name="toc-Subsection--2"></a>Usage
+</h2>
+<div class="Unindented">
+eLyXer is a command line tool written in Python. Installation is done using the included installer; just type at the prompt as root:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">#</span> python install.py</tt>
+</pre>
+<div class="Unindented">
+or, on Windows:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">&gt;</span> Python.exe install.py</tt>
+</pre>
+<div class="Unindented">
+Basic usage is as simple as writing at the command line prompt:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py document.lyx page.html</tt>
+</pre>
+<div class="Unindented">
+or, on Windows:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">&gt;</span> elyxer.py document.lyx page.html</tt>
+</pre>
+<div class="Unindented">
+where <tt>document.lyx</tt> is your LyX document, and <tt>page.html</tt> is the resulting HTML page. Write
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --help</tt>
+</pre>
+<div class="Unindented">
+or see the <a class="URL" href="userguide.html">user guide</a> for details.
+</div>
+<h2 class="Subsection-">
+<a class="toc" name="toc-Subsection--3"></a>Downloads
+</h2>
+<div class="Unindented">
+You can download the latest version 1.2.4, created on 2013-01-11, from the project’s <a class="URL" href="https://savannah.nongnu.org/files/?group=elyxer">download area</a>. See the <a class="URL" href="changelog.html">change log</a> for information about past versions.
+</div>
+<div class="Indented">
+eLyXer (including this page and all accompanying materials) is free software: you can redistribute it and/or modify it under the terms of the <a class="URL" href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GNU General Public License</a> as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. See the <tt>LICENSE</tt> file for details.
+</div>
+<div class="Indented">
+math2html (and <tt>math.css</tt>) is released without warranties or conditions of any kind under the terms of the <a class="URL" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, version 2.0</a>.
+</div>
+<h2 class="Subsection-">
+<a class="toc" name="toc-Subsection--4"></a>Contact
+</h2>
+<div class="Unindented">
+You can contact the main developer at <a class="URL" href="mailto:elyxer@gmail.com">elyxer@gmail.com</a>; he really likes getting challenging documents and making eLyXer work with them. Any document sample you send will be treated with the utmost confidentiality.
+</div>
+<div class="Indented">
+The author lingers around official LyX mailing lists and monitors for mentions of eLyXer. You can also <a class="URL" href="http://lists.nongnu.org/mailman/listinfo/elyxer-users">join</a> the low-volume <a class="URL" href="mailto:elyxer-users@nongnu.org">mailing list</a>, where announcements of new versions are always posted. Bugs can be reported at the <a class="URL" href="https://savannah.nongnu.org/bugs/?func=additem&amp;group=elyxer">Savannah page</a>; features can be requested too. Feature requests that fit in will be added to the <a class="URL" href="userguide.html#sub:Wish-List">wish list</a>.
+</div>
+<h2 class="Subsection-">
+<a class="toc" name="toc-Subsection--5"></a>Acknowledgments
+</h2>
+<div class="Unindented">
+This little project is my little contribution back to the wonderful LyX community, for all these years of fruitful use.
+</div>
+<div class="Indented">
+Thanks to <a class="URL" href="http://www.zipcon.net/~swhite/resume/">Stevan White</a> for encouraging me to publish the tool. Thanks also to <a class="URL" href="http://www.johndcook.com/">John D. Cook</a>, <a class="URL" href="http://community.jedit.org/?q=node/view/1746">rikal</a>, <a class="URL" href="http://www.seanet.com/~bradbell/omhelp/stdfun.htm">Bradley M. Bell</a>, <a class="URL" href="http://www.cl.cam.ac.uk/~mgk25/ucs/examples/TeX.txt">Markus Kuhn</a>, Jens Nöckel, <a class="URL" href="http://milde.users.sourceforge.net/LUCR/Math/">Günter Milde</a> and LyX developers Georg Baum, Uwe Stöhr and Jürgen Spitzmüller for their wonderful lists of TeX commands and Unicode equivalents; to <a class="URL" href="http://www.fileformat.info/">FileFormat.info</a> for their complete tables of Unicode characters. More thanks go to Christian Ridderström for helping me out right at the start; to Ignacio García for relentless encouragement; to Abdelrazak Younes, Pavel Sanda, Günter Milde, Olivier Ripoll, José Matos, Iain Mac Donald, Uwe Stöhr for their interesting suggestions. Thanks to Uwe Stöhr, Hans Bezemer, Sara Teinturier, Vladimir Ermakov for their translations. Packagers Sven Hoexter (for Debian) and Uwe Stöhr (on Windows) have helped with their work to make it easy to try it out. Olivier Ripoll, Geremy Condra, Simon South, Jack Desert, <a class="URL" href="http://www.newearthbiomed.org/">John Boik</a>, Yan Wong, Jose Ramón Álvarez Sánchez, Günter Milde, Pascal Francq, Marco R. Gazzetta have provided quite interesting patches. Davide P. Cervone has been extremely helpful and responsive about jsMath and MathJax integration, while Paul Hunter has also gone beyond the call of duty with his help integrating <a class="URL" href="http://www.mathtoweb.com/">MathToWeb</a> (which unfortunately has not been fruitful yet, due to my lack of skill and certainly not to his lack of interest).
+</div>
+<div class="Indented">
+Thanks to Nikos Alexandris, Joachim Kreimer-de Fries (Osnabryg), Richard Talley, Wolfgang Keller, Murray Eisenberg, Robert Orr, a Linux guy in Singapore, Anders Ekberg, Pavel Sanda, Steve Hastings, Sven Hoexter, Xie Chao, Uwe Stöhr, Jürgen Spitzmüller, Olivier Ripoll, Konrad Hofbauer, Eduardo Grosclaude, Ken, Jens Nöckel, <a class="URL" href="mailto:el@lisse.na">Dr Eberhard W Lisse</a>, William Crocker, Sara Teinturier, Hans Bezemer, Jack Desert, Hartmut Haase, Rainer Dorsch, Wolfgang Engelmann, Rodrigo Benenson, Stefano Franchi, Steve Litt, Paul Johnson, Yan Wong, Yaron Goland, Francis Girard, Rene de Zwart, Jose Ramón Álvarez Sánchez, Günter Milde, Axel Jacobs, Tiago Pedro Alves-Ferreira, Hoy Loper, Bob Alvarez, Tommaso Cucinotta for their testing and bug reporting.
+</div>
+<div class="Indented">
+A silent &ldquo;thank you&rdquo; goes to all those who downloaded the tool and silently tested it to their satisfaction (or were not bugged enough to write about it). Thanks to those who have criticized the tool for making eLyXer improve every day, if only to prove you wrong. And finally thanks to all those who have helped and yet I am now forgetting about them, for not hating me for it.
+</div>
+
+<hr class="footer"/>
+<div class="footer" id="generated-by">
+Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.2.4 (2013-01-11)</a> on <span class="create-date">2013-01-11T23:19:42.958069</span>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1776 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="generator" content="http://www.nongnu.org/elyxer/"/>
+<meta name="create-date" content="2013-01-11"/>
+<link rel="stylesheet" href="lyx.css" type="text/css" media="all"/>
+<title>eLyXer User Guide</title>
+</head>
+<body>
+<div id="globalWrapper">
+<h1 class="title">
+<img class="embedded" src="elyxer.png" alt="figure elyxer.png" style="max-width: 160px; max-height: 160px;"/>
+eLyXer User Guide
+</h1>
+<h2 class="author">
+Alex Fernández (elyxer@gmail.com)
+</h2>
+<div class="fulltoc">
+<div class="tocheader">
+Table of Contents
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Section-1">Section 1: The Basics</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-1.1">Subsection 1.1: System Requirements</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-1.2">Subsection 1.2: Installation</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--1">Subsubsection: Download eLyXer</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--2">Subsubsection: Using the Installer</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--3">Subsubsection: Prepackaged Versions</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--4">Subsubsection: Manual Installation</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-1.3">Subsection 1.3: Test Drive</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-1.4">Subsection 1.4: Usage</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-1.5">Subsection 1.5: Image Processing</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-1.6">Subsection 1.6: LyX Integration</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--5">Subsubsection: Installing as a Package or as a Module</a>
+</div>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-2">Section 2: Advanced Use</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.1">Subsection 2.1: Command Line Options</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--6">Subsubsection: Advanced Options</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--7">Subsubsection: Options to Control HTML output</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--8">Subsubsection: Options to Control image output</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--9">Subsubsection: Options to Control footnote output</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--10">Subsubsection: Advanced Options to Control HTML output</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--11">Subsubsection: Deprecated Options</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--12">Subsubsection: Adding Options In LyX</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.2">Subsection 2.2: CSS</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.3">Subsection 2.3: Title</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.4">Subsection 2.4: Table Of Contents</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.5">Subsection 2.5: Segmenting Pages</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.6">Subsection 2.6: HTML Code</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--13">Subsubsection: Character Encodings</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.7">Subsection 2.7: Internationalization</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.8">Subsection 2.8: Math</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--14">Subsubsection: MathJax</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--15">Subsubsection: Google Charts</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--16">Subsubsection: Brackets and Limits</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.9">Subsection 2.9: Footnotes</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--17">Subsubsection: Markers</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--18">Subsubsection: Position</a>
+</div>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-3">Section 3: Work in Progress</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-3.1">Subsection 3.1: Known Issues</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-3.2">Subsection 3.2: Wish List</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--19">Subsubsection: EPUB output format</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--20">Subsubsection: Output SVG as <tt>&lt;img&gt;</tt> tags</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--21">Subsubsection: More controls for image conversion</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsubsection--22">Subsubsection: CSS controls</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-3.3">Subsection 3.3: Contact Information</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-3.4">Subsection 3.4: Extending eLyXer</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-4">Section 4: FAQ</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#References">References</a>
+</div>
+
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-1">1</a> The Basics
+</h1>
+<blockquote class="Quotation">
+<i>elixir, n: a substance believed to cure all ills<span class="bibcites">[<a class="bibliocite" name="cite-1" href="#biblio-1">1</a>]</span>.</i>
+</blockquote>
+<div class="Unindented">
+eLyXer (pronounced <i>elixir</i>) is a LyX to HTML converter. While there are a ton of such projects all over the web, eLyXer has a clear focus on flexibility and elegant output.
+</div>
+<div class="Indented">
+eLyXer (including this guide and all accompanying materials) is licensed under the <a class="URL" href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPL version 3</a> or, at your option, any later version. See the <tt>LICENSE</tt> file for details.
+</div>
+<div class="Indented">
+Please visit the <a class="URL" href="index.html">main page</a> to find out about the latest developments.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-1.1">1.1</a> System Requirements
+</h2>
+<div class="Unindented">
+eLyXer requires Python 2.4.<span class="formula"><i>x</i></span>, and should work with versions up to 2.6.<span class="formula"><i>y</i></span>; it will convert documents generated by LyX 1.5.<span class="formula"><i>x</i></span> to 2.0. It has been tested on the most common operating systems: on Mac OS X, Linux and Windows, with and without CygWin.
+</div>
+<div class="Indented">
+Resource usage should be quite frugal; eLyXer runs quite happily on my 1st-gen Asus Eee, with its puny Celeron@570MHz and 512 MB of RAM. It should also be fast — the Eee can convert ~200 pages of LyX text in just over 50 seconds. Performance is fairly linear: 200 pages take <span class="formula">10 × </span> as long as 20, so there are no scalability problems. Memory usage stays low even when processing large documents, and conversion can be done on the fly (with <tt>--lowmem</tt>) for even lower memory requirements.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-1.2">1.2</a> Installation
+</h2>
+<div class="Unindented">
+This section looks at how to install eLyXer on your system, assuming that Python 2.4 to 2.6 is already there.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--1"></a>Download eLyXer
+</h3>
+<div class="Unindented">
+First you will need to fetch the official distribution file from the <a class="URL" href="https://savannah.nongnu.org/files/?group=elyxer">download area</a>. Now, there is more than one way to install eLyXe, but all of them start by uncompressing the distributed file to a suitable directory. Just write at the command prompt:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> tar -xzf elyxer-<i>[version]</i>.tar.gz</tt>
+</pre>
+<div class="Unindented">
+Or for the <tt>.zip</tt> version:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> unzip elyxer-<i>[version]</i>.zip</tt>
+</pre>
+<div class="Unindented">
+A directory called <tt>elyxer</tt> should appear, where the main executable file <tt>elyxer.py</tt> resides.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--2"></a>Using the Installer
+</h3>
+<div class="Unindented">
+An installer is provided in the root directory, called <tt>install.py</tt>; it is the recommended way to install eLyXer. To run it just type in a console as root:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">#</span> python install.py</tt>
+</pre>
+<div class="Unindented">
+On Windows you can type (as a regular user):
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">&gt;</span> python.exe install.py</tt>
+</pre>
+<div class="Unindented">
+In any case, the script will install eLyXer as a Python script. Now you can check if it was installed successfully:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --help</tt>
+</pre>
+<div class="Unindented">
+A brief help text and the list of command line options should appear.
+</div>
+<div class="Indented">
+The installer will also copy existing translation files to your hard drive so that they can be used from within eLyXer for internationalization.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--3"></a>Prepackaged Versions
+</h3>
+<div class="Unindented">
+The easiest way to install eLyXer is if someone has prepackaged it for your system. Some Linux distributions include eLyXer: <a class="URL" href="http://packages.debian.org/squeeze/elyxer">Debian squeeze</a> and <a class="URL" href="http://packages.ubuntu.com/lucid/elyxer">Ubuntu Lucid</a>. Installation is done using apt-get or aptitude, for Debian as root:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">#</span> apt-get install elyxer</tt>
+</pre>
+<div class="Unindented">
+or, for Ubuntu:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> sudo aptitude install elyxer</tt>
+</pre>
+<div class="Unindented">
+For both Debian and Ubuntu eLyXer needs to be run as <tt>"elyxer"</tt>:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer --help</tt>
+</pre>
+<div class="Unindented">
+On Windows, the <a class="URL" href="http://wiki.lyx.org/Windows/LyXWinInstaller">alternate LyX installer</a> includes eLyXer in the default installation. See <a class="Reference" href="#sub:LyX-Integration">1.6↓</a> for LyX integration.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--4"></a>Manual Installation
+</h3>
+<div class="Unindented">
+If the installer did not work for you, you can manually install it as a module. On Linux go to the elyxer directory and type, as root:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">#</span> python setup.py install</tt>
+</pre>
+<div class="Unindented">
+On Windows just type:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">&gt;</span> python.exe setup.py install</tt>
+</pre>
+<div class="Unindented">
+On Mac OS X you can use sudo to get the necessary permissions:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">%</span> sudo python setup.py install</tt>
+</pre>
+<div class="Unindented">
+Now you can run eLyXer as a Python script:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --help</tt>
+</pre>
+<div class="Unindented">
+The list of command line options should appear. You can also manually copy the file <tt>elyxer.py</tt> to a directory found in the execution path (for instance, <tt>/usr/bin</tt> on Linux or <tt>c:\windows\system32</tt> on Windows).
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-1.3">1.3</a> Test Drive
+</h2>
+<div class="Unindented">
+Now you may want to try to convert the user guide:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --css lyx.css --title "eLyXer User Guide" docs/userguide.lyx docs/userguide2.html</tt>
+</pre>
+<div class="Unindented">
+It should generate a working web page identical to the one distributed:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> diff docs/userguide.html docs/userguide2.html</tt>
+</pre>
+<div class="Unindented">
+The typical output will contain just the changed lines, which in this case should be only the header with the file creation date. An example is shown on listing <a class="Reference" href="#alg:diff">1↓</a>.
+</div>
+<div class="Indented">
+<div class="float">
+<a class="Label" name="alg:diff"> </a><div class="algorithm">
+<blockquote class="Quotation">
+<tt>7c7</tt><br/>
+<tt>&lt; &lt;meta name="create-date" content="2009-09-11"/&gt;</tt><br/>
+<tt>---</tt><br/>
+<tt>&gt; &lt;meta name="create-date" content="2009-09-12"/&gt;</tt>
+</blockquote>
+<div class="caption">
+Algorithm 1 Example of <tt>diff</tt> output for functionally identical HTML files.
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Indented">
+If nothing else appears (i.e. both files are functionally equal) then everything is working fine. If you have <tt>bash</tt> installed, to test that everything <i>really</i> works fine you can just run the included tests:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> ./run-tests</tt>
+</pre>
+<div class="Unindented">
+It will run a number of test and check the results, so you can see if everything is well. You also need to have installed the command-line tool <tt>diff</tt> to show differences between two files.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-1.4">1.4</a> Usage
+</h2>
+<div class="Unindented">
+eLyXer is a standalone command line tool. It can be invoked from the command line as:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py [options] [source file] [destination file]</tt>
+</pre>
+<div class="Unindented">
+If the source file is omitted then <tt>STDIN</tt> is used; likewise, if no destination file is specified eLyXer will output to <tt>STDOUT</tt>. This allows its use in pipes and other flexible configurations. Some examples:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py file.lyx file.html</tt>
+</pre>
+<div class="Unindented">
+converts <tt>file.lyx</tt> to <tt>file.html</tt>. Debug messages are shown.
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> cat file.lyx | elyxer.py &gt; file.html</tt>
+</pre>
+<div class="Unindented">
+converts <tt>file.lyx</tt> to <tt>file.html</tt>, as before. This time debug messages are not shown.
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py file.lyx | grep "&lt;blockquote&gt;" | wc</tt>
+</pre>
+<div class="Unindented">
+counts all blockquote paragraphs.
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py file.lyx | wget --no-check-certificate --spider -nv -F -i -</tt>
+</pre>
+<div class="Unindented">
+checks all external links in a document recursively. (Local links will appear as unresolved, but they can be ignored.)
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-1.5">1.5</a> Image Processing
+</h2>
+<div class="Unindented">
+eLyXer does not convert images directly; it uses the <a class="URL" href="http://www.imagemagick.org/">ImageMagick</a> package, in particular the <tt>convert</tt> tool, to create PNG versions of the images embedded in the original LyX documents, and then it inserts links to those PNG images in the resulting HTML pages. If ImageMagick is not installed eLyXer will show an error message and will not try to convert further images.
+</div>
+<div class="Indented">
+HTML pages, unlike PDF documents, do not contain images in the document file; rather they contain pointers to image locations on disk. (Fortunately, LyX documents do not contain images either.) eLyXer will generate pages that point to the same locations as the original images, when they are PNG images, or to the converted versions otherwise. Image types like Encapsulated PostScript cannot be used directly from within pages.
+</div>
+<div class="Indented">
+Image location is fragile. All images should be placed in the same location (and with the same structure) as the original document; and they should all be referenced relatively to the current document. During conversion from within LyX image locations can be lost, since LyX does not do in-place conversion; instead, LyX copies the original file to a temporary directory, converts the file and then copies everything back to a directory ending in <tt>.LyXconv</tt>.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-1.6">1.6</a> <a class="Label" name="sub:LyX-Integration"> </a>LyX Integration
+</h2>
+<div class="Unindented">
+If you used the eLyXer installer LyX will automatically detect it after reconfiguration. Just make sure that you are running LyX 1.6.5 or later, and click on Tools ▷ Reconfigure.
+</div>
+<div class="Indented">
+LyX should be able to detect if eLyXer was installed as a script, or even if it has been installed from a Linux distribution. In any case you can verify that it has been recognized by LyX by opening Tools ▷ Preferences…, going to External formats ▷ Converters, and finding the converter for &ldquo;LyX -&gt; HTML&rdquo;. If eLyXer is there, it worked! Now you can convert your documents using View ▷ HTML. Otherwise try to reinstall eLyXer from scratch and then reconfigure LyX.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--5"></a>Installing as a Package or as a Module
+</h3>
+<div class="Unindented">
+Versions of the eLyXer installer prior to 1.2.0 tried to install eLyXer as a module, so it could be run using <tt>"python -m elyxer"</tt>. This option is deprecated since a module called <tt>elyxer</tt> would collide with a Python package of the same name, and there are plans to install eLyXer as a proper Python package in the future (probably in the 1.3.0 time frame). In the interim eLyXer is installed only as a script called <tt>elyxer.py</tt>.
+</div>
+<div class="Indented">
+LyX (starting with versions 2.0.0 and 1.6.9) has been patched to recognize only the script and disregard the module.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-2">2</a> Advanced Use
+</h1>
+<div class="Unindented">
+There are some advanced uses for eLyXer if you want to extract the most of it.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.1">2.1</a> Command Line Options
+</h2>
+<div class="Unindented">
+eLyXer supports a few command line options:
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--help</tt>:</span> Show command line help.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--quiet</tt>:</span> Be quiet and do not output messages (except errors). This way you can avoid the comforting &ldquo;Parsing line 1000&rdquo; messages. When STDIN or STDOUT are used (e.g. in a pipeline) <tt>--quiet</tt> is always enabled.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--6"></a>Advanced Options
+</h3>
+<div class="Description">
+<span class="Description-entry"><tt>--debug</tt>:</span> Show debug messages. They may help a developer understand your problem.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--version</tt>:</span> Show version number and date. Use to check which version you are actually running.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--lyxformat</tt>:</span> Return the highest LyX version that eLyXer understands. This parameter is provided to help with <tt>lyx2lyx</tt> integration, so that this tool knows if it must convert the file to a lower LyX format.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--7"></a>Options to Control HTML output
+</h3>
+<div class="Description">
+<span class="Description-entry"><tt>--title <b>"</b>title<b>"</b></tt>:</span> Change the title of the generated web page.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--css <b>"</b>new.css<b>"</b></tt>:</span> Change default CSS. See section <a class="Reference" href="#sub:CSS">2.2↓</a>: CSS.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--embedcss <b>"</b>file.css<b>"</b></tt>:</span> Embed the styles in <tt>file.css</tt> into the resulting HTML document. See section <a class="Reference" href="#sub:CSS">2.2↓</a>: CSS.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--html</tt>:</span> Generate HTML 4.0 (instead of XHTML). The resulting pages should be easier to import from certain word processors. See section <a class="Reference" href="#sub:HTML-Code">2.6↓</a>: HTML code.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--unicode</tt>:</span> Restore full Unicode output. Right now switches midspaces to medium mathematical spaces. See also section <a class="Reference" href="#sub:HTML-Code">2.6↓</a>: HTML code.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--iso885915</tt>:</span> Generate a document using ISO-8859-1 encoding. Again, see section <a class="Reference" href="#sub:HTML-Code">2.6↓</a>: HTML code.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--nofooter</tt>:</span> Omit the footer message &ldquo;Document generated by eLyXer&rdquo; (shown at the bottom).
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--8"></a>Options to Control image output
+</h3>
+<div class="Description">
+<span class="Description-entry"><tt>--directory "images_dir"</tt>:</span> Look for images in the directory specified.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--destdirectory "dest_dir"</tt>:</span> Converted images will end up into this directory.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--imageformat ".extension"</tt>:</span> Force the format implied by the extension (e.g. <tt>".jpg"</tt> for JPEG) for output images. Use <tt>--imageformat "copy"</tt> to make images be copied over instead of converted.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--converter <b>"program"</b></tt>:<tt></tt></span> <tt></tt>Use the given program to convert images. Right now the supported converters are: <tt><b>imagemagick</b></tt> (default), <tt><b>inkscape</b></tt> and <tt><b>lyx</b></tt> itself. With <tt>--converter inkscape</tt> eLyXer picks Inkscape as the image converter (Inkscape uses some non-standard extensions so it might be needed to convert SVG images to PNG); with <tt>--converter lyx</tt> the new LyX option <tt>lyx -C</tt> is used. You can also supply your own converter command line, using <tt>$input</tt> and <tt>$output</tt> as variables (note the single quotes):
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --converter ’lyx -C $input $output’ [source file] [destination file]</tt>
+</pre>
+<div class="Description">
+<span class="Description-entry"><tt>--noconvert</tt>:</span> Use all images in their original location and do not convert anything. Useful when using images which do not convert well, such as SVG files.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--9"></a>Options to Control footnote output
+</h3>
+<div class="Description">
+<span class="Description-entry"><tt>--numberfoot</tt>:</span> Number all footnotes using numbers: &ldquo;[1]&rdquo;, instead of the default &ldquo;[A]&rdquo;.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--symbolfoot</tt>:</span> mark footnotes with symbols (*, **, †, ‡…).
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--hoverfoot</tt>:</span> show footnotes as hovering text. This is the default position.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--marginfoot</tt>:</span> show footnotes with numbers instead of letters.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--endfoot</tt>:</span> show footnotes at the end of the page.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--supfoot</tt>:</span> use superscript for footnote markers. This is the default style.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--alignfoot</tt>:</span> use aligned text for footnote markers, instead of superscript.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--footnotes "options"</tt>:</span> specify several footnotes options at the same time, separated with commas. Available options are: "number", "hover", "margin", "end". See section <a class="Reference" href="#sub:Footnotes">2.9↓</a>: Footnotes.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--10"></a>Advanced Options to Control HTML output
+</h3>
+<div class="Description">
+<span class="Description-entry"><tt>--splitpart <b>"</b>depth<b>"</b></tt>:</span> Split the resulting webpage at the given depth. See section <a class="Reference" href="#sub:Segmenting-Pages">2.5↓</a>: Segmenting Pages.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--tocfor <b>"</b>original.html<b>"</b></tt>:</span> Generate just a table of contents with links to the original HTML file. See section <a class="Reference" href="#sub:TOC">2.4↓</a>: TOC.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--target <b>"</b>frame<b>"</b></tt>:</span> Add a <tt>target</tt> attribute to every link in the generated HTML, making all links point to the provided frame. Again, see section <a class="Reference" href="#sub:TOC">2.4↓</a>: TOC.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--notoclabels</tt>:</span> Omit &ldquo;Chapter&rdquo;, &ldquo;Part&rdquo; and similar labels from the TOC; just output part numbers (and separate using a period). For instance, a chapter that without this option is labeled &ldquo;Chapter 2: Advanced Use&rdquo; in the TOC would now become &ldquo;2. Advanced Use&rdquo;, as on the PDF. Option adapted from the wish list: <a class="Reference" href="#sub:Wish-List">3.2↓</a>.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--lowmem</tt>:</span> Activate a low memory mode which does not keep the whole document in memory: conversion is done on the fly. Keep in mind that some features as the TOC will be missing from the generated document.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--numberfoot</tt>:<tt></tt></span> <tt></tt>Label footnotes using numbers, instead of letters. Useful when bibliographical references are not numbered and therefore cannot be confused with footnotes.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--raw</tt>:</span> Generate an HTML page without header or footer.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--mathjax <b>remote</b></tt>:</span> Use the excellent JavaScript library <a class="URL" href="http://www.mathjax.org/">MathJax</a> remotely to pretty-print mathematical equations. See section <a class="Reference" href="#sub:Math">2.8↓</a>.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--mathjax <b>"</b>URL<b>"</b></tt>:</span> Use the excellent JavaScript library <a class="URL" href="http://www.mathjax.org/">MathJax</a> at the given URL (usually a local URL is used). See also section <a class="Reference" href="#sub:Math">2.8↓</a>.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--googlecharts</tt>:</span> Use <a class="URL" href="http://code.google.com/apis/chart/index.html">Google Charts</a> to generate images for every formula. Again, see <a class="Reference" href="#sub:Math">2.8↓</a>.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--simplemath</tt>:</span> Do not generate fancy math structures such as multi-line Unicode brackets or stacked limits. This option is automatically activated when <tt>--html</tt> is selected; once more see section <a class="Reference" href="#sub:Math">2.8↓</a>.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--template <b>"</b>file<b>"</b></tt>:</span> Use an HTML template. The raw converted document will be placed where <tt>&lt;!--$content--&gt;</tt> appears in the template. Available variables: <tt>&lt;!--$content--&gt;</tt>, <tt>&lt;!--$title--&gt;</tt>, <tt>&lt;!--$author--&gt;</tt>, <tt>&lt;!--$encoding--&gt;</tt>, <tt>&lt;!--$css--&gt;</tt>, <tt>&lt;!--$navigation--&gt;</tt>, <tt>&lt;!--$year--&gt;</tt>, <tt>&lt;!--$date--&gt;</tt>, <tt>&lt;!--$datetime--&gt;</tt>, <tt>&lt;!--$version--&gt;</tt>, <tt>&lt;!--$script--&gt;</tt>, <tt>&lt;!--$mathjax--&gt;</tt>.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--copyright</tt>:</span> Include a copyright notice at the bottom.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--11"></a>Deprecated Options
+</h3>
+<div class="Description">
+<span class="Description-entry"><tt>--toc</tt>:</span> Generate just a table of contents. Use <tt>--tocfor</tt> instead.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--toctarget <b>"</b>original.html<b>"</b></tt>:</span> Generate a table of contents with links to the original HTML file. Use <tt>--tocfor</tt> instead.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>--nocopy</tt>:</span> No effect since the copyright notice is now optional, maintained for backwards compatibility.
+</div>
+<div class="Unindented">
+When an option accepts an argument it can be added after a space as <tt>--target <b>"</b>frame<b>"</b></tt>, or with an equals sign as in <tt>--target=<b>"</b>frame<b>"</b></tt>. The quotes are optional and can be useful if your arguments include e.g. spaces.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--12"></a>Adding Options In LyX
+</h3>
+<div class="Unindented">
+To add one of these options so that it is used from within LyX, you have to modify the converter line. To this effect open Tools ▷ Preferences…, go to External formats ▷ Converters, find the converter for &ldquo;LyX -&gt; HTML&rdquo; and edit the converter line. It should read something like this:
+</div>
+<pre class="LyX-Code">
+<tt>elyxer.py --directory $$r $$i $$o</tt>
+</pre>
+<div class="Unindented">
+If you want to generate pure HTML instead of XHTML, change the line to:
+</div>
+<pre class="LyX-Code">
+<tt>elyxer.py </tt><b>--html<tt></tt></b> --directory $$r $$i $$o
+</pre>
+<div class="Unindented">
+And so on. Figure 1 shows what to do to add the <tt>--html</tt> option: after editing the line and adding the new option, click on &ldquo;Modify&rdquo; and then &ldquo;Save&rdquo; or &ldquo;Apply&rdquo; the changes.<span class="Marginal">
+You should never remove the <tt>$$i $$o</tt> at the end, since it is what tells eLyXer where to find the input and output files.
+</span>
+
+</div>
+<div class="Indented">
+<div class="float">
+<a class="Label" name="Figure-1"> </a><div class="figure">
+<div class="center">
+<img class="embedded" src="converters.png" alt="figure converters.png" style="max-width: 813px; max-height: 582px;"/>
+
+</div>
+<div class="caption">
+Figure 1 eLyXer converter in LyX 1.6.5.
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Indented">
+LyX 1.6.5 supports a new &ldquo;extra flag&rdquo; line; however, at this moment it does not work with eLyXer.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.2">2.2</a> CSS<a class="Label" name="sub:CSS"> </a>
+</h2>
+<div class="Unindented">
+HTML output, as generated, can fall short in certain situations. Some CSS wizardry can go a long way to customize eLyXer.
+</div>
+<div class="Indented">
+eLyXer tags most elements with the type so you can later modify them using a CSS. The default HTML header is similar to listing <a class="Reference" href="#alg:CSS">2↓</a>, so the default remote CSS file is used.
+</div>
+<div class="Indented">
+<div class="float">
+<a class="Label" name="alg:CSS"> </a><div class="algorithm">
+<blockquote class="Quotation">
+<tt>&lt;head&gt;</tt><br/>
+<tt>[...]</tt><br/>
+<tt><b>&lt;link rel="stylesheet" href="http://elyxer.nongnu.org/lyx.css" type="text/css" media="all"/&gt;</b></tt><br/>
+<tt>&lt;title&gt;Your title here&lt;/title&gt;</tt><br/>
+<tt>&lt;/head&gt;</tt>
+</blockquote>
+<div class="caption">
+Algorithm 2 CSS link automatically added to HTML
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Indented">
+This sample CSS file is published on nongnu.org and distributed along with the scripts, <tt>docs/lyx.css</tt>. (You may have found that your document shows minor changes in its appearance with time — this is the reason. The main author regularly publishes a new, updated version of <tt>lyx.css</tt> on nongnu.org, and all documents using it automatically appear with the changes. Backwards compatibility is maintained as much as possible.)
+</div>
+<div class="Indented">
+To give your document a customized appearance (or for pages to be accessible offline) you probably will want to use your own CSS file; to use it first copy it to the directory where your document resides (e.g. renaming it to <tt>custom.css</tt>), and customize as needed. Then run <tt>elyxer.py</tt> with the following option:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --css=custom.css document.lyx page.html</tt>
+</pre>
+<div class="Unindented">
+This will make the generated <tt>page.html</tt> use your <tt>custom.css</tt> file. The <tt>‘=’</tt> sign between the constant <tt>‘--css’</tt> and the name of the CSS file is optional. More than one <tt>--css</tt> option can be added if you want several CSS files to be used in the header.
+</div>
+<div class="Indented">
+Sometimes the styles in a CSS are needed in the HTML document (for offline viewing, or to distribute as stand-alone pages). For these uses there is the option <tt>--embedcss</tt>: the styles contained in the CSS file passed as an argument will be embedded in the resulting HTML document. For instance:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --embedcss custom.css document.lyx page.html</tt>
+</pre>
+<div class="Unindented">
+This command generates a document <tt>page.html</tt> where the styles in <tt>custom.css</tt> are embedded. The CSS to embed must be a file, not a remote URL. Listing <a class="Reference" href="#alg:embed-CSS">3↓</a> shows the resulting HTML header for a test CSS with just one style, <tt>div.Standard</tt>. Note that the remote CSS is still added by default; to avoid it just add an option with an empty CSS file, <tt>--css=""</tt>.
+</div>
+<div class="Indented">
+<div class="float">
+<a class="Label" name="alg:embed-CSS"> </a><div class="algorithm">
+<blockquote class="Quotation">
+<tt>&lt;head&gt;</tt><br/>
+<tt>[...]</tt><br/>
+<tt>&lt;head&gt;</tt><br/>
+<tt>&lt;link rel="stylesheet" href="http://elyxer.nongnu.org/lyx.css" type="text/css" media="all"/&gt;</tt><br/>
+<tt><b>&lt;style type="text/css"&gt;</b></tt><br/>
+<tt><b>&lt;!--</b></tt><br/>
+<tt><b>/* Embedded CSS */</b></tt><br/>
+<tt><b>div.Standard {</b></tt><br/>
+<tt><b>  background: #909090;</b></tt><br/>
+<tt><b>}</b></tt><br/>
+<tt><b>--&gt;</b></tt><br/>
+<tt><b>&lt;/style&gt; </b></tt><br/>
+<tt>&lt;title&gt;Your title here&lt;/title&gt;</tt><br/>
+<tt>&lt;/head&gt;</tt>
+</blockquote>
+<div class="caption">
+Algorithm 3 CSS embedded into the HTML
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Indented">
+As with the <tt>--css</tt> option, several <tt>--embedcss</tt> options can be added to embed more than one file.
+</div>
+<div class="Indented">
+The CSS file for eLyXer uses some CSS2 features for math structures (fractions, arrays). This makes the output incompatible with older browsers; it requires Microsoft Internet Explorer 7, Firefox 3, Safari 3 or Chrome 1. Check the <a class="URL" href="math.html">Math Showcase</a> to see if your browser can render eLyXer output correctly.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.3">2.3</a> Title
+</h2>
+<div class="Unindented">
+By default the generated web pages have the title &ldquo;Converted Document&rdquo;. If a PDF title is found then it is used instead. The proper LyX title (a paragraph of type &ldquo;Title&rdquo; embedded in the text) will also be used if found. But when <tt>--lowmem</tt> is in use eLyXer does not try to get the proper title, since it may be found in the middle of the document or not be present at all; scanning for it would mean doing two passes, one to look for the title in all the document and another to output the web page, and <tt>--lowmem</tt> implies on-the-fly conversion to save memory.
+</div>
+<div class="Indented">
+You can change the title of the generated web page with the <tt>--title</tt> option:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --title "My Beautiful Document" document.lyx page.html</tt>
+</pre>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.4">2.4</a> Table Of Contents<a class="Label" name="sub:TOC"> </a>
+</h2>
+<div class="Unindented">
+A table of contents (or TOC) can be generated for every converted LyX document. You can optionally also add a target frame to every link. The trick is to combine both options to generate a TOC that links to the original document on a different frame. For example, if the original page is called <tt>page.html</tt> and you generated it with this command:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py document.lyx page.html</tt>
+</pre>
+<div class="Unindented">
+you can generate the TOC linking to this page, and at the same time point it to frame <tt>contents</tt>:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --tocfor page.html --target contents document.lyx page-toc.html</tt>
+</pre>
+<div class="Unindented">
+Then you can put it all together with a simple frameset generated manually. Just remember to place the original document in the frame called <tt>contents</tt>.
+</div>
+<div class="Indented">
+<div class="float">
+<a class="Label" name="alg:frameset"> </a><div class="algorithm">
+<div class="PlainVisible">
+<tt>&lt;html&gt;</tt><br/>
+<tt>  &lt;frameset cols="30%,70%"&gt;</tt><br/>
+<tt>    &lt;frame name="toc" src="page-toc.html" /&gt;</tt><br/>
+<tt>    &lt;frame name="contents" src="page.html" /&gt;</tt><br/>
+<tt>  &lt;/frameset&gt;</tt><br/>
+<tt>&lt;/html&gt;</tt>
+</div>
+<div class="caption">
+Algorithm 4 An example frameset for TOC navegation
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Indented">
+TOC generation accepts the same options as normal document conversion. For example, if you follow these instructions literally you will notice that the TOC has very wide margins and looks a bit weird; that is because it is using the default CSS. A special CSS file for TOC files is provided in <tt>docs/toc.css</tt>, so better results should be obtained with the <tt>--css</tt> option:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --tocfor page.html --css docs/toc.css --target contents document.lyx page-toc.html</tt>
+</pre>
+<div class="Unindented">
+With a little bit of practice you will be able to generate useful (and nice looking) TOC files. You can see an example for the <a class="URL" href="userguide-frameset.html">user guide</a> (if you are not already looking at it).
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.5">2.5</a> Segmenting Pages<a class="Label" name="sub:Segmenting-Pages"> </a>
+</h2>
+<div class="Unindented">
+Quite often you don’t want a huge monolithic page, but a set of linked pages. To do so you can use the <tt>--splitpart</tt> option, specifying the level at which eLyXer should split pages. For instance:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --splitpart 1 document.lyx output.html</tt>
+</pre>
+<div class="Unindented">
+will split <tt>document.lyx</tt> into pages at level 1, using <tt>output.html</tt> as the root page. Each page will get a number that starts with <tt>output</tt> and ends with <tt>.html</tt>, with a suffix that depends on the page — <tt>output-2.html</tt> will correspond to the second split part.
+</div>
+<div class="Indented">
+The level corresponding to 1 depends on the document class: books will be split at chapters, but articles will get a section per page. And so on with lower levels.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.6">2.6</a> HTML Code<a class="Label" name="sub:HTML-Code"> </a>
+</h2>
+<div class="Unindented">
+The HTML code generated is technically XHTML Transitional, version 1.0 <span class="bibcites">[<a class="bibliocite" name="cite-2" href="#biblio-2">2</a>]</span>, using UTF-8 encoding. Some programs have (in this day and age) trouble importing XHTML, notably some popular word processors. To work around this problem and provide more flexible output in general you can output HTML 4.0:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --html document.lyx page-to-import.html</tt>
+</pre>
+<div class="Unindented">
+Again, technically the code generated is HTML 4.01 Transitional <span class="bibcites">[<a class="bibliocite" name="cite-3" href="#biblio-3">3</a>]</span> using UTF-8 encoding. Both versions should pass the W3C tests <span class="bibcites">[<a class="bibliocite" name="cite-4" href="#biblio-4">4</a>]</span>. If your particular web page doesn’t pass the tests, then it is a bug and it will be treated as such.
+</div>
+<div class="Indented">
+The <tt>--html</tt> option also activates the <tt>--simplemath</tt> option; see section <a class="Reference" href="#sub:Math">2.8↓</a>: Math for details.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--13"></a>Character Encodings
+</h3>
+<div class="Unindented">
+For better browser compatibility, medium mathematical spaces are substituted in the output with midspaces — improving the output for some popular browsers. If you want your mathematical spaces back, just use the <tt>--unicode</tt> option:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --unicode document.lyx page-to-import.html</tt>
+</pre>
+<div class="Unindented">
+Check out the <a class="URL" href="math-unicode.html">Math Showcase with Unicode</a> to see the results. In the future other non-Unicode substitutions might be used.
+</div>
+<div class="Indented">
+In case you want to use the ISO-8859-15 encoding in your generated document, you can add the <tt>--iso885915</tt> option:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --iso885915 document.lyx page.html</tt>
+</pre>
+<div class="Unindented">
+This will make eLyXer output a document with all non-ASCII characters encoded as <tt>&amp;nbsp;</tt>, <tt>&amp;#x2005;</tt> and so on. This encoding is similar to ISO-8859-1, also called Latin-1, but including the Euro sign. The <a class="URL" href="math-iso885915.html">Math Showcase (ISO-8859-15 edition)</a> has been generated using this option.
+</div>
+<div class="Indented">
+Both encoding options can be combined with <tt>--html</tt> at will.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.7">2.7</a> Internationalization
+</h2>
+<div class="Unindented">
+eLyXer is distributed along with a few translation files. They are automatically regenerated every time <tt>make</tt> is run, and reside in the folder <tt>po/</tt>. Internationalization is done using GNU <tt>gettext</tt>, so every locale is identified by a two-letter code (such as &ldquo;en&rdquo; for English and &ldquo;es&rdquo; for Spanish). There are two kinds of files: the text <tt>.po</tt> file (which can be found in <tt>po/my.po</tt> for locale &ldquo;my&rdquo;), and the binary <tt>.mo</tt> file (found in <tt>po/my/elyxer.po</tt>).
+</div>
+<div class="Indented">
+For internationalization to work properly, Linux distributors should take all binary <tt>.mo</tt> files and place them in the directory corresponding to locale files, which we will call <tt>$localedir</tt>. As <a class="URL" href="http://docs.python.org/library/gettext.html">the Python gettext page</a> explains, this is distribution-dependent: for example on Debian <tt>$localedir</tt> is <tt>/usr/share/locale</tt>, so for locale &ldquo;es&rdquo; the correct route would be
+</div>
+<pre class="LyX-Code">
+<tt>/usr/share/locale/es/LC_MESSAGES/elyxer.mo</tt>
+</pre>
+<div class="Unindented">
+Windows distributors on the other hand should place files in <tt>%PYTHONHOME%\share\locale</tt>, for example for locale &ldquo;es&rdquo; on a machine where Python is in <tt>C:\python</tt>:
+</div>
+<pre class="LyX-Code">
+<tt>C:\python\share\locale\es\LC_MESSAGES\elyxer.mo</tt>
+</pre>
+<div class="Unindented">
+To generate a new translation file (we will use &ldquo;my&rdquo; as an example locale here, corresponding to Burmese): you need to have the GNU <tt>gettext</tt> package installed. Then go to the directory where elyxer.pot resides:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> cd src/conf</tt>
+</pre>
+<div class="Unindented">
+and generate a <tt>.po</tt> file for your locale:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> msginit --output-file=my.po --locale=my</tt>
+</pre>
+<div class="Unindented">
+Then move the file to the <tt>po/</tt> directory:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> mv my.po ../../po/</tt>
+</pre>
+<div class="Unindented">
+and start translating it to Burmese! Once you are done run make from the root directory:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> ./make</tt>
+</pre>
+<div class="Unindented">
+and it will generate the file <tt>po/my/elyxer.mo</tt>. Finally, place this file in
+</div>
+<pre class="LyX-Code">
+<tt>$localedir/my/LC_MESSAGES/elyxer.mo</tt>
+</pre>
+<div class="Unindented">
+and you are done.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.8">2.8</a> Math<a class="Label" name="sub:Math"> </a>
+</h2>
+<div class="Unindented">
+Math equations are an important part of what takes LyX apart from other editors, since it supports the full LaTeX feature set — that is, about everything under the sun. Unfortunately, math support is hard to get right. Many developers are focusing on MathML, but at the time of this writing (Q2 2010) support on some common browsers is still missing.
+</div>
+<div class="Indented">
+eLyXer follows its usual minimalistic approach and doesn’t try to be everything to everybody — instead, it supports out of the box a set of usual constructs (fraction, square root) and tries to simulate others (binomial, overbrace). See the <a class="URL" href="math.html">Math showcase</a> for yourself and learn what eLyXer supports and what not.
+</div>
+<div class="Indented">
+For more sophisticated math equations there are a couple of advanced features.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--14"></a>MathJax
+</h3>
+<div class="Unindented">
+The first option is to use <a class="URL" href="http://www.mathjax.org/">MathJax</a>, which is as simple as using the option <tt>--mathjax</tt>:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --mathjax </tt><b>remote<tt></tt></b> math.lyx math-mathjax-remote<tt>.html</tt>
+</pre>
+<div class="Unindented">
+The <tt><b>remote</b></tt> argument tells MathJax to access the MathJax library remotely on the MathJax CDN. (You should always comply with their <a class="URL" href="http://www.mathjax.org/download/mathjax-cdn-terms-of-service/">terms of service</a>.) See the <a class="URL" href="math-mathjax-remote.html">Math showcase (MathJax remote edition)</a> to check the results.
+</div>
+<div class="Indented">
+In case you need to go outside the terms of service, or you want the content to be accessible offline, you can always use a local copy of MathJax. Just use the URL of the repository as an argument to the <tt>--mathjax</tt> option:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --mathjax MathJax/ math.lyx math-</tt>mathjax-local<tt>.html</tt>
+</pre>
+<div class="Unindented">
+This way eLyXer uses the given URL (in the example <tt>MathJax/</tt>) to load MathJax from and set it up. Although some code needs to be hosted on the same site as the pages, MathJax uses a feature called web-fonts which can be downloaded from a public server; this is quite easier to host. See the <a class="URL" href="math-mathjax.html">Math showcase (MathJax edition)</a> to see how MathJax fares with eLyXer.
+</div>
+<div class="Indented">
+Something to note is that MathJax is a JavaScript library; all rendering is done client-side by the user’s browser. This has quite a few advantages:
+</div>
+<ul>
+<li>
+Math processing on the server is quite light; equations are basically surrounded by a special tag and left in TeX form.
+</li>
+<li>
+For developers: integration of these libraries is very easy. It took just a few days to integrate both libraries with eLyXer.
+</li>
+<li>
+MathJax is improving all the time thanks to the efforts of Davide P. Cervone and the rest of the developer team; eLyXer and its users reap the benefits readily.
+</li>
+<li>
+The client browser already knows its abilities, and can choose the rendering method it considers to be the best. MathJax can even choose between MathML and HTML+CSS <i>at page rendering time</i>, showing MathML on fancier browsers and simpler HTML where it is not available.
+</li>
+
+</ul>
+<div class="Unindented">
+It also brings some disadvantages:
+</div>
+<ul>
+<li>
+With the <tt>remote</tt> argument, JavaScript code resides at <a class="URL" href="http://cdn.mathjax.org/">a remote server</a> and your users will need online access to view the maths.
+</li>
+<li>
+If MathJax is accessed locally you need to also host the code for MathJax. (Web fonts used in MathJax can at least be hosted elsewhere, so publishers do not need to also host the fonts package, but this hasn’t still been used in eLyXer.)
+</li>
+<li>
+And of course it takes some time to render everything on the client, which can degrade the user experience on older machines.
+</li>
+
+</ul>
+<div class="Unindented">
+Publishers should carefully consider pros and cons before deciding what to use.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--15"></a>Google Charts
+</h3>
+<div class="Unindented">
+<a class="URL" href="http://code.google.com/apis/chart/index.html">Google Charts</a> is an online service which generates images that contain charts and other stuff; it can also generate TeX formulas. eLyXer can use it using the option <tt>--googlecharts</tt>:
+</div>
+<pre class="LyX-Code">
+<tt><span class="blue">$</span> elyxer.py --googlecharts math.lyx math-googlecharts.html</tt>
+</pre>
+<div class="Unindented">
+There are some limitations to Google Charts: no macros, formulas cannot exceed 200 characters, and the supported command set is limited (commands in text mode, for instance, are out of bounds). Also, generated images can be hard to align vertically — by default they are middle-aligned, but some small characters or superscripted formulas can look weird. But this option can be a quick&amp;dirty way of showing math for older or unsupported browsers.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--16"></a>Brackets and Limits
+</h3>
+<div class="Unindented">
+Fancy math structures are generated by default: arrays and binomials are surrounded by multi-line Unicode brackets, limits in display mode are stacked above / below the symbol, and so on. When the option <tt>--simplemath</tt> is used eLyXer avoids such structures and just outputs enlarged regular symbols. It is also included in the <tt>--html</tt> option.
+</div>
+<div class="Indented">
+Check out the <a class="URL" href="math-html.html">Math showcase (HTML edition)</a> to see the results.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.9">2.9</a> Footnotes<a class="Label" name="sub:Footnotes"> </a>
+</h2>
+<div class="Unindented">
+Footnote generation is surprisingly hard to get right in an HTML document. eLyXer has a fairly complete set of command line options to customize how footnotes are generated. Here we will use the aggregated option <tt>--footnotes "options"</tt> which can be used to specify any combination, but they can be turned on independently using <tt>--…foot</tt>. For instance: <tt>--footnotes number,margin</tt> is equivalent to <tt>--numberfoot --marginfoot</tt>.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--17"></a>Markers
+</h3>
+<div class="Unindented">
+The footnote is attached to a point of the text (the <i>referring</i> text) which is usually marked by a bit of text. The default behavior for the marker is to use a superscript letter surrounded by square brackets, in blue: <span class="blue"><span class="formula"><sup><span class="text">[A]</span></sup></span></span>. The text can be changed to aligned text with <tt>--footnotes align</tt>: <span class="blue">[A]</span>, so markers are not mistaken with other superscript constructs such as exponents (like <span class="formula"><i>e</i><sup><i>a</i></sup></span>).
+</div>
+<div class="Indented">
+Markers can also be converted to numbers using <tt>--footnotes number</tt>: <span class="blue"><span class="formula"><sup><span class="text">[1]</span></sup></span>.</span> Or, they can be switched over to symbols using <tt>--footnotes symbol</tt>: <span class="blue">*</span>. Available symbols are rotated from this sequence: * ** † ‡ § §§ ¶ ¶¶ # ##. All options can be combined. For instance, symbol markers look best when shown aligned; <tt>--footnotes align,symbol</tt> will show aligned symbolic markers such as <span class="blue">*</span> or <span class="blue">†</span>.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--18"></a>Position
+</h3>
+<div class="Unindented">
+Footnotes are supposed to appear at the foot of the page, but that is not always possible or practical in web pages. Huge pages make scrolling up and down quite uncomfortable, and remove the immediacy of having the note in the same page as the referring text.
+</div>
+<div class="Indented">
+There are a few alternatives: use the margin, show hovering text, or link to the note at the bottom of the page. eLyXer can use all three. <tt>--footnotes margin</tt> will place the notes at the margin, just as margin notes but with the addition of the footnote marker. While <tt>--footnotes hover</tt> will show hovering text when the mouse is placed on the marker; this is the default behavior. Note that hovering notes are converted into margin notes when printing.
+</div>
+<div class="Indented">
+When footnotes are shown at the end of the page with <tt>--footnotes end</tt>, footnote markers turn into links. The actual footnote at the end then contains a link back to the marker.
+</div>
+<div class="Indented">
+The most interesting part is that these three options can be combined at will: <tt>--footnotes margin,hover,end</tt> will show footnotes at the three possible locations. The most practical combination is probably <tt>--footnotes hover,end</tt>, which will show notes as hovering text and also at the end of the page. Note however that in this case notes will be printed twice (at the margin instead of hovering and at the end).
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-3">3</a> Work in Progress
+</h1>
+<div class="Unindented">
+As you can see eLyXer is a mature and tried package, but it has some rough edges.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-3.1">3.1</a> Known Issues
+</h2>
+<div class="Unindented">
+The following issues (including bugs and missing features) are acknowledged. Some of them should be solved soon; others may take longer.
+</div>
+<ol>
+<li>
+On Mac OS X the output of a message with Unicode characters may cause an error. Workaround: run <tt>elyxer.py</tt> with the <tt>--quiet</tt> option.
+</li>
+<li>
+Some phonetic alphabet symbols are not well supported — if generated with LyX they only appear in a different color: <span class="formula"><span class="text"><span class="textipa">[sample]</span></span></span>. 
+</li>
+<li>
+Multi-column layouts are lost. This one is almost impossible to get right in CSS, so there are no plans to even try.
+</li>
+<li>
+Many BibTeX styles are missing. (They are quite trivial to add though.)
+</li>
+<li>
+ERT (bare TeX code) is ignored.
+</li>
+<li>
+Many AMS environments (like <tt>alignat</tt>, <tt>gather</tt>…) are not working or look strange — some non-AMS environments too.
+</li>
+<li>
+Images are never scaled above their nominal resolution. This is seldom needed if at all, so there are no plans to change it; if people really need the feature just let the author know so it can be added as an option.
+</li>
+
+</ol>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-3.2">3.2</a> Wish List<a class="Label" name="sub:Wish-List"> </a>
+</h2>
+<div class="Unindented">
+The following features have been requested by users; specific people are referenced by a couple of initials so they can recognize themselves while keeping some anonymity. (If you prefer that your initials do not to appear here at all just let me know.)
+</div>
+<div class="Indented">
+Queued features will be added at the next big release — the priority for each feature will be set by the number of users requesting it and date requested. Pending features need some assessment. Those marked as too complex have been evaluated as requiring too much work, but the decision might be reversed if there are enough people interested or a simple way to implement them is found. Once done, features are marked with the first release where they appear.
+</div>
+<div class="Indented">
+<table>
+<tr>
+<td align="left" valign="top">
+Feature
+</td>
+<td align="center" valign="top">
+Date
+</td>
+<td align="center" valign="top">
+Users
+</td>
+<td align="center" valign="top">
+Status
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Understand \setcounter{section}{1}
+</td>
+<td align="center" valign="top">
+2010-05-15
+</td>
+<td align="center" valign="top">
+JB
+</td>
+<td align="center" valign="top">
+1.1.0
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Option to turn off title prefixes in TOC
+</td>
+<td align="center" valign="top">
+2010-07-10
+</td>
+<td align="center" valign="top">
+YG
+</td>
+<td align="center" valign="top">
+1.1.0
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Use BibLaTeX with eLyXer
+</td>
+<td align="center" valign="top">
+2010-09-14
+</td>
+<td align="center" valign="top">
+PJ, WE
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Render change tracking: "Show changes in output"
+</td>
+<td align="center" valign="top">
+2010-09-18
+</td>
+<td align="center" valign="top">
+YG
+</td>
+<td align="center" valign="top">
+1.1.0
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Option for footnotes at the margin
+</td>
+<td align="center" valign="top">
+2010-09-21
+</td>
+<td align="center" valign="top">
+A
+</td>
+<td align="center" valign="top">
+1.1.0
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Output SVG as <tt>&lt;img&gt;</tt> tags (<a class="Reference" href="#sub:Output-SVG-as">20↓</a>)
+</td>
+<td align="center" valign="top">
+2010-09-22
+</td>
+<td align="center" valign="top">
+YG
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+EPUB output format (<a class="Reference" href="#sub:EPUB-output-format">19↓</a>)
+</td>
+<td align="center" valign="top">
+2010-09-23
+</td>
+<td align="center" valign="top">
+MJ, MG
+</td>
+<td align="center" valign="top">
+Too complex
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Option for footnotes at the end of each section
+</td>
+<td align="center" valign="top">
+2010-09-23
+</td>
+<td align="center" valign="top">
+MJ
+</td>
+<td align="center" valign="top">
+1.1.0
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Add more controls for image conversion (<a class="Reference" href="#sub:More-controls-for">21↓</a>)
+</td>
+<td align="center" valign="top">
+2010-10-02
+</td>
+<td align="center" valign="top">
+WE
+</td>
+<td align="center" valign="top">
+1.1.0
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Support for format 401 (Insert Horizontal Line)
+</td>
+<td align="center" valign="top">
+2010-10-06
+</td>
+<td align="center" valign="top">
+US
+</td>
+<td align="center" valign="top">
+1.1.2
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Parse contents of ERTs
+</td>
+<td align="center" valign="top">
+2010-10-06
+</td>
+<td align="center" valign="top">
+US, JW
+</td>
+<td align="center" valign="top">
+1.2.0
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Correct scaling of tables with relative sizes (e.g. <tt>%col</tt>)
+</td>
+<td align="center" valign="top">
+2010-10-09
+</td>
+<td align="center" valign="top">
+US
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+BibTeX: parse math formulas inside BibTeX files
+</td>
+<td align="center" valign="top">
+2010-10-16
+</td>
+<td align="center" valign="top">
+JA
+</td>
+<td align="center" valign="top">
+1.1.1
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+BibTeX: display <tt>\url{}</tt> as an URL
+</td>
+<td align="center" valign="top">
+2010-10-16
+</td>
+<td align="center" valign="top">
+JA
+</td>
+<td align="center" valign="top">
+1.1.1
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Do not label bibliography items in comments
+</td>
+<td align="center" valign="top">
+2010-10-21
+</td>
+<td align="center" valign="top">
+JA
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Unit tests should warn if ImageMagick not installed
+</td>
+<td align="center" valign="top">
+2010-10-24
+</td>
+<td align="center" valign="top">
+JA
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Unit tests should run fine without PNG conversion tools
+</td>
+<td align="center" valign="top">
+2010-10-30
+</td>
+<td align="center" valign="top">
+JA
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Option <tt>--imageformat copy</tt> to avoid converting images
+</td>
+<td align="center" valign="top">
+2010-11-12
+</td>
+<td align="center" valign="top">
+JD
+</td>
+<td align="center" valign="top">
+1.1.1
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Option to embed the CSS in the HTML file<a class="Reference" href="#sub:CSS-controls">22↓</a>
+</td>
+<td align="center" valign="top">
+2010-11-23
+</td>
+<td align="center" valign="top">
+GM, JA
+</td>
+<td align="center" valign="top">
+1.1.1
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Display sub- and superscript aligned vertically (as in integrals)
+</td>
+<td align="center" valign="top">
+2010-11-23
+</td>
+<td align="center" valign="top">
+GM
+</td>
+<td align="center" valign="top">
+1.1.1
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Use Unicode large characters for sums, integrals, matrices…
+</td>
+<td align="center" valign="top">
+2010-12-07
+</td>
+<td align="center" valign="top">
+GM
+</td>
+<td align="center" valign="top">
+1.1.2
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Do not number captions in code listings
+</td>
+<td align="center" valign="top">
+2010-12-08
+</td>
+<td align="center" valign="top">
+DC
+</td>
+<td align="center" valign="top">
+1.2.0
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Support brushes for <a class="URL" href="http://alexgorbatchev.com/SyntaxHighlighter/manual/api/autoloader.html">SyntaxHighlighter</a>
+</td>
+<td align="center" valign="top">
+2010-12-10
+</td>
+<td align="center" valign="top">
+DC
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Generate formula images using Google Charts
+</td>
+<td align="center" valign="top">
+2011-01-07
+</td>
+<td align="center" valign="top">
+ET
+</td>
+<td align="center" valign="top">
+1.2.1
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Output reference arrows as CSS pseudo-elements
+</td>
+<td align="center" valign="top">
+2011-01-12
+</td>
+<td align="center" valign="top">
+GM
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Include part names in <tt>--splitpart</tt> navigation header
+</td>
+<td align="center" valign="top">
+2011-01-15
+</td>
+<td align="center" valign="top">
+AJ
+</td>
+<td align="center" valign="top">
+1.2.1
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Merge options <tt>--toc</tt> and <tt>--toctarget</tt> into <tt>--tocfor</tt>
+</td>
+<td align="center" valign="top">
+2010-01-17
+</td>
+<td align="center" valign="top">
+JA
+</td>
+<td align="center" valign="top">
+1.2.1
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Make <tt>--splitpart</tt> and <tt>--tocfor</tt> work together
+</td>
+<td align="center" valign="top">
+2010-01-17
+</td>
+<td align="center" valign="top">
+JA, TP
+</td>
+<td align="center" valign="top">
+1.2.1
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Generate named references (equivalent to <tt>\nameref</tt>)
+</td>
+<td align="center" valign="top">
+2011-01-19
+</td>
+<td align="center" valign="top">
+TP
+</td>
+<td align="center" valign="top">
+1.2.1
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Do not generate entries when index or nomenclature are missing
+</td>
+<td align="center" valign="top">
+2011-01-19
+</td>
+<td align="center" valign="top">
+TP
+</td>
+<td align="center" valign="top">
+Queued
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Do not output unknown commands in red except in <tt>--debug</tt>
+</td>
+<td align="center" valign="top">
+2011-02-22
+</td>
+<td align="center" valign="top">
+JA
+</td>
+<td align="center" valign="top">
+Queued
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Output equations as images
+</td>
+<td align="center" valign="top">
+2011-05-31
+</td>
+<td align="center" valign="top">
+GK
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Parse modules for custom Flex CharStyles
+</td>
+<td align="center" valign="top">
+2011-06-08
+</td>
+<td align="center" valign="top">
+MG
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Convert several files with a single command
+</td>
+<td align="center" valign="top">
+2011-06-01
+</td>
+<td align="center" valign="top">
+PF
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Export slides as HTML5 presentation
+</td>
+<td align="center" valign="top">
+2011-06-28
+</td>
+<td align="center" valign="top">
+RK
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Add an option to remove navigation bars
+</td>
+<td align="center" valign="top">
+2011-06-29
+</td>
+<td align="center" valign="top">
+AH
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+Support for External Material: PDF, Date
+</td>
+<td align="center" valign="top">
+2011-10-22
+</td>
+<td align="center" valign="top">
+MI
+</td>
+<td align="center" valign="top">
+Pending
+</td>
+
+</tr>
+
+</table>
+
+</div>
+<div class="Indented">
+Some features require further explanations.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--19"></a>EPUB output format<a class="Label" name="sub:EPUB-output-format"> </a>
+</h3>
+<div class="Unindented">
+The EPUB management package <a class="URL" href="http://calibre-ebook.com/user_manual/conversion.html">calibre</a> does not output valid EPUB documents when converted from eLyXer HTML files, at least according to the <a class="URL" href="http://threepress.org/document/epub-validate">Threepress validator</a>.
+</div>
+<div class="Indented">
+This is a complex feature request; calibre does minimal formatting in its EPUB conversion, so making it generate valid EPUB documents requires changing deeply how eLyXer outputs XHTML. Lots of help would be needed to get this working.
+</div>
+<div class="Indented">
+That said, EPUB readers are often much less strict than the official format and they readily accept eLyXer output. Just convert your LyX document to HTML using eLyXer, and then import the resulting HTML document into your EPUB reader. Let us know how it goes for you.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--20"></a>Output SVG as <tt>&lt;img&gt;</tt> tags<a class="Label" name="sub:Output-SVG-as"> </a>
+</h3>
+<div class="Unindented">
+This feature would be most welcome from the part of the author. Unfortunately, Firefox alone from the major browsers refuses to render <tt>&lt;img&gt;</tt> tags correctly for SVG. According to <a class="URL" href="https://bugzilla.mozilla.org/show_bug.cgi?id=276431">bug #276431</a>, this was fixed on 2010-09-08, so the next version should do the right thing; at that point this feature will be queued for inclusion.
+</div>
+<div class="Indented">
+You can check out how your browser does with SVG images with this <a class="URL" href="svg/svg-test.html">SVG test page</a>.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--21"></a>More controls for image conversion<a class="Label" name="sub:More-controls-for"> </a>
+</h3>
+<div class="Unindented">
+eLyXer uses ImageMagick to convert images. Some images (in EPS format, for example) do have blank borders, or they come in varied sizes. It would be nice to remove blank borders and have some kind of unified resolution in the conversion, which would be passed to ImageMagick.
+</div>
+<div class="Indented">
+As of 1.1.0, the improvements include using <tt>ps:use-cropbox=true</tt> in ImageMagick for PostScript and EPS images. Unified resolution has not been added as it might collide with picture density, but suggestions are welcome.
+</div>
+<h3 class="Subsubsection-">
+<a class="toc" name="toc-Subsubsection--22"></a>CSS controls<a class="Label" name="sub:CSS-controls"> </a>
+</h3>
+<div class="Unindented">
+Proposed by JRAS on the elyxer-users mailing list, the following is a direct quote of <a class="URL" href="http://www.mail-archive.com/elyxer-users@nongnu.org/msg00194.html">his message</a>.
+</div>
+<div class="Indented">
+&ldquo;[…]A mixed solution for CSS styles:
+</div>
+<ol>
+<li>
+The essential minimum css for math formatting (a compacted version of a <tt>math.css</tt> subset) included directly inside HTML head.
+</li>
+<li>
+Then a call to download the on-line full CSS, that can repeat the minimum already included <tt>math.css</tt> (from item 1) plus some other styles. The default can be changed by <tt>--css</tt> command line option.
+</li>
+<li>
+A new option (<tt>--addcss</tt>) to add another CSS defined by the user. For example, to only redefine some styles from the default, etc.
+</li>
+
+</ol>
+<div class="Unindented">
+The styles should be included in that order (using the "cascading" property). Item 1 is fixed in every HTML file. Item 2 is always added and by default pointing to the eLyXer on-line css, but it can be changed by option <tt>--css</tt> to another url or file. Item 3 is optional and its url would be added after the other two items, only if the <tt>--addcss</tt> option was used in conversion.&rdquo;
+</div>
+<div class="Indented">
+As of 1.1.1, an option <tt>--embedcss</tt> has been added which allows embedding one or more custom CSS files into the resulting HTML document. Also, <tt>--css</tt> can be repeated as many times as desired to use several CSS files.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-3.3">3.3</a> Contact Information
+</h2>
+<div class="Unindented">
+If your problem does not appear in the above list, please let the author know; you can find him at <a class="URL" href="mailto:mailto:elyxer@gmail.com">elyxer@gmail.com</a>. In the words of Rich Talley: &ldquo;the tool’s author really likes getting challenging documents and making eLyXer work with them&rdquo;. You can send your sample documents and we will try to make eLyXer convert them acceptably. Any documents sent will be treated with the utmost confidentiality.
+</div>
+<div class="Indented">
+You can also join the <a class="URL" href="http://lists.nongnu.org/mailman/listinfo/elyxer-users">mailing list</a> to discuss any information related to eLyXer. The author monitors the official LyX lists for mentions of eLyXer. Bugs can also be reported at the <a class="URL" href="https://savannah.nongnu.org/bugs/?func=additem&amp;group=elyxer">Savannah page</a>.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-3.4">3.4</a> Extending eLyXer
+</h2>
+<div class="Unindented">
+eLyXer should now support most LyX features; but sometimes it will ignore a command, sometimes it will signal it, and it might even refuse to work with certain documents. What can you do if eLyXer does not work with your LyX file? Worry not! Its flexible approach to processing allows anyone to write support for the missing commands.
+</div>
+<div class="Indented">
+eLyXer is written in Python so that it does not need to be compiled; its code is interpreted on the fly. See the accompanying <a class="URL" href="devguide.html">developer guide</a> to learn how to extend eLyXer for your own purposes. If you know how to program in Python it should not be difficult to support other LyX features. If you don’t your best bet is to ask the author.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-4">4</a> FAQ
+</h1>
+<div class="Description">
+<span class="Description-entry">Q:</span> What versions of LyX are supported?
+</div>
+<div class="Description">
+<span class="Description-entry">A:</span> The tool should work with all LyX versions from 1.5.5 to the latest and greatest. It has been tested on Linux, Mac OS X and Windows.
+</div>
+<div class="Description">
+<span class="Description-entry">Q:</span> There are indeed <i>a ton</i> of similar projects over the web. Why add another one?
+</div>
+<div class="Description">
+<span class="Description-entry">A:</span> The four tools supported by LyX (tex4ht, hevea, tth and latex2html) gave inferior results in 2009, and were quite inflexible. The author found the need for a good converter, while at the same time acknowledging the difficulty of the problem.
+</div>
+<div class="Description">
+<span class="Description-entry">Q:</span> Speaking of that: why build a LyX to HTML converter, instead of a more generic LaTeX to HTML converter?
+</div>
+<div class="Description">
+<span class="Description-entry">A:</span> The problem space is quite simplified, and therefore progress is much faster. To make it even easier eLyXer has historically centered on the subset of LyX functionality that is useful to most LyX users, leaving the rest for a later stage. Nowadays eLyXer aims to support the full LyX feature set.
+</div>
+<div class="Description">
+<span class="Description-entry">Q:</span> What can we expect from the tool in the future?
+</div>
+<div class="Description">
+<span class="Description-entry">A:</span> eLyXer should fulfill the needs of 99% of LyX users in the short term. It has also learned a couple of tricks of its own such as page segmenting. Eventually it could be distributed along with LyX as part of the standard installer.
+</div>
+<div class="Description">
+<span class="Description-entry">Q:</span> Why did you leave out my favorite feature <i>&lt;insert random LyX command here&gt;</i>?
+</div>
+<div class="Description">
+<span class="Description-entry">A:</span> In short, because nobody asked for it. Every feature which has been requested (either to me personally or to the list) has been tended to, unless it was too far out or I forgot about it. At this point of development every missing LyX feature will be considered a high priority item for the next version, if at all possible to implement.
+</div>
+<div class="Description">
+<span class="Description-entry">Q:</span> My document changed its appearance without my intervention. Was it black magic, elves or what?
+</div>
+<div class="Description">
+<span class="Description-entry">A:</span> It probably uses the online CSS file, which is regularly updated. See section <a class="Reference" href="#sub:CSS">2.2↑</a> for details.
+</div>
+<div class="Description">
+<span class="Description-entry">Q:</span> Why use an online CSS, instead of placing the CSS file in the same directory as the converted file?
+</div>
+<div class="Description">
+<span class="Description-entry">A:</span> There were pros and cons. An online CSS resource allowed me to update it for everyone at the same time, but might make it more difficult for people without an internet connection; local CSS files are more flexible but can also be confusing to novice users. In the end the online solution was preferred, with the <tt>--css</tt> option as a fallback. 
+</div>
+<div class="Description">
+<span class="Description-entry">Q:</span> My MathJax pages are not rendering correctly; equations are silently ignored.
+</div>
+<div class="Description">
+<span class="Description-entry">A:</span> Check that MathJax is installed on the same server as your pages; for security reasons the browser’s &ldquo;same-origin&rdquo; policy mandates that JavaScript can only be loaded from the same site as the original page. Also make sure that JavaScript is enabled on the browser.
+</div>
+<div class="Description">
+<span class="Description-entry">Q:</span> How can I disable hovering notes? Isn’t there a <tt>--nohover</tt> option?
+</div>
+<div class="Description">
+<span class="Description-entry">A:</span> It can be done using <tt>--footnotes margin</tt>. This will disable hovering text but keep footnotes in the margin.
+</div>
+<div class="Description">
+<span class="Description-entry">Q:</span> I found a bug, what should I do?
+</div>
+<div class="Description">
+<span class="Description-entry">A:</span> Just send it to the author at <a class="URL" href="mailto:mailto:elyxer@gmail.com">elyxer@gmail.com</a>. You can also report it to the <a class="URL" href="https://savannah.nongnu.org/bugs/?func=additem&amp;group=elyxer">Savannah interface</a>.
+</div>
+<a class="toc" name="References"></a><h1 class="biblio">
+References
+</h1>
+<p class="biblio">
+<span class="entry">[<a class="biblioentry" name="biblio-1">1</a>] </span>WordReference.com: &ldquo;definition of elixir&rdquo;, accessed March 2009. <a class="FlexURL" href="http://www.wordreference.com/definition/elixir">http://www.wordreference.com/definition/elixir</a>
+</p>
+<p class="biblio">
+<span class="entry">[<a class="biblioentry" name="biblio-2">2</a>] </span>W3C: &ldquo;XHTML™ 1.0 The Extensible HyperText Markup Language (Second Edition)&rdquo;, revised 1 August 2002. <a class="FlexURL" href="http://www.w3.org/TR/xhtml1/">http://www.w3.org/TR/xhtml1/</a>
+</p>
+<p class="biblio">
+<span class="entry">[<a class="biblioentry" name="biblio-3">3</a>] </span>W3C: &ldquo;HTML 4.01 Specification&rdquo;, 24 December 1999. <a class="FlexURL" href="http://www.w3.org/TR/REC-html40/">http://www.w3.org/TR/REC-html40/</a>
+</p>
+<p class="biblio">
+<span class="entry">[<a class="biblioentry" name="biblio-4">4</a>] </span>W3C: &ldquo;Markup Validation Service&rdquo;, accessed March 2009. <a class="FlexURL" href="http://validator.w3.org/">http://validator.w3.org/</a>
+</p>
+
+<hr class="footer"/>
+<div class="footer" id="generated-by">
+Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.2.4 (2013-01-11)</a> on <span class="create-date">2013-01-11T23:19:42.201062</span>
+</div>
+</div>
+</body>
+</html>

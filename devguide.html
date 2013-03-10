@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="generator" content="http://www.nongnu.org/elyxer/"/>
+<meta name="create-date" content="2013-01-11"/>
+<link rel="stylesheet" href="lyx.css" type="text/css" media="all"/>
+<title>eLyxer Developer Guide</title>
+</head>
+<body>
+<div id="globalWrapper">
+<h1 class="title">
+<img class="embedded" src="elyxer.png" alt="figure elyxer.png" style="max-width: 160px; max-height: 160px;"/>
+eLyXer Developer Guide
+</h1>
+<h2 class="author">
+Alex Fernández (elyxer@gmail.com)
+</h2>
+<div class="fulltoc">
+<div class="tocheader">
+Table of Contents
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Section-1">Section 1: The Basics</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-1.1">Subsection 1.1: Getting eLyXer</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-1.2">Subsection 1.2: <tt>Container</tt>s</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-1.3">Subsection 1.3: <tt>Parser</tt>s</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-1.4">Subsection 1.4: Outputs</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-1.5">Subsection 1.5: Tutorial: Adding Your Own <tt>Container</tt></a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-2">Section 2: Advanced Features</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.1">Subsection 2.1: Parse Tree</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.2">Subsection 2.2: Postprocessors</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.3">Subsection 2.3: Mathematical Formulae</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.4">Subsection 2.4: MathML</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.5">Subsection 2.5: Baskets</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-2.6">Subsection 2.6: Hybrid Functions</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-3">Section 3: Developing and Contributing</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-3.1">Subsection 3.1: Distribution</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-3.2">Subsection 3.2: Debugging</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-3.3">Subsection 3.3: Configuration</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-3.4">Subsection 3.4: License</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-3.5">Subsection 3.5: Contributions</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-4">Section 4: Roadmap</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-5">Section 5: Discarded Bits</a>
+</div>
+<div class="tocindent">
+<div class="toc">
+<a class="Link" href="#toc-Subsection-5.1">Subsection 5.1: Spellchecking</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-5.2">Subsection 5.2: URL Checking</a>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Subsection-5.3">Subsection 5.3: Use of <tt>lyx2lyx</tt> Framework</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#toc-Section-6">Section 6: FAQ</a>
+</div>
+</div>
+<div class="toc">
+<a class="Link" href="#Nomenclature">Nomenclature</a>
+</div>
+<div class="toc">
+<a class="Link" href="#References">References</a>
+</div>
+
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-1">1</a> The Basics
+</h1>
+<div class="Unindented">
+This document should help you get started if you want to understand how eLyXer works, and maybe extending its functionality. The package (including this guide and all accompanying materials) is licensed under the <a class="URL" href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPL version 3</a> or, at your option, any later version. See the <tt>LICENSE</tt> file for details. Also visit the <a class="URL" href="index.html">main page</a> to find out about the latest developments.
+</div>
+<div class="Indented">
+In this first section we will outline how eLyXer performs the basic tasks. Next section will be devoted to more arcane matters. The third section explains how to contribute to eLyXer, while the fourth one deals with future planned extensions. The fifth section includes things that will probably <i>not</i> be implemented. Finally there is a FAQ that contains answers to questions asked privately and on the lyx-devel list <span class="bibcites">[<a class="bibliocite" name="cite-7" href="#biblio-7">7</a>]</span>.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-1.1">1.1</a> Getting eLyXer
+</h2>
+<div class="Unindented">
+If you are interested in eLyXer from a developer perspective the first thing to do is fetch the code. It is included in the standard distribution, so just navigate to the <tt>src/</tt> folder and take a look at the <tt>.py</tt> Python code files.
+</div>
+<div class="Indented">
+For more serious use, or if your distribution did not carry the source code, or perhaps to get the latest copy of the code: you need to install the tool <tt>git</tt>, created by Linus Torvalds (of Linux fame) <span class="bibcites">[<a class="bibliocite" name="cite-8" href="#biblio-8">8</a>]</span>. You will also need to have Python installed; versions at or above 2.4 should be fine <span class="bibcites">[<a class="bibliocite" name="cite-9" href="#biblio-9">9</a>]</span>. The code is hosted in Savannah <span class="bibcites">[<a class="bibliocite" name="cite-1" href="#biblio-1">1</a>]</span>, a GNU project for hosting non-GNU projects. So first you have to fetch the code:
+</div>
+<pre class="LyX-Code">
+<span class="blue">$</span> git clone git://git.sv.gnu.org/elyxer.git
+</pre>
+<div class="Unindented">
+You should see some output similar to this:
+</div>
+<pre class="LyX-Code">
+Initialized empty Git repository in /home/user/install/elyxer/.git/
+remote: Counting objects: 528, done.
+remote: Compressing objects: 100% (157/157), done.
+remote: Total 528 (delta 371), reused 528 (delta 371)
+Receiving objects: 100% (528/528), 150.00 KiB | 140 KiB/s, done.
+Resolving deltas: 100% (371/371), done. 
+</pre>
+<div class="Unindented">
+Now enter the directory that <tt>git</tt> has created.
+</div>
+<pre class="LyX-Code">
+<span class="blue">$</span> cd elyxer
+</pre>
+<div class="Unindented">
+Your first task is to create the main executable file:
+</div>
+<pre class="LyX-Code">
+<span class="blue">$</span> ./make
+</pre>
+<div class="Unindented">
+The build system for eLyXer will compile it for you, and even run some basic tests. (We will see later on section <a class="Reference" href="#sub:Distribution">3.1↓</a> how this &ldquo;compilation&rdquo; is done.) Now you can try it out:
+</div>
+<pre class="LyX-Code">
+<span class="blue">$</span> cd docs/
+<span class="blue">$</span> ../elyxer.py devguide.lyx devguide2.html
+</pre>
+<div class="Unindented">
+You have just created your first eLyXer page! The result is in <tt>devguide2.html</tt>; to view it in Firefox:
+</div>
+<pre class="LyX-Code">
+<span class="blue">$</span> firefox-bin devguide2.html
+</pre>
+<div class="Unindented">
+If you want to debug eLyXer then it is better to run it from the source code folder, instead of the compiled version. For this you need to make just a small change, instead of <tt>elyxer.py</tt> run <tt>src/principal.py</tt>:
+</div>
+<pre class="LyX-Code">
+<span class="blue">$</span> ../src/principal.py --debug devguide.lyx devguide2.html
+</pre>
+<div class="Unindented">
+and you will see the internal debug messages.
+</div>
+<div class="Indented">
+Note for Windows developers: on Windows eLyXer needs to be invoked using the Python executable, and of course changing the slashes to backward-slashes:
+</div>
+<pre class="LyX-Code">
+<span class="blue">&gt;</span> Python ..\elyxer.py devguide.lyx devguide2.html
+</pre>
+<div class="Unindented">
+or for the source code version:
+</div>
+<pre class="LyX-Code">
+<span class="blue">&gt;</span> Python ..\src\elyxer.py devguide.lyx devguide2.html
+</pre>
+<div class="Unindented">
+If you want to install the created version you just have to run the provided install script as root:
+</div>
+<pre class="LyX-Code">
+<span class="blue">#</span> ./install
+</pre>
+<div class="Unindented">
+Once eLyXer has been installed it can be invoked as any other Unix command:
+</div>
+<pre class="LyX-Code">
+<span class="blue">$</span> elyxer.py devguide.lyx devguide3.html
+</pre>
+<div class="Unindented">
+In the rest of this section we will delve a little bit into how eLyXer works.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-1.2">1.2</a> <tt>Container</tt>s
+</h2>
+<div class="Unindented">
+The basic code artifact (or ‘class<a class="NomenclatureEntry" name="noment-class" href="#nom-class">↓</a>’ in Python talk) is the <tt>Container</tt>, located in the <tt>gen</tt> package (file <tt>src/gen/Container.py</tt>). Its responsibility is to take a bit of LyX code and generate working HTML code. This includes (with the aid of some helper classes): reading from file a few lines, converting it to HTML, and writing the lines back to a second file.
+</div>
+<div class="Indented">
+The following figure <a class="Reference" href="#fig:Container-structure">1↓</a> shows how a <tt>Container</tt> works. Each type of <tt>Container</tt> should have a <tt>parser</tt> and an <tt>output</tt>, and a list of <tt>contents</tt>. The <tt>parser</tt> object receives LyX input and produces a list of <tt>contents</tt> that is stored in the <tt>Container</tt>. The <tt>output</tt> object then converts those <tt>contents</tt> to a portion of valid HTML code.
+</div>
+<div class="Indented">
+<div class="float">
+<a class="Label" name="fig:Container-structure"> </a><div class="figure">
+<div class="center">
+<img class="embedded" src="container.png" alt="figure container.png" style="max-width: 333px; max-height: 194px;"/>
+
+</div>
+<div class="caption">
+Figure 1 Container structure.
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Indented">
+Two important class attributes of a <tt>Container</tt> are:
+</div>
+<ul>
+<li>
+<tt>start</tt>: a string of text containing the LyX command that we are about to process;
+</li>
+<li>
+and <tt>ending</tt>, which is used on some <tt>Container</tt>s to determine when to stop parsing.
+</li>
+
+</ul>
+<div class="Unindented">
+A class called <tt>ContainerFactory</tt> has the responsibility of creating the appropriate containers, as the strings in their <tt>start</tt> attributes are found.
+</div>
+<div class="Indented">
+The basic method of a <tt>Container</tt> is:
+</div>
+<ul>
+<li>
+<tt>process()</tt>: called after parsing the LyX text and before outputting the HTML result. Here the <tt>Container</tt> can alter its <tt>contents</tt> as needed, once everything has been read and before it is output.
+</li>
+
+</ul>
+<div class="Unindented">
+Now we will see each subordinate class in detail.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-1.3">1.3</a> <tt>Parser</tt>s
+</h2>
+<div class="Unindented">
+The package <tt>parse</tt> contains almost all parsing code; it has been isolated on purpose so that LyX format changes can be tackled just by changing the code in that directory.
+</div>
+<div class="Indented">
+A <tt>Parser</tt> has two main methods: <tt>parseheader()</tt> and <tt>parse()</tt>.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>parseheader()</tt>:</span> parses the first line and returns the contents as a list of words. This method is common for all <tt>Parser</tt>s. For example, for the command <tt>’\\emph on’</tt> the <tt>Parser</tt> will return a list <tt>[’\\emph’,’on’]</tt>. This list will end up in the <tt>Container</tt> as an attribute <tt>header</tt>.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>parse()</tt>:</span> parses all the remaining lines of the command. They will end up in the <tt>Container</tt> as an attribute <tt>contents</tt>. This method depends on the particular <tt>Parser</tt> employed.
+</div>
+<div class="Unindented">
+Basic <tt>Parser</tt>s reside in the file <tt>parser.py</tt>. Among them are the following usual classes:
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>LoneCommand</tt>:</span> parses a single line containing a LyX command.
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>BoundedParser</tt>:</span> reads until it finds the <tt>ending</tt>. For each line found within, the <tt>BoundedParser</tt> will call the <tt>ContainerFactory</tt> to recursively parse its contents. The parser then returns everything found inside as a list.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-1.4">1.4</a> Outputs
+</h2>
+<div class="Unindented">
+Common outputs reside in <tt>output.py</tt>. They have just one method:
+</div>
+<div class="Description">
+<span class="Description-entry"><tt>gethtml()</tt>:</span> processes the contents of a <tt>Container</tt> and returns a list with file lines. Carriage returns <tt>\n</tt> must be added manually at the desired points; eLyXer will just merge all lines and write them to file.
+</div>
+<div class="Unindented">
+Outputs do not however inherit from a common class; all you need is an object with a method <tt>gethtml(self,container)</tt> that processes the <tt>Container</tt>’s <tt>contents</tt> (as a list attribute). An output can also use all attributes of a <tt>Container</tt> to do their job.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-1.5">1.5</a> Tutorial: Adding Your Own <tt>Container</tt>
+</h2>
+<div class="Unindented">
+If you want to add your own <tt>Container</tt> to the processing you do not need to modify all these files. You just need to create your own source file that includes the <tt>Container</tt>, the <tt>Parser</tt> and the <tt>output</tt> (or reuse existing ones). Once it is added to the <tt>types</tt> in the <tt>ContainerFactory</tt> eLyXer will happily start matching it against LyX commands as they are parsed.
+</div>
+<div class="Indented">
+There are good examples of parsing commands in just one file in <tt>image.py</tt> and <tt>formula.py</tt>. But let us build our own container <tt>BibitemInset</tt> here. We want to parse the LyX command in listing <a class="Reference" href="#alg:bibitem-command">1↓</a>. In the resulting HTML we will generate an anchor: a single tag <tt>&lt;a name="mykey"&gt;</tt> with fixed text <tt>"[ref]"</tt>.
+</div>
+<div class="Indented">
+<div class="float">
+<a class="Label" name="alg:bibitem-command"> </a><div class="algorithm">
+<blockquote class="Quotation">
+<tt>\begin_inset CommandInset bibitem</tt><br/>
+<tt>LatexCommand bibitem</tt><br/>
+<tt>key "mykey"</tt><br/>
+<tt>\end_inset</tt>
+</blockquote>
+<div class="caption">
+Algorithm 1 The LyX command to parse.
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Indented">
+We will call the <tt>Container</tt> <tt>BibitemInset</tt>, and it will process precisely the inset that we have here. We will place the class in <tt>bibitem.py</tt>. So this file starts as shown in listing <a class="Reference" href="#alg:bibitem-class">2↓</a>.
+</div>
+<div class="Indented">
+<div class="float">
+<a class="Label" name="alg:bibitem-class"> </a><div class="algorithm">
+<blockquote class="Quotation">
+<tt>class BibitemInset(Container):</tt><br/>
+<tt>  "An inset containing a bibitem command"</tt><br/>
+<tt>  </tt><br/>
+<tt>  start = ’\\begin_inset CommandInset bibitem’</tt><br/>
+<tt>  ending = ’\\end_inset’</tt>
+</blockquote>
+<div class="caption">
+Algorithm 2 Class definition for <tt>BibitemInset</tt>.
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Indented">
+We can use the parser for a bounded command with start and ending, <tt>BoundedParser</tt>. For the output we will generate a single HTML tag <tt>&lt;a&gt;</tt>, so the <tt>TagOutput()</tt> is appropriate. Finally we will set the <tt>breaklines</tt> attribute to <tt>False</tt>, so that the output shows the tag in the same line as the contents: <tt>&lt;a …&gt;[ref]&lt;/a&gt;</tt>. Listing <a class="Reference" href="#alg:bibitem-init">3↓</a> shows the constructor.
+</div>
+<div class="Indented">
+<div class="float">
+<a class="Label" name="alg:bibitem-init"> </a><div class="algorithm">
+<blockquote class="Quotation">
+<tt>  def __init__(self):</tt><br/>
+<tt>    self.parser = BoundedParser()</tt><br/>
+<tt>    self.output = TagOutput()</tt><br/>
+<tt>    self.tag = ’a’</tt><br/>
+<tt>    self.breaklines = False</tt>
+</blockquote>
+<div class="caption">
+Algorithm 3 Constructor for <tt>BibitemInset</tt>.
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Indented">
+The <tt>BoundedParser</tt> will automatically parse the header and the contents. In the <tt>process()</tt> method we will discard the first line with the <tt>LatexCommand</tt>, and place the key from the second line as link destination. The class <tt>StringContainer</tt> holds string constants; in our case we will have to isolate the key by splitting the string around the double quote <tt>"</tt>, and then access the anchor with the same name. The contents will be set to the fixed string <tt>[ref]</tt>. The result is shown in listing <a class="Reference" href="#alg:bibitem-process">4↓</a>.
+</div>
+<div class="Indented">
+<div class="float">
+<a class="Label" name="alg:bibitem-process"> </a><div class="algorithm">
+<blockquote class="Quotation">
+<tt>  def process(self):</tt><br/>
+<tt>    #skip first line</tt><br/>
+<tt>    del self.contents[0]</tt><br/>
+<tt>    # parse second line: fixed string</tt><br/>
+<tt>    string = self.contents[0]</tt><br/>
+<tt>    # split around the "</tt><br/>
+<tt>    key = string.contents[0].split(’"’)[1]</tt><br/>
+<tt>    # make tag and contents</tt><br/>
+<tt>    self.tag = ’a name="’ + key + ’"’</tt><br/>
+<tt>    string.contents[0] = ’[ref] ’</tt>
+</blockquote>
+<div class="caption">
+Algorithm 4 Processing for <tt>BibitemInset</tt>.
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Indented">
+And then we have to add the new class to the types parsed by the <tt>ContainerFactory</tt>; this has to be done outside the class definition. The complete file is shown in listing <a class="Reference" href="#alg:bibitem-complete">5↓</a>.
+</div>
+<div class="Indented">
+<div class="float">
+<a class="Label" name="alg:bibitem-complete"> </a><div class="algorithm">
+<blockquote class="Quotation">
+<tt>from parser import *</tt><br/>
+<tt>from output import *</tt><br/>
+<tt>from container import *</tt><br/>
+<tt>  </tt><br/>
+<tt>class BibitemInset(Container):</tt><br/>
+<tt>  "An inset containing a bibitem command"</tt><br/>
+<tt>  </tt><br/>
+<tt>  start = ’\\begin_inset CommandInset bibitem’</tt><br/>
+<tt>  ending = ’\\end_inset’</tt><br/>
+<tt>  </tt><br/>
+<tt>  def __init__(self):</tt><br/>
+<tt>    self.parser = BoundedParser()</tt><br/>
+<tt>    self.output = TagOutput()</tt><br/>
+<tt>    self.breaklines = False</tt><br/>
+<tt>  </tt><br/>
+<tt>  def process(self):</tt><br/>
+<tt>    #skip first line</tt><br/>
+<tt>    del self.contents[0]</tt><br/>
+<tt>    # parse second line: fixed string</tt><br/>
+<tt>    string = self.contents[0]</tt><br/>
+<tt>    # split around the "</tt><br/>
+<tt>    key = string.contents[0].split(’"’)[1]</tt><br/>
+<tt>    # make tag and contents</tt><br/>
+<tt>    self.tag = ’a name="’ + key + ’"’</tt><br/>
+<tt>    string.contents[0] = ’[ref] ’</tt><br/>
+<tt>  </tt><br/>
+<tt>ContainerFactory.types.append(BibitemInset)</tt>
+</blockquote>
+<div class="caption">
+Algorithm 5 Full listing for <tt>BibitemInset</tt>.
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Indented">
+The end result of processing the command in listing <a class="Reference" href="#alg:bibitem-command">1↑</a> is a valid anchor:
+</div>
+<blockquote class="Quotation">
+<tt>&lt;a name="mykey"&gt;[ref] &lt;/a&gt;</tt>
+</blockquote>
+<div class="Unindented">
+The final touch is to make sure that the class is run, importing it in the file <tt>gen/factory.py</tt>, as shown in listing <a class="Reference" href="#alg:bibitem-include">6↓</a>. This ensures that the <tt>ContainerFactory</tt> will know what to do when it finds an element that corresponds to the <tt>BibitemInset</tt>.
+</div>
+<div class="Indented">
+<div class="float">
+<a class="Label" name="alg:bibitem-include"> </a><div class="algorithm">
+<blockquote class="Quotation">
+<tt>…</tt><br/>
+<tt>from structure import *</tt><br/>
+<tt><b>from bibitem import *</b></tt><br/>
+<tt>from container import *</tt><br/>
+<tt>…</tt>
+</blockquote>
+<div class="caption">
+Algorithm 6 Importing the <tt>BibitemInset</tt> from the factory file.
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Indented">
+Now this <b>Container</b> is not too refined: the link text is fixed, and we need to do additional processing on the bibitem entry to show consecutive numbers. The approach is not very flexible either: e.g. anchor text is fixed. But in less than 20 lines we have parsed a new LyX command and have outputted valid, working XHTML code. The actual code is a bit different but follows the same principles; it can be found in <tt>src/bib/biblio.py</tt>: in the classes <tt>BiblioCite</tt> and <tt>BiblioEntry</tt>, and it processes bibliography entries and citations (with all our missing bits) in about 50 lines.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-2">2</a> Advanced Features
+</h1>
+<div class="Unindented">
+This section tackles other, more complex features; all of them are included in current versions.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.1">2.1</a> Parse Tree<a class="Label" name="sub:Parse-Tree"> </a>
+</h2>
+<div class="Unindented">
+On initialization of the <tt>ContainerFactory</tt>, a <tt>ParseTree</tt> is created to quickly pass each incoming LyX command to the appropriate containers, which are created on demand. For example, when the <tt>ContainerFactory</tt> finds a command:
+</div>
+<blockquote class="Quotation">
+<tt>\\emph on</tt>
+</blockquote>
+<div class="Unindented">
+it will create and initialize an <tt>EmphaticText</tt> object. The <tt>ParseTree</tt> works with words: it creates a tree where each keyword has its own node. At that node there may be a leaf, which is a <tt>Container</tt> class, and/or additional branches that point to other nodes. If the tree finds a <tt>Container</tt> leaf at the last node then it has found the right point; otherwise it must backtrack to the last node with a <tt>Container</tt> leaf.
+</div>
+<div class="Indented">
+Figure <a class="Reference" href="#fig:parsetree">2↓</a> shows a piece of the actual parse tree. You can see how if the string to parse is <tt>\begin_inset LatexCommand</tt>, at the node for the second keyword <tt>LatexCommand</tt> there is no leaf, just two more branches <tt>label</tt> and <tt>ref</tt>. In this case the <tt>ParseTree</tt> would backtrack to <tt>begin_inset</tt>, and choose the generic <tt>Inset</tt>.
+</div>
+<div class="Indented">
+<div class="float">
+<a class="Label" name="fig:parsetree"> </a><div class="figure">
+<div class="center">
+<img class="embedded" src="parse tree.png" alt="figure parse tree.png" style="max-width: 527px; max-height: 250px;"/>
+
+</div>
+<div class="caption">
+Figure 2 Portion of the parse tree.
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="Indented">
+Parsing is much faster this way, but there are disadvantages; for one, parsing can only be done using whole words and not prefixes. SGML tags (such as <tt>&lt;lyxtabular&gt;</tt>) pose particular problems: sometimes they may appear with attributes (as in <tt>&lt;lyxtabular version="3"&gt;</tt>), and in this case the starting word is <tt>&lt;lyxtabular</tt> without the trailing <tt>’&gt;’</tt> character. So the parse tree removes any trailing <tt>’&gt;’</tt>, and the start string would be just <tt>&lt;lyxtabular</tt>; this way both starting words <tt>&lt;lyxtabular&gt;</tt> and <tt>&lt;lyxtabular</tt> are recognized.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.2">2.2</a> Postprocessors
+</h2>
+<div class="Unindented">
+Some post-processing of the resulting HTML page can make the results look much better. The main stage in the postprocessing pipeline inserts a title &ldquo;Bibliography&rdquo; before the first bibliographical entry. But more can be added to alter the result. As eLyXer parses a LyX document it automatically numbers all chapters and sections. This is also done in the postprocessor.
+</div>
+<div class="Indented">
+The package <tt>post</tt> contains most postprocessing code, although some postprocessors are located in the classes of their containers for easy access.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.3">2.3</a> Mathematical Formulae
+</h2>
+<div class="Unindented">
+Formulae in LyX are rendered beautifully into TeX and PDF documents. For HTML the conversion is not so simple. There are basically three options:
+</div>
+<ul>
+<li>
+render the formula as an image (GIF or PNG), then import the image;
+</li>
+<li>
+export a specific language called MathML
+</li>
+<li>
+or render using a variety of Unicode characters, HTML and CSS wizardry <span class="bibcites">[<a class="bibliocite" name="cite-2" href="#biblio-2">2</a>]</span>.
+</li>
+
+</ul>
+<div class="Unindented">
+eLyXer employs the third technique, with varied results. Basic fractions and square roots should be rendered fine, albeit at the moment there may be some issues pending. Complex fractions with several levels do not come out right. (But see subsection <a class="Reference" href="#sub:MathML">2.4↓</a>.)
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.4">2.4</a> MathML<a class="Label" name="sub:MathML"> </a>
+</h2>
+<div class="Unindented">
+There are two options in place to generate MathML, as suggested by Günther Milne and Abdelrazak Younes <span class="bibcites">[<a class="bibliocite" name="cite-4" href="#biblio-4">4</a>, <a class="bibliocite" name="cite-5" href="#biblio-5">5</a>]</span>. Both rely on some JavaScript page manipulations, and they need to be hosted on the same server as the documents. MathJax is less mature but it has grown faster so it has become the preferred option.
+</div>
+<div class="Indented">
+To use this last option in your own pages you just have to add the <tt>--mathjax</tt> option:
+</div>
+<pre class="LyX-Code">
+<span class="blue">$</span> elyxer.py --mathjax ./MathJax math.lyx math.html
+</pre>
+<div class="Unindented">
+You will notice that the <tt>--mathjax</tt> option requires an argument: the directory where MathJax resides. MathJax needs to live on your server; after <a class="URL" href="http://www.mathjax.org/download/">downloading the package</a>, deploy it to your server and give the installation directory as an argument to <tt>--mathjax</tt>.
+</div>
+<div class="Indented">
+In principle you might think of using some external installation of MathJax to avoid downloading it and serving it from your server, e.g. from Savannah:
+</div>
+<pre class="LyX-Code">
+<span class="blue">$</span> elyxer.py --mathjax http://elyxer.nongnu.org/MathJax/ math.lyx math.html
+</pre>
+<div class="Unindented">
+This approach may not work on certain browsers for two reasons: JavaScript loaded from a different site may not work, and WebFonts are also subject to this same-origin policy. If you have made it work it would be great to hear about it.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.5">2.5</a> Baskets
+</h2>
+<div class="Unindented">
+eLyXer supports a few distinct modes of operation. In each incarnation the tasks to do are quite different:
+</div>
+<ul>
+<li>
+A pure filter<a class="NomenclatureEntry" name="noment-filter" href="#nom-filter">↓</a>: read from disk and write to disk each <tt>Container</tt>, keeping no context in memory.
+</li>
+<li>
+In-memory processing: read a complete file, process it and write it all to disk.
+</li>
+<li>
+TOC<a class="NomenclatureEntry" name="noment-toc" href="#nom-toc">↓</a> generation: output just a table of contents for a LyX document.
+</li>
+<li>
+Split document generation: separates each chapter, section or subsection in a different file.
+</li>
+
+</ul>
+<div class="Unindented">
+How can it do so many different tasks without changing a lot of code? The answer is in the file <tt>gen/basket.py</tt>. A <tt>Basket</tt> is an object that keeps <tt>Container</tt>s. Once a batch is ready, the <tt>Basket</tt> outputs them to disk or to some other <tt>Basket</tt>, but it may decide to just wait a little longer.
+</div>
+<div class="Indented">
+The basic <tt>Basket</tt> is the <tt>WriterBasket</tt>: it writes everything that it gets to disk immediately and then forgets about it. Some bits of state are kept around, like for example which biliography entries have been found so far, but the bulk of the memory is released.
+</div>
+<div class="Indented">
+Another more complex object is the <tt>TOCBasket</tt>: it checks if the <tt>Container</tt> is worthy to appear in a TOC, and otherwise just discards it. For chapters, sections and so on it converts them to TOC entries and outputs them to disk.
+</div>
+<div class="Indented">
+The <tt>MemoryBasket</tt> does most of its work in memory: it stores all <tt>Container</tt>s until they have all been read, then does some further processing on them and outputs an improved version of the document, at the cost of using quite more memory. This allows us for example to generate a list of figures or to set consecutive labels for bibliography entries (instead of just numbering them as they appear in the text).
+</div>
+<div class="Indented">
+The most complex kind of <tt>Basket</tt> is the <tt>SplittingBasket</tt>: it writes each document part to a separate file, choosing what parts to split depending on the configuration passed in the <tt>--splitpart</tt> option. By default it creates a TOC at the top of each page.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-2.6">2.6</a> Hybrid Functions
+</h2>
+<div class="Unindented">
+Math processing is very configurable; most of it is based on configuration options found in <tt>src/conf/base.cfg</tt>. Parsing can be done using a few simple functions: commands (contained in <tt>[FormulaConfig.commands]</tt>) output some content and don’t have any parameters, while one-parameter functions (in <tt>[FormulaConfig.onefunctions]</tt>) take exactly one parameter and output an HTML tag. Thus, the definition for \bar is:
+</div>
+<div class="Indented">
+<div class="listing">
+<pre class="listing">\bar:span class="bar"
+</pre>
+</div>
+
+</div>
+<div class="Indented">
+Whenever eLyXer finds the command it parses a parameter, then outputs the tag <tt>&lt;span class="bar"&gt;</tt> surrounding the parameter. For instance: e.g. <tt>\bar{38}</tt> becomes <tt>&lt;span class="bar"&gt;38&lt;/span&gt;</tt> in the output. Decorating functions (in <tt>[FormulaConfig.decoratingfunctions]</tt>) place a symbol from in the definition above the parameter, and so on.
+</div>
+<div class="Indented">
+Such simple processing is not always enough; there is a generic mechanism for producing complex output from a number of parameters. They are called hybrid functions.
+</div>
+<div class="Indented">
+Each definition for a hybrid function contains: parser definition, output definition and a number of function tags. The parser definition tells eLyXer what to parse. Hybrid functions can have any number of optional parameters, denoted as <tt>[$p]</tt>; mandatory parameters are shown as <tt>{$p}</tt>. Each parameter consists of the symbol <tt>$</tt> followed by a letter or number: <tt>$0</tt>, <tt>$p</tt>.
+</div>
+<div class="Indented">
+The output definition contains regular text, plus parameters and functions. Each function consists of the letter <tt>f</tt> plus a number, such as <tt>f0</tt>; and each is associated with a tagged HTML element. These function tags are the last part of the definition. Presently there can be as many as 10 function tags (from <tt>f0</tt> to <tt>f9</tt>).
+</div>
+<div class="Indented">
+Let us see a simple example, equivalent to the above formula — a one-parameter, one-tag hybrid function:
+</div>
+<div class="Indented">
+<div class="listing">
+<pre class="listing">\fun:[{$p},f0{$p},span class="fun"]
+</pre>
+</div>
+
+</div>
+<div class="Indented">
+The only function tag <tt>f0</tt> generates the HTML tag <tt>&lt;span class="fun"&gt;</tt>. Whenever eLyXer finds <tt>\fun</tt> in a math formula, it will parse one parameter and put it into <tt>$p</tt>. Then it will generate <tt>f0{$p}</tt>, i.e. apply the tag <tt>&lt;span class="fun"&gt;</tt>. Putting it all together: <tt>\fun{38}</tt> becomes <tt>&lt;span class="fun"&gt;38&lt;/span&gt;</tt>.
+</div>
+<div class="Indented">
+Parameters can be parsed as a literal, in which case eLyXer will take everything between the brackets without parsing it. Literal parameters can be used within a tag definition. A real life hybrid function with literal parameters:
+</div>
+<div class="Indented">
+<div class="listing">
+<pre class="listing">\raisebox:[{$p!}{$1},f0{$1},span class="raisebox" style="vertical-align: $p;"]
+</pre>
+</div>
+
+</div>
+<div class="Indented">
+In this case there are two mandatory parameters, the first one literal and the second one a regular TeX expression. The output is just one function tag, in this case using the first mandatory parameter. For instance, <tt>\raisebox{3cm}{5}</tt> would generate:
+</div>
+<div class="Indented">
+<div class="listing">
+<pre class="listing">&lt;span class="raisebox" style="vertical-align: 3cm;"&gt;5&lt;/span&gt;
+</pre>
+</div>
+
+</div>
+<div class="Indented">
+The parameter <tt>$p</tt> is parsed as <tt>3cm</tt>, which is not parsed further.
+</div>
+<div class="Indented">
+Hybrid functions are easy to configure once you get the hang of it. Adding new TeX commands, even complex ones, becomes simply a matter of configuration.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-3">3</a> Developing and Contributing
+</h1>
+<div class="Unindented">
+This chapter will show you how to further develop eLyXer and how to contribute your own code.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-3.1">3.1</a> Distribution<a class="Label" name="sub:Distribution"> </a>
+</h2>
+<div class="Unindented">
+You will notice that in the <tt>src/</tt> folder there are several Python files, while in the main directory there is just a big one called <tt>elyxer.py</tt>. The reason is that before distributing the source code is coalesced and placed on the main directory, so that users can run it without worrying about libraries, directories and the such. (They need of course to have Python 2.5 installed.) And the weapon is a little Python script called <tt>coalesce.py</tt> that does the dirty job of parsing dependencies and inserting them into the main file. There is also a <tt>make</tt> Bash script that takes care of permissions and generates the documentation. Just type
+</div>
+<blockquote class="Quotation">
+<tt><span class="blue">$</span> ./make</tt>
+</blockquote>
+<div class="Unindented">
+at the prompt. This coalesces all code and configuration into <tt>elyxer.py</tt>. It is a primitive way perhaps to generate the &ldquo;binary&rdquo; (ok, not really a binary but a distributable Python file), but it works great.
+</div>
+<div class="Indented">
+The <tt>make</tt> script also runs all of the included tests to check that no functionality has been lost from one release to the next. These tests can also be run independently using the run-tests script:
+</div>
+<blockquote class="Quotation">
+<tt><span class="blue">$</span> ./run-tests</tt>
+</blockquote>
+<div class="Unindented">
+They are used to verify that no functionality is lost from one version to the next — although issues can certainly slip undetected if there is no test for them.
+</div>
+<div class="Indented">
+At the moment there is no way to do this packaging on non-Unix operating systems with a single script, e.g. a Windows <tt>.bat</tt> script. However the steps themselves are trivial.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-3.2">3.2</a> Debugging
+</h2>
+<div class="Unindented">
+Code problems are quite difficult to debug using the full <tt>elyxer.py</tt> file. It is much better to use the uncoalesced version instead, since it is quite modular and neatly divided. To do so you just need to locate the file <tt>src/principal.py</tt> and run that instead of <tt>elyxer.py</tt>. For example, if you are in the <tt>docs/</tt> directory and you want to convert <tt>math.lyx</tt> you can run eLyXer as:
+</div>
+<blockquote class="Quotation">
+<tt><span class="blue">$</span> ../src/principal.py math.lyx math.html</tt>
+</blockquote>
+<div class="Unindented">
+For extra debugging information you can activate the --debug option:
+</div>
+<blockquote class="Quotation">
+<tt><span class="blue">$</span> ../src/principal.py --debug math.lyx math.html</tt>
+</blockquote>
+<div class="Unindented">
+This will make any traces more meaningful and will let you follow the code much more easily.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-3.3">3.3</a> Configuration<a class="Label" name="sub:Configuration"> </a>
+</h2>
+<div class="Unindented">
+The make script does not just construct a single <tt>.py</tt> file from all sources; it is also used to extract the configuration in human-readable form and create a Python file which is then coalesced with all the rest. The original configuration file (the one you should modify) is called <tt>base.cfg</tt>, while the resulting Python file is called <tt>config.py</tt>.
+</div>
+<div class="Indented">
+The original configuration file uses this format:
+</div>
+<div class="Indented">
+<div class="listing">
+<pre class="listing">[ContainerConfig.startendings]
+\begin_deeper:\end_deeper
+\begin_inset:\end_inset
+\begin_layout:\end_layout
+</pre>
+</div>
+
+</div>
+<div class="Indented">
+where each section header is enclosed in square brackets; it contains an object name and a section name. In the example above the object is called <tt>ContainerConfig</tt>, while the section is called <tt>startendings</tt>. Inside each section there are a number of <tt>key:value</tt> pairs separated by a colon; the key is used to reference the value in other Python code.
+</div>
+<div class="Indented">
+To create <tt>config.py</tt> go to the <tt>src/</tt> folder and type:
+</div>
+<blockquote class="Quotation">
+<tt><span class="blue">$</span> ./exportconfig py</tt>
+</blockquote>
+<div class="Unindented">
+This will create all configuration objects to be used inside your Python code, where each section will become an object attribute containing a map. For instance, to access the first value above <tt>\end_deeper</tt> you would write in your Python code:
+</div>
+<blockquote class="Quotation">
+<tt>ContainerConfig.startendings[’\begin_deeper’]</tt>
+</blockquote>
+<div class="Unindented">
+Each section can contain as many values as needed.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-3.4">3.4</a> License
+</h2>
+<div class="Unindented">
+eLyXer is published under the GPL, version 3 or later <span class="bibcites">[<a class="bibliocite" name="cite-3" href="#biblio-3">3</a>]</span>. This basically means that you can modify the code and distribute the result as desired, as long as you publish your modifications under the same license. But consult a lawyer if you want an authoritative opinion.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-3.5">3.5</a> Contributions
+</h2>
+<div class="Unindented">
+All contributions will be published under this same license, so if you send them this way you implicitly give your consent. An explicit license grant would be even better and may be required for larger contributions.
+</div>
+<div class="Indented">
+Please send any suggestions, patches, ideas and whatever else related to development to the <a class="URL" href="mailto:elyxer-users@nongnu.org">mailing list</a>. (Alternatively you may contact <a class="URL" href="mailto:elyxer@gmail.com">elyxer@gmail.com</a> privately.) If you are willing to create a patch and submit it, you should patch against the proper sources in <tt>src/</tt> and send it to the list. This will make everyone’s lives better than if you patch against <tt>elyxer.py</tt>.
+</div>
+<div class="Indented">
+The first external patches have started arriving during late 2009 and early 2010 (provided by Olivier Ripoll, Geremy Condra and Simon South). You can join in the fun!
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-4">4</a> Roadmap
+</h1>
+<div class="Unindented">
+You can see what user features are planned for the near feature in the <a class="URL" href="userguide.html#sub:Wish-List">wish list</a>.
+</div>
+<div class="Indented">
+After the release of eLyXer 1.0, the goal is full LyX document support; any deviation from the output of LyX on e.g. PDF will be considered as bugs. (Keep in mind that some deviations arise in an inherent limitation in the design of eLyXer, and these will logically not be considered as bugs.)
+</div>
+<div class="Indented">
+For eLyXer 1.3.0 there are plans to convert it into a proper Python package so it can be installed using full source code (and not a coalesced script <tt>elyxer.py</tt> that contains everything). Also, once ERTs are parsed, eLyXer might be extended for 1.3.0 to translate generic LaTeX documents.
+</div>
+<div class="Indented">
+All this within the usual constraints: day job, family, etc.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-5">5</a> Discarded Bits
+</h1>
+<div class="Unindented">
+Some features suggested for eLyXer have been discarded; they do not fit with the design of eLyXer or are too much effort for the proposed gains.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-5.1">5.1</a> Spellchecking
+</h2>
+<div class="Unindented">
+LyX can use a spellchecker to verify the words used. However it is not interactive so you may forget to run it before generating a version. It is possible to integrate eLyXer with a spellchecker and verify the spelling before generating the HTML, but it is not clear that it can be done cleanly.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-5.2">5.2</a> URL Checking
+</h2>
+<div class="Unindented">
+Another fun possibility is to make eLyXer check all the external URLs embedded in the document. However the Python facilities for URL checking are not very mature, at least with Python 2.5: some of them do not return errors, others throw complex exceptions that have to be parsed… It is far easier to just create the HTML page and use wget (or a similar tool) to recursively check all links in the page.
+</div>
+<h2 class="Subsection">
+<a class="toc" name="toc-Subsection-5.3">5.3</a> Use of <tt>lyx2lyx</tt> Framework
+</h2>
+<div class="Unindented">
+Abdelrazak Younes suggests using the <tt>lyx2lyx</tt> framework, which after all already knows about LyX formats <span class="bibcites">[<a class="bibliocite" name="cite-5" href="#biblio-5">5</a>]</span>. It is an interesting suggestion, but one that for now does not fit well with the design of eLyXer: a standalone tool to convert between two formats, or as Kernighan and Plauger put it, a standalone <i>filter</i> <span class="bibcites">[<a class="bibliocite" name="cite-6" href="#biblio-6">6</a>]</span>. Long-term maintenance might result a bit heavier with this approach though, especially if LyX changes to a different file format in the future.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-6">6</a> FAQ
+</h1>
+<div class="Description">
+<span class="Description-entry">Q:</span> I don’t like how your tool outputs my document, what can I do?
+</div>
+<div class="Description">
+<span class="Description-entry">A:</span> First make sure that you are using the proper CSS file, i.e. copy the existing <tt>docs/lyx.css</tt> file to your web page directory. Next try to customize the CSS file to your liking; it is a flexible approach that requires no code changes. Then try changing the code (and submitting the patch back).
+</div>
+<div class="Description">
+<span class="Description-entry">Q:</span> How is the code maintained?
+</div>
+<div class="Description">
+<span class="Description-entry">A:</span> It is kept in a <tt>git</tt> repository <a class="URL" href="http://git.savannah.gnu.org/cgit/elyxer.git/">on Savannah</a>. Patches in <tt>git</tt> format are welcome (but keep in mind that my knowledge of <tt>git</tt> is even shallower than my Python skills).
+</div>
+<div class="Description">
+<span class="Description-entry">Q:</span> I found a bug, what should I do?
+</div>
+<div class="Description">
+<span class="Description-entry">A:</span> Just report it to the <a class="URL" href="https://savannah.nongnu.org/bugs/?func=additem&amp;group=elyxer">Savannah interface</a>, to the <a class="URL" href="mailto:elyxer-users@nongnu.org">mailing list</a> or directly to the <a class="URL" href="mailto:mailto:elyxer@gmail.com">main author</a>.
+</div>
+<a class="toc" name="Nomenclature"></a><h1 class="nomenclature">Nomenclature</h1><div class="Nomenclated">
+<a class="Link" name="nom-class" href="#noment-class">↑</a>class A self-contained piece of code that hosts attributes (values) and methods (functions).
+</div>
+<div class="Nomenclated">
+<a class="Link" name="nom-filter" href="#noment-filter">↑</a>filter A type of program that reads from a file and writes to another file, keeping in memory only what is needed short term.
+</div>
+<div class="Nomenclated">
+<a class="Link" name="nom-toc" href="#noment-toc">↑</a>TOC Table of contents
+</div>
+<a class="toc" name="References"></a><h1 class="biblio">
+References
+</h1>
+<p class="biblio">
+<span class="entry">[<a class="biblioentry" name="biblio-1">1</a>] </span>Free Software Foundation, Inc.: eLyXer summary. <a class="FlexURL" href="https://savannah.nongnu.org/projects/elyxer/">https://savannah.nongnu.org/projects/elyxer/</a>
+</p>
+<p class="biblio">
+<span class="entry">[<a class="biblioentry" name="biblio-2">2</a>] </span>S White: &ldquo;Math in HTML with CSS&rdquo;, accessed March 2009. <a class="FlexURL" href="http://www.zipcon.net/~swhite/docs/math/math.html">http://www.zipcon.net/~swhite/docs/math/math.html</a>
+</p>
+<p class="biblio">
+<span class="entry">[<a class="biblioentry" name="biblio-3">3</a>] </span>R S Stallman <i>et al</i>: &ldquo;GNU GENERAL PUBLIC LICENSE&rdquo; version 3, 20070629. <a class="FlexURL" href="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</a>
+</p>
+<p class="biblio">
+<span class="entry">[<a class="biblioentry" name="biblio-4">4</a>] </span>G Milde: &ldquo;Re: eLyXer: LyX to HTML converter&rdquo;, message to list <i>lyx-devel</i>, 20090309. <a class="FlexURL" href="http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg148627.html">http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg148627.html</a>
+</p>
+<p class="biblio">
+<span class="entry">[<a class="biblioentry" name="biblio-5">5</a>] </span>A Younes: &ldquo;Re: eLyXer: LyX to HTML converter&rdquo;, message to list <i>lyx-devel</i>, 20090309. <a class="FlexURL" href="http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg148634.html">http://www.mail-archive.com/lyx-devel@lists.lyx.org/msg148634.html</a>
+</p>
+<p class="biblio">
+<span class="entry">[<a class="biblioentry" name="biblio-6">6</a>] </span>B W Kernighan, P J Plauger: &ldquo;Software Tools&rdquo;, ed. Addison-Wesley Professional 1976, p. 35.
+</p>
+<p class="biblio">
+<span class="entry">[<a class="biblioentry" name="biblio-7">7</a>] </span>Various authors: &ldquo;lyx-devel mailing list&rdquo;, accessed November 2009. <a class="FlexURL" href="http://www.mail-archive.com/lyx-devel@lists.lyx.org/">http://www.mail-archive.com/lyx-devel@lists.lyx.org/</a>
+</p>
+<p class="biblio">
+<span class="entry">[<a class="biblioentry" name="biblio-8">8</a>] </span>S Chacon: &ldquo;Git — Download&rdquo;, accessed November 2009. <a class="FlexURL" href="http://git-scm.com/download">http://git-scm.com/download</a>
+</p>
+<p class="biblio">
+<span class="entry">[<a class="biblioentry" name="biblio-9">9</a>] </span>Python community: &ldquo;Download Python&rdquo;, accessed November 2009. <a class="FlexURL" href="http://www.python.org/download/">http://www.python.org/download/</a>
+</p>
+
+<hr class="footer"/>
+<div class="footer" id="generated-by">
+Document generated by <a href="http://elyxer.nongnu.org/">eLyXer 1.2.4 (2013-01-11)</a> on <span class="create-date">2013-01-11T23:19:42.815839</span>
+</div>
+</div>
+</body>
+</html>
