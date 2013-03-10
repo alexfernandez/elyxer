@@ -110,7 +110,23 @@ target "index.html"
 \end_layout
 
 \begin_layout Itemize
-1.2.4 (2013-01-11):
+1.2.5 (2013-01-11):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Solved a bug in the previous release: José Ramón's fix was not properly
+ applied in the executable 
+\family typewriter
+elyxer.py
+\family default
+.
+ Sorry about that.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+1.2.4 (2013-01-10):
 \end_layout
 
 \begin_deeper
