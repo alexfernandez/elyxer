@@ -25,7 +25,6 @@
 from elyxer.util.trace import Trace
 from elyxer.io.fileline import *
 from elyxer.conf.fileconfig import *
-from elyxer.conf.config import *
 
 
 class ImportFile(object):

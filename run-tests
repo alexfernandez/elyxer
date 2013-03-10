@@ -136,3 +136,8 @@ name="helloworld"
 ../elyxer.py --quiet --css ../docs/lyx.css --title "By Fernández" "$name.lyx" "$name-test.html"
 diff -u --ignore-matching-lines="create-date" --ignore-matching-lines="<title>" "$name-good.html" "$name-test.html"
 
+# test simultaneous hover and end in footnotes
+name="footnotes-1-6"
+../elyxer.py --quiet --footnotes hover,end,number --css ../docs/lyx.css "$name.lyx" "$name-hover-end-test.html"
+diff -u --ignore-matching-lines="create-date" "$name-hover-end-good.html" "$name-hover-end-test.html"
+

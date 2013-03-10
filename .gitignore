@@ -30,4 +30,5 @@ test/copyimages/*.svg
 test/copyimages/*.png
 test/copyimages/*.jpg
 test/copyimages/docs
+test/subdir/mourning.png
 
