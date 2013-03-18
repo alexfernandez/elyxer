@@ -17,22 +17,21 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Alex 20090315: upload generated documentation to Savannah CVS
+# Alex 2013-03-18: upload generated documentation to GitHub pages.
 
 # download current docs
-mkdir cvs
-cd cvs
 #rm -Rf elyxer
-#cvs -z3 -d:ext:alexfernandez@cvs.savannah.nongnu.org:/web/elyxer co elyxer
-cvs  -z3 -d:ext:alexfernandez@cvs.savannah.nongnu.org:/web/elyxer update elyxer
+# cvs -z3 -d:ext:alexfernandez@cvs.savannah.nongnu.org:/web/elyxer co elyxer
+# cvs  -z3 -d:ext:alexfernandez@cvs.savannah.nongnu.org:/web/elyxer update elyxer
 # overwrite with current docs
-cp ../*.html elyxer/
-cp ../*.png elyxer/
-cp ../*.css elyxer/
+cp *.html ../forks/pages-elyxer/
+cp *.png ../forks/pages-elyxer/
+cp *.css ../forks/pages-elyxer/
 # remove MathJaX and jsMath (comment if they are updated)
 #rm -Rf elyxer/MathJax
 #rm -Rf elyxer/jsMath
 # commit
-cd elyxer
-cvs commit -m "Automatic upload"
+cd ../forks/pages-elyxer/
+git commit -am "Automatic upload"
+git push origin gh-pages
 
