@@ -515,8 +515,9 @@ target "http://www.fileformat.info/"
  Uwe Stöhr for their interesting suggestions.
  Thanks to Uwe Stöhr, Hans Bezemer, Sara Teinturier, Vladimir Ermakov for
  their translations.
- Packagers Sven Hoexter (for Debian) and Uwe Stöhr (on Windows) have helped
- with their work to make it easy to try it out.
+ Packagers Sven Hoexter (Debian), Uwe Stöhr (Windows), Ray Rashif (ArchLinux)
+ and Liviu Andronic (Ubuntu) have helped with their work to make it easy
+ to try it out.
  Olivier Ripoll, Geremy Condra, Simon South, Jack Desert, 
 \begin_inset CommandInset href
 LatexCommand href
@@ -561,8 +562,8 @@ type "mailto:"
  Rainer Dorsch, Wolfgang Engelmann, Rodrigo Benenson, Stefano Franchi, Steve
  Litt, Paul Johnson, Yan Wong, Yaron Goland, Francis Girard, Rene de Zwart,
  Jose Ramón Álvarez Sánchez, Günter Milde, Axel Jacobs, Tiago Pedro Alves-Ferrei
-ra, Hoy Loper, Bob Alvarez, Tommaso Cucinotta for their testing and bug
- reporting.
+ra, Hoy Loper, Bob Alvarez, Tommaso Cucinotta and countless others for their
+ testing and bug reporting.
 \end_layout
 
 \begin_layout Standard
