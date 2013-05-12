@@ -4,12 +4,12 @@ Introduction
 ============
 eLyXer converts a LyX source file to a HTML page. Full documentation in HTML
 format can be found at docs/index.html, or on the web:
-  http://www.nongnu.org/elyxer/
+  http://alexfernandez.github.io/elyxer/
 
 Installation
 ============
 Quick installation guide (for the impatient):
-* download the latest version from http://www.nongnu.org/elyxer/,
+* download the latest version from http://alexfernandez.github.io/elyxer/,
 * decompress the .zip or .tar.gz
 * and install it using the provided script install.py as root:
     # ./install.py
@@ -17,7 +17,7 @@ Quick installation guide (for the impatient):
     > python install.py
 
 To install eLyXer first download a compressed version from
-  http://www.nongnu.org/elyxer/
+  http://alexfernandez.github.io/elyxer/
 You will also need a recent (> 2.4) version of Python on your target machine.
 
 For decompression: open a terminal window in the directory that contains the
@@ -84,9 +84,9 @@ as unresolved, but they can be ignored.)
 Documentation
 =============
 Documentation about eLyXer, including a user guide and a developer guide, can
-be found in the docs directory. The project is hosted at Savannah.nongnu.org.  
+be found in the docs directory. The project is hosted at GitHub.
 Be sure to visit the project home page at:
-  http://www.nongnu.org/elyxer/
+  http://alexfernandez.github.io/elyxer/
 
 License
 =======
