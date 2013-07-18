@@ -48,6 +48,7 @@ class Options(object):
   unicode = False
   iso885915 = False
   css = []
+  favicon = ''
   title = None
   directory = None
   destdirectory = None
@@ -127,6 +128,8 @@ class Options(object):
       Options.copyimages = True
     if Options.css == []:
       Options.css = ['http://elyxer.nongnu.org/lyx.css']
+    if Options.favicon == []:
+      pass # no default favicon
     if Options.html:
       Options.simplemath = True
     if Options.toc and not Options.tocfor:
@@ -182,6 +185,7 @@ class Options(object):
     Trace.error('    --title "title":        set the generated page title')
     Trace.error('    --css "file.css":       use a custom CSS file')
     Trace.error('    --embedcss "file.css":  embed styles from a CSS file into the output')
+    Trace.error('    --favicon "icon.ico":   insert the specified favicon in the header.')
     Trace.error('    --html:                 output HTML 4.0 instead of the default XHTML')
     Trace.error('    --unicode:              full Unicode output')
     Trace.error('    --iso885915:            output a document with ISO-8859-15 encoding')

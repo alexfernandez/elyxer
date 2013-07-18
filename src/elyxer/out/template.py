@@ -164,6 +164,7 @@ class DefaultTemplate(HTMLTemplate):
         html.append(u'  "HTML-CSS": { imageFont: null }\n')
         html.append(u'  });\n')
         html.append(u'</script>\n')
+    html += self.getfavicon()
     html.append('</head>\n')
     html.append('<body>\n')
     html.append('<div id="globalWrapper">\n')
@@ -195,6 +196,14 @@ class DefaultTemplate(HTMLTemplate):
       html.append(u'<style type="text/css">\n')
       html += BulkFile(cssfile).readall()
       html.append(u'</style>\n')
+    return html
+
+  def getfavicon(self):
+    "Get the favicon header, foolproof version."
+    html = []
+    if Options.favicon != '':
+       html.append(u'<link rel="shortcut icon" href="%s" type="image/x-icon">\n' % (Options.favicon,))
+       html.append(u'<link rel="icon" href="%s" type="image/x-icon">\n' % (Options.favicon,))
     return html
 
   def getfooter(self):
