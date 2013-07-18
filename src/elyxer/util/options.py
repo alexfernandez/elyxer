@@ -128,7 +128,7 @@ class Options(object):
       Options.copyimages = True
     if Options.css == []:
       Options.css = ['http://elyxer.nongnu.org/lyx.css']
-    if Options.favicon == []:
+    if Options.favicon == '':
       pass # no default favicon
     if Options.html:
       Options.simplemath = True
