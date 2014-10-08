@@ -12,8 +12,11 @@ Quick installation guide (for the impatient):
 * download the latest version from http://alexfernandez.github.io/elyxer/,
 * decompress the .zip or .tar.gz
 * and install it using the provided script install.py as root:
+
     # ./install.py
+
   or on Windows:
+
     > python install.py
 
 To install eLyXer first download a compressed version from
@@ -22,9 +25,13 @@ You will also need a recent (> 2.4) version of Python on your target machine.
 
 For decompression: open a terminal window in the directory that contains the
 downloaded file and just write at the command line prompt:
-  $ tar -xzf elyxer-[version].tar.gz
+
+    $ tar -xzf elyxer-[version].tar.gz
+
 Or for the .zip version:
-  $ unzip elyxer-[version].zip
+
+    $ unzip elyxer-[version].zip
+
 where [version] should be something like 0.44; the full name might be something
 like elyxer-0.44.tar.gz.
 
@@ -34,21 +41,33 @@ the installer script install.py can be found (along with this README).
 
 The recommended installation procedure is to just run this script. On Linux
 type as root:
-  # ./install.py
+
+    # ./install.py
+
 and similarly for Mac OS X, while for Windows open a console and type:
-  > python install.py
+
+    > python install.py
+
 Note the you don't need to write the prompt, # or >; the console will print it
 for you. Double-clicking on install.py should also work if your Python
 installation is minimally sane. It will tell you as a result to which directory
 eLyXer has been installed as a binary, which is be the typical result; in this
 case eLyXer should be run as follows:
-  $ elyxer.py [input file] [output file]
+
+    $ elyxer.py [input file] [output file]
+
 or, on Windows:
-  > elyxer.py [input file] [output file]
+
+    > elyxer.py [input file] [output file]
+
 You can test that it works with the --help option:
-  $ elyxer.py --help
+
+    $ elyxer.py --help
+
 or, on Windows:
-  > elyxer.py --help
+
+    > elyxer.py --help
+
 Usage and options should then be shown.
 
 LyX Integration
@@ -63,21 +82,30 @@ using distutils or as a binary.
 Usage
 =====
 eLyXer can be invoked from the command line as:
-  $ elyxer.py [source file] [destination file]
+
+    $ elyxer.py [source file] [destination file]
 
 If the source file is omitted then STDIN is used; likewise, if no destination
 file is specified eLyXer will output to STDOUT. This allows its use in pipes
 and other flexible configurations.
 
 Examples:
-  $ elyxer.py file.lyx file.html
+
+    $ elyxer.py file.lyx file.html
+
 converts file.lyx to file.html. Debug messages are shown.
-  $ cat file.lyx | elyxer.py > file.html
+
+    $ cat file.lyx | elyxer.py > file.html
+
 converts file.lyx to file.html, as before. This time debug messages are not
 shown.
-  $ elyxer.py file.lyx | grep "<blockquote>" | wc
+
+    $ elyxer.py file.lyx | grep "<blockquote>" | wc
+
 counts all blockquote paragraphs.
-  $ elyxer.py file.lyx | wget --no-check-certificate --spider -nv -F -i -
+
+    $ elyxer.py file.lyx | wget --no-check-certificate --spider -nv -F -i -
+
 checks all external links in a document recursively. (Local links will appear
 as unresolved, but they can be ignored.)
 
