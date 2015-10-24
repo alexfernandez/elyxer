@@ -134,7 +134,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-math2html (a subset of eLyXer) Copyright (C) 2009-2011 Alex Fernández
+math2html (a subset of eLyXer) and enclosed CSS:
+Copyright (C) 2009-2011 Alex Fernández
 
 Released under the terms of the `2-Clause BSD license'_, in short:
 Copying and distribution of this file, with or without modification,
