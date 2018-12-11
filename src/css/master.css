@@ -95,7 +95,7 @@ a.printindex {
 	color: black;
 }
 table {
-	display: inline-table;
+	display: block;
 	text-align: center;
 	border-collapse: collapse;
 	margin-top: 1em;
